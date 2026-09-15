@@ -36,7 +36,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "22"
+VERSION = "25"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -128,6 +128,30 @@ TEMPLATE = r'''<!DOCTYPE html>
   .hint { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0; }
   .nodata { text-align: center; color: var(--muted); padding: 30px 10px; }
 
+  /* options, archive */
+  .optrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; font-size: 14px; }
+  .optnote { color: var(--muted); font-size: 13px; }
+  .optnote.center { display: block; text-align: center; min-height: 1em; margin: 4px 0 0; }
+  .tabs button:disabled { cursor: not-allowed; opacity: .55; }
+  .tabs button[aria-selected="true"]:disabled { opacity: .8; }
+  .switch input:disabled + .track { opacity: .5; }
+  .slhint { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
+            width: fit-content; max-width: 100%; margin: 10px auto 0; padding: 8px 14px; border-radius: 999px;
+            background: var(--near); color: var(--near-fg); font-size: 14px; animation: rowin .35s ease both; }
+  .slhint img { width: 24px; height: 24px; }
+  .archbar { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4px 12px;
+             margin: 2px auto 6px; padding: 6px 14px; width: fit-content; max-width: 100%;
+             border-radius: 999px; background: var(--cell); color: var(--cell-fg); font-size: 14px; }
+  .archbar .linkbtn { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; letter-spacing: 0; font-size: 14px; padding: 2px 4px; }
+  .arlist { list-style: none; padding: 0; margin: 10px 0 0; max-height: 60vh; overflow-y: auto; }
+  .arbtn { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 10px; width: 100%;
+           background: none; border: 0; border-bottom: 1px solid var(--line); color: var(--fg); font: inherit;
+           padding: 11px 8px; text-align: left; cursor: pointer; font-variant-numeric: tabular-nums; }
+  .arbtn:hover, .arbtn.on { background: var(--cell); color: var(--cell-fg); }
+  .arno { color: var(--muted); font-weight: 600; }
+  .arstat { font-size: 14px; font-weight: 600; }
+  .arlist .empty { text-align: center; color: var(--muted); padding: 30px 0; }
+
   /* leaderboard */
   .lbcard { width: min(480px, 94vw); }
   .lbtabs { display: flex; width: fit-content; max-width: 100%; margin: 0 auto 10px; flex-wrap: wrap; justify-content: center; }
@@ -173,8 +197,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   .hlunit { margin: 4px 0 0; font-size: 14px; }
   .hlyr { margin: 4px 0 0; font-size: 13px; opacity: .7; }
   .hlbtns { display: flex; flex-direction: column; gap: 8px; width: min(200px, 100%); margin: 10px 0 2px; }
-  .hlbtn { margin: 0; font-size: 16px; padding: 11px 14px; }
-  .hlbtn + .hlbtn { background: var(--fg); color: var(--bg); }
+  .hlbtns .hlbtn { margin: 0; font-size: 16px; padding: 11px 14px; background: var(--fg); color: var(--bg);
+                  transition: opacity .15s, transform .1s; }
+  .hlbtns .hlbtn:hover:not(:disabled) { opacity: .85; }
+  .hlbtns .hlbtn:active:not(:disabled) { transform: scale(.98); }
   .hlbtn:disabled { opacity: .5; cursor: default; }
 
   /* stats: guess the player */
@@ -336,8 +362,11 @@ TEMPLATE = r'''<!DOCTYPE html>
     .hlimg { width: 76px; height: 76px; }
     .hlname { font-size: 16px; }
     .hlval b { font-size: 36px; }
-    .hlbtn { font-size: 14px; padding: 10px 8px; }
+    .hlbtns .hlbtn { font-size: 14px; padding: 10px 8px; }
     .lbtabs button { font-size: 12px; padding: 5px 9px; }
+    .iconbtn .txt { display: none; }
+    .iconbtn { padding: 0; width: 34px; }
+    .topleft { gap: 6px; }
     .lbtabs { gap: 2px; }
     .num { padding: 0; gap: 4px; justify-content: center; }
     .arrow { font-size: 16px; }
@@ -355,8 +384,9 @@ TEMPLATE = r'''<!DOCTYPE html>
 </head>
 <body>
 <div class="topleft">
-  <button class="iconbtn" id="statsBtn" type="button" aria-label="Statistics">📊 Stats</button>
+  <button class="iconbtn" id="statsBtn" type="button" aria-label="Statistics">📊<span class="txt"> Stats</span></button>
   <button class="iconbtn round" id="lbBtn" type="button" aria-label="Leaderboard" title="Leaderboard" hidden>🏆</button>
+  <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Archive: replay past puzzles">📅</button>
   <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
 </div>
 <div class="topbar">
@@ -385,9 +415,17 @@ TEMPLATE = r'''<!DOCTYPE html>
       <button type="button" role="tab" data-game="hl_goals">Goals</button>
       <button type="button" role="tab" data-game="hl_assists">Assists</button>
       <button type="button" role="tab" data-game="hl_points">Points</button>
+      <button type="button" role="tab" data-game="hl_pim">PIM</button>
     </div>
   </div>
+  <p class="archbar" id="archBar" hidden><span id="archText"></span>
+    <button class="linkbtn" id="pickDay" type="button">Pick another day</button>
+    <button class="linkbtn" id="backToday" type="button">Back to today</button></p>
   <button class="linkbtn" id="silBtn">SHOW SILHOUETTE</button>
+  <div class="optrow" id="classicOpts" hidden>
+    <label class="switch"><input type="checkbox" id="hardMode"><span class="track"></span><span>Hard mode</span></label>
+    <span class="optnote" id="hardNote"></span>
+  </div>
 </header>
 <main>
   <section class="view" id="view-classic">
@@ -426,6 +464,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
+    <div class="tabrow"><div class="tabs small" role="tablist" aria-label="Reveal order">
+      <button type="button" role="tab" data-order="oldest">Oldest season first</button>
+      <button type="button" role="tab" data-order="newest">Newest season first</button>
+    </div></div>
+    <p class="optnote center" id="slOrderNote"></p>
+    <p class="slhint" id="slHint" hidden></p>
     <table class="seasons">
       <thead><tr id="slHead"></tr></thead>
       <tbody id="slRows"></tbody>
@@ -507,6 +551,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <button type="button" role="tab" data-lbhl="hl_goals">Goals</button>
       <button type="button" role="tab" data-lbhl="hl_assists">Assists</button>
       <button type="button" role="tab" data-lbhl="hl_points">Points</button>
+      <button type="button" role="tab" data-lbhl="hl_pim">PIM</button>
     </div>
     <div class="tabs small lbtabs" role="tablist" aria-label="Period">
       <button type="button" role="tab" data-period="today">Today</button>
@@ -517,6 +562,15 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="hint" id="lbYou"></p>
     <div class="lbname" id="lbNameBox"></div>
     <p class="lbrules" id="lbRules"></p>
+  </div>
+</div>
+
+<div class="modal" id="archiveModal" role="dialog" aria-modal="true" aria-labelledby="arTitle">
+  <div class="card wide">
+    <button class="xbtn" data-close aria-label="Close">×</button>
+    <h2 id="arTitle">Archive</h2>
+    <p class="hint">Replay past daily puzzles. Archive games don't count toward your stats or the leaderboard.</p>
+    <ol class="arlist" id="arList"></ol>
   </div>
 </div>
 
@@ -541,21 +595,27 @@ TEMPLATE = r'''<!DOCTYPE html>
       <li><b>Team</b>: current NHL team. <b>Conf / Div</b>: East or West; Atlantic (A), Metropolitan (M), Central (C) or Pacific (P).</li>
       <li><b>Pos</b>: C, L, R, D or G. <b>Shoots</b>: L or R (for goalies, the hand they catch with). <b>Nation</b>: country of birth. <b>#</b>: sweater number.</li>
       <li><b>Show silhouette</b> reveals the mystery player's outline if you need a hint.</li>
+      <li><b>Hard mode</b> (switch under the tabs) hides the silhouette. Once you make a guess, it's locked until that game ends, and your share result says "Hard mode".</li>
     </ul>
 
     <h3>Stats: Guess the player</h3>
-    <p>You see the mystery player's position and the span of his NHL career, one row per season. Only the first season's regular-season stats are shown at the start (games, goals, assists and points, or games, wins, GAA and save percentage for goalies). Every wrong guess unlocks the next season. You have 8 tries.</p>
+    <p>You see the mystery player's position and the span of his NHL career, one row per season. Only one season's regular-season stats are shown at the start: games, goals, assists, points and plus/minus (for goalies: games, wins, GAA, save percentage and shutouts). Every wrong guess unlocks another season. You have 8 tries.</p>
+    <ul>
+      <li>Choose <b>Oldest season first</b> or <b>Newest season first</b> above the table. The choice is locked once you make a guess, until that game ends.</li>
+      <li>After 4 wrong guesses, a hint shows the logo of the team he plays for now.</li>
+    </ul>
 
     <h3>Stats: Guess the team</h3>
     <p>You're shown a player and his regular-season stats for one season. Pick the team he played for that season from the list. You have 4 tries. A <span class="swatch" style="background:var(--near)"></span><b>yellow</b> team means close: it's in the same division as the right answer (based on today's divisions).</p>
 
     <h3>Higher or Lower</h3>
-    <p>Two players go head to head. You can see the first player's career high, meaning his best single regular season, in the stat you picked: <b>goals</b>, <b>assists</b> or <b>points</b>. Guess whether the second player's career high is <b>higher</b> or <b>lower</b>. Get it right and he moves over to face a new player; get it wrong and your run ends. Ties count as right. The daily run has 40 matchups for each stat, and your score is how many you get right in a row.</p>
+    <p>Two players go head to head. You can see the first player's career high, meaning his best single regular season, in the stat you picked: <b>goals</b>, <b>assists</b>, <b>points</b> or <b>PIM</b> (penalty minutes). Guess whether the second player's career high is <b>higher</b> or <b>lower</b>. Get it right and he moves over to face a new player; get it wrong and your run ends. Ties count as right. The daily run has 40 matchups for each stat, and your score is how many you get right in a row.</p>
 
     <h3>Daily and Unlimited</h3>
     <ul>
       <li><b>Daily</b>: one puzzle per game per day. Everyone gets the same puzzles, and they switch at 12:00 am Eastern Time (ET). Your results stay until then.</li>
       <li><b>Unlimited</b>: turn on the switch in the top-right corner to play as many random puzzles as you like.</li>
+      <li><b>📅 Archive</b> (top left): replay any past daily puzzle for the game you're on. Archive games don't count toward stats or the leaderboard.</li>
       <li><b>Stats</b> (top left) tracks your daily wins, streaks and guess distribution for the game you're on, and lets you share your result. Only daily games count.</li>
       <li class="lbhelp" hidden><b>🏆 Leaderboard</b> (top left): pick a name to put your daily results on a global leaderboard for each game, for today, this week and all time. Each game scores differently:
         <ul>
@@ -585,7 +645,7 @@ const SITE = "/*__SITE__*/";
 const API = "/*__API__*/".replace(/\/+$/, "");
 const API_ON = /^https?:\/\//.test(API);
 const DAILY = { classic: /*__DAILY__*/{}, statline: /*__DAILY_SL__*/{}, team: /*__DAILY_TT__*/{} };
-const DAILY_HL = /*__DAILY_HL__*/{};   // "YYYY-MM-DD" -> { goals: [ids], assists: [...], points: [...] }
+const DAILY_HL = /*__DAILY_HL__*/{};   // "YYYY-MM-DD" -> { goals: [ids], assists: [...], points: [...], pim: [...] }
 const START = { classic: "/*__START__*/", statline: "/*__START_SL__*/", team: "/*__START_TT__*/", hl: "/*__START_HL__*/" };
 
 // abbr: [conference, division]
@@ -656,15 +716,15 @@ const seasonCache = new Map();
 function seasonsOf(p) {
   if (seasonCache.has(p.id)) return seasonCache.get(p.id);
   const goalie = p.pos === "G", bySeason = new Map();
-  for (const [y, t, gp, a, b, c, d = 0] of (p.car || [])) {
-    const r = bySeason.get(y) || { y, teams: [], gp: 0, a: 0, b: 0, c: 0, d: 0 };
+  for (const [y, t, gp, a, b, c, d = 0, e = 0] of (p.car || [])) {
+    const r = bySeason.get(y) || { y, teams: [], gp: 0, a: 0, b: 0, c: 0, d: 0, e: 0 };
     r.teams.push(t);
     const total = r.gp + gp;
     if (goalie) {   // wins add up; GAA and SV% are weighted by games played
       r.b = total ? (r.b * r.gp + b * gp) / total : 0;
       r.c = total ? (r.c * r.gp + c * gp) / total : 0;
-      r.a += a;
-    } else { r.a += a; r.b += b; r.c += c; r.d += d; }
+      r.a += a; r.d += d;   // wins, shutouts
+    } else { r.a += a; r.b += b; r.c += c; r.d += d; r.e += e; }
     r.gp = total;
     bySeason.set(y, r);
   }
@@ -675,10 +735,12 @@ function seasonsOf(p) {
 // seasons for "guess the team": one team all season, not his current team, 10+ games
 const teamSeasonsOf = p => seasonsOf(p).filter(r =>
   r.teams.length === 1 && TEAMS[r.teams[0]] && r.teams[0] !== p.team && r.gp >= 10);
+const signed = v => v > 0 ? `+${v}` : v < 0 ? `−${Math.abs(v)}` : "0";
 const statCells = (p, r) => p.pos === "G"
-  ? [r.gp, r.a, r.b.toFixed(2), r.c.toFixed(3).replace(/^0/, "")]
-  : [r.gp, r.a, r.b, r.c];
-const statHeads = p => p.pos === "G" ? ["GP", "W", "GAA", "SV%"] : ["GP", "G", "A", "PTS"];
+  ? [r.gp, r.a, r.b.toFixed(2), r.c.toFixed(3).replace(/^0/, ""), r.d]
+  : [r.gp, r.a, r.b, r.c, signed(r.e)];
+const statHeads = p => p.pos === "G" ? ["GP", "W", "GAA", "SV%", "SO"] : ["GP", "G", "A", "PTS", "+/−"];
+const HINT_AT = 4;   // wrong guesses before the team-logo hint in "guess the player"
 
 const SL_POOL = PLAYERS.filter(p => seasonsOf(p).length >= 3);
 const TT_POOL = PLAYERS.filter(p => teamSeasonsOf(p).length);
@@ -750,21 +812,26 @@ const G = {
       return p.id === t.id;
     },
     render(t, st) {
-      const rows = seasonsOf(t);
+      const all = seasonsOf(t), newest = (st.opts || {}).order === "newest";
+      const rows = newest ? all.slice().reverse() : all;
       const wrong = st.guesses.filter(id => id !== t.id).length;
       const shown = st.over ? rows.length : Math.min(rows.length, 1 + wrong);
       $("slIntro").textContent =
-        `${posName(t)} · ${rows.length} NHL seasons · ${seasonLabel(rows[0].y)} to ${seasonLabel(rows[rows.length - 1].y)}`;
+        `${posName(t)} · ${all.length} NHL seasons · ${seasonLabel(all[0].y)} to ${seasonLabel(all[all.length - 1].y)}`;
+      const hint = !st.over && wrong >= HINT_AT;
+      $("slHint").hidden = !hint;
+      if (hint) $("slHint").innerHTML = `Hint: he plays for <img src="${logo(t.team)}" alt="" onerror="this.remove()"><b>${esc(TEAM_NAMES[t.team] || t.team)}</b> now`;
       $("slHead").innerHTML = `<th>Season</th>${statHeads(t).map(h => `<th>${h}</th>`).join("")}` +
         (st.over ? "<th>Team</th>" : "");
       $("slRows").innerHTML = rows.map((r, i) => {
-        if (i >= shown) return `<tr class="locked"><td>${seasonLabel(r.y)}</td><td colspan="4">🔒 Locked</td></tr>`;
+        if (i >= shown) return `<tr class="locked"><td>${seasonLabel(r.y)}</td><td colspan="${statHeads(t).length}">🔒 Locked</td></tr>`;
         const cls = i >= (this.shown || 0) && this.shown ? ' class="newrow"' : "";
         return `<tr${cls}><td>${seasonLabel(r.y)}</td>${statCells(t, r).map(v => `<td>${v}</td>`).join("")}` +
           (st.over ? `<td>${r.teams.map(esc).join(" / ")}</td>` : "") + "</tr>";
       }).join("");
       $("slLeft").textContent = st.over ? "" :
-        shown < rows.length ? "Each wrong guess unlocks the next season." : "Every season is unlocked.";
+        (shown < rows.length ? `Each wrong guess unlocks the next ${newest ? "older" : ""} season.`.replace("  ", " ") : "Every season is unlocked.")
+        + (wrong < HINT_AT ? ` A team hint unlocks after ${HINT_AT} wrong guesses.` : "");
       this.shown = shown;
     },
     squares: (t, id) => id === t.id ? "🟩" : "⬛"
@@ -776,7 +843,7 @@ const G = {
     pool: () => TT_POOL,
     daily(k) {
       const [id, y] = DAILY.team[k] || [];
-      const p = BYID.get(id), r = p && teamSeasonsOf(p).find(s => s.y === y);
+      const p = BYID.get(id), r = p && seasonsOf(p).find(s => s.y === y && s.teams.length === 1 && TEAMS[s.teams[0]]);
       if (r) return { p, r, team: r.teams[0] };
       const q = TT_POOL[hash("sweater-tt-" + k) % TT_POOL.length], opts = teamSeasonsOf(q);
       const s = opts[hash("season-" + k) % opts.length];
@@ -828,6 +895,7 @@ const HL_STATS = {
   goals:   { key: "a", name: "Goals",   label: "goals",           one: "goal" },
   assists: { key: "b", name: "Assists", label: "assists",         one: "assist" },
   points:  { key: "c", name: "Points",  label: "points",          one: "point" },
+  pim:     { key: "d", name: "PIM",     label: "penalty minutes", one: "penalty minute" },
 };
 const HL_LEN = 40;   // answers in a daily run
 const HL_POOL = PLAYERS.filter(p => p.pos !== "G" && seasonsOf(p).reduce((n, r) => n + r.gp, 0) >= 100);
@@ -995,14 +1063,42 @@ const S = Object.fromEntries(GAME_IDS.map(g => [g, { target: null, guesses: [], 
 
 function hideBanner() { $("banner").style.display = "none"; }
 
-function startGame(t, restore = []) {
+// ---- per-game options (hard mode, reveal order); locked while a game is in progress ----
+const OPTION_DEFAULTS = { classic: { hard: false }, statline: { order: "oldest" } };
+const prefOpts = g => Object.assign({}, OPTION_DEFAULTS[g] || {}, store.get(`sweater-opts-${g}`) || {});
+const optsLocked = st => st.guesses.length > 0 && !st.over;
+
+// ---- archive progress and past results ----
+const archiveGet = (g, d) => (store.get("sweater-archive") || {})[`${g}:${d}`];
+function archiveSet(g, d, rec) {
+  const all = store.get("sweater-archive") || {};
+  all[`${g}:${d}`] = rec;
+  store.set("sweater-archive", all);
+}
+const historyGet = (g, d) => (store.get("sweater-history") || {})[`${g}:${d}`];
+function historySet(g, d, summary) {
+  const all = store.get("sweater-history") || {};
+  all[`${g}:${d}`] = summary;
+  store.set("sweater-history", all);
+}
+let archiveDay = null;
+
+function startGame(t, restore = [], opts) {
   const st = S[game], g = G[game];
-  Object.assign(st, { target: t, guesses: [], over: false, mode });
+  Object.assign(st, { target: t, guesses: [], over: false, mode, opts: opts || prefOpts(game) });
   hideBanner();
   g.reset(t);
   restore.forEach(x => doGuess(x, false));
   g.render && g.render(t, st);
+  renderOptions();
   updateLabels();
+}
+
+function saveProgress() {
+  const st = S[game], g = G[game];
+  const rec = { date: st.day, target: g.tid(st.target), guesses: st.guesses, opts: st.opts };
+  if (mode === "daily") store.set(KEYS[game].daily, rec);
+  if (mode === "archive") archiveSet(game, st.day, rec);
 }
 
 function doGuess(x, fresh = true) {
@@ -1011,9 +1107,9 @@ function doGuess(x, fresh = true) {
   const won = g.guess(st.target, x, fresh);
   if (won === null) return;
   st.guesses.push(x);
-  if (fresh && mode === "daily") store.set(KEYS[game].daily, { date: st.day, target: g.tid(st.target), guesses: st.guesses });
+  if (fresh) saveProgress();
   if (isDone(game, st.target, st.guesses)) finish(g.wonGame ? g.wonGame(st.target, st.guesses) : won, fresh);
-  if (fresh) { g.render && g.render(st.target, st); updateLabels(); }
+  if (fresh) { g.render && g.render(st.target, st); renderOptions(); updateLabels(); }
 }
 
 function finish(won, fresh) {
@@ -1028,13 +1124,16 @@ function finish(won, fresh) {
   $("pname").textContent = p.name;
   $("pmeta").textContent = g.meta(st.target);
   $("profile").href = `https://www.nhl.com/player/${p.id}`;
-  $("again").textContent = g.next;
-  $("again").hidden = mode !== "unlimited";
+  $("again").textContent = mode === "archive" ? "Pick another day" : g.next;
+  $("again").hidden = mode === "daily";
   $("countdown").hidden = mode !== "daily";
   $("banner").classList.toggle("won", won);
   $("banner").classList.remove("pop");
   tick();
   $("banner").style.display = "block";
+  if (mode !== "unlimited" && (fresh || !historyGet(game, st.day))) {
+    historySet(game, st.day, g.kind === "streak" ? { s: g.score(st.target, st.guesses), w: won } : { n, w: won });
+  }
   if (fresh) {
     const party = g.celebrate ? g.celebrate(st.target, st.guesses, won) : won;
     void $("banner").offsetWidth; // restart the pop animation
@@ -1049,22 +1148,55 @@ function finish(won, fresh) {
   }
 }
 
+function restoreFrom(saved, t) {
+  const g = G[game];
+  const ok = saved && saved.target === g.tid(t);
+  return [ok ? saved.guesses : [], ok && saved.opts ? { ...prefOpts(game), ...saved.opts } : undefined];
+}
+
 function loadDaily() {
   const st = S[game], g = G[game];
   if (!g.pool().length) return noData();
   st.day = dayKey();
   const t = g.daily(st.day);
   const saved = store.get(KEYS[game].daily);
-  startGame(t, saved && saved.date === st.day && saved.target === g.tid(t) ? saved.guesses : []);
+  startGame(t, ...restoreFrom(saved && saved.date === st.day ? saved : null, t));
+}
+
+function archiveDays(g) {
+  const today = dayKey();
+  if (g.startsWith("hl_")) {
+    return Object.keys(DAILY_HL).filter(k => k < today && (DAILY_HL[k][G[g].stat] || []).length > 1).sort().reverse();
+  }
+  return Object.keys(DAILY[g]).filter(k => k < today).sort().reverse();
+}
+
+function loadArchive(day) {
+  const st = S[game], g = G[game];
+  if (!g.pool().length) return noData();
+  if (!archiveDays(game).includes(day)) {
+    toast("That day isn't in this game's archive");
+    mode = "daily";
+    return loadDaily();
+  }
+  archiveDay = st.day = day;
+  const t = g.daily(day);
+  startGame(t, ...restoreFrom(archiveGet(game, day), t));
 }
 
 function loadUnlimited(forceNew = false) {
   const st = S[game], g = G[game];
   if (!g.pool().length) return noData();
-  if (!forceNew && st.target && st.mode === "unlimited") return startGame(st.target, st.guesses.slice());
+  if (!forceNew && st.target && st.mode === "unlimited") return startGame(st.target, st.guesses.slice(), st.opts);
   let t, tries = 0;
   do { t = g.random(); } while (st.target && g.tid(t) === g.tid(st.target) && ++tries < 10);
   startGame(t);
+}
+
+function loadCurrent() {
+  if (mode === "archive") return loadArchive(archiveDay);
+  if (mode === "unlimited") return loadUnlimited();
+  return loadDaily();
 }
 
 function noData() {
@@ -1072,18 +1204,56 @@ function noData() {
   Object.assign(st, { target: null, guesses: [], over: true, mode });
   hideBanner();
   $(G[game].view).querySelector(".nodata").hidden = false;
+  renderOptions();
   updateLabels();
 }
+
+const niceDay = k => { const [y, m, d] = k.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }); };
 
 function updateLabels() {
   const st = S[game], g = G[game];
   const text = !st.target ? "Not available yet"
-    : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing" : `Game over. Click ${g.next}`)
+    : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
+               : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
   for (const id of ["guess", "slGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
-  $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())}` : "Unlimited";
+  $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())}`
+    : mode === "archive" ? `Archive #${dailyNumber(game, archiveDay)}` : "Unlimited";
   $("unlimited").checked = mode === "unlimited";
+  $("archBar").hidden = mode !== "archive";
+  if (mode === "archive") $("archText").textContent = `Archive · #${dailyNumber(game, archiveDay)} · ${niceDay(archiveDay)}`;
 }
+
+function renderOptions() {
+  const st = S[game], locked = optsLocked(st), opts = st.opts || prefOpts(game);
+  $("classicOpts").hidden = game !== "classic";
+  $("silBtn").hidden = game !== "classic" || !!opts.hard;
+  if (game === "classic") {
+    $("hardMode").checked = !!opts.hard;
+    $("hardMode").disabled = locked;
+    $("hardNote").textContent = locked ? "Locked until this game ends" : opts.hard ? "No silhouette" : "";
+  }
+  if (game === "statline") {
+    document.querySelectorAll("[data-order]").forEach(b => {
+      b.setAttribute("aria-selected", b.dataset.order === opts.order);
+      b.disabled = locked;
+    });
+    $("slOrderNote").textContent = locked ? "Reveal order is locked until this game ends" : "";
+  }
+}
+
+function changeOption(key, value) {
+  const st = S[game];
+  if (optsLocked(st)) return renderOptions();
+  store.set(`sweater-opts-${game}`, { ...prefOpts(game), [key]: value });
+  st.opts = { ...(st.opts || prefOpts(game)), [key]: value };
+  if (st.target && !st.over && st.guesses.length === 0 && mode !== "unlimited") saveProgress();
+  if (st.target) G[game].render && G[game].render(st.target, st);
+  renderOptions();
+}
+$("hardMode").addEventListener("change", e => changeOption("hard", e.target.checked));
+document.querySelectorAll("[data-order]").forEach(b => b.addEventListener("click", () => changeOption("order", b.dataset.order)));
 
 function setGame(g) {
   game = g;
@@ -1095,12 +1265,40 @@ function setGame(g) {
   });
   $("subtabs").hidden = !isStatsGame(g);
   $("hlsubtabs").hidden = !g.startsWith("hl_");
-  $("silBtn").hidden = g !== "classic";
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = v !== G[g].view; });
   document.querySelectorAll(".nodata").forEach(n => n.hidden = true);
   searches.forEach(s => s.close());
-  if (mode === "daily") loadDaily(); else loadUnlimited();
+  loadCurrent();
 }
+
+// ---- archive picker ----
+function openArchive() {
+  const g = G[game], days = archiveDays(game);
+  $("arTitle").textContent = `Archive · ${game === "classic" ? "Classic" : isStatsGame(game) ? `Stats: ${g.title}` : g.title}`;
+  const status = d => {
+    const h = historyGet(game, d);
+    if (!h) return archiveGet(game, d)?.guesses?.length ? "In progress" : "Play";
+    if (g.kind === "streak") return `🔥 ${h.s}`;
+    return h.w ? `✓ ${h.n}/${g.max}` : "✗";
+  };
+  $("arList").innerHTML = days.length ? days.map(d => `
+    <li><button type="button" class="arbtn${archiveDay === d && mode === "archive" ? " on" : ""}" data-day="${d}">
+      <span class="arno">#${dailyNumber(game, d)}</span><span class="ardate">${niceDay(d)}</span>
+      <span class="arstat">${status(d)}</span></button></li>`).join("")
+    : '<li class="empty">No past puzzles yet for this game. Check back tomorrow.</li>';
+  openModal("archiveModal");
+}
+$("arList").addEventListener("click", e => {
+  const b = e.target.closest("[data-day]");
+  if (!b) return;
+  closeModals();
+  mode = "archive";
+  loadArchive(b.dataset.day);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+$("archiveBtn").onclick = openArchive;
+$("pickDay").onclick = openArchive;
+$("backToday").onclick = () => { mode = "daily"; store.set("sweater-mode", "daily"); loadDaily(); };
 
 // ======================= classic board =======================
 function cell(text, hit, cls = "") {
@@ -1294,7 +1492,8 @@ function shareText() {
   const won = saved.guesses.some(x => g.isWin(t, x));
   const body = saved.guesses.map(x => g.squares(t, x)).join("").trim();
   const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}`;
-  return `${g.share} #${dailyNumber(game, saved.date)} ${won ? saved.guesses.length : "X"}/${g.max}\n\n${body}${link}`;
+  const note = saved.opts && saved.opts.hard ? " · Hard mode" : saved.opts && saved.opts.order === "newest" ? " · Newest first" : "";
+  return `${g.share} #${dailyNumber(game, saved.date)} ${won ? saved.guesses.length : "X"}/${g.max}${note}\n\n${body}${link}`;
 }
 function toast(msg) {
   $("toast").textContent = msg; $("toast").classList.add("show");
@@ -1324,7 +1523,7 @@ document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e =
 }));
 $("statsBtn").onclick = () => openModal("statsModal");
 $("helpBtn").onclick = () => openModal("helpModal");
-$("silBtn").onclick = () => openModal("modal");
+$("silBtn").onclick = () => { if (!(S.classic.opts && S.classic.opts.hard)) openModal("modal"); };
 $("lbBtn").onclick = () => openLeaderboard();
 $("stLbBtn").onclick = () => openLeaderboard();
 
@@ -1346,7 +1545,7 @@ $("unlimited").addEventListener("change", e => {
   store.set("sweater-mode", mode);
   if (mode === "daily") loadDaily(); else loadUnlimited(true);
 });
-$("again").onclick = () => loadUnlimited(true);
+$("again").onclick = () => mode === "archive" ? openArchive() : loadUnlimited(true);
 document.querySelectorAll("[data-game]").forEach(b => b.addEventListener("click", () => {
   let g = b.dataset.game;
   if (g === "stats") g = isStatsGame(game) ? game : (store.get("sweater-stats-game") || "statline");
@@ -1633,7 +1832,7 @@ def team_seasons(p):
     return sorted(out)
 
 
-HL_STATS = {"goals": 3, "assists": 4, "points": 5}
+HL_STATS = {"goals": 3, "assists": 4, "points": 5, "pim": 6}
 HL_LEN = 40
 
 
@@ -1682,8 +1881,10 @@ def plan_hl(days, pool, today):
     highs = {s: {i: career_high(pool[i], s) for i in ids} for s in HL_STATS}
     for n in range(AHEAD + 1):
         k = (today + timedelta(days=n)).isoformat()
-        if k not in days:
-            days[k] = {s: hl_sequence(ids, highs[s], f"sweater-hl-{s}-{k}") for s in HL_STATS}
+        day = days.setdefault(k, {})
+        for s in HL_STATS:
+            if s not in day:
+                day[s] = hl_sequence(ids, highs[s], f"sweater-hl-{s}-{k}")
     return dict(sorted(days.items()))
 
 
@@ -1729,7 +1930,7 @@ def update_schedule(players, today):
         "team": ("team_days", "team_start",
                  {f"{i}:{y}": [i, y] for i, p in pool.items() for y in team_seasons(p)}, "sweater-tt"),
     }
-    first = (today - timedelta(days=1)).isoformat()
+    first = "0000-00-00"   # every past day, for the archive
     last = (today + timedelta(days=EMBED_AHEAD)).isoformat()
     result, new = {}, {}
     for g, (dk, sk, cands, seed) in games.items():
@@ -1800,10 +2001,10 @@ def career_data(pid):
             continue
         if goalie:
             stats = [row.get("wins") or 0, round(float(row.get("goalsAgainstAvg") or 0), 2),
-                     round(float(row.get("savePctg") or 0), 3)]
+                     round(float(row.get("savePctg") or 0), 3), row.get("shutouts") or 0]
         else:
             stats = [row.get("goals") or 0, row.get("assists") or 0, row.get("points") or 0,
-                     row.get("pim") or row.get("penaltyMinutes") or 0]
+                     row.get("pim") or row.get("penaltyMinutes") or 0, row.get("plusMinus") or 0]
         rows.append([year, ab or "", gp] + stats)
     rows.sort(key=lambda r: r[0])  # stable: keeps trade order within a season
     return teams, rows
@@ -1818,7 +2019,7 @@ def add_career_teams(players):
 
     def fresh(pid):
         c = cache.get(str(pid))
-        return bool(c) and c.get("v") == 3 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
+        return bool(c) and c.get("v") == 4 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
 
     todo = [p["id"] for p in players if not fresh(p["id"])]
     print(f"\nLoading career history and stats ({len(players) - len(todo)} saved, {len(todo)} to download)...")
@@ -1835,7 +2036,7 @@ def add_career_teams(players):
             if result is None:
                 failed += 1
             else:
-                cache[str(pid)] = {"day": today.isoformat(), "v": 3, "teams": result[0], "car": result[1]}
+                cache[str(pid)] = {"day": today.isoformat(), "v": 4, "teams": result[0], "car": result[1]}
             if i % 50 == 0 or i == len(todo):
                 print(f"  {i}/{len(todo)}")
     if failed:
