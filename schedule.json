@@ -1,0 +1,453 @@
+{
+ "start": "2026-09-15",
+ "days": {
+  "2026-09-15": 8477951,
+  "2026-09-16": 8475842,
+  "2026-09-17": 8483690,
+  "2026-09-18": 8482103,
+  "2026-09-19": 8478055,
+  "2026-09-20": 8483465,
+  "2026-09-21": 8479675,
+  "2026-09-22": 8482165,
+  "2026-09-23": 8481035,
+  "2026-09-24": 8483524,
+  "2026-09-25": 8479992,
+  "2026-09-26": 8477444,
+  "2026-09-27": 8477527,
+  "2026-09-28": 8484305,
+  "2026-09-29": 8482172,
+  "2026-09-30": 8483500,
+  "2026-10-01": 8484186,
+  "2026-10-02": 8480281,
+  "2026-10-03": 8480313,
+  "2026-10-04": 8481033,
+  "2026-10-05": 8481656,
+  "2026-10-06": 8480039,
+  "2026-10-07": 8476887,
+  "2026-10-08": 8476902,
+  "2026-10-09": 8477479,
+  "2026-10-10": 8483485,
+  "2026-10-11": 8480196,
+  "2026-10-12": 8482726,
+  "2026-10-13": 8482090,
+  "2026-10-14": 8475786,
+  "2026-10-15": 8475745
+ },
+ "players": {
+  "8475745": {
+   "id": 8475745,
+   "name": "Charlie Coyle",
+   "team": "CBJ",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "1992-03-02",
+   "nation": "USA",
+   "number": 3,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CBJ/8475745.png",
+   "past": [
+    "MIN",
+    "BOS",
+    "COL"
+   ]
+  },
+  "8475786": {
+   "id": 8475786,
+   "name": "Zach Hyman",
+   "team": "EDM",
+   "pos": "L",
+   "shoots": "R",
+   "birth": "1992-06-09",
+   "nation": "CAN",
+   "number": 18,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/EDM/8475786.png",
+   "past": [
+    "TOR"
+   ]
+  },
+  "8475842": {
+   "id": 8475842,
+   "name": "Sam Carrick",
+   "team": "BUF",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "1992-02-04",
+   "nation": "CAN",
+   "number": 10,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/BUF/8475842.png",
+   "past": [
+    "TOR",
+    "ANA",
+    "EDM",
+    "NYR"
+   ]
+  },
+  "8476887": {
+   "id": 8476887,
+   "name": "Filip Forsberg",
+   "team": "NSH",
+   "pos": "L",
+   "shoots": "R",
+   "birth": "1994-08-13",
+   "nation": "SWE",
+   "number": 9,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/NSH/8476887.png",
+   "past": []
+  },
+  "8476902": {
+   "id": 8476902,
+   "name": "Esa Lindell",
+   "team": "DAL",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "1994-05-23",
+   "nation": "FIN",
+   "number": 23,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DAL/8476902.png",
+   "past": []
+  },
+  "8477444": {
+   "id": 8477444,
+   "name": "Andre Burakovsky",
+   "team": "OTT",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "1995-02-09",
+   "nation": "AUT",
+   "number": 95,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/OTT/8477444.png",
+   "past": [
+    "WSH",
+    "COL",
+    "SEA",
+    "CHI"
+   ]
+  },
+  "8477479": {
+   "id": 8477479,
+   "name": "Tyler Bertuzzi",
+   "team": "CHI",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "1995-02-24",
+   "nation": "CAN",
+   "number": 59,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CHI/8477479.png",
+   "past": [
+    "DET",
+    "BOS",
+    "TOR"
+   ]
+  },
+  "8477527": {
+   "id": 8477527,
+   "name": "Ross Johnston",
+   "team": "STL",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "1994-02-18",
+   "nation": "CAN",
+   "number": 49,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/STL/8477527.png",
+   "past": [
+    "NYI",
+    "ANA"
+   ]
+  },
+  "8477951": {
+   "id": 8477951,
+   "name": "Nick Schmaltz",
+   "team": "UTA",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "1996-02-23",
+   "nation": "USA",
+   "number": 8,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/UTA/8477951.png",
+   "past": [
+    "CHI"
+   ]
+  },
+  "8478055": {
+   "id": 8478055,
+   "name": "Gustav Forsling",
+   "team": "FLA",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "1996-06-12",
+   "nation": "SWE",
+   "number": 42,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/FLA/8478055.png",
+   "past": [
+    "CHI"
+   ]
+  },
+  "8479675": {
+   "id": 8479675,
+   "name": "Trevor Moore",
+   "team": "LAK",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "1995-03-31",
+   "nation": "USA",
+   "number": 12,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/LAK/8479675.png",
+   "past": [
+    "TOR"
+   ]
+  },
+  "8479992": {
+   "id": 8479992,
+   "name": "Michael Rasmussen",
+   "team": "DET",
+   "pos": "C",
+   "shoots": "L",
+   "birth": "1999-04-17",
+   "nation": "CAN",
+   "number": 27,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DET/8479992.png",
+   "past": []
+  },
+  "8480039": {
+   "id": 8480039,
+   "name": "Martin Necas",
+   "team": "COL",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "1999-01-15",
+   "nation": "CZE",
+   "number": 88,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/COL/8480039.png",
+   "past": [
+    "CAR"
+   ]
+  },
+  "8480196": {
+   "id": 8480196,
+   "name": "Jacob Bryson",
+   "team": "DET",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "1997-11-18",
+   "nation": "CAN",
+   "number": 78,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DET/8480196.png",
+   "past": [
+    "BUF",
+    "WPG"
+   ]
+  },
+  "8480281": {
+   "id": 8480281,
+   "name": "Alexey Toropchenko",
+   "team": "STL",
+   "pos": "R",
+   "shoots": "L",
+   "birth": "1999-06-25",
+   "nation": "RUS",
+   "number": 13,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/STL/8480281.png",
+   "past": []
+  },
+  "8480313": {
+   "id": 8480313,
+   "name": "Logan Thompson",
+   "team": "WSH",
+   "pos": "G",
+   "shoots": "R",
+   "birth": "1997-02-25",
+   "nation": "CAN",
+   "number": 48,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/WSH/8480313.png",
+   "past": [
+    "VGK"
+   ]
+  },
+  "8481033": {
+   "id": 8481033,
+   "name": "Akira Schmid",
+   "team": "FLA",
+   "pos": "G",
+   "shoots": "L",
+   "birth": "2000-05-12",
+   "nation": "CHE",
+   "number": 40,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/FLA/8481033.png",
+   "past": [
+    "NJD",
+    "VGK"
+   ]
+  },
+  "8481035": {
+   "id": 8481035,
+   "name": "Samuel Ersson",
+   "team": "OTT",
+   "pos": "G",
+   "shoots": "L",
+   "birth": "1999-10-20",
+   "nation": "SWE",
+   "number": 30,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/OTT/8481035.png",
+   "past": [
+    "PHI"
+   ]
+  },
+  "8481656": {
+   "id": 8481656,
+   "name": "Aliaksei Protas",
+   "team": "WSH",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2001-01-06",
+   "nation": "BLR",
+   "number": 21,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/WSH/8481656.png",
+   "past": []
+  },
+  "8482090": {
+   "id": 8482090,
+   "name": "Jack Finley",
+   "team": "STL",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "2002-09-02",
+   "nation": "USA",
+   "number": 37,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/STL/8482090.png",
+   "past": [
+    "TBL"
+   ]
+  },
+  "8482103": {
+   "id": 8482103,
+   "name": "Ozzy Wiesblatt",
+   "team": "NSH",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "2002-03-09",
+   "nation": "CAN",
+   "number": 89,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/NSH/8482103.png",
+   "past": []
+  },
+  "8482165": {
+   "id": 8482165,
+   "name": "Yan Kuznetsov",
+   "team": "CGY",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "2002-03-09",
+   "nation": "RUS",
+   "number": 37,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CGY/8482165.png",
+   "past": []
+  },
+  "8482172": {
+   "id": 8482172,
+   "name": "Landon Slaggert",
+   "team": "CHI",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2002-06-25",
+   "nation": "USA",
+   "number": 84,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CHI/8482172.png",
+   "past": []
+  },
+  "8482726": {
+   "id": 8482726,
+   "name": "Samuel Helenius",
+   "team": "LAK",
+   "pos": "C",
+   "shoots": "L",
+   "birth": "2002-11-26",
+   "nation": "USA",
+   "number": 79,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/LAK/8482726.png",
+   "past": []
+  },
+  "8483465": {
+   "id": 8483465,
+   "name": "Joakim Kemell",
+   "team": "NSH",
+   "pos": "R",
+   "shoots": "R",
+   "birth": "2004-04-27",
+   "nation": "FIN",
+   "number": 25,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/NSH/8483465.png",
+   "past": []
+  },
+  "8483485": {
+   "id": 8483485,
+   "name": "Denton Mateychuk",
+   "team": "CBJ",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "2004-07-12",
+   "nation": "CAN",
+   "number": 5,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CBJ/8483485.png",
+   "past": []
+  },
+  "8483500": {
+   "id": 8483500,
+   "name": "Noah Ostlund",
+   "team": "BUF",
+   "pos": "C",
+   "shoots": "L",
+   "birth": "2004-03-11",
+   "nation": "SWE",
+   "number": 86,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/BUF/8483500.png",
+   "past": []
+  },
+  "8483524": {
+   "id": 8483524,
+   "name": "Shane Wright",
+   "team": "SEA",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "2004-01-05",
+   "nation": "CAN",
+   "number": 51,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/SEA/8483524.png",
+   "past": []
+  },
+  "8483690": {
+   "id": 8483690,
+   "name": "Noah Laba",
+   "team": "NYR",
+   "pos": "C",
+   "shoots": "R",
+   "birth": "2003-08-04",
+   "nation": "USA",
+   "number": 42,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/NYR/8483690.png",
+   "past": []
+  },
+  "8484186": {
+   "id": 8484186,
+   "name": "Ryan Leonard",
+   "team": "WSH",
+   "pos": "R",
+   "shoots": "R",
+   "birth": "2005-01-21",
+   "nation": "USA",
+   "number": 9,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/WSH/8484186.png",
+   "past": []
+  },
+  "8484305": {
+   "id": 8484305,
+   "name": "Zach Metsa",
+   "team": "BUF",
+   "pos": "D",
+   "shoots": "R",
+   "birth": "1998-10-19",
+   "nation": "USA",
+   "number": 73,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/BUF/8484305.png",
+   "past": []
+  }
+ }
+}
