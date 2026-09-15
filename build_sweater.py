@@ -36,7 +36,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "20"
+VERSION = "22"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -148,6 +148,34 @@ TEMPLATE = r'''<!DOCTYPE html>
   .lbrules { font-size: 13px; color: var(--muted); text-align: center; margin: 10px 0 0; line-height: 1.5; }
   .stlb { text-align: center; font-size: 14px; margin: 14px 0 0; }
   .stlb .linkbtn { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; letter-spacing: 0; }
+
+  /* higher or lower */
+  .hlscore { display: flex; justify-content: center; gap: 22px; font-size: 15px; color: var(--muted); margin: 0 0 6px; }
+  .hlscore b { color: var(--fg); font-size: 22px; font-variant-numeric: tabular-nums; margin-left: 4px; }
+  .hlpair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 14px;
+            max-width: 760px; margin: 10px auto 0; }
+  .hlpair.slide .hlcard { animation: rowin .4s cubic-bezier(.2,.8,.2,1) both; }
+  .hlpair > div:not(.hlvs) { display: flex; }
+  .hlpair .hlcard { flex: 1; }
+  @media (hover: none) { .keytip { display: none; } }
+  .hlvs { align-self: center; font-weight: 800; color: var(--muted); font-size: 18px; }
+  .hlcard { background: var(--cell); color: var(--cell-fg); border-radius: 12px; padding: 18px 14px 16px;
+            text-align: center; display: flex; flex-direction: column; align-items: center; min-height: 330px;
+            border: 3px solid transparent; transition: border-color .25s, background-color .25s; }
+  .hlcard.ok { border-color: var(--hit); }
+  .hlcard.bad { border-color: #c0392b; }
+  .hlimg { width: 112px; height: 112px; border-radius: 50%; background: var(--cream); object-fit: cover; }
+  .hlname { font-size: 20px; font-weight: 600; margin: 10px 0 2px; }
+  .hlteam { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: .75; margin: 0 0 10px; }
+  .hlteam img { width: 20px; height: 20px; }
+  .hlval { margin: 4px 0 0; line-height: 1; }
+  .hlval b { font-size: 46px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .hlunit { margin: 4px 0 0; font-size: 14px; }
+  .hlyr { margin: 4px 0 0; font-size: 13px; opacity: .7; }
+  .hlbtns { display: flex; flex-direction: column; gap: 8px; width: min(200px, 100%); margin: 10px 0 2px; }
+  .hlbtn { margin: 0; font-size: 16px; padding: 11px 14px; }
+  .hlbtn + .hlbtn { background: var(--fg); color: var(--bg); }
+  .hlbtn:disabled { opacity: .5; cursor: default; }
 
   /* stats: guess the player */
   .seasons { border-collapse: separate; border-spacing: 0 6px; width: min(620px, 100%); margin: 6px auto; }
@@ -302,6 +330,13 @@ TEMPLATE = r'''<!DOCTYPE html>
     .teambtn { font-size: 13px; padding: 6px 8px; gap: 6px; }
     .teambtn img { width: 22px; height: 22px; }
     .ttcard img { width: 76px; height: 76px; }
+    .hlpair { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hlvs { display: none; }
+    .hlcard { min-height: 290px; padding: 12px 8px; }
+    .hlimg { width: 76px; height: 76px; }
+    .hlname { font-size: 16px; }
+    .hlval b { font-size: 36px; }
+    .hlbtn { font-size: 14px; padding: 10px 8px; }
     .lbtabs button { font-size: 12px; padding: 5px 9px; }
     .lbtabs { gap: 2px; }
     .num { padding: 0; gap: 4px; justify-content: center; }
@@ -336,12 +371,20 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="tabs" role="tablist" aria-label="Game">
       <button type="button" role="tab" data-game="classic">Classic</button>
       <button type="button" role="tab" data-game="stats">Stats</button>
+      <button type="button" role="tab" data-game="hl">Higher or Lower</button>
     </div>
   </div>
   <div class="tabrow" id="subtabs" hidden>
     <div class="tabs small" role="tablist" aria-label="Stats game">
       <button type="button" role="tab" data-game="statline">Guess the player</button>
       <button type="button" role="tab" data-game="team">Guess the team</button>
+    </div>
+  </div>
+  <div class="tabrow" id="hlsubtabs" hidden>
+    <div class="tabs small" role="tablist" aria-label="Stat">
+      <button type="button" role="tab" data-game="hl_goals">Goals</button>
+      <button type="button" role="tab" data-game="hl_assists">Assists</button>
+      <button type="button" role="tab" data-game="hl_points">Points</button>
     </div>
   </div>
   <button class="linkbtn" id="silBtn">SHOW SILHOUETTE</button>
@@ -391,6 +434,20 @@ TEMPLATE = r'''<!DOCTYPE html>
     <ul class="wrong" id="slWrong"></ul>
   </section>
 
+  <section class="view" id="view-hl" hidden>
+    <p class="intro" id="hlIntro"></p>
+    <div class="hlscore"><span>Streak<b id="hlStreak">0</b></span><span>Best<b id="hlBest">0</b></span></div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
+    <div class="hlpair" id="hlPair">
+      <div id="hlA"></div>
+      <div class="hlvs">VS</div>
+      <div id="hlB"></div>
+    </div>
+    <p class="hint"><b id="hlLeft"></b><span id="hlStat" hidden></span></p>
+    <p class="hint">Career high means his best single regular season. Ties count as right.<span class="keytip"> Tip: use the ↑ and ↓ keys.</span></p>
+  </section>
+
   <section class="view" id="view-team" hidden>
     <div class="ttcard">
       <img id="ttImg" alt="">
@@ -421,12 +478,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="sTitle">Statistics</h2>
     <div class="statgrid">
-      <div><b id="stPlayed">0</b><span>Played</span></div>
-      <div><b id="stWin">0</b><span>Win %</span></div>
-      <div><b id="stStreak">0</b><span>Current streak</span></div>
-      <div><b id="stMax">0</b><span>Max streak</span></div>
+      <div><b id="stPlayed">0</b><span id="stL1">Played</span></div>
+      <div><b id="stWin">0</b><span id="stL2">Win %</span></div>
+      <div><b id="stStreak">0</b><span id="stL3">Current streak</span></div>
+      <div><b id="stMax">0</b><span id="stL4">Max streak</span></div>
     </div>
-    <h3>Guess distribution</h3>
+    <h3 id="distTitle">Guess distribution</h3>
     <div id="dist"></div>
     <div class="statfoot">
       <div><small>Next player</small><b id="stNext">--:--:--</b></div>
@@ -444,6 +501,12 @@ TEMPLATE = r'''<!DOCTYPE html>
       <button type="button" role="tab" data-lbgame="classic">Classic</button>
       <button type="button" role="tab" data-lbgame="statline">Guess the player</button>
       <button type="button" role="tab" data-lbgame="team">Guess the team</button>
+      <button type="button" role="tab" data-lbgame="hl">Higher or Lower</button>
+    </div>
+    <div class="tabs small lbtabs" role="tablist" aria-label="Stat" id="lbHl" hidden>
+      <button type="button" role="tab" data-lbhl="hl_goals">Goals</button>
+      <button type="button" role="tab" data-lbhl="hl_assists">Assists</button>
+      <button type="button" role="tab" data-lbhl="hl_points">Points</button>
     </div>
     <div class="tabs small lbtabs" role="tablist" aria-label="Period">
       <button type="button" role="tab" data-period="today">Today</button>
@@ -461,7 +524,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div class="card wide help">
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="hTitle">How to play</h2>
-    <p>Sweater has three games. Pick one with the <b>Classic</b> and <b>Stats</b> tabs at the top. Each has a daily puzzle and an unlimited mode.</p>
+    <p>Sweater has four games. Pick one with the <b>Classic</b>, <b>Stats</b> and <b>Higher or Lower</b> tabs at the top. Each has a daily puzzle and an unlimited mode.</p>
 
     <h3>Classic</h3>
     <p>Guess the mystery NHL player in 8 tries. Start typing a name and pick a player from the list. After each guess, the row shows how close that player is to the mystery player.</p>
@@ -486,6 +549,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     <h3>Stats: Guess the team</h3>
     <p>You're shown a player and his regular-season stats for one season. Pick the team he played for that season from the list. You have 4 tries. A <span class="swatch" style="background:var(--near)"></span><b>yellow</b> team means close: it's in the same division as the right answer (based on today's divisions).</p>
 
+    <h3>Higher or Lower</h3>
+    <p>Two players go head to head. You can see the first player's career high, meaning his best single regular season, in the stat you picked: <b>goals</b>, <b>assists</b> or <b>points</b>. Guess whether the second player's career high is <b>higher</b> or <b>lower</b>. Get it right and he moves over to face a new player; get it wrong and your run ends. Ties count as right. The daily run has 40 matchups for each stat, and your score is how many you get right in a row.</p>
+
     <h3>Daily and Unlimited</h3>
     <ul>
       <li><b>Daily</b>: one puzzle per game per day. Everyone gets the same puzzles, and they switch at 12:00 am Eastern Time (ET). Your results stay until then.</li>
@@ -496,6 +562,7 @@ TEMPLATE = r'''<!DOCTYPE html>
           <li><b>Classic</b>: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.</li>
           <li><b>Guess the player</b>: 8 points for 1 guess down to 1 for 8, plus 2 bonus points for every season still locked when you get it (up to +10).</li>
           <li><b>Guess the team</b>: 10 points on the first try, 6 on the second, 3 on the third and 1 on the fourth.</li>
+          <li><b>Higher or Lower</b> (a separate board for each stat): 1 point for every right answer in a row, up to 40.</li>
         </ul>
         Only daily puzzles count, and each one only counts once.
       </li>
@@ -518,7 +585,8 @@ const SITE = "/*__SITE__*/";
 const API = "/*__API__*/".replace(/\/+$/, "");
 const API_ON = /^https?:\/\//.test(API);
 const DAILY = { classic: /*__DAILY__*/{}, statline: /*__DAILY_SL__*/{}, team: /*__DAILY_TT__*/{} };
-const START = { classic: "/*__START__*/", statline: "/*__START_SL__*/", team: "/*__START_TT__*/" };
+const DAILY_HL = /*__DAILY_HL__*/{};   // "YYYY-MM-DD" -> { goals: [ids], assists: [...], points: [...] }
+const START = { classic: "/*__START__*/", statline: "/*__START_SL__*/", team: "/*__START_TT__*/", hl: "/*__START_HL__*/" };
 
 // abbr: [conference, division]
 const TEAMS = {
@@ -580,22 +648,23 @@ const secondsToEtMidnight = () => {
   return Math.max(0, 86400 - (Number(o.hour) * 3600 + Number(o.minute) * 60 + Number(o.second)));
 };
 const validStart = s => s && !/__START/.test(s);
-const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(START[g]) ? START[g] : k)) / 864e5) + 1;
+const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
+const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
 const seasonCache = new Map();
 function seasonsOf(p) {
   if (seasonCache.has(p.id)) return seasonCache.get(p.id);
   const goalie = p.pos === "G", bySeason = new Map();
-  for (const [y, t, gp, a, b, c] of (p.car || [])) {
-    const r = bySeason.get(y) || { y, teams: [], gp: 0, a: 0, b: 0, c: 0 };
+  for (const [y, t, gp, a, b, c, d = 0] of (p.car || [])) {
+    const r = bySeason.get(y) || { y, teams: [], gp: 0, a: 0, b: 0, c: 0, d: 0 };
     r.teams.push(t);
     const total = r.gp + gp;
     if (goalie) {   // wins add up; GAA and SV% are weighted by games played
       r.b = total ? (r.b * r.gp + b * gp) / total : 0;
       r.c = total ? (r.c * r.gp + c * gp) / total : 0;
       r.a += a;
-    } else { r.a += a; r.b += b; r.c += c; }
+    } else { r.a += a; r.b += b; r.c += c; r.d += d; }
     r.gp = total;
     bySeason.set(y, r);
   }
@@ -754,13 +823,172 @@ const G = {
   }
 };
 
+// ======================= higher or lower =======================
+const HL_STATS = {
+  goals:   { key: "a", name: "Goals",   label: "goals",           one: "goal" },
+  assists: { key: "b", name: "Assists", label: "assists",         one: "assist" },
+  points:  { key: "c", name: "Points",  label: "points",          one: "point" },
+};
+const HL_LEN = 40;   // answers in a daily run
+const HL_POOL = PLAYERS.filter(p => p.pos !== "G" && seasonsOf(p).reduce((n, r) => n + r.gp, 0) >= 100);
+const highCache = new Map();
+function careerHigh(p, stat) {
+  const k = `${p.id}:${stat}`;
+  if (highCache.has(k)) return highCache.get(k);
+  let best = { v: 0, y: null };
+  for (const r of seasonsOf(p)) {
+    const v = r[HL_STATS[stat].key] || 0;
+    if (best.y === null || v > best.v) best = { v, y: r.y };
+  }
+  highCache.set(k, best);
+  return best;
+}
+function seeded(seed) {   // small deterministic random generator
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hlExtend(seq, stat, rnd = Math.random) {
+  const used = new Set(seq.map(p => p.id));
+  for (let i = 0; i < 60; i++) {
+    const c = HL_POOL[Math.floor(rnd() * HL_POOL.length)];
+    if (used.has(c.id) && used.size < HL_POOL.length) continue;
+    if (seq.length && i < 59 && careerHigh(c, stat).v === careerHigh(seq[seq.length - 1], stat).v) continue;
+    seq.push(c);
+    return;
+  }
+  seq.push(HL_POOL[Math.floor(rnd() * HL_POOL.length)]);
+}
+
+let hlTimer = null;
+function makeHL(stat) {
+  const info = HL_STATS[stat], id = `hl_${stat}`;
+  const unit = v => v === 1 ? info.one : info.label;
+  return {
+    kind: "streak", stat, repeat: true,
+    title: `Higher or Lower · ${info.name}`, share: "Sweater Higher or Lower",
+    view: "view-hl", max: HL_LEN, next: "Play again",
+    pool: () => HL_POOL,
+    daily(k) {
+      const ids = (DAILY_HL[k] || {})[stat] || [];
+      const seq = ids.map(i => BYID.get(i)).filter(Boolean);
+      if (seq.length >= 2 && seq.length === ids.length) return { seq, fixed: true };
+      const rnd = seeded(hash(`sweater-hl-${stat}-${k}`)), s = [];
+      while (s.length < HL_LEN + 1) hlExtend(s, stat, rnd);
+      return { seq: s, fixed: true };
+    },
+    random() { const seq = []; hlExtend(seq, stat); hlExtend(seq, stat); return { seq, fixed: false, rid: Math.random() }; },
+    tid: t => t.fixed ? `${stat}:${t.seq.slice(0, 4).map(p => p.id).join(",")}` : `${stat}:${t.rid}`,
+    limit: t => t.fixed ? t.seq.length - 1 : Infinity,
+    correct(t, i, ans) {
+      const a = careerHigh(t.seq[i], stat).v, b = careerHigh(t.seq[i + 1], stat).v;
+      return ans === "H" ? b >= a : b <= a;   // ties count either way
+    },
+    score(t, guesses) { let n = 0; for (const [i, x] of guesses.entries()) { if (!this.correct(t, i, x)) break; n++; } return n; },
+    isWin: () => false,
+    isDone(t, guesses) { return guesses.some((x, i) => !this.correct(t, i, x)) || guesses.length >= this.limit(t); },
+    wonGame(t, guesses) { return guesses.length >= this.limit(t) && this.score(t, guesses) === guesses.length; },
+    player(t) { return t.seq[Math.min(S[id].guesses.length, t.seq.length - 1)]; },
+    meta(t) {
+      const p = this.player(t), h = careerHigh(p, stat);
+      return `Career high: ${h.v} ${unit(h.v)}${h.y ? ` in ${seasonLabel(h.y)}` : ""}`;
+    },
+    endText(t, guesses, won) {
+      const n = this.score(t, guesses);
+      return {
+        result: won ? `Perfect! All ${n} right` : `Streak: ${n}`,
+        cheer: won ? "Flawless run! 🏆" : n >= 20 ? "Legendary run! 🔥" : n >= 10 ? "Hot streak! 🔥"
+          : n >= 5 ? "Nice run! 💪" : n >= 1 ? "Good start! 🏒" : "Tough one! This player got you:"
+      };
+    },
+    celebrate(t, guesses, won) { return won || this.score(t, guesses) >= 10; },
+    onFinish(st) {
+      const n = this.score(st.target, st.guesses), k = `sweater-hl-best-${stat}`;
+      if (n > (store.get(k) || 0)) store.set(k, n);
+    },
+    reset() { clearTimeout(hlTimer); this.pending = false; },
+    card(p, side, reveal, state) {
+      const h = careerHigh(p, stat);
+      const other = side === "b" ? S[id].target.seq[Math.min(S[id].guesses.length, S[id].target.seq.length - 2)] : null;
+      return `<div class="hlcard ${state || ""}">
+        <img class="hlimg" src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
+        <p class="hlname">${esc(p.name)}</p>
+        <p class="hlteam"><img src="${logo(p.team)}" alt="" onerror="this.remove()">${esc(p.team)} · ${esc(p.pos)}</p>
+        ${reveal
+          ? `<p class="hlval"><b data-count="${h.v}">${h.v}</b></p><p class="hlunit">career-high ${unit(h.v)}</p><p class="hlyr">${h.y ? `in ${seasonLabel(h.y)}` : ""}</p>`
+          : `<p class="hlunit">career-high ${info.label}:</p>
+             <div class="hlbtns"><button class="btn hlbtn" type="button" data-hl="H">▲ Higher</button>
+             <button class="btn hlbtn" type="button" data-hl="L">▼ Lower</button></div>
+             <p class="hlyr">than ${esc(other ? other.name : "")}</p>`}
+      </div>`;
+    },
+    guess(t, x, fresh) {
+      if (x !== "H" && x !== "L") return null;
+      const i = S[id].guesses.length;
+      if (i + 1 >= t.seq.length) return null;
+      const ok = this.correct(t, i, x);
+      if (fresh) {
+        this.pending = true;
+        $("hlB").innerHTML = this.card(t.seq[i + 1], "b", true, ok ? "ok" : "bad");
+        countUp($("hlB").querySelector("[data-count]"));
+        clearTimeout(hlTimer);
+        hlTimer = setTimeout(() => {
+          this.pending = false;
+          if (game === id) this.render(t, S[id], true);
+        }, ok ? 1100 : 1400);
+      }
+      return ok;
+    },
+    render(t, st, slide = false) {
+      if (this.pending) return;
+      $("hlIntro").innerHTML = `Whose career-high <b>${info.label}</b> in a single season is higher?`;
+      $("hlStat").textContent = info.name;
+      $("hlStreak").textContent = this.score(t, st.guesses);
+      $("hlBest").textContent = Math.max(store.get(`sweater-hl-best-${stat}`) || 0, this.score(t, st.guesses));
+      $("hlLeft").textContent = t.fixed ? `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run` : "";
+      let i;
+      if (st.over) i = Math.max(0, Math.min(st.guesses.length, t.seq.length - 1) - 1);
+      else {
+        i = st.guesses.length;
+        while (!t.fixed && t.seq.length < i + 2) hlExtend(t.seq, stat);
+      }
+      const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
+      $("hlA").innerHTML = this.card(t.seq[i], "a", true, "");
+      $("hlB").innerHTML = this.card(t.seq[i + 1], "b", st.over, st.over ? (lastOk ? "ok" : "bad") : "");
+      if (slide) { $("hlPair").classList.remove("slide"); void $("hlPair").offsetWidth; $("hlPair").classList.add("slide"); }
+    },
+    squares(t, x, i) { return this.correct(t, i, x) ? "🟩" : "🟥"; }
+  };
+}
+Object.keys(HL_STATS).forEach(s => { G[`hl_${s}`] = makeHL(s); });
+
+function countUp(el) {
+  if (!el) return;
+  const end = Number(el.dataset.count);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || end <= 0) return;
+  const t0 = performance.now();
+  (function step(t) {
+    const k = Math.min(1, (t - t0) / 600);
+    el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+    if (k < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
 const KEYS = {
   classic: { daily: "sweater-daily", stats: "sweater-stats" },
   statline: { daily: "sweater-daily-statline", stats: "sweater-stats-statline" },
-  team: { daily: "sweater-daily-team", stats: "sweater-stats-team" }
+  team: { daily: "sweater-daily-team", stats: "sweater-stats-team" },
+  ...Object.fromEntries(Object.keys(HL_STATS).map(s => [`hl_${s}`, { daily: `sweater-daily-hl_${s}`, stats: `sweater-stats-hl_${s}` }]))
 };
+const isStatsGame = g => g === "statline" || g === "team";
+const isDone = (g, t, guesses) => G[g].isDone ? G[g].isDone(t, guesses)
+  : guesses.some(x => G[g].isWin(t, x)) || guesses.length >= G[g].max;
 let game = GAME_IDS.includes(store.get("sweater-game")) ? store.get("sweater-game") : "classic";
 let mode = store.get("sweater-mode") === "unlimited" ? "unlimited" : "daily";
 const S = Object.fromEntries(GAME_IDS.map(g => [g, { target: null, guesses: [], over: false, day: null, mode: null }]));
@@ -779,12 +1007,12 @@ function startGame(t, restore = []) {
 
 function doGuess(x, fresh = true) {
   const st = S[game], g = G[game];
-  if (!st.target || st.over || st.guesses.includes(x)) return;
-  const won = g.guess(st.target, x);
+  if (!st.target || st.over || g.pending || (!g.repeat && st.guesses.includes(x))) return;
+  const won = g.guess(st.target, x, fresh);
   if (won === null) return;
   st.guesses.push(x);
   if (fresh && mode === "daily") store.set(KEYS[game].daily, { date: st.day, target: g.tid(st.target), guesses: st.guesses });
-  if (won || st.guesses.length >= g.max) finish(won, fresh);
+  if (isDone(game, st.target, st.guesses)) finish(g.wonGame ? g.wonGame(st.target, st.guesses) : won, fresh);
   if (fresh) { g.render && g.render(st.target, st); updateLabels(); }
 }
 
@@ -794,8 +1022,9 @@ function finish(won, fresh) {
   $(g.view).querySelector(".slot").appendChild($("banner"));
   $("reveal").src = p.headshot || FALLBACK;
   $("reveal").alt = p.name;
-  $("result").textContent = won ? `You got it in ${n}!` : "Out of guesses";
-  $("cheer").textContent = won ? g.cheers[n - 1] : (game === "team" ? "The answer was" : "The mystery player was");
+  const text = g.endText && g.endText(st.target, st.guesses, won);
+  $("result").textContent = text ? text.result : won ? `You got it in ${n}!` : "Out of guesses";
+  $("cheer").textContent = text ? text.cheer : won ? g.cheers[n - 1] : (game === "team" ? "The answer was" : "The mystery player was");
   $("pname").textContent = p.name;
   $("pmeta").textContent = g.meta(st.target);
   $("profile").href = `https://www.nhl.com/player/${p.id}`;
@@ -807,13 +1036,15 @@ function finish(won, fresh) {
   tick();
   $("banner").style.display = "block";
   if (fresh) {
+    const party = g.celebrate ? g.celebrate(st.target, st.guesses, won) : won;
     void $("banner").offsetWidth; // restart the pop animation
     $("banner").classList.add("pop");
-    if (won) confetti();
+    if (party) confetti();
+    if (g.onFinish) g.onFinish(st);
     if (mode === "daily") {
       recordResult(won);
       submitPending();
-      setTimeout(() => openModal("statsModal"), won ? 2400 : 1400);
+      setTimeout(() => openModal("statsModal"), party ? 2400 : 1600);
     }
   }
 }
@@ -858,12 +1089,14 @@ function setGame(g) {
   game = g;
   store.set("sweater-game", g);
   document.querySelectorAll("[data-game]").forEach(b => {
-    const on = b.dataset.game === g || (b.dataset.game === "stats" && g !== "classic");
+    const on = b.dataset.game === g || (b.dataset.game === "stats" && isStatsGame(g))
+      || (b.dataset.game === "hl" && g.startsWith("hl_"));
     b.setAttribute("aria-selected", on);
   });
-  $("subtabs").hidden = g === "classic";
+  $("subtabs").hidden = !isStatsGame(g);
+  $("hlsubtabs").hidden = !g.startsWith("hl_");
   $("silBtn").hidden = g !== "classic";
-  GAME_IDS.forEach(id => { $(G[id].view).hidden = id !== g; });
+  new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = v !== G[g].view; });
   document.querySelectorAll(".nodata").forEach(n => n.hidden = true);
   searches.forEach(s => s.close());
   if (mode === "daily") loadDaily(); else loadUnlimited();
@@ -995,6 +1228,13 @@ function getStats(g = game) {
 function recordResult(won) {
   const day = S[game].day, st = getStats(), n = S[game].guesses.length;
   if (st.lastDay === day) return;
+  if (G[game].kind === "streak") {
+    const score = G[game].score(S[game].target, S[game].guesses);
+    Object.assign(st, { played: st.played + 1, wins: st.wins + (won ? 1 : 0), total: (st.total || 0) + score,
+                        best: Math.max(st.best || 0, score), lastDay: day, lastScore: score });
+    store.set(KEYS[game].stats, st);
+    return;
+  }
   st.played++;
   if (won) {
     st.wins++;
@@ -1011,7 +1251,22 @@ function recordResult(won) {
 function renderStats() {
   const st = getStats(), today = dayKey();
   const streak = st.lastWinDay === today || st.lastWinDay === prevDayKey(today) ? st.streak : 0;
-  $("sTitle").textContent = game === "classic" ? "Statistics · Classic" : `Statistics · Stats: ${G[game].title}`;
+  $("sTitle").textContent = game === "classic" ? "Statistics · Classic"
+    : isStatsGame(game) ? `Statistics · Stats: ${G[game].title}` : `Statistics · ${G[game].title}`;
+  const streakGame = G[game].kind === "streak";
+  $("distTitle").hidden = $("dist").hidden = streakGame;
+  ["Played", streakGame ? "Best run" : "Win %", streakGame ? "Average" : "Current streak", streakGame ? "Today" : "Max streak"]
+    .forEach((label, i) => { $(`stL${i + 1}`).textContent = label; });
+  if (streakGame) {
+    $("stPlayed").textContent = st.played;
+    $("stWin").textContent = st.best || 0;
+    $("stStreak").textContent = st.played ? Math.round((st.total || 0) / st.played * 10) / 10 : 0;
+    $("stMax").textContent = st.lastDay === today ? st.lastScore : "–";
+    const saved = store.get(KEYS[game].daily);
+    $("shareBtn").hidden = !(saved && saved.date === today && st.lastDay === today);
+    renderStatsLb();
+    return;
+  }
   $("stPlayed").textContent = st.played;
   $("stWin").textContent = st.played ? Math.round(st.wins / st.played * 100) : 0;
   $("stStreak").textContent = streak;
@@ -1029,6 +1284,13 @@ function renderStats() {
 function shareText() {
   const g = G[game], saved = store.get(KEYS[game].daily);
   const t = g.daily(saved.date);
+  if (g.kind === "streak") {
+    const n = g.score(t, saved.guesses), won = g.wonGame(t, saved.guesses);
+    const marks = saved.guesses.map((x, i) => g.squares(t, x, i)).join("");
+    const rows = (marks.match(/(?:🟩|🟥){1,10}/gu) || []).join("\n");
+    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}`;
+    return `${g.share} #${dailyNumber(game, saved.date)} · ${HL_STATS[g.stat].name}\nStreak: ${n}${won ? " (perfect!)" : ""}\n\n${rows}${link}`;
+  }
   const won = saved.guesses.some(x => g.isWin(t, x));
   const body = saved.guesses.map(x => g.squares(t, x)).join("").trim();
   const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}`;
@@ -1086,8 +1348,12 @@ $("unlimited").addEventListener("change", e => {
 });
 $("again").onclick = () => loadUnlimited(true);
 document.querySelectorAll("[data-game]").forEach(b => b.addEventListener("click", () => {
-  const g = b.dataset.game === "stats" ? (game === "classic" ? (store.get("sweater-stats-game") || "statline") : game) : b.dataset.game;
-  if (g !== "classic") store.set("sweater-stats-game", g);
+  let g = b.dataset.game;
+  if (g === "stats") g = isStatsGame(game) ? game : (store.get("sweater-stats-game") || "statline");
+  if (g === "hl") g = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
+  if (!G[g]) return;
+  if (isStatsGame(g)) store.set("sweater-stats-game", g);
+  if (g.startsWith("hl_")) store.set("sweater-hl-game", g);
   if (g !== game) setGame(g);
 }));
 
@@ -1110,9 +1376,20 @@ $("themeBtn").onclick = () => {
 };
 paintThemeBtn();
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
+document.addEventListener("keydown", e => {
+  if (!game.startsWith("hl_") || document.querySelector(".modal.open") || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (e.key === "ArrowUp") { e.preventDefault(); doGuess("H"); }
+  if (e.key === "ArrowDown") { e.preventDefault(); doGuess("L"); }
+});
+$("hlPair").addEventListener("click", e => {
+  const b = e.target.closest("[data-hl]");
+  if (b) doGuess(b.dataset.hl);
+});
 
 // ======================= global leaderboard =======================
 const LB_RULES = {
+  ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
+    [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
   statline: "Guess the player: 8 points for 1 guess down to 1 for 8, plus 2 for every season still locked when you get it (up to +10).",
   team: "Guess the team: 10 points on the first try, 6 on the second, 3 on the third, 1 on the fourth.",
@@ -1155,7 +1432,7 @@ function submitPending() {
       const key = `${g}:${saved.date}`;
       if (key in sent || !G[g].pool().length) continue;
       const t = G[g].daily(saved.date);
-      const done = saved.guesses.some(x => G[g].isWin(t, x)) || saved.guesses.length >= G[g].max;
+      const done = isDone(g, t, saved.guesses);
       if (!done) continue;
       try {
         const r = await api("/api/result", { ...me, game: g, day: saved.date, guesses: saved.guesses });
@@ -1223,7 +1500,10 @@ async function saveLbName() {
 }
 
 async function renderLeaderboard() {
-  document.querySelectorAll("[data-lbgame]").forEach(b => b.setAttribute("aria-selected", b.dataset.lbgame === lbGame));
+  document.querySelectorAll("[data-lbgame]").forEach(b => b.setAttribute("aria-selected",
+    b.dataset.lbgame === lbGame || (b.dataset.lbgame === "hl" && lbGame.startsWith("hl_"))));
+  document.querySelectorAll("[data-lbhl]").forEach(b => b.setAttribute("aria-selected", b.dataset.lbhl === lbGame));
+  $("lbHl").hidden = !lbGame.startsWith("hl_");
   document.querySelectorAll("[data-period]").forEach(b => b.setAttribute("aria-selected", b.dataset.period === lbPeriod));
   $("lbRules").textContent = LB_RULES[lbGame];
   renderLbName();
@@ -1233,11 +1513,12 @@ async function renderLeaderboard() {
     const d = await api(`/api/leaderboard?game=${lbGame}&period=${lbPeriod}${me ? `&uid=${me.uid}` : ""}`);
     if (req !== lbRequest) return;
     const medal = r => ["🥇", "🥈", "🥉"][r - 1] || r;
+    const hlBoard = lbGame.startsWith("hl_");
     $("lbList").innerHTML = d.rows.length ? d.rows.map(r => `
       <li class="${r.me ? "me" : ""}">
         <span class="rk">${medal(r.rank)}</span>
-        <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${r.wins} won</small>`}</span>
-        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
+        <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${hlBoard ? `best run ${r.top}` : `${r.wins} won`}</small>`}</span>
+        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
       </li>`).join("")
       : `<li class="empty">No scores yet${lbPeriod === "today" ? " today" : ""}. Finish the daily puzzle to get on the board.</li>`;
     $("lbYou").textContent = d.you ? `You're #${d.you.rank} of ${d.total} with ${d.you.points} points.`
@@ -1249,7 +1530,13 @@ async function renderLeaderboard() {
   }
 }
 
-document.querySelectorAll("[data-lbgame]").forEach(b => b.onclick = () => { lbGame = b.dataset.lbgame; $("lbList").innerHTML = ""; renderLeaderboard(); });
+document.querySelectorAll("[data-lbgame]").forEach(b => b.onclick = () => {
+  const pickHl = b.dataset.lbgame === "hl";
+  if (pickHl && lbGame.startsWith("hl_")) return;
+  lbGame = pickHl ? (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points") : b.dataset.lbgame;
+  $("lbList").innerHTML = ""; renderLeaderboard();
+});
+document.querySelectorAll("[data-lbhl]").forEach(b => b.onclick = () => { lbGame = b.dataset.lbhl; $("lbList").innerHTML = ""; renderLeaderboard(); });
 document.querySelectorAll("[data-period]").forEach(b => b.onclick = () => { lbPeriod = b.dataset.period; $("lbList").innerHTML = ""; renderLeaderboard(); });
 $("lbBtn").hidden = !API_ON;
 document.querySelectorAll(".lbhelp").forEach(el => el.hidden = !API_ON);
@@ -1346,6 +1633,60 @@ def team_seasons(p):
     return sorted(out)
 
 
+HL_STATS = {"goals": 3, "assists": 4, "points": 5}
+HL_LEN = 40
+
+
+def hl_ok(p):
+    """Higher or Lower: skaters with 100+ NHL regular-season games."""
+    return p["pos"] != "G" and sum(r[2] for r in p.get("car", [])) >= 100
+
+
+def career_high(p, stat):
+    idx, totals = HL_STATS[stat], {}
+    for r in p.get("car", []):
+        totals[r[0]] = totals.get(r[0], 0) + (r[idx] if len(r) > idx else 0)
+    return max(totals.values()) if totals else 0
+
+
+def hl_sequence(ids, highs, seed):
+    """HL_LEN + 1 players in a row, no repeats, and no two neighbours with the same career high."""
+    rnd = random.Random(seed)
+    seq, used = [], set()
+    while len(seq) < HL_LEN + 1:
+        pick = None
+        for attempt in range(60):
+            c = rnd.choice(ids)
+            if c in used and len(used) < len(ids):
+                continue
+            if seq and attempt < 59 and highs[c] == highs[seq[-1]]:
+                continue
+            pick = c
+            break
+        pick = pick if pick is not None else rnd.choice(ids)
+        seq.append(pick)
+        used.add(pick)
+    return seq
+
+
+def plan_hl(days, pool, today):
+    lock = (today + timedelta(days=LOCK_DAYS)).isoformat()
+    # keep only the stats the game still uses
+    days = {k: {st: seq for st, seq in d.items() if st in HL_STATS} for k, d in days.items()}
+    for k in list(days):
+        if k > lock and any(i not in pool for s in days[k].values() for i in s):
+            del days[k]
+    ids = sorted(i for i, p in pool.items() if hl_ok(p))
+    if len(ids) < 2:
+        return dict(sorted(days.items()))
+    highs = {s: {i: career_high(pool[i], s) for i in ids} for s in HL_STATS}
+    for n in range(AHEAD + 1):
+        k = (today + timedelta(days=n)).isoformat()
+        if k not in days:
+            days[k] = {s: hl_sequence(ids, highs[s], f"sweater-hl-{s}-{k}") for s in HL_STATS}
+    return dict(sorted(days.items()))
+
+
 def player_of(v):
     return v[0] if isinstance(v, list) else v
 
@@ -1398,14 +1739,26 @@ def update_schedule(players, today):
         result[g] = (start, {k: v for k, v in days.items() if first <= k <= last})
 
     # remember every scheduled player, so a past answer still works after he leaves the league
+    hl_days = plan_hl(sched.get("hl_days", {}), pool, today)
+    new["hl_days"] = hl_days
+    new["hl_start"] = sched.get("hl_start") or (today.isoformat() if hl_days else "")
+    hl_window = {k: v for k, v in hl_days.items() if first <= k <= last}
+    result["hl"] = (new["hl_start"], hl_window)
+
     for dk in ("days", "statline_days", "team_days"):
         for v in new[dk].values():
             if player_of(v) in pool:
                 archive[player_of(v)] = pool[player_of(v)]
+    for day in hl_days.values():
+        for seq in day.values():
+            for i in seq:
+                if i in pool:
+                    archive[i] = pool[i]
     new["players"] = {str(k): v for k, v in sorted(archive.items())}
     SCHEDULE.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    needed = {player_of(v) for _, window in result.values() for v in window.values()}
+    needed = {player_of(v) for g, (_, window) in result.items() if g != "hl" for v in window.values()}
+    needed |= {i for day in hl_window.values() for seq in day.values() for i in seq}
     extras = [archive[i] for i in sorted(needed) if i not in pool and i in archive]
     return result, extras
 
@@ -1449,7 +1802,8 @@ def career_data(pid):
             stats = [row.get("wins") or 0, round(float(row.get("goalsAgainstAvg") or 0), 2),
                      round(float(row.get("savePctg") or 0), 3)]
         else:
-            stats = [row.get("goals") or 0, row.get("assists") or 0, row.get("points") or 0]
+            stats = [row.get("goals") or 0, row.get("assists") or 0, row.get("points") or 0,
+                     row.get("pim") or row.get("penaltyMinutes") or 0]
         rows.append([year, ab or "", gp] + stats)
     rows.sort(key=lambda r: r[0])  # stable: keeps trade order within a season
     return teams, rows
@@ -1464,7 +1818,7 @@ def add_career_teams(players):
 
     def fresh(pid):
         c = cache.get(str(pid))
-        return bool(c) and c.get("v") == 2 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
+        return bool(c) and c.get("v") == 3 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
 
     todo = [p["id"] for p in players if not fresh(p["id"])]
     print(f"\nLoading career history and stats ({len(players) - len(todo)} saved, {len(todo)} to download)...")
@@ -1481,7 +1835,7 @@ def add_career_teams(players):
             if result is None:
                 failed += 1
             else:
-                cache[str(pid)] = {"day": today.isoformat(), "v": 2, "teams": result[0], "car": result[1]}
+                cache[str(pid)] = {"day": today.isoformat(), "v": 3, "teams": result[0], "car": result[1]}
             if i % 50 == 0 or i == len(todo):
                 print(f"  {i}/{len(todo)}")
     if failed:
@@ -1497,7 +1851,8 @@ def add_career_teams(players):
         if entry.get("car"):
             p["car"] = entry["car"]
     print(f"  Stats games: {sum(map(statline_ok, players))} players for 'guess the player', "
-          f"{sum(len(team_seasons(p)) > 0 for p in players)} for 'guess the team'.")
+          f"{sum(len(team_seasons(p)) > 0 for p in players)} for 'guess the team', "
+          f"{sum(map(hl_ok, players))} for 'higher or lower'.")
 
 
 def recent_games():
@@ -1606,6 +1961,8 @@ def main():
         "/*__START__*/": games["classic"][0],
         "/*__START_SL__*/": games["statline"][0],
         "/*__START_TT__*/": games["team"][0],
+        "/*__DAILY_HL__*/{}": esc(games["hl"][1]),
+        "/*__START_HL__*/": games["hl"][0],
         "/*__SITE__*/": site,
         "/*__API__*/": args.api_url.strip(),
         "/*__BUILT__*/": f"{today.isoformat()} · builder v{VERSION}",
