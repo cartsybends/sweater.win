@@ -19,6 +19,7 @@ import shutil
 import json
 import sys
 import time
+from concurrent.futures import TimeoutError as FuturesTimeout, as_completed
 from concurrent.futures import ThreadPoolExecutor
 import traceback
 import webbrowser
@@ -37,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "28"
+VERSION = "30"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2764,10 +2765,10 @@ if (PLAYERS.length) {
 '''
 
 
-def get_json(url):
+def get_json(url, timeout=30):
     req = urllib.request.Request(url,
                                  headers={"User-Agent": "Mozilla/5.0 (Sweater game builder)"})
-    with urllib.request.urlopen(req, timeout=30) as r:
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.load(r)
 
 
@@ -3181,6 +3182,8 @@ COUNTRY_LABELS = {"CAN": "Canada", "USA": "USA", "SWE": "Sweden", "FIN": "Finlan
                   "NOR": "Norway", "LVA": "Latvia", "FRA": "France", "GBR": "Great Britain", "SVN": "Slovenia",
                   "BLR": "Belarus", "UKR": "Ukraine", "KAZ": "Kazakhstan", "AUS": "Australia", "NLD": "Netherlands",
                   "POL": "Poland", "ITA": "Italy", "JPN": "Japan", "KOR": "South Korea", "HUN": "Hungary"}
+GEO_BUDGET = 4 * 60        # seconds
+CAREER_BUDGET = 8 * 60     # seconds
 GEO_URL = "https://geocoding-api.open-meteo.com/v1/search?name={name}&count=10&language=en&format=json{cc}"
 
 
@@ -3197,26 +3200,43 @@ def add_birthplaces(players, cache, today):
         if stale:
             todo[key] = (p["bc"], p.get("bs", ""), p["nation"])
     if todo:
-        print(f"\nLooking up {len(todo)} birthplaces...")
-    for n, (key, (city, region, nation)) in enumerate(sorted(todo.items()), 1):
-        at = None
+        print(f"\n{stamp()} Looking up {len(todo)} birthplaces (up to {GEO_BUDGET // 60} minutes)...")
+
+    def lookup(item):
+        key, (city, region, nation) = item
+        cc = f"&countryCode={ISO2[nation]}" if nation in ISO2 else ""
+        results = get_json(GEO_URL.format(name=urllib.parse.quote(city), cc=cc), timeout=8).get("results") or []
+        if nation in ISO2:
+            results = [r for r in results if (r.get("country_code") or "").upper() == ISO2[nation]]
+        want = REGIONS.get(region, region).lower()
+        best = next((r for r in results if want and (r.get("admin1") or "").lower() == want), None)
+        if not best and results:
+            best = max(results, key=lambda r: r.get("population") or 0)
+        return key, ([round(best["latitude"], 2), round(best["longitude"], 2)] if best else None)
+
+    started, done, errors = time.time(), 0, 0
+    items = sorted(todo.items())
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = [pool.submit(lookup, it) for it in items]
         try:
-            cc = f"&countryCode={ISO2[nation]}" if nation in ISO2 else ""
-            results = get_json(GEO_URL.format(name=urllib.parse.quote(city), cc=cc)).get("results") or []
-            if nation in ISO2:
-                results = [r for r in results if (r.get("country_code") or "").upper() == ISO2[nation]]
-            want = REGIONS.get(region, region).lower()
-            best = next((r for r in results if want and (r.get("admin1") or "").lower() == want), None)
-            if not best and results:
-                best = max(results, key=lambda r: r.get("population") or 0)
-            if best:
-                at = [round(best["latitude"], 2), round(best["longitude"], 2)]
-        except Exception:
-            pass
-        geo[key] = {"day": today.isoformat(), "at": at}
-        if n % 50 == 0 or n == len(todo):
-            print(f"  {n}/{len(todo)}")
-        time.sleep(0.15)
+            for f in as_completed(futures, timeout=GEO_BUDGET):
+                try:
+                    key, at = f.result()
+                    geo[key] = {"day": today.isoformat(), "at": at}
+                except Exception:
+                    errors += 1
+                done += 1
+                if done == 20 and errors == 20:
+                    print("  The place-name service isn't responding; skipping birthplaces this time.")
+                    break
+                if done % 50 == 0 or done == len(items):
+                    print(f"  {done}/{len(items)}")
+        except FuturesTimeout:
+            print(f"  Time's up after {done} lookups; the rest will be looked up in the next build.")
+        for f in futures:
+            f.cancel()
+    if errors:
+        print(f"  {errors} lookups failed; they'll be retried in the next build.")
     found = 0
     for p in players:
         hit = geo.get(f'{p.get("bc")}|{p.get("bs", "")}|{p["nation"]}') if p.get("bc") else None
@@ -3225,7 +3245,7 @@ def add_birthplaces(players, cache, today):
                 + [COUNTRY_LABELS.get(p["nation"], p["nation"])]
             p["bp"] = hit["at"] + [", ".join(where)]
             found += 1
-    print(f"  Birthplaces found for {found} of {len(players)} players.")
+    print(f"  {stamp()} Birthplaces found for {found} of {len(players)} players.")
 
 
 def add_career_teams(players):
@@ -3240,7 +3260,7 @@ def add_career_teams(players):
         return bool(c) and c.get("v") == 5 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
 
     todo = [p["id"] for p in players if not fresh(p["id"])]
-    print(f"\nLoading career history and stats ({len(players) - len(todo)} saved, {len(todo)} to download)...")
+    print(f"\n{stamp()} Loading career history and stats ({len(players) - len(todo)} saved, {len(todo)} to download, up to {CAREER_BUDGET // 60} minutes)...")
 
     def job(pid):
         try:
@@ -3248,15 +3268,23 @@ def add_career_teams(players):
         except Exception:
             return pid, None
 
-    failed = 0
+    failed, i = 0, 0
     with ThreadPoolExecutor(max_workers=6) as pool:
-        for i, (pid, result) in enumerate(pool.map(job, todo), 1):
-            if result is None:
-                failed += 1
-            else:
-                cache[str(pid)] = {"day": today.isoformat(), "v": 5, "teams": result[0], "car": result[1], "draft": result[2]}
-            if i % 50 == 0 or i == len(todo):
-                print(f"  {i}/{len(todo)}")
+        futures = [pool.submit(job, pid) for pid in todo]
+        try:
+            for f in as_completed(futures, timeout=CAREER_BUDGET):
+                pid, result = f.result()
+                i += 1
+                if result is None:
+                    failed += 1
+                else:
+                    cache[str(pid)] = {"day": today.isoformat(), "v": 5, "teams": result[0], "car": result[1], "draft": result[2]}
+                if i % 50 == 0 or i == len(todo):
+                    print(f"  {i}/{len(todo)}")
+        except FuturesTimeout:
+            print(f"  Time's up after {i} downloads; the rest will be downloaded in the next build (saved data is used for now).")
+        for f in futures:
+            f.cancel()
     if failed:
         print(f"  {failed} players' history couldn't be loaded (no yellow hints or stats games for them).")
     add_birthplaces(players, cache, today)
@@ -3322,6 +3350,13 @@ def players_from(team, roster, include_all):
     return out
 
 
+STARTED = time.time()
+
+
+def stamp():
+    return f"[{int(time.time() - STARTED) // 60}m{int(time.time() - STARTED) % 60:02d}s]"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--all", action="store_true", help="include players without a sweater number")
@@ -3341,7 +3376,7 @@ def main():
 
     games = {}
     if not args.all and args.min_games > 0:
-        print("Loading NHL games played...")
+        print(f"{stamp()} Loading NHL games played...")
         games = recent_games()
         if not games:
             print("  Couldn't load games played - skipping that filter.\n")
@@ -3361,7 +3396,7 @@ def main():
             if p["id"] not in seen:
                 seen.add(p["id"])
                 players.append(p)
-        print(f"  {team}: {len(batch)} players")
+        print(f"  {stamp()} {team}: {len(batch)} players")
         time.sleep(0.3)  # be polite to the NHL API
 
     if not players:
@@ -3371,6 +3406,7 @@ def main():
         add_career_teams(players)
 
     today = eastern_today()
+    print(f"\n{stamp()} Planning daily puzzles...")
     games, extras = update_schedule(players, today)
     embedded = players + extras
     for g, (start, window) in games.items():
@@ -3410,6 +3446,12 @@ def main():
 
 
 if __name__ == "__main__":
+    # show progress in build logs right away (Python holds output back when it isn't a window)
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+        sys.stderr.reconfigure(line_buffering=True)
+    except Exception:
+        pass
     print(f"Building Sweater (builder version {VERSION}) from:\n   {Path(__file__).resolve()}\n")
     failed = False
     try:
