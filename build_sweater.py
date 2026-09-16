@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "31"
+VERSION = "32"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -458,8 +458,30 @@ TEMPLATE = r'''<!DOCTYPE html>
   .statfoot small { color: var(--muted); display: block; }
   .statfoot b { font-size: 24px; font-variant-numeric: tabular-nums; font-weight: 500; }
   .help p, .help li { font-size: 14px; line-height: 1.55; }
-  .help ul { padding-left: 18px; margin: 6px 0; }
   .help a { color: var(--fg); text-underline-offset: 2px; }
+  .helpintro { margin: 0 0 12px; font-size: 15px !important; }
+  .helpkeys { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 6px; }
+  .helpkeys li { display: flex; align-items: center; gap: 10px; }
+  .helpkeys li > span:first-child { width: 28px; text-align: center; flex: none; font-size: 17px; }
+  .keyswitch { display: inline-block; width: 24px !important; height: 14px; border-radius: 7px; background: var(--hit); position: relative; }
+  .keyswitch::after { content: ""; position: absolute; top: 2px; right: 2px; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+  .colourkey { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0 0 4px; padding: 10px 12px; border-radius: 8px; background: var(--cell); color: var(--cell-fg); }
+  .colourkey span { display: inline-flex; align-items: center; gap: 6px; }
+  .colourkey .swatch { margin: 0; }
+  .helplead { margin: -4px 0 8px; color: var(--muted); }
+  .helpgame { --tone: var(--hit); border-bottom: 1px solid var(--line); }
+  .helpgame.tone-blue { --tone: #4a78b5; }
+  .helpgame.tone-amber { --tone: #c9962a; }
+  .helpgame summary { display: flex; align-items: center; gap: 10px; padding: 10px 2px; cursor: pointer; font-weight: 600; list-style: none; }
+  .helpgame summary::-webkit-details-marker { display: none; }
+  .helpgame summary::after { content: "+"; margin-left: auto; color: var(--muted); font-weight: 400; font-size: 20px; line-height: 1; }
+  .helpgame[open] summary::after { content: "−"; }
+  .helpgame summary:focus-visible { outline: 2px solid var(--tone); outline-offset: 2px; border-radius: 4px; }
+  .hicon { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; font-size: 16px;
+           background: color-mix(in srgb, var(--tone) 16%, transparent); }
+  .helpbody { padding: 0 2px 10px 40px; }
+  .helpbody p { margin: 0 0 6px; }
+  .helpfoot { color: var(--muted); font-size: 13px !important; margin: 12px 0 0; }
   .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; }
   .toast { position: fixed; left: 50%; top: 80px; transform: translateX(-50%); background: var(--fg); color: var(--bg);
            padding: 8px 14px; border-radius: 6px; font-size: 14px; z-index: 20; opacity: 0; transition: opacity .2s; pointer-events: none; }
@@ -831,77 +853,28 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div class="card wide help">
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="hTitle">How to play</h2>
-    <p>Pick a game from the home screen, and use <b>‹ All games</b> to go back. Every game has a daily puzzle, an unlimited mode and an archive.</p>
+    <p class="helpintro">Pick a game on the home screen. Every game has a new daily puzzle at midnight Eastern, the same for everyone.</p>
 
-    <h3>Classic</h3>
-    <p>Guess the mystery NHL player in 8 tries. Start typing a name and pick a player from the list. After each guess, the row shows how close that player is to the mystery player.</p>
-    <ul>
-      <li><span class="swatch" style="background:var(--hit)"></span><b>Green</b> means it's an exact match.</li>
-      <li><span class="swatch" style="background:var(--near)"></span><b>Yellow</b> means close:
-        <ul>
-          <li><b>Age</b> and <b>#</b>: within 2 of the mystery player's value.</li>
-          <li><b>Team</b>: the mystery player used to play for the team you guessed at some point in his NHL career, but isn't on it now.</li>
-        </ul>
-      </li>
-      <li><span class="swatch" style="background:var(--cell);border:1px solid var(--line)"></span><b>Grey</b> means no match.</li>
-      <li><b>↑ / ↓</b> on age and number means the mystery player's value is higher or lower than your guess.</li>
-      <li><b>Team</b>: current NHL team. <b>Conf / Div</b>: East or West; Atlantic (A), Metropolitan (M), Central (C) or Pacific (P).</li>
-      <li><b>Pos</b>: C, L, R, D or G. <b>Shoots</b>: L or R (for goalies, the hand they catch with). <b>Nation</b>: country of birth. <b>#</b>: sweater number.</li>
-      <li><b>Show silhouette</b> reveals the mystery player's outline if you need a hint.</li>
-      <li><b>Hard mode</b> (switch above the guess box) hides the silhouette. Once you make a guess, it's locked until that game ends, and your share result says "Hard mode".</li>
+    <ul class="helpkeys">
+      <li><span aria-hidden="true">📊</span>Your stats, and share today's result</li>
+      <li class="lbhelp" hidden><span aria-hidden="true">🏆</span>Leaderboards and how each game scores</li>
+      <li><span aria-hidden="true">📅</span>Replay past daily puzzles</li>
+      <li><span class="keyswitch" aria-hidden="true"></span>Unlimited: play as many puzzles as you like</li>
+      <li><span aria-hidden="true">🌙</span>Night and day mode</li>
     </ul>
 
-    <h3>Stat Line</h3>
-    <p>You see the mystery player's position and the span of his NHL career, one row per season. Only one season's regular-season stats are shown at the start: games, goals, assists, points and plus/minus (for goalies: games, wins, GAA, save percentage and shutouts). Every wrong guess unlocks another season. You have 8 tries.</p>
-    <ul>
-      <li>Choose <b>Oldest season first</b> or <b>Newest season first</b> above the table. The choice is locked once you make a guess, until that game ends.</li>
-      <li>After 4 wrong guesses, a hint shows the logo of the team he plays for now.</li>
-    </ul>
+    <p class="colourkey">
+      <span><i class="swatch" style="background:var(--hit)"></i>Right</span>
+      <span><i class="swatch" style="background:var(--near)"></i>Close</span>
+      <span><i class="swatch" style="background:var(--cell);box-shadow:inset 0 0 0 1px var(--line)"></i>No match</span>
+    </p>
 
-    <h3>Guess the team</h3>
-    <p>You're shown a player and his regular-season stats for one season. Pick the team he played for that season from the list. You have 5 tries. A <span class="swatch" style="background:var(--near)"></span><b>yellow</b> team means close: it's in the same division as the right answer (based on today's divisions).</p>
+    <h3>Game rules</h3>
+    <p class="helplead" id="helpLead" hidden></p>
+    <div id="helpGames"></div>
 
-    <h3>Higher or Lower</h3>
-    <p>Two players go head to head. Pick a stat from the menu at the top of the game: career-high <b>goals</b>, <b>assists</b>, <b>points</b> or <b>PIM</b> (his best single regular season), or career <b>games</b> played, <b>height</b>, <b>weight</b> or <b>age</b>. You can see the first player's number; guess whether the second player's is <b>higher</b> or <b>lower</b>. Get it right and he moves over to face a new player; get it wrong and your run ends. Ties count as right. The daily run has 40 matchups for each stat, and your score is how many you get right in a row.</p>
-
-    <h3>More games</h3>
-    <ul>
-      <li><b>Journey</b>: you see a player's NHL career path, team by team, with seasons and games played. Guess who it is in 6 tries. Hints unlock after 2, 4 and 5 wrong guesses.</li>
-      <li><b>Blur</b>: guess the player from a heavily blurred photo. Each wrong guess sharpens it. 6 tries, with hints after 3 and 5 wrong guesses.</li>
-      <li><b>Sweater #</b>: you're shown a player; guess his jersey number in 5 tries. Arrows tell you to go higher or lower, and yellow means you're within 3.</li>
-      <li><b>Roster</b>: press Start, then type as many players on the team's roster as you can in 60 seconds. A last name is enough unless two players share it.</li>
-      <li><b>Draft Day</b>: guess the year and round a player was drafted, in 5 tries. Arrows point to a later or earlier year and round; yellow means the year is within 2 or the round within 1. After 3 wrong guesses you see the team that drafted him.</li>
-      <li><b>Birthplace</b>: tap the map to place a pin where you think the player was born, then press <b>Drop pin here</b>. Drag to move the map, and pinch, scroll or use + and − to zoom. You get 3 pins; each shows how far off you were and an arrow pointing the right way. A pin within 100 km wins.</li>
-      <li><b>Connections</b>: 16 players, 4 hidden groups of 4 (for example a team, a birth country, a sweater number or a birth year). Select 4 players and press Submit. Groups are colour-coded from easiest (yellow) to hardest (purple). You can make 3 mistakes; the 4th ends the game.</li>
-    </ul>
-
-    <h3>Daily and Unlimited</h3>
-    <ul>
-      <li><b>Daily</b>: one puzzle per game per day. Everyone gets the same puzzles, and they switch at 12:00 am Eastern Time (ET). Your results stay until then.</li>
-      <li><b>Unlimited</b>: turn on the switch in the top-right corner to play as many random puzzles as you like.</li>
-      <li><b>📅 Archive</b> (top left): replay any past daily puzzle for the game you're on. Archive games don't count toward stats or the leaderboard.</li>
-      <li><b>Stats</b> (top left) tracks your daily wins, streaks and guess distribution for the game you're on, and lets you share your result. Only daily games count.</li>
-      <li class="lbhelp" hidden><b>🏆 Leaderboard</b> (top left): pick a name to put your daily results on a global leaderboard for each game, for today, this week and all time. Each game scores differently:
-        <ul>
-          <li><b>Classic</b>: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.</li>
-          <li><b>Guess the player</b>: 8 points for 1 guess down to 1 for 8, plus 2 bonus points for every season still locked when you get it (up to +10).</li>
-          <li><b>Guess the team</b>: 10 points on the first try, 6 on the second, 3 on the third, 2 on the fourth and 1 on the fifth.</li>
-          <li><b>Higher or Lower</b> (a separate board for each stat): 1 point for every right answer in a row, up to 40.</li>
-          <li><b>Journey</b> and <b>Blur</b>: 10 points for 1 guess, then 8, 6, 4, 2 and 1.</li>
-          <li><b>Sweater #</b>: 10 points on the first try, then 7, 5, 3 and 1.</li>
-          <li><b>Roster</b>: 1 point for every player you name.</li>
-          <li><b>Draft Day</b>: 10 points on the first try, then 7, 5, 3 and 1.</li>
-          <li><b>Birthplace</b>: points for your closest pin (10 within 100 km, 8 within 250, 6 within 500, 4 within 1,000, 2 within 2,500), minus 2 for each extra pin.</li>
-          <li><b>Connections</b>: 10 points with no mistakes, then 8, 6 and 4. Running out of mistakes scores 0.</li>
-        </ul>
-        Only daily puzzles count, and each one only counts once.
-      </li>
-      <li>The 🌙 / ☀️ button switches between night and day mode.</li>
-    </ul>
-
-    <h3>Credits</h3>
-    <p>Inspired by Bradley Connolly with <a href="https://www.hertl.app/" target="_blank" rel="noopener">hertl.app</a> and the people at <a href="https://poeltl.nbpa.com/" target="_blank" rel="noopener">Poeltl</a>.</p>
-    <p style="color:var(--muted)">Player data and headshots come from NHL.com.</p>
+    <p class="helpfoot">Only daily puzzles count toward your stats and the leaderboard. Archive and Unlimited games are just for fun.</p>
+    <p class="helpfoot">Inspired by Bradley Connolly with <a href="https://www.hertl.app/" target="_blank" rel="noopener">hertl.app</a> and the people at <a href="https://poeltl.nbpa.com/" target="_blank" rel="noopener">Poeltl</a>. Player data and headshots come from NHL.com.</p>
   </div>
 </div>
 
@@ -2517,6 +2490,7 @@ function openModal(id) {
   closeModals();
   if (id === "statsModal") renderStats();
   if (id === "lbModal") renderLeaderboard();
+  if (id === "helpModal") renderHelp();
   $(id).classList.add("open");
 }
 document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e => {
@@ -2592,7 +2566,7 @@ const LB_RULES = {
   ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
-  statline: "Guess the player: 8 points for 1 guess down to 1 for 8, plus 2 for every season still locked when you get it (up to +10).",
+  statline: "Stat Line: 8 points for 1 guess down to 1 for 8, plus 2 for every season still locked when you get it (up to +10).",
   team: "Guess the team: 10 points on the first try, 6 on the second, 3 on the third, 2 on the fourth, 1 on the fifth.",
 };
 let lbGame = "classic", lbPeriod = "today", lbEditing = false, lbRequest = 0;
@@ -2852,6 +2826,44 @@ $("stGameSel").addEventListener("change", e => { statsGame = e.target.value; ren
 $("lbGameSel").addEventListener("change", e => { lbGame = e.target.value; $("lbList").innerHTML = ""; renderLeaderboard(); });
 $("arGameSel").addEventListener("change", e => { renderArchive(e.target.value); });
 
+// ======================= help window =======================
+const HELP = {
+  classic: `<p>Guess the player in 8 tries. Each guess shows how he compares on team, conference, division, position, shooting hand, age, birth country and number.</p>
+    <p>Yellow on <b>team</b> means the answer used to play there. Yellow on <b>age</b> or <b>#</b> means within 2, and the arrow points toward the answer.</p>
+    <p>Stuck? <b>Show silhouette</b>. <b>Hard mode</b> hides it and locks once you guess.</p>`,
+  statline: `<p>Name the player from his regular-season stats. You start with one season, and each miss unlocks another. 8 tries.</p>
+    <p>Before your first guess, choose whether his oldest or newest seasons appear first. After 4 misses you'll see his current team.</p>`,
+  journey: `<p>Name the player from the teams he's played for, in order, with seasons and games. 6 tries.</p>
+    <p>Hints appear after 2, 4 and 5 misses: position, birth country, then sweater number.</p>`,
+  blur: `<p>Name the player from a blurry photo. Every miss sharpens it. 6 tries, with hints after 3 and 5 misses.</p>`,
+  team: `<p>You see a player and one season of his stats. Pick the team he played for that season. 5 tries.</p>
+    <p>Yellow means the right team is in the same division.</p>`,
+  number: `<p>Guess the player's sweater number in 5 tries. Arrows say go higher or lower, and yellow means you're within 3.</p>`,
+  draft: `<p>Guess the year and round he was drafted, in 5 tries. Arrows point to a later or earlier year and round.</p>
+    <p>Yellow means the year is within 2 or the round within 1. After 3 misses you'll see who drafted him.</p>`,
+  map: `<p>Tap the map, then <b>Drop pin here</b>. You get 3 pins; each shows how far off you were and which way to go. A pin within 100 km wins.</p>
+    <p>Drag to move the map. Pinch, scroll or use + and − to zoom.</p>`,
+  hl: `<p>Is the second player's number higher or lower than the first? Pick what to compare from the <b>Stat</b> menu: best-season goals, assists, points or PIM, career games, height, weight or age.</p>
+    <p>A right answer keeps your run going and ties count as right. The daily run has 40 matchups. On a keyboard, use ↑ and ↓.</p>`,
+  roster: `<p>Press <b>Start</b>, then type as many players on the team's roster as you can in 60 seconds. A last name is enough unless two players share it.</p>`,
+  conn: `<p>Find 4 groups of 4 players who share something, like a team, a birth country, a sweater number or a birth year. Select 4, then <b>Submit</b>.</p>
+    <p>Groups go from yellow (easiest) to purple (hardest). Your 4th mistake ends the game.</p>`,
+};
+
+function renderHelp() {
+  const current = onHub ? null : (game.startsWith("hl_") ? "hl" : game);
+  $("helpGames").innerHTML = HUB.map(sec => sec.games.map(([id, icon]) => `
+    <details class="helpgame tone-${sec.tone}" data-help="${id}"${id === current ? " open" : ""}>
+      <summary><span class="hicon" aria-hidden="true">${icon}</span><span>${esc(cardTitle(id))}</span></summary>
+      <div class="helpbody">${HELP[id] || ""}</div>
+    </details>`).join("")).join("");
+  $("helpLead").hidden = !current;
+  if (current) {
+    $("helpLead").textContent = `You're playing ${cardTitle(current)}. Its rules are open below.`;
+    requestAnimationFrame(() => { const el = $("helpGames").querySelector("[open]"); if (el) el.scrollIntoView({ block: "nearest" }); });
+  }
+}
+
 // ======================= start =======================
 $("foot").textContent = `Player data from NHL.com · updated ${BUILT} · ${PLAYERS.length} players`;
 if (!store.get("sweater-seen-help")) { store.set("sweater-seen-help", true); openModal("helpModal"); }
@@ -2860,6 +2872,7 @@ if (PLAYERS.length) {
   const start = decodeURIComponent(location.hash.slice(1));
   if (start && (G[start] || start === "hl")) openGame(start, false);
   else showHub(false);
+  tick();
   submitPending();
 } else {
   $("guess").disabled = true;
