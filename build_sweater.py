@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "30"
+VERSION = "31"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -213,6 +213,55 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cnctl .btn { margin: 0; }
   .btn.ghost { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--line); }
   .btn:disabled { opacity: .5; cursor: default; }
+
+  /* home screen */
+  header h1 a { color: inherit; text-decoration: none; }
+  header h1 a:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; border-radius: 4px; }
+  header h1::after { content: ""; display: block; width: 132px; height: 7px; margin: 6px auto 0;
+                     background: linear-gradient(var(--hit) 0 2px, transparent 2px 5px, var(--hit) 5px 7px); }
+  .sub { margin: 8px 0 6px; color: var(--muted); }
+  #view-hub { max-width: 980px; }
+  .hubprogress { text-align: center; color: var(--muted); margin: 4px 0 18px; }
+  .hubsec { --tone: var(--hit); margin: 0 0 26px; }
+  .hubsec.tone-blue { --tone: #4a78b5; }
+  .hubsec.tone-amber { --tone: #c9962a; }
+  .hubsec h2 { font-size: 17px; font-weight: 600; margin: 0 0 10px; padding-left: 12px; border-left: 4px solid var(--tone); }
+  .hubgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .gcard { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 14px; text-align: left;
+           background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 12px;
+           padding: 14px 16px; font: inherit; cursor: pointer; transition: border-color .15s, background-color .15s; }
+  .gcard:hover:not(:disabled) { border-color: var(--tone); }
+  .gcard:focus-visible { outline: 2px solid var(--tone); outline-offset: 2px; }
+  .gcard:disabled { opacity: .5; cursor: default; }
+  .gicon { width: 48px; height: 48px; border-radius: 10px; display: grid; place-items: center; font-size: 24px;
+           background: color-mix(in srgb, var(--tone) 16%, transparent); }
+  .gtext b { display: block; font-size: 16px; }
+  .gtext small { display: block; color: var(--muted); font-size: 13px; line-height: 1.35; margin-top: 2px; }
+  .gstat { font-size: 13px; font-weight: 600; white-space: nowrap; padding: 5px 10px; border-radius: 999px;
+           background: var(--cell); color: var(--cell-fg); }
+  .gcard.done .gstat { background: var(--hit); color: var(--hit-fg); }
+  .gcard.missed .gstat { background: transparent; box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); }
+  .gcard.going .gstat { background: var(--near); color: var(--near-fg); }
+  .hubnext { text-align: center; color: var(--muted); font-size: 14px; }
+  .hubnext b { font-variant-numeric: tabular-nums; color: var(--fg); }
+
+  /* game bar */
+  .gamebar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+             max-width: 1100px; margin: 0 auto 10px; padding: 0 0 10px; border-bottom: 1px solid var(--line); }
+  .backbtn { justify-self: start; background: none; border: 0; color: var(--fg); font: inherit; font-size: 15px;
+             padding: 6px 10px 6px 4px; border-radius: 8px; cursor: pointer; }
+  .backbtn span { font-size: 22px; line-height: 0; vertical-align: -2px; margin-right: 2px; }
+  .backbtn:hover { background: var(--cell); }
+  .gtitle { text-align: center; }
+  .gtitle h2 { margin: 0; font-size: 22px; font-weight: 600; }
+  #modeLabel { display: block; font-size: 13px; color: var(--muted); }
+  .gamesel { display: block; margin: 0 auto 12px; padding: 8px 12px; font: inherit; font-size: 15px; border-radius: 8px;
+             border: 1px solid var(--line); background: var(--bg); color: var(--fg); max-width: 100%; }
+  .pickstat { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+  .pickstat select { padding: 7px 10px; font: inherit; font-size: 15px; border-radius: 8px; border: 1px solid var(--line);
+                     background: var(--bg); color: var(--fg); }
+  #classicOpts { gap: 16px; }
+  #silBtn { text-transform: none; letter-spacing: 0; font-size: 15px; }
 
   /* options, archive */
   .optrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; font-size: 14px; }
@@ -418,7 +467,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (max-width: 700px) {
     .topleft { top: 10px; left: 12px; }
     .topbar { position: static; justify-content: flex-end; padding: 10px 12px 0; gap: 10px; }
-    #modeLabel, .switch .long { display: none; }
+    .switch .long { display: none; }
+    .hubgrid { grid-template-columns: 1fr; gap: 8px; }
+    .gcard { grid-template-columns: 40px 1fr auto; padding: 10px 12px; gap: 12px; }
+    .gicon { width: 40px; height: 40px; font-size: 20px; }
+    .gtext small { font-size: 12px; }
+    .gstat { font-size: 12px; padding: 4px 9px; max-width: 34vw; white-space: normal; text-align: center; }
+    .gtitle h2 { font-size: 18px; }
+    .backbtn { font-size: 14px; }
     header { padding-top: 14px; }
     h1 { font-size: 36px; }
     main { padding: 4px 10px 32px; }
@@ -486,61 +542,34 @@ TEMPLATE = r'''<!DOCTYPE html>
   <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
 </div>
 <div class="topbar">
-  <span id="modeLabel">Daily</span>
   <label class="switch"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited<span class="long"> mode</span></span></label>
   <button class="themebtn" id="themeBtn" type="button"></button>
 </div>
 <header>
-  <h1>SWEATER</h1>
-  <p class="sub">NHL Player Guessing Game</p>
-  <div class="tabrow">
-    <div class="tabs" role="tablist" aria-label="Game">
-      <button type="button" role="tab" data-game="classic">Classic</button>
-      <button type="button" role="tab" data-game="stats">Stats</button>
-      <button type="button" role="tab" data-game="hl">Higher or Lower</button>
-      <button type="button" role="tab" data-game="more">More</button>
-    </div>
-  </div>
-  <div class="tabrow" id="subtabs" hidden>
-    <div class="tabs small" role="tablist" aria-label="Stats game">
-      <button type="button" role="tab" data-game="statline">Guess the player</button>
-      <button type="button" role="tab" data-game="team">Guess the team</button>
-    </div>
-  </div>
-  <div class="tabrow" id="hlsubtabs" hidden>
-    <div class="tabs small wrap" role="tablist" aria-label="Stat">
-      <button type="button" role="tab" data-game="hl_goals">Goals</button>
-      <button type="button" role="tab" data-game="hl_assists">Assists</button>
-      <button type="button" role="tab" data-game="hl_points">Points</button>
-      <button type="button" role="tab" data-game="hl_pim">PIM</button>
-      <button type="button" role="tab" data-game="hl_gp">Games</button>
-      <button type="button" role="tab" data-game="hl_height">Height</button>
-      <button type="button" role="tab" data-game="hl_weight">Weight</button>
-      <button type="button" role="tab" data-game="hl_age">Age</button>
-    </div>
-  </div>
-  <div class="tabrow" id="moresubtabs" hidden>
-    <div class="tabs small wrap" role="tablist" aria-label="More games">
-      <button type="button" role="tab" data-game="journey">Journey</button>
-      <button type="button" role="tab" data-game="blur">Blur</button>
-      <button type="button" role="tab" data-game="number">Sweater #</button>
-      <button type="button" role="tab" data-game="roster">Roster</button>
-      <button type="button" role="tab" data-game="draft">Draft Day</button>
-      <button type="button" role="tab" data-game="map">Birthplace</button>
-      <button type="button" role="tab" data-game="conn">Connections</button>
-    </div>
+  <h1><a href="./" id="homeLink" title="All games">SWEATER</a></h1>
+  <p class="sub">NHL player guessing games</p>
+</header>
+<main>
+  <div class="gamebar" id="gameBar" hidden>
+    <button class="backbtn" id="backHub" type="button"><span aria-hidden="true">‹</span> All games</button>
+    <div class="gtitle"><h2 id="gTitle"></h2><span id="modeLabel"></span></div>
   </div>
   <p class="archbar" id="archBar" hidden><span id="archText"></span>
     <button class="linkbtn" id="pickDay" type="button">Pick another day</button>
     <button class="linkbtn" id="backToday" type="button">Back to today</button></p>
-  <button class="linkbtn" id="silBtn">SHOW SILHOUETTE</button>
-  <div class="optrow" id="classicOpts" hidden>
-    <label class="switch"><input type="checkbox" id="hardMode"><span class="track"></span><span>Hard mode</span></label>
-    <span class="optnote" id="hardNote"></span>
-  </div>
-</header>
-<main>
-  <section class="view" id="view-classic">
+
+  <section class="view" id="view-hub">
+    <p class="hubprogress" id="hubProgress"></p>
+    <div id="hubSections"></div>
+    <p class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></p>
+  </section>
+
+  <section class="view" id="view-classic" hidden>
+    <div class="optrow" id="classicOpts">
+      <button class="linkbtn" id="silBtn" type="button">Show silhouette</button>
+      <label class="switch"><input type="checkbox" id="hardMode"><span class="track"></span><span>Hard mode</span></label>
+      <span class="optnote" id="hardNote"></span>
+    </div>
     <div class="search">
       <input id="guess" autocomplete="off" role="combobox" aria-expanded="false"
              aria-controls="opts" placeholder="Guess 1 of 8">
@@ -591,6 +620,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-hl" hidden>
+    <div class="optrow"><label class="pickstat">Stat <select id="hlStatSel" aria-label="Stat to compare"></select></label></div>
     <p class="intro" id="hlIntro"></p>
     <div class="hlscore"><span>Streak<b id="hlStreak">0</b></span><span>Best<b id="hlBest">0</b></span></div>
     <div class="slot"></div>
@@ -753,6 +783,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div class="card wide">
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="sTitle">Statistics</h2>
+    <select class="gamesel" id="stGameSel" aria-label="Game"></select>
     <div class="statgrid">
       <div><b id="stPlayed">0</b><span id="stL1">Played</span></div>
       <div><b id="stWin">0</b><span id="stL2">Win %</span></div>
@@ -773,32 +804,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div class="card wide lbcard">
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="lbTitle">Leaderboard</h2>
-    <div class="tabs small lbtabs" role="tablist" aria-label="Game">
-      <button type="button" role="tab" data-lbgame="classic">Classic</button>
-      <button type="button" role="tab" data-lbgame="statline">Guess the player</button>
-      <button type="button" role="tab" data-lbgame="team">Guess the team</button>
-      <button type="button" role="tab" data-lbgame="hl">Higher or Lower</button>
-      <button type="button" role="tab" data-lbgame="more">More</button>
-    </div>
-    <div class="tabs small lbtabs wrap" role="tablist" aria-label="Stat" id="lbHl" hidden>
-      <button type="button" role="tab" data-lbsub="hl_goals">Goals</button>
-      <button type="button" role="tab" data-lbsub="hl_assists">Assists</button>
-      <button type="button" role="tab" data-lbsub="hl_points">Points</button>
-      <button type="button" role="tab" data-lbsub="hl_pim">PIM</button>
-      <button type="button" role="tab" data-lbsub="hl_gp">Games</button>
-      <button type="button" role="tab" data-lbsub="hl_height">Height</button>
-      <button type="button" role="tab" data-lbsub="hl_weight">Weight</button>
-      <button type="button" role="tab" data-lbsub="hl_age">Age</button>
-    </div>
-    <div class="tabs small lbtabs wrap" role="tablist" aria-label="More games" id="lbMore" hidden>
-      <button type="button" role="tab" data-lbsub="journey">Journey</button>
-      <button type="button" role="tab" data-lbsub="blur">Blur</button>
-      <button type="button" role="tab" data-lbsub="number">Sweater #</button>
-      <button type="button" role="tab" data-lbsub="roster">Roster</button>
-      <button type="button" role="tab" data-lbsub="draft">Draft Day</button>
-      <button type="button" role="tab" data-lbsub="map">Birthplace</button>
-      <button type="button" role="tab" data-lbsub="conn">Connections</button>
-    </div>
+    <select class="gamesel" id="lbGameSel" aria-label="Game"></select>
     <div class="tabs small lbtabs" role="tablist" aria-label="Period">
       <button type="button" role="tab" data-period="today">Today</button>
       <button type="button" role="tab" data-period="week">This week</button>
@@ -815,6 +821,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div class="card wide">
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="arTitle">Archive</h2>
+    <select class="gamesel" id="arGameSel" aria-label="Game"></select>
     <p class="hint">Replay past daily puzzles. Archive games don't count toward your stats or the leaderboard.</p>
     <ol class="arlist" id="arList"></ol>
   </div>
@@ -824,7 +831,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <div class="card wide help">
     <button class="xbtn" data-close aria-label="Close">×</button>
     <h2 id="hTitle">How to play</h2>
-    <p>Pick a game with the <b>Classic</b>, <b>Stats</b>, <b>Higher or Lower</b> and <b>More</b> tabs at the top. Every game has a daily puzzle, an unlimited mode and an archive.</p>
+    <p>Pick a game from the home screen, and use <b>‹ All games</b> to go back. Every game has a daily puzzle, an unlimited mode and an archive.</p>
 
     <h3>Classic</h3>
     <p>Guess the mystery NHL player in 8 tries. Start typing a name and pick a player from the list. After each guess, the row shows how close that player is to the mystery player.</p>
@@ -841,23 +848,23 @@ TEMPLATE = r'''<!DOCTYPE html>
       <li><b>Team</b>: current NHL team. <b>Conf / Div</b>: East or West; Atlantic (A), Metropolitan (M), Central (C) or Pacific (P).</li>
       <li><b>Pos</b>: C, L, R, D or G. <b>Shoots</b>: L or R (for goalies, the hand they catch with). <b>Nation</b>: country of birth. <b>#</b>: sweater number.</li>
       <li><b>Show silhouette</b> reveals the mystery player's outline if you need a hint.</li>
-      <li><b>Hard mode</b> (switch under the tabs) hides the silhouette. Once you make a guess, it's locked until that game ends, and your share result says "Hard mode".</li>
+      <li><b>Hard mode</b> (switch above the guess box) hides the silhouette. Once you make a guess, it's locked until that game ends, and your share result says "Hard mode".</li>
     </ul>
 
-    <h3>Stats: Guess the player</h3>
+    <h3>Stat Line</h3>
     <p>You see the mystery player's position and the span of his NHL career, one row per season. Only one season's regular-season stats are shown at the start: games, goals, assists, points and plus/minus (for goalies: games, wins, GAA, save percentage and shutouts). Every wrong guess unlocks another season. You have 8 tries.</p>
     <ul>
       <li>Choose <b>Oldest season first</b> or <b>Newest season first</b> above the table. The choice is locked once you make a guess, until that game ends.</li>
       <li>After 4 wrong guesses, a hint shows the logo of the team he plays for now.</li>
     </ul>
 
-    <h3>Stats: Guess the team</h3>
+    <h3>Guess the team</h3>
     <p>You're shown a player and his regular-season stats for one season. Pick the team he played for that season from the list. You have 5 tries. A <span class="swatch" style="background:var(--near)"></span><b>yellow</b> team means close: it's in the same division as the right answer (based on today's divisions).</p>
 
     <h3>Higher or Lower</h3>
-    <p>Two players go head to head. Pick a stat: career-high <b>goals</b>, <b>assists</b>, <b>points</b> or <b>PIM</b> (his best single regular season), or career <b>games</b> played, <b>height</b>, <b>weight</b> or <b>age</b>. You can see the first player's number; guess whether the second player's is <b>higher</b> or <b>lower</b>. Get it right and he moves over to face a new player; get it wrong and your run ends. Ties count as right. The daily run has 40 matchups for each stat, and your score is how many you get right in a row.</p>
+    <p>Two players go head to head. Pick a stat from the menu at the top of the game: career-high <b>goals</b>, <b>assists</b>, <b>points</b> or <b>PIM</b> (his best single regular season), or career <b>games</b> played, <b>height</b>, <b>weight</b> or <b>age</b>. You can see the first player's number; guess whether the second player's is <b>higher</b> or <b>lower</b>. Get it right and he moves over to face a new player; get it wrong and your run ends. Ties count as right. The daily run has 40 matchups for each stat, and your score is how many you get right in a row.</p>
 
-    <h3>More</h3>
+    <h3>More games</h3>
     <ul>
       <li><b>Journey</b>: you see a player's NHL career path, team by team, with seasons and games played. Guess who it is in 6 tries. Hints unlock after 2, 4 and 5 wrong guesses.</li>
       <li><b>Blur</b>: guess the player from a heavily blurred photo. Each wrong guess sharpens it. 6 tries, with hints after 3 and 5 wrong guesses.</li>
@@ -1049,7 +1056,7 @@ const G = {
   },
 
   statline: {
-    title: "Guess the player", share: "Sweater Stats", view: "view-statline", max: 8, next: "Next player",
+    title: "Stat Line", share: "Sweater Stat Line", view: "view-statline", max: 8, next: "Next player",
     cheers: ["Stat nerd, first try! 🤓", "Snipe! 🎯", "Hat trick! 🎩", "Nice read! 🧠",
              "Got there! 🙌", "Solid shift! 💪", "Clutch! ⏱️", "Buzzer beater! 🚨"],
     pool: () => SL_POOL,
@@ -2035,7 +2042,7 @@ const KEYS = Object.fromEntries(Object.keys(G).map(g => [g, g === "classic"
   : { daily: `sweater-daily-${g}`, stats: `sweater-stats-${g}` }]));
 const isScored = g => G[g].kind === "streak" || G[g].kind === "score";
 const isStatsGame = g => g === "statline" || g === "team";
-const gameTitle = g => g === "classic" ? "Classic" : isStatsGame(g) ? `Stats: ${G[g].title}` : G[g].title;
+const gameTitle = g => G[g].title;
 const isDone = (g, t, guesses) => G[g].isDone ? G[g].isDone(t, guesses)
   : guesses.some(x => G[g].isWin(t, x)) || guesses.length >= G[g].max;
 let game = GAME_IDS.includes(store.get("sweater-game")) ? store.get("sweater-game") : "classic";
@@ -2125,7 +2132,7 @@ function finish(won, fresh) {
     if (mode === "daily") {
       recordResult(won);
       submitPending();
-      setTimeout(() => openModal("statsModal"), party ? 2400 : 1600);
+      setTimeout(() => { statsGame = null; openModal("statsModal"); }, party ? 2400 : 1600);
     }
   }
 }
@@ -2203,7 +2210,7 @@ function updateLabels() {
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())}`
     : mode === "archive" ? `Archive #${dailyNumber(game, archiveDay)}` : "Unlimited";
   $("unlimited").checked = mode === "unlimited";
-  $("archBar").hidden = mode !== "archive";
+  $("archBar").hidden = mode !== "archive" || onHub;
   if (mode === "archive") $("archText").textContent = `Archive · #${dailyNumber(game, archiveDay)} · ${niceDay(archiveDay)}`;
 }
 
@@ -2240,25 +2247,26 @@ document.querySelectorAll("[data-order]").forEach(b => b.addEventListener("click
 function setGame(g) {
   game = g;
   store.set("sweater-game", g);
-  document.querySelectorAll("[data-game]").forEach(b => {
-    const on = b.dataset.game === g || (b.dataset.game === "stats" && isStatsGame(g))
-      || (b.dataset.game === "hl" && g.startsWith("hl_")) || (b.dataset.game === "more" && isMoreGame(g));
-    b.setAttribute("aria-selected", on);
-  });
-  $("subtabs").hidden = !isStatsGame(g);
-  $("hlsubtabs").hidden = !g.startsWith("hl_");
-  $("moresubtabs").hidden = !isMoreGame(g);
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = v !== G[g].view; });
   document.querySelectorAll(".nodata").forEach(n => n.hidden = true);
   searches.forEach(s => s.close());
+  $("gTitle").textContent = g.startsWith("hl_") ? "Higher or Lower" : G[g].title;
+  document.title = `${$("gTitle").textContent} · Sweater`;
+  if (g.startsWith("hl_")) $("hlStatSel").value = g;
   loadCurrent();
   if (g === "map" && S.map.target) requestAnimationFrame(() => setView(mapView.x, mapView.y, mapView.w, mapView.h));
 }
 
 // ---- archive picker ----
+let archiveGame = null;
 function openArchive() {
+  renderArchive(game);
+  openModal("archiveModal");
+}
+function renderArchive(game) {
+  archiveGame = game;
+  $("arGameSel").innerHTML = gameOptions(game);
   const g = G[game], days = archiveDays(game);
-  $("arTitle").textContent = `Archive · ${gameTitle(game)}`;
   const status = d => {
     const h = historyGet(game, d);
     if (!h) return archiveGet(game, d)?.guesses?.length ? "In progress" : "Play";
@@ -2267,23 +2275,23 @@ function openArchive() {
     return h.w ? `✓ ${h.n}/${g.max}` : "✗";
   };
   $("arList").innerHTML = days.length ? days.map(d => `
-    <li><button type="button" class="arbtn${archiveDay === d && mode === "archive" ? " on" : ""}" data-day="${d}">
+    <li><button type="button" class="arbtn${archiveDay === d && mode === "archive" && archiveGame === currentGame() ? " on" : ""}" data-day="${d}">
       <span class="arno">#${dailyNumber(game, d)}</span><span class="ardate">${niceDay(d)}</span>
       <span class="arstat">${status(d)}</span></button></li>`).join("")
     : '<li class="empty">No past puzzles yet for this game. Check back tomorrow.</li>';
-  openModal("archiveModal");
 }
 $("arList").addEventListener("click", e => {
   const b = e.target.closest("[data-day]");
   if (!b) return;
   closeModals();
   mode = "archive";
-  loadArchive(b.dataset.day);
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  archiveDay = b.dataset.day;
+  openGame(archiveGame);
 });
 $("archiveBtn").onclick = openArchive;
 $("pickDay").onclick = openArchive;
 $("backToday").onclick = () => { mode = "daily"; store.set("sweater-mode", "daily"); loadDaily(); };
+$("unlimited").addEventListener("change", () => { if (onHub) renderHub(); });
 
 // ======================= classic board =======================
 function cell(text, hit, cls = "") {
@@ -2403,6 +2411,7 @@ function confetti() {
 
 // ======================= stats (daily games only, kept per game) =======================
 const blankStats = max => ({ played: 0, wins: 0, streak: 0, maxStreak: 0, dist: Array(max).fill(0), lastDay: null, lastWinDay: null, lastGuesses: 0 });
+const currentGame = () => game;
 function getStats(g = game) {
   const st = Object.assign(blankStats(G[g].max), store.get(KEYS[g].stats) || {});
   st.dist = Array.from({ length: G[g].max }, (_, i) => st.dist[i] || 0);
@@ -2433,7 +2442,9 @@ function recordResult(won) {
 }
 
 function renderStats() {
-  const st = getStats(), today = dayKey();
+  const game = statsGame || currentGame();
+  $("stGameSel").innerHTML = gameOptions(game);
+  const st = getStats(game), today = dayKey();
   const streak = st.lastWinDay === today || st.lastWinDay === prevDayKey(today) ? st.streak : 0;
   $("sTitle").textContent = `Statistics · ${gameTitle(game)}`;
   const streakGame = isScored(game);
@@ -2447,7 +2458,7 @@ function renderStats() {
     $("stMax").textContent = st.lastDay === today ? st.lastScore : "–";
     const saved = store.get(KEYS[game].daily);
     $("shareBtn").hidden = !(saved && saved.date === today && st.lastDay === today);
-    renderStatsLb();
+    renderStatsLb(game);
     return;
   }
   $("stPlayed").textContent = st.played;
@@ -2461,26 +2472,27 @@ function renderStats() {
     $("dist").querySelectorAll(".bar").forEach((b, i) => b.style.width = `${Math.max(8, st.dist[i] / most * 100)}%`)));
   const saved = store.get(KEYS[game].daily);
   $("shareBtn").hidden = !(saved && saved.date === today && st.lastDay === today);
-  renderStatsLb();
+  renderStatsLb(game);
 }
 
 function shareText() {
+  const game = statsGame || currentGame();
   const g = G[game], saved = store.get(KEYS[game].daily);
   const t = g.daily(saved.date);
   if (g.shareText) {
-    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}`;
+    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}#${game}`;
     return g.shareText(t, saved, dailyNumber(game, saved.date), link);
   }
   if (g.kind === "streak") {
     const n = g.score(t, saved.guesses), won = g.wonGame(t, saved.guesses);
     const marks = saved.guesses.map((x, i) => g.squares(t, x, i)).join("");
     const rows = (marks.match(/(?:🟩|🟥){1,10}/gu) || []).join("\n");
-    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}`;
+    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}#${game}`;
     return `${g.share} #${dailyNumber(game, saved.date)} · ${HL_STATS[g.stat].name}\nStreak: ${n}${won ? " (perfect!)" : ""}\n\n${rows}${link}`;
   }
   const won = saved.guesses.some(x => g.isWin(t, x));
   const body = saved.guesses.map(x => g.squares(t, x)).join("").trim();
-  const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}`;
+  const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}#${game}`;
   const note = saved.opts && saved.opts.hard ? " · Hard mode" : saved.opts && saved.opts.order === "newest" ? " · Newest first" : "";
   return `${g.share} #${dailyNumber(game, saved.date)} ${won ? saved.guesses.length : "X"}/${g.max}${note}\n\n${body}${link}`;
 }
@@ -2510,11 +2522,11 @@ function openModal(id) {
 document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e => {
   if (m.id === "modal" || e.target === m || e.target.closest("[data-close]")) m.classList.remove("open");
 }));
-$("statsBtn").onclick = () => openModal("statsModal");
+$("statsBtn").onclick = () => { statsGame = null; openModal("statsModal"); };
 $("helpBtn").onclick = () => openModal("helpModal");
 $("silBtn").onclick = () => { if (!(S.classic.opts && S.classic.opts.hard)) openModal("modal"); };
 $("lbBtn").onclick = () => openLeaderboard();
-$("stLbBtn").onclick = () => openLeaderboard();
+$("stLbBtn").onclick = () => openLeaderboard(statsGame || game);
 
 // ======================= countdown + midnight rollover =======================
 function tick() {
@@ -2524,6 +2536,9 @@ function tick() {
   const clock = `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
   $("countdown").textContent = `New puzzle in ${clock}`;
   $("stNext").textContent = clock;
+  $("hubNext").textContent = clock;
+  if (onHub && tick.lastDay && tick.lastDay !== dayKey()) renderHub();
+  tick.lastDay = dayKey();
 }
 setInterval(tick, 1000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) tick(); });
@@ -2535,17 +2550,6 @@ $("unlimited").addEventListener("change", e => {
   if (mode === "daily") loadDaily(); else loadUnlimited(true);
 });
 $("again").onclick = () => mode === "archive" ? openArchive() : loadUnlimited(true);
-document.querySelectorAll("[data-game]").forEach(b => b.addEventListener("click", () => {
-  let g = b.dataset.game;
-  if (g === "stats") g = isStatsGame(game) ? game : (store.get("sweater-stats-game") || "statline");
-  if (g === "hl") g = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
-  if (g === "more") g = isMoreGame(game) ? game : (G[store.get("sweater-more-game")] ? store.get("sweater-more-game") : "journey");
-  if (!G[g]) return;
-  if (isStatsGame(g)) store.set("sweater-stats-game", g);
-  if (g.startsWith("hl_")) store.set("sweater-hl-game", g);
-  if (isMoreGame(g)) store.set("sweater-more-game", g);
-  if (g !== game) setGame(g);
-}));
 
 // ---- day / night toggle ----
 const isDark = () => {
@@ -2567,7 +2571,7 @@ $("themeBtn").onclick = () => {
 paintThemeBtn();
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
 document.addEventListener("keydown", e => {
-  if (!game.startsWith("hl_") || document.querySelector(".modal.open") || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (onHub || !game.startsWith("hl_") || document.querySelector(".modal.open") || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
   if (e.key === "ArrowUp") { e.preventDefault(); doGuess("H"); }
   if (e.key === "ArrowDown") { e.preventDefault(); doGuess("L"); }
 });
@@ -2646,7 +2650,7 @@ function submitPending() {
   return submitting;
 }
 
-function renderStatsLb() {
+function renderStatsLb(game = currentGame()) {
   $("stLb").hidden = !API_ON;
   if (!API_ON) return;
   const pts = (store.get("sweater-lb-sent") || {})[`${game}:${dayKey()}`];
@@ -2655,8 +2659,8 @@ function renderStatsLb() {
   $("stLbBtn").textContent = store.get("sweater-lb-name") ? "See the leaderboard" : "Join the leaderboard";
 }
 
-function openLeaderboard() {
-  lbGame = game;
+function openLeaderboard(g = game) {
+  lbGame = g;
   lbEditing = !store.get("sweater-lb-name");
   openModal("lbModal");
 }
@@ -2697,12 +2701,7 @@ async function saveLbName() {
 }
 
 async function renderLeaderboard() {
-  document.querySelectorAll("[data-lbgame]").forEach(b => b.setAttribute("aria-selected",
-    b.dataset.lbgame === lbGame || (b.dataset.lbgame === "hl" && lbGame.startsWith("hl_"))
-    || (b.dataset.lbgame === "more" && isMoreGame(lbGame))));
-  document.querySelectorAll("[data-lbsub]").forEach(b => b.setAttribute("aria-selected", b.dataset.lbsub === lbGame));
-  $("lbHl").hidden = !lbGame.startsWith("hl_");
-  $("lbMore").hidden = !isMoreGame(lbGame);
+  $("lbGameSel").innerHTML = gameOptions(lbGame);
   document.querySelectorAll("[data-period]").forEach(b => b.setAttribute("aria-selected", b.dataset.period === lbPeriod));
   $("lbRules").textContent = LB_RULES[lbGame];
   renderLbName();
@@ -2729,27 +2728,138 @@ async function renderLeaderboard() {
   }
 }
 
-const LB_GROUPS = {
-  hl: [g => g.startsWith("hl_"), "sweater-hl-game", "hl_points"],
-  more: [isMoreGame, "sweater-more-game", "journey"],
-};
-document.querySelectorAll("[data-lbgame]").forEach(b => b.onclick = () => {
-  const group = LB_GROUPS[b.dataset.lbgame];
-  if (group && group[0](lbGame)) return;
-  lbGame = group ? (G[store.get(group[1])] ? store.get(group[1]) : group[2]) : b.dataset.lbgame;
-  $("lbList").innerHTML = ""; renderLeaderboard();
-});
-document.querySelectorAll("[data-lbsub]").forEach(b => b.onclick = () => { lbGame = b.dataset.lbsub; $("lbList").innerHTML = ""; renderLeaderboard(); });
 document.querySelectorAll("[data-period]").forEach(b => b.onclick = () => { lbPeriod = b.dataset.period; $("lbList").innerHTML = ""; renderLeaderboard(); });
 $("lbBtn").hidden = !API_ON;
 document.querySelectorAll(".lbhelp").forEach(el => el.hidden = !API_ON);
+
+// ======================= home screen and navigation =======================
+const HUB = [
+  { title: "Name the player", tone: "green", games: [
+    ["classic", "🏒", "Guess the player from his team, position, age and more."],
+    ["statline", "📈", "Name him from his season-by-season stats."],
+    ["journey", "🧭", "Name him from the teams he's played for."],
+    ["blur", "🔍", "Name him from a blurry photo that sharpens as you guess."],
+  ]},
+  { title: "Know the details", tone: "blue", games: [
+    ["team", "🛡️", "Which team was he on that season?"],
+    ["number", "👕", "What number does he wear?"],
+    ["draft", "📋", "When was he drafted, and in which round?"],
+    ["map", "📍", "Find where he was born on the map."],
+  ]},
+  { title: "Streaks and puzzles", tone: "amber", games: [
+    ["hl", "↕️", "Whose number is bigger? Keep the streak alive."],
+    ["roster", "⏱️", "Name as much of a team's roster as you can in 60 seconds."],
+    ["conn", "🧩", "Sort 16 players into 4 hidden groups."],
+  ]},
+];
+const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
+const cardTitle = id => id === "hl" ? "Higher or Lower" : G[id].title;
+let onHub = true, statsGame = null;
+
+function hubStatus(id) {
+  const today = dayKey();
+  if (id === "hl") {
+    const played = HL_IDS.filter(g => historyGet(g, today));
+    const going = HL_IDS.some(g => { const sv = store.get(KEYS[g].daily);
+      return sv && sv.date === today && sv.guesses && sv.guesses.length && !historyGet(g, today); });
+    if (!played.length) return going ? ["going", "In progress"] : ["", "Play"];
+    const best = Math.max(...played.map(g => historyGet(g, today).s));
+    return ["done", `${played.length} of ${HL_IDS.length} stats · best run ${best}`];
+  }
+  const h = historyGet(id, today), g = G[id];
+  if (h) {
+    if (g.archiveStatus) return ["done", g.archiveStatus(h)];
+    if (g.kind === "score") return ["done", `${h.s} pts`];
+    return h.w ? ["done", `Solved in ${h.n}`] : ["missed", "Missed today"];
+  }
+  const saved = store.get(KEYS[id].daily);
+  if (saved && saved.date === today && saved.guesses && saved.guesses.length) return ["going", "In progress"];
+  return ["", "Play"];
+}
+
+function renderHub() {
+  let played = 0, total = 0;
+  $("hubSections").innerHTML = HUB.map(sec => `
+    <section class="hubsec tone-${sec.tone}">
+      <h2>${sec.title}</h2>
+      <div class="hubgrid">${sec.games.map(([id, icon, blurb]) => {
+        const [cls, text] = hubStatus(id);
+        total++; if (cls === "done" || cls === "missed") played++;
+        const ready = id === "hl" ? HL_POOL.length > 1 : G[id].pool().length > 0;
+        return `<button type="button" class="gcard ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
+          <span class="gicon" aria-hidden="true">${icon}</span>
+          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small></span>
+          <span class="gstat">${ready ? esc(text) : "Coming soon"}</span>
+        </button>`;
+      }).join("")}</div>
+    </section>`).join("");
+  $("hubProgress").textContent = played
+    ? `You've played ${played} of ${total} daily games today.`
+    : "Every game has a new daily puzzle at midnight Eastern.";
+}
+$("hubSections").addEventListener("click", e => {
+  const b = e.target.closest("[data-open]");
+  if (b && !b.disabled) openGame(b.dataset.open);
+});
+
+function showHub(push = true) {
+  onHub = true;
+  if (push && location.hash) history.pushState(null, "", location.pathname + location.search);
+  $("view-hub").hidden = false;
+  $("gameBar").hidden = true;
+  $("archBar").hidden = true;
+  new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = true; });
+  searches.forEach(s => s.close());
+  renderHub();
+  document.title = "Sweater · NHL player guessing games";
+}
+
+function openGame(id, push = true) {
+  if (id === "hl") id = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
+  if (!G[id]) return showHub(push);
+  if (id.startsWith("hl_")) store.set("sweater-hl-game", id);
+  if (push && location.hash !== `#${id}`) history.pushState(null, "", `#${id}`);
+  onHub = false;
+  $("view-hub").hidden = true;
+  $("gameBar").hidden = false;
+  setGame(id);
+  window.scrollTo({ top: 0 });
+}
+
+function route() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (id && (G[id] || id === "hl")) {
+    if (!onHub && id === game) return;
+    openGame(id, false);
+  } else if (!onHub) {
+    showHub(false);
+  }
+}
+window.addEventListener("popstate", route);
+window.addEventListener("hashchange", route);
+$("backHub").onclick = () => showHub();
+$("homeLink").onclick = e => { e.preventDefault(); showHub(); };
+
+// game pickers inside the stats, leaderboard and archive windows
+function gameOptions(selected) {
+  return HUB.map(sec => `<optgroup label="${sec.title}">${sec.games.map(([id]) => id === "hl"
+    ? HL_IDS.map(h => `<option value="${h}"${h === selected ? " selected" : ""}>Higher or Lower · ${HL_STATS[G[h].stat].name}</option>`).join("")
+    : `<option value="${id}"${id === selected ? " selected" : ""}>${esc(G[id].title)}</option>`).join("")}</optgroup>`).join("");
+}
+$("hlStatSel").innerHTML = HL_IDS.map(h => `<option value="${h}">${HL_STATS[G[h].stat].name}</option>`).join("");
+$("hlStatSel").addEventListener("change", e => openGame(e.target.value));
+$("stGameSel").addEventListener("change", e => { statsGame = e.target.value; renderStats(); });
+$("lbGameSel").addEventListener("change", e => { lbGame = e.target.value; $("lbList").innerHTML = ""; renderLeaderboard(); });
+$("arGameSel").addEventListener("change", e => { renderArchive(e.target.value); });
 
 // ======================= start =======================
 $("foot").textContent = `Player data from NHL.com · updated ${BUILT} · ${PLAYERS.length} players`;
 if (!store.get("sweater-seen-help")) { store.set("sweater-seen-help", true); openModal("helpModal"); }
 
 if (PLAYERS.length) {
-  setGame(game);
+  const start = decodeURIComponent(location.hash.slice(1));
+  if (start && (G[start] || start === "hl")) openGame(start, false);
+  else showHub(false);
   submitPending();
 } else {
   $("guess").disabled = true;
