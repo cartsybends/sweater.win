@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "32"
+VERSION = "33"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -70,6 +70,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     --hit: #528f4f; --hit-fg: #fff; --near: #e3b83b; --near-fg: #1d1a10; --line: #ddd; --link: #1a6f7a;
     --panel: #fff; --scrim: rgba(0,0,0,.5); --cream: #f3e9d2; --silbg: transparent;
     --sea: #dfe9f3; --land: #f3e9d2; --coast: #b9ab8c;
+    --grouped: #f2f2f7; --row: #ffffff; --sep: rgba(60,60,67,.14); --label2: #6e6e73;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -77,6 +78,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       --hit: #4f8a4c; --hit-fg: #fff; --near: #c9a227; --near-fg: #17140a; --line: #33373c; --link: #6cc3cf;
       --panel: #1f2226; --scrim: rgba(0,0,0,.7); --silbg: var(--cream);
       --sea: #1b2a38; --land: #3a3f46; --coast: #5c636d;
+      --grouped: #000000; --row: #1c1c1e; --sep: rgba(84,84,88,.5); --label2: #98989d;
     }
   }
   :root[data-theme="dark"] {
@@ -84,11 +86,14 @@ TEMPLATE = r'''<!DOCTYPE html>
       --hit: #4f8a4c; --hit-fg: #fff; --near: #c9a227; --near-fg: #17140a; --line: #33373c; --link: #6cc3cf;
       --panel: #1f2226; --scrim: rgba(0,0,0,.7); --silbg: var(--cream);
       --sea: #1b2a38; --land: #3a3f46; --coast: #5c636d;
+      --grouped: #000000; --row: #1c1c1e; --sep: rgba(84,84,88,.5); --label2: #98989d;
   }
   body, td, .search input, .list, .card { transition: background-color .3s ease, color .3s ease, border-color .3s ease; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--fg);
-         font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif; }
+         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+         -webkit-font-smoothing: antialiased; transition: background-color .3s; }
+  body.hubmode { background: var(--grouped); }
   header { text-align: center; padding: 24px 16px 8px; }
   h1 { margin: 0; font-size: 48px; font-weight: 800; letter-spacing: .5px; }
   .sub { margin: 2px 0 14px; font-size: 14px; }
@@ -263,6 +268,188 @@ TEMPLATE = r'''<!DOCTYPE html>
   #classicOpts { gap: 16px; }
   #silBtn { text-transform: none; letter-spacing: 0; font-size: 15px; }
 
+  /* navigation bar */
+  .navbar { position: sticky; top: 0; z-index: 8; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            padding: 10px max(16px, env(safe-area-inset-left)); background: color-mix(in srgb, var(--bg) 78%, transparent);
+            -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+            border-bottom: 1px solid var(--sep); }
+  body.hubmode .navbar { background: color-mix(in srgb, var(--grouped) 78%, transparent); }
+  .brand { color: var(--fg); text-decoration: none; font-weight: 800; font-size: 19px; letter-spacing: .06em; }
+  .brand span { display: inline-block; padding-bottom: 5px;
+                background: linear-gradient(var(--hit) 0 2px, transparent 2px 4px, var(--hit) 4px 6px) bottom / 100% 6px no-repeat; }
+  .brand:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; border-radius: 4px; }
+  .navactions { display: flex; align-items: center; gap: 6px; }
+  .navactions .iconbtn { width: 36px; height: 36px; min-width: 36px; border: 0; background: var(--cell); color: var(--fg); font-size: 16px; }
+  .navactions .iconbtn:hover { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
+  .navactions .switch { margin: 0 4px; font-size: 14px; }
+
+  /* home screen, grouped-list style */
+  #view-hub { max-width: 680px; padding-top: 18px; }
+  .hubhead { margin: 0 4px 18px; }
+  .hubdate { margin: 0; color: var(--label2); font-size: 15px; font-weight: 500; }
+  .hubtitle { margin: 2px 0 12px; font-size: 34px; font-weight: 700; letter-spacing: -.02em; }
+  .hubmeter { height: 6px; border-radius: 3px; background: var(--sep); overflow: hidden; }
+  .hubmeter i { display: block; height: 100%; width: 0; border-radius: 3px; background: var(--hit); transition: width .6s cubic-bezier(.2,.8,.2,1); }
+  .hubprogress { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; margin: 8px 0 0;
+                 color: var(--label2); font-size: 13px; text-align: left; }
+  .hubnext b { font-variant-numeric: tabular-nums; color: var(--fg); font-weight: 600; }
+  .partycard { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 12px;
+               width: 100%; min-height: 150px; margin: 0 0 26px; padding: 20px; border: 0; border-radius: 22px; cursor: pointer;
+               text-align: left; font: inherit; color: #fff; background: #0f2440; }
+  .partycard .rink { position: absolute; inset: 0; width: 100%; height: 100%; color: rgba(255,255,255,.2); opacity: .45; }
+  .partycard > span { position: relative; }
+  .partytext b { display: block; font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+  .partytext span { display: block; margin-top: 4px; font-size: 15px; opacity: .85; max-width: 30ch; }
+  .partycta { padding: 9px 16px; border-radius: 999px; background: #fff; color: #0f2440; font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .partycard:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+  .partycard:disabled { cursor: default; opacity: .6; }
+  .hubsec { --tone: #34a853; margin: 0 0 24px; }
+  .hubsec.tone-blue { --tone: #2f7cf6; }
+  .hubsec.tone-amber { --tone: #f2a100; }
+  .hubsec.tone-red { --tone: #e5484d; }
+  .hubsec h2 { margin: 0 4px 8px; padding: 0; border: 0; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
+  .glist { background: var(--row); border-radius: 14px; overflow: hidden; }
+  .grow { position: relative; display: grid; grid-template-columns: 40px 1fr auto 12px; align-items: center; gap: 12px;
+          width: 100%; padding: 11px 14px; border: 0; background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .grow + .grow::before { content: ""; position: absolute; top: 0; left: 66px; right: 0; border-top: 1px solid var(--sep); }
+  .grow:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+  .grow:active:not(:disabled) { background: color-mix(in srgb, var(--fg) 10%, transparent); }
+  .grow:focus-visible { outline: 2px solid var(--tone); outline-offset: -2px; }
+  .grow:disabled { opacity: .45; cursor: default; }
+  .grow .gicon { width: 40px; height: 40px; border-radius: 10px; font-size: 21px; display: grid; place-items: center;
+                 background: color-mix(in srgb, var(--tone) 18%, transparent); }
+  .grow .gtext b { display: block; font-size: 16px; font-weight: 600; }
+  .grow .gtext small { display: block; margin-top: 1px; color: var(--label2); font-size: 13px; line-height: 1.3; }
+  .grow .gstat { background: none; padding: 0; color: var(--label2); font-size: 14px; font-weight: 400; white-space: nowrap; }
+  .grow.done .gstat { color: var(--hit); font-weight: 600; background: none; }
+  .grow.done .gstat::before { content: "✓ "; }
+  .grow.going .gstat { color: #c98a00; background: none; }
+  .grow.missed .gstat { box-shadow: none; }
+  .chev { color: var(--label2); font-size: 22px; line-height: 1; opacity: .6; }
+
+  /* rank 'em */
+  .rklist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; touch-action: none; }
+  .rkrow { display: grid; grid-template-columns: 24px 44px 1fr auto auto; align-items: center; gap: 10px; padding: 8px 10px;
+           border-radius: 12px; background: var(--cell); color: var(--cell-fg); border: 2px solid transparent;
+           user-select: none; transition: border-color .2s, box-shadow .2s; }
+  .rkrow.done { grid-template-columns: 24px 44px 1fr auto; }
+  .rkrow.good { border-color: var(--hit); }
+  .rkrow.lifted { box-shadow: 0 8px 22px rgba(0,0,0,.18); }
+  .rkpos { font-weight: 700; font-size: 18px; text-align: center; font-variant-numeric: tabular-nums; }
+  .rkrow img { width: 44px; height: 44px; border-radius: 50%; background: var(--cream); object-fit: cover; pointer-events: none; }
+  .rkname b { display: block; font-size: 15px; }
+  .rkname small { font-size: 12px; opacity: .7; }
+  .rkval { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .rkbtns { display: flex; gap: 4px; }
+  .rkbtns button { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; font-size: 11px; }
+  .rkbtns button:disabled { opacity: .3; cursor: default; }
+  .rkgrip { cursor: grab; font-size: 20px; color: var(--muted); padding: 0 2px; }
+  .rklist.dragging { cursor: grabbing; }
+
+  /* puck drop */
+  .pkrule { text-align: center; font-size: 17px; margin: 4px 0 8px; }
+  .pkrule b { color: var(--hit); }
+  .rinklane { position: relative; height: 230px; max-width: 900px; margin: 10px auto; border-radius: 26px; overflow: hidden;
+              background: linear-gradient(90deg, transparent 49.6%, rgba(229,72,77,.55) 49.6% 50.4%, transparent 50.4%),
+                          linear-gradient(90deg, transparent 32.5%, rgba(91,141,239,.5) 32.5% 33.3%, transparent 33.3% 66.6%, rgba(91,141,239,.5) 66.6% 67.4%, transparent 67.4%),
+                          linear-gradient(180deg, #f3f8fb, #dfeaf1);
+              border: 2px solid color-mix(in srgb, var(--fg) 15%, transparent); touch-action: manipulation; }
+  .puck { position: absolute; left: 0; height: 26%; padding: 0 16px; border: 0; border-radius: 999px; background: #121417; color: #fff;
+          font: inherit; font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer; will-change: transform;
+          box-shadow: 0 3px 0 #000, 0 6px 14px rgba(0,0,0,.25); }
+  .puck.good { background: var(--hit); }
+  .puck.bad { background: #c0392b; }
+  .puck.tapped { pointer-events: none; opacity: .85; }
+  .pksummary { position: absolute; inset: 0; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 6px; padding: 14px; overflow: auto; }
+  .chips .chip.bad, .pksummary .chip.bad { background: #c0392b; color: #fff; }
+
+  /* shootout */
+  .shdots { display: flex; justify-content: center; gap: 8px; margin: 4px 0 10px; }
+  .shdot { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--cell); color: var(--cell-fg); font-weight: 600; }
+  .shdot.now { box-shadow: 0 0 0 2px var(--fg); }
+  .shnet { display: block; width: min(420px, 100%); margin: 0 auto; }
+  .shnet .netbg { fill: color-mix(in srgb, var(--fg) 4%, transparent); }
+  .shnet .mesh line { stroke: color-mix(in srgb, var(--fg) 16%, transparent); stroke-width: 1; }
+  .shnet .posts { fill: none; stroke: #d6312f; stroke-width: 7; stroke-linejoin: round; }
+  .goalie { transition: transform .35s cubic-bezier(.3,1.4,.5,1); }
+  .gbody { fill: #1f4e9c; } .gmask { fill: #e8e8e8; stroke: #333; } .gpad, .gblock { fill: #f2f2f2; stroke: #1f4e9c; stroke-width: 2; }
+  .gglove { fill: #d9a441; }
+  .zone { fill: rgba(52,168,83,.18); stroke: var(--hit); stroke-width: 2; stroke-dasharray: 4 3; cursor: pointer; transition: opacity .2s; }
+  .zone:hover { fill: rgba(52,168,83,.35); }
+  .zone.off { opacity: 0; pointer-events: none; }
+  .shpuck { fill: #111; opacity: 0; }
+  .shpuck.fly { opacity: 1; animation: shot .45s ease-in forwards; }
+  .shpuck.fly.saved { animation: shot .45s ease-in forwards, bounce .3s .45s ease-out forwards; }
+  @keyframes shot { from { transform: translate(0, 0) scale(1.2); } to { transform: translate(var(--tx), var(--ty)) scale(.8); } }
+  @keyframes bounce { to { transform: translate(calc(var(--tx) * .6), 20px) scale(.9); opacity: .4; } }
+  .shopts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 560px; margin: 0 auto; }
+  .shopt { padding: 12px; border-radius: 12px; border: 0; background: var(--cell); color: var(--cell-fg); font: inherit; font-size: 15px; cursor: pointer; }
+  .shopt:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
+  .shopt.right { background: var(--hit); color: var(--hit-fg); }
+  .shopt.wrong { background: #c0392b; color: #fff; }
+  .shopt.dim { opacity: .45; }
+  .shopt:disabled { cursor: default; }
+
+  /* zamboni */
+  .zambox { position: relative; width: min(300px, 80vw); aspect-ratio: 1; margin: 6px auto 12px; border-radius: 24px; overflow: hidden; background: var(--cream); }
+  .zambox img, .zambox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .zambox img { object-fit: cover; user-select: none; -webkit-user-drag: none; }
+  .zambox canvas { touch-action: none; cursor: crosshair; }
+
+  /* party mode */
+  #view-party { max-width: 900px; }
+  .ptchoice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .ptpanel { background: var(--cell); color: var(--cell-fg); border-radius: 18px; padding: 18px; }
+  .ptpanel h3 { margin: 0 0 6px; font-size: 20px; }
+  .ptpanel p { margin: 0 0 14px; font-size: 14px; opacity: .8; }
+  .ptpanel label { display: block; font-size: 13px; margin: 0 0 10px; }
+  .ptpanel input { display: block; width: 100%; box-sizing: border-box; margin-top: 4px; padding: 11px 12px; font: inherit; font-size: 17px;
+                   border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+  #ptCode { text-transform: uppercase; letter-spacing: .3em; font-weight: 700; }
+  .ptpanel .btn { margin: 4px 0 0; width: 100%; }
+  .ptnote { text-align: center; color: var(--muted); }
+  .ptlobby { text-align: center; }
+  .ptlabel { margin: 10px 0 0; color: var(--muted); }
+  .ptcode { margin: 4px 0; font-size: clamp(64px, 14vw, 120px); font-weight: 800; letter-spacing: .12em; font-variant-numeric: tabular-nums; }
+  .ptlink { margin: 0 0 16px; color: var(--muted); font-size: 13px; word-break: break-all; }
+  .ptplayers { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; min-height: 40px; margin: 0 0 16px; }
+  .ptplayers .chip { animation: rowin .3s ease both; }
+  .ptcontrols { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; margin: 14px 0; }
+  .ptcontrols select { padding: 8px 10px; font: inherit; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+  .ptcontrols .btn { margin: 0; }
+  .pthead { display: flex; justify-content: space-between; color: var(--muted); font-size: 14px; margin: 4px 0 8px; }
+  .pttimer { position: relative; height: 10px; border-radius: 5px; background: var(--cell); overflow: hidden; margin: 0 0 12px; }
+  .pttimer i { position: absolute; inset: 0 auto 0 0; background: var(--hit); transition: width 1s linear; }
+  .pttimer b { display: none; }
+  .ptq { text-align: center; font-size: clamp(22px, 3.4vw, 34px); font-weight: 700; margin: 10px 0 16px; letter-spacing: -.01em; }
+  .ptq.small { font-size: 19px; }
+  .pttiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .pttile { position: relative; display: flex; align-items: center; gap: 12px; min-height: 84px; padding: 14px 16px; border: 0; border-radius: 16px;
+            color: #fff; font: inherit; font-size: 18px; font-weight: 600; text-align: left; cursor: pointer; transition: opacity .2s, transform .1s; }
+  .pttiles.big .pttile { min-height: 110px; font-size: clamp(18px, 2.4vw, 26px); }
+  .pttile .shape { font-size: 22px; opacity: .9; }
+  .pttile.c0 { background: #e5484d; } .pttile.c1 { background: #2f7cf6; } .pttile.c2 { background: #d99a00; } .pttile.c3 { background: #2f9e57; }
+  .pttile:active:not(:disabled) { transform: scale(.98); }
+  .pttile:disabled { cursor: default; }
+  .pttile.picked { box-shadow: inset 0 0 0 4px #fff; }
+  .pttile.faded { opacity: .3; }
+  .pttile.right { box-shadow: inset 0 0 0 4px #fff, 0 0 0 3px var(--hit); }
+  .pttile .count { margin-left: auto; font-size: 22px; }
+  .ptboard { list-style: none; padding: 0; margin: 16px auto; max-width: 520px; }
+  .ptboard li { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  .ptboard li.me { background: var(--cell); border-radius: 8px; }
+  .ptboard em { font-style: normal; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ptpodium { display: flex; justify-content: center; align-items: flex-end; gap: 10px; margin: 10px 0; }
+  .ptpodium .step { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 2px; width: 30%; max-width: 180px;
+                    padding: 12px 8px; border-radius: 14px 14px 0 0; background: var(--cell); color: var(--cell-fg); }
+  .ptpodium .s0 { order: 2; min-height: 170px; } .ptpodium .s1 { order: 1; min-height: 130px; } .ptpodium .s2 { order: 3; min-height: 100px; }
+  .ptpodium span { font-size: 34px; } .ptpodium em { font-style: normal; font-variant-numeric: tabular-nums; }
+  .ptwait { text-align: center; padding: 30px 10px; border-radius: 18px; background: var(--cell); color: var(--cell-fg); }
+  .ptwait.good { background: var(--hit); color: var(--hit-fg); }
+  .ptwait.bad { background: #c0392b; color: #fff; }
+  .ptbig { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
+  .ptleave { display: block; margin: 18px auto 0; color: var(--muted); text-decoration: underline; letter-spacing: 0; text-transform: none; }
+
   /* options, archive */
   .optrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; font-size: 14px; }
   .optnote { color: var(--muted); font-size: 13px; }
@@ -421,7 +608,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .silbox { background: var(--silbg); transition: background-color .3s ease; border-radius: 4px; overflow: hidden; line-height: 0; }
   .card img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: brightness(0);
               user-select: none; -webkit-user-drag: none; }
-  .topbar { position: absolute; top: 14px; right: 18px; display: flex; align-items: center;
+  .topbar-unused { position: absolute; top: 14px; right: 18px; display: flex; align-items: center;
             gap: 14px; font-size: 14px; }
   #modeLabel { color: var(--muted); }
   .switch { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
@@ -434,7 +621,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .switch input:focus-visible + .track { outline: 2px solid var(--link); outline-offset: 2px; }
   .countdown { font-variant-numeric: tabular-nums; color: var(--muted); }
   body { position: relative; }
-  .topleft { position: absolute; top: 14px; left: 18px; display: flex; gap: 8px; }
+  .topleft-unused { display: none; }
   .iconbtn { background: none; border: 1px solid var(--line); color: var(--fg); border-radius: 999px;
              height: 34px; min-width: 34px; padding: 0 12px; cursor: pointer; font: inherit; font-size: 14px;
              display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
@@ -491,6 +678,25 @@ TEMPLATE = r'''<!DOCTYPE html>
     .topbar { position: static; justify-content: flex-end; padding: 10px 12px 0; gap: 10px; }
     .switch .long { display: none; }
     .hubgrid { grid-template-columns: 1fr; gap: 8px; }
+    .navbar { padding: 8px 10px; }
+    .brand { font-size: 16px; }
+    .navactions { gap: 4px; }
+    .navactions .iconbtn { width: 32px; height: 32px; min-width: 32px; font-size: 14px; }
+    .navactions .switch > span:last-child { display: none; }
+    .hubtitle { font-size: 30px; }
+    .grow { grid-template-columns: 36px 1fr auto 10px; padding: 10px 12px; gap: 10px; }
+    .grow .gicon { width: 36px; height: 36px; font-size: 19px; border-radius: 9px; }
+    .grow + .grow::before { left: 58px; }
+    .grow .gstat { font-size: 12px; max-width: 26vw; white-space: normal; text-align: right; }
+    .partycard { grid-template-columns: 1fr; min-height: 170px; }
+    .partycta { justify-self: start; }
+    .rkrow { grid-template-columns: 20px 36px 1fr auto auto; gap: 8px; padding: 6px 8px; }
+    .rkrow img { width: 36px; height: 36px; }
+    .rinklane { height: 200px; border-radius: 18px; }
+    .puck { font-size: 13px; padding: 0 12px; }
+    .shopts, .pttiles { grid-template-columns: 1fr; }
+    .pttile { min-height: 64px; }
+    .ptchoice { grid-template-columns: 1fr; }
     .gcard { grid-template-columns: 40px 1fr auto; padding: 10px 12px; gap: 12px; }
     .gicon { width: 40px; height: 40px; font-size: 20px; }
     .gtext small { font-size: 12px; }
@@ -556,21 +762,18 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes rowin { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 </style>
 </head>
-<body>
-<div class="topleft">
-  <button class="iconbtn" id="statsBtn" type="button" aria-label="Statistics">📊<span class="txt"> Stats</span></button>
-  <button class="iconbtn round" id="lbBtn" type="button" aria-label="Leaderboard" title="Leaderboard" hidden>🏆</button>
-  <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Archive: replay past puzzles">📅</button>
-  <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play">?</button>
-</div>
-<div class="topbar">
-  <label class="switch"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited<span class="long"> mode</span></span></label>
-  <button class="themebtn" id="themeBtn" type="button"></button>
-</div>
-<header>
-  <h1><a href="./" id="homeLink" title="All games">SWEATER</a></h1>
-  <p class="sub">NHL player guessing games</p>
-</header>
+<body class="hubmode">
+<nav class="navbar">
+  <a href="./" id="homeLink" class="brand" title="All games"><span>SWEATER</span></a>
+  <div class="navactions">
+    <button class="iconbtn round" id="statsBtn" type="button" aria-label="Statistics" title="Statistics">📊</button>
+    <button class="iconbtn round" id="lbBtn" type="button" aria-label="Leaderboard" title="Leaderboard" hidden>🏆</button>
+    <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
+    <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play" title="How to play">?</button>
+    <label class="switch" title="Play as many puzzles as you like"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited</span></label>
+    <button class="iconbtn round themebtn" id="themeBtn" type="button"></button>
+  </div>
+</nav>
 <main>
   <div class="gamebar" id="gameBar" hidden>
     <button class="backbtn" id="backHub" type="button"><span aria-hidden="true">‹</span> All games</button>
@@ -581,9 +784,28 @@ TEMPLATE = r'''<!DOCTYPE html>
     <button class="linkbtn" id="backToday" type="button">Back to today</button></p>
 
   <section class="view" id="view-hub">
-    <p class="hubprogress" id="hubProgress"></p>
+    <div class="hubhead">
+      <p class="hubdate" id="hubDate"></p>
+      <h1 class="hubtitle">Today's games</h1>
+      <div class="hubmeter" aria-hidden="true"><i id="hubBar"></i></div>
+      <p class="hubprogress"><span id="hubProgress"></span> <span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
+    </div>
+    <button type="button" class="partycard" data-open="party">
+      <svg class="rink" viewBox="0 0 400 160" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <rect x="6" y="6" width="388" height="148" rx="70" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="200" y1="6" x2="200" y2="154" stroke="#e5484d" stroke-width="4"/>
+        <line x1="140" y1="6" x2="140" y2="154" stroke="#5b8def" stroke-width="4"/>
+        <line x1="260" y1="6" x2="260" y2="154" stroke="#5b8def" stroke-width="4"/>
+        <circle cx="200" cy="80" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="70" cy="45" r="22" fill="none" stroke="#e5484d" stroke-width="2"/>
+        <circle cx="70" cy="115" r="22" fill="none" stroke="#e5484d" stroke-width="2"/>
+        <circle cx="330" cy="45" r="22" fill="none" stroke="#e5484d" stroke-width="2"/>
+        <circle cx="330" cy="115" r="22" fill="none" stroke="#e5484d" stroke-width="2"/>
+      </svg>
+      <span class="partytext"><b>Party Mode</b><span>Host on a big screen. Friends answer from their phones.</span></span>
+      <span class="partycta">Start a party</span>
+    </button>
     <div id="hubSections"></div>
-    <p class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></p>
   </section>
 
   <section class="view" id="view-classic" hidden>
@@ -776,6 +998,72 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="nodata" hidden>This game isn't available right now.</p>
   </section>
 
+  <section class="view" id="view-rank" hidden>
+    <p class="intro" id="rkIntro"></p>
+    <ol class="rklist" id="rkList"></ol>
+    <div class="numrow"><button class="btn" id="rkGo" type="button">Lock it in</button></div>
+    <div class="chips" id="rkHist"></div>
+    <p class="hint" id="rkLeft"></p>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
+  </section>
+
+  <section class="view" id="view-puck" hidden>
+    <p class="pkrule">Tap every player who fits: <b id="pkRule"></b></p>
+    <div class="hlscore"><span>Score<b id="pkScore">0</b></span><span>Caught<b id="pkCaught">0</b></span></div>
+    <div class="rinklane" id="pkLane"></div>
+    <div class="numrow"><button class="btn" id="pkStart" type="button">Drop the puck</button></div>
+    <p class="hint" id="pkLeft"></p>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
+  </section>
+
+  <section class="view" id="view-shoot" hidden>
+    <div class="shdots" id="shDots"></div>
+    <svg class="shnet" id="shNet" viewBox="0 0 300 200" role="img" aria-label="Hockey net">
+      <rect x="20" y="20" width="260" height="170" rx="4" class="netbg"/>
+      <g class="mesh"><line x1="40" y1="20" x2="40" y2="190"/><line x1="60" y1="20" x2="60" y2="190"/><line x1="80" y1="20" x2="80" y2="190"/><line x1="100" y1="20" x2="100" y2="190"/><line x1="120" y1="20" x2="120" y2="190"/><line x1="140" y1="20" x2="140" y2="190"/><line x1="160" y1="20" x2="160" y2="190"/><line x1="180" y1="20" x2="180" y2="190"/><line x1="200" y1="20" x2="200" y2="190"/><line x1="220" y1="20" x2="220" y2="190"/><line x1="240" y1="20" x2="240" y2="190"/><line x1="260" y1="20" x2="260" y2="190"/><line x1="280" y1="20" x2="280" y2="190"/><line x1="20" y1="40" x2="280" y2="40"/><line x1="20" y1="60" x2="280" y2="60"/><line x1="20" y1="80" x2="280" y2="80"/><line x1="20" y1="100" x2="280" y2="100"/><line x1="20" y1="120" x2="280" y2="120"/><line x1="20" y1="140" x2="280" y2="140"/><line x1="20" y1="160" x2="280" y2="160"/><line x1="20" y1="180" x2="280" y2="180"/></g>
+      <path d="M20 190 V20 H280 V190" class="posts"/>
+      <g id="shGoalie" class="goalie">
+        <rect x="128" y="96" width="44" height="46" rx="12" class="gbody"/>
+        <circle cx="150" cy="84" r="15" class="gmask"/>
+        <rect x="112" y="136" width="30" height="50" rx="8" class="gpad"/>
+        <rect x="158" y="136" width="30" height="50" rx="8" class="gpad"/>
+        <rect x="186" y="110" width="26" height="30" rx="6" class="gglove"/>
+        <rect x="90" y="108" width="24" height="34" rx="4" class="gblock"/>
+      </g>
+      <g class="zones">
+        <circle class="zone" data-z="0" cx="62" cy="52" r="22"/><circle class="zone" data-z="1" cx="238" cy="52" r="22"/>
+        <circle class="zone" data-z="2" cx="62" cy="132" r="22"/><circle class="zone" data-z="3" cx="238" cy="132" r="22"/>
+        <circle class="zone" data-z="4" cx="150" cy="170" r="16"/>
+      </g>
+      <circle id="shPuck" class="shpuck" cx="150" cy="190" r="7"/>
+    </svg>
+    <p class="ttq" id="shQ"></p>
+    <div class="shopts" id="shOpts"></div>
+    <p class="hint" id="shMsg"></p>
+    <div class="numrow"><button class="btn" id="shNext" type="button" hidden>Next shooter</button></div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
+  </section>
+
+  <section class="view" id="view-zam" hidden>
+    <p class="intro">Drag across the ice to reveal the player, then guess who it is.</p>
+    <div class="zambox"><img id="zmImg" alt="" draggable="false"><canvas id="zmIce" aria-label="Ice covering the photo. Drag to clear it."></canvas></div>
+    <div class="search narrow">
+      <input id="zmGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="zmOpts" placeholder="Guess 1 of 3">
+      <ul class="list" id="zmOpts" role="listbox" hidden></ul>
+    </div>
+    <p class="hint" id="zmLeft"></p>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
+    <ul class="wrong" id="zmWrong"></ul>
+  </section>
+
+  <section class="view" id="view-party" hidden>
+    <div id="ptBody"></div>
+  </section>
+
   <section class="view" id="view-team" hidden>
     <div class="ttcard">
       <img id="ttImg" alt="">
@@ -873,6 +1161,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="helplead" id="helpLead" hidden></p>
     <div id="helpGames"></div>
 
+    <p class="helpfoot"><b>Party Mode</b>: host on a screen everyone can see, and friends join on their phones with the 4-letter code. Questions are timed, and faster right answers score more.</p>
     <p class="helpfoot">Only daily puzzles count toward your stats and the leaderboard. Archive and Unlimited games are just for fun.</p>
     <p class="helpfoot">Inspired by Bradley Connolly with <a href="https://www.hertl.app/" target="_blank" rel="noopener">hertl.app</a> and the people at <a href="https://poeltl.nbpa.com/" target="_blank" rel="noopener">Poeltl</a>. Player data and headshots come from NHL.com.</p>
   </div>
@@ -952,7 +1241,7 @@ const secondsToEtMidnight = () => {
 };
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
-["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot", "zam"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -1318,7 +1607,7 @@ function countUp(el) {
 TEAM_NAMES.ARI = "Arizona";
 TEAM_NAMES.ATL = "Atlanta";
 const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "ATL"]);
-const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn"].includes(g);
+const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot", "zam"].includes(g);
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
 const teamName = t => TEAM_NAMES[t] || t;
 
@@ -2008,6 +2297,522 @@ $("cnSubmit").onclick = () => {
   }
 };
 
+// ======================= rank 'em, puck drop, shootout, zamboni reveal =======================
+function quizQuestion(rnd, pool = PLAYERS) {
+  const one = arr => arr[Math.floor(rnd() * arr.length)];
+  const sample = (arr, n) => shuffled(arr, rnd).slice(0, n);
+  for (let tries = 0; tries < 50; tries++) {
+    const kind = one(["team", "nation", "number", "oldest", "defence", "draft"]), p = one(pool);
+    let q, opts, right;
+    if (kind === "team") {
+      const others = [...new Set(pool.map(x => x.team))].filter(t => t !== p.team);
+      if (others.length < 3) continue;
+      opts = sample(others, 3).map(teamName); right = teamName(p.team); q = `Which team does ${p.name} play for?`;
+    } else if (kind === "nation") {
+      const others = [...new Set(pool.map(x => x.nation))].filter(n => n !== p.nation);
+      if (others.length < 3) continue;
+      const nm = n => COUNTRY_NAMES[n] ? COUNTRY_NAMES[n].replace(/^the /, "") : n;
+      opts = sample(others, 3).map(nm); right = nm(p.nation); q = `Where was ${p.name} born?`;
+    } else if (kind === "number") {
+      const others = [...new Set(pool.map(x => x.number).filter(Boolean))].filter(n => n !== p.number);
+      if (!p.number || others.length < 3) continue;
+      opts = sample(others, 3).map(n => `#${n}`); right = `#${p.number}`; q = `What number does ${p.name} wear?`;
+    } else if (kind === "oldest") {
+      const four = sample(pool, 4);
+      if (new Set(four.map(x => x.birth)).size < 4) continue;
+      const old = four.reduce((a, b) => a.birth <= b.birth ? a : b);
+      opts = four.filter(x => x !== old).map(x => x.name); right = old.name; q = "Which of these players is the oldest?";
+    } else if (kind === "defence") {
+      const d = pool.filter(x => x.pos === "D"), f = pool.filter(x => ["C", "L", "R"].includes(x.pos));
+      if (!d.length || f.length < 3) continue;
+      opts = sample(f, 3).map(x => x.name); right = one(d).name; q = "Which of these players is a defenceman?";
+    } else {
+      if (!hasDraft(p)) continue;
+      const y = p.draft[0];
+      opts = sample([y - 3, y - 2, y - 1, y + 1, y + 2, y + 3], 3).map(String); right = String(y); q = `What year was ${p.name} drafted?`;
+    }
+    if (opts.includes(right)) continue;
+    const a = Math.floor(rnd() * 4);
+    opts.splice(a, 0, right);
+    return { q, o: opts, a };
+  }
+  return null;
+}
+
+// ---- Rank 'Em: put 5 players in order ----
+const RANK_STATS = {
+  goals:  { label: "career goals",  order: "most to fewest" },
+  points: { label: "career points", order: "most to fewest" },
+  gp:     { label: "career games",  order: "most to fewest" },
+  height: { label: "height",        order: "tallest to shortest" },
+  weight: { label: "weight",        order: "heaviest to lightest" },
+  age:    { label: "age",           order: "oldest to youngest" },
+};
+function rankValue(p, stat) {
+  if (!p) return 0;
+  if (stat === "goals") return seasonsOf(p).reduce((n, r) => n + r.a, 0);
+  if (stat === "points") return seasonsOf(p).reduce((n, r) => n + r.c, 0);
+  if (stat === "gp") return seasonsOf(p).reduce((n, r) => n + r.gp, 0);
+  return hlValue(p, stat).v;
+}
+function rankShow(p, stat) {
+  if (stat === "goals") return `${rankValue(p, stat)} G`;
+  if (stat === "points") return `${rankValue(p, stat)} PTS`;
+  if (stat === "gp") return `${rankValue(p, stat)} GP`;
+  if (stat === "weight") return `${p.wt} lbs`;
+  if (stat === "age") return `${ageOf(p.birth)} yrs`;
+  return hlValue(p, stat).show;
+}
+function rankRandom(rnd) {
+  const stats = Object.keys(RANK_STATS);
+  for (let i = 0; i < 100; i++) {
+    const stat = stats[Math.floor(rnd() * stats.length)];
+    const pool = HL_POOL.filter(p => rankValue(p, stat));
+    const five = shuffled(pool, rnd).slice(0, 5);
+    if (five.length === 5 && new Set(five.map(p => rankValue(p, stat))).size === 5) return { stat, ids: five.map(p => p.id) };
+  }
+  return null;
+}
+let rkOrder = [];
+G.rank = {
+  title: "Rank 'Em", share: "Sweater Rank 'Em", view: "view-rank", max: 3, next: "Next puzzle", hideReveal: true,
+  cheers: ["Perfect order! 🥇", "Sorted! 🙌", "Just in time! 🚨"],
+  pool: () => HL_POOL.length >= 5 ? HL_POOL : [],
+  daily(k) {
+    const v = DAILY.rank[k];
+    if (v && RANK_STATS[v.stat] && v.ids.length === 5 && v.ids.every(i => BYID.has(i))) return { stat: v.stat, ids: v.ids };
+    return rankRandom(seeded(hash("sweater-rank-" + k)));
+  },
+  random: () => rankRandom(Math.random),
+  tid: t => `${t.stat}:${t.ids.join(".")}`,
+  answer: t => t.ids.slice().sort((a, b) => rankValue(BYID.get(b), t.stat) - rankValue(BYID.get(a), t.stat)),
+  player: t => BYID.get(t.ids[0]),
+  isWin(t, key) { return key === this.answer(t).join(","); },
+  meta: t => `Ranked ${RANK_STATS[t.stat].order} by ${RANK_STATS[t.stat].label}`,
+  reset(t) { rkOrder = t.ids.slice(); },
+  guess(t, key) {
+    if (typeof key !== "string") return null;
+    const ids = key.split(",").map(Number);
+    if (ids.length !== 5 || ids.slice().sort().join() !== t.ids.slice().sort().join()) return null;
+    rkOrder = ids;
+    return this.isWin(t, key);
+  },
+  render(t, st) {
+    const info = RANK_STATS[t.stat], ans = this.answer(t);
+    const last = st.guesses.length ? st.guesses[st.guesses.length - 1].split(",").map(Number) : null;
+    if (st.over) rkOrder = ans;
+    $("rkIntro").innerHTML = `Put these players in order of <b>${info.label}</b>, ${info.order}.`;
+    $("rkList").innerHTML = rkOrder.map((id, i) => {
+      const p = BYID.get(id), good = st.over || (last && last.join() === rkOrder.join() && ans[i] === id) ? " good" : "";
+      return `<li class="rkrow${good}${st.over ? " done" : ""}" data-id="${id}">
+        <span class="rkpos">${i + 1}</span>
+        <img src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
+        <span class="rkname"><b>${esc(p.name)}</b><small>${esc(p.team)} · ${esc(p.pos)}</small></span>
+        ${st.over ? `<span class="rkval">${esc(rankShow(p, t.stat))}</span>` : `<span class="rkbtns">
+          <button type="button" data-mv="-1" aria-label="Move ${esc(p.name)} up"${i === 0 ? " disabled" : ""}>▲</button>
+          <button type="button" data-mv="1" aria-label="Move ${esc(p.name)} down"${i === 4 ? " disabled" : ""}>▼</button></span>
+          <span class="rkgrip" aria-hidden="true">⠿</span>`}
+      </li>`;
+    }).join("");
+    $("rkHist").innerHTML = st.guesses.map((k, n) => `<span class="chip">Try ${n + 1}: ${this.squares(t, k).trim()}</span>`).join("");
+    const left = this.max - st.guesses.length;
+    $("rkLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left. Drag the rows or use the arrows. Green rows are in the right spot.`;
+    $("rkGo").hidden = !!st.over;
+  },
+  squares(t, key) { const ans = this.answer(t); return key.split(",").map((id, i) => Number(id) === ans[i] ? "🟩" : "⬛").join("") + "\n"; }
+};
+function rkMove(from, to) {
+  if (to < 0 || to > 4 || from === to) return;
+  const [id] = rkOrder.splice(from, 1);
+  rkOrder.splice(to, 0, id);
+  G.rank.render(S.rank.target, S.rank);
+}
+$("rkList").addEventListener("click", e => {
+  const b = e.target.closest("[data-mv]");
+  if (!b || S.rank.over) return;
+  const i = rkOrder.indexOf(Number(b.closest(".rkrow").dataset.id));
+  rkMove(i, i + Number(b.dataset.mv));
+});
+(() => {
+  let drag = null;
+  $("rkList").addEventListener("pointerdown", e => {
+    const row = e.target.closest(".rkrow");
+    if (!row || S.rank.over || e.target.closest("button")) return;
+    drag = { id: Number(row.dataset.id), y: e.clientY };
+    $("rkList").setPointerCapture(e.pointerId);
+    $("rkList").classList.add("dragging");
+    row.classList.add("lifted");
+  });
+  $("rkList").addEventListener("pointermove", e => {
+    if (!drag) return;
+    const rows = [...$("rkList").children];
+    const from = rkOrder.indexOf(drag.id);
+    let to = rows.findIndex(r => e.clientY < r.getBoundingClientRect().top + r.offsetHeight / 2);
+    if (to === -1) to = rows.length - 1; else if (to > from) to -= 1;
+    if (to !== from) { rkMove(from, to); $("rkList").querySelector(`[data-id="${drag.id}"]`).classList.add("lifted"); }
+  });
+  const stop = () => { if (!drag) return; drag = null; $("rkList").classList.remove("dragging"); G.rank.render(S.rank.target, S.rank); };
+  $("rkList").addEventListener("pointerup", stop);
+  $("rkList").addEventListener("pointercancel", stop);
+})();
+$("rkGo").onclick = () => {
+  const key = rkOrder.join(",");
+  if (S.rank.guesses.includes(key)) { toast("You already tried that order"); return; }
+  const before = S.rank.guesses.length;
+  doGuess(key);
+  if (!S.rank.over && S.rank.guesses.length > before) toast("Not quite. Green rows are right.");
+};
+
+// ---- Puck Drop: tap the players who match the rule ----
+const PUCK_LANES = 3, PUCK_GAP = 1150;
+function puckMatch(rule, p) {
+  if (!p) return false;
+  if (rule.kind === "team") return p.team === rule.key;
+  if (rule.kind === "nation") return p.nation === rule.key;
+  if (rule.kind === "pos") return p.pos === rule.key;
+  return hasDraft(p) && p.draft[1] === 1;
+}
+const PUCK_RULES = (() => {
+  const rules = [], count = f => PLAYERS.filter(f).length;
+  [...new Set(PLAYERS.map(p => p.team))].forEach(t => { if (count(p => p.team === t) >= 8) rules.push({ kind: "team", key: t, label: `Plays for ${teamName(t)}` }); });
+  [...new Set(PLAYERS.map(p => p.nation))].filter(n => n !== "CAN" && n !== "USA")
+    .forEach(n => { if (count(p => p.nation === n) >= 8) rules.push({ kind: "nation", key: n, label: `Born in ${countryName(n)}` }); });
+  if (count(p => p.pos === "D") >= 10) rules.push({ kind: "pos", key: "D", label: "Plays defence" });
+  if (count(p => hasDraft(p) && p.draft[1] === 1) >= 10) rules.push({ kind: "round1", key: "1", label: "First-round draft pick" });
+  return rules;
+})();
+function puckRandom(rnd) {
+  if (!PUCK_RULES.length) return null;
+  const rule = PUCK_RULES[Math.floor(rnd() * PUCK_RULES.length)];
+  const yes = PLAYERS.filter(p => puckMatch(rule, p)).map(p => p.id), no = PLAYERS.filter(p => !puckMatch(rule, p)).map(p => p.id);
+  const m = Math.min(13, yes.length);
+  return { ...rule, ids: shuffled([...shuffled(yes, rnd).slice(0, m), ...shuffled(no, rnd).slice(0, 36 - m)], rnd) };
+}
+let puckRun = null;
+G.puck = {
+  kind: "score", title: "Puck Drop", share: "Sweater Puck Drop", view: "view-puck", max: 99, next: "Play again", hideReveal: true,
+  pool: () => PUCK_RULES.length ? PUCK_RULES : [],
+  daily(k) {
+    const v = DAILY.puck[k];
+    if (v && v.ids && v.ids.every(i => BYID.has(i))) return v;
+    return puckRandom(seeded(hash("sweater-puck-" + k)));
+  },
+  random: () => ({ ...puckRandom(Math.random), rid: Math.random() }),
+  tid: t => t.rid ? `puck:${t.rid}` : `${t.kind}:${t.key}:${hash(t.ids.join(","))}`,
+  player: () => null,
+  tally(t, g) {
+    const taps = g.filter(x => x !== "END"), right = taps.filter(id => puckMatch(t, BYID.get(id))).length;
+    return { right, wrong: taps.length - right, total: t.ids.filter(id => puckMatch(t, BYID.get(id))).length };
+  },
+  score(t, g) { const { right, wrong } = this.tally(t, g); return Math.max(0, right - wrong); },
+  isWin: () => false,
+  isDone: (t, g) => g.includes("END"),
+  wonGame(t, g) { const { right, wrong, total } = this.tally(t, g); return right === total && wrong === 0; },
+  meta: t => t.label,
+  endText(t, g, won) {
+    const { right, wrong, total } = this.tally(t, g);
+    return { result: `${this.score(t, g)} ${this.score(t, g) === 1 ? "point" : "points"}`,
+             cheer: won ? "Clean sheet! Every match, no mistakes 🥅" : `${right} of ${total} caught, ${wrong} wrong` };
+  },
+  celebrate(t, g, won) { const { right, total } = this.tally(t, g); return won || right >= total * 0.8; },
+  archiveStatus: h => `${h.s} pts`,
+  shareText(t, saved, num, link) {
+    const { right, wrong, total } = this.tally(t, saved.guesses);
+    return `Sweater Puck Drop #${num} · ${t.label}\n🥅 ${right}/${total} caught · ❌ ${wrong} wrong\nScore: ${this.score(t, saved.guesses)}${link}`;
+  },
+  clockKey(t) { return `${mode}:${S.puck.day || ""}:${this.tid(t)}`; },
+  reset(t) {
+    stopPuck();
+    $("pkRule").textContent = t.label;
+    $("pkLane").innerHTML = "";
+    const c = store.get("sweater-puck-clock");
+    this.stale = mode !== "unlimited" && c && c.key === this.clockKey(t);
+  },
+  guess(t, x) { return x === "END" ? false : t.ids.includes(x) ? false : null; },
+  render(t, st) {
+    const { right, wrong, total } = this.tally(t, st.guesses);
+    $("pkScore").textContent = Math.max(0, right - wrong);
+    $("pkCaught").textContent = `${right}/${total}`;
+    $("pkStart").hidden = !!(puckRun || st.over);
+    $("pkLeft").textContent = st.over ? "" : puckRun ? "Tap only the players who match." : "Names slide across the ice. Tap the ones who match the rule. Wrong taps cost a point.";
+    if (st.over) {
+      stopPuck();
+      const taps = st.guesses.filter(x => x !== "END");
+      $("pkLane").innerHTML = `<div class="pksummary">${t.ids.filter(id => puckMatch(t, BYID.get(id)) || taps.includes(id)).map(id => {
+        const hit = taps.includes(id), ok = puckMatch(t, BYID.get(id));
+        return `<span class="chip ${hit && ok ? "hit" : hit ? "bad" : "missed"}">${esc(BYID.get(id).name)}</span>`;
+      }).join("")}</div>`;
+    } else if (!puckRun && this.stale && st.guesses.length) {
+      this.stale = false;
+      setTimeout(() => { if (game === "puck" && !S.puck.over) doGuess("END"); }, 0);
+    }
+  },
+};
+function stopPuck() { if (puckRun) { cancelAnimationFrame(puckRun.raf); puckRun = null; } }
+function startPuck() {
+  const st = S.puck, t = st.target;
+  if (game !== "puck" || !t || st.over || puckRun) return;
+  if (mode !== "unlimited") store.set("sweater-puck-clock", { key: G.puck.clockKey(t) });
+  const lane = $("pkLane"), queue = t.ids.filter(id => !st.guesses.includes(id));
+  lane.innerHTML = "";
+  puckRun = { t0: performance.now(), pucks: [], next: 0, queue };
+  const step = now => {
+    if (!puckRun) return;
+    const run = puckRun, elapsed = now - run.t0;
+    while (run.next < run.queue.length && elapsed >= run.next * PUCK_GAP) {
+      const id = run.queue[run.next], el = document.createElement("button");
+      el.type = "button"; el.className = "puck"; el.dataset.id = id;
+      el.textContent = BYID.get(id).name;
+      el.style.top = `${(run.next % PUCK_LANES) * (100 / PUCK_LANES) + 4}%`;
+      lane.appendChild(el);
+      run.pucks.push({ el, born: run.next * PUCK_GAP, dur: 3600 - 1200 * (run.next / Math.max(1, run.queue.length - 1)) });
+      run.next++;
+    }
+    const w = lane.clientWidth;
+    run.pucks = run.pucks.filter(pk => {
+      const k = (elapsed - pk.born) / pk.dur;
+      if (k > 1) { pk.el.remove(); return false; }
+      pk.el.style.transform = `translateX(${w - k * (w + pk.el.offsetWidth + 20)}px)`;
+      return true;
+    });
+    if (run.next >= run.queue.length && !run.pucks.length) {
+      stopPuck();
+      if (game === "puck" && !S.puck.over) doGuess("END");
+      return;
+    }
+    run.raf = requestAnimationFrame(step);
+  };
+  puckRun.raf = requestAnimationFrame(step);
+  G.puck.render(t, st);
+}
+$("pkStart").onclick = startPuck;
+$("pkLane").addEventListener("pointerdown", e => {
+  const el = e.target.closest(".puck");
+  if (!el || !puckRun || el.classList.contains("tapped")) return;
+  const id = Number(el.dataset.id), ok = puckMatch(S.puck.target, BYID.get(id));
+  el.classList.add("tapped", ok ? "good" : "bad");
+  doGuess(id);
+  setTimeout(() => el.remove(), 350);
+});
+
+// ---- Shootout: answer to earn a shot, then beat the goalie ----
+const NET_ZONES = [[62, 52], [238, 52], [62, 132], [238, 132], [150, 150]];
+const GOALIE_AT = [[-52, -26], [52, -26], [-56, 16], [56, 16], [0, 22]];
+function shootRandom(rnd) {
+  const rounds = [];
+  for (let i = 0; i < 5; i++) {
+    const q = quizQuestion(rnd);
+    if (!q) return null;
+    q.keep = shuffled([0, 1, 2, 3, 4], rnd).slice(0, 2).sort();
+    rounds.push(q);
+  }
+  return { rounds, rid: rnd === Math.random ? Math.random() : 0 };
+}
+let shootUI = { phase: "ask", choice: null, zone: null };
+G.shoot = {
+  kind: "score", title: "Shootout", share: "Sweater Shootout", view: "view-shoot", max: 5, next: "Play again", hideReveal: true,
+  repeat: true,   // the same answer and spot can come up in different rounds
+  pool: () => PLAYERS.length >= 20 ? PLAYERS : [],
+  daily(k) {
+    const v = DAILY.shoot[k];
+    if (v && v.rounds && v.rounds.length === 5) return v;
+    return shootRandom(seeded(hash("sweater-shoot-" + k)));
+  },
+  random: () => shootRandom(Math.random),
+  tid: t => `shoot:${t.rid || hash(t.rounds.map(r => r.q).join("|"))}`,
+  player: () => null,
+  outcome(t, x, i) {
+    const [c, z] = x.split(":").map(Number), r = t.rounds[i];
+    return c !== r.a ? "miss" : z >= 0 && !r.keep.includes(z) ? "goal" : "save";
+  },
+  goals(t, g) { return g.filter((x, i) => this.outcome(t, x, i) === "goal").length; },
+  score(t, g) { return this.goals(t, g) * 2; },
+  isWin: () => false,
+  isDone: (t, g) => g.length >= 5,
+  wonGame(t, g) { return this.goals(t, g) >= 3; },
+  meta: () => "",
+  endText(t, g, won) {
+    const n = this.goals(t, g);
+    return { result: `${n} for 5`, cheer: n === 5 ? "Perfect shootout! 🚨" : won ? "You win the shootout! 🏆" : "The goalie stole this one. 🧤" };
+  },
+  celebrate: (t, g, won) => won,
+  archiveStatus: h => `${h.s / 2}/5 goals`,
+  shareText(t, saved, num, link) {
+    const icon = { goal: "🚨", save: "🧤", miss: "❌" };
+    return `Sweater Shootout #${num}\n${saved.guesses.map((x, i) => icon[this.outcome(t, x, i)]).join("")}\n${this.goals(t, saved.guesses)}/5 goals${link}`;
+  },
+  reset() { shootUI = { phase: "ask", choice: null, zone: null }; },
+  guess(t, x) { return typeof x === "string" && /^[0-3]:(-1|[0-4])$/.test(x) ? false : null; },
+  render(t, st) {
+    const i = st.guesses.length, icon = { goal: "🚨", save: "🧤", miss: "❌" };
+    $("shDots").innerHTML = [0, 1, 2, 3, 4].map(n => `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? icon[this.outcome(t, st.guesses[n], n)] : n + 1}</span>`).join("");
+    const lastI = i - 1, showResult = shootUI.phase === "result" && lastI >= 0;
+    const r = t.rounds[showResult ? lastI : Math.min(i, 4)];
+    $("shQ").textContent = st.over && !showResult ? "Shootout over" : `Shooter ${(showResult ? lastI : i) + 1}: ${r.q}`;
+    const answered = showResult || shootUI.phase === "aim";
+    const chosen = showResult ? Number(st.guesses[lastI].split(":")[0]) : shootUI.choice;
+    $("shOpts").innerHTML = st.over && !showResult ? "" : r.o.map((o, n) => {
+      const cls = answered ? (n === r.a ? " right" : n === chosen ? " wrong" : " dim") : "";
+      return `<button type="button" class="shopt${cls}" data-c="${n}"${answered ? " disabled" : ""}>${esc(o)}</button>`;
+    }).join("");
+    const aiming = shootUI.phase === "aim";
+    $("shNet").classList.toggle("aim", aiming);
+    $("shNet").querySelectorAll(".zone").forEach(z => z.classList.toggle("off", !aiming));
+    let msg = "";
+    if (showResult) {
+      const out = this.outcome(t, st.guesses[lastI], lastI);
+      msg = out === "goal" ? "Goal! 🚨" : out === "save" ? "Saved by the goalie 🧤" : "Wrong answer, so no shot ❌";
+    } else if (aiming) msg = "Pick your spot and shoot.";
+    else if (!st.over) msg = "Answer right to earn a shot.";
+    $("shMsg").textContent = msg;
+    $("shNext").hidden = !(showResult && !st.over);
+    if (!showResult && !aiming) { $("shPuck").setAttribute("class", "shpuck"); $("shGoalie").style.transform = ""; }
+  },
+};
+function shootAnimate(zone, keep) {
+  const puck = $("shPuck"), goalie = $("shGoalie");
+  const [x, y] = NET_ZONES[zone], save = keep.includes(zone);
+  const dive = save ? zone : keep[0];
+  goalie.style.transform = `translate(${GOALIE_AT[dive][0]}px, ${GOALIE_AT[dive][1]}px)`;
+  puck.style.setProperty("--tx", `${x - 150}px`);
+  puck.style.setProperty("--ty", `${y - 190}px`);
+  puck.setAttribute("class", `shpuck fly${save ? " saved" : ""}`);
+}
+$("shOpts").addEventListener("click", e => {
+  const b = e.target.closest("[data-c]"), st = S.shoot;
+  if (!b || st.over || shootUI.phase !== "ask") return;
+  const c = Number(b.dataset.c), r = st.target.rounds[st.guesses.length];
+  if (c === r.a) { shootUI = { phase: "aim", choice: c }; G.shoot.render(st.target, st); }
+  else { shootUI = { phase: "result" }; doGuess(`${c}:-1`); }
+});
+$("shNet").addEventListener("click", e => {
+  const z = e.target.closest("[data-z]"), st = S.shoot;
+  if (!z || shootUI.phase !== "aim" || st.over) return;
+  const zone = Number(z.dataset.z), r = st.target.rounds[st.guesses.length];
+  shootAnimate(zone, r.keep);
+  const choice = shootUI.choice;
+  shootUI = { phase: "result" };
+  setTimeout(() => doGuess(`${choice}:${zone}`), 450);
+});
+$("shNext").onclick = () => { shootUI = { phase: "ask" }; G.shoot.render(S.shoot.target, S.shoot); };
+
+// ---- Zamboni Reveal: clear the ice to find the player ----
+const ZAM_BRUSH = 24;
+let zamCtx = null, zamLast = null, zamMax = 0;
+function zamPaint(t) {
+  const cv = $("zmIce"), dpr = window.devicePixelRatio || 1, size = cv.clientWidth || 300;
+  cv.width = cv.height = Math.round(size * dpr);
+  zamCtx = cv.getContext("2d");
+  zamCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const g = zamCtx.createLinearGradient(0, 0, size, size);
+  g.addColorStop(0, "#f4f9fc"); g.addColorStop(1, "#cfe1ec");
+  zamCtx.globalCompositeOperation = "source-over";
+  zamCtx.fillStyle = g; zamCtx.fillRect(0, 0, size, size);
+  const rnd = seeded(hash(String(t.id)));
+  zamCtx.strokeStyle = "rgba(255,255,255,.75)";
+  for (let i = 0; i < 40; i++) {
+    zamCtx.lineWidth = .5 + rnd() * 1.5;
+    zamCtx.beginPath();
+    const x = rnd() * size, y = rnd() * size, a = rnd() * Math.PI;
+    zamCtx.moveTo(x, y); zamCtx.lineTo(x + Math.cos(a) * 60 * rnd(), y + Math.sin(a) * 60 * rnd());
+    zamCtx.stroke();
+  }
+  zamCtx.globalCompositeOperation = "destination-out";
+  zamCtx.lineCap = "round"; zamCtx.lineWidth = ZAM_BRUSH * 2;
+}
+function zamPct() {
+  if (!zamCtx) return zamMax;
+  const cv = $("zmIce"), data = zamCtx.getImageData(0, 0, cv.width, cv.height).data;
+  let clear = 0, n = 0;
+  for (let i = 3; i < data.length; i += 4 * 7) { n++; if (data[i] < 128) clear++; }
+  zamMax = Math.max(zamMax, Math.round(clear / n * 100));
+  return zamMax;
+}
+G.zam = {
+  kind: "score", title: "Zamboni Reveal", share: "Sweater Zamboni", view: "view-zam", max: 3, next: "Next player",
+  pool: () => BL_POOL,
+  daily(k) {
+    const p = BYID.get(DAILY.zam[k]);
+    return p && p.headshot ? p : BL_POOL[hash("sweater-zam-" + k) % BL_POOL.length];
+  },
+  random: () => pick(BL_POOL),
+  tid: t => t.id, player: t => t,
+  parse: x => String(x).split("@").map(Number),
+  isWin(t, x) { return this.parse(x)[0] === t.id; },
+  isDone(t, g) { return g.some(x => this.isWin(t, x)) || g.length >= 3; },
+  wonGame(t, g) { return g.some(x => this.isWin(t, x)); },
+  score(t, g) {
+    const i = g.findIndex(x => this.isWin(t, x));
+    return i < 0 ? 0 : Math.max(1, 10 - Math.floor(this.parse(g[i])[1] / 10) - 2 * i);
+  },
+  meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
+  endText(t, g, won) {
+    const pct = won ? this.parse(g[g.length - 1])[1] : 0;
+    return won ? { result: `Got him with ${pct}% of the ice cleared`, cheer: `${this.score(t, g)} points` }
+               : { result: "Out of guesses", cheer: "The mystery player was" };
+  },
+  celebrate: (t, g, won) => won,
+  archiveStatus: h => h.w ? `${h.s} pts` : "✗",
+  shareText(t, saved, num, link) {
+    const won = this.wonGame(t, saved.guesses), pct = this.parse(saved.guesses[saved.guesses.length - 1])[1];
+    return `Sweater Zamboni #${num} · ${this.score(t, saved.guesses)} pts\n${won ? `🧊 ${pct}% of the ice cleared · ${saved.guesses.length} ${saved.guesses.length === 1 ? "guess" : "guesses"}` : "❌ Missed"}${link}`;
+  },
+  reset(t) {
+    $("zmWrong").innerHTML = "";
+    $("zmImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
+    $("zmImg").src = t.headshot || FALLBACK;
+    zamMax = 0;
+    requestAnimationFrame(() => {
+      zamPaint(t);
+      const done = S.zam.guesses;
+      if (done.length && !S.zam.over) {   // after a reload, clear a matching area in the middle
+        const pct = this.parse(done[done.length - 1])[1], size = $("zmIce").clientWidth;
+        zamCtx.beginPath(); zamCtx.arc(size / 2, size / 2, Math.sqrt(pct / 100 * size * size / Math.PI), 0, Math.PI * 2);
+        zamCtx.fill();
+        zamMax = pct;
+      }
+      this.render(t, S.zam);
+    });
+  },
+  guess(t, x) {
+    if (typeof x !== "string" || !/^\d+@\d{1,3}$/.test(x)) return null;
+    const [id] = this.parse(x), p = BYID.get(id);
+    if (!p) return null;
+    if (id !== t.id) addWrong("zmWrong", p);
+    return id === t.id;
+  },
+  render(t, st) {
+    if (st.over && zamCtx) { const cv = $("zmIce"); zamCtx.clearRect(0, 0, cv.width, cv.height); }
+    const left = this.max - st.guesses.length;
+    $("zmLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "guess" : "guesses"} left · ${zamMax}% of the ice cleared. The less you clear, the more points you get.`;
+  },
+};
+(() => {
+  const cv = $("zmIce");
+  const at = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener("pointerdown", e => {
+    if (S.zam.over || !zamCtx) return;
+    cv.setPointerCapture(e.pointerId);
+    zamLast = at(e);
+    zamCtx.beginPath(); zamCtx.arc(zamLast[0], zamLast[1], ZAM_BRUSH, 0, Math.PI * 2); zamCtx.fill();
+  });
+  cv.addEventListener("pointermove", e => {
+    if (!zamLast || S.zam.over) return;
+    const p = at(e);
+    zamCtx.beginPath(); zamCtx.moveTo(zamLast[0], zamLast[1]); zamCtx.lineTo(p[0], p[1]); zamCtx.stroke();
+    zamLast = p;
+  });
+  const up = () => { if (!zamLast) return; zamLast = null; zamPct(); G.zam.render(S.zam.target, S.zam); };
+  cv.addEventListener("pointerup", up);
+  cv.addEventListener("pointercancel", up);
+})();
+
+// finish a running arcade game if the player leaves it
+function leaveGame(g) {
+  if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
+  if (g === "shoot" && shootUI.phase === "aim") shootUI = { phase: "ask" };
+}
+
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
 const KEYS = Object.fromEntries(Object.keys(G).map(g => [g, g === "classic"
@@ -2179,7 +2984,7 @@ function updateLabels() {
     : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
-  for (const id of ["guess", "slGuess", "jyGuess", "blGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
+  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "zmGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())}`
     : mode === "archive" ? `Archive #${dailyNumber(game, archiveDay)}` : "Unlimited";
   $("unlimited").checked = mode === "unlimited";
@@ -2218,6 +3023,7 @@ $("hardMode").addEventListener("change", e => changeOption("hard", e.target.chec
 document.querySelectorAll("[data-order]").forEach(b => b.addEventListener("click", () => changeOption("order", b.dataset.order)));
 
 function setGame(g) {
+  if (g !== game) leaveGame(game);
   game = g;
   store.set("sweater-game", g);
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = v !== G[g].view; });
@@ -2302,15 +3108,15 @@ function addClassicRow(p, t) {
 }
 
 // ======================= player search (autocomplete) =======================
-function makeSearch(inputId, listId) {
+function makeSearch(inputId, listId, toGuess = id => id) {
   const input = $(inputId), ul = $(listId);
   let idx = -1, found = [];
   function close() { ul.hidden = true; idx = -1; input.setAttribute("aria-expanded", false); }
-  function choose(p) { if (!p) return; close(); input.value = ""; doGuess(p.id); }
+  function choose(p) { if (!p) return; close(); input.value = ""; doGuess(toGuess(p.id)); }
   function render() {
     const q = norm(input.value.trim());
     if (!q) return close();
-    const used = S[game].guesses;
+    const used = S[game].guesses.map(x => typeof x === "string" && x.includes("@") ? Number(x.split("@")[0]) : x);
     found = PLAYERS.filter(p => !used.includes(p.id) && norm(p.name).includes(q)).slice(0, 30);
     ul.innerHTML = "";
     found.forEach((p, i) => {
@@ -2338,7 +3144,8 @@ function makeSearch(inputId, listId) {
   return { close };
 }
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
-                  makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts")];
+                  makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
+                  makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`)];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
 
@@ -2563,6 +3370,10 @@ const LB_RULES = {
   draft: "Draft Day: 10 points on the first try, then 7, 5, 3 and 1 on the fifth.",
   map: "Birthplace: 10 points within 100 km, 8 within 250, 6 within 500, 4 within 1,000, 2 within 2,500, minus 2 for each extra pin.",
   conn: "Connections: 10 points with no mistakes, then 8, 6 and 4. Running out of mistakes scores 0.",
+  rank: "Rank 'Em: 10 points on the first try, 6 on the second, 3 on the third.",
+  puck: "Puck Drop: 1 point for each right tap, minus 1 for each wrong tap.",
+  shoot: "Shootout: 2 points for every goal, up to 10.",
+  zam: "Zamboni Reveal: up to 10 points, minus 1 for every 10% of the ice cleared and 2 for each extra guess.",
   ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
@@ -2690,7 +3501,7 @@ async function renderLeaderboard() {
       <li class="${r.me ? "me" : ""}">
         <span class="rk">${medal(r.rank)}</span>
         <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${hlBoard ? `best run ${r.top}` : rosterBoard ? `best ${r.top}` : `${r.wins} won`}</small>`}</span>
-        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : rosterBoard ? `named ${r.top}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
+        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : rosterBoard ? `named ${r.top}` : lbGame === "puck" ? `${r.top} caught` : lbGame === "shoot" ? `${r.top} ${r.top === 1 ? "goal" : "goals"}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
       </li>`).join("")
       : `<li class="empty">No scores yet${lbPeriod === "today" ? " today" : ""}. Finish the daily puzzle to get on the board.</li>`;
     $("lbYou").textContent = d.you ? `You're #${d.you.rank} of ${d.total} with ${d.you.points} points.`
@@ -2713,6 +3524,7 @@ const HUB = [
     ["statline", "📈", "Name him from his season-by-season stats."],
     ["journey", "🧭", "Name him from the teams he's played for."],
     ["blur", "🔍", "Name him from a blurry photo that sharpens as you guess."],
+    ["zam", "🧊", "Clear the ice to reveal him. Guess early for more points."],
   ]},
   { title: "Know the details", tone: "blue", games: [
     ["team", "🛡️", "Which team was he on that season?"],
@@ -2722,8 +3534,13 @@ const HUB = [
   ]},
   { title: "Streaks and puzzles", tone: "amber", games: [
     ["hl", "↕️", "Whose number is bigger? Keep the streak alive."],
+    ["rank", "🥇", "Put five players in order by a stat."],
     ["roster", "⏱️", "Name as much of a team's roster as you can in 60 seconds."],
     ["conn", "🧩", "Sort 16 players into 4 hidden groups."],
+  ]},
+  { title: "Arcade", tone: "red", games: [
+    ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
+    ["shoot", "🥅", "Answer right to earn a shot, then beat the goalie."],
   ]},
 ];
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
@@ -2756,28 +3573,36 @@ function renderHub() {
   $("hubSections").innerHTML = HUB.map(sec => `
     <section class="hubsec tone-${sec.tone}">
       <h2>${sec.title}</h2>
-      <div class="hubgrid">${sec.games.map(([id, icon, blurb]) => {
+      <div class="glist">${sec.games.map(([id, icon, blurb]) => {
         const [cls, text] = hubStatus(id);
         total++; if (cls === "done" || cls === "missed") played++;
         const ready = id === "hl" ? HL_POOL.length > 1 : G[id].pool().length > 0;
-        return `<button type="button" class="gcard ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
+        return `<button type="button" class="grow ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
           <span class="gicon" aria-hidden="true">${icon}</span>
           <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small></span>
-          <span class="gstat">${ready ? esc(text) : "Coming soon"}</span>
+          <span class="gstat">${ready ? esc(text) : "Not available"}</span>
+          <span class="chev" aria-hidden="true">›</span>
         </button>`;
       }).join("")}</div>
     </section>`).join("");
-  $("hubProgress").textContent = played
-    ? `You've played ${played} of ${total} daily games today.`
-    : "Every game has a new daily puzzle at midnight Eastern.";
+  $("hubProgress").textContent = `${played} of ${total} played today.`;
+  $("hubBar").style.width = `${Math.round(played / total * 100)}%`;
+  $("hubDate").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  document.querySelector(".partycard").disabled = !API_ON;
+  document.querySelector(".partycard .partycta").textContent = API_ON ? "Start a party" : "Not available";
 }
-$("hubSections").addEventListener("click", e => {
+$("view-hub").addEventListener("click", e => {
   const b = e.target.closest("[data-open]");
-  if (b && !b.disabled) openGame(b.dataset.open);
+  if (!b || b.disabled) return;
+  if (b.dataset.open === "party") openParty("");
+  else openGame(b.dataset.open);
 });
 
 function showHub(push = true) {
+  leaveGame(game);
+  closeParty();
   onHub = true;
+  document.body.classList.add("hubmode");
   if (push && location.hash) history.pushState(null, "", location.pathname + location.search);
   $("view-hub").hidden = false;
   $("gameBar").hidden = true;
@@ -2793,7 +3618,9 @@ function openGame(id, push = true) {
   if (!G[id]) return showHub(push);
   if (id.startsWith("hl_")) store.set("sweater-hl-game", id);
   if (push && location.hash !== `#${id}`) history.pushState(null, "", `#${id}`);
+  closeParty();
   onHub = false;
+  document.body.classList.remove("hubmode");
   $("view-hub").hidden = true;
   $("gameBar").hidden = false;
   setGame(id);
@@ -2802,6 +3629,10 @@ function openGame(id, push = true) {
 
 function route() {
   const id = decodeURIComponent(location.hash.slice(1));
+  if (id === "party" || id.startsWith("party-")) {
+    if ($("view-party").hidden) openParty(id.slice(6).toUpperCase(), false);
+    return;
+  }
   if (id && (G[id] || id === "hl")) {
     if (!onHub && id === game) return;
     openGame(id, false);
@@ -2826,6 +3657,218 @@ $("stGameSel").addEventListener("change", e => { statsGame = e.target.value; ren
 $("lbGameSel").addEventListener("change", e => { lbGame = e.target.value; $("lbList").innerHTML = ""; renderLeaderboard(); });
 $("arGameSel").addEventListener("change", e => { renderArchive(e.target.value); });
 
+// ======================= party mode =======================
+const PARTY_SHAPES = ["▲", "◆", "●", "■"];
+let party = null, partyTimer = null, partyBusy = false;
+const partySaved = () => { const p = store.get("sweater-party"); return p && Date.now() - p.at < 6 * 3600e3 ? p : null; };
+
+function openParty(code, push = true) {
+  if (push) history.pushState(null, "", code ? `#party-${code}` : "#party");
+  leaveGame(game);
+  onHub = false;
+  document.body.classList.remove("hubmode");
+  $("view-hub").hidden = true;
+  new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = true; });
+  $("view-party").hidden = false;
+  $("gameBar").hidden = false;
+  $("archBar").hidden = true;
+  $("gTitle").textContent = "Party Mode";
+  $("modeLabel").textContent = "Live with friends";
+  document.title = "Party Mode · Sweater";
+  const saved = partySaved();
+  party = saved && (!code || saved.code === code) ? { ...saved, state: null } : { role: null, joinCode: code || "" };
+  partyRender();
+  partyPoll();
+  window.scrollTo({ top: 0 });
+}
+function closeParty() {
+  clearInterval(partyTimer);
+  partyTimer = null;
+  $("view-party").hidden = true;
+}
+function partyPoll() {
+  clearInterval(partyTimer);
+  partyTimer = setInterval(partyTick, 1000);
+  partyTick();
+}
+async function partyTick() {
+  if (!party || !party.code || partyBusy || $("view-party").hidden || document.hidden) return;
+  partyBusy = true;
+  try {
+    const q = party.role === "player" ? `&pid=${party.pid}&key=${party.key}` : "";
+    const st = await api(`/api/party/state?code=${party.code}${q}`);
+    party.offset = st.now - Date.now();
+    const changed = !party.state || party.state.status !== st.status || party.state.qi !== st.qi;
+    party.state = st;
+    if (party.role === "host" && st.status === "question" &&
+        (partyNow() >= st.endsAt || (st.players.length && st.answered >= st.players.length))) {
+      party.state = await api("/api/party/host", { code: party.code, hostKey: party.hostKey, action: "reveal" });
+    }
+    if (changed) party.picked = null;
+    partyRender();
+  } catch (e) {
+    if (e.status === 404) { store.set("sweater-party", null); party = { role: null, joinCode: "" }; partyRender("That game has ended."); }
+  } finally { partyBusy = false; }
+}
+const partyNow = () => Date.now() + (party.offset || 0);
+
+async function partyHostNew() {
+  try {
+    const r = await api("/api/party/create", {});
+    party = { role: "host", code: r.code, hostKey: r.hostKey, at: Date.now(), state: null, rounds: 10 };
+    store.set("sweater-party", party);
+    history.replaceState(null, "", "#party");
+    partyTick();
+  } catch (e) { partyRender(e.status ? e.message : "Couldn't reach the server. Try again."); }
+}
+async function partyJoin() {
+  const code = $("ptCode").value.trim().toUpperCase(), name = $("ptName").value.trim();
+  if (!/^[A-Z]{4}$/.test(code)) { partyRender("Enter the 4-letter code from the big screen."); return; }
+  try {
+    const r = await api("/api/party/join", { code, name });
+    party = { role: "player", code: r.code, pid: r.pid, key: r.key, name: r.name, at: Date.now(), state: null };
+    store.set("sweater-party", party);
+    store.set("sweater-party-name", name);
+    partyTick();
+  } catch (e) { partyRender(e.status ? e.message : "Couldn't reach the server. Try again."); }
+}
+async function partyHostAction(action) {
+  const body = { code: party.code, hostKey: party.hostKey, action };
+  if (action === "start") {
+    const qs = [];
+    for (let i = 0; qs.length < party.rounds && i < 200; i++) { const q = quizQuestion(Math.random); if (q && !qs.some(x => x.q === q.q)) qs.push(q); }
+    body.questions = qs;
+  }
+  try { party.state = await api("/api/party/host", body); party.picked = null; partyRender(); }
+  catch (e) { toast(e.status ? e.message : "Couldn't reach the server"); }
+}
+async function partyAnswer(choice) {
+  const st = party.state;
+  if (!st || st.status !== "question" || party.picked !== null && party.picked !== undefined) return;
+  party.picked = choice;
+  partyRender();
+  try { await api("/api/party/answer", { code: party.code, pid: party.pid, key: party.key, qi: st.qi, choice }); }
+  catch (e) { toast(e.status ? e.message : "Couldn't send your answer"); }
+}
+function partyLeave() {
+  store.set("sweater-party", null);
+  party = { role: null, joinCode: "" };
+  partyRender();
+}
+
+function partyTiles(st, host) {
+  const q = st.question, reveal = st.status !== "question";
+  return `<div class="pttiles${host ? " big" : ""}">${q.o.map((o, i) => {
+    const picked = party.picked === i || (st.you && st.you.choice === i);
+    const cls = reveal ? (i === q.a ? " right" : " faded") : picked ? " picked" : "";
+    return `<button type="button" class="pttile c${i}${cls}" data-choice="${i}"${host || reveal || party.picked != null || st.you ? " disabled" : ""}>
+      <span class="shape" aria-hidden="true">${PARTY_SHAPES[i]}</span><span>${esc(o)}</span>
+      ${reveal && st.counts ? `<b class="count">${st.counts[i]}</b>` : ""}</button>`;
+  }).join("")}</div>`;
+}
+function partyBoard(st, n = 5) {
+  return `<ol class="ptboard">${st.players.slice(0, n).map((p, i) => `<li class="${p.me ? "me" : ""}"><span>${i + 1}</span><b>${esc(p.name)}</b><em>${p.score.toLocaleString()}</em></li>`).join("")}</ol>`;
+}
+let partySig = "";
+function partyRender(message = "") {
+  const box = $("ptBody"), st = party && party.state;
+  const sig = JSON.stringify([message, party && party.role, party && party.picked, party && party.rounds, st && { ...st, now: 0 }]);
+  if (sig === partySig && box.innerHTML) {
+    if (st && st.endsAt) {
+      const secs = Math.max(0, Math.ceil((st.endsAt - partyNow()) / 1000));
+      if ($("ptSecs")) $("ptSecs").textContent = secs;
+      if ($("ptBar")) $("ptBar").style.width = `${Math.min(100, secs / st.limit * 100)}%`;
+    }
+    return;
+  }
+  partySig = sig;
+  const note = message ? `<p class="ptnote">${esc(message)}</p>` : "";
+  if (!API_ON) { box.innerHTML = `<p class="ptnote">Party Mode needs the leaderboard server, which isn't set up for this site.</p>`; return; }
+  if (!party || !party.role) {
+    box.innerHTML = `${note}
+      <div class="ptchoice">
+        <section class="ptpanel">
+          <h3>Host a game</h3>
+          <p>Use a TV, laptop or tablet everyone can see. Friends join on their phones.</p>
+          <button type="button" class="btn" id="ptHost">Host on this screen</button>
+        </section>
+        <section class="ptpanel">
+          <h3>Join a game</h3>
+          <label>Code <input id="ptCode" maxlength="4" autocomplete="off" autocapitalize="characters" placeholder="ABCD" value="${esc(party ? party.joinCode || "" : "")}"></label>
+          <label>Your name <input id="ptName" maxlength="14" autocomplete="nickname" placeholder="Name" value="${esc(store.get("sweater-party-name") || "")}"></label>
+          <button type="button" class="btn" id="ptJoin">Join</button>
+        </section>
+      </div>`;
+    $("ptHost").onclick = partyHostNew;
+    $("ptJoin").onclick = partyJoin;
+    [$("ptCode"), $("ptName")].forEach(i => i.addEventListener("keydown", e => { if (e.key === "Enter") partyJoin(); }));
+    return;
+  }
+  if (!st) { box.innerHTML = `${note}<p class="ptnote">Connecting…</p>`; return; }
+  const secs = st.endsAt ? Math.max(0, Math.ceil((st.endsAt - partyNow()) / 1000)) : 0;
+  const leave = `<button type="button" class="linkbtn ptleave" id="ptLeave">${party.role === "host" ? "End and leave" : "Leave game"}</button>`;
+  let html = "";
+  if (party.role === "host") {
+    const link = `${location.origin}${location.pathname}#party-${st.code}`;
+    if (st.status === "lobby") {
+      html = `<div class="ptlobby">
+          <p class="ptlabel">On your phone, go to <b>${esc(location.host + location.pathname.replace(/index\.html$/, ""))}</b>, choose Party Mode and enter</p>
+          <p class="ptcode">${st.code}</p>
+          <p class="ptlink">or open ${esc(link)}</p>
+        </div>
+        <div class="ptplayers">${st.players.length ? st.players.map(p => `<span class="chip">${esc(p.name)}</span>`).join("") : "<p class='ptnote'>Waiting for players to join…</p>"}</div>
+        <div class="ptcontrols">
+          <label>Questions <select id="ptRounds">${[5, 10, 15].map(n => `<option${n === party.rounds ? " selected" : ""}>${n}</option>`).join("")}</select></label>
+          <button type="button" class="btn" id="ptStart"${st.players.length ? "" : " disabled"}>Start game</button>
+        </div>`;
+    } else if (st.status === "question" || st.status === "reveal") {
+      const reveal = st.status === "reveal";
+      html = `<div class="pthead"><span>Question ${st.qi + 1} of ${st.total}</span>
+          <span>${reveal ? "Answer" : `${st.answered} of ${st.players.length} answered`}</span></div>
+        ${reveal ? "" : `<div class="pttimer"><i id="ptBar" style="width:${Math.min(100, secs / st.limit * 100)}%"></i><b id="ptSecs">${secs}</b></div>`}
+        <h3 class="ptq">${esc(st.question.q)}</h3>
+        ${partyTiles(st, true)}
+        ${reveal ? `${partyBoard(st)}<div class="ptcontrols"><button type="button" class="btn" id="ptNext">${st.qi + 1 >= st.total ? "See final results" : "Next question"}</button></div>`
+                 : `<div class="ptcontrols"><button type="button" class="btn ghost" id="ptReveal">Show answer now</button></div>`}`;
+    } else {
+      const podium = st.players.slice(0, 3);
+      html = `<h3 class="ptq">Final results</h3>
+        <div class="ptpodium">${podium.map((p, i) => `<div class="step s${i}"><span>${["🥇", "🥈", "🥉"][i]}</span><b>${esc(p.name)}</b><em>${p.score.toLocaleString()}</em></div>`).join("")}</div>
+        ${partyBoard(st, 30)}
+        <div class="ptcontrols"><button type="button" class="btn" id="ptAgain">Host another game</button></div>`;
+    }
+  } else {
+    const me = st.players.find(p => p.me), rank = st.players.findIndex(p => p.me) + 1;
+    if (st.status === "lobby") {
+      html = `<div class="ptwait"><p class="ptbig">You're in, ${esc(party.name)}!</p><p>Watch the big screen. The game starts soon.</p><p class="ptnote">Game ${st.code} · ${st.players.length} ${st.players.length === 1 ? "player" : "players"}</p></div>`;
+    } else if (st.status === "question") {
+      const locked = party.picked != null || st.you;
+      html = `<div class="pthead"><span>Question ${st.qi + 1} of ${st.total}</span><span><b id="ptSecs">${secs}</b>s</span></div>
+        <h3 class="ptq small">${esc(st.question.q)}</h3>
+        ${partyTiles(st, false)}
+        <p class="ptnote">${locked ? "Locked in. Look at the big screen." : "Tap your answer."}</p>`;
+    } else if (st.status === "reveal") {
+      const got = st.you && st.you.points > 0;
+      html = `<div class="ptwait ${st.you ? (got ? "good" : "bad") : ""}">
+          <p class="ptbig">${!st.you ? "Too slow!" : got ? `Correct! +${st.you.points}` : "Not this time"}</p>
+          <p>You're ${ordinal(rank)} with ${me ? me.score.toLocaleString() : 0} points.</p></div>`;
+    } else {
+      html = `<div class="ptwait"><p class="ptbig">You finished ${ordinal(rank)}</p><p>${me ? me.score.toLocaleString() : 0} points · ${st.players.length} ${st.players.length === 1 ? "player" : "players"}</p></div>
+        ${partyBoard(st, 10)}`;
+    }
+  }
+  box.innerHTML = note + html + leave;
+  const on = (id, f) => { const el = $(id); if (el) el.onclick = f; };
+  on("ptStart", () => partyHostAction("start"));
+  on("ptReveal", () => partyHostAction("reveal"));
+  on("ptNext", () => partyHostAction("next"));
+  on("ptAgain", () => { store.set("sweater-party", null); partyHostNew(); });
+  on("ptLeave", async () => { if (party.role === "host") await partyHostAction("end"); partyLeave(); });
+  const rounds = $("ptRounds");
+  if (rounds) rounds.onchange = () => { party.rounds = Number(rounds.value); store.set("sweater-party", party); };
+  box.querySelectorAll(".pttile:not([disabled])").forEach(b => b.onclick = () => partyAnswer(Number(b.dataset.choice)));
+}
+
 // ======================= help window =======================
 const HELP = {
   classic: `<p>Guess the player in 8 tries. Each guess shows how he compares on team, conference, division, position, shooting hand, age, birth country and number.</p>
@@ -2846,6 +3889,11 @@ const HELP = {
   hl: `<p>Is the second player's number higher or lower than the first? Pick what to compare from the <b>Stat</b> menu: best-season goals, assists, points or PIM, career games, height, weight or age.</p>
     <p>A right answer keeps your run going and ties count as right. The daily run has 40 matchups. On a keyboard, use ↑ and ↓.</p>`,
   roster: `<p>Press <b>Start</b>, then type as many players on the team's roster as you can in 60 seconds. A last name is enough unless two players share it.</p>`,
+  zam: `<p>Drag across the ice to clear it and reveal the player's photo. Guess whenever you're ready. You get 3 guesses.</p>
+    <p>The less ice you've cleared when you get it, the more points you score.</p>`,
+  rank: `<p>Drag the 5 players into order by the stat shown, or use the arrows, then press <b>Lock it in</b>. You get 3 tries; rows in the right spot turn green.</p>`,
+  puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
+  shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
   conn: `<p>Find 4 groups of 4 players who share something, like a team, a birth country, a sweater number or a birth year. Select 4, then <b>Submit</b>.</p>
     <p>Groups go from yellow (easiest) to purple (hardest). Your 4th mistake ends the game.</p>`,
 };
@@ -2870,7 +3918,8 @@ if (!store.get("sweater-seen-help")) { store.set("sweater-seen-help", true); ope
 
 if (PLAYERS.length) {
   const start = decodeURIComponent(location.hash.slice(1));
-  if (start && (G[start] || start === "hl")) openGame(start, false);
+  if (start === "party" || start.startsWith("party-")) openParty(start.slice(6).toUpperCase(), false);
+  else if (start && (G[start] || start === "hl")) openGame(start, false);
   else showHub(false);
   tick();
   submitPending();
@@ -3113,6 +4162,153 @@ def plan_conn(days, pool, today):
     return dict(sorted(days.items()))
 
 
+# ---- Rank 'Em, Puck Drop, Shootout, Zamboni ----
+RANK_STATS = ["goals", "points", "gp", "height", "weight", "age"]
+
+
+def rank_value(p, stat):
+    car = p.get("car", [])
+    if stat == "goals":
+        return sum(r[3] for r in car)
+    if stat == "points":
+        return sum(r[5] for r in car)
+    if stat == "gp":
+        return sum(r[2] for r in car)
+    return hl_value(p, stat)
+
+
+def rank_puzzle(players, rnd):
+    stat = rnd.choice(RANK_STATS)
+    pool = [p for p in players if hl_ok(p) and rank_value(p, stat)]
+    for _ in range(200):
+        picks = rnd.sample(pool, 5)
+        if len({rank_value(p, stat) for p in picks}) == 5:
+            return {"stat": stat, "ids": [p["id"] for p in picks]}
+    return None
+
+
+def puck_rules(players):
+    rules = []
+    count = lambda f: sum(1 for p in players if f(p))
+    for t in sorted({p["team"] for p in players}):
+        if count(lambda p, t=t: p["team"] == t) >= 8:
+            rules.append({"kind": "team", "key": t, "label": f"Plays for {PY_TEAM_NAMES.get(t, t)}"})
+    for n in sorted({p["nation"] for p in players} - {"CAN", "USA"}):
+        if count(lambda p, n=n: p["nation"] == n) >= 8:
+            rules.append({"kind": "nation", "key": n, "label": f"Born in {CONN_COUNTRIES.get(n, COUNTRY_LABELS.get(n, n))}"})
+    if count(lambda p: p["pos"] == "D") >= 10:
+        rules.append({"kind": "pos", "key": "D", "label": "Plays defence"})
+    if count(lambda p: isinstance(p.get("draft"), list) and p["draft"][1] == 1) >= 10:
+        rules.append({"kind": "round1", "key": "1", "label": "First-round draft pick"})
+    return rules
+
+
+def puck_match(rule, p):
+    k = rule["kind"]
+    if k == "team":
+        return p["team"] == rule["key"]
+    if k == "nation":
+        return p["nation"] == rule["key"]
+    if k == "pos":
+        return p["pos"] == rule["key"]
+    return isinstance(p.get("draft"), list) and p["draft"][1] == 1
+
+
+def puck_puzzle(players, rules, rnd):
+    if not rules:
+        return None
+    rule = rnd.choice(rules)
+    yes = [p["id"] for p in players if puck_match(rule, p)]
+    no = [p["id"] for p in players if not puck_match(rule, p)]
+    if len(yes) < 6 or len(no) < 20:
+        return None
+    ids = rnd.sample(yes, min(13, len(yes))) + rnd.sample(no, 36 - min(13, len(yes)))
+    rnd.shuffle(ids)
+    return dict(rule, ids=ids)
+
+
+def quiz_question(players, rnd):
+    """A multiple-choice question: {q, o: [4 options], a: index}."""
+    for _ in range(50):
+        kind = rnd.choice(["team", "nation", "number", "oldest", "defence", "draft"])
+        p = rnd.choice(players)
+        if kind == "team":
+            wrong = rnd.sample(sorted({x["team"] for x in players} - {p["team"]}), 3)
+            opts, right = [PY_TEAM_NAMES.get(t, t) for t in wrong], PY_TEAM_NAMES.get(p["team"], p["team"])
+            q = f"Which team does {p['name']} play for?"
+        elif kind == "nation":
+            others = sorted({x["nation"] for x in players} - {p["nation"]})
+            if len(others) < 3:
+                continue
+            name = lambda n: COUNTRY_LABELS.get(n, n)
+            opts, right = [name(n) for n in rnd.sample(others, 3)], name(p["nation"])
+            q = f"Where was {p['name']} born?"
+        elif kind == "number":
+            if not p.get("number"):
+                continue
+            pool = sorted({x.get("number") for x in players if x.get("number")} - {p["number"]})
+            opts, right = [f"#{n}" for n in rnd.sample(pool, 3)], f"#{p['number']}"
+            q = f"What number does {p['name']} wear?"
+        elif kind == "oldest":
+            four = rnd.sample(players, 4)
+            if len({x["birth"] for x in four}) < 4:
+                continue
+            old = min(four, key=lambda x: x["birth"])
+            opts, right = [x["name"] for x in four if x is not old], old["name"]
+            q = "Which of these players is the oldest?"
+        elif kind == "defence":
+            d = [x for x in players if x["pos"] == "D"]
+            f = [x for x in players if x["pos"] in ("C", "L", "R")]
+            if not d or len(f) < 3:
+                continue
+            pick = rnd.choice(d)
+            opts, right = [x["name"] for x in rnd.sample(f, 3)], pick["name"]
+            q = "Which of these players is a defenceman?"
+        else:
+            if not (isinstance(p.get("draft"), list) and len(p["draft"]) >= 2):
+                continue
+            y = p["draft"][0]
+            opts, right = [str(v) for v in rnd.sample([y - 3, y - 2, y - 1, y + 1, y + 2, y + 3], 3)], str(y)
+            q = f"What year was {p['name']} drafted?"
+        if right in opts:
+            continue
+        a = rnd.randrange(4)
+        opts.insert(a, right)
+        return {"q": q, "o": opts, "a": a}
+    return None
+
+
+def shootout_puzzle(players, rnd):
+    rounds = []
+    for _ in range(5):
+        q = quiz_question(players, rnd)
+        if not q:
+            return None
+        q["keep"] = sorted(rnd.sample(range(5), 2))   # net zones the goalie covers
+        rounds.append(q)
+    return {"rounds": rounds}
+
+
+def plan_generated(days, pool, today, make, seed):
+    """Day-by-day puzzles built by `make`; days after tomorrow are rebuilt if a player left."""
+    lock = (today + timedelta(days=LOCK_DAYS)).isoformat()
+    days = {k: v for k, v in days.items() if k <= lock or all(i in pool for i in extra_ids(v))}
+    players = [pool[i] for i in sorted(pool)]
+    for n in range(AHEAD + 1):
+        k = (today + timedelta(days=n)).isoformat()
+        if k not in days:
+            puzzle = make(players, random.Random(f"{seed}-{k}"))
+            if puzzle:
+                days[k] = puzzle
+    return dict(sorted(days.items()))
+
+
+def extra_ids(v):
+    if isinstance(v, dict) and "ids" in v:
+        return list(v["ids"])
+    return []
+
+
 def player_of(v):
     """What counts as 'the same puzzle' for no-repeat rules."""
     if isinstance(v, dict):
@@ -3123,7 +4319,7 @@ def player_of(v):
 def ids_of(v):
     """Every player a scheduled puzzle needs."""
     if isinstance(v, dict):
-        return list(v["ids"])
+        return list(v.get("ids", []))
     if isinstance(v, list) and v and isinstance(v[0], dict):   # connections
         return [i for g in v for i in g["ids"]]
     return [v[0]] if isinstance(v, list) else [v]
@@ -3184,6 +4380,7 @@ def update_schedule(players, today):
                   {str(i): i for i, p in pool.items() if isinstance(p.get("draft"), list) and len(p["draft"]) >= 2},
                   "sweater-dr"),
         "map": ("map_days", "map_start", {str(i): i for i, p in pool.items() if p.get("bp")}, "sweater-map"),
+        "zam": ("zam_days", "zam_start", {str(i): i for i, p in pool.items() if p.get("headshot")}, "sweater-zam"),
         "roster": ("roster_days", "roster_start",
                    {t: {"team": t, "ids": sorted(ids)} for t, ids in roster_teams.items() if len(ids) >= 10},
                    "sweater-ro", 20),
@@ -3198,6 +4395,22 @@ def update_schedule(players, today):
         result[g] = (start, {k: v for k, v in days.items() if first <= k <= last})
 
     # remember every scheduled player, so a past answer still works after he leaves the league
+    rules = puck_rules([pool[i] for i in sorted(pool)])
+    extra_games = {
+        "rank": (lambda pl, rnd: rank_puzzle(pl, rnd), "sweater-rank"),
+        "puck": (lambda pl, rnd: puck_puzzle(pl, rules, rnd), "sweater-puck"),
+        "shoot": (lambda pl, rnd: shootout_puzzle(pl, rnd), "sweater-shoot"),
+    }
+    for g, (make, seed) in extra_games.items():
+        days = plan_generated(sched.get(f"{g}_days", {}), pool, today, make, seed)
+        new[f"{g}_days"] = days
+        new[f"{g}_start"] = sched.get(f"{g}_start") or (today.isoformat() if days else "")
+        result[g] = (new[f"{g}_start"], {k: v for k, v in days.items() if first <= k <= last})
+        for v in days.values():
+            for i in extra_ids(v):
+                if i in pool:
+                    archive[i] = pool[i]
+
     conn_days = plan_conn(sched.get("conn_days", {}), pool, today)
     new["conn_days"] = conn_days
     new["conn_start"] = sched.get("conn_start") or (today.isoformat() if conn_days else "")
