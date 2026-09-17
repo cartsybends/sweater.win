@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "36"
+VERSION = "37"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -251,15 +251,21 @@ TEMPLATE = r'''<!DOCTYPE html>
   .hubnext b { font-variant-numeric: tabular-nums; color: var(--fg); }
 
   /* game bar */
-  .gamebar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
-             max-width: 1100px; margin: 0 auto 10px; padding: 0 0 10px; border-bottom: 1px solid var(--line); }
-  .backbtn { justify-self: start; background: none; border: 0; color: var(--fg); font: inherit; font-size: 15px;
-             padding: 6px 10px 6px 4px; border-radius: 8px; cursor: pointer; }
-  .backbtn span { font-size: 22px; line-height: 0; vertical-align: -2px; margin-right: 2px; }
-  .backbtn:hover { background: var(--cell); }
-  .gtitle { text-align: center; }
-  .gtitle h2 { margin: 0; font-size: 22px; font-weight: 600; }
-  #modeLabel { display: block; font-size: 13px; color: var(--muted); }
+  .gamebar { --tone: var(--hit); max-width: 1100px; margin: 0 auto 14px; }
+  .gamebar[data-tone="blue"] { --tone: #2f7cf6; }
+  .gamebar[data-tone="amber"] { --tone: #f2a100; }
+  .gamebar[data-tone="red"] { --tone: #e5484d; }
+  .backbtn { display: inline-flex; align-items: center; gap: 2px; background: none; border: 0; color: var(--label2);
+             font: inherit; font-size: 15px; padding: 4px 8px 4px 2px; margin: 0 0 6px -2px; border-radius: 8px; cursor: pointer; }
+  .backbtn span { font-size: 20px; line-height: 0; vertical-align: -2px; }
+  .backbtn:hover { color: var(--fg); }
+  .gtitle { display: flex; align-items: center; gap: 14px; padding: 0 0 14px;
+            border-bottom: 1px solid var(--sep); }
+  .gticon { width: 46px; height: 46px; flex: none; border-radius: 12px; display: grid; place-items: center; font-size: 24px;
+            background: color-mix(in srgb, var(--tone) 18%, transparent); }
+  .gtwords { min-width: 0; }
+  .gtitle h2 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+  #modeLabel { display: block; margin-top: 3px; font-size: 13px; color: var(--label2); font-variant-numeric: tabular-nums; }
   .gamesel { display: block; margin: 0 auto 12px; padding: 8px 12px; font: inherit; font-size: 15px; border-radius: 8px;
              border: 1px solid var(--line); background: var(--bg); color: var(--fg); max-width: 100%; }
   .pickstat { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
@@ -750,7 +756,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     .gicon { width: 40px; height: 40px; font-size: 20px; }
     .gtext small { font-size: 12px; }
     .gstat { font-size: 12px; padding: 4px 9px; max-width: 34vw; white-space: normal; text-align: center; }
-    .gtitle h2 { font-size: 18px; }
+    .gtitle h2 { font-size: 23px; }
+    .gtitle { gap: 11px; padding-bottom: 11px; }
+    .gticon { width: 40px; height: 40px; font-size: 21px; border-radius: 11px; }
     .backbtn { font-size: 14px; }
     header { padding-top: 14px; }
     h1 { font-size: 36px; }
@@ -826,7 +834,10 @@ TEMPLATE = r'''<!DOCTYPE html>
 <main>
   <div class="gamebar" id="gameBar" hidden>
     <button class="backbtn" id="backHub" type="button"><span aria-hidden="true">‹</span> All games</button>
-    <div class="gtitle"><h2 id="gTitle"></h2><span id="modeLabel"></span></div>
+    <div class="gtitle">
+      <span class="gticon" id="gIcon" aria-hidden="true"></span>
+      <span class="gtwords"><h2 id="gTitle"></h2><span id="modeLabel"></span></span>
+    </div>
   </div>
   <p class="archbar" id="archBar" hidden><span id="archText"></span>
     <button class="linkbtn" id="pickDay" type="button">Pick another day</button>
@@ -3253,8 +3264,9 @@ function updateLabels() {
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
   for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "zmGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
-  $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())}`
-    : mode === "archive" ? `Archive #${dailyNumber(game, archiveDay)}` : "Unlimited";
+  const today = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
+    : mode === "archive" ? `Archive · #${dailyNumber(game, archiveDay)}` : "Unlimited play";
   $("unlimited").checked = mode === "unlimited";
   $("archBar").hidden = mode !== "archive" || onHub;
   if (mode === "archive") $("archText").textContent = `Archive · #${dailyNumber(game, archiveDay)} · ${niceDay(archiveDay)}`;
@@ -3297,7 +3309,10 @@ function setGame(g) {
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = v !== G[g].view; });
   document.querySelectorAll(".nodata").forEach(n => n.hidden = true);
   searches.forEach(s => s.close());
-  $("gTitle").textContent = g.startsWith("hl_") ? "Higher or Lower" : G[g].title;
+  const card = CARD[g.startsWith("hl_") ? "hl" : g] || { icon: "🏒", tone: "green" };
+  $("gIcon").textContent = card.icon;
+  $("gameBar").dataset.tone = card.tone;
+  $("gTitle").textContent = g.startsWith("hl_") ? `Higher or Lower · ${HL_STATS[G[g].stat].name}` : G[g].title;
   document.title = `${$("gTitle").textContent} · Sweater`;
   if (g.startsWith("hl_")) $("hlStatSel").value = g;
   loadCurrent();
@@ -3812,6 +3827,8 @@ const HUB = [
   ]},
 ];
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
+const CARD = {};
+HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: sec.tone }; }));
 const cardTitle = id => id === "hl" ? "Higher or Lower" : G[id].title;
 let onHub = true, statsGame = null;
 
@@ -3940,6 +3957,8 @@ function openParty(code, push = true) {
   $("view-party").hidden = false;
   $("gameBar").hidden = false;
   $("archBar").hidden = true;
+  $("gIcon").textContent = "🎉";
+  $("gameBar").dataset.tone = "blue";
   $("gTitle").textContent = "Party Mode";
   $("modeLabel").textContent = "Live with friends";
   document.title = "Party Mode · Sweater";
