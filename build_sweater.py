@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "34"
+VERSION = "35"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -381,11 +381,18 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes lamp { 50% { fill: #7a1712; filter: none; } }
   @keyframes ripple { 30% { transform: scale(1.015, 1.03); } }
 
-  .goalie { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .32s cubic-bezier(.25,1.35,.5,1); }
+  .goalie { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .3s cubic-bezier(.25,1.3,.5,1); }
+  .goalie .posewrap { transition: transform 0s; }
+  .goalie.mirror .posewrap { transform: matrix(-1, 0, 0, 1, 300, 0); }
+  .goalie.mirror .crestS { transform: scale(-1, 1); transform-box: fill-box; transform-origin: center; }
+  .goalie .pose { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transform: scale(.94);
+                  transition: opacity .14s ease-out, transform .3s cubic-bezier(.25,1.4,.5,1); }
+  .goalie[data-pose="ready"] .pose-ready, .goalie[data-pose="stretch"] .pose-stretch,
+  .goalie[data-pose="split"] .pose-split { opacity: 1; transform: none; }
   .goalie .shaft { stroke: #3a2a1d; stroke-width: 4; stroke-linecap: round; }
   .goalie .paddle, .goalie .blade { fill: #1b1b1b; }
   .goalie .tape { fill: #f4f4f4; opacity: .85; }
-  .goalie .skate { fill: #202225; }
+  .goalie .skate { fill: #3a3d42; }
   .goalie .pad rect:first-child { fill: url(#gPad); stroke: #8e9bb0; stroke-width: 1; }
   .goalie .knee { fill: #fff; stroke: #8e9bb0; stroke-width: .8; }
   .goalie .trim { fill: #2d63c4; }
@@ -1080,7 +1087,9 @@ TEMPLATE = r'''<!DOCTYPE html>
       <path d="M22 190 V22 H278 V190" class="posts"/>
       <path d="M24 190 V24 H276 V190" class="postshine"/>
 
-      <g id="shGoalie" class="goalie">
+      <g id="shGoalie" class="goalie" data-pose="ready">
+       <g class="posewrap">
+        <g class="pose pose-ready">
         <!-- skates -->
         <rect x="116" y="182" width="30" height="7" rx="3" class="skate"/>
         <rect x="154" y="182" width="30" height="7" rx="3" class="skate"/>
@@ -1119,6 +1128,82 @@ TEMPLATE = r'''<!DOCTYPE html>
         <path d="M136 52 Q150 38 164 52" class="helmetstripe"/>
         <path d="M139 59 Q150 55 161 59 L160 72 Q150 80 140 72 Z" class="face"/>
         <path d="M143 58 V76 M147 57 V78 M153 57 V78 M157 58 V76 M139 63 H161 M140 68 H160 M141 73 H159" class="cage"/>
+        </g>
+
+        <g class="pose pose-stretch">
+          <path d="M92 138 L96 172" class="shaft"/>
+          <path d="M90 168 L101 168 L103 185 L92 185 Z" class="paddle"/>
+          <rect x="92" y="182" width="34" height="6" rx="2" class="blade"/>
+          <rect x="108" y="182" width="11" height="6" class="tape"/>
+          <g transform="translate(138 120) rotate(42)">
+            <g class="pad"><rect x="-15" y="0" width="30" height="64" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
+              <rect x="-15" y="26" width="30" height="5" class="trim"/><rect x="-15" y="40" width="30" height="3" class="trim"/><path d="M-9 16 V60 M9 16 V60" class="seam"/></g>
+            <rect x="-10" y="61" width="20" height="6" rx="3" class="skate"/>
+          </g>
+          <g transform="translate(166 120) rotate(-60)">
+            <g class="pad"><rect x="-15" y="0" width="30" height="64" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
+              <rect x="-15" y="26" width="30" height="5" class="trim"/><rect x="-15" y="40" width="30" height="3" class="trim"/><path d="M-9 16 V60 M9 16 V60" class="seam"/></g>
+            <rect x="-10" y="61" width="20" height="6" rx="3" class="skate"/>
+          </g>
+          <path d="M128 106 Q156 98 182 108 L184 128 Q156 138 126 128 Z" class="pants"/>
+          <g transform="rotate(-8 156 96)">
+            <path d="M130 84 L100 124" class="arm"/>
+            <path d="M122 95 L115 105" class="armstripe"/>
+            <path d="M184 82 L220 58" class="arm"/>
+            <path d="M198 73 L206 67" class="armstripe"/>
+            <path d="M112 80 Q152 68 192 80 L196 100 Q188 104 184 102 L183 118 Q152 122 121 118 L120 102 Q116 104 108 100 Z" class="jersey"/>
+            <path d="M121 106 Q152 110 183 106 L183 113 Q152 117 121 113 Z" class="stripe"/>
+            <circle cx="152" cy="92" r="8.5" class="crest"/>
+            <text x="152" y="95.6" class="crestS">S</text>
+            <rect x="80" y="116" width="24" height="34" rx="4" class="blocker"/>
+            <rect x="83" y="120" width="18" height="26" rx="2" class="blockertrim"/>
+            <path d="M214 58 C208 42 228 30 242 38 L250 56 C254 70 236 78 224 72 Z" class="glove"/>
+            <path d="M220 52 C226 44 236 42 242 48 M222 62 C230 56 238 56 246 60" class="pocket"/>
+            <rect x="210" y="58" width="12" height="12" rx="3" transform="rotate(-35 216 64)" class="cuff"/>
+            <rect x="152" y="73" width="10" height="7" rx="2" class="throat"/>
+            <circle cx="160" cy="60" r="16" class="helmet"/>
+            <path d="M146 51 Q160 37 174 51" class="helmetstripe"/>
+            <path d="M151 58 Q162 54 172 58 L171 71 Q162 79 152 71 Z" class="face"/>
+            <path d="M155 57 V75 M159 56 V77 M165 56 V77 M169 57 V75 M151 62 H172 M152 67 H171 M153 72 H170" class="cage"/>
+          </g>
+        </g>
+
+        <g class="pose pose-split">
+          <path d="M92 138 L94 172" class="shaft"/>
+          <path d="M88 168 L99 168 L101 185 L90 185 Z" class="paddle"/>
+          <rect x="68" y="182" width="32" height="6" rx="2" class="blade"/>
+          <g transform="translate(140 128) rotate(22)">
+            <g class="pad"><rect x="-15" y="0" width="30" height="58" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
+              <rect x="-15" y="24" width="30" height="5" class="trim"/><rect x="-15" y="36" width="30" height="3" class="trim"/></g>
+            <rect x="-10" y="55" width="20" height="6" rx="3" class="skate"/>
+          </g>
+          <g transform="translate(166 134) rotate(-80)">
+            <g class="pad"><rect x="-15" y="0" width="30" height="66" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
+              <rect x="-15" y="26" width="30" height="5" class="trim"/><rect x="-15" y="40" width="30" height="3" class="trim"/><path d="M-9 16 V62 M9 16 V62" class="seam"/></g>
+            <rect x="-10" y="63" width="20" height="6" rx="3" class="skate"/>
+          </g>
+          <path d="M128 116 Q154 108 180 118 L182 138 Q154 146 126 138 Z" class="pants"/>
+          <g transform="translate(0 14) rotate(-8 152 100)">
+            <path d="M128 86 L98 116" class="arm"/>
+            <path d="M120 96 L112 104" class="armstripe"/>
+            <path d="M178 84 L204 104" class="arm"/>
+            <path d="M188 90 L195 97" class="armstripe"/>
+            <path d="M112 80 Q152 68 192 80 L196 100 Q188 104 184 102 L183 118 Q152 122 121 118 L120 102 Q116 104 108 100 Z" class="jersey"/>
+            <path d="M121 106 Q152 110 183 106 L183 113 Q152 117 121 113 Z" class="stripe"/>
+            <circle cx="152" cy="92" r="8.5" class="crest"/>
+            <text x="152" y="95.6" class="crestS">S</text>
+            <rect x="80" y="104" width="24" height="34" rx="4" class="blocker"/>
+            <rect x="83" y="108" width="18" height="26" rx="2" class="blockertrim"/>
+            <path d="M196 96 C196 84 220 82 226 93 L230 113 C231 125 212 130 201 122 Z" class="glove"/>
+            <path d="M202 100 C208 95 218 95 223 102 M203 109 C210 105 218 106 225 111" class="pocket"/>
+            <rect x="148" y="73" width="10" height="7" rx="2" class="throat"/>
+            <circle cx="156" cy="60" r="16" class="helmet"/>
+            <path d="M142 51 Q156 37 170 51" class="helmetstripe"/>
+            <path d="M146 58 Q157 54 167 58 L166 71 Q157 79 147 71 Z" class="face"/>
+            <path d="M150 57 V75 M154 56 V77 M160 56 V77 M164 57 V75 M146 62 H167 M147 67 H166 M148 72 H165" class="cage"/>
+          </g>
+        </g>
+       </g>
       </g>
 
       <g class="zones">
@@ -2694,14 +2779,21 @@ $("pkLane").addEventListener("pointerdown", e => {
 
 // ---- Shootout: answer to earn a shot, then beat the goalie ----
 const NET_ZONES = [[62, 52], [238, 52], [62, 140], [238, 140], [150, 172]];
-// where the goalie moves for each spot: a lunge up high, a slide down low, a butterfly for the five-hole
+// how the goalie reacts to each spot: a full stretch up high, a pad-extension split down low,
+// and a butterfly for the five-hole. Blocker-side saves use the mirrored pose.
 const GOALIE_AT = [
-  "translate(-36px, -14px) rotate(-13deg)",
-  "translate(36px, -14px) rotate(13deg)",
-  "translate(-50px, 8px) rotate(-9deg) scaleY(.93)",
-  "translate(50px, 8px) rotate(9deg) scaleY(.93)",
-  "translate(0, 12px) scale(1.12, .84)",
+  { pose: "stretch", mirror: true,  move: "translate(-8px, -4px)" },
+  { pose: "stretch", mirror: false, move: "translate(8px, -4px)" },
+  { pose: "split",   mirror: true,  move: "translate(-10px, 2px)" },
+  { pose: "split",   mirror: false, move: "translate(10px, 2px)" },
+  { pose: "ready",   mirror: false, move: "translate(0, 12px) scale(1.12, .84)" },
 ];
+function setGoalie(at) {
+  const g = $("shGoalie");
+  g.dataset.pose = at ? at.pose : "ready";
+  g.classList.toggle("mirror", !!(at && at.mirror));
+  g.style.transform = at ? at.move : "";
+}
 function shootRandom(rnd) {
   const rounds = [];
   for (let i = 0; i < 5; i++) {
@@ -2770,13 +2862,13 @@ G.shoot = {
     else if (!st.over) msg = "Answer right to earn a shot.";
     $("shMsg").textContent = msg;
     $("shNext").hidden = !(showResult && !st.over);
-    if (!showResult) { $("shPuck").setAttribute("class", "shpuck"); $("shGoalie").style.transform = ""; $("shNet").classList.remove("scored", "saved"); }
+    if (!showResult) { $("shPuck").setAttribute("class", "shpuck"); setGoalie(null); $("shNet").classList.remove("scored", "saved"); }
   },
 };
 function shootAnimate(zone, keep) {
-  const puck = $("shPuck"), goalie = $("shGoalie"), net = $("shNet");
+  const puck = $("shPuck"), net = $("shNet");
   const [x, y] = NET_ZONES[zone], save = keep.includes(zone);
-  goalie.style.transform = GOALIE_AT[save ? zone : keep[0]];
+  setGoalie(GOALIE_AT[save ? zone : keep[0]]);
   puck.style.setProperty("--tx", `${x - 150}px`);
   puck.style.setProperty("--ty", `${y - 194}px`);
   puck.setAttribute("class", `shpuck fly${save ? " saved" : ""}`);
