@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "33"
+VERSION = "34"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -367,21 +367,63 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shdots { display: flex; justify-content: center; gap: 8px; margin: 4px 0 10px; }
   .shdot { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--cell); color: var(--cell-fg); font-weight: 600; }
   .shdot.now { box-shadow: 0 0 0 2px var(--fg); }
-  .shnet { display: block; width: min(420px, 100%); margin: 0 auto; }
-  .shnet .netbg { fill: color-mix(in srgb, var(--fg) 4%, transparent); }
-  .shnet .mesh line { stroke: color-mix(in srgb, var(--fg) 16%, transparent); stroke-width: 1; }
-  .shnet .posts { fill: none; stroke: #d6312f; stroke-width: 7; stroke-linejoin: round; }
-  .goalie { transition: transform .35s cubic-bezier(.3,1.4,.5,1); }
-  .gbody { fill: #1f4e9c; } .gmask { fill: #e8e8e8; stroke: #333; } .gpad, .gblock { fill: #f2f2f2; stroke: #1f4e9c; stroke-width: 2; }
-  .gglove { fill: #d9a441; }
-  .zone { fill: rgba(52,168,83,.18); stroke: var(--hit); stroke-width: 2; stroke-dasharray: 4 3; cursor: pointer; transition: opacity .2s; }
-  .zone:hover { fill: rgba(52,168,83,.35); }
+  .shnet { display: block; width: min(460px, 100%); margin: 0 auto; overflow: visible; user-select: none; }
+  .shnet .ice { fill: color-mix(in srgb, #bfdcf0 45%, var(--bg)); }
+  .shnet .netback { fill: color-mix(in srgb, var(--fg) 3%, var(--bg)); }
+  .shnet .meshline { stroke: color-mix(in srgb, var(--fg) 20%, transparent); stroke-width: .7; fill: none; }
+  .shnet .crease { fill: rgba(80,150,220,.28); stroke: #d6312f; stroke-width: 1.2; }
+  .shnet .posts { fill: none; stroke: url(#gPost); stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
+  .shnet .postshine { fill: none; stroke: rgba(255,255,255,.35); stroke-width: 1; }
+  .shnet .lamp { fill: color-mix(in srgb, var(--fg) 15%, transparent); transition: fill .2s, filter .2s; }
+  .shnet.scored .lamp { fill: #ff3b30; filter: drop-shadow(0 0 6px #ff3b30); animation: lamp .5s ease-in-out 3; }
+  .shnet.scored .posts { filter: drop-shadow(0 0 4px rgba(255,59,48,.8)); }
+  .shnet.scored .mesh { animation: ripple .45s ease-out; transform-box: fill-box; transform-origin: center; }
+  @keyframes lamp { 50% { fill: #7a1712; filter: none; } }
+  @keyframes ripple { 30% { transform: scale(1.015, 1.03); } }
+
+  .goalie { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .32s cubic-bezier(.25,1.35,.5,1); }
+  .goalie .shaft { stroke: #3a2a1d; stroke-width: 4; stroke-linecap: round; }
+  .goalie .paddle, .goalie .blade { fill: #1b1b1b; }
+  .goalie .tape { fill: #f4f4f4; opacity: .85; }
+  .goalie .skate { fill: #202225; }
+  .goalie .pad rect:first-child { fill: url(#gPad); stroke: #8e9bb0; stroke-width: 1; }
+  .goalie .knee { fill: #fff; stroke: #8e9bb0; stroke-width: .8; }
+  .goalie .trim { fill: #2d63c4; }
+  .goalie .seam { stroke: #b8c2d2; stroke-width: .8; fill: none; }
+  .goalie .pants { fill: #10295a; }
+  .goalie .arm { stroke: #1f4ea6; stroke-width: 15; stroke-linecap: round; fill: none; }
+  .goalie .armstripe { stroke: #fff; stroke-width: 15; fill: none; opacity: .92; }
+  .goalie .jersey { fill: url(#gJersey); stroke: #0f2a5a; stroke-width: 1; }
+  .goalie .stripe { fill: #fff; opacity: .92; }
+  .goalie .crest { fill: #fff; stroke: #0f2a5a; stroke-width: 1; }
+  .goalie .crestS { fill: #173f86; font-size: 11px; font-weight: 800; text-anchor: middle; font-family: inherit; }
+  .goalie .blocker { fill: #fbfbfc; stroke: #8e9bb0; stroke-width: 1; }
+  .goalie .blockertrim { fill: none; stroke: #2d63c4; stroke-width: 1.4; }
+  .goalie .glove { fill: #fbfbfc; stroke: #8e9bb0; stroke-width: 1; }
+  .goalie .pocket { stroke: #2d63c4; stroke-width: 1.4; fill: none; stroke-linecap: round; }
+  .goalie .cuff { fill: #2d63c4; }
+  .goalie .helmet { fill: url(#gHelmet); stroke: #8e9bb0; stroke-width: 1; }
+  .goalie .helmetstripe { stroke: #2d63c4; stroke-width: 3.5; fill: none; stroke-linecap: round; }
+  .goalie .face { fill: #2a2d33; }
+  .goalie .cage { stroke: #d9dde4; stroke-width: 1; fill: none; }
+  .goalie .throat { fill: #dfe5ee; stroke: #8e9bb0; stroke-width: .6; }
+
+  .zone { cursor: pointer; transition: opacity .2s; }
+  .zone circle:first-child { fill: rgba(52,168,83,.12); stroke: var(--hit); stroke-width: 1.6; stroke-dasharray: 3 3; }
+  .zone .dot { fill: var(--hit); }
+  .zone:hover circle:first-child { fill: rgba(52,168,83,.3); stroke-dasharray: none; }
   .zone.off { opacity: 0; pointer-events: none; }
-  .shpuck { fill: #111; opacity: 0; }
-  .shpuck.fly { opacity: 1; animation: shot .45s ease-in forwards; }
-  .shpuck.fly.saved { animation: shot .45s ease-in forwards, bounce .3s .45s ease-out forwards; }
-  @keyframes shot { from { transform: translate(0, 0) scale(1.2); } to { transform: translate(var(--tx), var(--ty)) scale(.8); } }
-  @keyframes bounce { to { transform: translate(calc(var(--tx) * .6), 20px) scale(.9); opacity: .4; } }
+
+  .shpuck { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .2s; }
+  .shnet.aim .shpuck { opacity: 1; }
+  .shpuck .puckside { fill: #050505; }
+  .shpuck .pucktop { fill: #2c2c2e; stroke: rgba(255,255,255,.4); stroke-width: .6; }
+  .shpuck .puckshine { fill: rgba(255,255,255,.22); }
+  .shpuck.fly { opacity: 1; animation: shot .42s cubic-bezier(.3,.6,.4,1) forwards; }
+  .shpuck.fly.saved { animation: shot .42s cubic-bezier(.3,.6,.4,1) forwards, deflect .35s .42s ease-out forwards; }
+  @keyframes shot { from { transform: translate(0, 0) scale(1.15) rotate(0); } to { transform: translate(var(--tx), var(--ty)) scale(.62) rotate(-8deg); } }
+  @keyframes deflect { from { transform: translate(var(--tx), var(--ty)) scale(.62); } to { transform: translate(calc(var(--tx) * .5), -2px) scale(.8); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .goalie { transition: none; } .shpuck.fly, .shpuck.fly.saved { animation-duration: .01s; } .shnet.scored .lamp, .shnet.scored .mesh { animation: none; } }
   .shopts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 560px; margin: 0 auto; }
   .shopt { padding: 12px; border-radius: 12px; border: 0; background: var(--cell); color: var(--cell-fg); font: inherit; font-size: 15px; cursor: pointer; }
   .shopt:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
@@ -1020,24 +1062,79 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="view" id="view-shoot" hidden>
     <div class="shdots" id="shDots"></div>
-    <svg class="shnet" id="shNet" viewBox="0 0 300 200" role="img" aria-label="Hockey net">
-      <rect x="20" y="20" width="260" height="170" rx="4" class="netbg"/>
-      <g class="mesh"><line x1="40" y1="20" x2="40" y2="190"/><line x1="60" y1="20" x2="60" y2="190"/><line x1="80" y1="20" x2="80" y2="190"/><line x1="100" y1="20" x2="100" y2="190"/><line x1="120" y1="20" x2="120" y2="190"/><line x1="140" y1="20" x2="140" y2="190"/><line x1="160" y1="20" x2="160" y2="190"/><line x1="180" y1="20" x2="180" y2="190"/><line x1="200" y1="20" x2="200" y2="190"/><line x1="220" y1="20" x2="220" y2="190"/><line x1="240" y1="20" x2="240" y2="190"/><line x1="260" y1="20" x2="260" y2="190"/><line x1="280" y1="20" x2="280" y2="190"/><line x1="20" y1="40" x2="280" y2="40"/><line x1="20" y1="60" x2="280" y2="60"/><line x1="20" y1="80" x2="280" y2="80"/><line x1="20" y1="100" x2="280" y2="100"/><line x1="20" y1="120" x2="280" y2="120"/><line x1="20" y1="140" x2="280" y2="140"/><line x1="20" y1="160" x2="280" y2="160"/><line x1="20" y1="180" x2="280" y2="180"/></g>
-      <path d="M20 190 V20 H280 V190" class="posts"/>
+    <svg class="shnet" id="shNet" viewBox="0 0 300 204" role="img" aria-label="Hockey net with a goalie">
+      <defs>
+        <linearGradient id="gJersey" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2d63c4"/><stop offset="1" stop-color="#173f86"/></linearGradient>
+        <linearGradient id="gPad" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#eef1f6"/><stop offset="1" stop-color="#cfd7e3"/></linearGradient>
+        <radialGradient id="gHelmet" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c3cddb"/></radialGradient>
+        <linearGradient id="gPost" x1="0" x2="1"><stop offset="0" stop-color="#b3201d"/><stop offset=".45" stop-color="#ef4b45"/><stop offset="1" stop-color="#b3201d"/></linearGradient>
+        <pattern id="gMesh" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <path d="M0 0 H10 M0 0 V10" class="meshline"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="190" width="300" height="14" class="ice"/>
+      <circle class="lamp" cx="150" cy="9" r="5"/>
+      <rect x="24" y="24" width="252" height="166" class="netback"/>
+      <rect x="24" y="24" width="252" height="166" fill="url(#gMesh)" class="mesh"/>
+      <path d="M78 190 A72 30 0 0 1 222 190 Z" class="crease"/>
+      <path d="M22 190 V22 H278 V190" class="posts"/>
+      <path d="M24 190 V24 H276 V190" class="postshine"/>
+
       <g id="shGoalie" class="goalie">
-        <rect x="128" y="96" width="44" height="46" rx="12" class="gbody"/>
-        <circle cx="150" cy="84" r="15" class="gmask"/>
-        <rect x="112" y="136" width="30" height="50" rx="8" class="gpad"/>
-        <rect x="158" y="136" width="30" height="50" rx="8" class="gpad"/>
-        <rect x="186" y="110" width="26" height="30" rx="6" class="gglove"/>
-        <rect x="90" y="108" width="24" height="34" rx="4" class="gblock"/>
+        <!-- skates -->
+        <rect x="116" y="182" width="30" height="7" rx="3" class="skate"/>
+        <rect x="154" y="182" width="30" height="7" rx="3" class="skate"/>
+        <!-- leg pads -->
+        <g class="pad"><rect x="115" y="124" width="32" height="62" rx="10"/><rect x="117" y="124" width="28" height="13" rx="6" class="knee"/>
+          <rect x="115" y="150" width="32" height="5" class="trim"/><rect x="115" y="164" width="32" height="3" class="trim"/><path d="M121 140 V182 M141 140 V182" class="seam"/></g>
+        <g class="pad"><rect x="153" y="124" width="32" height="62" rx="10"/><rect x="155" y="124" width="28" height="13" rx="6" class="knee"/>
+          <rect x="153" y="150" width="32" height="5" class="trim"/><rect x="153" y="164" width="32" height="3" class="trim"/><path d="M159 140 V182 M179 140 V182" class="seam"/></g>
+        <!-- pants -->
+        <path d="M118 110 H182 L187 132 Q150 138 113 132 Z" class="pants"/>
+        <!-- stick -->
+        <path d="M100 128 L138 162" class="shaft"/>
+        <path d="M134 156 L145 156 L149 183 L139 183 Z" class="paddle"/>
+        <rect x="138" y="181" width="48" height="6" rx="2" class="blade"/>
+        <rect x="160" y="181" width="14" height="6" class="tape"/>
+        <!-- arms -->
+        <path d="M114 84 L100 118" class="arm"/>
+        <path d="M186 84 L202 110" class="arm"/>
+        <path d="M109 96 L104 108" class="armstripe"/>
+        <path d="M191 94 L197 105" class="armstripe"/>
+        <!-- body -->
+        <path d="M110 80 Q150 68 190 80 L194 100 Q186 104 182 102 L181 118 Q150 122 119 118 L118 102 Q114 104 106 100 Z" class="jersey"/>
+        <path d="M119 106 Q150 110 181 106 L181 113 Q150 117 119 113 Z" class="stripe"/>
+        <circle cx="150" cy="92" r="8.5" class="crest"/>
+        <text x="150" y="95.6" class="crestS">S</text>
+        <!-- blocker -->
+        <rect x="84" y="104" width="24" height="34" rx="4" class="blocker"/>
+        <rect x="87" y="108" width="18" height="26" rx="2" class="blockertrim"/>
+        <!-- catching glove -->
+        <path d="M192 100 C192 88 216 86 222 97 L226 117 C227 129 208 134 197 126 Z" class="glove"/>
+        <path d="M198 104 C204 99 214 99 219 106 M199 113 C206 109 214 110 221 115" class="pocket"/>
+        <rect x="190" y="118" width="14" height="10" rx="3" class="cuff"/>
+        <!-- helmet and cage -->
+        <rect x="145" y="74" width="10" height="7" rx="2" class="throat"/>
+        <circle cx="150" cy="61" r="16" class="helmet"/>
+        <path d="M136 52 Q150 38 164 52" class="helmetstripe"/>
+        <path d="M139 59 Q150 55 161 59 L160 72 Q150 80 140 72 Z" class="face"/>
+        <path d="M143 58 V76 M147 57 V78 M153 57 V78 M157 58 V76 M139 63 H161 M140 68 H160 M141 73 H159" class="cage"/>
       </g>
+
       <g class="zones">
-        <circle class="zone" data-z="0" cx="62" cy="52" r="22"/><circle class="zone" data-z="1" cx="238" cy="52" r="22"/>
-        <circle class="zone" data-z="2" cx="62" cy="132" r="22"/><circle class="zone" data-z="3" cx="238" cy="132" r="22"/>
-        <circle class="zone" data-z="4" cx="150" cy="170" r="16"/>
+        <g class="zone" data-z="0"><circle cx="62" cy="52" r="17"/><circle cx="62" cy="52" r="3" class="dot"/></g>
+        <g class="zone" data-z="1"><circle cx="238" cy="52" r="17"/><circle cx="238" cy="52" r="3" class="dot"/></g>
+        <g class="zone" data-z="2"><circle cx="62" cy="140" r="17"/><circle cx="62" cy="140" r="3" class="dot"/></g>
+        <g class="zone" data-z="3"><circle cx="238" cy="140" r="17"/><circle cx="238" cy="140" r="3" class="dot"/></g>
+        <g class="zone" data-z="4"><circle cx="150" cy="172" r="12"/><circle cx="150" cy="172" r="2.5" class="dot"/></g>
       </g>
-      <circle id="shPuck" class="shpuck" cx="150" cy="190" r="7"/>
+
+      <g id="shPuck" class="shpuck">
+        <ellipse cx="150" cy="197" rx="11" ry="3.8" class="puckside"/>
+        <rect x="139" y="192" width="22" height="5" class="puckside"/>
+        <ellipse cx="150" cy="192" rx="11" ry="3.8" class="pucktop"/>
+        <ellipse cx="146.5" cy="191.2" rx="4.5" ry="1.1" class="puckshine"/>
+      </g>
     </svg>
     <p class="ttq" id="shQ"></p>
     <div class="shopts" id="shOpts"></div>
@@ -2596,8 +2693,15 @@ $("pkLane").addEventListener("pointerdown", e => {
 });
 
 // ---- Shootout: answer to earn a shot, then beat the goalie ----
-const NET_ZONES = [[62, 52], [238, 52], [62, 132], [238, 132], [150, 150]];
-const GOALIE_AT = [[-52, -26], [52, -26], [-56, 16], [56, 16], [0, 22]];
+const NET_ZONES = [[62, 52], [238, 52], [62, 140], [238, 140], [150, 172]];
+// where the goalie moves for each spot: a lunge up high, a slide down low, a butterfly for the five-hole
+const GOALIE_AT = [
+  "translate(-36px, -14px) rotate(-13deg)",
+  "translate(36px, -14px) rotate(13deg)",
+  "translate(-50px, 8px) rotate(-9deg) scaleY(.93)",
+  "translate(50px, 8px) rotate(9deg) scaleY(.93)",
+  "translate(0, 12px) scale(1.12, .84)",
+];
 function shootRandom(rnd) {
   const rounds = [];
   for (let i = 0; i < 5; i++) {
@@ -2666,17 +2770,17 @@ G.shoot = {
     else if (!st.over) msg = "Answer right to earn a shot.";
     $("shMsg").textContent = msg;
     $("shNext").hidden = !(showResult && !st.over);
-    if (!showResult && !aiming) { $("shPuck").setAttribute("class", "shpuck"); $("shGoalie").style.transform = ""; }
+    if (!showResult) { $("shPuck").setAttribute("class", "shpuck"); $("shGoalie").style.transform = ""; $("shNet").classList.remove("scored", "saved"); }
   },
 };
 function shootAnimate(zone, keep) {
-  const puck = $("shPuck"), goalie = $("shGoalie");
+  const puck = $("shPuck"), goalie = $("shGoalie"), net = $("shNet");
   const [x, y] = NET_ZONES[zone], save = keep.includes(zone);
-  const dive = save ? zone : keep[0];
-  goalie.style.transform = `translate(${GOALIE_AT[dive][0]}px, ${GOALIE_AT[dive][1]}px)`;
+  goalie.style.transform = GOALIE_AT[save ? zone : keep[0]];
   puck.style.setProperty("--tx", `${x - 150}px`);
-  puck.style.setProperty("--ty", `${y - 190}px`);
+  puck.style.setProperty("--ty", `${y - 194}px`);
   puck.setAttribute("class", `shpuck fly${save ? " saved" : ""}`);
+  setTimeout(() => net.classList.add(save ? "saved" : "scored"), 380);
 }
 $("shOpts").addEventListener("click", e => {
   const b = e.target.closest("[data-c]"), st = S.shoot;
