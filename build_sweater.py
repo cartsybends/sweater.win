@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "35"
+VERSION = "36"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2480,43 +2480,115 @@ $("cnSubmit").onclick = () => {
 };
 
 // ======================= rank 'em, puck drop, shootout, zamboni reveal =======================
-function quizQuestion(rnd, pool = PLAYERS) {
+const QUIZ_KINDS = ["team", "nation", "number", "oldest", "youngest", "defence", "goalie", "draftYear", "draftTeam",
+  "draftRound", "position", "height", "tallest", "mostGames", "mostGoals", "mostPoints", "bornIn", "wears", "city",
+  "seasons", "pastTeam", "bestGoals"];
+const POS_LABELS = { C: "Centre", L: "Left wing", R: "Right wing", D: "Defence", G: "Goalie" };
+// A multiple-choice question {q, o: [4 options], a}. `used` keeps a run from repeating a question type or a player.
+function quizQuestion(rnd, pool = PLAYERS, used = {}) {
   const one = arr => arr[Math.floor(rnd() * arr.length)];
   const sample = (arr, n) => shuffled(arr, rnd).slice(0, n);
-  for (let tries = 0; tries < 50; tries++) {
-    const kind = one(["team", "nation", "number", "oldest", "defence", "draft"]), p = one(pool);
-    let q, opts, right;
-    if (kind === "team") {
-      const others = [...new Set(pool.map(x => x.team))].filter(t => t !== p.team);
-      if (others.length < 3) continue;
-      opts = sample(others, 3).map(teamName); right = teamName(p.team); q = `Which team does ${p.name} play for?`;
-    } else if (kind === "nation") {
-      const others = [...new Set(pool.map(x => x.nation))].filter(n => n !== p.nation);
-      if (others.length < 3) continue;
-      const nm = n => COUNTRY_NAMES[n] ? COUNTRY_NAMES[n].replace(/^the /, "") : n;
-      opts = sample(others, 3).map(nm); right = nm(p.nation); q = `Where was ${p.name} born?`;
-    } else if (kind === "number") {
-      const others = [...new Set(pool.map(x => x.number).filter(Boolean))].filter(n => n !== p.number);
-      if (!p.number || others.length < 3) continue;
-      opts = sample(others, 3).map(n => `#${n}`); right = `#${p.number}`; q = `What number does ${p.name} wear?`;
-    } else if (kind === "oldest") {
-      const four = sample(pool, 4);
-      if (new Set(four.map(x => x.birth)).size < 4) continue;
-      const old = four.reduce((a, b) => a.birth <= b.birth ? a : b);
-      opts = four.filter(x => x !== old).map(x => x.name); right = old.name; q = "Which of these players is the oldest?";
-    } else if (kind === "defence") {
-      const d = pool.filter(x => x.pos === "D"), f = pool.filter(x => ["C", "L", "R"].includes(x.pos));
-      if (!d.length || f.length < 3) continue;
-      opts = sample(f, 3).map(x => x.name); right = one(d).name; q = "Which of these players is a defenceman?";
-    } else {
-      if (!hasDraft(p)) continue;
-      const y = p.draft[0];
-      opts = sample([y - 3, y - 2, y - 1, y + 1, y + 2, y + 3], 3).map(String); right = String(y); q = `What year was ${p.name} drafted?`;
+  const kinds = used.kinds || new Set(), seen = used.players || new Set();
+  const freshAll = pool.filter(p => !seen.has(p.id)), fresh = freshAll.length >= 8 ? freshAll : pool;
+  const skaters = fresh.filter(p => p.pos !== "G");
+  const nm = n => (COUNTRY_NAMES[n] || n).replace(/^the /, "");
+  const inches = v => `${Math.floor(v / 12)}′${v % 12}″`;
+  const near = (v, step, low = 0) => {
+    const out = new Set();
+    for (let k = 0; out.size < 3 && k < 60; k++) {
+      const d = (1 + Math.floor(rnd() * 4)) * step * (rnd() < .5 ? -1 : 1);
+      if (v + d >= low) out.add(v + d);
     }
-    if (opts.includes(right)) continue;
+    return [...out];
+  };
+  const four = (list, key) => { const f = sample(list, 4); return f.length === 4 && new Set(f.map(key)).size === 4 ? f : null; };
+  const best = (list, score) => list.reduce((a, b) => score(a) >= score(b) ? a : b);
+  for (let tries = 0; tries < 80; tries++) {
+    const left = QUIZ_KINDS.filter(k => !kinds.has(k));
+    const kind = one(left.length ? left : QUIZ_KINDS), p = one(fresh);
+    let q = null, opts = null, right = null, who = [p];
+    if (kind === "team") {
+      const o = [...new Set(pool.map(x => x.team))].filter(t => t !== p.team);
+      if (o.length >= 3) { opts = sample(o, 3).map(teamName); right = teamName(p.team); q = `Which team does ${p.name} play for?`; }
+    } else if (kind === "nation") {
+      const o = [...new Set(pool.map(x => x.nation))].filter(n => n !== p.nation);
+      if (o.length >= 3) { opts = sample(o, 3).map(nm); right = nm(p.nation); q = `Which country was ${p.name} born in?`; }
+    } else if (kind === "number") {
+      const o = [...new Set(pool.map(x => x.number).filter(Boolean))].filter(n => n !== p.number);
+      if (p.number && o.length >= 3) { opts = sample(o, 3).map(n => `#${n}`); right = `#${p.number}`; q = `What number does ${p.name} wear?`; }
+    } else if (kind === "oldest" || kind === "youngest") {
+      const f = four(fresh, x => x.birth);
+      if (f) {
+        const t = best(f, x => kind === "oldest" ? -Number(x.birth.replace(/-/g, "")) : Number(x.birth.replace(/-/g, "")));
+        opts = f.filter(x => x !== t).map(x => x.name); right = t.name; who = f; q = `Which of these players is the ${kind}?`;
+      }
+    } else if (kind === "defence" || kind === "goalie") {
+      const want = kind === "defence" ? "D" : "G";
+      const yes = fresh.filter(x => x.pos === want), no = fresh.filter(x => ["C", "L", "R"].includes(x.pos));
+      if (yes.length && no.length >= 3) {
+        const y = one(yes), n3 = sample(no, 3);
+        opts = n3.map(x => x.name); right = y.name; who = [y, ...n3];
+        q = `Which of these players is a ${kind === "defence" ? "defenceman" : "goalie"}?`;
+      }
+    } else if (kind === "draftYear") {
+      if (hasDraft(p)) { opts = near(p.draft[0], 1, 1980).map(String); right = String(p.draft[0]); q = `What year was ${p.name} drafted?`; }
+    } else if (kind === "draftTeam") {
+      if (hasDraft(p) && TEAMS[p.draft[3]]) {
+        opts = sample(Object.keys(TEAMS).filter(t => t !== p.draft[3]), 3).map(teamName);
+        right = teamName(p.draft[3]); q = `Which team drafted ${p.name}?`;
+      }
+    } else if (kind === "draftRound") {
+      if (hasDraft(p) && p.draft[1] <= 7) {
+        opts = sample([1, 2, 3, 4, 5, 6, 7].filter(r => r !== p.draft[1]), 3).map(r => `Round ${r}`);
+        right = `Round ${p.draft[1]}`; q = `In which round was ${p.name} drafted?`;
+      }
+    } else if (kind === "position") {
+      if (POS_LABELS[p.pos]) {
+        opts = sample(Object.keys(POS_LABELS).filter(k => k !== p.pos), 3).map(k => POS_LABELS[k]);
+        right = POS_LABELS[p.pos]; q = `What position does ${p.name} play?`;
+      }
+    } else if (kind === "height") {
+      if (p.ht) { opts = near(p.ht, 1, 60).map(inches); right = inches(p.ht); q = `How tall is ${p.name}?`; }
+    } else if (kind === "tallest") {
+      const f = four(fresh.filter(x => x.ht), x => x.ht);
+      if (f) { const t = best(f, x => x.ht); opts = f.filter(x => x !== t).map(x => x.name); right = t.name; who = f; q = "Which of these players is the tallest?"; }
+    } else if (kind === "mostGames" || kind === "mostGoals" || kind === "mostPoints") {
+      const key = { mostGames: "gp", mostGoals: "goals", mostPoints: "points" }[kind];
+      const f = four((kind === "mostGames" ? fresh : skaters).filter(x => x.car), x => rankValue(x, key));
+      if (f) {
+        const t = best(f, x => rankValue(x, key));
+        opts = f.filter(x => x !== t).map(x => x.name); right = t.name; who = f;
+        q = `Which of these players has the most career ${key === "gp" ? "NHL games" : key}?`;
+      }
+    } else if (kind === "bornIn") {
+      const no = fresh.filter(x => x.nation !== p.nation);
+      if (no.length >= 3) { const n3 = sample(no, 3); opts = n3.map(x => x.name); right = p.name; who = [p, ...n3]; q = `Which of these players was born in ${nm(p.nation)}?`; }
+    } else if (kind === "wears") {
+      const no = fresh.filter(x => x.number && x.number !== p.number);
+      if (p.number && no.length >= 3) { const n3 = sample(no, 3); opts = n3.map(x => x.name); right = p.name; who = [p, ...n3]; q = `Which of these players wears #${p.number}?`; }
+    } else if (kind === "city") {
+      const cities = [...new Set(pool.filter(x => x.bp && x.bp[2]).map(x => x.bp[2]))].filter(c => !p.bp || c !== p.bp[2]);
+      if (p.bp && p.bp[2] && cities.length >= 3) { opts = sample(cities, 3); right = p.bp[2]; q = `Which city was ${p.name} born in?`; }
+    } else if (kind === "seasons") {
+      const n = seasonsOf(p).length;
+      if (n >= 2) { opts = near(n, 1, 1).map(String); right = String(n); q = `How many NHL seasons has ${p.name} played?`; }
+    } else if (kind === "pastTeam") {
+      const r = teamSeasonsOf(p);
+      if (r.length) {
+        const s = one(r), t = s.teams[0];
+        opts = sample(Object.keys(TEAMS).filter(x => x !== t), 3).map(teamName); right = teamName(t);
+        q = `Which team did ${p.name} play for in ${seasonLabel(s.y)}?`;
+      }
+    } else if (kind === "bestGoals") {
+      const v = p.pos === "G" ? 0 : hlValue(p, "goals").v;
+      if (v) { opts = near(v, 2, 0).map(String); right = String(v); q = `What's the most goals ${p.name} has scored in one NHL season?`; }
+    }
+    if (!q || !opts || opts.length !== 3 || opts.includes(right) || new Set(opts).size !== 3) continue;
+    kinds.add(kind);
+    who.forEach(x => seen.add(x.id));
     const a = Math.floor(rnd() * 4);
     opts.splice(a, 0, right);
-    return { q, o: opts, a };
+    return { q, o: opts, a, kind };
   }
   return null;
 }
@@ -2795,9 +2867,9 @@ function setGoalie(at) {
   g.style.transform = at ? at.move : "";
 }
 function shootRandom(rnd) {
-  const rounds = [];
+  const rounds = [], used = { kinds: new Set(), players: new Set() };
   for (let i = 0; i < 5; i++) {
-    const q = quizQuestion(rnd);
+    const q = quizQuestion(rnd, PLAYERS, used);
     if (!q) return null;
     q.keep = shuffled([0, 1, 2, 3, 4], rnd).slice(0, 2).sort();
     rounds.push(q);
@@ -3932,7 +4004,12 @@ async function partyHostAction(action) {
   const body = { code: party.code, hostKey: party.hostKey, action };
   if (action === "start") {
     const qs = [];
-    for (let i = 0; qs.length < party.rounds && i < 200; i++) { const q = quizQuestion(Math.random); if (q && !qs.some(x => x.q === q.q)) qs.push(q); }
+    const used = { kinds: new Set(), players: new Set() };
+    for (let i = 0; qs.length < party.rounds && i < 200; i++) {
+      if (used.kinds.size >= QUIZ_KINDS.length) used.kinds.clear();   // every type used once, so start the cycle again
+      const q = quizQuestion(Math.random, PLAYERS, used);
+      if (q && !qs.some(x => x.q === q.q)) qs.push({ q: q.q, o: q.o, a: q.a });
+    }
     body.questions = qs;
   }
   try { party.state = await api("/api/party/host", body); party.picked = null; partyRender(); }
@@ -4423,61 +4500,150 @@ def puck_puzzle(players, rules, rnd):
     return dict(rule, ids=ids)
 
 
-def quiz_question(players, rnd):
-    """A multiple-choice question: {q, o: [4 options], a: index}."""
-    for _ in range(50):
-        kind = rnd.choice(["team", "nation", "number", "oldest", "defence", "draft"])
-        p = rnd.choice(players)
+QUIZ_KINDS = ["team", "nation", "number", "oldest", "youngest", "defence", "goalie", "draftYear", "draftTeam",
+              "draftRound", "position", "height", "tallest", "mostGames", "mostGoals", "mostPoints", "bornIn", "wears",
+              "city", "seasons", "pastTeam", "bestGoals"]
+POS_LABELS = {"C": "Centre", "L": "Left wing", "R": "Right wing", "D": "Defence", "G": "Goalie"}
+QUIZ_COUNTRIES = {"USA": "USA", "NLD": "Netherlands"}
+
+
+def quiz_question(players, rnd, used=None):
+    """A multiple-choice question {q, o: [4 options], a}. `used` keeps a run from repeating a type or a player."""
+    used = used if used is not None else {"kinds": set(), "players": set()}
+    fresh = [p for p in players if p["id"] not in used["players"]]
+    fresh = fresh if len(fresh) >= 8 else players
+    skaters = [p for p in fresh if p["pos"] != "G"]
+    team = lambda t: PY_TEAM_NAMES.get(t, t)
+    country = lambda n: QUIZ_COUNTRIES.get(n, COUNTRY_LABELS.get(n, n))
+    has_draft = lambda p: isinstance(p.get("draft"), list) and len(p["draft"]) >= 2
+    inches = lambda v: f"{v // 12}′{v % 12}″"
+    teams = sorted(CURRENT_TEAMS)
+
+    def near(v, step, low=0):
+        out = []
+        for _ in range(60):
+            n = v + rnd.randint(1, 4) * step * rnd.choice((-1, 1))
+            if n >= low and n not in out:
+                out.append(n)
+            if len(out) == 3:
+                break
+        return out
+
+    def four(lst, key):
+        if len(lst) < 4:
+            return None
+        f = rnd.sample(lst, 4)
+        return f if len({key(x) for x in f}) == 4 else None
+
+    for _ in range(80):
+        left = [k for k in QUIZ_KINDS if k not in used["kinds"]] or QUIZ_KINDS
+        kind, p = rnd.choice(left), rnd.choice(fresh)
+        q = opts = right = None
+        who = [p]
         if kind == "team":
-            wrong = rnd.sample(sorted({x["team"] for x in players} - {p["team"]}), 3)
-            opts, right = [PY_TEAM_NAMES.get(t, t) for t in wrong], PY_TEAM_NAMES.get(p["team"], p["team"])
-            q = f"Which team does {p['name']} play for?"
+            o = sorted({x["team"] for x in players} - {p["team"]})
+            if len(o) >= 3:
+                opts, right, q = [team(t) for t in rnd.sample(o, 3)], team(p["team"]), f"Which team does {p['name']} play for?"
         elif kind == "nation":
-            others = sorted({x["nation"] for x in players} - {p["nation"]})
-            if len(others) < 3:
-                continue
-            name = lambda n: COUNTRY_LABELS.get(n, n)
-            opts, right = [name(n) for n in rnd.sample(others, 3)], name(p["nation"])
-            q = f"Where was {p['name']} born?"
+            o = sorted({x["nation"] for x in players} - {p["nation"]})
+            if len(o) >= 3:
+                opts, right, q = [country(n) for n in rnd.sample(o, 3)], country(p["nation"]), f"Which country was {p['name']} born in?"
         elif kind == "number":
-            if not p.get("number"):
-                continue
-            pool = sorted({x.get("number") for x in players if x.get("number")} - {p["number"]})
-            opts, right = [f"#{n}" for n in rnd.sample(pool, 3)], f"#{p['number']}"
-            q = f"What number does {p['name']} wear?"
-        elif kind == "oldest":
-            four = rnd.sample(players, 4)
-            if len({x["birth"] for x in four}) < 4:
-                continue
-            old = min(four, key=lambda x: x["birth"])
-            opts, right = [x["name"] for x in four if x is not old], old["name"]
-            q = "Which of these players is the oldest?"
-        elif kind == "defence":
-            d = [x for x in players if x["pos"] == "D"]
-            f = [x for x in players if x["pos"] in ("C", "L", "R")]
-            if not d or len(f) < 3:
-                continue
-            pick = rnd.choice(d)
-            opts, right = [x["name"] for x in rnd.sample(f, 3)], pick["name"]
-            q = "Which of these players is a defenceman?"
-        else:
-            if not (isinstance(p.get("draft"), list) and len(p["draft"]) >= 2):
-                continue
-            y = p["draft"][0]
-            opts, right = [str(v) for v in rnd.sample([y - 3, y - 2, y - 1, y + 1, y + 2, y + 3], 3)], str(y)
-            q = f"What year was {p['name']} drafted?"
-        if right in opts:
+            o = sorted({x.get("number") for x in players if x.get("number")} - {p.get("number")})
+            if p.get("number") and len(o) >= 3:
+                opts, right, q = [f"#{n}" for n in rnd.sample(o, 3)], f"#{p['number']}", f"What number does {p['name']} wear?"
+        elif kind in ("oldest", "youngest"):
+            f = four(fresh, lambda x: x["birth"])
+            if f:
+                t = min(f, key=lambda x: x["birth"]) if kind == "oldest" else max(f, key=lambda x: x["birth"])
+                opts, right, who = [x["name"] for x in f if x is not t], t["name"], f
+                q = f"Which of these players is the {kind}?"
+        elif kind in ("defence", "goalie"):
+            want = "D" if kind == "defence" else "G"
+            yes = [x for x in fresh if x["pos"] == want]
+            no = [x for x in fresh if x["pos"] in ("C", "L", "R")]
+            if yes and len(no) >= 3:
+                y, n3 = rnd.choice(yes), rnd.sample(no, 3)
+                opts, right, who = [x["name"] for x in n3], y["name"], [y] + n3
+                q = f"Which of these players is a {'defenceman' if kind == 'defence' else 'goalie'}?"
+        elif kind == "draftYear":
+            if has_draft(p):
+                opts, right = [str(v) for v in near(p["draft"][0], 1, 1980)], str(p["draft"][0])
+                q = f"What year was {p['name']} drafted?"
+        elif kind == "draftTeam":
+            if has_draft(p) and p["draft"][3] in CURRENT_TEAMS:
+                opts = [team(t) for t in rnd.sample([t for t in teams if t != p["draft"][3]], 3)]
+                right, q = team(p["draft"][3]), f"Which team drafted {p['name']}?"
+        elif kind == "draftRound":
+            if has_draft(p) and p["draft"][1] <= 7:
+                opts = [f"Round {r}" for r in rnd.sample([r for r in range(1, 8) if r != p["draft"][1]], 3)]
+                right, q = f"Round {p['draft'][1]}", f"In which round was {p['name']} drafted?"
+        elif kind == "position":
+            if p["pos"] in POS_LABELS:
+                opts = [POS_LABELS[k] for k in rnd.sample([k for k in POS_LABELS if k != p["pos"]], 3)]
+                right, q = POS_LABELS[p["pos"]], f"What position does {p['name']} play?"
+        elif kind == "height":
+            if p.get("ht"):
+                opts, right, q = [inches(v) for v in near(p["ht"], 1, 60)], inches(p["ht"]), f"How tall is {p['name']}?"
+        elif kind == "tallest":
+            f = four([x for x in fresh if x.get("ht")], lambda x: x["ht"])
+            if f:
+                t = max(f, key=lambda x: x["ht"])
+                opts, right, who, q = [x["name"] for x in f if x is not t], t["name"], f, "Which of these players is the tallest?"
+        elif kind in ("mostGames", "mostGoals", "mostPoints"):
+            key = {"mostGames": "gp", "mostGoals": "goals", "mostPoints": "points"}[kind]
+            f = four([x for x in (fresh if kind == "mostGames" else skaters) if x.get("car")], lambda x: rank_value(x, key))
+            if f:
+                t = max(f, key=lambda x: rank_value(x, key))
+                opts, right, who = [x["name"] for x in f if x is not t], t["name"], f
+                q = f"Which of these players has the most career {'NHL games' if key == 'gp' else key}?"
+        elif kind == "bornIn":
+            no = [x for x in fresh if x["nation"] != p["nation"]]
+            if len(no) >= 3:
+                n3 = rnd.sample(no, 3)
+                opts, right, who = [x["name"] for x in n3], p["name"], [p] + n3
+                q = f"Which of these players was born in {CONN_COUNTRIES.get(p['nation'], COUNTRY_LABELS.get(p['nation'], p['nation']))}?"
+        elif kind == "wears":
+            no = [x for x in fresh if x.get("number") and x.get("number") != p.get("number")]
+            if p.get("number") and len(no) >= 3:
+                n3 = rnd.sample(no, 3)
+                opts, right, who, q = [x["name"] for x in n3], p["name"], [p] + n3, f"Which of these players wears #{p['number']}?"
+        elif kind == "city":
+            if p.get("bp") and len(p["bp"]) > 2:
+                cities = sorted({x["bp"][2] for x in players if x.get("bp") and len(x["bp"]) > 2} - {p["bp"][2]})
+                if len(cities) >= 3:
+                    opts, right, q = rnd.sample(cities, 3), p["bp"][2], f"Which city was {p['name']} born in?"
+        elif kind == "seasons":
+            n = len(season_groups(p))
+            if n >= 2:
+                opts, right = [str(v) for v in near(n, 1, 1)], str(n)
+                q = f"How many NHL seasons has {p['name']} played?"
+        elif kind == "pastTeam":
+            years = team_seasons(p)
+            if years:
+                y = rnd.choice(years)
+                t = season_groups(p)[y][0][1]
+                opts = [team(x) for x in rnd.sample([x for x in teams if x != t], 3)]
+                right, q = team(t), f"Which team did {p['name']} play for in {y}–{(y + 1) % 100:02d}?"
+        elif kind == "bestGoals":
+            v = 0 if p["pos"] == "G" else hl_value(p, "goals")
+            if v:
+                opts, right = [str(x) for x in near(v, 2, 0)], str(v)
+                q = f"What's the most goals {p['name']} has scored in one NHL season?"
+        if not q or not opts or len(opts) != 3 or right in opts or len(set(opts)) != 3:
             continue
+        used["kinds"].add(kind)
+        used["players"].update(x["id"] for x in who)
         a = rnd.randrange(4)
         opts.insert(a, right)
-        return {"q": q, "o": opts, "a": a}
+        return {"q": q, "o": opts, "a": a, "kind": kind}
     return None
 
 
 def shootout_puzzle(players, rnd):
-    rounds = []
+    rounds, used = [], {"kinds": set(), "players": set()}
     for _ in range(5):
-        q = quiz_question(players, rnd)
+        q = quiz_question(players, rnd, used)
         if not q:
             return None
         q["keep"] = sorted(rnd.sample(range(5), 2))   # net zones the goalie covers
