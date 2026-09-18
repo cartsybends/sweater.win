@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "40"
+VERSION = "41"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -4879,6 +4879,8 @@ CACHE_DAYS = 7
 
 
 SCHEDULE = HERE / "schedule.json"
+GAMES_LIST_MIN = 600       # fewer than this means the stats API gave us a broken list
+PLAYER_POOL_MIN = 400      # fewer than this means something went wrong upstream; don't plan puzzles
 AWARD_HISTORY = []
 LOCK_DAYS = 1      # today and tomorrow never change once scheduled
 AHEAD = 30         # how many days to plan ahead
@@ -4951,6 +4953,8 @@ def hl_value(p, stat):
 
 def hl_sequence(ids, highs, seed):
     """HL_LEN + 1 players in a row, no repeats, and no two neighbours with the same career high."""
+    if len(ids) < 2:
+        return []
     rnd = random.Random(seed)
     seq, used = [], set()
     while len(seq) < HL_LEN + 1:
@@ -5095,6 +5099,8 @@ def rank_value(p, stat):
 def rank_puzzle(players, rnd):
     stat = rnd.choice(RANK_STATS)
     pool = [p for p in players if hl_ok(p) and rank_value(p, stat)]
+    if len(pool) < 5:
+        return None
     for _ in range(200):
         picks = rnd.sample(pool, 5)
         if len({rank_value(p, stat) for p in picks}) == 5:
@@ -5283,6 +5289,8 @@ def quiz_question(players, rnd, used=None):
 
 
 def shootout_puzzle(players, rnd):
+    if len(players) < 12:
+        return None
     rounds, used = [], {"kinds": set(), "players": set()}
     for _ in range(5):
         q = quiz_question(players, rnd, used)
@@ -5330,6 +5338,8 @@ def truth_facts(p, rnd):
 
 
 def truths_puzzle(players, rnd):
+    if len(players) < 8:
+        return None
     rounds, seen = [], set()
     for _ in range(200):
         if len(rounds) == 5:
@@ -5537,6 +5547,8 @@ def mroster_puzzle(players, rnd):
     if not teams:
         return None
     team = rnd.choice(teams)
+    if len(rosters[team]) < 6:
+        return None
     picks = rnd.sample(rosters[team], 6)
     return {"team": team, "ids": [p["id"] for p in picks]}
 
@@ -5935,17 +5947,28 @@ def recent_games():
     today = date.today()
     start = today.year if today.month >= 7 else today.year - 1
     seasons = [f"{start - 1}{start}", f"{start}{start + 1}"]
-    games = {}
+    games, failures = {}, 0
     for season in seasons:
         for kind in ("skater", "goalie"):
-            try:
-                rows = get_json(STATS.format(kind=kind, season=season)).get("data", [])
-            except Exception as e:
-                print(f"  (couldn't load {kind} stats for {season}: {e})", file=sys.stderr)
+            rows = None
+            for attempt in range(3):
+                try:
+                    rows = get_json(STATS.format(kind=kind, season=season), timeout=25).get("data", [])
+                    break
+                except Exception as e:
+                    print(f"  (couldn't load {kind} stats for {season}, try {attempt + 1}: {e})", file=sys.stderr)
+                    time.sleep(3)
+            if rows is None:
+                failures += 1
                 continue
             for r in rows:
                 pid = r.get("playerId")
                 games[pid] = games.get(pid, 0) + (r.get("gamesPlayed") or 0)
+    # a half-loaded list would wrongly cut most of the league, so treat it as no list at all
+    if failures or len(games) < GAMES_LIST_MIN:
+        print(f"  Games-played list looks incomplete ({len(games)} players, {failures} requests failed), "
+              f"so every rostered player is included this time.")
+        return {}
     return games
 
 
@@ -6025,6 +6048,10 @@ def main():
 
     if not players:
         sys.exit("No players fetched - check your internet connection.")
+
+    if len(players) < PLAYER_POOL_MIN and not args.all:
+        sys.exit(f"Only {len(players)} players came back, which is far fewer than a full league. "
+                 "Nothing was changed; the next build will try again.")
 
     if not args.no_career:
         add_career_teams(players)
