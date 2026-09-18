@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "37"
+VERSION = "39"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -505,6 +505,41 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ptbig { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
   .ptleave { display: block; margin: 18px auto 0; color: var(--muted); text-decoration: underline; letter-spacing: 0; text-transform: none; }
 
+  /* two truths */
+  .twlist { display: grid; gap: 8px; max-width: 560px; margin: 4px auto 0; }
+  .twline { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 0; border-radius: 12px;
+            background: var(--cell); color: var(--cell-fg); font: inherit; font-size: 16px; text-align: left; cursor: pointer;
+            transition: background-color .2s, transform .1s; }
+  .twline:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
+  .twline:active:not(:disabled) { transform: scale(.99); }
+  .twline:disabled { cursor: default; }
+  .twmark { width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center;
+            background: color-mix(in srgb, var(--fg) 12%, transparent); font-weight: 700; font-size: 14px; }
+  .twline.true { background: color-mix(in srgb, var(--hit) 22%, var(--cell)); }
+  .twline.wrong { background: #c0392b; color: #fff; }
+  .twline.wrong .twmark, .twline.true .twmark { background: rgba(255,255,255,.3); }
+  .twline.picked { box-shadow: inset 0 0 0 3px var(--fg); }
+
+  /* team higher or lower */
+  .hltlogo { width: 92px; height: 92px; object-fit: contain; }
+
+  /* mystery season */
+  .selist { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 620px; margin: 14px auto 0; }
+  .sebtn { padding: 10px 14px; border: 0; border-radius: 10px; background: var(--cell); color: var(--cell-fg);
+           font: inherit; font-size: 15px; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color .2s; }
+  .sebtn:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
+  .sebtn.hit { background: var(--hit); color: var(--hit-fg); }
+  .sebtn.miss { opacity: .45; }
+  .sebtn:disabled { cursor: default; }
+
+  /* mystery roster */
+  .mrlist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; }
+  .mrrow { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 12px;
+           background: var(--cell); color: var(--cell-fg); }
+  .mrrow img { width: 44px; height: 44px; border-radius: 50%; background: var(--cream); object-fit: cover; }
+  .mrrow b { display: block; font-size: 16px; }
+  .mrrow small { font-size: 12px; opacity: .7; }
+
   /* options, archive */
   .optrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; font-size: 14px; }
   .optnote { color: var(--muted); font-size: 13px; }
@@ -783,6 +818,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     .teambtn { font-size: 13px; padding: 6px 8px; gap: 6px; }
     .teambtn img { width: 22px; height: 22px; }
     .ttcard img { width: 76px; height: 76px; }
+    .hltlogo { width: 62px; height: 62px; }
+    .twline { font-size: 14px; padding: 12px; gap: 10px; }
+    .sebtn { font-size: 13px; padding: 8px 11px; }
     .jystop { min-width: 88px; padding: 8px; }
     .cngrid { gap: 5px; }
     .cntile { min-height: 64px; }
@@ -1257,6 +1295,69 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div id="ptBody"></div>
   </section>
 
+  <section class="view" id="view-truths" hidden>
+    <div class="shdots" id="twDots"></div>
+    <div class="ttcard"><img id="twImg" alt=""><div><p class="pname" id="twName"></p><p class="pmeta">Two of these are true</p></div></div>
+    <p class="ttq" id="twQ"></p>
+    <div class="twlist" id="twList"></div>
+    <p class="hint" id="twMsg"></p>
+    <div class="numrow"><button class="btn" id="twNext" type="button" hidden>Next player</button></div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
+  </section>
+
+  <section class="view" id="view-hlt" hidden>
+    <p class="intro" id="htIntro"></p>
+    <div class="hlscore"><span>Streak<b id="htStreak">0</b></span><span>Best<b id="htBest">0</b></span></div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
+    <div class="hlpair" id="htPair"><div id="htA"></div><div class="hlvs">VS</div><div id="htB"></div></div>
+    <p class="hint" id="htLeft"></p>
+  </section>
+
+  <section class="view" id="view-season" hidden>
+    <div class="ttcard"><img id="seImg" alt=""><div><p class="pname" id="seName"></p><p class="pmeta tmeta" id="seMeta"></p></div></div>
+    <p class="ttq">Which season is this?</p>
+    <div class="chips" id="seStats"></div>
+    <div class="selist" id="seList"></div>
+    <p class="hint" id="seLeft"></p>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
+  </section>
+
+  <section class="view" id="view-playoff" hidden>
+    <p class="intro" id="phIntro"></p>
+    <p class="slhint" id="phHint" hidden></p>
+    <div class="search narrow">
+      <input id="phGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="phOpts" placeholder="Guess 1 of 6">
+      <ul class="list" id="phOpts" role="listbox" hidden></ul>
+    </div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game needs playoff stats. Rebuild the site to load them.</p>
+    <table class="seasons"><thead><tr id="phHead"></tr></thead><tbody id="phRows"></tbody></table>
+    <p class="hint" id="phLeft"></p>
+    <ul class="wrong" id="phWrong"></ul>
+  </section>
+
+  <section class="view" id="view-trophy" hidden>
+    <div class="shdots" id="trDots"></div>
+    <p class="ttq" id="trQ"></p>
+    <div class="shopts" id="trOpts"></div>
+    <p class="hint" id="trMsg"></p>
+    <div class="numrow"><button class="btn" id="trNext" type="button" hidden>Next trophy</button></div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game needs trophy info. Rebuild the site to load it.</p>
+  </section>
+
+  <section class="view" id="view-mroster" hidden>
+    <p class="intro">Which team do these players belong to?</p>
+    <ul class="mrlist" id="mrList"></ul>
+    <p class="hint" id="mrLeft"></p>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
+    <div class="divs" id="mrGrid"></div>
+  </section>
+
   <section class="view" id="view-team" hidden>
     <div class="ttcard">
       <img id="ttImg" alt="">
@@ -1434,7 +1535,8 @@ const secondsToEtMidnight = () => {
 };
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
-["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot", "zam"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
+ "shoot", "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -1800,7 +1902,8 @@ function countUp(el) {
 TEAM_NAMES.ARI = "Arizona";
 TEAM_NAMES.ATL = "Atlanta";
 const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "ATL"]);
-const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot", "zam"].includes(g);
+const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot",
+                         "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster"].includes(g);
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
 const teamName = t => TEAM_NAMES[t] || t;
 
@@ -3092,6 +3195,477 @@ function leaveGame(g) {
   if (g === "shoot" && shootUI.phase === "aim") shootUI = { phase: "ask" };
 }
 
+// ======================= two truths, higher or lower: teams, mystery season =======================
+const FACT_KINDS = ["team", "position", "nation", "number", "draftYear", "seasons", "height", "bestGoals", "games"];
+function factText(p, kind, rnd, wrong = false) {
+  const one = arr => arr[Math.floor(rnd() * arr.length)];
+  const inches = v => `${Math.floor(v / 12)}′${v % 12}″`;
+  const seasons = seasonsOf(p).length, games = seasonsOf(p).reduce((n, r) => n + r.gp, 0);
+  if (kind === "team") {
+    const t = wrong ? one(Object.keys(TEAMS).filter(x => x !== p.team)) : p.team;
+    return `Plays for ${teamName(t)}`;
+  }
+  if (kind === "position") {
+    if (!POS_LABELS[p.pos]) return null;
+    const k = wrong ? one(Object.keys(POS_LABELS).filter(x => x !== p.pos)) : p.pos;
+    return `Is a ${POS_LABELS[k].toLowerCase()}`;
+  }
+  if (kind === "nation") {
+    const known = Object.keys(COUNTRY_NAMES);
+    const n = wrong ? one(known.filter(x => x !== p.nation)) : p.nation;
+    return `Was born in ${(COUNTRY_NAMES[n] || n).replace(/^the /, "")}`;
+  }
+  if (kind === "number") {
+    if (!p.number) return null;
+    return `Wears #${wrong ? Math.max(1, p.number + one([-9, -7, -5, 5, 7, 9])) : p.number}`;
+  }
+  if (kind === "draftYear") {
+    if (!hasDraft(p)) return null;
+    return `Was drafted in ${wrong ? p.draft[0] + one([-4, -3, 3, 4]) : p.draft[0]}`;
+  }
+  if (kind === "seasons") {
+    if (seasons < 2) return null;
+    return `Has played ${wrong ? Math.max(1, seasons + one([-3, -2, 2, 3])) : seasons} NHL seasons`;
+  }
+  if (kind === "height") {
+    if (!p.ht) return null;
+    return `Is ${inches(wrong ? p.ht + one([-3, -2, 2, 3]) : p.ht)} tall`;
+  }
+  if (kind === "bestGoals") {
+    const v = p.pos === "G" ? 0 : hlValue(p, "goals").v;
+    if (!v) return null;
+    return `Once scored ${wrong ? Math.max(0, v + one([-12, -8, 8, 12])) : v} goals in a season`;
+  }
+  if (games < 100) return null;
+  const floor = Math.floor(games / 100) * 100;
+  return `Has played over ${wrong ? floor + 300 : floor} NHL games`;
+}
+function truthsRandom(rnd) {
+  const rounds = [], seen = new Set();
+  for (let i = 0; i < 400 && rounds.length < 5; i++) {
+    const p = pick(PLAYERS);
+    if (seen.has(p.id)) continue;
+    const kinds = shuffled(FACT_KINDS, rnd).filter(k => factText(p, k, rnd) && factText(p, k, rnd, true));
+    if (kinds.length < 3) continue;
+    const lines = [factText(p, kinds[0], rnd), factText(p, kinds[1], rnd), factText(p, kinds[2], rnd, true)];
+    if (new Set(lines).size < 3) continue;
+    const order = shuffled([0, 1, 2], rnd);
+    rounds.push({ p: p.id, s: order.map(i => lines[i]), f: order.indexOf(2) });
+    seen.add(p.id);
+  }
+  return rounds.length === 5 ? { rounds, rid: Math.random() } : null;
+}
+G.truths = {
+  kind: "score", repeat: true, title: "Two Truths", share: "Sweater Two Truths", view: "view-truths",
+  max: 5, next: "Play again", hideReveal: true,
+  cheers: ["Lie detector! 🔍", "Sharp! 🧠", "Nice work! 💪", "Good eye! 🏒", "Time's up!"],
+  pool: () => PLAYERS.length >= 20 ? PLAYERS : [],
+  daily(k) {
+    const v = DAILY.truths[k];
+    if (v && v.rounds && v.rounds.length === 5 && v.rounds.every(r => BYID.has(r.p))) return v;
+    return truthsRandom(seeded(hash("sweater-truths-" + k)));
+  },
+  random: () => truthsRandom(Math.random),
+  tid: t => `truths:${t.rid || hash(t.rounds.map(r => r.s.join("|")).join())}`,
+  player: t => BYID.get(t.rounds[Math.min(S.truths.guesses.length, 4)].p),
+  right: (t, g, i) => Number(g) === t.rounds[i].f,
+  score(t, g) { return g.filter((x, i) => this.right(t, x, i)).length * 2; },
+  isWin: () => false,
+  isDone: (t, g) => g.length >= 5,
+  wonGame(t, g) { return this.score(t, g) === 10; },
+  meta: () => "",
+  endText(t, g, won) {
+    const n = this.score(t, g) / 2;
+    return { result: `${n} of 5 right`, cheer: won ? "Perfect! Nothing gets past you 🔍" : n >= 3 ? "Solid detective work 🧠" : "Tricky ones today 🏒" };
+  },
+  celebrate: (t, g, won) => won,
+  archiveStatus: h => `${h.s / 2}/5`,
+  shareText(t, saved, num, link) {
+    const marks = saved.guesses.map((g, i) => this.right(t, g, i) ? "🟩" : "🟥").join("");
+    return `Sweater Two Truths #${num}\n${marks}\n${this.score(t, saved.guesses) / 2}/5 right${link}`;
+  },
+  reset() { this.showing = false; },
+  guess(t, g) { return /^[0-2]$/.test(String(g)) ? false : null; },
+  render(t, st) {
+    const i = st.guesses.length, last = i - 1;
+    const showing = this.showing && last >= 0;
+    const r = t.rounds[showing ? last : Math.min(i, 4)], p = BYID.get(r.p);
+    $("twDots").innerHTML = [0, 1, 2, 3, 4].map(n =>
+      `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
+    $("twImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
+    $("twImg").src = p.headshot || FALLBACK;
+    $("twName").textContent = p.name;
+    $("twQ").textContent = st.over && !showing ? "That's the game" : "Which one is false?";
+    $("twList").innerHTML = st.over && !showing ? "" : r.s.map((line, n) => {
+      const cls = showing ? (n === r.f ? " wrong" : " true") : "";
+      const picked = showing && Number(st.guesses[last]) === n ? " picked" : "";
+      return `<button type="button" class="twline${cls}${picked}" data-c="${n}"${showing ? " disabled" : ""}>
+        <span class="twmark">${showing ? (n === r.f ? "✗" : "✓") : String.fromCharCode(65 + n)}</span><span>${esc(line)}</span></button>`;
+    }).join("");
+    $("twMsg").textContent = showing
+      ? (this.right(t, st.guesses[last], last) ? "Right, that one was false." : `Not quite. The false one was "${t.rounds[last].s[t.rounds[last].f]}".`)
+      : st.over ? "" : "Two of these are true.";
+    $("twNext").hidden = !(showing && !st.over);
+  },
+};
+$("twList").addEventListener("click", e => {
+  const b = e.target.closest("[data-c]"), st = S.truths;
+  if (!b || st.over || G.truths.showing) return;
+  G.truths.showing = true;
+  doGuess(b.dataset.c);
+});
+$("twNext").onclick = () => { G.truths.showing = false; G.truths.render(S.truths.target, S.truths); };
+
+// ---- Higher or Lower: Teams ----
+const HLT_METRICS = {
+  age:    { name: "Average age",        unit: "years on average",       up: "Older",  down: "Younger", show: v => v.toFixed(1) },
+  height: { name: "Average height",     unit: "tall on average",        up: "Taller", down: "Shorter", show: v => `${Math.floor(v / 12)}′${Math.round(v % 12)}″` },
+  goals:  { name: "Career goals",       unit: "career goals on the roster", up: "More", down: "Fewer", show: v => v.toLocaleString() },
+  games:  { name: "Career games",       unit: "career NHL games on the roster", up: "More", down: "Fewer", show: v => v.toLocaleString() },
+  abroad: { name: "Players from abroad", unit: "players born outside Canada and the USA", up: "More", down: "Fewer", show: v => String(v) },
+};
+function hltValue(team, metric) {
+  const roster = PLAYERS.filter(p => p.team === team);
+  if (!roster.length) return 0;
+  if (metric === "age") return Math.round(roster.reduce((n, p) => n + ageOf(p.birth), 0) / roster.length * 10) / 10;
+  if (metric === "height") { const h = roster.filter(p => p.ht); return h.length ? Math.round(h.reduce((n, p) => n + p.ht, 0) / h.length * 10) / 10 : 0; }
+  if (metric === "goals") return roster.reduce((n, p) => n + rankValue(p, "goals"), 0);
+  if (metric === "games") return roster.reduce((n, p) => n + rankValue(p, "gp"), 0);
+  return roster.filter(p => !["CAN", "USA"].includes(p.nation)).length;
+}
+function hltRandom(rnd) {
+  const teams = Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 10);
+  if (teams.length < 4) return null;
+  const metric = pick(Object.keys(HLT_METRICS)), seq = [];
+  while (seq.length < HL_LEN + 1) {
+    const recent = seq.slice(-4).map(x => x[0]);
+    let t = null;
+    for (let i = 0; i < 60 && !t; i++) {
+      const c = teams[Math.floor(rnd() * teams.length)];
+      if (seq.length && hltValue(c, metric) === seq[seq.length - 1][1]) continue;
+      if ((i < 40 ? recent : recent.slice(-1)).includes(c)) continue;
+      t = c;
+    }
+    seq.push([t || teams[0], hltValue(t || teams[0], metric)]);
+  }
+  return { metric, seq, rid: Math.random() };
+}
+G.hlt = {
+  kind: "streak", repeat: true, title: "Team Higher or Lower", share: "Sweater Team H/L", view: "view-hlt",
+  max: HL_LEN, next: "Play again", hideReveal: true,
+  pool: () => Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 10),
+  daily(k) {
+    const v = DAILY.hlt[k];
+    if (v && v.seq && v.seq.length > 1 && HLT_METRICS[v.metric]) return v;
+    return hltRandom(seeded(hash("sweater-hlt-" + k)));
+  },
+  random: () => hltRandom(Math.random),
+  tid: t => t.rid ? `hlt:${t.rid}` : `${t.metric}:${hash(t.seq.map(x => x[0]).join())}`,
+  limit: t => t.seq.length - 1,
+  correct(t, i, ans) { const a = Number(t.seq[i][1]), b = Number(t.seq[i + 1][1]); return ans === "H" ? b >= a : b <= a; },
+  score(t, g) { let n = 0; for (const [i, x] of g.entries()) { if (!this.correct(t, i, x)) break; n++; } return n; },
+  isWin: () => false,
+  isDone(t, g) { return g.some((x, i) => !this.correct(t, i, x)) || g.length >= this.limit(t); },
+  wonGame(t, g) { return g.length >= this.limit(t) && this.score(t, g) === g.length; },
+  player: () => null,
+  meta(t) {
+    const i = Math.min(S.hlt.guesses.length, t.seq.length - 1), info = HLT_METRICS[t.metric];
+    return `${teamName(t.seq[i][0])}: ${info.show(t.seq[i][1])} ${info.unit}`;
+  },
+  endText(t, g, won) {
+    const n = this.score(t, g);
+    return { result: won ? `Perfect! All ${n} right` : `Streak: ${n}`,
+             cheer: won ? "Flawless run! 🏆" : n >= 15 ? "Legendary! 🔥" : n >= 8 ? "Hot streak! 🔥" : n >= 3 ? "Nice run! 💪" : "Tough start! 🏒" };
+  },
+  celebrate(t, g, won) { return won || this.score(t, g) >= 10; },
+  archiveStatus: h => `🔥 ${h.s}`,
+  shareText(t, saved, num, link) {
+    const marks = saved.guesses.map((x, i) => this.squares(t, x, i)).join("");
+    const rows = (marks.match(/(?:🟩|🟥){1,10}/gu) || []).join("\n");
+    const won = this.wonGame(t, saved.guesses);
+    return `Sweater Team H/L #${num} · ${HLT_METRICS[t.metric].name}\nStreak: ${this.score(t, saved.guesses)}${won ? " (perfect!)" : ""}\n\n${rows}${link}`;
+  },
+  onFinish(st) { const k = `sweater-hlt-best-${st.target.metric}`, n = this.score(st.target, st.guesses);
+    if (n > (store.get(k) || 0)) store.set(k, n); },
+  reset() { clearTimeout(this.timer); this.pending = false; },
+  card(t, i, reveal, state) {
+    const [team, value] = t.seq[i], info = HLT_METRICS[t.metric];
+    const other = teamName(t.seq[Math.max(0, i - 1)][0]);
+    return `<div class="hlcard ${state || ""}">
+      <img class="hltlogo" src="${logo(team)}" alt="" onerror="this.style.visibility='hidden'">
+      <p class="hlname">${esc(teamName(team))}</p>
+      ${reveal ? `<p class="hlval"><b>${info.show(value)}</b></p><p class="hlunit">${esc(info.unit)}</p>`
+        : `<p class="hlunit">${esc(info.name.toLowerCase())}:</p>
+           <div class="hlbtns"><button class="btn hlbtn" type="button" data-hlt="H">▲ ${info.up}</button>
+           <button class="btn hlbtn" type="button" data-hlt="L">▼ ${info.down}</button></div>
+           <p class="hlyr">than ${esc(other)}</p>`}
+    </div>`;
+  },
+  guess(t, x, fresh) {
+    if (x !== "H" && x !== "L") return null;
+    const i = S.hlt.guesses.length;
+    if (i + 1 >= t.seq.length) return null;
+    const ok = this.correct(t, i, x);
+    if (fresh) {
+      this.pending = true;
+      $("htB").innerHTML = this.card(t, i + 1, true, ok ? "ok" : "bad");
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => { this.pending = false; if (game === "hlt") this.render(t, S.hlt, true); }, ok ? 1100 : 1400);
+    }
+    return ok;
+  },
+  render(t, st, slide = false) {
+    if (this.pending) return;
+    const info = HLT_METRICS[t.metric];
+    $("htIntro").innerHTML = `Which team has the higher <b>${esc(info.name.toLowerCase())}</b>?`;
+    $("htStreak").textContent = this.score(t, st.guesses);
+    $("htBest").textContent = Math.max(store.get(`sweater-hlt-best-${t.metric}`) || 0, this.score(t, st.guesses));
+    $("htLeft").textContent = st.over ? "" : `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run · ties count as right`;
+    const i = st.over ? Math.max(0, Math.min(st.guesses.length, t.seq.length - 1) - 1) : st.guesses.length;
+    const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
+    $("htA").innerHTML = this.card(t, i, true, "");
+    $("htB").innerHTML = this.card(t, i + 1, st.over, st.over ? (lastOk ? "ok" : "bad") : "");
+    if (slide) { $("htPair").classList.remove("slide"); void $("htPair").offsetWidth; $("htPair").classList.add("slide"); }
+  },
+  squares(t, x, i) { return this.correct(t, i, x) ? "🟩" : "🟥"; },
+};
+$("htPair").addEventListener("click", e => { const b = e.target.closest("[data-hlt]"); if (b) doGuess(b.dataset.hlt); });
+
+// ---- Mystery Season ----
+G.season = {
+  title: "Mystery Season", share: "Sweater Mystery Season", view: "view-season", max: 3, next: "Next player",
+  cheers: ["Spot on! 🎯", "Nice read! 🧠", "Just in time! 🚨"],
+  pool: () => PLAYERS.filter(p => seasonsOf(p).length >= 4),
+  daily(k) {
+    const v = DAILY.season[k], p = v && BYID.get(v.id);
+    if (p && seasonsOf(p).some(r => r.y === v.y)) return { p, y: v.y };
+    const pool = this.pool();
+    const q = pool[hash("sweater-season-" + k) % pool.length], rows = seasonsOf(q);
+    return { p: q, y: rows[hash("season-" + k) % rows.length].y };
+  },
+  random() { const p = pick(this.pool()), rows = seasonsOf(p); return { p, y: pick(rows).y }; },
+  tid: t => `${t.p.id}:${t.y}`,
+  player: t => t.p,
+  isWin: (t, y) => y === t.y,
+  meta(t) {
+    const row = seasonsOf(t.p).find(r => r.y === t.y) || { teams: [t.p.team] };
+    return `${seasonLabel(t.y)} with ${row.teams.map(teamName).join(" and ")}`;
+  },
+  reset(t) {
+    $("seImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
+    $("seImg").src = t.p.headshot || FALLBACK;
+    $("seName").textContent = t.p.name;
+    $("seMeta").innerHTML = `<img src="${logo(t.p.team)}" alt="" onerror="this.remove()"> ${esc(teamName(t.p.team))} · ${posName(t.p)}`;
+    const row = seasonsOf(t.p).find(r => r.y === t.y);
+    $("seStats").innerHTML = statHeads(t.p).map((h, i) => `<span class="chip"><b>${statCells(t.p, row)[i]}</b> ${h}</span>`).join("");
+  },
+  guess(t, y) { return Number.isInteger(y) ? y === t.y : null; },
+  render(t, st) {
+    const rows = seasonsOf(t.p), left = this.max - st.guesses.length;
+    $("seList").innerHTML = rows.map(r => {
+      const tried = st.guesses.includes(r.y);
+      const cls = st.over && r.y === t.y ? " hit" : tried ? " miss" : "";
+      const arrow = tried && r.y !== t.y ? (t.y > r.y ? " ↑" : " ↓") : "";
+      return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried || st.over ? " disabled" : ""}>${seasonLabel(r.y)}${arrow}</button>`;
+    }).join("");
+    $("seLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left · arrows point to a later or earlier season`;
+  },
+  squares: (t, y) => y === t.y ? "🟩" : "⬛",
+};
+$("seList").addEventListener("click", e => {
+  const b = e.target.closest("[data-y]");
+  if (b && !b.disabled) doGuess(Number(b.dataset.y));
+});
+
+// ======================= playoff hero, trophy case, mystery roster =======================
+const poSeasons = p => {
+  const by = new Map();
+  for (const [y, t, gp, a, b, c] of (p.po || [])) {
+    const r = by.get(y) || { y, teams: [], gp: 0, a: 0, b: 0, c: 0 };
+    r.teams.push(t); r.gp += gp; r.a += a; r.b += b; r.c += c;
+    by.set(y, r);
+  }
+  return [...by.values()].sort((x, y) => x.y - y.y);
+};
+const PO_POOL = PLAYERS.filter(p => poSeasons(p).length >= 3);
+const poHeads = p => p.pos === "G" ? ["GP", "W", "GAA", "SV%"] : ["GP", "G", "A", "PTS"];
+const poCells = (p, r) => p.pos === "G"
+  ? [r.gp, r.a, (r.gp ? r.b / r.teams.length : 0).toFixed(2), (r.gp ? r.c / r.teams.length : 0).toFixed(3).replace(/^0/, "")]
+  : [r.gp, r.a, r.b, r.c];
+
+G.playoff = {
+  title: "Playoff Hero", share: "Sweater Playoff Hero", view: "view-playoff", max: 6, next: "Next player",
+  cheers: ["Playoff legend! 🏆", "Snipe! 🎯", "Hat trick! 🎩", "Nice read! 🏒", "Got there! 💪", "Buzzer beater! 🚨"],
+  pool: () => PO_POOL,
+  daily(k) {
+    const p = BYID.get((DAILY.playoff[k] || {}).id);
+    return p && poSeasons(p).length >= 3 ? p : PO_POOL[hash("sweater-po-" + k) % PO_POOL.length];
+  },
+  random: () => pick(PO_POOL),
+  tid: t => t.id, player: t => t, isWin: (t, id) => id === t.id,
+  meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
+  reset() { $("phWrong").innerHTML = ""; this.shown = 0; },
+  guess(t, id) {
+    const p = BYID.get(id);
+    if (!p) return null;
+    if (p.id !== t.id) addWrong("phWrong", p);
+    return p.id === t.id;
+  },
+  render(t, st) {
+    const rows = poSeasons(t), wrong = st.guesses.filter(id => id !== t.id).length;
+    const shown = st.over ? rows.length : Math.min(rows.length, 1 + wrong);
+    const runs = rows.reduce((n, r) => n + r.gp, 0), pts = rows.reduce((n, r) => n + (t.pos === "G" ? r.a : r.c), 0);
+    $("phIntro").textContent = `${posName(t)} · ${rows.length} playoff runs · ${runs} playoff games · ${pts} career playoff ${t.pos === "G" ? "wins" : "points"}`;
+    const hint = !st.over && wrong >= 4;
+    $("phHint").hidden = !hint;
+    if (hint) $("phHint").innerHTML = `Hint: he plays for <img src="${logo(t.team)}" alt="" onerror="this.remove()"><b>${esc(teamName(t.team))}</b> now`;
+    $("phHead").innerHTML = `<th>Playoffs</th>${poHeads(t).map(h => `<th>${h}</th>`).join("")}${st.over ? "<th>Team</th>" : ""}`;
+    $("phRows").innerHTML = rows.map((r, i) => {
+      if (i >= shown) return `<tr class="locked"><td>${seasonLabel(r.y)}</td><td colspan="${poHeads(t).length}">🔒 Locked</td></tr>`;
+      const cls = this.shown && i >= this.shown ? ' class="newrow"' : "";
+      return `<tr${cls}><td>${seasonLabel(r.y)}</td>${poCells(t, r).map(v => `<td>${v}</td>`).join("")}` +
+        (st.over ? `<td>${r.teams.map(x => esc(x || "?")).join(" / ")}</td>` : "") + "</tr>";
+    }).join("");
+    $("phLeft").textContent = st.over ? "" :
+      `${this.max - st.guesses.length} tries left. Each wrong guess unlocks another playoff run.` +
+      (wrong < 4 ? " A team hint unlocks after 4 wrong guesses." : "");
+    this.shown = shown;
+  },
+  squares: (t, id) => id === t.id ? "🟩" : "⬛",
+};
+
+// ---- Trophy Case ----
+function trophyRandom(rnd) {
+  const entries = [];
+  for (const p of PLAYERS) for (const [name, y] of (p.aw || [])) if (!/Stanley Cup/.test(name)) entries.push([name, y, p.id]);
+  if (entries.length < 5) return null;
+  const rounds = [], used = new Set();
+  for (let i = 0; i < 300 && rounds.length < 5; i++) {
+    const [t, y, pid] = entries[Math.floor(rnd() * entries.length)];
+    if (used.has(`${t}:${y}`)) continue;
+    const ids = shuffled(PLAYERS.filter(p => p.id !== pid), rnd).slice(0, 3).map(p => p.id);
+    if (ids.length < 3) return null;
+    const a = Math.floor(rnd() * 4);
+    ids.splice(a, 0, pid);
+    rounds.push({ t, y, ids, a });
+    used.add(`${t}:${y}`);
+  }
+  return rounds.length === 5 ? { rounds, rid: Math.random() } : null;
+}
+G.trophy = {
+  kind: "score", repeat: true, title: "Trophy Case", share: "Sweater Trophy Case", view: "view-trophy",
+  max: 5, next: "Play again", hideReveal: true,
+  pool: () => PLAYERS.some(p => p.aw && p.aw.length) ? PLAYERS : [],
+  daily(k) {
+    const v = DAILY.trophy[k];
+    if (v && v.rounds && v.rounds.length === 5 && v.rounds.every(r => r.ids.every(i => BYID.has(i)))) return v;
+    return trophyRandom(seeded(hash("sweater-trophy-" + k)));
+  },
+  random: () => trophyRandom(Math.random),
+  tid: t => `trophy:${t.rid || hash(t.rounds.map(r => `${r.t}${r.y}`).join())}`,
+  player: t => BYID.get(t.rounds[Math.min(S.trophy.guesses.length, 4)].ids[t.rounds[Math.min(S.trophy.guesses.length, 4)].a]),
+  right: (t, g, i) => Number(g) === t.rounds[i].a,
+  score(t, g) { return g.filter((x, i) => this.right(t, x, i)).length * 2; },
+  isWin: () => false,
+  isDone: (t, g) => g.length >= 5,
+  wonGame(t, g) { return this.score(t, g) === 10; },
+  meta: () => "",
+  endText(t, g, won) {
+    const n = this.score(t, g) / 2;
+    return { result: `${n} of 5 right`, cheer: won ? "You know your trophies! 🏆" : n >= 3 ? "Nicely done 🧠" : "Tough ballot today 🏒" };
+  },
+  celebrate: (t, g, won) => won,
+  archiveStatus: h => `${h.s / 2}/5`,
+  shareText(t, saved, num, link) {
+    const marks = saved.guesses.map((g, i) => this.right(t, g, i) ? "🟩" : "🟥").join("");
+    return `Sweater Trophy Case #${num}\n${marks}\n${this.score(t, saved.guesses) / 2}/5 right${link}`;
+  },
+  reset() { this.showing = false; },
+  guess(t, g) { return /^[0-3]$/.test(String(g)) ? false : null; },
+  render(t, st) {
+    const i = st.guesses.length, last = i - 1, showing = this.showing && last >= 0;
+    const r = t.rounds[showing ? last : Math.min(i, 4)];
+    $("trDots").innerHTML = [0, 1, 2, 3, 4].map(n =>
+      `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
+    $("trQ").innerHTML = st.over && !showing ? "That's the game"
+      : `Who won the <b>${esc(r.t)}</b> for ${seasonLabel(r.y)}?`;
+    $("trOpts").innerHTML = st.over && !showing ? "" : r.ids.map((id, n) => {
+      const p = BYID.get(id);
+      const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
+      return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>${esc(p ? p.name : "?")}</button>`;
+    }).join("");
+    $("trMsg").textContent = showing
+      ? (this.right(t, st.guesses[last], last) ? "Correct!" : `It was ${(BYID.get(t.rounds[last].ids[t.rounds[last].a]) || {}).name || "someone else"}.`)
+      : st.over ? "" : "Trophies won by players still in the league.";
+    $("trNext").hidden = !(showing && !st.over);
+  },
+};
+$("trOpts").addEventListener("click", e => {
+  const b = e.target.closest("[data-c]");
+  if (!b || S.trophy.over || G.trophy.showing) return;
+  G.trophy.showing = true;
+  doGuess(b.dataset.c);
+});
+$("trNext").onclick = () => { G.trophy.showing = false; G.trophy.render(S.trophy.target, S.trophy); };
+
+// ---- Mystery Roster ----
+function mrosterRandom(rnd) {
+  const teams = Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 6);
+  if (!teams.length) return null;
+  const team = teams[Math.floor(rnd() * teams.length)];
+  return { team, ids: shuffled(PLAYERS.filter(p => p.team === team), rnd).slice(0, 6).map(p => p.id), rid: Math.random() };
+}
+G.mroster = {
+  title: "Mystery Roster", share: "Sweater Mystery Roster", view: "view-mroster", max: 4, next: "Next team",
+  cheers: ["Called it! 🎯", "Nice read! 🧠", "Got there! 💪", "Last chance, nailed it! 🚨"],
+  hideReveal: true,
+  pool: () => Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 6),
+  daily(k) {
+    const v = DAILY.mroster[k];
+    if (v && v.team && TEAMS[v.team] && v.ids && v.ids.every(i => BYID.has(i))) return v;
+    return mrosterRandom(seeded(hash("sweater-mroster-" + k)));
+  },
+  random: () => mrosterRandom(Math.random),
+  tid: t => t.rid ? `mroster:${t.rid}` : `${t.team}:${hash(t.ids.join(","))}`,
+  player: () => null,
+  isWin: (t, abbr) => abbr === t.team,
+  meta: t => `${teamName(t.team)} · ${t.ids.length} players shown`,
+  state: (t, abbr) => abbr === t.team ? true : TEAMS[abbr] && TEAMS[abbr][1] === TEAMS[t.team][1] ? "near" : false,
+  reset(t) {
+    $("mrGrid").innerHTML = Object.entries(DIV_NAMES).map(([d, name]) =>
+      `<div><h4>${name}</h4>${Object.keys(TEAMS).filter(a => TEAMS[a][1] === d)
+        .sort((a, b) => TEAM_NAMES[a].localeCompare(TEAM_NAMES[b]))
+        .map(a => `<button class="teambtn" type="button" data-team="${a}"><img alt="" src="${logo(a)}" onerror="this.style.visibility='hidden'"><span>${TEAM_NAMES[a]}</span></button>`).join("")}</div>`).join("");
+  },
+  guess(t, abbr) {
+    if (!TEAMS[abbr]) return null;
+    const b = $("mrGrid").querySelector(`[data-team="${abbr}"]`), s = this.state(t, abbr);
+    if (b) b.classList.add(s === true ? "hit" : s === "near" ? "near" : "miss");
+    return s === true;
+  },
+  render(t, st) {
+    const shown = st.over ? t.ids.length : Math.min(t.ids.length, 1 + st.guesses.length);
+    $("mrList").innerHTML = t.ids.slice(0, shown).map((id, i) => {
+      const p = BYID.get(id);
+      return `<li class="mrrow${i === shown - 1 && shown > 1 ? " newrow" : ""}">
+        <img src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
+        <span><b>${esc(p.name)}</b><small>#${p.number} · ${esc(posName(p))}</small></span></li>`;
+    }).join("");
+    $("mrGrid").querySelectorAll(".teambtn").forEach(b => {
+      b.disabled = st.over || st.guesses.includes(b.dataset.team);
+      if (st.over && b.dataset.team === t.team) b.classList.add("hit");
+    });
+    const left = this.max - st.guesses.length;
+    $("mrLeft").textContent = st.over ? "" :
+      `${left} ${left === 1 ? "try" : "tries"} left · each wrong guess shows another player · yellow means same division`;
+  },
+  squares(t, abbr) { return sq(this.state(t, abbr)); },
+};
+$("mrGrid").addEventListener("click", e => {
+  const b = e.target.closest(".teambtn");
+  if (b && !b.disabled) doGuess(b.dataset.team);
+});
+
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
 const KEYS = Object.fromEntries(Object.keys(G).map(g => [g, g === "classic"
@@ -3263,7 +3837,7 @@ function updateLabels() {
     : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
-  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "zmGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
+  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "zmGuess", "phGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
   const today = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
     : mode === "archive" ? `Archive · #${dailyNumber(game, archiveDay)}` : "Unlimited play";
@@ -3428,7 +4002,7 @@ function makeSearch(inputId, listId, toGuess = id => id) {
 }
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
-                  makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`)];
+                  makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`), makeSearch("phGuess", "phOpts")];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
 
@@ -3656,6 +4230,12 @@ const LB_RULES = {
   rank: "Rank 'Em: 10 points on the first try, 6 on the second, 3 on the third.",
   puck: "Puck Drop: 1 point for each right tap, minus 1 for each wrong tap.",
   shoot: "Shootout: 2 points for every goal, up to 10.",
+  playoff: "Playoff Hero: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
+  trophy: "Trophy Case: 2 points for every round you get right, up to 10.",
+  mroster: "Mystery Roster: 10 points on the first try, then 6, 3 and 1.",
+  truths: "Two Truths: 2 points for every round you get right, up to 10.",
+  hlt: "Team Higher or Lower: 1 point for every right answer in a row, up to 40.",
+  season: "Mystery Season: 10 points on the first try, 6 on the second, 3 on the third.",
   zam: "Zamboni Reveal: up to 10 points, minus 1 for every 10% of the ice cleared and 2 for each extra guess.",
   ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
@@ -3783,8 +4363,8 @@ async function renderLeaderboard() {
     $("lbList").innerHTML = d.rows.length ? d.rows.map(r => `
       <li class="${r.me ? "me" : ""}">
         <span class="rk">${medal(r.rank)}</span>
-        <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${hlBoard ? `best run ${r.top}` : rosterBoard ? `best ${r.top}` : `${r.wins} won`}</small>`}</span>
-        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : rosterBoard ? `named ${r.top}` : lbGame === "puck" ? `${r.top} caught` : lbGame === "shoot" ? `${r.top} ${r.top === 1 ? "goal" : "goals"}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
+        <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${hlBoard || lbGame === "hlt" ? `best run ${r.top}` : rosterBoard ? `best ${r.top}` : `${r.wins} won`}</small>`}</span>
+        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : rosterBoard ? `named ${r.top}` : lbGame === "truths" || lbGame === "trophy" ? `${r.top}/5 right` : lbGame === "hlt" ? `run of ${r.top}` : lbGame === "puck" ? `${r.top} caught` : lbGame === "shoot" ? `${r.top} ${r.top === 1 ? "goal" : "goals"}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
       </li>`).join("")
       : `<li class="empty">No scores yet${lbPeriod === "today" ? " today" : ""}. Finish the daily puzzle to get on the board.</li>`;
     $("lbYou").textContent = d.you ? `You're #${d.you.rank} of ${d.total} with ${d.you.points} points.`
@@ -3805,6 +4385,7 @@ const HUB = [
   { title: "Name the player", tone: "green", games: [
     ["classic", "🏒", "Guess the player from his team, position, age and more."],
     ["statline", "📈", "Name him from his season-by-season stats."],
+    ["playoff", "🏒", "Name him from his playoff runs."],
     ["journey", "🧭", "Name him from the teams he's played for."],
     ["blur", "🔍", "Name him from a blurry photo that sharpens as you guess."],
     ["zam", "🧊", "Clear the ice to reveal him. Guess early for more points."],
@@ -3813,11 +4394,16 @@ const HUB = [
     ["team", "🛡️", "Which team was he on that season?"],
     ["number", "👕", "What number does he wear?"],
     ["draft", "📋", "When was he drafted, and in which round?"],
+    ["season", "📅", "Which season did this stat line come from?"],
+    ["trophy", "🏆", "Who won the trophy that year?"],
+    ["mroster", "🧢", "Six players, one team. Name it fast."],
     ["map", "📍", "Find where he was born on the map."],
   ]},
   { title: "Streaks and puzzles", tone: "amber", games: [
     ["hl", "↕️", "Whose number is bigger? Keep the streak alive."],
     ["rank", "🥇", "Put five players in order by a stat."],
+    ["hlt", "🛡️", "Team against team: which roster has more?"],
+    ["truths", "🔍", "Two true, one false. Spot the fib."],
     ["roster", "⏱️", "Name as much of a team's roster as you can in 60 seconds."],
     ["conn", "🧩", "Sort 16 players into 4 hidden groups."],
   ]},
@@ -4186,6 +4772,13 @@ const HELP = {
   rank: `<p>Drag the 5 players into order by the stat shown, or use the arrows, then press <b>Lock it in</b>. You get 3 tries; rows in the right spot turn green.</p>`,
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
+  playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
+  trophy: `<p>A trophy and a season, and four players to choose from. Five rounds, 2 points each. It covers trophies won by players who are still in the league.</p>`,
+  mroster: `<p>One player from a mystery team is shown, and you pick the team. Each wrong guess reveals another teammate, up to six. 4 tries, and yellow means the right team is in that division.</p>`,
+  truths: `<p>You see a player and three statements about him. Two are true and one isn't. Tap the false one. Five rounds, 2 points each.</p>`,
+  hlt: `<p>Two teams go head to head on their current rosters: average age, average height, total career goals, total career NHL games, or players born outside Canada and the USA.</p>
+    <p>Guess whether the second team's number is higher or lower. A right answer keeps the run going, and ties count as right.</p>`,
+  season: `<p>You see a player and one of his season stat lines. Pick which season it came from, in 3 tries. Arrows point to a later or earlier season.</p>`,
   conn: `<p>Find 4 groups of 4 players who share something, like a team, a birth country, a sweater number or a birth year. Select 4, then <b>Submit</b>.</p>
     <p>Groups go from yellow (easiest) to purple (hardest). Your 4th mistake ends the game.</p>`,
 };
@@ -4670,6 +5263,179 @@ def shootout_puzzle(players, rnd):
     return {"rounds": rounds}
 
 
+# ---- Two Truths, Higher or Lower: Teams, Mystery Season ----
+def truth_facts(p, rnd):
+    """(true statement, false statement) pairs about one player."""
+    inches = lambda v: f"{v // 12}′{v % 12}″"
+    out = []
+    other_team = rnd.choice([t for t in sorted(CURRENT_TEAMS) if t != p["team"]])
+    out.append((f"Plays for {PY_TEAM_NAMES.get(p['team'], p['team'])}", f"Plays for {PY_TEAM_NAMES.get(other_team, other_team)}"))
+    if p.get("number"):
+        wrong = p["number"] + rnd.choice((-9, -7, -5, 5, 7, 9))
+        out.append((f"Wears #{p['number']}", f"Wears #{max(1, wrong)}"))
+    others = [n for n in COUNTRY_LABELS if n != p["nation"]]
+    if others:
+        n2 = rnd.choice(others)
+        name = lambda n: CONN_COUNTRIES.get(n, COUNTRY_LABELS.get(n, n))
+        out.append((f"Was born in {name(p['nation'])}", f"Was born in {name(n2)}"))
+    if p["pos"] in POS_LABELS:
+        wrong_pos = rnd.choice([k for k in POS_LABELS if k != p["pos"]])
+        out.append((f"Is a {POS_LABELS[p['pos']].lower()}", f"Is a {POS_LABELS[wrong_pos].lower()}"))
+    if isinstance(p.get("draft"), list) and len(p["draft"]) >= 2:
+        y = p["draft"][0]
+        out.append((f"Was drafted in {y}", f"Was drafted in {y + rnd.choice((-4, -3, 3, 4))}"))
+    seasons = len(season_groups(p))
+    if seasons >= 2:
+        out.append((f"Has played {seasons} NHL seasons", f"Has played {max(1, seasons + rnd.choice((-3, -2, 2, 3)))} NHL seasons"))
+    if p.get("ht"):
+        out.append((f"Is {inches(p['ht'])} tall", f"Is {inches(p['ht'] + rnd.choice((-3, -2, 2, 3)))} tall"))
+    if p["pos"] != "G":
+        high = hl_value(p, "goals")
+        if high:
+            out.append((f"Once scored {high} goals in a season", f"Once scored {high + rnd.choice((-12, -8, 8, 12))} goals in a season"))
+    games = sum(r[2] for r in p.get("car", []))
+    if games >= 100:
+        out.append((f"Has played over {games // 100 * 100} NHL games", f"Has played over {games // 100 * 100 + 300} NHL games"))
+    return [(t, f) for t, f in out if t != f and "-" not in f]
+
+
+def truths_puzzle(players, rnd):
+    rounds, seen = [], set()
+    for _ in range(200):
+        if len(rounds) == 5:
+            return {"rounds": rounds}
+        p = rnd.choice(players)
+        if p["id"] in seen:
+            continue
+        facts = truth_facts(p, rnd)
+        if len(facts) < 4:
+            continue
+        picks = rnd.sample(facts, 3)
+        lines = [picks[0][0], picks[1][0], picks[2][1]]   # two true, one false
+        if len(set(lines)) < 3:
+            continue
+        order = rnd.sample(range(3), 3)
+        rounds.append({"p": p["id"], "s": [lines[i] for i in order], "f": order.index(2)})
+        seen.add(p["id"])
+    return None
+
+
+HLT_METRICS = ["age", "height", "goals", "games", "abroad"]
+
+
+def hlt_value(roster, metric):
+    if not roster:
+        return 0
+    if metric == "age":
+        today = eastern_today()
+        ages = [(today - date.fromisoformat(p["birth"])).days / 365.25 for p in roster]
+        return round(sum(ages) / len(ages), 1)
+    if metric == "height":
+        hts = [p["ht"] for p in roster if p.get("ht")]
+        return round(sum(hts) / len(hts), 1) if hts else 0
+    if metric == "goals":
+        return sum(rank_value(p, "goals") for p in roster)
+    if metric == "games":
+        return sum(rank_value(p, "gp") for p in roster)
+    return sum(1 for p in roster if p["nation"] not in ("CAN", "USA"))
+
+
+def hlt_puzzle(players, rnd):
+    rosters = {}
+    for p in players:
+        rosters.setdefault(p["team"], []).append(p)
+    teams = sorted(t for t, r in rosters.items() if len(r) >= 10)
+    if len(teams) < 4:
+        return None
+    metric = rnd.choice(HLT_METRICS)
+    values = {t: hlt_value(rosters[t], metric) for t in teams}
+    seq = []
+    while len(seq) < HL_LEN + 1:
+        recent = [x[0] for x in seq[-4:]]
+        pick = None
+        for attempt in range(60):
+            t = rnd.choice(teams)
+            if seq and values[t] == seq[-1][1]:
+                continue
+            if t in (recent if attempt < 40 else recent[-1:]):
+                continue
+            pick = t
+            break
+        pick = pick if pick else rnd.choice(teams)
+        seq.append([pick, values[pick]])
+    return {"metric": metric, "seq": seq}
+
+
+def season_puzzle(players, rnd):
+    pool = [p for p in players if len(season_groups(p)) >= 4]
+    if not pool:
+        return None
+    p = rnd.choice(pool)
+    return {"id": p["id"], "y": rnd.choice(sorted(season_groups(p)))}
+
+
+# ---- Playoff Hero, Trophy Case, Mystery Roster ----
+def playoff_seasons(p):
+    years = {}
+    for r in p.get("po", []):
+        years.setdefault(r[0], []).append(r)
+    return years
+
+
+def playoff_ok(p):
+    return len(playoff_seasons(p)) >= 3
+
+
+def playoff_puzzle(players, rnd):
+    pool = [p for p in players if playoff_ok(p)]
+    return {"id": rnd.choice(pool)["id"]} if pool else None
+
+
+TROPHY_SKIP = ("Stanley Cup",)
+
+
+def trophy_entries(players):
+    out = []
+    for p in players:
+        for name, year in p.get("aw", []):
+            if not any(skip in name for skip in TROPHY_SKIP):
+                out.append((name, year, p["id"]))
+    return sorted(set(out))
+
+
+def trophy_puzzle(players, entries, rnd):
+    if len(entries) < 5 or len(players) < 8:
+        return None
+    rounds, used = [], set()
+    for _ in range(200):
+        if len(rounds) == 5:
+            return {"rounds": rounds}
+        name, year, pid = rnd.choice(entries)
+        if (name, year) in used:
+            continue
+        others = [p["id"] for p in players if p["id"] != pid]
+        if len(others) < 3:
+            return None
+        ids = rnd.sample(others, 3)
+        a = rnd.randrange(4)
+        ids.insert(a, pid)
+        rounds.append({"t": name, "y": year, "ids": ids, "a": a})
+        used.add((name, year))
+    return None
+
+
+def mroster_puzzle(players, rnd):
+    rosters = {}
+    for p in players:
+        rosters.setdefault(p["team"], []).append(p)
+    teams = sorted(t for t, r in rosters.items() if t in CURRENT_TEAMS and len(r) >= 6)
+    if not teams:
+        return None
+    team = rnd.choice(teams)
+    picks = rnd.sample(rosters[team], 6)
+    return {"team": team, "ids": [p["id"] for p in picks]}
+
+
 def plan_generated(days, pool, today, make, seed):
     """Day-by-day puzzles built by `make`; days after tomorrow are rebuilt if a player left."""
     lock = (today + timedelta(days=LOCK_DAYS)).isoformat()
@@ -4685,8 +5451,17 @@ def plan_generated(days, pool, today, make, seed):
 
 
 def extra_ids(v):
-    if isinstance(v, dict) and "ids" in v:
+    if not isinstance(v, dict):
+        return []
+    if "ids" in v:
         return list(v["ids"])
+    if "rounds" in v:                                    # two truths, trophy case
+        out = []
+        for r in v["rounds"]:
+            out += [r["p"]] if "p" in r else list(r.get("ids", []))
+        return out
+    if "id" in v:                                        # mystery season
+        return [v["id"]]
     return []
 
 
@@ -4781,6 +5556,12 @@ def update_schedule(players, today):
         "rank": (lambda pl, rnd: rank_puzzle(pl, rnd), "sweater-rank"),
         "puck": (lambda pl, rnd: puck_puzzle(pl, rules, rnd), "sweater-puck"),
         "shoot": (lambda pl, rnd: shootout_puzzle(pl, rnd), "sweater-shoot"),
+        "truths": (lambda pl, rnd: truths_puzzle(pl, rnd), "sweater-truths"),
+        "hlt": (lambda pl, rnd: hlt_puzzle(pl, rnd), "sweater-hlt"),
+        "season": (lambda pl, rnd: season_puzzle(pl, rnd), "sweater-season"),
+        "playoff": (lambda pl, rnd: playoff_puzzle(pl, rnd), "sweater-playoff"),
+        "trophy": (lambda pl, rnd: trophy_puzzle(pl, trophy_entries(pl), rnd), "sweater-trophy"),
+        "mroster": (lambda pl, rnd: mroster_puzzle(pl, rnd), "sweater-mroster"),
     }
     for g, (make, seed) in extra_games.items():
         days = plan_generated(sched.get(f"{g}_days", {}), pool, today, make, seed)
@@ -4838,7 +5619,7 @@ def career_data(pid):
     Rows are [season start year, team, GP, G, A, PTS] (goalies: [.., GP, W, GAA, SV%])."""
     data = get_json(f"https://api-web.nhle.com/v1/player/{pid}/landing")
     goalie = data.get("position") == "G"
-    teams, rows = [], []
+    teams, rows, playoffs = [], [], []
     for row in data.get("seasonTotals", []):
         if row.get("leagueAbbrev") != "NHL":
             continue
@@ -4852,7 +5633,8 @@ def career_data(pid):
             ab = abbrev_for(name)
         if ab and ab not in teams:
             teams.append(ab)
-        if row.get("gameTypeId", 2) != 2:
+        kind = row.get("gameTypeId", 2)
+        if kind not in (2, 3):
             continue
         try:
             year = int(str(row.get("season"))[:4])
@@ -4867,12 +5649,21 @@ def career_data(pid):
         else:
             stats = [row.get("goals") or 0, row.get("assists") or 0, row.get("points") or 0,
                      row.get("pim") or row.get("penaltyMinutes") or 0, row.get("plusMinus") or 0]
-        rows.append([year, ab or "", gp] + stats)
-    rows.sort(key=lambda r: r[0])  # stable: keeps trade order within a season
+        (rows if kind == 2 else playoffs).append([year, ab or "", gp] + stats)
+    rows.sort(key=lambda r: r[0])
+    playoffs.sort(key=lambda r: r[0])
+    awards = []
+    for a in data.get("awards") or []:
+        name = (a.get("trophy") or {}).get("default")
+        for season in a.get("seasons") or []:
+            try:
+                awards.append([name, int(str(season.get("seasonId"))[:4])])
+            except (ValueError, TypeError):
+                continue  # stable: keeps trade order within a season
     d = data.get("draftDetails") or {}
     draft = [d.get("year"), d.get("round"), d.get("overallPick") or 0, d.get("teamAbbrev") or ""] \
         if d.get("year") and d.get("round") else 0   # 0 = undrafted
-    return teams, rows, draft
+    return teams, rows, draft, playoffs, [a for a in awards if a[0]]
 
 
 ISO2 = {"CAN": "CA", "USA": "US", "SWE": "SE", "FIN": "FI", "CZE": "CZ", "RUS": "RU", "SVK": "SK", "CHE": "CH",
@@ -4974,7 +5765,7 @@ def add_career_teams(players):
 
     def fresh(pid):
         c = cache.get(str(pid))
-        return bool(c) and c.get("v") == 5 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
+        return bool(c) and c.get("v") == 6 and (today - date.fromisoformat(c["day"])).days < CACHE_DAYS
 
     todo = [p["id"] for p in players if not fresh(p["id"])]
     print(f"\n{stamp()} Loading career history and stats ({len(players) - len(todo)} saved, {len(todo)} to download, up to {CAREER_BUDGET // 60} minutes)...")
@@ -4995,7 +5786,8 @@ def add_career_teams(players):
                 if result is None:
                     failed += 1
                 else:
-                    cache[str(pid)] = {"day": today.isoformat(), "v": 5, "teams": result[0], "car": result[1], "draft": result[2]}
+                    cache[str(pid)] = {"day": today.isoformat(), "v": 6, "teams": result[0], "car": result[1],
+                                   "draft": result[2], "po": result[3], "aw": result[4]}
                 if i % 50 == 0 or i == len(todo):
                     print(f"  {i}/{len(todo)}")
         except FuturesTimeout:
@@ -5017,10 +5809,15 @@ def add_career_teams(players):
             p["car"] = entry["car"]
         if "draft" in entry:
             p["draft"] = entry["draft"]
+        if entry.get("po"):
+            p["po"] = entry["po"]
+        if entry.get("aw"):
+            p["aw"] = entry["aw"]
     print(f"  Stats games: {sum(map(statline_ok, players))} players for 'guess the player', "
           f"{sum(len(team_seasons(p)) > 0 for p in players)} for 'guess the team', "
           f"{sum(map(hl_ok, players))} for 'higher or lower', {sum(map(journey_ok, players))} for 'journey', "
-          f"{sum(isinstance(p.get('draft'), list) for p in players)} with draft info.")
+          f"{sum(isinstance(p.get('draft'), list) for p in players)} with draft info, "
+          f"{sum(1 for p in players if p.get('po'))} with playoff stats, {sum(1 for p in players if p.get('aw'))} with trophies.")
 
 
 def recent_games():
