@@ -23,6 +23,7 @@ from concurrent.futures import TimeoutError as FuturesTimeout, as_completed
 from concurrent.futures import ThreadPoolExecutor
 import traceback
 import webbrowser
+import re
 import urllib.parse
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
@@ -38,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "41"
+VERSION = "42"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1464,7 +1465,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
     <p class="helpfoot"><b>Party Mode</b>: host on a screen everyone can see, and friends join on their phones with the 4-letter code. Questions are timed, and faster right answers score more.</p>
     <p class="helpfoot">Only daily puzzles count toward your stats and the leaderboard. Archive and Unlimited games are just for fun.</p>
-    <p class="helpfoot">Inspired by Bradley Connolly with <a href="https://www.hertl.app/" target="_blank" rel="noopener">hertl.app</a> and the people at <a href="https://poeltl.nbpa.com/" target="_blank" rel="noopener">Poeltl</a>. Player data and headshots come from NHL.com.</p>
+    <p class="helpfoot">Inspired by Bradley Connolly with <a href="https://www.hertl.app/" target="_blank" rel="noopener">hertl.app</a> and the people at <a href="https://poeltl.nbpa.com/" target="_blank" rel="noopener">Poeltl</a>. Player data and headshots come from NHL.com, and trophy winners from <a href="https://en.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a>.</p>
   </div>
 </div>
 
@@ -5453,6 +5454,60 @@ def dig(obj, *names):
     return None
 
 
+WIKI_API = ("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvslots=main&rvprop=content"
+            "&format=json&formatversion=2&redirects=1&titles={titles}")
+WIKI_TROPHIES = ["Hart Memorial Trophy", "Vezina Trophy", "James Norris Memorial Trophy", "Calder Memorial Trophy",
+                 "Art Ross Trophy", "Maurice Richard Trophy", "Conn Smythe Trophy", "Frank J. Selke Trophy",
+                 "Lady Byng Memorial Trophy", "Ted Lindsay Award", "Bill Masterton Memorial Trophy",
+                 "King Clancy Memorial Trophy"]
+NOT_A_PLAYER = re.compile(r"(season|NHL|Trophy|Award|List of|Stanley Cup|Conference|Division|Hockey League"
+                          r"|Ducks|Bruins|Sabres|Flames|Hurricanes|Blackhawks|Avalanche|Blue Jackets|Stars|Red Wings"
+                          r"|Oilers|Panthers|Kings|Wild|Canadiens|Predators|Devils|Islanders|Rangers|Senators|Flyers"
+                          r"|Penguins|Sharks|Kraken|Blues|Lightning|Maple Leafs|Mammoth|Canucks|Golden Knights"
+                          r"|Capitals|Jets|Coyotes|Thrashers|Whalers|Nordiques|North Stars)", re.I)
+SEASON_RE = re.compile("\\b(19[2-9]\\d|20[0-4]\\d)[\u2013\u2014-](?:\\d{2,4})\\b")
+LINK_RE = re.compile(r"\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]")
+
+
+def wiki_pages(titles):
+    """Raw wikitext for a few Wikipedia pages in one request: {title: text}."""
+    out = {}
+    for batch in [titles[i:i + 6] for i in range(0, len(titles), 6)]:
+        try:
+            url = WIKI_API.format(titles=urllib.parse.quote("|".join(batch)))
+            pages = get_json(url, timeout=25).get("query", {}).get("pages", [])
+        except Exception as e:
+            print(f"  (couldn't load Wikipedia pages: {e})", file=sys.stderr)
+            continue
+        for page in pages:
+            text = (((page.get("revisions") or [{}])[0].get("slots") or {}).get("main") or {}).get("content", "")
+            if text:
+                out[page.get("title", "")] = text
+    return out
+
+
+def wiki_award_history():
+    """Trophy winners from Wikipedia's per-trophy tables: [(trophy, season start year, winner)]."""
+    rows = []
+    for title, text in wiki_pages(WIKI_TROPHIES).items():
+        found = []
+        for row in text.split("|-"):
+            season = SEASON_RE.search(row)
+            if not season:
+                continue
+            for link in LINK_RE.findall(row):
+                name = re.sub(r"\s*\([^)]*\)$", "", link).strip()
+                if NOT_A_PLAYER.search(link) or " " not in name or re.search(r"\d", name):
+                    continue
+                found.append((title, int(season.group(1)), name))
+                break
+        if len(found) >= 15:
+            rows += found
+        else:
+            print(f"  (Wikipedia: couldn't read the winners table for {title})", file=sys.stderr)
+    return sorted(set(rows))
+
+
 def fetch_award_history(cache, today):
     """[(trophy, season start year, winner name)] for every winner the NHL lists, retired players included."""
     saved = cache.get("_trophies")
@@ -5490,11 +5545,14 @@ def fetch_award_history(cache, today):
         if len(found) >= 200:
             rows, source = sorted(set(found)), url
             break
+    if not rows:
+        rows, source = wiki_award_history(), "Wikipedia"
     if rows:
         print(f"  Award history: {len(rows)} winners from {source}")
         cache["_trophies"] = {"day": today.isoformat(), "rows": [list(r) for r in rows]}
     else:
-        print("  Award history: the NHL's award lists weren't reachable, so Trophy Case uses current players only.")
+        print("  Award history: neither the NHL's award lists nor Wikipedia were reachable, "
+              "so Trophy Case uses current players only.")
     return rows
 
 
