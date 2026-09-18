@@ -14644,6 +14644,8 @@
   }
  },
  "mroster_start": "2026-09-18",
+ "cups_days": {},
+ "cups_start": "",
  "conn_days": {
   "2026-09-16": [
    {
