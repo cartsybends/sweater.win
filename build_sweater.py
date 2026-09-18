@@ -38,7 +38,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "39"
+VERSION = "40"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -515,10 +515,16 @@ TEMPLATE = r'''<!DOCTYPE html>
   .twline:disabled { cursor: default; }
   .twmark { width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center;
             background: color-mix(in srgb, var(--fg) 12%, transparent); font-weight: 700; font-size: 14px; }
-  .twline.true { background: color-mix(in srgb, var(--hit) 22%, var(--cell)); }
-  .twline.wrong { background: #c0392b; color: #fff; }
-  .twline.wrong .twmark, .twline.true .twmark { background: rgba(255,255,255,.3); }
-  .twline.picked { box-shadow: inset 0 0 0 3px var(--fg); }
+  .twtext { flex: 1; }
+  .twtag { font-size: 12px; font-weight: 600; letter-spacing: .03em; opacity: .8; white-space: nowrap; }
+  .twline.istrue { background: var(--cell); opacity: .65; }
+  .twline.isfalse { background: color-mix(in srgb, var(--hit) 18%, var(--cell)); box-shadow: inset 0 0 0 2px var(--hit); opacity: 1; }
+  .twline.isfalse .twmark { background: var(--hit); color: var(--hit-fg); }
+  .twline.mine { opacity: 1; box-shadow: inset 0 0 0 3px var(--fg); }
+  .twline.istrue.mine { background: color-mix(in srgb, #c0392b 16%, var(--cell)); }
+  .twline.istrue.mine .twmark { background: #c0392b; color: #fff; }
+  .hint .good { color: var(--hit); }
+  .hint .bad { color: #c0392b; }
 
   /* team higher or lower */
   .hltlogo { width: 92px; height: 92px; object-fit: contain; }
@@ -536,7 +542,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mrlist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; }
   .mrrow { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 12px;
            background: var(--cell); color: var(--cell-fg); }
-  .mrrow img { width: 44px; height: 44px; border-radius: 50%; background: var(--cream); object-fit: cover; }
+  .mrnum { width: 46px; height: 46px; flex: none; border-radius: 10px; display: grid; place-items: center;
+           background: color-mix(in srgb, var(--fg) 10%, transparent); font-weight: 700; font-variant-numeric: tabular-nums; }
   .mrrow b { display: block; font-size: 16px; }
   .mrrow small { font-size: 12px; opacity: .7; }
 
@@ -3296,14 +3303,18 @@ G.truths = {
     $("twImg").src = p.headshot || FALLBACK;
     $("twName").textContent = p.name;
     $("twQ").textContent = st.over && !showing ? "That's the game" : "Which one is false?";
+    const myPick = showing ? Number(st.guesses[last]) : -1;
     $("twList").innerHTML = st.over && !showing ? "" : r.s.map((line, n) => {
-      const cls = showing ? (n === r.f ? " wrong" : " true") : "";
-      const picked = showing && Number(st.guesses[last]) === n ? " picked" : "";
-      return `<button type="button" class="twline${cls}${picked}" data-c="${n}"${showing ? " disabled" : ""}>
-        <span class="twmark">${showing ? (n === r.f ? "✗" : "✓") : String.fromCharCode(65 + n)}</span><span>${esc(line)}</span></button>`;
+      const isFalse = n === r.f, mine = n === myPick;
+      const cls = showing ? (isFalse ? " isfalse" : " istrue") + (mine ? " mine" : "") : "";
+      const tag = showing ? `<span class="twtag">${isFalse ? "False" : "True"}${mine ? " · your pick" : ""}</span>` : "";
+      return `<button type="button" class="twline${cls}" data-c="${n}"${showing ? " disabled" : ""}>
+        <span class="twmark">${showing ? (isFalse ? "✗" : "✓") : String.fromCharCode(65 + n)}</span>
+        <span class="twtext">${esc(line)}</span>${tag}</button>`;
     }).join("");
-    $("twMsg").textContent = showing
-      ? (this.right(t, st.guesses[last], last) ? "Right, that one was false." : `Not quite. The false one was "${t.rounds[last].s[t.rounds[last].f]}".`)
+    $("twMsg").innerHTML = showing
+      ? (this.right(t, st.guesses[last], last) ? '<b class="good">Right!</b> You found the false statement.'
+        : '<b class="bad">Not quite.</b> The false statement is marked ✗.')
       : st.over ? "" : "Two of these are true.";
     $("twNext").hidden = !(showing && !st.over);
   },
@@ -3535,35 +3546,53 @@ G.playoff = {
 };
 
 // ---- Trophy Case ----
+// Every trophy round the page has been given, so unlimited play draws on the same history.
+const TROPHY_HISTORY = (() => {
+  const winners = new Map(), byTrophy = {};
+  for (const day of Object.values(DAILY.trophy || {})) {
+    for (const r of day.rounds || []) {
+      const names = r.names || (r.ids || []).map(i => (BYID.get(i) || {}).name);
+      if (!names || !names[r.a]) continue;
+      winners.set(`${r.t}:${r.y}`, { t: r.t, y: r.y, w: names[r.a] });
+      byTrophy[r.t] = [...new Set([...(byTrophy[r.t] || []), ...names.filter(Boolean)])];
+    }
+  }
+  return { winners: [...winners.values()], byTrophy };
+})();
 function trophyRandom(rnd) {
-  const entries = [];
-  for (const p of PLAYERS) for (const [name, y] of (p.aw || [])) if (!/Stanley Cup/.test(name)) entries.push([name, y, p.id]);
+  const local = [];
+  for (const p of PLAYERS) for (const [t, y] of (p.aw || [])) if (!/Stanley Cup/.test(t)) local.push({ t, y, w: p.name });
+  const entries = TROPHY_HISTORY.winners.length >= 12 ? TROPHY_HISTORY.winners : local;
   if (entries.length < 5) return null;
   const rounds = [], used = new Set();
-  for (let i = 0; i < 300 && rounds.length < 5; i++) {
-    const [t, y, pid] = entries[Math.floor(rnd() * entries.length)];
-    if (used.has(`${t}:${y}`)) continue;
-    const ids = shuffled(PLAYERS.filter(p => p.id !== pid), rnd).slice(0, 3).map(p => p.id);
-    if (ids.length < 3) return null;
+  for (let i = 0; i < 400 && rounds.length < 5; i++) {
+    const e = entries[Math.floor(rnd() * entries.length)];
+    if (used.has(`${e.t}:${e.y}`)) continue;
+    let pool = (TROPHY_HISTORY.byTrophy[e.t] || []).filter(n => n !== e.w);
+    if (pool.length < 3) pool = [...new Set(entries.map(x => x.w))].filter(n => n !== e.w);
+    if (pool.length < 3) continue;
+    const names = shuffled([...new Set(pool)], rnd).slice(0, 3);
     const a = Math.floor(rnd() * 4);
-    ids.splice(a, 0, pid);
-    rounds.push({ t, y, ids, a });
-    used.add(`${t}:${y}`);
+    names.splice(a, 0, e.w);
+    rounds.push({ t: e.t, y: e.y, names, a });
+    used.add(`${e.t}:${e.y}`);
   }
   return rounds.length === 5 ? { rounds, rid: Math.random() } : null;
 }
 G.trophy = {
   kind: "score", repeat: true, title: "Trophy Case", share: "Sweater Trophy Case", view: "view-trophy",
   max: 5, next: "Play again", hideReveal: true,
-  pool: () => PLAYERS.some(p => p.aw && p.aw.length) ? PLAYERS : [],
+  pool: () => TROPHY_HISTORY.winners.length >= 12 || PLAYERS.some(p => p.aw && p.aw.length) ? PLAYERS : [],
   daily(k) {
     const v = DAILY.trophy[k];
-    if (v && v.rounds && v.rounds.length === 5 && v.rounds.every(r => r.ids.every(i => BYID.has(i)))) return v;
+    if (v && v.rounds && v.rounds.length === 5 && v.rounds.every(r => (r.names || []).length === 4 || (r.ids || []).every(i => BYID.has(i)))) {
+      return { rounds: v.rounds.map(r => ({ ...r, names: r.names || r.ids.map(i => (BYID.get(i) || {}).name || "?") })) };
+    }
     return trophyRandom(seeded(hash("sweater-trophy-" + k)));
   },
   random: () => trophyRandom(Math.random),
   tid: t => `trophy:${t.rid || hash(t.rounds.map(r => `${r.t}${r.y}`).join())}`,
-  player: t => BYID.get(t.rounds[Math.min(S.trophy.guesses.length, 4)].ids[t.rounds[Math.min(S.trophy.guesses.length, 4)].a]),
+  player: () => null,
   right: (t, g, i) => Number(g) === t.rounds[i].a,
   score(t, g) { return g.filter((x, i) => this.right(t, x, i)).length * 2; },
   isWin: () => false,
@@ -3589,14 +3618,13 @@ G.trophy = {
       `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
       : `Who won the <b>${esc(r.t)}</b> for ${seasonLabel(r.y)}?`;
-    $("trOpts").innerHTML = st.over && !showing ? "" : r.ids.map((id, n) => {
-      const p = BYID.get(id);
+    $("trOpts").innerHTML = st.over && !showing ? "" : r.names.map((name, n) => {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
-      return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>${esc(p ? p.name : "?")}</button>`;
+      return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>${esc(name)}</button>`;
     }).join("");
     $("trMsg").textContent = showing
-      ? (this.right(t, st.guesses[last], last) ? "Correct!" : `It was ${(BYID.get(t.rounds[last].ids[t.rounds[last].a]) || {}).name || "someone else"}.`)
-      : st.over ? "" : "Trophies won by players still in the league.";
+      ? (this.right(t, st.guesses[last], last) ? "Correct!" : `It was ${t.rounds[last].names[t.rounds[last].a]}.`)
+      : st.over ? "" : TROPHY_HISTORY.winners.length >= 12 ? "Winners from 1967 onwards, including retired players." : "Trophies won by players still in the league.";
     $("trNext").hidden = !(showing && !st.over);
   },
 };
@@ -3648,8 +3676,8 @@ G.mroster = {
     $("mrList").innerHTML = t.ids.slice(0, shown).map((id, i) => {
       const p = BYID.get(id);
       return `<li class="mrrow${i === shown - 1 && shown > 1 ? " newrow" : ""}">
-        <img src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
-        <span><b>${esc(p.name)}</b><small>#${p.number} · ${esc(posName(p))}</small></span></li>`;
+        <span class="mrnum">#${p.number}</span>
+        <span><b>${esc(p.name)}</b><small>${esc(posName(p))} · age ${ageOf(p.birth)} · ${esc(p.nation)}</small></span></li>`;
     }).join("");
     $("mrGrid").querySelectorAll(".teambtn").forEach(b => {
       b.disabled = st.over || st.guesses.includes(b.dataset.team);
@@ -4773,7 +4801,8 @@ const HELP = {
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
   playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
-  trophy: `<p>A trophy and a season, and four players to choose from. Five rounds, 2 points each. It covers trophies won by players who are still in the league.</p>`,
+  trophy: `<p>A trophy and a season, and four names to choose from. Five rounds, 2 points each.</p>
+    <p>It covers winners from 1967 onwards, retired players included, and the wrong answers are other winners of the same trophy.</p>`,
   mroster: `<p>One player from a mystery team is shown, and you pick the team. Each wrong guess reveals another teammate, up to six. 4 tries, and yellow means the right team is in that division.</p>`,
   truths: `<p>You see a player and three statements about him. Two are true and one isn't. Tap the false one. Five rounds, 2 points each.</p>`,
   hlt: `<p>Two teams go head to head on their current rosters: average age, average height, total career goals, total career NHL games, or players born outside Canada and the USA.</p>
@@ -4850,6 +4879,7 @@ CACHE_DAYS = 7
 
 
 SCHEDULE = HERE / "schedule.json"
+AWARD_HISTORY = []
 LOCK_DAYS = 1      # today and tomorrow never change once scheduled
 AHEAD = 30         # how many days to plan ahead
 EMBED_AHEAD = 10   # how many future days go into the page (covers a missed update or two)
@@ -5391,36 +5421,111 @@ def playoff_puzzle(players, rnd):
     return {"id": rnd.choice(pool)["id"]} if pool else None
 
 
-TROPHY_SKIP = ("Stanley Cup",)
+TROPHY_SKIP = ("Stanley Cup", "Presidents' Trophy", "Prince of Wales", "Clarence S. Campbell")
+TROPHY_FIRST_YEAR = 1967          # the expansion era onwards
+TROPHY_URLS = [
+    "https://records.nhl.com/site/api/trophy?include=seasons&limit=-1",
+    "https://records.nhl.com/site/api/award-winner?limit=-1",
+    "https://records.nhl.com/site/api/nhl-award-winner?limit=-1",
+    "https://api.nhle.com/stats/rest/en/trophy?limit=-1",
+    "https://api.nhle.com/stats/rest/en/award?limit=-1",
+]
 
 
-def trophy_entries(players):
-    out = []
-    for p in players:
-        for name, year in p.get("aw", []):
-            if not any(skip in name for skip in TROPHY_SKIP):
-                out.append((name, year, p["id"]))
+def dig(obj, *names):
+    """Pull a value out of the NHL's JSON, which nests names in a few different ways."""
+    for n in names:
+        v = obj.get(n)
+        if isinstance(v, dict):
+            v = v.get("default") or v.get("en")
+        if v not in (None, ""):
+            return v
+    return None
+
+
+def fetch_award_history(cache, today):
+    """[(trophy, season start year, winner name)] for every winner the NHL lists, retired players included."""
+    saved = cache.get("_trophies")
+    if saved and (today - date.fromisoformat(saved["day"])).days < 14 and saved.get("rows"):
+        return [tuple(r) for r in saved["rows"]]
+    rows, source = [], None
+    for url in TROPHY_URLS:
+        try:
+            data = get_json(url, timeout=20)
+        except Exception:
+            continue
+        items = data.get("data") if isinstance(data, dict) else data
+        if not isinstance(items, list):
+            continue
+        found = []
+        for item in items if isinstance(items, list) else []:
+            if not isinstance(item, dict):
+                continue
+            name = dig(item, "trophy", "trophyName", "awardName", "name")
+            seasons = item.get("seasons") if isinstance(item.get("seasons"), list) else [item]
+            for sn in seasons:
+                if not isinstance(sn, dict):
+                    continue
+                season = dig(sn, "seasonId", "season", "seasonNumber")
+                winner = dig(sn, "playerName", "fullName", "winner", "player")
+                if not winner:
+                    first, last = dig(sn, "firstName"), dig(sn, "lastName")
+                    winner = f"{first} {last}" if first and last else None
+                try:
+                    year = int(str(season)[:4])
+                except (TypeError, ValueError):
+                    continue
+                if name and winner and 1900 < year < 2100:
+                    found.append((str(name), year, str(winner).strip()))
+        if len(found) >= 200:
+            rows, source = sorted(set(found)), url
+            break
+    if rows:
+        print(f"  Award history: {len(rows)} winners from {source}")
+        cache["_trophies"] = {"day": today.isoformat(), "rows": [list(r) for r in rows]}
+    else:
+        print("  Award history: the NHL's award lists weren't reachable, so Trophy Case uses current players only.")
+    return rows
+
+
+def trophy_entries(players, history=()):
+    """(trophy, year, winner name) — the league's full history when we have it."""
+    out = [(t, y, w) for t, y, w in history
+           if y >= TROPHY_FIRST_YEAR and not any(skip in t for skip in TROPHY_SKIP)]
+    if not out:
+        for p in players:
+            for name, year in p.get("aw", []):
+                if not any(skip in name for skip in TROPHY_SKIP):
+                    out.append((name, year, p["name"]))
     return sorted(set(out))
 
 
 def trophy_puzzle(players, entries, rnd):
-    if len(entries) < 5 or len(players) < 8:
+    if len(entries) < 12:
         return None
+    by_trophy = {}
+    for t, y, w in entries:
+        by_trophy.setdefault(t, []).append((y, w))
     rounds, used = [], set()
-    for _ in range(200):
+    for _ in range(400):
         if len(rounds) == 5:
             return {"rounds": rounds}
-        name, year, pid = rnd.choice(entries)
-        if (name, year) in used:
+        t, y, w = rnd.choice(entries)
+        if (t, y) in used:
             continue
-        others = [p["id"] for p in players if p["id"] != pid]
+        # the other three options are other winners of the same trophy, so guessing is genuinely hard
+        pool = [n for yy, n in by_trophy[t] if n != w]
+        others = [n for n in dict.fromkeys(pool) if n != w]
         if len(others) < 3:
-            return None
-        ids = rnd.sample(others, 3)
+            others += [n for _, _, n in rnd.sample(entries, min(len(entries), 30)) if n != w]
+            others = [n for n in dict.fromkeys(others)][:12]
+        if len(others) < 3:
+            continue
+        names = rnd.sample(others, 3)
         a = rnd.randrange(4)
-        ids.insert(a, pid)
-        rounds.append({"t": name, "y": year, "ids": ids, "a": a})
-        used.add((name, year))
+        names.insert(a, w)
+        rounds.append({"t": t, "y": y, "names": names, "a": a})
+        used.add((t, y))
     return None
 
 
@@ -5460,6 +5565,8 @@ def extra_ids(v):
         for r in v["rounds"]:
             out += [r["p"]] if "p" in r else list(r.get("ids", []))
         return out
+    if "team" in v and "ids" in v:
+        return list(v["ids"])
     if "id" in v:                                        # mystery season
         return [v["id"]]
     return []
@@ -5551,6 +5658,7 @@ def update_schedule(players, today):
         result[g] = (start, {k: v for k, v in days.items() if first <= k <= last})
 
     # remember every scheduled player, so a past answer still works after he leaves the league
+    award_history = AWARD_HISTORY
     rules = puck_rules([pool[i] for i in sorted(pool)])
     extra_games = {
         "rank": (lambda pl, rnd: rank_puzzle(pl, rnd), "sweater-rank"),
@@ -5560,7 +5668,7 @@ def update_schedule(players, today):
         "hlt": (lambda pl, rnd: hlt_puzzle(pl, rnd), "sweater-hlt"),
         "season": (lambda pl, rnd: season_puzzle(pl, rnd), "sweater-season"),
         "playoff": (lambda pl, rnd: playoff_puzzle(pl, rnd), "sweater-playoff"),
-        "trophy": (lambda pl, rnd: trophy_puzzle(pl, trophy_entries(pl), rnd), "sweater-trophy"),
+        "trophy": (lambda pl, rnd: trophy_puzzle(pl, trophy_entries(pl, award_history), rnd), "sweater-trophy"),
         "mroster": (lambda pl, rnd: mroster_puzzle(pl, rnd), "sweater-mroster"),
     }
     for g, (make, seed) in extra_games.items():
@@ -5797,6 +5905,8 @@ def add_career_teams(players):
     if failed:
         print(f"  {failed} players' history couldn't be loaded (no yellow hints or stats games for them).")
     add_birthplaces(players, cache, today)
+    global AWARD_HISTORY
+    AWARD_HISTORY = fetch_award_history(cache, today)
     try:
         CACHE.write_text(json.dumps(cache), encoding="utf-8")
     except Exception:
