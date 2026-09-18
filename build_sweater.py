@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "42"
+VERSION = "43"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -547,6 +547,17 @@ TEMPLATE = r'''<!DOCTYPE html>
            background: color-mix(in srgb, var(--fg) 10%, transparent); font-weight: 700; font-variant-numeric: tabular-nums; }
   .mrrow b { display: block; font-size: 16px; }
   .mrrow small { font-size: 12px; opacity: .7; }
+
+  /* playoff history grid */
+  .cuboard { max-width: 760px; margin: 10px auto 0; }
+  .cutable { width: 100%; border-collapse: separate; border-spacing: 0 5px; }
+  .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 0 10px 4px; }
+  .cutable td { height: 34px; padding: 0 10px; background: var(--cell); color: var(--cell-fg); font-size: 14px; }
+  .cutable td:first-child { border-radius: 8px 0 0 8px; font-weight: 600; font-variant-numeric: tabular-nums; width: 88px; }
+  .cutable td:last-child { border-radius: 0 8px 8px 0; }
+  .cucell.got { background: color-mix(in srgb, var(--hit) 26%, var(--cell)); font-weight: 600; }
+  .cucell.miss { color: var(--muted); font-style: italic; }
+  @media (max-width: 700px) { .cutable td, .cutable th { font-size: 12px; padding: 0 6px; } .cutable td:first-child { width: 64px; } }
 
   /* options, archive */
   .optrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; font-size: 14px; }
@@ -1366,6 +1377,25 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="divs" id="mrGrid"></div>
   </section>
 
+  <section class="view" id="view-cups" hidden>
+    <p class="intro">Fill in the Stanley Cup winners, runners-up and Conn Smythe winners.</p>
+    <div class="hlscore"><span>Time<b id="cuTime">300</b></span><span>Squares<b id="cuCount">0/60</b></span></div>
+    <div class="numrow wide">
+      <input id="cuInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send"
+             placeholder="Press Start to begin" aria-label="Team or player name">
+      <button class="btn" id="cuStart" type="button">Start</button>
+    </div>
+    <p class="hint romsg" id="cuMsg" aria-live="polite"></p>
+    <div class="slot"></div>
+    <p class="nodata" hidden>This game needs playoff history. Rebuild the site to load it.</p>
+    <div class="board cuboard">
+      <table class="cutable">
+        <thead><tr><th>Season</th><th>Stanley Cup</th><th>Runner-up</th><th>Conn Smythe</th></tr></thead>
+        <tbody id="cuRows"></tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="view" id="view-team" hidden>
     <div class="ttcard">
       <img id="ttImg" alt="">
@@ -1479,7 +1509,8 @@ const SITE = "/*__SITE__*/";
 const API = "/*__API__*/".replace(/\/+$/, "");
 const API_ON = /^https?:\/\//.test(API);
 const DAILY = /*__DAILY_ALL__*/{};   // game -> { "YYYY-MM-DD" (Eastern) -> puzzle }
-const DAILY_HL = /*__DAILY_HL__*/{};   // "YYYY-MM-DD" -> { goals: [ids], assists: [...], points: [...], pim: [...] }
+const DAILY_HL = /*__DAILY_HL__*/{};
+const CUP_ROWS = /*__CUPS__*/[];   // [year, champion, runner-up, Conn Smythe winner]   // "YYYY-MM-DD" -> { goals: [ids], assists: [...], points: [...], pim: [...] }
 const START = /*__START_ALL__*/{};   // game -> date of Daily #1
 
 // abbr: [conference, division]
@@ -1544,7 +1575,7 @@ const secondsToEtMidnight = () => {
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
- "shoot", "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+ "shoot", "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -1911,7 +1942,7 @@ TEAM_NAMES.ARI = "Arizona";
 TEAM_NAMES.ATL = "Atlanta";
 const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "ATL"]);
 const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot",
-                         "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster"].includes(g);
+                         "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].includes(g);
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
 const teamName = t => TEAM_NAMES[t] || t;
 
@@ -3695,6 +3726,141 @@ $("mrGrid").addEventListener("click", e => {
   if (b && !b.disabled) doGuess(b.dataset.team);
 });
 
+// ======================= playoff history =======================
+const CUPS_SECONDS = 300;
+const cupsNorm = s => norm(s).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+function cupsKeys(rows) {
+  const cells = [];
+  rows.forEach((r, y) => [1, 2, 3].forEach(c => cells.push({ row: y, col: c, full: cupsNorm(r[c]) })));
+  const count = {};
+  [...new Set(cells.map(c => c.full))].forEach(full => {
+    const short = full.split(" ").slice(-1)[0];
+    count[short] = (count[short] || 0) + 1;
+  });
+  return cells.map(c => {
+    const short = c.full.split(" ").slice(-1)[0];
+    return { ...c, keys: count[short] === 1 ? [c.full, short] : [c.full] };
+  });
+}
+let cupsTimer = null, cupsMemory = null;
+G.cups = {
+  kind: "score", repeat: false, title: "Playoff History", share: "Sweater Playoff History",
+  view: "view-cups", max: 999, next: "New grid", hideReveal: true,
+  pool: () => (DAILY.cups && Object.keys(DAILY.cups).length) || CUP_ROWS.length >= 20 ? [1] : [],
+  daily(k) {
+    const v = DAILY.cups[k];
+    if (v && v.rows && v.rows.length) return v;
+    if (CUP_ROWS.length < 20) return null;
+    const rnd = seeded(hash("sweater-cups-" + k));
+    const start = Math.floor(rnd() * (CUP_ROWS.length - 20 + 1));
+    return { rows: CUP_ROWS.slice(start, start + 20) };
+  },
+  random() {
+    if (CUP_ROWS.length < 20) return this.daily(dayKey());
+    const start = Math.floor(Math.random() * (CUP_ROWS.length - 20 + 1));
+    return { rows: CUP_ROWS.slice(start, start + 20), rid: Math.random() };
+  },
+  tid: t => t.rid ? `cups:${t.rid}` : `cups:${t.rows[0][0]}-${t.rows[t.rows.length - 1][0]}`,
+  player: () => null,
+  cells(t) { this._cells = this._cells && this._cells.t === t ? this._cells : { t, list: cupsKeys(t.rows) }; return this._cells.list; },
+  filled(t, g) {
+    const typed = g.filter(x => x !== "END").map(cupsNorm);
+    return this.cells(t).map(c => typed.some(x => c.keys.includes(x)));
+  },
+  score(t, g) { return this.filled(t, g).filter(Boolean).length; },
+  isWin: () => false,
+  isDone(t, g) { return g.includes("END") || this.score(t, g) >= this.cells(t).length; },
+  wonGame(t, g) { return this.score(t, g) >= this.cells(t).length; },
+  meta: t => `${seasonLabel(t.rows[0][0])} to ${seasonLabel(t.rows[t.rows.length - 1][0])}`,
+  endText(t, g, won) {
+    const n = this.score(t, g), total = this.cells(t).length;
+    return { result: `${n} of ${total} squares`,
+             cheer: won ? "The whole grid! 🏆" : n >= total * .7 ? "Deep run! 🔥" : n >= total * .35 ? "Solid effort 💪" : "Time's up! ⏱️" };
+  },
+  celebrate(t, g, won) { return won || this.score(t, g) >= this.cells(t).length * 0.7; },
+  archiveStatus: h => `${h.s} squares`,
+  shareText(t, saved, num, link) {
+    const marks = this.filled(t, saved.guesses);
+    const rows = t.rows.map((r, i) => marks.slice(i * 3, i * 3 + 3).map(x => x ? "🟩" : "⬜").join("")).join("\n");
+    return `Sweater Playoff History #${num} · ${this.meta(t)}\n${this.score(t, saved.guesses)}/${marks.length} squares\n\n${rows}${link}`;
+  },
+  clockKey(t) { return `${mode}:${S.cups.day || ""}:${this.tid(t)}`; },
+  reset(t) {
+    clearInterval(cupsTimer);
+    const st = S.cups;
+    st.endsAt = null;
+    this._cells = null;
+    const saved = mode === "unlimited" ? cupsMemory : store.get("sweater-cups-clock");
+    if (saved && saved.key === this.clockKey(t)) st.endsAt = saved.endsAt;
+    $("cuInput").value = "";
+    $("cuMsg").textContent = "";
+  },
+  guess(t, x) { return x === "END" || typeof x === "string" ? false : null; },
+  render(t, st) {
+    const marks = this.filled(t, st.guesses), total = marks.length;
+    const running = !!st.endsAt && !st.over;
+    $("cuCount").textContent = `${marks.filter(Boolean).length}/${total}`;
+    $("cuTime").textContent = st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : CUPS_SECONDS;
+    $("cuStart").hidden = running || !!st.over;
+    $("cuInput").disabled = !running;
+    $("cuInput").placeholder = running ? "Type a team or player, then press Enter" : st.over ? "Time's up" : "Press Start to begin";
+    $("cuRows").innerHTML = t.rows.map((r, i) => `<tr>
+      <td class="cuyear">${seasonLabel(r[0])}</td>
+      ${[1, 2, 3].map(c => {
+        const got = marks[i * 3 + (c - 1)];
+        return `<td class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? esc(r[c]) : ""}</td>`;
+      }).join("")}</tr>`).join("");
+    if (running) {
+      if (st.endsAt <= Date.now()) setTimeout(() => { if (game === "cups" && !S.cups.over) doGuess("END"); }, 0);
+      else cupsTick();
+    }
+  },
+};
+function cupsTick() {
+  clearInterval(cupsTimer);
+  cupsTimer = setInterval(() => {
+    const st = S.cups;
+    if (!st.endsAt || st.over) { clearInterval(cupsTimer); return; }
+    const left = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
+    if (game === "cups") {
+      $("cuTime").textContent = left;
+      $("cuTime").parentElement.classList.toggle("urgent", left <= 30);
+    }
+    if (left <= 0) { clearInterval(cupsTimer); if (game === "cups") doGuess("END"); }
+  }, 250);
+}
+function cupsStart() {
+  const st = S.cups;
+  if (game !== "cups" || !st.target || st.over || st.endsAt) return;
+  st.endsAt = Date.now() + CUPS_SECONDS * 1000;
+  const rec = { key: G.cups.clockKey(st.target), endsAt: st.endsAt };
+  if (mode === "unlimited") cupsMemory = rec; else store.set("sweater-cups-clock", rec);
+  G.cups.render(st.target, st);
+  $("cuInput").focus();
+}
+function cupsEnter() {
+  const st = S.cups, t = st.target;
+  if (!t || st.over || !st.endsAt) return;
+  const text = $("cuInput").value.trim();
+  const key = cupsNorm(text);
+  if (!key) return;
+  const before = G.cups.filled(t, st.guesses);
+  const hits = G.cups.cells(t).filter((c, i) => !before[i] && c.keys.includes(key)).length;
+  if (!hits) {
+    $("cuMsg").textContent = st.guesses.map(cupsNorm).includes(key) ? "Already got that one" : `No square for "${text}"`;
+    $("cuMsg").classList.add("bad");
+    $("cuInput").classList.remove("shake"); void $("cuInput").offsetWidth; $("cuInput").classList.add("shake");
+    return;
+  }
+  $("cuInput").value = "";
+  $("cuMsg").classList.remove("bad");
+  $("cuMsg").textContent = `✓ ${text}${hits > 1 ? ` ×${hits}` : ""}`;
+  doGuess(text);
+  if (!S.cups.over) $("cuInput").focus();
+}
+$("cuStart").onclick = cupsStart;
+$("cuInput").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); cupsEnter(); } });
+
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
 const KEYS = Object.fromEntries(Object.keys(G).map(g => [g, g === "classic"
@@ -4260,6 +4426,7 @@ const LB_RULES = {
   puck: "Puck Drop: 1 point for each right tap, minus 1 for each wrong tap.",
   shoot: "Shootout: 2 points for every goal, up to 10.",
   playoff: "Playoff Hero: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
+  cups: "Playoff History: 1 point for every square you fill in 5 minutes.",
   trophy: "Trophy Case: 2 points for every round you get right, up to 10.",
   mroster: "Mystery Roster: 10 points on the first try, then 6, 3 and 1.",
   truths: "Two Truths: 2 points for every round you get right, up to 10.",
@@ -4392,8 +4559,8 @@ async function renderLeaderboard() {
     $("lbList").innerHTML = d.rows.length ? d.rows.map(r => `
       <li class="${r.me ? "me" : ""}">
         <span class="rk">${medal(r.rank)}</span>
-        <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${hlBoard || lbGame === "hlt" ? `best run ${r.top}` : rosterBoard ? `best ${r.top}` : `${r.wins} won`}</small>`}</span>
-        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : rosterBoard ? `named ${r.top}` : lbGame === "truths" || lbGame === "trophy" ? `${r.top}/5 right` : lbGame === "hlt" ? `run of ${r.top}` : lbGame === "puck" ? `${r.top} caught` : lbGame === "shoot" ? `${r.top} ${r.top === 1 ? "goal" : "goals"}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
+        <span class="nm">${esc(r.name)}${lbPeriod === "today" ? "" : `<small>${r.played} played · ${hlBoard || lbGame === "hlt" ? `best run ${r.top}` : rosterBoard || lbGame === "cups" ? `best ${r.top}` : `${r.wins} won`}</small>`}</span>
+        <span class="pt">${r.points} pts${lbPeriod === "today" ? `<small>${hlBoard ? `run of ${r.top}` : rosterBoard ? `named ${r.top}` : lbGame === "cups" ? `${r.top} squares` : lbGame === "truths" || lbGame === "trophy" ? `${r.top}/5 right` : lbGame === "hlt" ? `run of ${r.top}` : lbGame === "puck" ? `${r.top} caught` : lbGame === "shoot" ? `${r.top} ${r.top === 1 ? "goal" : "goals"}` : r.wins ? `${r.best} ${r.best === 1 ? "guess" : "guesses"}` : "missed"}</small>` : ""}</span>
       </li>`).join("")
       : `<li class="empty">No scores yet${lbPeriod === "today" ? " today" : ""}. Finish the daily puzzle to get on the board.</li>`;
     $("lbYou").textContent = d.you ? `You're #${d.you.rank} of ${d.total} with ${d.you.points} points.`
@@ -4425,6 +4592,7 @@ const HUB = [
     ["draft", "📋", "When was he drafted, and in which round?"],
     ["season", "📅", "Which season did this stat line come from?"],
     ["trophy", "🏆", "Who won the trophy that year?"],
+    ["cups", "🏒", "Fill the grid: Cup winners, runners-up and playoff MVPs."],
     ["mroster", "🧢", "Six players, one team. Name it fast."],
     ["map", "📍", "Find where he was born on the map."],
   ]},
@@ -4802,6 +4970,8 @@ const HELP = {
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
   playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
+  cups: `<p>A grid of 20 playoff years with three squares each: the Stanley Cup winner, the runner-up and the Conn Smythe winner. Press Start, then type names for 5 minutes.</p>
+    <p>One name fills every square it belongs in, and a team nickname or a surname is enough when only one answer matches it.</p>`,
   trophy: `<p>A trophy and a season, and four names to choose from. Five rounds, 2 points each.</p>
     <p>It covers winners from 1967 onwards, retired players included, and the wrong answers are other winners of the same trophy.</p>`,
   mroster: `<p>One player from a mystery team is shown, and you pick the team. Each wrong guess reveals another teammate, up to six. 4 tries, and yellow means the right team is in that division.</p>`,
@@ -4883,6 +5053,7 @@ SCHEDULE = HERE / "schedule.json"
 GAMES_LIST_MIN = 600       # fewer than this means the stats API gave us a broken list
 PLAYER_POOL_MIN = 400      # fewer than this means something went wrong upstream; don't plan puzzles
 AWARD_HISTORY = []
+CUP_HISTORY = []
 LOCK_DAYS = 1      # today and tomorrow never change once scheduled
 AHEAD = 30         # how many days to plan ahead
 EMBED_AHEAD = 10   # how many future days go into the page (covers a missed update or two)
@@ -5486,6 +5657,62 @@ def wiki_pages(titles):
     return out
 
 
+TEAM_LINK_RE = re.compile(r"(Ducks|Bruins|Sabres|Flames|Hurricanes|Blackhawks|Avalanche|Blue Jackets|Stars"
+                          r"|Red Wings|Oilers|Panthers|Kings|Wild|Canadiens|Predators|Devils|Islanders|Rangers"
+                          r"|Senators|Flyers|Penguins|Sharks|Kraken|Blues|Lightning|Maple Leafs|Mammoth|Canucks"
+                          r"|Golden Knights|Capitals|Jets|Coyotes|Thrashers|Whalers|Nordiques|North Stars|Mighty Ducks"
+                          r"|Hockey Club|Metropolitans|Millionaires|Victorias|Wanderers|Shamrocks|Silver Seven"
+                          r"|Thistles|Maroons|Eagles|Americans|Pirates|Quakers|Falcons|Cougars|Arenas|St. Patricks)")
+CUP_PAGE = "List of Stanley Cup champions"
+
+
+def wiki_cup_finals():
+    """[(year, champion, runner-up)] from Wikipedia's Stanley Cup champions table."""
+    text = wiki_pages([CUP_PAGE]).get(CUP_PAGE, "")
+    out = {}
+    for row in text.split("|-"):
+        season = SEASON_RE.search(row)
+        if not season:
+            continue
+        teams = []
+        for link in LINK_RE.findall(row):
+            name = re.sub(r"\s*\([^)]*\)$", "", link).strip()
+            if TEAM_LINK_RE.search(name) and name not in teams:
+                teams.append(name)
+        if len(teams) >= 2:
+            out[int(season.group(1))] = (teams[0], teams[1])
+    return sorted((y, a, b) for y, (a, b) in out.items())
+
+
+def fetch_cup_history(cache, today):
+    """[(year, champion, runner-up, Conn Smythe winner)] — cached, since it barely changes."""
+    saved = cache.get("_cups")
+    if saved and saved.get("rows") and (today - date.fromisoformat(saved["day"])).days < 14:
+        return [tuple(r) for r in saved["rows"]]
+    finals = wiki_cup_finals()
+    if len(finals) < 30:
+        print("  Cup history: couldn't read Wikipedia's Stanley Cup table, so Playoff History is off for now.")
+        return []
+    smythe = {y: w for t, y, w in AWARD_HISTORY if "Conn Smythe" in t}
+    rows = [[y, a, b, smythe.get(y, "")] for y, a, b in finals if y >= 1967]
+    print(f"  Cup history: {len(rows)} finals, {sum(1 for r in rows if r[3])} with a Conn Smythe winner")
+    cache["_cups"] = {"day": today.isoformat(), "rows": rows}
+    return [tuple(r) for r in rows]
+
+
+CUPS_YEARS = 20            # years in one daily grid
+CUPS_SECONDS = 300
+
+
+def cups_puzzle(history, rnd):
+    rows = [r for r in history if r[3]]           # only years where all three answers exist
+    if len(rows) < CUPS_YEARS:
+        return None
+    start = rnd.randrange(0, len(rows) - CUPS_YEARS + 1)
+    picked = rows[start:start + CUPS_YEARS]
+    return {"rows": [list(r) for r in picked]}
+
+
 def wiki_award_history():
     """Trophy winners from Wikipedia's per-trophy tables: [(trophy, season start year, winner)]."""
     rows = []
@@ -5740,6 +5967,7 @@ def update_schedule(players, today):
         "playoff": (lambda pl, rnd: playoff_puzzle(pl, rnd), "sweater-playoff"),
         "trophy": (lambda pl, rnd: trophy_puzzle(pl, trophy_entries(pl, award_history), rnd), "sweater-trophy"),
         "mroster": (lambda pl, rnd: mroster_puzzle(pl, rnd), "sweater-mroster"),
+        "cups": (lambda pl, rnd: cups_puzzle(CUP_HISTORY, rnd), "sweater-cups"),
     }
     for g, (make, seed) in extra_games.items():
         days = plan_generated(sched.get(f"{g}_days", {}), pool, today, make, seed)
@@ -5977,6 +6205,8 @@ def add_career_teams(players):
     add_birthplaces(players, cache, today)
     global AWARD_HISTORY
     AWARD_HISTORY = fetch_award_history(cache, today)
+    global CUP_HISTORY
+    CUP_HISTORY = fetch_cup_history(cache, today)
     try:
         CACHE.write_text(json.dumps(cache), encoding="utf-8")
     except Exception:
@@ -6130,6 +6360,7 @@ def main():
         "/*__DAILY_ALL__*/{}": esc({g: w for g, (_, w) in games.items() if g != "hl"}),
         "/*__START_ALL__*/{}": esc({g: st for g, (st, _) in games.items()}),
         "/*__DAILY_HL__*/{}": esc(games["hl"][1]),
+        "/*__CUPS__*/[]": esc([list(r) for r in CUP_HISTORY]),
         "/*__SITE__*/": site,
         "/*__API__*/": args.api_url.strip(),
         "/*__BUILT__*/": f"{today.isoformat()} · builder v{VERSION}",
