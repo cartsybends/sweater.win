@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "43"
+VERSION = "44"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1390,7 +1390,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="nodata" hidden>This game needs playoff history. Rebuild the site to load it.</p>
     <div class="board cuboard">
       <table class="cutable">
-        <thead><tr><th>Season</th><th>Stanley Cup</th><th>Runner-up</th><th>Conn Smythe</th></tr></thead>
+        <thead><tr id="cuHead"></tr></thead>
         <tbody id="cuRows"></tbody>
       </table>
     </div>
@@ -3729,9 +3729,10 @@ $("mrGrid").addEventListener("click", e => {
 // ======================= playoff history =======================
 const CUPS_SECONDS = 300;
 const cupsNorm = s => norm(s).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
-function cupsKeys(rows) {
+const cupsCols = t => t.mvp === false || !t.rows.some(r => r[3]) ? [1, 2] : [1, 2, 3];
+function cupsKeys(rows, cols) {
   const cells = [];
-  rows.forEach((r, y) => [1, 2, 3].forEach(c => cells.push({ row: y, col: c, full: cupsNorm(r[c]) })));
+  rows.forEach((r, y) => cols.forEach(c => cells.push({ row: y, col: c, full: cupsNorm(r[c]) })));
   const count = {};
   [...new Set(cells.map(c => c.full))].forEach(full => {
     const short = full.split(" ").slice(-1)[0];
@@ -3762,7 +3763,7 @@ G.cups = {
   },
   tid: t => t.rid ? `cups:${t.rid}` : `cups:${t.rows[0][0]}-${t.rows[t.rows.length - 1][0]}`,
   player: () => null,
-  cells(t) { this._cells = this._cells && this._cells.t === t ? this._cells : { t, list: cupsKeys(t.rows) }; return this._cells.list; },
+  cells(t) { this._cells = this._cells && this._cells.t === t ? this._cells : { t, list: cupsKeys(t.rows, cupsCols(t)) }; return this._cells.list; },
   filled(t, g) {
     const typed = g.filter(x => x !== "END").map(cupsNorm);
     return this.cells(t).map(c => typed.some(x => c.keys.includes(x)));
@@ -3780,8 +3781,8 @@ G.cups = {
   celebrate(t, g, won) { return won || this.score(t, g) >= this.cells(t).length * 0.7; },
   archiveStatus: h => `${h.s} squares`,
   shareText(t, saved, num, link) {
-    const marks = this.filled(t, saved.guesses);
-    const rows = t.rows.map((r, i) => marks.slice(i * 3, i * 3 + 3).map(x => x ? "🟩" : "⬜").join("")).join("\n");
+    const marks = this.filled(t, saved.guesses), n = cupsCols(t).length;
+    const rows = t.rows.map((r, i) => marks.slice(i * n, i * n + n).map(x => x ? "🟩" : "⬜").join("")).join("\n");
     return `Sweater Playoff History #${num} · ${this.meta(t)}\n${this.score(t, saved.guesses)}/${marks.length} squares\n\n${rows}${link}`;
   },
   clockKey(t) { return `${mode}:${S.cups.day || ""}:${this.tid(t)}`; },
@@ -3804,10 +3805,12 @@ G.cups = {
     $("cuStart").hidden = running || !!st.over;
     $("cuInput").disabled = !running;
     $("cuInput").placeholder = running ? "Type a team or player, then press Enter" : st.over ? "Time's up" : "Press Start to begin";
+    const cols = cupsCols(t);
+    $("cuHead").innerHTML = `<th>Season</th><th>Stanley Cup</th><th>Runner-up</th>` + (cols.length === 3 ? "<th>Conn Smythe</th>" : "");
     $("cuRows").innerHTML = t.rows.map((r, i) => `<tr>
       <td class="cuyear">${seasonLabel(r[0])}</td>
-      ${[1, 2, 3].map(c => {
-        const got = marks[i * 3 + (c - 1)];
+      ${cols.map((c, ci) => {
+        const got = marks[i * cols.length + ci];
         return `<td class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? esc(r[c]) : ""}</td>`;
       }).join("")}</tr>`).join("");
     if (running) {
@@ -5695,7 +5698,9 @@ def fetch_cup_history(cache, today):
         return []
     smythe = {y: w for t, y, w in AWARD_HISTORY if "Conn Smythe" in t}
     rows = [[y, a, b, smythe.get(y, "")] for y, a, b in finals if y >= 1967]
-    print(f"  Cup history: {len(rows)} finals, {sum(1 for r in rows if r[3])} with a Conn Smythe winner")
+    with_mvp = sum(1 for r in rows if r[3])
+    print(f"  Cup history: {len(rows)} finals, {with_mvp} with a Conn Smythe winner"
+          + ("" if with_mvp >= len(rows) * 0.6 else " (the grid will show winners and runners-up only)"))
     cache["_cups"] = {"day": today.isoformat(), "rows": rows}
     return [tuple(r) for r in rows]
 
@@ -5705,12 +5710,16 @@ CUPS_SECONDS = 300
 
 
 def cups_puzzle(history, rnd):
-    rows = [r for r in history if r[3]]           # only years where all three answers exist
+    full = [r for r in history if r[3]]           # years where all three answers exist
+    if len(full) >= CUPS_YEARS:
+        rows, mvp = full, True
+    else:                                          # no Conn Smythe data: winners and runners-up only
+        rows, mvp = [r for r in history if r[1] and r[2]], False
     if len(rows) < CUPS_YEARS:
         return None
     start = rnd.randrange(0, len(rows) - CUPS_YEARS + 1)
-    picked = rows[start:start + CUPS_YEARS]
-    return {"rows": [list(r) for r in picked]}
+    picked = [list(r[:3]) + ([r[3]] if mvp else [""]) for r in rows[start:start + CUPS_YEARS]]
+    return {"rows": picked, "mvp": mvp}
 
 
 def wiki_award_history():
@@ -5735,11 +5744,24 @@ def wiki_award_history():
     return sorted(set(rows))
 
 
+def report_trophies(rows):
+    counts = {}
+    for t, y, w in rows:
+        counts[t] = counts.get(t, 0) + 1
+    print("    " + ", ".join(f"{t.replace(' Trophy', '').replace(' Memorial', '')}: {n}"
+                             for t, n in sorted(counts.items())))
+
+
 def fetch_award_history(cache, today):
     """[(trophy, season start year, winner name)] for every winner the NHL lists, retired players included."""
     saved = cache.get("_trophies")
     if saved and (today - date.fromisoformat(saved["day"])).days < 14 and saved.get("rows"):
-        return [tuple(r) for r in saved["rows"]]
+        rows = [tuple(r) for r in saved["rows"]]
+        if any("Conn Smythe" in r[0] for r in rows):
+            print(f"  Award history: {len(rows)} winners saved from an earlier build")
+            report_trophies(rows)
+            return rows
+        print("  Award history: the saved copy has no Conn Smythe winners, so it's being looked up again")
     rows, source = [], None
     for url in TROPHY_URLS:
         try:
@@ -5776,6 +5798,7 @@ def fetch_award_history(cache, today):
         rows, source = wiki_award_history(), "Wikipedia"
     if rows:
         print(f"  Award history: {len(rows)} winners from {source}")
+        report_trophies(rows)
         cache["_trophies"] = {"day": today.isoformat(), "rows": [list(r) for r in rows]}
     else:
         print("  Award history: neither the NHL's award lists nor Wikipedia were reachable, "
@@ -5808,12 +5831,9 @@ def trophy_puzzle(players, entries, rnd):
         t, y, w = rnd.choice(entries)
         if (t, y) in used:
             continue
-        # the other three options are other winners of the same trophy, so guessing is genuinely hard
-        pool = [n for yy, n in by_trophy[t] if n != w]
-        others = [n for n in dict.fromkeys(pool) if n != w]
-        if len(others) < 3:
-            others += [n for _, _, n in rnd.sample(entries, min(len(entries), 30)) if n != w]
-            others = [n for n in dict.fromkeys(others)][:12]
+        # the wrong options are always other winners of the same trophy, so a Vezina round
+        # never lists a skater; a trophy with too few winners is skipped instead
+        others = [n for n in dict.fromkeys(n for yy, n in by_trophy[t]) if n != w]
         if len(others) < 3:
             continue
         names = rnd.sample(others, 3)
