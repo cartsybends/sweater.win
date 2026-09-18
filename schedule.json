@@ -592,6 +592,7 @@
     8482165,
     8482445,
     8482679,
+    8482747,
     8483495,
     8483609,
     8484150,
@@ -1219,6 +1220,7 @@
     8482165,
     8482445,
     8482679,
+    8482747,
     8483495,
     8483609,
     8484150,
@@ -14644,8 +14646,3884 @@
   }
  },
  "mroster_start": "2026-09-18",
- "cups_days": {},
- "cups_start": "",
+ "cups_days": {
+  "2026-09-18": {
+   "rows": [
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-19": {
+   "rows": [
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-20": {
+   "rows": [
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-21": {
+   "rows": [
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-22": {
+   "rows": [
+    [
+     1978,
+     "1978–79 Montreal Canadiens season",
+     "1978–79 New York Rangers season",
+     ""
+    ],
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-23": {
+   "rows": [
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ],
+    [
+     2019,
+     "2019–20 Tampa Bay Lightning season",
+     "2019–20 Dallas Stars season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-24": {
+   "rows": [
+    [
+     1974,
+     "1974–75 Philadelphia Flyers season",
+     "1974–75 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1975,
+     "1975–76 Montreal Canadiens season",
+     "1975–76 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1976,
+     "1976–77 Montreal Canadiens season",
+     "1976–77 Boston Bruins season",
+     ""
+    ],
+    [
+     1977,
+     "1977–78 Montreal Canadiens season",
+     "1977–78 Boston Bruins season",
+     ""
+    ],
+    [
+     1978,
+     "1978–79 Montreal Canadiens season",
+     "1978–79 New York Rangers season",
+     ""
+    ],
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-25": {
+   "rows": [
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-26": {
+   "rows": [
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-27": {
+   "rows": [
+    [
+     1973,
+     "1973–74 Philadelphia Flyers season",
+     "1973–74 Boston Bruins season",
+     ""
+    ],
+    [
+     1974,
+     "1974–75 Philadelphia Flyers season",
+     "1974–75 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1975,
+     "1975–76 Montreal Canadiens season",
+     "1975–76 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1976,
+     "1976–77 Montreal Canadiens season",
+     "1976–77 Boston Bruins season",
+     ""
+    ],
+    [
+     1977,
+     "1977–78 Montreal Canadiens season",
+     "1977–78 Boston Bruins season",
+     ""
+    ],
+    [
+     1978,
+     "1978–79 Montreal Canadiens season",
+     "1978–79 New York Rangers season",
+     ""
+    ],
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-28": {
+   "rows": [
+    [
+     1976,
+     "1976–77 Montreal Canadiens season",
+     "1976–77 Boston Bruins season",
+     ""
+    ],
+    [
+     1977,
+     "1977–78 Montreal Canadiens season",
+     "1977–78 Boston Bruins season",
+     ""
+    ],
+    [
+     1978,
+     "1978–79 Montreal Canadiens season",
+     "1978–79 New York Rangers season",
+     ""
+    ],
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-29": {
+   "rows": [
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-09-30": {
+   "rows": [
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-01": {
+   "rows": [
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-02": {
+   "rows": [
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-03": {
+   "rows": [
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-04": {
+   "rows": [
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-05": {
+   "rows": [
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-06": {
+   "rows": [
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-07": {
+   "rows": [
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-08": {
+   "rows": [
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-09": {
+   "rows": [
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ],
+    [
+     2019,
+     "2019–20 Tampa Bay Lightning season",
+     "2019–20 Dallas Stars season",
+     ""
+    ],
+    [
+     2020,
+     "2020–21 Tampa Bay Lightning season",
+     "2020–21 Montreal Canadiens season",
+     ""
+    ],
+    [
+     2021,
+     "2021–22 Colorado Avalanche season",
+     "2021–22 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2022,
+     "2022–23 Vegas Golden Knights season",
+     "2022–23 Florida Panthers season",
+     ""
+    ],
+    [
+     2023,
+     "2023–24 Florida Panthers season",
+     "2023–24 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2024,
+     "2024–25 Florida Panthers season",
+     "2024–25 Edmonton Oilers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-10": {
+   "rows": [
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-11": {
+   "rows": [
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-12": {
+   "rows": [
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ],
+    [
+     2019,
+     "2019–20 Tampa Bay Lightning season",
+     "2019–20 Dallas Stars season",
+     ""
+    ],
+    [
+     2020,
+     "2020–21 Tampa Bay Lightning season",
+     "2020–21 Montreal Canadiens season",
+     ""
+    ],
+    [
+     2021,
+     "2021–22 Colorado Avalanche season",
+     "2021–22 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2022,
+     "2022–23 Vegas Golden Knights season",
+     "2022–23 Florida Panthers season",
+     ""
+    ],
+    [
+     2023,
+     "2023–24 Florida Panthers season",
+     "2023–24 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2024,
+     "2024–25 Florida Panthers season",
+     "2024–25 Edmonton Oilers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-13": {
+   "rows": [
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ],
+    [
+     2019,
+     "2019–20 Tampa Bay Lightning season",
+     "2019–20 Dallas Stars season",
+     ""
+    ],
+    [
+     2020,
+     "2020–21 Tampa Bay Lightning season",
+     "2020–21 Montreal Canadiens season",
+     ""
+    ],
+    [
+     2021,
+     "2021–22 Colorado Avalanche season",
+     "2021–22 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2022,
+     "2022–23 Vegas Golden Knights season",
+     "2022–23 Florida Panthers season",
+     ""
+    ],
+    [
+     2023,
+     "2023–24 Florida Panthers season",
+     "2023–24 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2024,
+     "2024–25 Florida Panthers season",
+     "2024–25 Edmonton Oilers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-14": {
+   "rows": [
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-15": {
+   "rows": [
+    [
+     1971,
+     "1971–72 Boston Bruins season",
+     "1971–72 New York Rangers season",
+     ""
+    ],
+    [
+     1973,
+     "1973–74 Philadelphia Flyers season",
+     "1973–74 Boston Bruins season",
+     ""
+    ],
+    [
+     1974,
+     "1974–75 Philadelphia Flyers season",
+     "1974–75 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1975,
+     "1975–76 Montreal Canadiens season",
+     "1975–76 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1976,
+     "1976–77 Montreal Canadiens season",
+     "1976–77 Boston Bruins season",
+     ""
+    ],
+    [
+     1977,
+     "1977–78 Montreal Canadiens season",
+     "1977–78 Boston Bruins season",
+     ""
+    ],
+    [
+     1978,
+     "1978–79 Montreal Canadiens season",
+     "1978–79 New York Rangers season",
+     ""
+    ],
+    [
+     1979,
+     "1979–80 New York Islanders season",
+     "1979–80 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-16": {
+   "rows": [
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ],
+    [
+     2019,
+     "2019–20 Tampa Bay Lightning season",
+     "2019–20 Dallas Stars season",
+     ""
+    ],
+    [
+     2020,
+     "2020–21 Tampa Bay Lightning season",
+     "2020–21 Montreal Canadiens season",
+     ""
+    ],
+    [
+     2021,
+     "2021–22 Colorado Avalanche season",
+     "2021–22 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2022,
+     "2022–23 Vegas Golden Knights season",
+     "2022–23 Florida Panthers season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-17": {
+   "rows": [
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ]
+   ],
+   "mvp": false
+  },
+  "2026-10-18": {
+   "rows": [
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ]
+   ],
+   "mvp": false
+  }
+ },
+ "cups_start": "2026-09-18",
  "conn_days": {
   "2026-09-16": [
    {
@@ -63460,7 +67338,7 @@
    "ht": 75,
    "bc": "Praha",
    "bs": "",
-   "wt": 220,
+   "wt": 223,
    "bp": [
     50.09,
     14.42,
@@ -72470,7 +76348,7 @@
    "ht": 74,
    "bc": "Aldergrove",
    "bs": "BC",
-   "wt": 197,
+   "wt": 200,
    "bp": [
     49.06,
     -122.47,
@@ -83089,7 +86967,7 @@
    "ht": 72,
    "bc": "Moscow",
    "bs": "",
-   "wt": 203,
+   "wt": 198,
    "bp": [
     55.75,
     37.62,
@@ -86984,7 +90862,7 @@
    "id": 8478109,
    "name": "Victor Olofsson",
    "team": "VGK",
-   "pos": "R",
+   "pos": "L",
    "shoots": "L",
    "birth": "1995-07-18",
    "nation": "SWE",
@@ -86993,7 +90871,7 @@
    "ht": 71,
    "bc": "Ornskoldsvik",
    "bs": "",
-   "wt": 180,
+   "wt": 181,
    "bp": [
     63.29,
     18.72,
@@ -89717,7 +93595,7 @@
    "ht": 74,
    "bc": "North Chelmsford",
    "bs": "MA",
-   "wt": 208,
+   "wt": 205,
    "bp": [
     42.64,
     -71.38,
@@ -92988,7 +96866,7 @@
    "ht": 73,
    "bc": "Surrey",
    "bs": "BC",
-   "wt": 190,
+   "wt": 195,
    "bp": [
     49.11,
     -122.83,
@@ -93804,7 +97682,7 @@
    "ht": 75,
    "bc": "Val-d'Or",
    "bs": "QC",
-   "wt": 225,
+   "wt": 230,
    "bp": [
     48.1,
     -77.8,
@@ -95330,7 +99208,7 @@
    "ht": 76,
    "bc": "Comox",
    "bs": "BC",
-   "wt": 222,
+   "wt": 218,
    "bp": [
     49.68,
     -124.94,
@@ -102363,7 +106241,7 @@
    "ht": 74,
    "bc": "Oakbank",
    "bs": "MB",
-   "wt": 201,
+   "wt": 204,
    "bp": [
     49.94,
     -96.84,
@@ -105995,7 +109873,7 @@
    "ht": 73,
    "bc": "Minooka",
    "bs": "IL",
-   "wt": 211,
+   "wt": 200,
    "bp": [
     41.46,
     -88.26,
@@ -132204,7 +136082,7 @@
    "ht": 72,
    "bc": "Stockholm",
    "bs": "",
-   "wt": 198,
+   "wt": 192,
    "bp": [
     59.33,
     18.07,
@@ -137886,6 +141764,77 @@
      2,
      1
     ]
+   ]
+  },
+  "8482747": {
+   "id": 8482747,
+   "name": "Brennan Othmann",
+   "team": "CGY",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2003-01-05",
+   "nation": "CAN",
+   "number": 78,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CGY/8482747.png",
+   "ht": 72,
+   "bc": "Pickering",
+   "bs": "ON",
+   "wt": 192,
+   "bp": [
+    43.9,
+    -79.13,
+    "Pickering, ON, Canada"
+   ],
+   "past": [
+    "NYR"
+   ],
+   "car": [
+    [
+     2023,
+     "NYR",
+     3,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     2024,
+     "NYR",
+     22,
+     0,
+     2,
+     2,
+     2,
+     7
+    ],
+    [
+     2025,
+     "NYR",
+     17,
+     1,
+     0,
+     1,
+     11,
+     -4
+    ],
+    [
+     2025,
+     "CGY",
+     2,
+     1,
+     1,
+     2,
+     0,
+     -4
+    ]
+   ],
+   "draft": [
+    2021,
+    1,
+    16,
+    "NYR"
    ]
   },
   "8482748": {
@@ -145362,7 +149311,7 @@
    "ht": 73,
    "bc": "Kitchener",
    "bs": "ON",
-   "wt": 205,
+   "wt": 200,
    "bp": [
     43.43,
     -80.51,
