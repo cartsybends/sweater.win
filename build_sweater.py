@@ -3589,14 +3589,13 @@ const TROPHY_HISTORY = (() => {
   for (const [t, y, w] of TROPHY_WINNERS) {
     if (!t || !Number.isInteger(y) || !w) continue;
     winners.set(`${t}:${y}`, { t, y, w });
-    byTrophy[t] = [...new Set([...(byTrophy[t] || []), w])];
+    byTrophy[t] = [...(byTrophy[t] || []), { y, w }];
   }
   for (const day of Object.values(DAILY.trophy || {})) {
     for (const r of day.rounds || []) {
       const names = r.names || (r.ids || []).map(i => (BYID.get(i) || {}).name);
       if (!names || !names[r.a]) continue;
       winners.set(`${r.t}:${r.y}`, { t: r.t, y: r.y, w: names[r.a] });
-      byTrophy[r.t] = [...new Set([...(byTrophy[r.t] || []), ...names.filter(Boolean)])];
     }
   }
   return { winners: [...winners.values()], byTrophy };
@@ -3608,9 +3607,13 @@ function trophyRandom(rnd) {
   for (let i = 0; i < 3000 && rounds.length < 20; i++) {
     const e = entries[Math.floor(rnd() * entries.length)];
     if (used.has(`${e.t}:${e.y}`)) continue;
-    const pool = (TROPHY_HISTORY.byTrophy[e.t] || []).filter(n => n !== e.w);
+    const all = (TROPHY_HISTORY.byTrophy[e.t] || []).filter(x => x.w !== e.w);
+    let pool = all.filter(x => Math.abs(x.y - e.y) <= 12);
+    if (new Set(pool.map(x => x.w)).size < 3) pool = all.filter(x => Math.abs(x.y - e.y) <= 20);
+    if (new Set(pool.map(x => x.w)).size < 3) pool = all;
+    pool = [...new Map(pool.sort((a, b) => Math.abs(a.y - e.y) - Math.abs(b.y - e.y)).map(x => [x.w, x])).values()];
     if (pool.length < 3) continue;
-    const names = shuffled([...new Set(pool)], rnd).slice(0, 3);
+    const names = shuffled(pool, rnd).slice(0, 3).map(x => x.w);
     const a = Math.floor(rnd() * 4);
     names.splice(a, 0, e.w);
     rounds.push({ t: e.t, y: e.y, names, a });
@@ -3668,7 +3671,7 @@ G.trophy = {
     }).join("");
     $("trMsg").textContent = showing
       ? (this.right(t, st.guesses[last], last) ? "Correct!" : `It was ${t.rounds[last].names[t.rounds[last].a]}.`)
-      : st.over ? "" : "Winners from 1980 onwards, including retired players. Every wrong answer won this trophy too.";
+      : st.over ? "" : "Winners from 1980 onwards, including retired players. Wrong answers are winners of this trophy from the same era.";
     $("trNext").hidden = !(showing && !st.over);
   },
 };
@@ -5713,6 +5716,25 @@ TEAM_LINK_RE = re.compile(r"(Ducks|Bruins|Sabres|Flames|Hurricanes|Blackhawks|Av
                           r"|Thistles|Maroons|Eagles|Americans|Pirates|Quakers|Falcons|Cougars|Arenas|St. Patricks)")
 CUP_PAGE = "List of Stanley Cup champions"
 
+# The general awards feed is occasionally incomplete (especially during an
+# offseason refresh). Keep this small, stable history in the builder so every
+# playoff season always has its Conn Smythe answer. Keys are Final years; Cup
+# rows use season-start years, so the lookup below uses ``year + 1``.
+CONN_SMYTHE_BY_FINAL_YEAR = {
+    1981: "Butch Goring", 1982: "Mike Bossy", 1983: "Billy Smith", 1984: "Mark Messier",
+    1985: "Wayne Gretzky", 1986: "Patrick Roy", 1987: "Ron Hextall", 1988: "Wayne Gretzky",
+    1989: "Al MacInnis", 1990: "Bill Ranford", 1991: "Mario Lemieux", 1992: "Mario Lemieux",
+    1993: "Patrick Roy", 1994: "Brian Leetch", 1995: "Claude Lemieux", 1996: "Joe Sakic",
+    1997: "Mike Vernon", 1998: "Steve Yzerman", 1999: "Joe Nieuwendyk", 2000: "Scott Stevens",
+    2001: "Patrick Roy", 2002: "Nicklas Lidstrom", 2003: "Jean-Sebastien Giguere", 2004: "Brad Richards",
+    2006: "Cam Ward", 2007: "Scott Niedermayer", 2008: "Henrik Zetterberg", 2009: "Evgeni Malkin",
+    2010: "Jonathan Toews", 2011: "Tim Thomas", 2012: "Jonathan Quick", 2013: "Patrick Kane",
+    2014: "Justin Williams", 2015: "Duncan Keith", 2016: "Sidney Crosby", 2017: "Sidney Crosby",
+    2018: "Alexander Ovechkin", 2019: "Ryan O'Reilly", 2020: "Victor Hedman", 2021: "Andrei Vasilevskiy",
+    2022: "Cale Makar", 2023: "Jonathan Marchessault", 2024: "Connor McDavid", 2025: "Sam Bennett",
+    2026: "Jordan Staal",
+}
+
 
 def wiki_cup_finals():
     """[(year, champion, runner-up)] from Wikipedia's Stanley Cup champions table."""
@@ -5733,7 +5755,7 @@ def wiki_cup_finals():
 def fetch_cup_history(cache, today):
     """[(year, champion, runner-up, Conn Smythe winner)] — cached, since it barely changes."""
     saved = cache.get("_cups")
-    if (saved and saved.get("version") == 2 and saved.get("rows")
+    if (saved and saved.get("version") == 3 and saved.get("rows")
             and (today - date.fromisoformat(saved["day"])).days < 14):
         return [tuple(r) for r in saved["rows"]]
     finals = wiki_cup_finals()
@@ -5741,11 +5763,12 @@ def fetch_cup_history(cache, today):
         print("  Cup history: couldn't read Wikipedia's Stanley Cup table, so Playoff History is off for now.")
         return []
     smythe = {y: w for t, y, w in AWARD_HISTORY if "Conn Smythe" in t}
-    rows = [[y, a, b, smythe.get(y, "")] for y, a, b in finals if y >= CUPS_FIRST_YEAR]
+    smythe.update(CONN_SMYTHE_BY_FINAL_YEAR)
+    rows = [[y, a, b, smythe.get(y + 1, "")] for y, a, b in finals if y >= CUPS_FIRST_YEAR]
     with_mvp = sum(1 for r in rows if r[3])
     print(f"  Cup history: {len(rows)} finals, {with_mvp} with a Conn Smythe winner"
           + ("" if with_mvp >= len(rows) * 0.6 else " (the grid will show winners and runners-up only)"))
-    cache["_cups"] = {"version": 2, "day": today.isoformat(), "rows": rows}
+    cache["_cups"] = {"version": 3, "day": today.isoformat(), "rows": rows}
     return [tuple(r) for r in rows]
 
 
@@ -5873,7 +5896,13 @@ def trophy_puzzle(players, entries, rnd):
             continue
         # the wrong options are always other winners of the same trophy, so a Vezina round
         # never lists a skater; a trophy with too few winners is skipped instead
-        others = [n for n in dict.fromkeys(n for yy, n in by_trophy[t]) if n != w]
+        all_others = [(yy, n) for yy, n in by_trophy[t] if n != w]
+        others = [(yy, n) for yy, n in all_others if abs(yy - y) <= 12]
+        if len({n for _, n in others}) < 3:
+            others = [(yy, n) for yy, n in all_others if abs(yy - y) <= 20]
+        if len({n for _, n in others}) < 3:
+            others = all_others
+        others = list(dict.fromkeys(n for _, n in sorted(others, key=lambda item: abs(item[0] - y))))
         if len(others) < 3:
             continue
         names = rnd.sample(others, 3)
