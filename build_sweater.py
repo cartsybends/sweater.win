@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "51 · Progression"
+VERSION = "52 · Game Lobby"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -60,6 +60,12 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="twitter:title" content="Sweater · Daily NHL Trivia">
 <meta name="twitter:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
 <meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png">
+<meta name="theme-color" content="#111113">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="sweater.webmanifest">
+<link rel="apple-touch-icon" href="sweater-icon.svg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏒</text></svg>">
 <script>
   // Apply saved appearance choices before the page paints.
@@ -1416,6 +1422,28 @@ TEMPLATE = r'''<!DOCTYPE html>
   .libraryfilters::-webkit-scrollbar { display: none; }
   .libraryfilter { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 11px; background: transparent; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
   .libraryfilter[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+  .hubshelf { margin: 0 0 18px; padding: 14px; border: 1px solid var(--line); border-radius: 17px; background: color-mix(in srgb, var(--panel) 92%, transparent); box-shadow: 0 10px 28px rgba(22, 54, 70, .045); }
+  .shelfhead { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 2px 10px; }
+  .shelfhead b { font-size: 14px; letter-spacing: -.01em; }
+  .shelfhead span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  .shelfscroll { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(164px, 1fr); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .shelfscroll::-webkit-scrollbar { display: none; }
+  .shelfcard { min-width: 0; min-height: 93px; padding: 11px; border: 1px solid var(--line); border-radius: 13px; background: var(--cell); color: var(--cell-fg); font: inherit; text-align: left; cursor: pointer; transition: transform .18s ease, border-color .18s ease; }
+  .shelfcard:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .shelfcard b, .shelfcard small { display: block; }
+  .shelfcard b { margin-top: 6px; font-size: 14px; letter-spacing: -.015em; }
+  .shelfcard small { margin-top: 3px; color: var(--muted); font-size: 11px; line-height: 1.3; }
+  .shelfcard .shelficon { display: inline-grid; width: 26px; height: 26px; place-items: center; border-radius: 8px; background: color-mix(in srgb, var(--accent) 14%, transparent); font-size: 15px; }
+  .modebadges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+  .modebadge { display: inline-flex; align-items: center; min-height: 17px; padding: 2px 5px; border-radius: 999px; background: color-mix(in srgb, var(--fg) 7%, transparent); color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .055em; line-height: 1; text-transform: uppercase; }
+  .modebadge.difficulty-hard { background: color-mix(in srgb, var(--near) 20%, transparent); color: color-mix(in srgb, var(--near) 74%, var(--fg)); }
+  .modebadge.difficulty-expert { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+  .librarygame { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 40px; }
+  .librarygame + .librarygame::before { content: ""; position: absolute; top: 0; left: 66px; right: 0; border-top: 1px solid var(--sep); }
+  .librarygame .grow { grid-column: 1; min-width: 0; }
+  .favtoggle { grid-column: 2; z-index: 1; align-self: stretch; width: 40px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 18px; cursor: pointer; }
+  .favtoggle:hover, .favtoggle[aria-pressed="true"] { color: var(--accent); }
+  .favtoggle[aria-pressed="true"] { text-shadow: 0 2px 9px color-mix(in srgb, var(--accent) 30%, transparent); }
   .resultrecap { width: min(450px, 100%); margin: 15px auto 11px; padding: 11px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
                  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line)); border-radius: 13px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); text-align: left; }
   .recapstats { display: flex; align-items: center; gap: 12px; min-width: 0; }
@@ -1451,6 +1479,21 @@ TEMPLATE = r'''<!DOCTYPE html>
   .achievement b { font-size: 12px; }
   .achievement small, .lockerhint { color: var(--muted); font-size: 11px; line-height: 1.35; }
   .lockerhint { margin: 0; }
+  .lockerbench { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .lockerbenchsection { min-width: 0; }
+  .lockerbenchsection > b { display: block; margin: 0 0 6px; color: var(--muted); font-size: 10px; letter-spacing: .075em; text-transform: uppercase; }
+  .lockerlist { display: grid; gap: 6px; }
+  .lockerrow { display: grid; grid-template-columns: 27px minmax(0, 1fr) 12px; align-items: center; gap: 7px; width: 100%; min-height: 43px; padding: 7px 8px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .lockerrow:hover { border-color: var(--accent); }
+  .lockerrow i { width: 27px; height: 27px; display: grid; place-items: center; border-radius: 8px; background: color-mix(in srgb, var(--accent) 13%, transparent); font-style: normal; font-size: 14px; }
+  .lockerrow span { min-width: 0; }
+  .lockerrow b, .lockerrow small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lockerrow b { font-size: 12px; }
+  .lockerrow small { margin-top: 1px; color: var(--muted); font-size: 10px; }
+  .lockerrow em { color: var(--muted); font-size: 17px; font-style: normal; }
+  .recapfact { margin-top: 3px; }
+  .recapfact small { display: block; max-width: 280px; color: var(--muted); font-size: 10px; line-height: 1.3; }
+  .answerstate { display: inline-flex; align-items: center; margin-left: auto; padding: 3px 6px; border-radius: 999px; background: rgba(0,0,0,.13); color: inherit; font-size: 10px; font-weight: 800; letter-spacing: .045em; line-height: 1; text-transform: uppercase; }
   .welcomecard { width: min(430px, 92vw); text-align: center; }
   .welcomecard h2 { margin: 4px 0 8px; font-size: 29px; letter-spacing: -.045em; line-height: 1.05; }
   .welcomecard .settingsintro { margin: 0 auto; max-width: 350px; }
@@ -1475,6 +1518,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     .libraryhead { align-items: center; margin-top: 22px; }
     .libraryhead h2 { font-size: 22px; }
     .librarytoggle { padding: 8px 10px; font-size: 12px; }
+    .shelfscroll { grid-auto-columns: minmax(152px, 72%); grid-template-columns: none; }
+    .modebadges { display: none; }
+    .lockerbench { grid-template-columns: 1fr; }
     .achievementgrid { grid-template-columns: 1fr; }
     .cudecades { grid-template-columns: repeat(3, 1fr); }
 
@@ -1552,6 +1598,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <p class="hubprogress"><span id="hubProgress"></span> <span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
     <section class="hubfeatures" id="hubFeatures" aria-label="Featured games"></section>
+    <section class="hubshelf" id="hubShelf" aria-label="Your game shelf" hidden></section>
     <button type="button" class="partycard" data-open="party">
       <svg class="rink" viewBox="0 0 400 160" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
         <rect x="6" y="6" width="388" height="148" rx="70" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -2190,6 +2237,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="achievementgrid" id="achievementGrid"></div>
     <h3>Keep going</h3>
     <p class="lockerhint" id="lockerHint"></p>
+    <h3>Your bench</h3>
+    <div class="lockerbench" id="lockerBench"></div>
   </div>
 </div>
 
@@ -4427,8 +4476,9 @@ G.trophy = {
     $("trOpts").innerHTML = st.over && !showing ? "" : r.names.map((name, n) => {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
       const team = (r.teams || [])[n] || trophyTeam(r.t, r.y, name);
+      const state = showing && n === r.a ? "Correct" : showing && n === Number(st.guesses[last]) ? "Incorrect" : "";
       return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>` +
-        `${team ? `<img class="trlogo${logoToneClass(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
+        `${team ? `<img class="trlogo${logoToneClass(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span>${state ? `<span class="answerstate">${state}</span>` : ""}</button>`;
     }).join("");
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
@@ -4808,6 +4858,12 @@ function renderPlayerProfile() {
   $("achievementGrid").innerHTML = achievementList().map(a => `<div class="achievement${a.on ? "" : " locked"}"><i>${a.icon}</i><span><b>${a.title}</b><small>${a.copy}</small></span></div>`).join("");
   const theme = activeWeeklyTheme(), progress = weeklyProgress(theme);
   $("lockerHint").textContent = `${theme.title}: ${progress}/3 complete. ${progress >= 3 ? "Challenge cleared—nice work." : theme.copy}`;
+  const gameRows = (ids, empty) => ids.length ? ids.slice(0, 3).map(id => {
+    const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
+    return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${card.icon}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)} · ${esc(meta.time)}</small></span><em aria-hidden="true">›</em></button>`;
+  }).join("") : `<p class="lockerhint">${esc(empty)}</p>`;
+  $("lockerBench").innerHTML = `<section class="lockerbenchsection"><b>Favourites</b><div class="lockerlist">${gameRows(favouriteIds(), "Star modes in the game library to keep them here.")}</div></section>
+    <section class="lockerbenchsection"><b>Recently played</b><div class="lockerlist">${gameRows(recentIds(), "Your last few modes will show up here.")}</div></section>`;
 }
 function renderResultRecap(unlocked = []) {
   const box = $("resultRecap");
@@ -4815,8 +4871,10 @@ function renderResultRecap(unlocked = []) {
   const p = progressSummary(), done = dailyEntries(dayKey()).length;
   const entry = historyEntries().find(x => x.game === game && x.day === S[game].day);
   const achievement = unlocked[0] ? ` · Unlocked ${unlocked[0].title}` : "";
+  const info = modeMeta(game.startsWith("hl_") ? "hl" : game);
+  const next = info.next && G[info.next] ? info.next : "classic";
   box.hidden = false;
-  box.innerHTML = `<div class="recapstats"><i>✦</i><span><b>+${entry ? xpFor(entry) : 0} XP${achievement}</b><small>Level ${p.level} · Daily Hat Trick ${Math.min(done, 3)}/3</small></span></div><div class="recapactions"><button type="button" data-result-share>Share</button><button type="button" class="ghost" data-result-challenge>Challenge</button></div>`;
+  box.innerHTML = `<div class="recapstats"><i>✦</i><span><b>+${entry ? xpFor(entry) : 0} XP${achievement}</b><small>Level ${p.level} · Daily Hat Trick ${Math.min(done, 3)}/3</small><span class="recapfact"><small>${esc(info.fact)}</small></span></span></div><div class="recapactions"><button type="button" data-result-share>Share</button><button type="button" class="ghost" data-result-next="${next}">Next</button></div>`;
 }
 
 function startGame(t, restore = [], opts) {
@@ -5275,6 +5333,8 @@ $("shareBtn").onclick = async () => {
 };
 $("resultRecap").addEventListener("click", async e => {
   if (e.target.closest("[data-result-share]")) await copyToClipboard(shareText());
+  const next = e.target.closest("[data-result-next]");
+  if (next) openGame(next.dataset.resultNext);
   if (e.target.closest("[data-result-challenge]")) {
     const base = !SITE || /__SITE__/.test(SITE) ? location.href : `${SITE}#${game}`;
     await copyToClipboard(`Can you beat my ${cardTitle(game)} result on Sweater?\n\n${base}`, "Challenge link copied to clipboard");
@@ -5295,6 +5355,12 @@ document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e =
 }));
 $("statsBtn").onclick = () => { statsGame = null; openModal("statsModal"); };
 $("profileBtn").onclick = () => { renderPlayerProfile(); openModal("profileModal"); };
+$("profileModal").addEventListener("click", e => {
+  const b = e.target.closest("[data-locker-open]");
+  if (!b) return;
+  closeModals();
+  openGame(b.dataset.lockerOpen);
+});
 document.querySelectorAll("[data-welcome-open]").forEach(b => b.onclick = () => {
   $("welcomeModal").classList.remove("open");
   openGame(b.dataset.welcomeOpen);
@@ -5596,6 +5662,48 @@ const HUB = [
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
 const CARD = {};
 HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: sec.tone }; }));
+/* Short, repeatable labels make a 22-mode library scannable before a player
+   has to read a description. They also power the shelf, Locker, and results. */
+const MODE_META = Object.freeze({
+  classic:  { type: "Deduction", time: "3–5 min", difficulty: "Medium", fact: "Read the board: team, position, age and more all narrow the field.", next: "statline" },
+  statline: { type: "Stats", time: "3–5 min", difficulty: "Hard", fact: "Each wrong guess reveals another season from the player’s career.", next: "playoff" },
+  playoff:  { type: "History", time: "3–5 min", difficulty: "Hard", fact: "Use postseason runs to identify the player behind the playoff résumé.", next: "trophy" },
+  journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
+  blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every guess sharpens the photo—risk a name early for the best score.", next: "zam" },
+  zam:      { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Clear the ice quickly, but one early correct guess is worth the gamble.", next: "classic" },
+  team:     { type: "Seasons", time: "1–2 min", difficulty: "Medium", fact: "The right answer is the sweater the player wore in that exact season.", next: "season" },
+  number:   { type: "Details", time: "1 min", difficulty: "Easy", fact: "A player’s number is a small detail—unless it is the one you miss.", next: "draft" },
+  draft:    { type: "Draft", time: "2 min", difficulty: "Hard", fact: "Draft position turns hockey memory into a genuine scouting test.", next: "trophy" },
+  season:   { type: "Stats", time: "2 min", difficulty: "Hard", fact: "Find the season hidden behind a player’s stat line and team context.", next: "statline" },
+  trophy:   { type: "Awards", time: "2–4 min", difficulty: "Hard", fact: "Wrong choices are winners from nearby seasons, so era knowledge matters.", next: "cups" },
+  cups:     { type: "History", time: "10 min", difficulty: "Expert", fact: "Every square spans Cup winners, finalists and Conn Smythe winners from 1980 onward.", next: "trophy" },
+  mroster:  { type: "Rosters", time: "2 min", difficulty: "Hard", fact: "Six players share one sweater—name the team before the clock beats you.", next: "roster" },
+  map:      { type: "Geography", time: "2 min", difficulty: "Medium", fact: "Hockey’s map gets much bigger once you leave North America.", next: "draft" },
+  hl:       { type: "Streak", time: "1–3 min", difficulty: "Medium", fact: "Trust the stat you are given, then keep the streak alive one choice at a time.", next: "rank" },
+  rank:     { type: "Ordering", time: "2 min", difficulty: "Hard", fact: "Five players, one stat, and no room for a sloppy order.", next: "hl" },
+  hlt:      { type: "Teams", time: "1–3 min", difficulty: "Medium", fact: "Every round changes the stat, so the best roster is not always obvious.", next: "rank" },
+  truths:   { type: "Hockey IQ", time: "2 min", difficulty: "Medium", fact: "Two statements are true; slow down and spot the one detail that does not fit.", next: "mroster" },
+  roster:   { type: "Speed", time: "1 min", difficulty: "Hard", fact: "Depth knowledge matters here—star names alone will not fill a roster.", next: "puck" },
+  conn:     { type: "Puzzle", time: "3–5 min", difficulty: "Hard", fact: "The groups are hidden until you find the shared hockey connection.", next: "truths" },
+  puck:     { type: "Arcade", time: "1–2 min", difficulty: "Medium", fact: "Fast answers score, but the wrong tap costs you the run.", next: "shoot" },
+  shoot:    { type: "Arcade", time: "2 min", difficulty: "Medium", fact: "Answer the hockey question first—then turn it into a goal.", next: "puck" },
+});
+const modeMeta = id => MODE_META[id] || { type: "Daily", time: "2–4 min", difficulty: "Medium", fact: "A fresh hockey puzzle is ready every day.", next: "classic" };
+const hubIds = () => HUB.flatMap(sec => sec.games.map(([id]) => id));
+const cleanHubIds = ids => [...new Set((Array.isArray(ids) ? ids : []).filter(id => hubIds().includes(id)))];
+const favouriteIds = () => cleanHubIds(store.get("sweater-favourites"));
+const recentIds = () => cleanHubIds(store.get("sweater-recent-games"));
+function toggleFavourite(id) {
+  const ids = favouriteIds();
+  const next = ids.includes(id) ? ids.filter(x => x !== id) : [id, ...ids];
+  store.set("sweater-favourites", next);
+  return next.includes(id);
+}
+function rememberGame(id) {
+  const hubId = id.startsWith("hl_") ? "hl" : id;
+  if (!hubIds().includes(hubId)) return;
+  store.set("sweater-recent-games", [hubId, ...recentIds().filter(x => x !== hubId)].slice(0, 6));
+}
 const cardTitle = id => id === "hl" ? "Higher or Lower" : G[id].title;
 let onHub = true, statsGame = null;
 
@@ -5623,7 +5731,7 @@ function hubStatus(id) {
 const FEATURE_SEQUENCE = ["trophy", "cups", "classic", "shoot", "map", "conn", "journey"];
 const gameIsReady = id => id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0;
 const LIBRARY_FILTERS = [
-  ["all", "All games"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
+  ["all", "All games"], ["favourites", "Favourites"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
 ];
 const librarySection = { player: "Name the player", details: "Know the details", puzzles: "Streaks and puzzles", arcade: "Arcade" };
 function weeklyDoneGames(theme = activeWeeklyTheme()) {
@@ -5662,27 +5770,41 @@ function renderHub() {
         <h2 class="featuretitle"><span aria-hidden="true">${theme.icon}</span>${esc(theme.title)}</h2><p class="featurecopy">${esc(theme.copy)}</p>
       </button>
     </div>`;
+  const favourites = favouriteIds(), recents = recentIds();
+  const suggested = [primary, quickGame, weeklyGame].filter((id, i, all) => all.indexOf(id) === i);
+  const shelfIds = (favourites.length ? favourites : recents.length ? recents : suggested).filter(gameIsReady).slice(0, 3);
+  const shelfLabel = favourites.length ? "Your favourites" : recents.length ? "Keep playing" : "Start here";
+  const shelfHint = favourites.length ? "Your saved modes" : recents.length ? "Your recent modes" : "A few great first shifts";
+  $("hubShelf").hidden = !shelfIds.length;
+  $("hubShelf").innerHTML = shelfIds.length ? `<div class="shelfhead"><b>${shelfLabel}</b><span>${shelfHint}</span></div><div class="shelfscroll">${shelfIds.map(id => {
+    const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
+    return `<button type="button" class="shelfcard" data-open="${id}"><span class="shelficon" aria-hidden="true">${card.icon}</span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)} · ${esc(meta.time)} · ${esc(meta.difficulty)}</small></button>`;
+  }).join("")}</div>` : "";
   const selectedFilter = store.get("sweater-library-filter") || "all";
   $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
-  $("hubSections").innerHTML = HUB.filter(sec => selectedFilter === "all" || sec.title === librarySection[selectedFilter]).map(sec => `
+  const librarySections = HUB.map(sec => ({ ...sec, games: sec.games.filter(([id]) =>
+    selectedFilter === "all" || (selectedFilter === "favourites" ? favourites.includes(id) : sec.title === librarySection[selectedFilter])
+  ) })).filter(sec => sec.games.length);
+  $("hubSections").innerHTML = librarySections.length ? librarySections.map(sec => `
     <section class="hubsec tone-${sec.tone}">
       <h2>${sec.title}</h2>
       <div class="glist">${sec.games.map(([id, icon, blurb]) => {
         const [cls, text] = hubStatus(id);
         const ready = gameIsReady(id);
-        return `<button type="button" class="grow ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
+        const meta = modeMeta(id), favourited = favourites.includes(id);
+        return `<div class="librarygame ${cls}"><button type="button" class="grow" data-open="${id}"${ready ? "" : " disabled"}>
           <span class="gicon" aria-hidden="true">${icon}</span>
-          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small></span>
+          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small><span class="modebadges"><i class="modebadge">${esc(meta.type)}</i><i class="modebadge">${esc(meta.time)}</i><i class="modebadge difficulty-${meta.difficulty.toLowerCase()}">${esc(meta.difficulty)}</i></span></span>
           <span class="gstat">${ready ? esc(text) : "Not available"}</span>
           <span class="chev" aria-hidden="true">›</span>
-        </button>`;
+        </button><button type="button" class="favtoggle" data-favorite="${id}" aria-label="${favourited ? "Remove" : "Add"} ${esc(cardTitle(id))} ${favourited ? "from" : "to"} favourites" aria-pressed="${favourited}" title="${favourited ? "Remove from" : "Add to"} favourites">★</button></div>`;
       }).join("")}</div>
-    </section>`).join("");
+    </section>`).join("") : `<p class="lockerhint">No favourites yet. Tap the star beside a game to build your shelf.</p>`;
   const libraryOpen = store.get("sweater-library-open") === true;
   $("hubSections").hidden = !libraryOpen;
   $("libraryToggle").setAttribute("aria-expanded", libraryOpen ? "true" : "false");
   $("libraryToggle").innerHTML = `${libraryOpen ? "Hide game library" : "Browse all games"} <span aria-hidden="true">›</span>`;
-  $("hubProgress").textContent = `${played} of ${total} played today.`;
+  $("hubProgress").textContent = `Daily Hat Trick ${Math.min(hatTrickCount, 3)}/3 · ${played} of ${total} games played today.`;
   $("hubBar").style.width = `${Math.round(played / total * 100)}%`;
   $("hubDate").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
   document.querySelector(".partycard").disabled = !API_ON;
@@ -5697,6 +5819,13 @@ $("libraryFilters").addEventListener("click", e => {
   renderHub();
 });
 $("view-hub").addEventListener("click", e => {
+  const favourite = e.target.closest("[data-favorite]");
+  if (favourite) {
+    const on = toggleFavourite(favourite.dataset.favorite);
+    toast(on ? `${cardTitle(favourite.dataset.favorite)} added to favourites` : `${cardTitle(favourite.dataset.favorite)} removed from favourites`);
+    renderHub();
+    return;
+  }
   const b = e.target.closest("[data-open]");
   if (!b || b.disabled) return;
   if (b.dataset.open === "party") openParty("");
@@ -5722,6 +5851,7 @@ function openGame(id, push = true) {
   if (id === "hl") id = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
   if (!G[id]) return showHub(push);
   if (id.startsWith("hl_")) store.set("sweater-hl-game", id);
+  rememberGame(id);
   if (push && location.hash !== `#${id}`) history.pushState(null, "", `#${id}`);
   closeParty();
   onHub = false;
@@ -6037,6 +6167,11 @@ function renderHelp() {
 // ======================= start =======================
 $("foot").textContent = `Player data from NHL.com · refreshed ${BUILT.split(" · ")[0]} · ${PLAYERS.length} players`;
 if (!store.get("sweater-seen-welcome")) { store.set("sweater-seen-welcome", true); openModal("welcomeModal"); }
+// Hosting this site over HTTPS also turns it into an installable, resilient
+// phone app. Local file previews deliberately skip service-worker registration.
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
 
 if (PLAYERS.length) {
   const start = decodeURIComponent(location.hash.slice(1));
@@ -7554,6 +7689,37 @@ def main():
     og = HERE / "sweater-trivia-preview.png"
     if og.exists() and out.parent != HERE:
         shutil.copy(og, out.parent / "sweater-trivia-preview.png")
+    # Companion files make a deployed HTTPS build installable as a lightweight
+    # phone app. They live next to the generated HTML, so publishing is just a
+    # matter of uploading the build folder rather than hand-editing a host.
+    pwa_icon = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#111113"/><path d="M82 252h348M112 174h288M112 330h288" stroke="#fff" stroke-opacity=".16" stroke-width="10"/><circle cx="256" cy="256" r="118" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="12"/><circle cx="256" cy="256" r="55" fill="#fff"/><circle cx="238" cy="238" r="13" fill="#111113"/><circle cx="274" cy="274" r="13" fill="#111113"/></svg>'''
+    manifest = {
+        "name": "Sweater · Daily NHL Trivia",
+        "short_name": "Sweater",
+        "start_url": "./",
+        "display": "standalone",
+        "background_color": "#111113",
+        "theme_color": "#111113",
+        "description": "Daily NHL trivia, player guessing games, Trophy Case and Playoff History.",
+        "icons": [{"src": "sweater-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}],
+    }
+    service_worker = f'''const CACHE = "sweater-shell-{today.isoformat()}";
+const CORE = ["./", "./sweater.webmanifest", "./sweater-icon.svg", "./sweater-trivia-preview.png"];
+self.addEventListener("install", event => event.waitUntil(
+  caches.open(CACHE).then(cache => Promise.all(CORE.map(url => cache.add(url).catch(() => undefined)))).then(() => self.skipWaiting())
+));
+self.addEventListener("activate", event => event.waitUntil(
+  caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("sweater-shell-") && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())
+));
+self.addEventListener("fetch", event => {{
+  if (event.request.method !== "GET" || new URL(event.request.url).origin !== location.origin) return;
+  event.respondWith(fetch(event.request).then(response => {{
+    const copy = response.clone(); caches.open(CACHE).then(cache => cache.put(event.request, copy)); return response;
+  }}).catch(() => caches.match(event.request)));
+}});\n'''
+    (out.parent / "sweater.webmanifest").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    (out.parent / "sweater-icon.svg").write_text(pwa_icon, encoding="utf-8")
+    (out.parent / "sw.js").write_text(service_worker, encoding="utf-8")
     # double-check the page that was written
     check = out.read_text(encoding="utf-8")
     if "/*__" in check or check.count('"headshot"') != len(embedded):
