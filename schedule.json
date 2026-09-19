@@ -33,7 +33,8 @@
   "2026-10-15": 8475745,
   "2026-10-16": 8481668,
   "2026-10-17": 8480434,
-  "2026-10-18": 8478970
+  "2026-10-18": 8478970,
+  "2026-10-19": 8477450
  },
  "start": "2026-09-15",
  "statline_days": {
@@ -70,7 +71,8 @@
   "2026-10-15": 8477987,
   "2026-10-16": 8482245,
   "2026-10-17": 8481540,
-  "2026-10-18": 8475913
+  "2026-10-18": 8475913,
+  "2026-10-19": 8478507
  },
  "statline_start": "2026-09-15",
  "team_days": {
@@ -209,6 +211,10 @@
   "2026-10-18": [
    8479981,
    2022
+  ],
+  "2026-10-19": [
+   8475798,
+   2012
   ]
  },
  "team_start": "2026-09-15",
@@ -246,7 +252,8 @@
   "2026-10-15": 8475795,
   "2026-10-16": 8478476,
   "2026-10-17": 8475722,
-  "2026-10-18": 8478882
+  "2026-10-18": 8478882,
+  "2026-10-19": 8475760
  },
  "journey_start": "2026-09-15",
  "blur_days": {
@@ -283,7 +290,8 @@
   "2026-10-15": 8480068,
   "2026-10-16": 8473512,
   "2026-10-17": 8478007,
-  "2026-10-18": 8481551
+  "2026-10-18": 8481551,
+  "2026-10-19": 8474593
  },
  "blur_start": "2026-09-15",
  "number_days": {
@@ -320,7 +328,8 @@
   "2026-10-15": 8482408,
   "2026-10-16": 8479337,
   "2026-10-17": 8476872,
-  "2026-10-18": 8484185
+  "2026-10-18": 8484185,
+  "2026-10-19": 8483756
  },
  "number_start": "2026-09-15",
  "draft_days": {
@@ -356,7 +365,8 @@
   "2026-10-15": 8480068,
   "2026-10-16": 8482896,
   "2026-10-17": 8476458,
-  "2026-10-18": 8477986
+  "2026-10-18": 8477986,
+  "2026-10-19": 8482720
  },
  "draft_start": "2026-09-16",
  "map_days": {
@@ -392,7 +402,8 @@
   "2026-10-15": 8480849,
   "2026-10-16": 8476461,
   "2026-10-17": 8484801,
-  "2026-10-18": 8473533
+  "2026-10-18": 8473533,
+  "2026-10-19": 8484185
  },
  "map_start": "2026-09-16",
  "zam_days": {
@@ -427,7 +438,8 @@
   "2026-10-15": 8480873,
   "2026-10-16": 8483733,
   "2026-10-17": 8478020,
-  "2026-10-18": 8482929
+  "2026-10-18": 8482929,
+  "2026-10-19": 8483425
  },
  "zam_start": "2026-09-17",
  "roster_days": {
@@ -1402,6 +1414,28 @@
     8483771,
     8484304
    ]
+  },
+  "2026-10-19": {
+   "team": "TOR",
+   "ids": [
+    8475166,
+    8475171,
+    8475690,
+    8476853,
+    8476931,
+    8476932,
+    8477541,
+    8477939,
+    8478057,
+    8478904,
+    8479026,
+    8479318,
+    8479442,
+    8480870,
+    8482720,
+    8484158,
+    8484901
+   ]
   }
  },
  "roster_start": "2026-09-15",
@@ -1724,6 +1758,16 @@
     8481607,
     8478542,
     8473533
+   ]
+  },
+  "2026-10-19": {
+   "stat": "goals",
+   "ids": [
+    8476441,
+    8482775,
+    8477932,
+    8480281,
+    8481006
    ]
   }
  },
@@ -3103,6 +3147,49 @@
     8475752,
     8482667,
     8483669
+   ]
+  },
+  "2026-10-19": {
+   "kind": "team",
+   "key": "TOR",
+   "label": "Plays for Toronto",
+   "ids": [
+    8483510,
+    8477939,
+    8478416,
+    8478474,
+    8481806,
+    8477149,
+    8482259,
+    8479973,
+    8476932,
+    8478024,
+    8479026,
+    8476931,
+    8476874,
+    8480891,
+    8476331,
+    8484911,
+    8478057,
+    8478916,
+    8479292,
+    8477447,
+    8476853,
+    8482720,
+    8482165,
+    8479442,
+    8484153,
+    8481020,
+    8481716,
+    8477541,
+    8478472,
+    8480870,
+    8475690,
+    8479318,
+    8475167,
+    8484158,
+    8482911,
+    8483548
    ]
   }
  },
@@ -5480,6 +5567,85 @@
      ]
     }
    ]
+  },
+  "2026-10-19": {
+   "rounds": [
+    {
+     "q": "In which round was Mackenzie Blackwood drafted?",
+     "o": [
+      "Round 7",
+      "Round 1",
+      "Round 2",
+      "Round 6"
+     ],
+     "a": 2,
+     "kind": "draftRound",
+     "keep": [
+      3,
+      4
+     ]
+    },
+    {
+     "q": "Which team drafted Bo Horvat?",
+     "o": [
+      "Vegas",
+      "Vancouver",
+      "Calgary",
+      "Edmonton"
+     ],
+     "a": 1,
+     "kind": "draftTeam",
+     "keep": [
+      0,
+      1
+     ]
+    },
+    {
+     "q": "Which of these players is the youngest?",
+     "o": [
+      "Jack McBain",
+      "Kevin Bahl",
+      "Dustin Wolf",
+      "Brandon Bussi"
+     ],
+     "a": 2,
+     "kind": "youngest",
+     "keep": [
+      2,
+      4
+     ]
+    },
+    {
+     "q": "Which of these players has the most career goals?",
+     "o": [
+      "Hampus Lindholm",
+      "Anthony Mantha",
+      "Brandon Montour",
+      "Victor Hedman"
+     ],
+     "a": 1,
+     "kind": "mostGoals",
+     "keep": [
+      1,
+      4
+     ]
+    },
+    {
+     "q": "Which country was Anton Frondell born in?",
+     "o": [
+      "Czechia",
+      "Russia",
+      "Sweden",
+      "France"
+     ],
+     "a": 2,
+     "kind": "nation",
+     "keep": [
+      0,
+      3
+     ]
+    }
+   ]
   }
  },
  "shoot_start": "2026-09-17",
@@ -6998,6 +7164,55 @@
       "Is a right wing",
       "Wears #44",
       "Plays for Columbus"
+     ],
+     "f": 0
+    }
+   ]
+  },
+  "2026-10-19": {
+   "rounds": [
+    {
+     "p": 8480078,
+     "s": [
+      "Is 5′11″ tall",
+      "Has played over 400 NHL games",
+      "Once scored 22 goals in a season"
+     ],
+     "f": 0
+    },
+    {
+     "p": 8478397,
+     "s": [
+      "Is 6′1″ tall",
+      "Wears #1",
+      "Has played 10 NHL seasons"
+     ],
+     "f": 1
+    },
+    {
+     "p": 8482511,
+     "s": [
+      "Has played over 100 NHL games",
+      "Has played 3 NHL seasons",
+      "Was drafted in 2023"
+     ],
+     "f": 2
+    },
+    {
+     "p": 8482733,
+     "s": [
+      "Was born in Canada",
+      "Has played 3 NHL seasons",
+      "Is a left wing"
+     ],
+     "f": 2
+    },
+    {
+     "p": 8480193,
+     "s": [
+      "Was drafted in 2020",
+      "Wears #80",
+      "Has played 5 NHL seasons"
      ],
      "f": 0
     }
@@ -12244,6 +12459,175 @@
      10043
     ]
    ]
+  },
+  "2026-10-19": {
+   "metric": "abroad",
+   "seq": [
+    [
+     "VAN",
+     12
+    ],
+    [
+     "TOR",
+     2
+    ],
+    [
+     "VGK",
+     6
+    ],
+    [
+     "DAL",
+     10
+    ],
+    [
+     "WSH",
+     6
+    ],
+    [
+     "FLA",
+     11
+    ],
+    [
+     "MIN",
+     10
+    ],
+    [
+     "CBJ",
+     6
+    ],
+    [
+     "DET",
+     8
+    ],
+    [
+     "BUF",
+     4
+    ],
+    [
+     "TOR",
+     2
+    ],
+    [
+     "VAN",
+     12
+    ],
+    [
+     "NYI",
+     5
+    ],
+    [
+     "NJD",
+     9
+    ],
+    [
+     "MTL",
+     6
+    ],
+    [
+     "BOS",
+     9
+    ],
+    [
+     "TBL",
+     11
+    ],
+    [
+     "PIT",
+     8
+    ],
+    [
+     "NSH",
+     9
+    ],
+    [
+     "BUF",
+     4
+    ],
+    [
+     "OTT",
+     10
+    ],
+    [
+     "STL",
+     11
+    ],
+    [
+     "VAN",
+     12
+    ],
+    [
+     "NYI",
+     5
+    ],
+    [
+     "LAK",
+     7
+    ],
+    [
+     "FLA",
+     11
+    ],
+    [
+     "DET",
+     8
+    ],
+    [
+     "SEA",
+     3
+    ],
+    [
+     "CHI",
+     4
+    ],
+    [
+     "NSH",
+     9
+    ],
+    [
+     "WSH",
+     6
+    ],
+    [
+     "NYR",
+     11
+    ],
+    [
+     "CGY",
+     9
+    ],
+    [
+     "OTT",
+     10
+    ],
+    [
+     "CBJ",
+     6
+    ],
+    [
+     "MIN",
+     10
+    ],
+    [
+     "NYR",
+     11
+    ],
+    [
+     "NYI",
+     5
+    ],
+    [
+     "VAN",
+     12
+    ],
+    [
+     "DAL",
+     10
+    ],
+    [
+     "BUF",
+     4
+    ]
+   ]
   }
  },
  "hlt_start": "2026-09-18",
@@ -12371,6 +12755,10 @@
   "2026-10-18": {
    "id": 8476883,
    "y": 2016
+  },
+  "2026-10-19": {
+   "id": 8471675,
+   "y": 2022
   }
  },
  "season_start": "2026-09-18",
@@ -12467,6 +12855,9 @@
   },
   "2026-10-18": {
    "id": 8477504
+  },
+  "2026-10-19": {
+   "id": 8478460
   }
  },
  "playoff_start": "2026-09-18",
@@ -14299,6 +14690,230 @@
      "a": 1
     }
    ]
+  },
+  "2026-10-19": {
+   "rounds": [
+    {
+     "t": "Vezina Trophy",
+     "y": 1998,
+     "names": [
+      "Grant Fuhr",
+      "Ed Belfour",
+      "Denis Herron",
+      "Dominik Hašek"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1999,
+     "names": [
+      "Anže Kopitar",
+      "Mats Näslund",
+      "Pavol Demitra",
+      "Mike Bossy"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 1988,
+     "names": [
+      "Evgeni Malkin",
+      "Wayne Gretzky",
+      "Peter Forsberg",
+      "Taylor Hall"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2002,
+     "names": [
+      "Dominik Hašek",
+      "Eric Lindros",
+      "Nikita Kucherov",
+      "Markus Näslund"
+     ],
+     "a": 3
+    },
+    {
+     "t": "James Norris Memorial Trophy",
+     "y": 2022,
+     "names": [
+      "Scott Niedermayer",
+      "Erik Karlsson",
+      "Adam Fox",
+      "Paul Coffey"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2000,
+     "names": [
+      "Jiří Hudler",
+      "Rick Kehoe",
+      "Ryan O'Reilly",
+      "Joe Sakic"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Art Ross Trophy",
+     "y": 1994,
+     "names": [
+      "Jamie Benn",
+      "Henrik Sedin",
+      "Jaromír Jágr",
+      "Daniel Sedin"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2020,
+     "names": [
+      "Wayne Gretzky",
+      "Connor McDavid",
+      "Auston Matthews",
+      "Chris Pronger"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2017,
+     "names": [
+      "Jaromír Jágr",
+      "Wayne Gretzky",
+      "Connor McDavid",
+      "Eric Lindros"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2011,
+     "names": [
+      "Mike Liut",
+      "Jaromír Jágr",
+      "Evgeni Malkin",
+      "Markus Näslund"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2021,
+     "names": [
+      "Jarome Iginla",
+      "Milan Hejduk",
+      "Auston Matthews",
+      "Jonathan Cheechoo"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2000,
+     "names": [
+      "Alexander Ovechkin",
+      "Evgeni Malkin",
+      "Connor McDavid",
+      "Joe Sakic"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 1982,
+     "names": [
+      "Andrei Vasilevskiy",
+      "Pete Peeters",
+      "Marc-André Fleury",
+      "Igor Shesterkin"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2001,
+     "names": [
+      "Mario Lemieux",
+      "Jose Theodore",
+      "Joe Thornton",
+      "Connor Hellebuyck"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 1980,
+     "names": [
+      "Peter Šťastný",
+      "Brian Leetch",
+      "Lane Hutson",
+      "Matty Beniers"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2012,
+     "names": [
+      "Wayne Gretzky",
+      "Sidney Crosby",
+      "Jaromír Jágr",
+      "Nathan MacKinnon"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2025,
+     "names": [
+      "Patrice Bergeron",
+      "Nick Suzuki",
+      "Guy Carbonneau",
+      "Ron Francis"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 1985,
+     "names": [
+      "Gary Suter",
+      "Gabriel Landeskog",
+      "Elias Pettersson",
+      "Steve Mason"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 2022,
+     "names": [
+      "Connor Hellebuyck",
+      "Linus Ullmark",
+      "Tom Barrasso",
+      "Pete Peeters"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2024,
+     "names": [
+      "Leon Draisaitl",
+      "Alexander Ovechkin",
+      "Jonathan Cheechoo",
+      "Auston Matthews"
+     ],
+     "a": 0
+    }
+   ]
   }
  },
  "trophy_start": "2026-09-18",
@@ -14642,6 +15257,17 @@
     8480870,
     8479442,
     8479318
+   ]
+  },
+  "2026-10-19": {
+   "team": "NYR",
+   "ids": [
+    8482073,
+    8482877,
+    8478048,
+    8480009,
+    8479323,
+    8481604
    ]
   }
  },
@@ -18521,6 +19147,281 @@
     ]
    ],
    "mvp": false
+  },
+  "2026-10-19": {
+   "rows": [
+    [
+     1980,
+     "1980–81 New York Islanders season",
+     "1980–81 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1981,
+     "1981–82 New York Islanders season",
+     "1981–82 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1982,
+     "1982–83 New York Islanders season",
+     "1982–83 Edmonton Oilers season",
+     ""
+    ],
+    [
+     1983,
+     "1983–84 Edmonton Oilers season",
+     "1983–84 New York Islanders season",
+     ""
+    ],
+    [
+     1984,
+     "1984–85 Edmonton Oilers season",
+     "1984–85 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1985,
+     "1985–86 Montreal Canadiens season",
+     "1985–86 Calgary Flames season",
+     ""
+    ],
+    [
+     1986,
+     "Toronto Arenas",
+     "Toronto St. Patricks",
+     ""
+    ],
+    [
+     1987,
+     "1987–88 Edmonton Oilers season",
+     "1987–88 Boston Bruins season",
+     ""
+    ],
+    [
+     1988,
+     "1988–89 Calgary Flames season",
+     "1988–89 Montreal Canadiens season",
+     ""
+    ],
+    [
+     1989,
+     "1989–90 Edmonton Oilers season",
+     "1989–90 Boston Bruins season",
+     ""
+    ],
+    [
+     1990,
+     "1990–91 Pittsburgh Penguins season",
+     "1990–91 Minnesota North Stars season",
+     ""
+    ],
+    [
+     1991,
+     "1991–92 Pittsburgh Penguins season",
+     "1991–92 Chicago Blackhawks season",
+     ""
+    ],
+    [
+     1992,
+     "1992–93 Montreal Canadiens season",
+     "1992–93 Los Angeles Kings season",
+     ""
+    ],
+    [
+     1993,
+     "1993–94 New York Rangers season",
+     "1993–94 Vancouver Canucks season",
+     ""
+    ],
+    [
+     1994,
+     "1994–95 New Jersey Devils season",
+     "1994–95 Detroit Red Wings season",
+     ""
+    ],
+    [
+     1995,
+     "1995–96 Colorado Avalanche season",
+     "1995–96 Florida Panthers season",
+     ""
+    ],
+    [
+     1996,
+     "1996–97 Detroit Red Wings season",
+     "1996–97 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     1997,
+     "1997–98 Detroit Red Wings season",
+     "1997–98 Washington Capitals season",
+     ""
+    ],
+    [
+     1998,
+     "1998–99 Dallas Stars season",
+     "1998–99 Buffalo Sabres season",
+     ""
+    ],
+    [
+     1999,
+     "1999–2000 New Jersey Devils season",
+     "1999–2000 Dallas Stars season",
+     ""
+    ],
+    [
+     2000,
+     "2000–01 Colorado Avalanche season",
+     "2000–01 New Jersey Devils season",
+     ""
+    ],
+    [
+     2001,
+     "2001–02 Detroit Red Wings season",
+     "2001–02 Carolina Hurricanes season",
+     ""
+    ],
+    [
+     2002,
+     "2002–03 New Jersey Devils season",
+     "2002–03 Mighty Ducks of Anaheim season",
+     ""
+    ],
+    [
+     2003,
+     "2003–04 Tampa Bay Lightning season",
+     "2003–04 Calgary Flames season",
+     ""
+    ],
+    [
+     2005,
+     "2005–06 Carolina Hurricanes season",
+     "2005–06 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2006,
+     "2006–07 Anaheim Ducks season",
+     "2006–07 Ottawa Senators season",
+     ""
+    ],
+    [
+     2007,
+     "2007–08 Detroit Red Wings season",
+     "2007–08 Pittsburgh Penguins season",
+     ""
+    ],
+    [
+     2008,
+     "2008–09 Pittsburgh Penguins season",
+     "2008–09 Detroit Red Wings season",
+     ""
+    ],
+    [
+     2009,
+     "2009–10 Chicago Blackhawks season",
+     "2009–10 Philadelphia Flyers season",
+     ""
+    ],
+    [
+     2010,
+     "2010–11 Boston Bruins season",
+     "2010–11 Vancouver Canucks season",
+     ""
+    ],
+    [
+     2011,
+     "2011–12 Los Angeles Kings season",
+     "2011–12 New Jersey Devils season",
+     ""
+    ],
+    [
+     2012,
+     "2012–13 Chicago Blackhawks season",
+     "2012–13 Boston Bruins season",
+     ""
+    ],
+    [
+     2013,
+     "2013–14 Los Angeles Kings season",
+     "2013–14 New York Rangers season",
+     ""
+    ],
+    [
+     2014,
+     "2014–15 Chicago Blackhawks season",
+     "2014–15 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2015,
+     "2015–16 Pittsburgh Penguins season",
+     "2015–16 San Jose Sharks season",
+     ""
+    ],
+    [
+     2016,
+     "2016–17 Pittsburgh Penguins season",
+     "2016–17 Nashville Predators season",
+     ""
+    ],
+    [
+     2017,
+     "2017–18 Washington Capitals season",
+     "2017–18 Vegas Golden Knights season",
+     ""
+    ],
+    [
+     2018,
+     "2018–19 St. Louis Blues season",
+     "2018–19 Boston Bruins season",
+     ""
+    ],
+    [
+     2019,
+     "2019–20 Tampa Bay Lightning season",
+     "2019–20 Dallas Stars season",
+     ""
+    ],
+    [
+     2020,
+     "2020–21 Tampa Bay Lightning season",
+     "2020–21 Montreal Canadiens season",
+     ""
+    ],
+    [
+     2021,
+     "2021–22 Colorado Avalanche season",
+     "2021–22 Tampa Bay Lightning season",
+     ""
+    ],
+    [
+     2022,
+     "2022–23 Vegas Golden Knights season",
+     "2022–23 Florida Panthers season",
+     ""
+    ],
+    [
+     2023,
+     "2023–24 Florida Panthers season",
+     "2023–24 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2024,
+     "2024–25 Florida Panthers season",
+     "2024–25 Edmonton Oilers season",
+     ""
+    ],
+    [
+     2025,
+     "2025–26 Carolina Hurricanes season",
+     "2025–26 Vegas Golden Knights season",
+     ""
+    ]
+   ],
+   "mvp": false
   }
  },
  "cups_start": "2026-09-18",
@@ -19776,6 +20677,44 @@
      8478024,
      8478046,
      8478109
+    ]
+   }
+  ],
+  "2026-10-19": [
+   {
+    "label": "Plays for Columbus",
+    "ids": [
+     8477497,
+     8480893,
+     8481161,
+     8482705
+    ]
+   },
+   {
+    "label": "Born in Czechia",
+    "ids": [
+     8475462,
+     8478435,
+     8479496,
+     8483460
+    ]
+   },
+   {
+    "label": "Wears #91",
+    "ids": [
+     8474564,
+     8482110,
+     8482149,
+     8482659
+    ]
+   },
+   {
+    "label": "Drafted in 2009",
+    "ids": [
+     8475170,
+     8475184,
+     8475231,
+     8475311
     ]
    }
   ]
@@ -31544,6 +32483,352 @@
     8476869,
     8474586,
     8476872
+   ]
+  },
+  "2026-10-19": {
+   "goals": [
+    8479372,
+    8476393,
+    8480028,
+    8474716,
+    8475913,
+    8484153,
+    8479385,
+    8479026,
+    8480049,
+    8483445,
+    8481527,
+    8481656,
+    8477425,
+    8477444,
+    8476292,
+    8484911,
+    8484144,
+    8479619,
+    8476429,
+    8477964,
+    8475462,
+    8482702,
+    8476853,
+    8480036,
+    8481596,
+    8477950,
+    8481725,
+    8477499,
+    8478013,
+    8483808,
+    8479525,
+    8479400,
+    8476889,
+    8481540,
+    8480891,
+    8478550,
+    8484145,
+    8475726,
+    8477948,
+    8482475,
+    8476539
+   ],
+   "assists": [
+    8482079,
+    8478450,
+    8475184,
+    8478020,
+    8477506,
+    8478841,
+    8482111,
+    8479980,
+    8478840,
+    8480002,
+    8478396,
+    8475690,
+    8480802,
+    8479542,
+    8475314,
+    8481557,
+    8476867,
+    8477495,
+    8478500,
+    8477935,
+    8477402,
+    8480028,
+    8481716,
+    8474600,
+    8477073,
+    8476422,
+    8477365,
+    8476872,
+    8478519,
+    8476474,
+    8473419,
+    8476539,
+    8475168,
+    8479336,
+    8480185,
+    8475755,
+    8478831,
+    8480035,
+    8480855,
+    8481043,
+    8475752
+   ],
+   "points": [
+    8475722,
+    8476905,
+    8470621,
+    8480829,
+    8482105,
+    8473986,
+    8479985,
+    8482145,
+    8483524,
+    8477495,
+    8478474,
+    8475692,
+    8479337,
+    8478013,
+    8480879,
+    8471214,
+    8477956,
+    8475208,
+    8477810,
+    8476880,
+    8480023,
+    8478020,
+    8480003,
+    8475753,
+    8481559,
+    8476278,
+    8478046,
+    8480893,
+    8482730,
+    8481624,
+    8475171,
+    8478136,
+    8477932,
+    8474578,
+    8478975,
+    8482858,
+    8480018,
+    8479675,
+    8480855,
+    8477527,
+    8480990
+   ],
+   "pim": [
+    8478233,
+    8475324,
+    8481186,
+    8479425,
+    8478416,
+    8482259,
+    8475208,
+    8484958,
+    8481527,
+    8478420,
+    8482079,
+    8482074,
+    8475188,
+    8482201,
+    8481556,
+    8476467,
+    8484911,
+    8482702,
+    8482475,
+    8478450,
+    8480058,
+    8477070,
+    8479675,
+    8470613,
+    8477919,
+    8475314,
+    8483464,
+    8480113,
+    8476419,
+    8474141,
+    8479420,
+    8482665,
+    8476902,
+    8479542,
+    8478904,
+    8477447,
+    8482730,
+    8481524,
+    8477496,
+    8480196,
+    8482092
+   ],
+   "gp": [
+    8475752,
+    8478440,
+    8476874,
+    8481553,
+    8483457,
+    8478057,
+    8474567,
+    8480018,
+    8480078,
+    8478424,
+    8479977,
+    8479407,
+    8476885,
+    8480797,
+    8481604,
+    8482109,
+    8477476,
+    8476917,
+    8482730,
+    8483431,
+    8475200,
+    8478856,
+    8479638,
+    8482089,
+    8478416,
+    8474013,
+    8479542,
+    8479293,
+    8482702,
+    8478449,
+    8478851,
+    8480817,
+    8478434,
+    8482659,
+    8480192,
+    8477406,
+    8477492,
+    8484145,
+    8480762,
+    8483524,
+    8479442
+   ],
+   "height": [
+    8480113,
+    8478498,
+    8481559,
+    8474567,
+    8476887,
+    8476878,
+    8484801,
+    8478856,
+    8479066,
+    8477998,
+    8476468,
+    8477402,
+    8479410,
+    8480459,
+    8476392,
+    8481032,
+    8473419,
+    8482105,
+    8479368,
+    8476853,
+    8475184,
+    8477956,
+    8475790,
+    8476399,
+    8477938,
+    8482093,
+    8476467,
+    8477964,
+    8477495,
+    8481006,
+    8482705,
+    8479638,
+    8478904,
+    8480078,
+    8480336,
+    8481716,
+    8476879,
+    8482659,
+    8480873,
+    8477479,
+    8482113
+   ],
+   "weight": [
+    8482079,
+    8482149,
+    8479026,
+    8475287,
+    8482110,
+    8478424,
+    8480893,
+    8481523,
+    8482177,
+    8480796,
+    8482055,
+    8475171,
+    8480001,
+    8477406,
+    8481006,
+    8479337,
+    8477940,
+    8482124,
+    8482699,
+    8478542,
+    8478401,
+    8476917,
+    8480074,
+    8476429,
+    8483445,
+    8478439,
+    8477479,
+    8477839,
+    8481532,
+    8480113,
+    8479980,
+    8480748,
+    8475166,
+    8477956,
+    8482172,
+    8476897,
+    8476889,
+    8476867,
+    8480246,
+    8479661,
+    8476461
+   ],
+   "age": [
+    8481554,
+    8475188,
+    8479325,
+    8476278,
+    8481056,
+    8480023,
+    8480014,
+    8476456,
+    8482671,
+    8478401,
+    8475745,
+    8477416,
+    8476889,
+    8482245,
+    8474586,
+    8479671,
+    8483490,
+    8478407,
+    8477998,
+    8477839,
+    8479944,
+    8476474,
+    8475231,
+    8480803,
+    8478420,
+    8481161,
+    8482089,
+    8477476,
+    8478449,
+    8479675,
+    8482145,
+    8481656,
+    8477463,
+    8475455,
+    8474600,
+    8478414,
+    8484911,
+    8476897,
+    8476906,
+    8477497,
+    8477429
    ]
   }
  },
