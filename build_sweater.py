@@ -550,6 +550,8 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   /* playoff history grid */
   #view-cups { max-width: 1440px; }
+  .cups-controls { position: sticky; top: 0; z-index: 3; padding: 6px 0 10px; background: var(--bg); border-bottom: 1px solid var(--sep); }
+  .cups-controls .intro { margin-top: 0; }
   #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: visible; }
   .cutable { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0 5px; }
   .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 0 10px 4px; }
@@ -560,7 +562,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cutable th:not(:first-child) { width: 30.333%; }
   .cucell.got { background: color-mix(in srgb, var(--hit) 26%, var(--cell)); font-weight: 600; }
   .cucell.miss { color: var(--muted); font-style: italic; }
+  .cuanswer { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .culogo { width: 24px; height: 24px; flex: none; object-fit: contain; }
   @media (max-width: 700px) {
+    .cups-controls { position: static; }
     #view-cups .cuboard { overflow-x: auto; }
     #view-cups .cutable { min-width: 700px; }
     .cutable td, .cutable th { font-size: 12px; padding: 6px; }
@@ -1398,14 +1403,16 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-cups" hidden>
-    <p class="intro">Stanley Cup winners, runners-up and Conn Smythe winners from 1980–81 through the latest Final. A team name or nickname works; players need a surname.</p>
-    <div class="hlscore"><span>Time<b id="cuTime">600</b></span><span>Squares<b id="cuCount">0/0</b></span></div>
-    <div class="numrow wide">
-      <input id="cuInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send"
-             placeholder="Press Start to begin" aria-label="Team or player name">
-      <button class="btn" id="cuStart" type="button">Start</button>
+    <div class="cups-controls">
+      <p class="intro">Stanley Cup winners, runners-up and Conn Smythe winners from 1980–81 through the latest Final. A team name or nickname works; players need a surname.</p>
+      <div class="hlscore"><span>Time<b id="cuTime">600</b></span><span>Squares<b id="cuCount">0/0</b></span></div>
+      <div class="numrow wide">
+        <input id="cuInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send"
+               placeholder="Press Start to begin" aria-label="Team or player name">
+        <button class="btn" id="cuStart" type="button">Start</button>
+      </div>
+      <p class="hint romsg" id="cuMsg" aria-live="polite"></p>
     </div>
-    <p class="hint romsg" id="cuMsg" aria-live="polite"></p>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs playoff history. Rebuild the site to load it.</p>
     <div class="board cuboard">
@@ -1530,7 +1537,7 @@ const API = "/*__API__*/".replace(/\/+$/, "");
 const API_ON = /^https?:\/\//.test(API);
 const DAILY = /*__DAILY_ALL__*/{};   // game -> { "YYYY-MM-DD" (Eastern) -> puzzle }
 const DAILY_HL = /*__DAILY_HL__*/{};
-const CUP_ROWS = /*__CUPS__*/[];   // [year, champion, runner-up, Conn Smythe winner]
+const CUP_ROWS = /*__CUPS__*/[];   // [year, champion, runner-up, Conn Smythe winner, Conn Smythe team]
 const TROPHY_WINNERS = /*__TROPHIES__*/[];   // [trophy, season start year, winner]
 const START = /*__START_ALL__*/{};   // game -> date of Daily #1
 
@@ -3798,6 +3805,20 @@ function cupsMatch(full, isPlayer, guess) {
   if (!(" " + full + " ").includes(" " + guess + " ")) return false;
   return !isPlayer || guess.split(" ").includes(full.split(" ").slice(-1)[0]);
 }
+const CUP_TEAM_ABBRS = {
+  "anaheim ducks":"ANA", "boston bruins":"BOS", "buffalo sabres":"BUF", "calgary flames":"CGY",
+  "carolina hurricanes":"CAR", "chicago blackhawks":"CHI", "colorado avalanche":"COL", "dallas stars":"DAL",
+  "detroit red wings":"DET", "edmonton oilers":"EDM", "florida panthers":"FLA", "los angeles kings":"LAK",
+  "minnesota north stars":"MNS", "montreal canadiens":"MTL", "mighty ducks of anaheim":"ANA", "nashville predators":"NSH",
+  "new jersey devils":"NJD", "new york islanders":"NYI", "new york rangers":"NYR", "ottawa senators":"OTT",
+  "philadelphia flyers":"PHI", "pittsburgh penguins":"PIT", "san jose sharks":"SJS", "st louis blues":"STL",
+  "tampa bay lightning":"TBL", "vancouver canucks":"VAN", "vegas golden knights":"VGK", "washington capitals":"WSH"
+};
+const cupsTeamAbbr = value => TEAMS[value] ? value : (CUP_TEAM_ABBRS[cupsNorm(value)] || "");
+const cupsAnswer = (name, team) => {
+  const abbr = cupsTeamAbbr(team);
+  return `<span class="cuanswer">${abbr ? `<img class="culogo" src="${logo(abbr)}" alt="" onerror="this.remove()">` : ""}<span>${esc(name)}</span></span>`;
+};
 function cupsKeys(rows, cols) {
   const cells = [];
   rows.forEach((r, y) => cols.forEach(c => cells.push({ row: y, col: c, full: cupsNorm(r[c]), player: c === 3 })));
@@ -3867,7 +3888,8 @@ G.cups = {
       <td class="cuyear">${seasonLabel(r[0])}</td>
       ${cols.map((c, ci) => {
         const got = marks[i * cols.length + ci];
-        return `<td class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? esc(r[c]) : ""}</td>`;
+        const team = c === 3 ? r[4] : r[c];
+        return `<td class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? cupsAnswer(r[c], team) : ""}</td>`;
       }).join("")}</tr>`).join("");
     if (running) {
       if (st.endsAt <= Date.now()) setTimeout(() => { if (game === "cups" && !S.cups.over) doGuess("END"); }, 0);
@@ -3895,7 +3917,7 @@ function cupsStart() {
   const rec = { key: G.cups.clockKey(st.target), endsAt: st.endsAt };
   if (mode === "unlimited") cupsMemory = rec; else store.set("sweater-cups-clock", rec);
   G.cups.render(st.target, st);
-  $("cuInput").focus();
+  $("cuInput").focus({ preventScroll: true });
 }
 function cupsEnter() {
   const st = S.cups, t = st.target;
@@ -3917,7 +3939,7 @@ function cupsEnter() {
   $("cuMsg").classList.remove("bad");
   $("cuMsg").textContent = `✓ ${text}${hits > 1 ? ` ×${hits}` : ""}`;
   doGuess(text);
-  if (!S.cups.over) $("cuInput").focus();
+  if (!S.cups.over) $("cuInput").focus({ preventScroll: true });
 }
 $("cuStart").onclick = cupsStart;
 $("cuInput").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); cupsEnter(); } });
@@ -5774,6 +5796,16 @@ CONN_SMYTHE_BY_FINAL_YEAR = {
     2022: "Cale Makar", 2023: "Jonathan Marchessault", 2024: "Connor McDavid", 2025: "Sam Bennett",
     2026: "Jordan Staal",
 }
+CONN_SMYTHE_TEAM_BY_FINAL_YEAR = {
+    1981: "NYI", 1982: "NYI", 1983: "NYI", 1984: "EDM", 1985: "EDM", 1986: "MTL",
+    1987: "PHI", 1988: "EDM", 1989: "CGY", 1990: "EDM", 1991: "PIT", 1992: "PIT",
+    1993: "MTL", 1994: "NYR", 1995: "NJD", 1996: "COL", 1997: "DET", 1998: "DET",
+    1999: "DAL", 2000: "NJD", 2001: "COL", 2002: "DET", 2003: "ANA", 2004: "TBL",
+    2006: "CAR", 2007: "ANA", 2008: "DET", 2009: "PIT", 2010: "CHI", 2011: "BOS",
+    2012: "LAK", 2013: "CHI", 2014: "LAK", 2015: "CHI", 2016: "PIT", 2017: "PIT",
+    2018: "WSH", 2019: "STL", 2020: "TBL", 2021: "TBL", 2022: "COL", 2023: "VGK",
+    2024: "EDM", 2025: "FLA", 2026: "CAR",
+}
 
 # A local copy keeps Playoff History available when a build machine cannot
 # reach Wikipedia or lacks its CA certificate. Years are season-start years.
@@ -5824,7 +5856,7 @@ def wiki_cup_finals():
 def fetch_cup_history(cache, today):
     """[(year, champion, runner-up, Conn Smythe winner)] — cached, since it barely changes."""
     saved = cache.get("_cups")
-    if (saved and saved.get("version") == 4 and saved.get("rows")
+    if (saved and saved.get("version") == 5 and saved.get("rows")
             and (today - date.fromisoformat(saved["day"])).days < 14):
         return [tuple(r) for r in saved["rows"]]
     finals = wiki_cup_finals()
@@ -5833,11 +5865,12 @@ def fetch_cup_history(cache, today):
         return []
     smythe = {y: w for t, y, w in AWARD_HISTORY if "Conn Smythe" in t}
     smythe.update(CONN_SMYTHE_BY_FINAL_YEAR)
-    rows = [[y, a, b, smythe.get(y + 1, "")] for y, a, b in finals if y >= CUPS_FIRST_YEAR]
+    rows = [[y, a, b, smythe.get(y + 1, ""), CONN_SMYTHE_TEAM_BY_FINAL_YEAR.get(y + 1, "")]
+            for y, a, b in finals if y >= CUPS_FIRST_YEAR]
     with_mvp = sum(1 for r in rows if r[3])
     print(f"  Cup history: {len(rows)} finals, {with_mvp} with a Conn Smythe winner"
           + ("" if with_mvp >= len(rows) * 0.6 else " (the grid will show winners and runners-up only)"))
-    cache["_cups"] = {"version": 4, "day": today.isoformat(), "rows": rows}
+    cache["_cups"] = {"version": 5, "day": today.isoformat(), "rows": rows}
     return [tuple(r) for r in rows]
 
 
