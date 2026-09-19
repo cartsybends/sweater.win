@@ -1354,13 +1354,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cucell.got .culogo { opacity: .31; filter: brightness(1.13) saturate(1.12) drop-shadow(0 4px 6px rgba(0,0,0,.16)); }
   :root[data-theme="dark"] .cucell.got { background: #171718; box-shadow: inset 3px 0 0 var(--accent); }
   :root[data-theme="dark"] .cucell.miss { background: #171718; }
-  /* Table row-spacing creates a literal opening below sticky headings. Use
-     opaque cell separators instead, so a scrolling season cannot enter it. */
+  /* Keep the table's readable row rhythm and column dividers, while extending
+     the sticky header just past that row gutter so season text cannot enter it. */
   @media (min-width: 701px) {
-    #view-cups .cutable { border-spacing: 0; }
-    #view-cups .cutable thead th { z-index: 5; box-shadow: 0 7px 0 var(--panel); }
-    #view-cups .cutable tbody td { border-bottom: 7px solid var(--panel); background-clip: padding-box; }
-    #view-cups .cutable tbody tr:last-child td { border-bottom-width: 0; }
+    #view-cups .cutable { border-spacing: 0 7px; }
+    #view-cups .cutable thead th { z-index: 6; box-shadow: 0 9px 0 var(--panel); }
+    #view-cups .cutable thead th:not(:last-child), #view-cups .cutable tbody td:not(:last-child) {
+      border-right: 1px solid var(--line); background-clip: padding-box;
+    }
+    #view-cups .cutable tbody td { border-bottom: 0; }
   }
   @media (max-width: 700px) {
     .cucell { min-height: 48px; }
