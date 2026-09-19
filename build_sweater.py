@@ -549,15 +549,29 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mrrow small { font-size: 12px; opacity: .7; }
 
   /* playoff history grid */
-  .cuboard { max-width: 760px; margin: 10px auto 0; }
-  .cutable { width: 100%; border-collapse: separate; border-spacing: 0 5px; }
+  #view-cups { max-width: 1440px; }
+  #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: visible; }
+  .cutable { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0 5px; }
   .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 0 10px 4px; }
-  .cutable td { height: 34px; padding: 0 10px; background: var(--cell); color: var(--cell-fg); font-size: 14px; }
+  .cutable td { height: 34px; padding: 7px 10px; background: var(--cell); color: var(--cell-fg); font-size: 14px; overflow-wrap: anywhere; }
   .cutable td:first-child { border-radius: 8px 0 0 8px; font-weight: 600; font-variant-numeric: tabular-nums; width: 88px; }
   .cutable td:last-child { border-radius: 0 8px 8px 0; }
+  .cutable th:first-child { width: 9%; }
+  .cutable th:not(:first-child) { width: 30.333%; }
   .cucell.got { background: color-mix(in srgb, var(--hit) 26%, var(--cell)); font-weight: 600; }
   .cucell.miss { color: var(--muted); font-style: italic; }
-  @media (max-width: 700px) { .cutable td, .cutable th { font-size: 12px; padding: 0 6px; } .cutable td:first-child { width: 64px; } }
+  @media (max-width: 700px) {
+    #view-cups .cuboard { overflow-x: auto; }
+    #view-cups .cutable { min-width: 700px; }
+    .cutable td, .cutable th { font-size: 12px; padding: 6px; }
+    .cutable td:first-child { width: 64px; }
+  }
+
+  @keyframes trophysetup { from { opacity: .25; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  #view-trophy.setup-change .shdots, #view-trophy.setup-change .ttq,
+  #view-trophy.setup-change .shopts, #view-trophy.setup-change #trMsg {
+    animation: trophysetup .28s ease both;
+  }
 
   /* options, archive */
   .optrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 6px 0 0; font-size: 14px; }
@@ -3668,9 +3682,7 @@ G.trophy = {
     $("trTrophy").innerHTML = `<option value="all">All trophies</option>${this.trophies().map(name =>
       `<option value="${esc(name)}">${esc(name)}</option>`).join("")}`;
     $("trTrophy").value = selectedTrophy;
-    $("trTrophy").disabled = i > 0 && !st.over;
     $("trRounds").value = String(of);
-    $("trRounds").disabled = i > 0 && !st.over;
     $("trDots").innerHTML = Array.from({ length: of }, (_, n) =>
       `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
@@ -3692,17 +3704,29 @@ $("trOpts").addEventListener("click", e => {
   doGuess(b.dataset.c);
 });
 $("trNext").onclick = () => { G.trophy.showing = false; G.trophy.render(S.trophy.target, S.trophy); };
+let trophySetupTimer = null;
+function refreshTrophySetup() {
+  const g = G.trophy, st = S.trophy, view = $(g.view);
+  if (!g.pool().length) return noData();
+  const puzzleDay = mode === "archive" ? archiveDay : dayKey();
+  const t = mode === "unlimited" ? g.random() : g.daily(puzzleDay);
+  if (!t) return noData();
+  g.showing = false;
+  st.day = puzzleDay;
+  view.classList.remove("setup-change");
+  startGame(t);                         // never restore a previous setup's answers
+  void view.offsetWidth;                // restart the setup animation
+  view.classList.add("setup-change");
+  clearTimeout(trophySetupTimer);
+  trophySetupTimer = setTimeout(() => view.classList.remove("setup-change"), 300);
+}
 $("trRounds").addEventListener("change", e => {
-  const st = S.trophy;
-  if (st.guesses.length && !st.over) return;          // locked once you've answered a round
   store.set("sweater-trophy-rounds", Number(e.target.value));
-  if (mode === "daily") loadDaily(); else loadUnlimited(true);
+  refreshTrophySetup();
 });
 $("trTrophy").addEventListener("change", e => {
-  const st = S.trophy;
-  if (st.guesses.length && !st.over) return;
   store.set("sweater-trophy-filter", e.target.value);
-  if (mode === "daily") loadDaily(); else loadUnlimited(true);
+  refreshTrophySetup();
 });
 
 // ---- Mystery Roster ----
