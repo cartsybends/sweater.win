@@ -39,17 +39,17 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "49 · Studio"
+VERSION = "50 · Contrast"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sweater · The Daily NHL Player Guessing Game</title>
 <meta name="description" content="Guess the mystery NHL player in 8 tries. A new player every day at midnight ET, plus unlimited mode.">
-<meta name="theme-color" content="#0b2538">
+<meta name="theme-color" content="#0b0b0c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sweater">
 <meta property="og:title" content="Sweater · The Daily NHL Player Guessing Game">
@@ -1225,6 +1225,73 @@ TEMPLATE = r'''<!DOCTYPE html>
     .accentgrid { grid-template-columns: repeat(4, 1fr); gap: 7px; }
     .accentchoice { min-height: 66px; font-size: 11px; }
   }
+
+  /* Contrast mode: quiet black surfaces, hard type hierarchy, and a single
+     accent used only for active states—the visual rhythm from the reference. */
+  :root { --accent: #7950f2; --accent-ink: #fff; }
+  :root[data-theme="dark"] {
+    --bg: #000; --fg: #f4f4f5; --muted: #929299; --cell: #171718; --cell-fg: #f4f4f5;
+    --panel: #0d0d0e; --line: #28282b; --grouped: #000; --row: #0d0d0e; --sep: #27272a; --label2: #a1a1a7;
+    --scrim: rgba(0,0,0,.82); --cream: #222225; --silbg: #171718; --link: var(--accent);
+    --hit: #16b864; --hit-fg: #061a0d; --near: #dcb539; --near-fg: #231b04;
+  }
+  :root[data-theme="dark"] body, :root[data-theme="dark"] body.hubmode { background: #000; }
+  :root[data-theme="dark"] body::before { display: none; }
+  :root[data-theme="dark"] .navbar, :root[data-theme="dark"] body.hubmode .navbar {
+    background: #171718; border-bottom-color: #252527; box-shadow: 0 1px #232325;
+  }
+  :root[data-theme="dark"] .navbar .brand span { padding-bottom: 6px; background-color: transparent; background-image: linear-gradient(90deg, var(--accent), var(--accent), var(--accent)); }
+  :root[data-theme="dark"] .navbar .navactions .iconbtn, :root[data-theme="dark"] .navbar .themebtn { background: transparent; border-color: transparent; color: #ededee; }
+  :root[data-theme="dark"] .navbar .navactions .iconbtn:hover, :root[data-theme="dark"] .navbar .themebtn:hover { background: #262629; }
+  :root[data-theme="dark"] .hubhead, :root[data-theme="dark"] .gamebar {
+    background: #0d0d0e; border-color: #29292c; box-shadow: none;
+  }
+  :root[data-theme="dark"] .hubhead { border-radius: 16px; }
+  :root[data-theme="dark"] .hubhead::before, :root[data-theme="dark"] .gamebar::after { display: none; }
+  :root[data-theme="dark"] .hubhead::after { background: var(--accent); }
+  :root[data-theme="dark"] .hubdate { color: var(--accent); }
+  :root[data-theme="dark"] .hubmeter { background: #242427; }
+  :root[data-theme="dark"] .hubmeter i { background: var(--accent); box-shadow: none; }
+  :root[data-theme="dark"] .partycard { background: #111113; border-color: #2b2b2e; box-shadow: none; }
+  :root[data-theme="dark"] .partycard:hover:not(:disabled) { transform: none; background: #18181a; box-shadow: inset 0 0 0 1px var(--accent); }
+  :root[data-theme="dark"] .partycta { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+  :root[data-theme="dark"] .hubsec h2 { color: #b1b1b7; }
+  :root[data-theme="dark"] .hubsec h2::before { background: var(--accent); box-shadow: none; }
+  :root[data-theme="dark"] .glist, :root[data-theme="dark"] .hubgrid { background: #0d0d0e; border-color: #28282b; box-shadow: none; }
+  :root[data-theme="dark"] .grow, :root[data-theme="dark"] .gcard { background: #0d0d0e; }
+  :root[data-theme="dark"] .grow + .grow::before { border-color: #262629; }
+  :root[data-theme="dark"] .grow:hover:not(:disabled), :root[data-theme="dark"] .gcard:hover:not(:disabled) { transform: none; background: #171719; box-shadow: inset 3px 0 var(--accent); }
+  :root[data-theme="dark"] .grow::after, :root[data-theme="dark"] .gcard::after { display: none; }
+  :root[data-theme="dark"] .grow .gicon, :root[data-theme="dark"] .gcard .gicon { background: #1b1b1e; }
+  :root[data-theme="dark"] .grow .gstat, :root[data-theme="dark"] .gcard .gstat { background: #202023; color: #c3c3c8; }
+  :root[data-theme="dark"] .gamebar .gticon { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+  :root[data-theme="dark"] .tabs { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  :root[data-theme="dark"] .tabs button { border-radius: 0; color: #aaaab0; font-weight: 750; }
+  :root[data-theme="dark"] .tabs button[aria-selected="true"] { background: transparent; color: var(--accent); box-shadow: inset 0 -3px var(--accent); }
+  :root[data-theme="dark"] .btn, :root[data-theme="dark"] .profile { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+  :root[data-theme="dark"] .btn:hover:not(:disabled), :root[data-theme="dark"] .profile:hover { box-shadow: none; filter: brightness(1.1); }
+  :root[data-theme="dark"] .search input, :root[data-theme="dark"] .numrow input, :root[data-theme="dark"] .gamesel, :root[data-theme="dark"] .pickstat select, :root[data-theme="dark"] .numrow select {
+    background: #171718; border-color: #2c2c30; box-shadow: none;
+  }
+  :root[data-theme="dark"] .ttcard, :root[data-theme="dark"] .ttq, :root[data-theme="dark"] #view-trophy .optrow, :root[data-theme="dark"] .cups-controls, :root[data-theme="dark"] .cuboard {
+    background: #0d0d0e; border-color: #29292c; box-shadow: none;
+  }
+  :root[data-theme="dark"] .shdot { background: #19191b; border-color: #2b2b2e; box-shadow: none; }
+  :root[data-theme="dark"] .shdot.now { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+  :root[data-theme="dark"] .shopt { background: #171718; border-color: #2c2c30; box-shadow: none; }
+  :root[data-theme="dark"] .shopt:hover:not(:disabled) { background: #202023; border-color: var(--accent); box-shadow: none; }
+  :root[data-theme="dark"] .shopt.right { background: var(--hit); border-color: var(--hit); color: var(--hit-fg); }
+  :root[data-theme="dark"] .shopt.wrong { background: #cf4d4d; border-color: #cf4d4d; }
+  :root[data-theme="dark"] .cutable td, :root[data-theme="dark"] .seasons td { background: #171718; box-shadow: none; }
+  :root[data-theme="dark"] .cutable tr:hover td { background: #202023; }
+  :root[data-theme="dark"] .hlcard { background: #171718; border-color: #2c2c30; box-shadow: none; }
+  :root[data-theme="dark"] .card { background: #171718; border-color: #303034; box-shadow: 0 24px 70px rgba(0,0,0,.6); }
+  :root[data-theme="dark"] .accentchoice, :root[data-theme="dark"] .customaccent { background: #202023; border-color: #303034; }
+  :root[data-theme="dark"] .accentchoice[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  :root[data-theme="dark"] #accentPicker { background: #111113; border-color: #353539; }
+  @media (max-width: 700px) {
+    :root[data-theme="dark"] .hubhead, :root[data-theme="dark"] .gamebar { border-radius: 12px; }
+  }
 </style>
 </head>
 <body class="hubmode">
@@ -1872,11 +1939,11 @@ TEMPLATE = r'''<!DOCTYPE html>
       <button type="button" class="accentchoice" data-accent="#d04747"><i style="--swatch:#d04747"></i><span>Red</span></button>
       <button type="button" class="accentchoice" data-accent="#26875d"><i style="--swatch:#26875d"></i><span>Green</span></button>
       <button type="button" class="accentchoice" data-accent="#c99b24"><i style="--swatch:#c99b24"></i><span>Yellow</span></button>
-      <button type="button" class="accentchoice" data-accent="#805ad5"><i style="--swatch:#805ad5"></i><span>Purple</span></button>
+      <button type="button" class="accentchoice" data-accent="#7950f2"><i style="--swatch:#7950f2"></i><span>Purple</span></button>
       <button type="button" class="accentchoice" data-accent="#d66b25"><i style="--swatch:#d66b25"></i><span>Orange</span></button>
       <button type="button" class="accentchoice" data-accent="#d35b91"><i style="--swatch:#d35b91"></i><span>Pink</span></button>
     </div>
-    <label class="customaccent"><span><b>Custom colour</b><small>Choose any shade</small></span><input id="accentPicker" type="color" value="#242424" aria-label="Custom interface colour"></label>
+    <label class="customaccent"><span><b>Custom colour</b><small>Choose any shade</small></span><input id="accentPicker" type="color" value="#7950f2" aria-label="Custom interface colour"></label>
   </div>
 </div>
 
@@ -4868,7 +4935,7 @@ function paintThemeBtn() {
 }
 
 // ---- interface colour ----
-const DEFAULT_ACCENT = "#242424";
+const DEFAULT_ACCENT = "#7950f2";
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
 function accentInk(hex) {
   const rgb = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
