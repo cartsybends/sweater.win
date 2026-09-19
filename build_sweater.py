@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "48 · Arena"
+VERSION = "49 · Studio"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -62,8 +62,13 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="twitter:image" content="/*__SITE__*/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏒</text></svg>">
 <script>
-  // apply saved day/night choice before the page paints
-  try { const t = JSON.parse(localStorage.getItem("sweater-theme")); if (t) document.documentElement.dataset.theme = t; } catch {}
+  // Apply saved appearance choices before the page paints.
+  try {
+    const root = document.documentElement, theme = JSON.parse(localStorage.getItem("sweater-theme"));
+    const accent = JSON.parse(localStorage.getItem("sweater-accent"));
+    if (theme) root.dataset.theme = theme;
+    if (/^#[0-9a-f]{6}$/i.test(accent || "")) root.style.setProperty("--accent", accent);
+  } catch {}
 </script>
 <style>
   :root {
@@ -1152,6 +1157,74 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (prefers-reduced-motion: reduce) {
     .partycard, .grow, .gcard, .btn, .profile, .shopt { transition: none; }
   }
+
+  /* Neutral foundation + player-selected interface colour.  Green and red are
+     reserved for game feedback, never used as the app's decorative colour. */
+  :root {
+    --accent: #242424; --accent-ink: #fff;
+    --hit: #1b9853; --hit-fg: #fff; --near: #ddb237; --near-fg: #2b2108;
+    --arena: #242424; --arena-deep: #111; --arena-blue: var(--accent); --arena-mint: var(--accent); --arena-glow: color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  :root[data-theme="dark"] { --hit: #35b96d; --hit-fg: #07190d; --near: #e6bd4e; --near-fg: #211905; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --hit: #35b96d; --hit-fg: #07190d; --near: #e6bd4e; --near-fg: #211905; } }
+  body {
+    background: radial-gradient(800px 400px at 50% -220px, rgba(0,0,0,.055), transparent 70%), linear-gradient(145deg, #fbfbfa, #f2f2ef 65%, #ebebe7);
+  }
+  body.hubmode { background: radial-gradient(750px 400px at 50% -230px, rgba(0,0,0,.065), transparent 70%), #f0f0ed; }
+  body::before { opacity: .18; background-image: linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px); }
+  .navbar, body.hubmode .navbar {
+    background: linear-gradient(105deg, color-mix(in srgb, var(--accent) 72%, #000), var(--accent) 75%, color-mix(in srgb, var(--accent) 84%, #000));
+    border-bottom-color: color-mix(in srgb, var(--accent-ink) 17%, transparent);
+  }
+  .navbar .brand span { background-color: color-mix(in srgb, var(--accent-ink) 9%, transparent); background-image: linear-gradient(90deg, var(--accent-ink), color-mix(in srgb, var(--accent-ink) 62%, transparent), var(--accent-ink)); }
+  .navbar .switch input:checked + .track { background: color-mix(in srgb, var(--accent-ink) 76%, var(--accent)); }
+  .hubhead {
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent); background: linear-gradient(118deg, color-mix(in srgb, var(--accent) 77%, #000), var(--accent) 70%, color-mix(in srgb, var(--accent) 82%, #000));
+  }
+  .hubhead::after { background: linear-gradient(90deg, color-mix(in srgb, var(--accent-ink) 80%, transparent), var(--accent-ink), color-mix(in srgb, var(--accent-ink) 80%, transparent)); }
+  .hubdate { color: color-mix(in srgb, var(--accent-ink) 70%, transparent); }
+  .hubmeter i { background: var(--accent-ink); box-shadow: 0 0 16px color-mix(in srgb, var(--accent-ink) 32%, transparent); }
+  .partycard { border-color: color-mix(in srgb, var(--accent) 38%, transparent); background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 82%, #000), var(--accent) 74%, color-mix(in srgb, var(--accent) 68%, #000)); }
+  .partycta { background: var(--accent-ink); color: var(--accent); }
+  .hubsec h2::before { background: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent), 0 0 14px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .grow:hover:not(:disabled), .gcard:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 8%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .grow::after, .gcard::after { background: var(--accent); }
+  .gamebar { border-color: color-mix(in srgb, var(--accent) 38%, transparent); background: linear-gradient(112deg, color-mix(in srgb, var(--accent) 82%, #000), var(--accent) 72%, color-mix(in srgb, var(--accent) 66%, #000)); }
+  .gamebar .gticon { color: var(--accent); background: var(--accent-ink); }
+  .tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+  .btn, .profile { color: var(--accent-ink); background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 88%, white), var(--accent)); box-shadow: 0 7px 15px color-mix(in srgb, var(--accent) 25%, transparent), inset 0 1px color-mix(in srgb, var(--accent-ink) 18%, transparent); }
+  .btn:hover:not(:disabled), .profile:hover { box-shadow: 0 10px 20px color-mix(in srgb, var(--accent) 30%, transparent), inset 0 1px color-mix(in srgb, var(--accent-ink) 20%, transparent); }
+  .switch input:checked + .track { background: var(--accent); }
+  .shdot.now { color: var(--accent-ink); background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 19%, transparent), 0 4px 11px color-mix(in srgb, var(--accent) 20%, transparent); }
+  .shopt:hover:not(:disabled) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--panel)); box-shadow: 0 10px 18px color-mix(in srgb, var(--accent) 14%, transparent); }
+  .settingscard { width: min(460px, 92vw); padding: 25px; }
+  .settingskicker { margin: 0 0 4px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+  .settingscard h2 { margin: 0 0 7px; font-weight: 800; letter-spacing: -.03em; }
+  .settingsintro { margin: 0 0 19px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+  .accentgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+  .accentchoice { display: grid; place-items: center; gap: 6px; min-height: 72px; padding: 8px 4px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--panel) 88%, var(--cell)); color: var(--fg); font: inherit; font-size: 12px; cursor: pointer; transition: border-color .16s, transform .16s, box-shadow .16s; }
+  .accentchoice i { display: block; width: 25px; height: 25px; border-radius: 50%; background: var(--swatch); box-shadow: inset 0 1px rgba(255,255,255,.38), 0 3px 7px rgba(0,0,0,.14); }
+  .accentchoice:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--swatch) 60%, var(--line)); }
+  .accentchoice[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 19%, transparent); }
+  .accentchoice[aria-pressed="true"] i { box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--panel) 92%, transparent), 0 3px 7px rgba(0,0,0,.14); }
+  .customaccent { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 13px; padding: 12px 13px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--panel) 72%, var(--cell)); cursor: pointer; }
+  .customaccent b, .customaccent small { display: block; }
+  .customaccent b { font-size: 14px; }
+  .customaccent small { margin-top: 2px; color: var(--muted); font-size: 12px; }
+  #accentPicker { width: 42px; height: 34px; padding: 2px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); cursor: pointer; }
+  #accentPicker::-webkit-color-swatch-wrapper { padding: 0; }
+  #accentPicker::-webkit-color-swatch { border: 0; border-radius: 6px; }
+  :root[data-theme="dark"] body, :root[data-theme="dark"] body.hubmode { background: radial-gradient(800px 440px at 50% -220px, rgba(255,255,255,.045), transparent 70%), var(--bg); }
+  :root[data-theme="dark"] .glist, :root[data-theme="dark"] .hubgrid { background: rgba(25,25,25,.82); border-color: rgba(255,255,255,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) body, :root:not([data-theme="light"]) body.hubmode { background: radial-gradient(800px 440px at 50% -220px, rgba(255,255,255,.045), transparent 70%), var(--bg); }
+    :root:not([data-theme="light"]) .glist, :root:not([data-theme="light"]) .hubgrid { background: rgba(25,25,25,.82); border-color: rgba(255,255,255,.12); }
+  }
+  @media (max-width: 700px) {
+    .settingscard { padding: 21px; }
+    .accentgrid { grid-template-columns: repeat(4, 1fr); gap: 7px; }
+    .accentchoice { min-height: 66px; font-size: 11px; }
+  }
 </style>
 </head>
 <body class="hubmode">
@@ -1163,6 +1236,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play" title="How to play">?</button>
     <label class="switch" title="Play as many puzzles as you like"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited</span></label>
+    <button class="iconbtn round" id="settingsBtn" type="button" aria-label="Appearance settings" title="Appearance settings">⚙</button>
     <button class="iconbtn round themebtn" id="themeBtn" type="button"></button>
   </div>
 </nav>
@@ -1766,6 +1840,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <li class="lbhelp" hidden><span aria-hidden="true">🏆</span>Leaderboards and how each game scores</li>
       <li><span aria-hidden="true">📅</span>Replay past daily puzzles</li>
       <li><span class="keyswitch" aria-hidden="true"></span>Unlimited: play as many puzzles as you like</li>
+      <li><span aria-hidden="true">⚙</span>Choose your interface colour</li>
       <li><span aria-hidden="true">🌙</span>Night and day mode</li>
     </ul>
 
@@ -1782,6 +1857,26 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="helpfoot"><b>Party Mode</b>: host on a screen everyone can see, and friends join on their phones with the 4-letter code. Questions are timed, and faster right answers score more.</p>
     <p class="helpfoot">Only daily puzzles count toward your stats and the leaderboard. Archive and Unlimited games are just for fun.</p>
     <p class="helpfoot">Inspired by Bradley Connolly with <a href="https://www.hertl.app/" target="_blank" rel="noopener">hertl.app</a> and the people at <a href="https://poeltl.nbpa.com/" target="_blank" rel="noopener">Poeltl</a>. Player data and headshots come from NHL.com, and trophy winners from <a href="https://en.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a>.</p>
+  </div>
+</div>
+
+<div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+  <div class="card settingscard">
+    <button class="xbtn" data-close aria-label="Close">×</button>
+    <p class="settingskicker">Appearance</p>
+    <h2 id="setTitle">Make it yours</h2>
+    <p class="settingsintro">Choose an interface colour. Answer feedback always stays green for right and red for wrong.</p>
+    <div class="accentgrid" id="accentGrid" role="group" aria-label="Interface colour">
+      <button type="button" class="accentchoice" data-accent="#242424"><i style="--swatch:#242424"></i><span>Neutral</span></button>
+      <button type="button" class="accentchoice" data-accent="#2878d4"><i style="--swatch:#2878d4"></i><span>Blue</span></button>
+      <button type="button" class="accentchoice" data-accent="#d04747"><i style="--swatch:#d04747"></i><span>Red</span></button>
+      <button type="button" class="accentchoice" data-accent="#26875d"><i style="--swatch:#26875d"></i><span>Green</span></button>
+      <button type="button" class="accentchoice" data-accent="#c99b24"><i style="--swatch:#c99b24"></i><span>Yellow</span></button>
+      <button type="button" class="accentchoice" data-accent="#805ad5"><i style="--swatch:#805ad5"></i><span>Purple</span></button>
+      <button type="button" class="accentchoice" data-accent="#d66b25"><i style="--swatch:#d66b25"></i><span>Orange</span></button>
+      <button type="button" class="accentchoice" data-accent="#d35b91"><i style="--swatch:#d35b91"></i><span>Pink</span></button>
+    </div>
+    <label class="customaccent"><span><b>Custom colour</b><small>Choose any shade</small></span><input id="accentPicker" type="color" value="#242424" aria-label="Custom interface colour"></label>
   </div>
 </div>
 
@@ -4771,6 +4866,41 @@ function paintThemeBtn() {
   $("themeBtn").setAttribute("aria-label", dark ? "Switch to day mode" : "Switch to night mode");
   $("themeBtn").title = $("themeBtn").getAttribute("aria-label");
 }
+
+// ---- interface colour ----
+const DEFAULT_ACCENT = "#242424";
+const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
+function accentInk(hex) {
+  const rgb = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map(c => c <= .04045 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4));
+  return (.2126 * rgb[0] + .7152 * rgb[1] + .0722 * rgb[2]) > .36 ? "#111111" : "#ffffff";
+}
+function paintAccentControls() {
+  const accent = (store.get("sweater-accent") || DEFAULT_ACCENT).toLowerCase();
+  document.querySelectorAll("[data-accent]").forEach(b => {
+    const on = b.dataset.accent.toLowerCase() === accent;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  $("accentPicker").value = accent;
+}
+function applyAccent(value, save = true) {
+  if (!HEX_COLOUR.test(value || "")) return;
+  const accent = value.toLowerCase(), root = document.documentElement;
+  root.style.setProperty("--accent", accent);
+  root.style.setProperty("--accent-ink", accentInk(accent));
+  if (save) store.set("sweater-accent", accent);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = accent;
+  paintAccentControls();
+}
+$("settingsBtn").onclick = () => { paintAccentControls(); openModal("settingsModal"); };
+$("accentGrid").addEventListener("click", e => {
+  const b = e.target.closest("[data-accent]");
+  if (b) applyAccent(b.dataset.accent);
+});
+$("accentPicker").addEventListener("input", e => applyAccent(e.target.value));
+applyAccent(HEX_COLOUR.test(store.get("sweater-accent") || "") ? store.get("sweater-accent") : DEFAULT_ACCENT, false);
+
 $("themeBtn").onclick = () => {
   const next = isDark() ? "light" : "dark";
   document.documentElement.dataset.theme = next;
