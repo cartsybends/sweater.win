@@ -1123,7 +1123,22 @@ TEMPLATE = r'''<!DOCTYPE html>
   .trlogo { position: absolute; z-index: 0; right: -5px; top: 50%; width: 92px; height: 92px; object-fit: contain;
              transform: translateY(-50%); opacity: .18; filter: drop-shadow(0 5px 5px rgba(4, 24, 35, .14)); pointer-events: none; }
   .shopt:hover:not(:disabled) .trlogo { opacity: .28; transform: translateY(-50%) scale(1.06); }
-  .shopt.right .trlogo, .shopt.wrong .trlogo { opacity: .25; filter: brightness(0) invert(1) drop-shadow(0 5px 5px rgba(0,0,0,.16)); }
+  /* Keep the crest in its real team colours after a choice is graded. The
+     former white inversion turned detailed crests into an unrecognizable blob. */
+  .shopt.right .trlogo { opacity: .43; filter: brightness(1.16) saturate(1.2) drop-shadow(0 5px 6px rgba(0,0,0,.2)); animation: trophy-crest-win .62s cubic-bezier(.18,.85,.25,1.16) both; }
+  .shopt.wrong .trlogo { opacity: .31; filter: brightness(1.12) saturate(1.15) drop-shadow(0 5px 6px rgba(0,0,0,.2)); }
+  @keyframes trophy-crest-win {
+    0% { transform: translateY(-50%) scale(.42) rotate(-14deg); }
+    58% { transform: translateY(-50%) scale(1.28) rotate(4deg); }
+    78% { transform: translateY(-50%) scale(.93) rotate(-1deg); }
+    100% { transform: translateY(-50%) scale(1) rotate(0); }
+  }
+  @keyframes trophy-answer-win {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 0%, transparent); }
+    45% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--hit) 20%, transparent), 0 0 26px color-mix(in srgb, var(--hit) 48%, transparent); }
+    100% { box-shadow: 0 0 0 12px transparent, 0 0 0 transparent; }
+  }
+  .shopt.right { animation: trophy-answer-win .62s ease-out both; }
   .shopt:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--arena-blue); background: color-mix(in srgb, var(--arena-blue) 8%, var(--panel)); box-shadow: 0 10px 18px rgba(18, 74, 92, .12); }
   .shopt.right, .shopt.wrong { color: #fff; }
   .shopt.right::before { border-color: #fff; box-shadow: inset 0 0 0 4px var(--hit-fg); }
@@ -1155,6 +1170,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     #view-trophy .optrow { width: 100%; justify-content: center; gap: 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
+    .shopt.right, .shopt.right .trlogo { animation: none; }
     .partycard, .grow, .gcard, .btn, .profile, .shopt { transition: none; }
   }
 
@@ -1318,6 +1334,32 @@ TEMPLATE = r'''<!DOCTYPE html>
     .gamebar .backbtn { grid-column: 1; }
     .gamebar .gtitle { grid-column: 1; }
   }
+
+  /* Playoff History answer tiles use the same oversized, background-logo
+     treatment as Trophy Case while preserving the compact table layout. */
+  .cucell { position: relative; overflow: hidden; min-height: 54px; }
+  .cuanswer { position: relative; display: flex; align-items: center; min-height: 38px; padding: 4px 56px 4px 0; }
+  .cuname { position: relative; z-index: 1; }
+  .culogo { position: absolute; z-index: 0; right: -6px; top: 50%; width: 74px; height: 74px; transform: translateY(-50%); opacity: .17;
+            filter: drop-shadow(0 4px 5px rgba(0,0,0,.14)); pointer-events: none; }
+  .cucell.got .culogo { opacity: .28; filter: brightness(0) invert(1) drop-shadow(0 4px 5px rgba(0,0,0,.16)); }
+  :root[data-theme="dark"] .cucell.got { background: color-mix(in srgb, var(--hit) 72%, #171718); }
+  :root[data-theme="dark"] .cucell.miss { background: #171718; }
+  @media (max-width: 700px) {
+    .cucell { min-height: 48px; }
+    .cuanswer { min-height: 34px; padding-right: 46px; }
+    .culogo { width: 62px; height: 62px; }
+  }
+
+  /* Blue-heavy crests (especially Toronto and Tampa Bay) are darker by
+     design, so raise them just enough to match the visual weight of the
+     warmer-coloured marks on dark tiles. */
+  .trlogo.logo-blue { opacity: .31; filter: brightness(1.6) saturate(1.28) drop-shadow(0 5px 6px rgba(82, 140, 255, .18)); }
+  .shopt:hover:not(:disabled) .trlogo.logo-blue { opacity: .42; }
+  .culogo.logo-blue { opacity: .31; filter: brightness(1.6) saturate(1.28) drop-shadow(0 4px 6px rgba(82, 140, 255, .18)); }
+  .cucell.got .culogo.logo-blue { filter: brightness(0) invert(1) drop-shadow(0 4px 5px rgba(0,0,0,.16)); }
+  .shopt.right .trlogo.logo-blue { opacity: .48; filter: brightness(1.72) saturate(1.35) drop-shadow(0 5px 7px rgba(82, 140, 255, .22)); }
+  .shopt.wrong .trlogo.logo-blue { opacity: .37; filter: brightness(1.62) saturate(1.32) drop-shadow(0 5px 7px rgba(82, 140, 255, .2)); }
 </style>
 </head>
 <body class="hubmode">
@@ -2005,6 +2047,9 @@ const TEAM_NAMES = {
 const DIV_NAMES = { A: "Atlantic", M: "Metropolitan", C: "Central", P: "Pacific" };
 const BYID = new Map(PLAYERS.map(p => [p.id, p]));
 const logo = t => `https://assets.nhle.com/logos/nhl/svg/${t}_light.svg`;
+// Navy/royal crests need a little more lift on the contrast theme's black surfaces.
+const BLUE_LOGO_TEAMS = new Set(["BUF", "CBJ", "COL", "EDM", "MTL", "NYI", "NYR", "SEA", "STL", "TBL", "TOR", "UTA", "VAN", "WPG"]);
+const logoToneClass = t => BLUE_LOGO_TEAMS.has(t) ? " logo-blue" : "";
 const FALLBACK = "data:image/svg+xml," + encodeURIComponent(
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='38' r='20'/><path d='M12 100c2-26 18-38 38-38s36 12 38 38z'/></svg>`);
 
@@ -4160,7 +4205,7 @@ G.trophy = {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
       const team = (r.teams || [])[n] || trophyTeam(r.t, r.y, name);
       return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>` +
-        `${team ? `<img class="trlogo" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
+        `${team ? `<img class="trlogo${logoToneClass(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
     }).join("");
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
@@ -4291,7 +4336,7 @@ const CUP_TEAM_ABBRS = {
 const cupsTeamAbbr = value => TEAMS[value] ? value : (CUP_TEAM_ABBRS[cupsNorm(value)] || "");
 const cupsAnswer = (name, team) => {
   const abbr = cupsTeamAbbr(team);
-  return `<span class="cuanswer">${abbr ? `<img class="culogo" src="${logo(abbr)}" alt="" onerror="this.remove()">` : ""}<span>${esc(name)}</span></span>`;
+  return `<span class="cuanswer">${abbr ? `<img class="culogo${logoToneClass(abbr)}" src="${logo(abbr)}" alt="" onerror="this.remove()">` : ""}<span class="cuname">${esc(name)}</span></span>`;
 };
 function cupsKeys(rows, cols) {
   const cells = [];
