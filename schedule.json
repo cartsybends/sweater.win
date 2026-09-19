@@ -73635,7 +73635,7 @@
    "ht": 75,
    "bc": "Boden",
    "bs": "",
-   "wt": 210,
+   "wt": 212,
    "bp": [
     65.83,
     21.69,
@@ -119140,7 +119140,7 @@
    "ht": 72,
    "bc": "Aurora",
    "bs": "ON",
-   "wt": 207,
+   "wt": 213,
    "bp": [
     44.0,
     -79.47,
@@ -123335,7 +123335,7 @@
    "ht": 78,
    "bc": "Moscow",
    "bs": "",
-   "wt": 225,
+   "wt": 227,
    "bp": [
     55.75,
     37.62,
@@ -124402,7 +124402,7 @@
    "ht": 71,
    "bc": "Zurich",
    "bs": "",
-   "wt": 172,
+   "wt": 178,
    "bp": [
     47.37,
     8.55,
@@ -129588,10 +129588,10 @@
    "nation": "CAN",
    "number": 75,
    "headshot": "https://assets.nhle.com/mugs/nhl/20262027/STL/8481006.png",
-   "ht": 73,
+   "ht": 74,
    "bc": "Thunder Bay",
    "bs": "ON",
-   "wt": 204,
+   "wt": 209,
    "bp": [
     48.38,
     -89.25,
@@ -151559,7 +151559,7 @@
    "nation": "USA",
    "number": 21,
    "headshot": "https://assets.nhle.com/mugs/nhl/20262027/STL/8483516.png",
-   "ht": 73,
+   "ht": 74,
    "bc": "Minneapolis",
    "bs": "MN",
    "wt": 193,
