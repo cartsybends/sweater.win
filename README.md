@@ -1,6 +1,6 @@
 # Sweater
 
-The daily NHL player guessing game. Guess the mystery player in 8 tries.
+The daily NHL player guessing game. 
 
 Sweater is a fan-made game and is not affiliated with or endorsed by the NHL or its teams.
 
