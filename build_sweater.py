@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "50 · Contrast"
+VERSION = "51 · Progression"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1360,6 +1360,103 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cucell.got .culogo.logo-blue { filter: brightness(0) invert(1) drop-shadow(0 4px 5px rgba(0,0,0,.16)); }
   .shopt.right .trlogo.logo-blue { opacity: .48; filter: brightness(1.72) saturate(1.35) drop-shadow(0 5px 7px rgba(82, 140, 255, .22)); }
   .shopt.wrong .trlogo.logo-blue { opacity: .37; filter: brightness(1.62) saturate(1.32) drop-shadow(0 5px 7px rgba(82, 140, 255, .2)); }
+
+  /* Sweater progression: the home screen is now a game lobby first, library second. */
+  .hubfeatures { display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; margin: 0 0 18px; }
+  .hubfeature { position: relative; overflow: hidden; min-height: 152px; padding: 18px; border: 1px solid var(--line); border-radius: 18px;
+                background: color-mix(in srgb, var(--panel) 92%, transparent); color: var(--fg); font: inherit; text-align: left; cursor: pointer;
+                box-shadow: 0 10px 26px rgba(0,0,0,.07); transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .hubfeature:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 32px color-mix(in srgb, var(--accent) 16%, transparent); }
+  .hubfeature.primary { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 21%, var(--panel)), color-mix(in srgb, var(--panel) 96%, transparent) 72%); }
+  .hubfeature.primary::after { content: ""; position: absolute; width: 170px; height: 170px; right: -56px; top: -72px; border-radius: 50%;
+                               border: 22px solid color-mix(in srgb, var(--accent) 15%, transparent); box-shadow: 0 0 0 26px color-mix(in srgb, var(--accent) 6%, transparent); pointer-events: none; }
+  .featureeyebrow, .libraryhead p { margin: 0 0 6px; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .105em; text-transform: uppercase; }
+  .featuretitle { position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; margin: 0; font-size: 22px; font-weight: 760; letter-spacing: -.035em; }
+  .featureicon { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 10px; font-size: 18px; background: color-mix(in srgb, var(--accent) 15%, transparent); }
+  .featurecopy { position: relative; z-index: 1; max-width: 340px; margin: 7px 0 16px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .featurefooter { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--accent); font-size: 13px; font-weight: 750; }
+  .featurefooter b { font-variant-numeric: tabular-nums; color: var(--fg); }
+  .queststack { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .hubfeature.quest { min-height: 70px; padding: 13px 15px; box-shadow: none; }
+  .hubfeature.quest .featuretitle { font-size: 16px; }
+  .hubfeature.quest .featurecopy { margin: 3px 0 0; font-size: 12px; }
+  .questprogress { position: absolute; right: 13px; top: 13px; min-width: 34px; text-align: center; padding: 5px 7px; border-radius: 999px;
+                   background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .libraryhead { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 26px 4px 16px; }
+  .libraryhead h2 { margin: 0; font-size: 25px; letter-spacing: -.035em; }
+  .librarytoggle { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; background: var(--panel); color: var(--fg); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .librarytoggle span { font-size: 19px; line-height: .7; transition: transform .2s ease; }
+  .librarytoggle[aria-expanded="true"] span { transform: rotate(90deg); }
+  .libraryfilters { display: flex; gap: 7px; overflow-x: auto; margin: -8px 4px 14px; padding: 2px 0 4px; scrollbar-width: none; }
+  .libraryfilters::-webkit-scrollbar { display: none; }
+  .libraryfilter { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 11px; background: transparent; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .libraryfilter[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+  .resultrecap { width: min(450px, 100%); margin: 15px auto 11px; padding: 11px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+                 border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line)); border-radius: 13px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); text-align: left; }
+  .recapstats { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .recapstats i { width: 30px; height: 30px; display: grid; place-items: center; flex: none; border-radius: 9px; background: color-mix(in srgb, var(--accent) 16%, transparent); font-style: normal; }
+  .recapstats b, .recapstats small { display: block; }
+  .recapstats b { font-size: 13px; letter-spacing: -.01em; }
+  .recapstats small { margin-top: 1px; color: var(--muted); font-size: 11px; }
+  .recapactions { display: flex; gap: 5px; }
+  .recapactions button { border: 0; border-radius: 9px; padding: 7px 9px; background: var(--fg); color: var(--bg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .recapactions button.ghost { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px var(--line); }
+  .appearancechoice { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 16px 0 14px; }
+  .appearancechoice button { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; border: 1px solid var(--line); border-radius: 11px; background: var(--cell); color: var(--cell-fg); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .appearancechoice button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .appearancechoice span { color: var(--accent); font-size: 15px; }
+  .lockercard h3 { margin: 22px 0 10px; }
+  .lockerhero { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 15px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); }
+  .levelmark { width: 64px; aspect-ratio: 1; display: grid; place-items: center; border-radius: 18px; background: var(--accent); color: var(--accent-ink); font-size: 19px; font-weight: 850; box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .levelcopy b, .levelcopy small { display: block; }
+  .levelcopy b { font-size: 17px; letter-spacing: -.025em; }
+  .levelcopy small { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .xpbar { height: 7px; margin-top: 9px; overflow: hidden; border-radius: 99px; background: color-mix(in srgb, var(--fg) 9%, transparent); }
+  .xpbar i { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+  .lockerstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 12px; border: 1px solid var(--line); border-radius: 13px; overflow: hidden; background: var(--line); }
+  .lockerstats div { padding: 10px 5px; background: var(--panel); text-align: center; }
+  .lockerstats b, .lockerstats span { display: block; }
+  .lockerstats b { font-size: 17px; font-variant-numeric: tabular-nums; }
+  .lockerstats span { margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .achievementgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .achievement { min-height: 70px; padding: 10px; display: grid; grid-template-columns: 28px 1fr; gap: 9px; align-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  .achievement.locked { opacity: .45; filter: grayscale(1); }
+  .achievement i { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--accent) 14%, transparent); font-style: normal; font-size: 15px; }
+  .achievement b, .achievement small { display: block; }
+  .achievement b { font-size: 12px; }
+  .achievement small, .lockerhint { color: var(--muted); font-size: 11px; line-height: 1.35; }
+  .lockerhint { margin: 0; }
+  .welcomecard { width: min(430px, 92vw); text-align: center; }
+  .welcomecard h2 { margin: 4px 0 8px; font-size: 29px; letter-spacing: -.045em; line-height: 1.05; }
+  .welcomecard .settingsintro { margin: 0 auto; max-width: 350px; }
+  .welcomeactions { display: grid; gap: 8px; margin-top: 20px; }
+  .welcomeactions .btn { width: 100%; margin: 0; }
+  .welcomeskip { margin-top: 12px; color: var(--muted); }
+  .cudecades { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; max-width: 980px; margin: 12px auto 4px; }
+  .cudecade { min-width: 0; padding: 8px 9px; border: 1px solid var(--line); border-radius: 10px; background: color-mix(in srgb, var(--panel) 86%, transparent); }
+  .cudecade b, .cudecade small { display: block; }
+  .cudecade b { font-size: 11px; letter-spacing: .03em; }
+  .cudecade small { margin-top: 3px; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  .cudecade i { display: block; height: 4px; margin-top: 6px; overflow: hidden; border-radius: 99px; background: color-mix(in srgb, var(--fg) 10%, transparent); }
+  .cudecade i span { display: block; height: 100%; border-radius: inherit; background: var(--accent); transition: width .35s ease; }
+  :root[data-theme="dark"] .hubfeature, :root[data-theme="dark"] .lockerhero, :root[data-theme="dark"] .resultrecap { background: #171718; }
+  :root[data-theme="dark"] .hubfeature.primary { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 21%, #171718), #171718 76%); }
+  :root[data-theme="dark"] .librarytoggle, :root[data-theme="dark"] .achievement, :root[data-theme="dark"] .lockerstats div { background: #171718; }
+  @media (max-width: 700px) {
+    .hubfeatures { grid-template-columns: 1fr; }
+    .queststack { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+    .hubfeature { min-height: 138px; }
+    .hubfeature.quest { min-height: 94px; }
+    .libraryhead { align-items: center; margin-top: 22px; }
+    .libraryhead h2 { font-size: 22px; }
+    .librarytoggle { padding: 8px 10px; font-size: 12px; }
+    .achievementgrid { grid-template-columns: 1fr; }
+    .cudecades { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hubfeature, .librarytoggle span { transition: none; }
+    .hubfeature:hover { transform: none; }
+  }
 </style>
 </head>
 <body class="hubmode">
@@ -1370,9 +1467,9 @@ TEMPLATE = r'''<!DOCTYPE html>
     <button class="iconbtn round" id="lbBtn" type="button" aria-label="Leaderboard" title="Leaderboard" hidden>🏆</button>
     <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play" title="How to play">?</button>
+    <button class="iconbtn round" id="profileBtn" type="button" aria-label="Your locker" title="Your locker">★</button>
     <label class="switch" title="Play as many puzzles as you like"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited</span></label>
     <button class="iconbtn round" id="settingsBtn" type="button" aria-label="Theme settings" title="Theme settings">🖌️</button>
-    <button class="iconbtn round themebtn" id="themeBtn" type="button"></button>
   </div>
 </nav>
 <main>
@@ -1394,6 +1491,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div class="hubmeter" aria-hidden="true"><i id="hubBar"></i></div>
       <p class="hubprogress"><span id="hubProgress"></span> <span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
+    <section class="hubfeatures" id="hubFeatures" aria-label="Featured games"></section>
     <button type="button" class="partycard" data-open="party">
       <svg class="rink" viewBox="0 0 400 160" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
         <rect x="6" y="6" width="388" height="148" rx="70" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -1409,7 +1507,9 @@ TEMPLATE = r'''<!DOCTYPE html>
       <span class="partytext"><b>Party Mode</b><span>Host on a big screen. Friends answer from their phones.</span></span>
       <span class="partycta">Start a party</span>
     </button>
-    <div id="hubSections"></div>
+    <div class="libraryhead"><div><p>All modes</p><h2>Game library</h2></div><button type="button" class="librarytoggle" id="libraryToggle" aria-expanded="false">Browse all games <span aria-hidden="true">›</span></button></div>
+    <div class="libraryfilters" id="libraryFilters" role="group" aria-label="Filter game library"></div>
+    <div id="hubSections" hidden></div>
   </section>
 
   <section class="view" id="view-classic" hidden>
@@ -1430,6 +1530,7 @@ TEMPLATE = r'''<!DOCTYPE html>
         <img id="reveal" alt="">
         <p class="pname" id="pname"></p>
         <p class="pmeta" id="pmeta"></p>
+        <div class="resultrecap" id="resultRecap" hidden></div>
         <a class="profile" id="profile" target="_blank" rel="noopener">View profile on NHL.com</a>
         <p class="countdown" id="countdown" hidden></p>
         <button class="btn" id="again" hidden>Next player</button>
@@ -1881,6 +1982,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       </div>
       <p class="hint romsg" id="cuMsg" aria-live="polite"></p>
     </div>
+    <div class="cudecades" id="cuDecades" aria-label="Playoff History progress by decade"></div>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs playoff history. Rebuild the site to load it.</p>
     <div class="board cuboard">
@@ -1975,8 +2077,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <li class="lbhelp" hidden><span aria-hidden="true">🏆</span>Leaderboards and how each game scores</li>
       <li><span aria-hidden="true">📅</span>Replay past daily puzzles</li>
       <li><span class="keyswitch" aria-hidden="true"></span>Unlimited: play as many puzzles as you like</li>
-      <li><span aria-hidden="true">⚙</span>Choose your interface colour</li>
-      <li><span aria-hidden="true">🌙</span>Night and day mode</li>
+      <li><span aria-hidden="true">🖌️</span>Choose your interface colour and appearance</li>
     </ul>
 
     <p class="colourkey">
@@ -2001,6 +2102,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="settingskicker">Appearance</p>
     <h2 id="setTitle">Make it yours</h2>
     <p class="settingsintro">Choose an interface colour. Answer feedback always stays green for right and red for wrong.</p>
+    <div class="appearancechoice" id="appearanceChoice" role="group" aria-label="Appearance">
+      <button type="button" data-theme-choice="dark"><span>●</span> Dark</button>
+      <button type="button" data-theme-choice="light"><span>○</span> Light</button>
+    </div>
     <div class="accentgrid" id="accentGrid" role="group" aria-label="Interface colour">
       <button type="button" class="accentchoice" data-accent="#242424"><i style="--swatch:#242424"></i><span>Neutral</span></button>
       <button type="button" class="accentchoice" data-accent="#2878d4"><i style="--swatch:#2878d4"></i><span>Blue</span></button>
@@ -2012,6 +2117,32 @@ TEMPLATE = r'''<!DOCTYPE html>
       <button type="button" class="accentchoice" data-accent="#d35b91"><i style="--swatch:#d35b91"></i><span>Pink</span></button>
     </div>
     <label class="customaccent"><span><b>Custom colour</b><small>Choose any shade</small></span><input id="accentPicker" type="color" value="#7950f2" aria-label="Custom interface colour"></label>
+  </div>
+</div>
+
+<div class="modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+  <div class="card wide lockercard">
+    <button class="xbtn" data-close aria-label="Close">×</button>
+    <p class="settingskicker">Your locker</p>
+    <h2 id="profileTitle">Rink Rat</h2>
+    <div id="profileHero"></div>
+    <h3>Achievements</h3>
+    <div class="achievementgrid" id="achievementGrid"></div>
+    <h3>Keep going</h3>
+    <p class="lockerhint" id="lockerHint"></p>
+  </div>
+</div>
+
+<div class="modal" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <div class="card wide welcomecard">
+    <p class="settingskicker">Welcome to Sweater</p>
+    <h2 id="welcomeTitle">Your daily hockey brain workout.</h2>
+    <p class="settingsintro">Play the daily puzzles, build your level, unlock badges, and see how deep your hockey knowledge goes.</p>
+    <div class="welcomeactions">
+      <button type="button" class="btn" data-welcome-open="classic">Play today's Classic</button>
+      <button type="button" class="btn ghost" data-welcome-library>Browse all games</button>
+    </div>
+    <button type="button" class="linkbtn welcomeskip" data-close>I'll explore on my own</button>
   </div>
 </div>
 
@@ -4408,6 +4539,14 @@ G.cups = {
     $("cuInput").disabled = !running;
     $("cuInput").placeholder = running ? "Type a team or player, then press Enter" : st.over ? "Time's up" : "Press Start to begin";
     const cols = cupsCols(t);
+    const decades = {};
+    t.rows.forEach((r, i) => {
+      const key = `${Math.floor(r[0] / 10) * 10}s`;
+      const d = decades[key] || (decades[key] = { got: 0, total: 0 });
+      const rowMarks = marks.slice(i * cols.length, i * cols.length + cols.length);
+      d.got += rowMarks.filter(Boolean).length; d.total += cols.length;
+    });
+    $("cuDecades").innerHTML = Object.entries(decades).map(([decade, d]) => `<div class="cudecade"><b>${decade}</b><small>${d.got}/${d.total}</small><i><span style="width:${d.got / d.total * 100}%"></span></i></div>`).join("");
     $("cuHead").innerHTML = `<th>Season</th><th>Stanley Cup</th><th>Runner-up</th>` + (cols.length === 3 ? "<th>Conn Smythe</th>" : "");
     $("cuRows").innerHTML = t.rows.map((r, i) => `<tr>
       <td class="cuyear">${seasonLabel(r[0])}</td>
@@ -4506,10 +4645,91 @@ function historySet(g, d, summary) {
 }
 let archiveDay = null;
 
+// ---- player progression (derived from real completed daily puzzles) ----
+const HISTORY_KEY = "sweater-history";
+const ACHIEVEMENT_KEY = "sweater-achievements";
+const shiftDay = (key, days) => {
+  const d = new Date(`${key}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+};
+const historyEntries = () => Object.entries(store.get(HISTORY_KEY) || {}).map(([key, result]) => {
+  const at = key.lastIndexOf(":");
+  return { game: key.slice(0, at), day: key.slice(at + 1), ...result };
+}).filter(x => x.game && /^\d{4}-\d{2}-\d{2}$/.test(x.day));
+const dailyEntries = day => historyEntries().filter(x => x.day === day);
+const xpFor = x => x.s != null ? 45 + Math.min(80, Math.round(Number(x.s) || 0) * 3) : (x.w ? 100 : 35);
+function progressSummary() {
+  const entries = historyEntries();
+  const xp = entries.reduce((total, x) => total + xpFor(x), 0);
+  const wins = entries.filter(x => x.w).length;
+  const days = [...new Set(entries.map(x => x.day))];
+  const historic = entries.filter(x => ["trophy", "cups", "playoff"].includes(x.game)).length;
+  return { entries, xp, wins, days, historic, level: Math.floor(xp / 500) + 1, intoLevel: xp % 500 };
+}
+const WEEKLY_THEMES = [
+  { icon: "⌛", title: "History Night", copy: "Complete three hockey-history dailies this week.", games: ["trophy", "cups", "playoff"] },
+  { icon: "✦", title: "All-Rounder", copy: "Play one player, one detail, and one speed challenge.", games: ["classic", "trophy", "shoot"] },
+  { icon: "⚡", title: "Fast Hands", copy: "Take on three quick-thinking dailies this week.", games: ["hl", "rank", "puck"] },
+  { icon: "🗺", title: "Hockey IQ", copy: "Go from birthplace to draft day to a mystery season.", games: ["map", "draft", "season"] },
+];
+function activeWeeklyTheme() {
+  const start = new Date("2024-01-01T12:00:00Z");
+  const now = new Date(`${dayKey()}T12:00:00Z`);
+  return WEEKLY_THEMES[Math.floor((now - start) / 604800000) % WEEKLY_THEMES.length];
+}
+function weeklyProgress(theme = activeWeeklyTheme()) {
+  const day = dayKey();
+  const weekday = (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
+  const days = Array.from({ length: weekday + 1 }, (_, i) => shiftDay(day, -i));
+  const entries = historyEntries();
+  return theme.games.filter(g => entries.some(x => (g === "hl" ? x.game.startsWith("hl_") : x.game === g) && days.includes(x.day))).length;
+}
+function achievementList() {
+  const p = progressSummary();
+  const dailyHatTrick = p.days.some(d => dailyEntries(d).length >= 3);
+  const weeklyDone = weeklyProgress() >= 3;
+  return [
+    { id: "first-shift", icon: "🏒", title: "First Shift", copy: "Finish one daily puzzle.", on: p.entries.length >= 1 },
+    { id: "hat-trick", icon: "🎩", title: "Hat Trick", copy: "Finish three dailies in one day.", on: dailyHatTrick },
+    { id: "regular", icon: "★", title: "Regular", copy: "Finish 10 daily puzzles.", on: p.entries.length >= 10 },
+    { id: "historian", icon: "⌛", title: "Historian", copy: "Finish 5 history puzzles.", on: p.historic >= 5 },
+    { id: "on-a-roll", icon: "🔥", title: "On a Roll", copy: "Win 10 daily puzzles.", on: p.wins >= 10 },
+    { id: "weekender", icon: "✓", title: "Weekly Win", copy: "Complete this week's challenge.", on: weeklyDone },
+  ];
+}
+function awardProgression() {
+  const seen = store.get(ACHIEVEMENT_KEY) || {};
+  const unlocked = achievementList().filter(a => a.on && !seen[a.id]);
+  if (unlocked.length) {
+    unlocked.forEach(a => { seen[a.id] = dayKey(); });
+    store.set(ACHIEVEMENT_KEY, seen);
+  }
+  return unlocked;
+}
+function renderPlayerProfile() {
+  const p = progressSummary(), levelCap = 500;
+  const todayDone = dailyEntries(dayKey()).length;
+  $("profileHero").innerHTML = `<div class="lockerhero"><div class="levelmark">${p.level}</div><div class="levelcopy"><b>Level ${p.level} · Rink Rat</b><small>${p.xp} XP earned · ${levelCap - p.intoLevel} XP to the next level</small><div class="xpbar"><i style="width:${p.intoLevel / levelCap * 100}%"></i></div></div></div><div class="lockerstats"><div><b>${p.entries.length}</b><span>Daily plays</span></div><div><b>${p.wins}</b><span>Wins</span></div><div><b>${todayDone}/3</b><span>Today's hat trick</span></div></div>`;
+  $("achievementGrid").innerHTML = achievementList().map(a => `<div class="achievement${a.on ? "" : " locked"}"><i>${a.icon}</i><span><b>${a.title}</b><small>${a.copy}</small></span></div>`).join("");
+  const theme = activeWeeklyTheme(), progress = weeklyProgress(theme);
+  $("lockerHint").textContent = `${theme.title}: ${progress}/3 complete. ${progress >= 3 ? "Challenge cleared—nice work." : theme.copy}`;
+}
+function renderResultRecap(unlocked = []) {
+  const box = $("resultRecap");
+  if (mode !== "daily") { box.hidden = true; return; }
+  const p = progressSummary(), done = dailyEntries(dayKey()).length;
+  const entry = historyEntries().find(x => x.game === game && x.day === S[game].day);
+  const achievement = unlocked[0] ? ` · Unlocked ${unlocked[0].title}` : "";
+  box.hidden = false;
+  box.innerHTML = `<div class="recapstats"><i>✦</i><span><b>+${entry ? xpFor(entry) : 0} XP${achievement}</b><small>Level ${p.level} · Daily Hat Trick ${Math.min(done, 3)}/3</small></span></div><div class="recapactions"><button type="button" data-result-share>Share</button><button type="button" class="ghost" data-result-challenge>Challenge</button></div>`;
+}
+
 function startGame(t, restore = [], opts) {
   const st = S[game], g = G[game];
   Object.assign(st, { target: t, guesses: [], over: false, mode, opts: opts || prefOpts(game) });
   hideBanner();
+  $("resultRecap").hidden = true;
   g.reset(t);
   restore.forEach(x => doGuess(x, false));
   g.render && g.render(t, st);
@@ -4558,6 +4778,12 @@ function finish(won, fresh) {
   if (mode !== "unlimited" && (fresh || !historyGet(game, st.day))) {
     historySet(game, st.day, isScored(game) ? { s: g.score(st.target, st.guesses), w: won } : { n, w: won });
   }
+  let unlocked = [];
+  if (mode === "daily" && fresh) {
+    recordResult(won);
+    unlocked = awardProgression();
+  }
+  renderResultRecap(unlocked);
   if (fresh) {
     const party = g.celebrate ? g.celebrate(st.target, st.guesses, won) : won;
     void $("banner").offsetWidth; // restart the pop animation
@@ -4565,8 +4791,8 @@ function finish(won, fresh) {
     if (party) confetti();
     if (g.onFinish) g.onFinish(st);
     if (mode === "daily") {
-      recordResult(won);
       submitPending();
+      if (unlocked.length) setTimeout(() => toast(`Achievement unlocked: ${unlocked[0].title}`), party ? 900 : 350);
       setTimeout(() => { statsGame = null; openModal("statsModal"); }, party ? 2400 : 1600);
     }
   }
@@ -4941,16 +5167,25 @@ function toast(msg) {
   $("toast").textContent = msg; $("toast").classList.add("show");
   clearTimeout(toast.t); toast.t = setTimeout(() => $("toast").classList.remove("show"), 1800);
 }
-$("shareBtn").onclick = async () => {
-  const text = shareText();
-  try { await navigator.clipboard.writeText(text); toast("Result copied to clipboard"); }
+async function copyToClipboard(text, message = "Result copied to clipboard") {
+  try { await navigator.clipboard.writeText(text); toast(message); }
   catch {
     const ta = Object.assign(document.createElement("textarea"), { value: text });
     document.body.appendChild(ta); ta.select();
-    try { document.execCommand("copy"); toast("Result copied to clipboard"); } catch { toast("Couldn't copy the result"); }
+    try { document.execCommand("copy"); toast(message); } catch { toast("Couldn't copy the result"); }
     ta.remove();
   }
+}
+$("shareBtn").onclick = async () => {
+  await copyToClipboard(shareText());
 };
+$("resultRecap").addEventListener("click", async e => {
+  if (e.target.closest("[data-result-share]")) await copyToClipboard(shareText());
+  if (e.target.closest("[data-result-challenge]")) {
+    const base = !SITE || /__SITE__/.test(SITE) ? location.href : `${SITE}#${game}`;
+    await copyToClipboard(`Can you beat my ${cardTitle(game)} result on Sweater?\n\n${base}`, "Challenge link copied to clipboard");
+  }
+});
 
 // ======================= modals =======================
 function closeModals() { document.querySelectorAll(".modal.open").forEach(m => m.classList.remove("open")); }
@@ -4965,6 +5200,16 @@ document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e =
   if (m.id === "modal" || e.target === m || e.target.closest("[data-close]")) m.classList.remove("open");
 }));
 $("statsBtn").onclick = () => { statsGame = null; openModal("statsModal"); };
+$("profileBtn").onclick = () => { renderPlayerProfile(); openModal("profileModal"); };
+document.querySelectorAll("[data-welcome-open]").forEach(b => b.onclick = () => {
+  $("welcomeModal").classList.remove("open");
+  openGame(b.dataset.welcomeOpen);
+});
+document.querySelectorAll("[data-welcome-library]").forEach(b => b.onclick = () => {
+  $("welcomeModal").classList.remove("open");
+  store.set("sweater-library-open", true);
+  renderHub();
+});
 $("helpBtn").onclick = () => openModal("helpModal");
 $("silBtn").onclick = () => { if (!(S.classic.opts && S.classic.opts.hard)) openModal("modal"); };
 $("lbBtn").onclick = () => openLeaderboard();
@@ -4993,16 +5238,16 @@ $("unlimited").addEventListener("change", e => {
 });
 $("again").onclick = () => mode === "archive" ? openArchive() : loadUnlimited(true);
 
-// ---- day / night toggle ----
+// ---- appearance controls ----
 const isDark = () => {
   const t = document.documentElement.dataset.theme;
   return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
 };
-function paintThemeBtn() {
-  const dark = isDark();
-  $("themeBtn").textContent = dark ? "☀️" : "🌙";
-  $("themeBtn").setAttribute("aria-label", dark ? "Switch to day mode" : "Switch to night mode");
-  $("themeBtn").title = $("themeBtn").getAttribute("aria-label");
+function paintAppearanceControls() {
+  const theme = isDark() ? "dark" : "light";
+  document.querySelectorAll("[data-theme-choice]").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.themeChoice === theme ? "true" : "false");
+  });
 }
 
 // ---- interface colour ----
@@ -5031,7 +5276,7 @@ function applyAccent(value, save = true) {
   if (meta) meta.content = accent;
   paintAccentControls();
 }
-$("settingsBtn").onclick = () => { paintAccentControls(); openModal("settingsModal"); };
+$("settingsBtn").onclick = () => { paintAccentControls(); paintAppearanceControls(); openModal("settingsModal"); };
 $("accentGrid").addEventListener("click", e => {
   const b = e.target.closest("[data-accent]");
   if (b) applyAccent(b.dataset.accent);
@@ -5039,13 +5284,14 @@ $("accentGrid").addEventListener("click", e => {
 $("accentPicker").addEventListener("input", e => applyAccent(e.target.value));
 applyAccent(HEX_COLOUR.test(store.get("sweater-accent") || "") ? store.get("sweater-accent") : DEFAULT_ACCENT, false);
 
-$("themeBtn").onclick = () => {
-  const next = isDark() ? "light" : "dark";
-  document.documentElement.dataset.theme = next;
-  store.set("sweater-theme", next);
-  paintThemeBtn();
-};
-paintThemeBtn();
+$("appearanceChoice").addEventListener("click", e => {
+  const b = e.target.closest("[data-theme-choice]");
+  if (!b) return;
+  document.documentElement.dataset.theme = b.dataset.themeChoice;
+  store.set("sweater-theme", b.dataset.themeChoice);
+  paintAppearanceControls();
+});
+paintAppearanceControls();
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
 document.addEventListener("keydown", e => {
   if (onHub || !game.startsWith("hl_") || document.querySelector(".modal.open") || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
@@ -5280,15 +5526,56 @@ function hubStatus(id) {
   return ["", "Play"];
 }
 
+const FEATURE_SEQUENCE = ["trophy", "cups", "classic", "shoot", "map", "conn", "journey"];
+const gameIsReady = id => id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0;
+const LIBRARY_FILTERS = [
+  ["all", "All games"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
+];
+const librarySection = { player: "Name the player", details: "Know the details", puzzles: "Streaks and puzzles", arcade: "Arcade" };
+function weeklyDoneGames(theme = activeWeeklyTheme()) {
+  const day = dayKey(), weekday = (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
+  const days = Array.from({ length: weekday + 1 }, (_, i) => shiftDay(day, -i));
+  const entries = historyEntries();
+  return theme.games.filter(g => entries.some(x => (g === "hl" ? x.game.startsWith("hl_") : x.game === g) && days.includes(x.day)));
+}
 function renderHub() {
-  let played = 0, total = 0;
-  $("hubSections").innerHTML = HUB.map(sec => `
+  const allCards = HUB.flatMap(sec => sec.games);
+  const total = allCards.length;
+  const played = allCards.filter(([id]) => ["done", "missed"].includes(hubStatus(id)[0])).length;
+  const going = allCards.find(([id]) => hubStatus(id)[0] === "going");
+  const dateSeed = Number(dayKey().replaceAll("-", ""));
+  const candidate = FEATURE_SEQUENCE[dateSeed % FEATURE_SEQUENCE.length];
+  const primary = going ? going[0] : (gameIsReady(candidate) ? candidate : "classic");
+  const primaryState = hubStatus(primary);
+  const primaryIcon = (CARD[primary] || {}).icon || "🏒";
+  const primaryCopy = going ? "Your current run is waiting—pick up where you left off." : `${cardTitle(primary)} is ready for today's shift.`;
+  const hatTrickCount = dailyEntries(dayKey()).length;
+  const quickGame = ["classic", "trophy", "shoot"].find(id => hubStatus(id)[0] !== "done" && gameIsReady(id)) || primary;
+  const theme = activeWeeklyTheme(), completedThemeGames = weeklyDoneGames(theme);
+  const weeklyGame = theme.games.find(id => !completedThemeGames.includes(id) && gameIsReady(id)) || primary;
+  $("hubFeatures").innerHTML = `<button type="button" class="hubfeature primary" data-open="${primary}">
+      <p class="featureeyebrow">${going ? "Continue playing" : "Today's featured game"}</p>
+      <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${primaryIcon}</span>${esc(cardTitle(primary))}</h2>
+      <p class="featurecopy">${esc(primaryCopy)}</p>
+      <span class="featurefooter"><span>${primaryState[0] === "done" ? "Daily complete" : primaryState[0] === "going" ? "In progress" : "New daily puzzle"}</span><b>${going ? "Resume" : "Play"} →</b></span>
+    </button><div class="queststack">
+      <button type="button" class="hubfeature quest" data-open="${quickGame}">
+        <span class="questprogress">${Math.min(hatTrickCount, 3)}/3</span><p class="featureeyebrow">Daily Hat Trick</p>
+        <h2 class="featuretitle">Play any 3 dailies</h2><p class="featurecopy">Build your daily routine and earn a badge.</p>
+      </button>
+      <button type="button" class="hubfeature quest" data-open="${weeklyGame}">
+        <span class="questprogress">${completedThemeGames.length}/3</span><p class="featureeyebrow">Weekly challenge</p>
+        <h2 class="featuretitle"><span aria-hidden="true">${theme.icon}</span>${esc(theme.title)}</h2><p class="featurecopy">${esc(theme.copy)}</p>
+      </button>
+    </div>`;
+  const selectedFilter = store.get("sweater-library-filter") || "all";
+  $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
+  $("hubSections").innerHTML = HUB.filter(sec => selectedFilter === "all" || sec.title === librarySection[selectedFilter]).map(sec => `
     <section class="hubsec tone-${sec.tone}">
       <h2>${sec.title}</h2>
       <div class="glist">${sec.games.map(([id, icon, blurb]) => {
         const [cls, text] = hubStatus(id);
-        total++; if (cls === "done" || cls === "missed") played++;
-        const ready = id === "hl" ? HL_POOL.length > 1 : G[id].pool().length > 0;
+        const ready = gameIsReady(id);
         return `<button type="button" class="grow ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
           <span class="gicon" aria-hidden="true">${icon}</span>
           <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small></span>
@@ -5297,12 +5584,24 @@ function renderHub() {
         </button>`;
       }).join("")}</div>
     </section>`).join("");
+  const libraryOpen = store.get("sweater-library-open") === true;
+  $("hubSections").hidden = !libraryOpen;
+  $("libraryToggle").setAttribute("aria-expanded", libraryOpen ? "true" : "false");
+  $("libraryToggle").innerHTML = `${libraryOpen ? "Hide game library" : "Browse all games"} <span aria-hidden="true">›</span>`;
   $("hubProgress").textContent = `${played} of ${total} played today.`;
   $("hubBar").style.width = `${Math.round(played / total * 100)}%`;
   $("hubDate").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
   document.querySelector(".partycard").disabled = !API_ON;
   document.querySelector(".partycard .partycta").textContent = API_ON ? "Start a party" : "Not available";
 }
+$("libraryToggle").onclick = () => { store.set("sweater-library-open", !(store.get("sweater-library-open") === true)); renderHub(); };
+$("libraryFilters").addEventListener("click", e => {
+  const b = e.target.closest("[data-library-filter]");
+  if (!b) return;
+  store.set("sweater-library-filter", b.dataset.libraryFilter);
+  store.set("sweater-library-open", true);
+  renderHub();
+});
 $("view-hub").addEventListener("click", e => {
   const b = e.target.closest("[data-open]");
   if (!b || b.disabled) return;
@@ -5642,8 +5941,8 @@ function renderHelp() {
 }
 
 // ======================= start =======================
-$("foot").textContent = `Player data from NHL.com · updated ${BUILT} · ${PLAYERS.length} players`;
-if (!store.get("sweater-seen-help")) { store.set("sweater-seen-help", true); openModal("helpModal"); }
+$("foot").textContent = `Player data from NHL.com · refreshed ${BUILT.split(" · ")[0]} · ${PLAYERS.length} players`;
+if (!store.get("sweater-seen-welcome")) { store.set("sweater-seen-welcome", true); openModal("welcomeModal"); }
 
 if (PLAYERS.length) {
   const start = decodeURIComponent(location.hash.slice(1));
