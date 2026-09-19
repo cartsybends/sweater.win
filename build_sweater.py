@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "46"
+VERSION = "47 · Rinkside"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -49,7 +49,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sweater · The Daily NHL Player Guessing Game</title>
 <meta name="description" content="Guess the mystery NHL player in 8 tries. A new player every day at midnight ET, plus unlimited mode.">
-<meta name="theme-color" content="#528f4f">
+<meta name="theme-color" content="#0b2538">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sweater">
 <meta property="og:title" content="Sweater · The Daily NHL Player Guessing Game">
@@ -895,6 +895,131 @@ TEMPLATE = r'''<!DOCTYPE html>
     .newrow { animation: rowin .35s cubic-bezier(.2,.8,.2,1) both; }
   }
   @keyframes rowin { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  /* Rinkside visual edition — a deliberately separate, reversible skin. */
+  :root {
+    --bg: #f5f8fa; --fg: #102636; --muted: #62717b; --cell: #e8eef2; --cell-fg: #18303e;
+    --hit: #157a65; --hit-fg: #fff; --near: #e2ac34; --near-fg: #30230a; --line: #d5e0e6; --link: #0d6f89;
+    --panel: #ffffff; --scrim: rgba(5, 23, 34, .58); --cream: #edf1ea; --silbg: transparent;
+    --sea: #dcecf3; --land: #eef0e7; --coast: #aab9ae;
+    --grouped: #edf3f5; --row: #ffffff; --sep: rgba(16, 38, 54, .12); --label2: #61727e;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1822; --fg: #edf5f7; --muted: #a6b5bd; --cell: #182b38; --cell-fg: #eef6f8;
+    --hit: #35ad91; --hit-fg: #071c20; --near: #f0bd48; --near-fg: #201807; --line: #2d4655; --link: #70d2e3;
+    --panel: #11232e; --scrim: rgba(0,0,0,.72); --cream: #253a39; --silbg: var(--cream);
+    --sea: #12303d; --land: #263c3d; --coast: #50706c;
+    --grouped: #09151d; --row: #11232e; --sep: rgba(184, 211, 220, .16); --label2: #a6b5bd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1822; --fg: #edf5f7; --muted: #a6b5bd; --cell: #182b38; --cell-fg: #eef6f8;
+      --hit: #35ad91; --hit-fg: #071c20; --near: #f0bd48; --near-fg: #201807; --line: #2d4655; --link: #70d2e3;
+      --panel: #11232e; --scrim: rgba(0,0,0,.72); --cream: #253a39; --silbg: var(--cream);
+      --sea: #12303d; --land: #263c3d; --coast: #50706c;
+      --grouped: #09151d; --row: #11232e; --sep: rgba(184, 211, 220, .16); --label2: #a6b5bd;
+    }
+  }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(900px 480px at 50% -240px, rgba(57, 146, 176, .16), transparent 70%),
+      linear-gradient(135deg, #f8fbfc 0%, var(--bg) 52%, #edf5f3 100%);
+  }
+  body.hubmode {
+    background:
+      radial-gradient(800px 420px at 85% -140px, rgba(38, 151, 132, .15), transparent 68%),
+      radial-gradient(620px 360px at 6% 18%, rgba(27, 117, 157, .10), transparent 70%),
+      var(--grouped);
+  }
+  :root[data-theme="dark"] body { background: var(--bg); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) body { background: var(--bg); }
+  }
+  .navbar {
+    min-height: 58px; padding-top: 11px; padding-bottom: 11px;
+    box-shadow: 0 1px 0 rgba(9, 31, 45, .05), 0 8px 28px rgba(22, 54, 70, .05);
+  }
+  .brand { font-size: 18px; letter-spacing: .12em; }
+  .brand span { padding: 4px 9px 7px; background-color: color-mix(in srgb, var(--hit) 10%, transparent);
+                border-radius: 7px 7px 4px 4px; background-position: bottom 3px center; }
+  .navactions .iconbtn { border-radius: 10px; background: color-mix(in srgb, var(--panel) 82%, var(--cell));
+                           box-shadow: inset 0 0 0 1px var(--sep); }
+  header { padding: 34px 16px 16px; }
+  h1 { font-size: clamp(40px, 6vw, 58px); letter-spacing: -.045em; }
+  header h1::after { width: 114px; height: 6px; margin-top: 8px; border-radius: 99px;
+                     background: linear-gradient(90deg, var(--hit), #56b9cc, var(--hit)); }
+  .sub { font-size: 15px; letter-spacing: .01em; }
+  main { padding-bottom: 56px; }
+  #view-hub { max-width: 760px; padding-top: 28px; }
+  .hubhead { padding: 20px 22px; margin: 0 0 20px; border: 1px solid var(--line); border-radius: 18px;
+             background: color-mix(in srgb, var(--panel) 88%, transparent); box-shadow: 0 12px 32px rgba(23, 59, 75, .06); }
+  .hubdate { color: var(--hit); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: 12px; }
+  .hubtitle { margin-top: 4px; font-size: clamp(29px, 5vw, 38px); letter-spacing: -.04em; }
+  .hubmeter { height: 7px; background: color-mix(in srgb, var(--hit) 12%, var(--cell)); }
+  .hubmeter i { background: linear-gradient(90deg, var(--hit), #2e9db5); }
+  .hubsec { margin-bottom: 28px; }
+  .hubsec h2 { display: flex; align-items: center; gap: 9px; margin: 0 4px 10px; font-size: 18px; letter-spacing: -.02em; }
+  .hubsec h2::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--tone); box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone) 14%, transparent); }
+  .glist, .hubgrid { border: 1px solid var(--line); border-radius: 17px; overflow: hidden;
+                      box-shadow: 0 10px 28px rgba(22, 54, 70, .055); }
+  .grow, .gcard { min-height: 74px; background: color-mix(in srgb, var(--row) 94%, transparent); }
+  .grow:hover:not(:disabled), .gcard:hover:not(:disabled) { background: color-mix(in srgb, var(--tone) 7%, var(--panel)); }
+  .grow .gicon, .gcard .gicon { border-radius: 13px; background: color-mix(in srgb, var(--tone) 13%, transparent); }
+  .grow .gtext b, .gcard .gtext b { font-weight: 700; letter-spacing: -.015em; }
+  .grow .gtext small, .gcard .gtext small { color: var(--muted); }
+  .grow .gstat, .gcard .gstat { color: var(--muted); font-size: 13px; }
+  .partycard { border: 1px solid rgba(118, 208, 201, .3); border-radius: 20px; background: linear-gradient(115deg, #09283a, #0e5360 110%);
+               box-shadow: 0 16px 34px rgba(7, 42, 55, .18); }
+  .partycta { color: #0b3140; box-shadow: 0 5px 14px rgba(0,0,0,.14); }
+  .gamebar { max-width: 1180px; margin-bottom: 20px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 17px;
+             background: color-mix(in srgb, var(--panel) 88%, transparent); box-shadow: 0 10px 28px rgba(23, 59, 75, .055); }
+  .backbtn { color: var(--muted); }
+  .gtitle { padding-bottom: 2px; border-bottom: 0; }
+  .gticon { border-radius: 14px; background: color-mix(in srgb, var(--tone) 14%, transparent); }
+  .gtitle h2 { font-size: clamp(25px, 4vw, 32px); letter-spacing: -.04em; }
+  #modeLabel { color: var(--muted); }
+  .gamesel, .pickstat select, .numrow select, .search input, .numrow input, .lbname input {
+    border-color: var(--line); border-radius: 10px; background: color-mix(in srgb, var(--panel) 95%, transparent);
+    box-shadow: inset 0 1px 1px rgba(13, 39, 52, .03); }
+  .gamesel:focus, .pickstat select:focus, .numrow select:focus, .search input:focus, .numrow input:focus, .lbname input:focus {
+    border-color: var(--link); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 18%, transparent); outline: none; }
+  .tabs { padding: 4px; border-color: var(--line); background: color-mix(in srgb, var(--panel) 78%, transparent); box-shadow: 0 5px 16px rgba(23, 59, 75, .04); }
+  .tabs button[aria-selected="true"] { background: var(--fg); color: var(--panel); box-shadow: 0 2px 6px rgba(8, 30, 44, .18); }
+  .btn, .profile { border-radius: 10px; box-shadow: 0 3px 9px rgba(11, 42, 57, .12); }
+  .ttcard, .ptquestion { border: 1px solid var(--line); border-radius: 18px; padding: 16px 20px; margin: 10px auto;
+                          width: min(660px, 100%); background: color-mix(in srgb, var(--panel) 92%, transparent); box-shadow: 0 9px 24px rgba(23, 59, 75, .05); }
+  .ttcard img { border: 4px solid color-mix(in srgb, var(--hit) 12%, var(--panel)); box-shadow: 0 4px 16px rgba(15, 48, 64, .12); }
+  .ttq { font-size: 20px; font-weight: 650; letter-spacing: -.02em; }
+  .shopts { gap: 10px; }
+  .shopt { border-radius: 12px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 90%, transparent);
+           box-shadow: 0 4px 12px rgba(23, 59, 75, .04); }
+  .shopt:hover:not(:disabled) { border-color: var(--link); transform: translateY(-2px); }
+  .chips .chip, .archbar { border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 82%, var(--cell)); }
+  .seasons { border-spacing: 0 8px; }
+  .seasons td, .cutable td { box-shadow: 0 3px 9px rgba(23, 59, 75, .045); }
+  .cuboard { padding: 10px; border: 1px solid var(--line); border-radius: 17px; background: color-mix(in srgb, var(--panel) 87%, transparent); box-shadow: 0 10px 28px rgba(23, 59, 75, .05); }
+  .cutable { border-spacing: 0 7px; }
+  .cutable th { padding: 9px 11px; color: var(--muted); font-size: 11px; letter-spacing: .055em; text-transform: uppercase; }
+  #view-cups .cutable thead th { background: var(--panel); box-shadow: 0 5px 0 var(--panel); }
+  .cutable td { background: color-mix(in srgb, var(--cell) 78%, var(--panel)); }
+  .cutable tr:hover td { background: color-mix(in srgb, var(--link) 8%, var(--panel)); }
+  .cups-controls { border: 1px solid var(--line); border-radius: 17px; padding: 16px; background: color-mix(in srgb, var(--panel) 90%, transparent); box-shadow: 0 10px 28px rgba(23, 59, 75, .05); }
+  .hlcard, .mapwrap .mapsvg { border-radius: 17px; box-shadow: 0 10px 24px rgba(23, 59, 75, .06); }
+  .hlcard { border-color: var(--line); background: color-mix(in srgb, var(--panel) 88%, var(--cell)); }
+  .foot { margin-top: 28px; }
+  @media (max-width: 700px) {
+    header { padding: 24px 14px 10px; }
+    #view-hub { padding-top: 16px; }
+    .hubhead { padding: 17px; border-radius: 15px; }
+    .gamebar { padding: 13px 14px; border-radius: 14px; }
+    .grow, .gcard { min-height: 64px; }
+    .ttcard, .ptquestion, .cups-controls { border-radius: 14px; }
+    .cuboard { padding: 5px; border-radius: 14px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .glist, .hubgrid, .gamebar, .ttcard, .ptquestion, .cups-controls, .cuboard { animation: rinkfade .38s ease both; }
+    @keyframes rinkfade { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  }
 </style>
 </head>
 <body class="hubmode">
