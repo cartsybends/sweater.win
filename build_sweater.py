@@ -1114,6 +1114,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shdot.now { color: #06313b; border-color: transparent; background: linear-gradient(135deg, #b7f3ec, #6dd4da); box-shadow: 0 0 0 3px var(--arena-glow), 0 4px 11px rgba(36, 164, 159, .18); }
   .shopt { position: relative; overflow: hidden; min-height: 62px; border-radius: 13px; font-weight: 700; text-align: left; padding: 13px 16px 13px 48px; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s; }
   .shopt::before { content: ""; position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); border: 2px solid color-mix(in srgb, var(--fg) 32%, transparent); border-radius: 50%; }
+  .trname { position: relative; z-index: 1; display: block; padding-right: 56px; }
+  .trlogo { position: absolute; z-index: 0; right: -5px; top: 50%; width: 92px; height: 92px; object-fit: contain;
+             transform: translateY(-50%); opacity: .18; filter: drop-shadow(0 5px 5px rgba(4, 24, 35, .14)); pointer-events: none; }
+  .shopt:hover:not(:disabled) .trlogo { opacity: .28; transform: translateY(-50%) scale(1.06); }
+  .shopt.right .trlogo, .shopt.wrong .trlogo { opacity: .25; filter: brightness(0) invert(1) drop-shadow(0 5px 5px rgba(0,0,0,.16)); }
   .shopt:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--arena-blue); background: color-mix(in srgb, var(--arena-blue) 8%, var(--panel)); box-shadow: 0 10px 18px rgba(18, 74, 92, .12); }
   .shopt.right, .shopt.wrong { color: #fff; }
   .shopt.right::before { border-color: #fff; box-shadow: inset 0 0 0 4px var(--hit-fg); }
@@ -1141,6 +1146,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .grow:hover:not(:disabled), .gcard:hover:not(:disabled) { transform: none; }
     .gamebar { padding: 15px; border-radius: 16px; }
     .shopt { min-height: 56px; }
+    .trlogo { width: 78px; height: 78px; right: -4px; }
     #view-trophy .optrow { width: 100%; justify-content: center; gap: 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1791,7 +1797,7 @@ const API_ON = /^https?:\/\//.test(API);
 const DAILY = /*__DAILY_ALL__*/{};   // game -> { "YYYY-MM-DD" (Eastern) -> puzzle }
 const DAILY_HL = /*__DAILY_HL__*/{};
 const CUP_ROWS = /*__CUPS__*/[];   // [year, champion, runner-up, Conn Smythe winner, Conn Smythe team]
-const TROPHY_WINNERS = /*__TROPHIES__*/[];   // [trophy, season start year, winner]
+const TROPHY_WINNERS = /*__TROPHIES__*/[];   // [trophy, season start year, winner, team at the time]
 const START = /*__START_ALL__*/{};   // game -> date of Daily #1
 
 // abbr: [conference, division]
@@ -3862,24 +3868,32 @@ G.playoff = {
 // Every trophy round the page has been given, so unlimited play draws on the same history.
 const TROPHY_HISTORY = (() => {
   const winners = new Map();
-  for (const [t, y, w] of TROPHY_WINNERS) {
+  for (const [t, y, w, team = ""] of TROPHY_WINNERS) {
     if (!t || !Number.isInteger(y) || !w) continue;
-    winners.set(`${t}:${y}`, { t, y, w });
+    winners.set(`${t}:${y}`, { t, y, w, team });
   }
   for (const day of Object.values(DAILY.trophy || {})) {
     for (const r of day.rounds || []) {
       const names = r.names || (r.ids || []).map(i => (BYID.get(i) || {}).name);
       if (!names || !names[r.a]) continue;
-      winners.set(`${r.t}:${r.y}`, { t: r.t, y: r.y, w: names[r.a] });
+      const old = winners.get(`${r.t}:${r.y}`);
+      winners.set(`${r.t}:${r.y}`, { t: r.t, y: r.y, w: names[r.a],
+        team: (r.teams || [])[r.a] || (old && old.team) || "" });
     }
   }
   // Build these after combining the full history and the daily fallback.  This
   // keeps the multiple-choice pools playable even if an award-history fetch
   // only supplied the daily rounds during a particular build.
   const all = [...winners.values()], byTrophy = {};
-  for (const e of all) byTrophy[e.t] = [...(byTrophy[e.t] || []), { y: e.y, w: e.w }];
+  for (const e of all) byTrophy[e.t] = [...(byTrophy[e.t] || []), { y: e.y, w: e.w, team: e.team }];
   return { winners: all, byTrophy };
 })();
+function trophyTeam(trophy, year, winner) {
+  const candidates = (TROPHY_HISTORY.byTrophy[trophy] || [])
+    .filter(e => e.w === winner && e.team)
+    .sort((a, b) => Math.abs(a.y - year) - Math.abs(b.y - year));
+  return candidates.length ? candidates[0].team : "";
+}
 function trophyRandom(rnd, trophy = "all") {
   const entries = trophy === "all" ? TROPHY_HISTORY.winners : TROPHY_HISTORY.winners.filter(e => e.t === trophy);
   if (entries.length < 20) return null;
@@ -3893,10 +3907,10 @@ function trophyRandom(rnd, trophy = "all") {
     if (new Set(pool.map(x => x.w)).size < 3) pool = all;
     pool = [...new Map(pool.sort((a, b) => Math.abs(a.y - e.y) - Math.abs(b.y - e.y)).map(x => [x.w, x])).values()];
     if (pool.length < 3) continue;
-    const names = shuffled(pool, rnd).slice(0, 3).map(x => x.w);
+    const choices = shuffled(pool, rnd).slice(0, 3);
     const a = Math.floor(rnd() * 4);
-    names.splice(a, 0, e.w);
-    rounds.push({ t: e.t, y: e.y, names, a });
+    choices.splice(a, 0, e);
+    rounds.push({ t: e.t, y: e.y, names: choices.map(x => x.w), teams: choices.map(x => x.team || ""), a });
     used.add(`${e.t}:${e.y}`);
   }
   return rounds.length === 20 ? { rounds, rid: Math.random() } : null;
@@ -3912,7 +3926,10 @@ G.trophy = {
     const trophy = this.trophy();
     const v = DAILY.trophy[k];
     if (trophy === "all" && v && v.rounds && v.rounds.length >= 20 && v.rounds.every(r => (r.names || []).length === 4 || (r.ids || []).every(i => BYID.has(i)))) {
-      return { rounds: v.rounds.map(r => ({ ...r, names: r.names || r.ids.map(i => (BYID.get(i) || {}).name || "?") })) };
+      return { rounds: v.rounds.map(r => {
+        const names = r.names || r.ids.map(i => (BYID.get(i) || {}).name || "?");
+        return { ...r, names, teams: r.teams || names.map(name => trophyTeam(r.t, r.y, name)) };
+      }) };
     }
     return trophyRandom(seeded(hash(`sweater-trophy-${trophy}-${k}`)), trophy);
   },
@@ -3953,7 +3970,9 @@ G.trophy = {
       : `Who won the <b>${esc(r.t)}</b> for ${seasonLabel(r.y)}?`;
     $("trOpts").innerHTML = st.over && !showing ? "" : r.names.map((name, n) => {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
-      return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>${esc(name)}</button>`;
+      const team = (r.teams || [])[n] || trophyTeam(r.t, r.y, name);
+      return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>` +
+        `${team ? `<img class="trlogo" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
     }).join("");
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
@@ -5394,6 +5413,8 @@ def fetch(team):
 NICKNAMES = [
     ("Golden Knights", "VGK"), ("Maple Leafs", "TOR"), ("Blue Jackets", "CBJ"), ("Red Wings", "DET"),
     ("Blackhawks", "CHI"), ("Black Hawks", "CHI"), ("Utah Hockey Club", "UTA"), ("Mammoth", "UTA"),
+    ("Minnesota North Stars", "MNS"), ("Hartford Whalers", "HFD"), ("Quebec Nordiques", "QUE"),
+    ("Atlanta Flames", "AFM"), ("Colorado Rockies", "CLR"),
     ("Ducks", "ANA"), ("Bruins", "BOS"), ("Sabres", "BUF"), ("Flames", "CGY"), ("Hurricanes", "CAR"),
     ("Avalanche", "COL"), ("Stars", "DAL"), ("Oilers", "EDM"), ("Panthers", "FLA"), ("Kings", "LAK"),
     ("Wild", "MIN"), ("Canadiens", "MTL"), ("Predators", "NSH"), ("Devils", "NJD"), ("Islanders", "NYI"),
@@ -6137,7 +6158,7 @@ def fetch_cup_history(cache, today):
     if len(finals) < 30:
         print("  Cup history: couldn't read Wikipedia's Stanley Cup table, so Playoff History is off for now.")
         return []
-    smythe = {y: w for t, y, w in AWARD_HISTORY if "Conn Smythe" in t}
+    smythe = {r[1]: r[2] for r in AWARD_HISTORY if "Conn Smythe" in r[0]}
     smythe.update(CONN_SMYTHE_BY_FINAL_YEAR)
     rows = [[y, a, b, smythe.get(y + 1, ""), CONN_SMYTHE_TEAM_BY_FINAL_YEAR.get(y + 1, "")]
             for y, a, b in finals if y >= CUPS_FIRST_YEAR]
@@ -6160,7 +6181,7 @@ def cups_puzzle(history, rnd):
 
 
 def wiki_award_history():
-    """Trophy winners from Wikipedia's per-trophy tables: [(trophy, season start year, winner)]."""
+    """Trophy winners plus their team from Wikipedia's per-trophy tables."""
     rows = []
     for title in WIKI_TROPHIES:
         found = []
@@ -6168,10 +6189,11 @@ def wiki_award_history():
             season = SEASON_RE.search(text)
             if not season:
                 continue
+            team = next((abbrev_for(name) for name in names if TEAM_LINK_RE.search(name) and abbrev_for(name)), "")
             for name in names:
                 if " " not in name or NOT_A_PLAYER.search(name) or re.search(r"\d", name):
                     continue
-                found.append((title, int(season.group(1)), name))
+                found.append((title, int(season.group(1)), name, team))
                 break
         if len(found) >= 10:
             rows += found
@@ -6182,16 +6204,17 @@ def wiki_award_history():
 
 def report_trophies(rows):
     counts = {}
-    for t, y, w in rows:
+    for t, y, w, *_ in rows:
         counts[t] = counts.get(t, 0) + 1
     print("    " + ", ".join(f"{t.replace(' Trophy', '').replace(' Memorial', '')}: {n}"
                              for t, n in sorted(counts.items())))
 
 
 def fetch_award_history(cache, today):
-    """[(trophy, season start year, winner name)] for every winner the NHL lists, retired players included."""
+    """[(trophy, season start year, winner name, team)] for every winner the NHL lists."""
     saved = cache.get("_trophies")
-    if saved and (today - date.fromisoformat(saved["day"])).days < 14 and saved.get("rows"):
+    if (saved and saved.get("team_version") == 1
+            and (today - date.fromisoformat(saved["day"])).days < 14 and saved.get("rows")):
         rows = [tuple(r) for r in saved["rows"]]
         if any("Conn Smythe" in r[0] for r in rows):
             print(f"  Award history: {len(rows)} winners saved from an earlier build")
@@ -6218,6 +6241,8 @@ def fetch_award_history(cache, today):
                     continue
                 season = dig(sn, "seasonId", "season", "seasonNumber")
                 winner = dig(sn, "playerName", "fullName", "winner", "player")
+                team = dig(sn, "teamAbbrev", "teamCode", "teamName", "team") or ""
+                team = str(team).upper() if re.fullmatch(r"[A-Za-z]{2,4}", str(team)) else (abbrev_for(str(team)) or "")
                 if not winner:
                     first, last = dig(sn, "firstName"), dig(sn, "lastName")
                     winner = f"{first} {last}" if first and last else None
@@ -6226,7 +6251,7 @@ def fetch_award_history(cache, today):
                 except (TypeError, ValueError):
                     continue
                 if name and winner and 1900 < year < 2100:
-                    found.append((str(name), year, str(winner).strip()))
+                    found.append((str(name), year, str(winner).strip(), team))
         if len(found) >= 200:
             rows, source = sorted(set(found)), url
             break
@@ -6238,22 +6263,35 @@ def fetch_award_history(cache, today):
         if not any("Conn Smythe" in r[0] for r in rows):
             print("    (no Conn Smythe winners yet, so this isn't saved and will be looked up again next build)")
             return rows
-        cache["_trophies"] = {"day": today.isoformat(), "rows": [list(r) for r in rows]}
+        cache["_trophies"] = {"team_version": 1, "day": today.isoformat(), "rows": [list(r) for r in rows]}
     else:
         print("  Award history: neither the NHL's award lists nor Wikipedia were reachable, "
               "so Trophy Case uses current players only.")
     return rows
 
 
+def trophy_team_for(player, year):
+    """The team a current/archived player spent most of an award season with."""
+    rows = [r for r in player.get("car", []) if r[0] == year and len(r) > 2 and r[1]]
+    return max(rows, key=lambda r: r[2])[1] if rows else ""
+
+
 def trophy_entries(players, history=()):
-    """(trophy, year, winner name) — the league's full history when we have it."""
-    out = [(t, y, w) for t, y, w in history
-           if y >= TROPHY_FIRST_YEAR and not any(skip in t for skip in TROPHY_SKIP)]
+    """(trophy, year, winner name, team) — historical winners with their award-season club."""
+    by_name = {p["name"]: p for p in players}
+    out = []
+    for row in history:
+        if len(row) < 3:
+            continue
+        t, y, w = row[:3]
+        team = row[3] if len(row) > 3 else ""
+        if y >= TROPHY_FIRST_YEAR and not any(skip in t for skip in TROPHY_SKIP):
+            out.append((t, y, w, team or trophy_team_for(by_name.get(w, {}), y)))
     if not out:
         for p in players:
             for name, year in p.get("aw", []):
                 if not any(skip in name for skip in TROPHY_SKIP):
-                    out.append((name, year, p["name"]))
+                    out.append((name, year, p["name"], trophy_team_for(p, year)))
     return sorted(set(out))
 
 
@@ -6261,30 +6299,34 @@ def trophy_puzzle(players, entries, rnd):
     if len(entries) < 12:
         return None
     by_trophy = {}
-    for t, y, w in entries:
-        by_trophy.setdefault(t, []).append((y, w))
+    for t, y, w, team in entries:
+        by_trophy.setdefault(t, []).append((y, w, team))
     rounds, used = [], set()
     for _ in range(3000):
         if len(rounds) == 20:
             return {"rounds": rounds}
-        t, y, w = rnd.choice(entries)
+        t, y, w, team = rnd.choice(entries)
         if (t, y) in used:
             continue
         # the wrong options are always other winners of the same trophy, so a Vezina round
         # never lists a skater; a trophy with too few winners is skipped instead
-        all_others = [(yy, n) for yy, n in by_trophy[t] if n != w]
-        others = [(yy, n) for yy, n in all_others if abs(yy - y) <= 12]
-        if len({n for _, n in others}) < 3:
-            others = [(yy, n) for yy, n in all_others if abs(yy - y) <= 20]
-        if len({n for _, n in others}) < 3:
+        all_others = [(yy, n, tm) for yy, n, tm in by_trophy[t] if n != w]
+        others = [(yy, n, tm) for yy, n, tm in all_others if abs(yy - y) <= 12]
+        if len({n for _, n, _ in others}) < 3:
+            others = [(yy, n, tm) for yy, n, tm in all_others if abs(yy - y) <= 20]
+        if len({n for _, n, _ in others}) < 3:
             others = all_others
-        others = list(dict.fromkeys(n for _, n in sorted(others, key=lambda item: abs(item[0] - y))))
+        by_winner = {}
+        for row in sorted(others, key=lambda item: abs(item[0] - y)):
+            by_winner.setdefault(row[1], row)
+        others = list(by_winner.values())
         if len(others) < 3:
             continue
-        names = rnd.sample(others, 3)
+        choices = rnd.sample(others, 3)
         a = rnd.randrange(4)
-        names.insert(a, w)
-        rounds.append({"t": t, "y": y, "names": names, "a": a})
+        choices.insert(a, (y, w, team))
+        rounds.append({"t": t, "y": y, "names": [n for _, n, _ in choices],
+                       "teams": [tm for _, _, tm in choices], "a": a})
         used.add((t, y))
     return None
 
