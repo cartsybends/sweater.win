@@ -1358,25 +1358,17 @@ TEMPLATE = r'''<!DOCTYPE html>
      the sticky header just past that row gutter so season text cannot enter it. */
   @media (min-width: 701px) {
     #view-cups .cutable { border-spacing: 0 7px; }
-    /* These two sticky layers deliberately use a solid surface.  The previous
-       translucent card treatment looked nice at rest, but let crests and team
-       names from scrolling rows show through the controls and column labels. */
-    #view-cups .cups-controls {
-      z-index: 7;
-      background: var(--panel);
-      background-color: var(--panel);
-    }
-    #view-cups .cutable thead th {
-      z-index: 6;
-      background: var(--panel);
-      background-color: var(--panel);
-      opacity: 1;
-      box-shadow: 0 9px 0 var(--panel);
-    }
+    #view-cups .cutable thead th { z-index: 6; box-shadow: 0 9px 0 var(--panel); }
     #view-cups .cutable thead th:not(:last-child), #view-cups .cutable tbody td:not(:last-child) {
       border-right: 1px solid var(--line); background-clip: padding-box;
     }
     #view-cups .cutable tbody td { border-bottom: 0; }
+  }
+  /* Keep the light-mode Playoff History controls looking exactly as before,
+     but make their near-white surface solid instead of 90% transparent. */
+  :root[data-theme="light"] #view-cups .cups-controls { background: #fefeff; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) #view-cups .cups-controls { background: #fefeff; }
   }
   @media (max-width: 700px) {
     .cucell { min-height: 48px; }
