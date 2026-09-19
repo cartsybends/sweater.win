@@ -1292,6 +1292,32 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (max-width: 700px) {
     :root[data-theme="dark"] .hubhead, :root[data-theme="dark"] .gamebar { border-radius: 12px; }
   }
+
+  /* Navigation and game-heading refinement. */
+  .navbar .navactions { gap: 4px; }
+  .navbar .navactions .iconbtn, .navbar .themebtn {
+    width: 36px; height: 36px; min-width: 36px; padding: 0; display: inline-grid; place-items: center;
+    font-size: 16px !important; line-height: 1; text-align: center;
+  }
+  .navbar .switch {
+    gap: 6px; margin: 0 4px; padding: 3px 8px 3px 5px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+    background: rgba(255,255,255,.045); color: rgba(255,255,255,.82); font-size: 12px; font-weight: 650; letter-spacing: .01em;
+  }
+  .navbar .track { width: 28px; height: 16px; background: rgba(255,255,255,.22); }
+  .navbar .track::after { top: 2px; left: 2px; width: 12px; height: 12px; }
+  .navbar .switch input:checked + .track { background: var(--accent); }
+  .navbar .switch input:checked + .track::after { transform: translateX(12px); }
+  .gamebar { display: grid; grid-template-columns: minmax(118px, 1fr) auto minmax(118px, 1fr); align-items: center; }
+  .gamebar .backbtn { grid-column: 1; justify-self: start; margin: 0; }
+  .gamebar .gtitle { grid-column: 2; justify-self: center; padding: 0; margin: 0; }
+  .gamebar .gtwords { text-align: center; }
+  @media (max-width: 700px) {
+    .navbar .navactions .iconbtn, .navbar .themebtn { width: 32px; height: 32px; min-width: 32px; font-size: 15px !important; }
+    .navbar .switch { margin: 0 2px; padding: 3px; }
+    .gamebar { grid-template-columns: 1fr; gap: 8px; }
+    .gamebar .backbtn { grid-column: 1; }
+    .gamebar .gtitle { grid-column: 1; }
+  }
 </style>
 </head>
 <body class="hubmode">
@@ -1303,7 +1329,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play" title="How to play">?</button>
     <label class="switch" title="Play as many puzzles as you like"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited</span></label>
-    <button class="iconbtn round" id="settingsBtn" type="button" aria-label="Appearance settings" title="Appearance settings">⚙</button>
+    <button class="iconbtn round" id="settingsBtn" type="button" aria-label="Theme settings" title="Theme settings">🖌️</button>
     <button class="iconbtn round themebtn" id="themeBtn" type="button"></button>
   </div>
 </nav>
