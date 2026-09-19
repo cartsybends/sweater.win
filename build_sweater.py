@@ -4094,19 +4094,27 @@ function hltValue(team, metric) {
 function hltRandom(rnd) {
   const teams = Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 10);
   if (teams.length < 4) return null;
-  const metric = pick(Object.keys(HLT_METRICS)), seq = [];
-  while (seq.length < HL_LEN + 1) {
-    const recent = seq.slice(-4).map(x => x[0]);
-    let t = null;
-    for (let i = 0; i < 60 && !t; i++) {
-      const c = teams[Math.floor(rnd() * teams.length)];
-      if (seq.length && hltValue(c, metric) === seq[seq.length - 1][1]) continue;
-      if ((i < 40 ? recent : recent.slice(-1)).includes(c)) continue;
-      t = c;
+  const metrics = Object.keys(HLT_METRICS), rounds = [];
+  while (rounds.length < HL_LEN) {
+    const recent = rounds.slice(-2).flatMap(r => [r[0], r[2]]);
+    const metricChoices = metrics.filter(m => m !== rounds.at(-1)?.[4]);
+    let pair = null;
+    for (let attempt = 0; attempt < 100 && !pair; attempt++) {
+      const metric = metricChoices[Math.floor(rnd() * metricChoices.length)];
+      const a = teams[Math.floor(rnd() * teams.length)], b = teams[Math.floor(rnd() * teams.length)];
+      if (a === b || (attempt < 70 && (recent.includes(a) || recent.includes(b)))) continue;
+      const av = hltValue(a, metric), bv = hltValue(b, metric);
+      if (av === bv) continue;
+      pair = [a, av, b, bv, metric];
     }
-    seq.push([t || teams[0], hltValue(t || teams[0], metric)]);
+    if (!pair) {
+      const metric = metricChoices[0], a = teams[rounds.length % teams.length];
+      const b = teams[(rounds.length + 1) % teams.length];
+      pair = [a, hltValue(a, metric), b, hltValue(b, metric), metric];
+    }
+    rounds.push(pair);
   }
-  return { metric, seq, rid: Math.random() };
+  return { rounds };
 }
 G.hlt = {
   kind: "streak", repeat: true, title: "Team Higher or Lower", share: "Sweater Team H/L", view: "view-hlt",
@@ -4114,21 +4122,21 @@ G.hlt = {
   pool: () => Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 10),
   daily(k) {
     const v = DAILY.hlt[k];
-    if (v && v.seq && v.seq.length > 1 && HLT_METRICS[v.metric]) return v;
+    if (v && Array.isArray(v.rounds) && v.rounds.length && v.rounds.every(r => Array.isArray(r) && r.length === 5 && HLT_METRICS[r[4]])) return v;
     return hltRandom(seeded(hash("sweater-hlt-" + k)));
   },
   random: () => hltRandom(Math.random),
-  tid: t => t.rid ? `hlt:${t.rid}` : `${t.metric}:${hash(t.seq.map(x => x[0]).join())}`,
-  limit: t => t.seq.length - 1,
-  correct(t, i, ans) { const a = Number(t.seq[i][1]), b = Number(t.seq[i + 1][1]); return ans === "H" ? b >= a : b <= a; },
+  tid: t => t.rid ? `hlt:${t.rid}` : `hlt:${hash(t.rounds.map(r => r.join(":" )).join("|"))}`,
+  limit: t => t.rounds.length,
+  correct(t, i, ans) { const r = t.rounds[i]; if (!r) return false; const a = Number(r[1]), b = Number(r[3]); return ans === "H" ? b >= a : b <= a; },
   score(t, g) { let n = 0; for (const [i, x] of g.entries()) { if (!this.correct(t, i, x)) break; n++; } return n; },
   isWin: () => false,
   isDone(t, g) { return g.some((x, i) => !this.correct(t, i, x)) || g.length >= this.limit(t); },
   wonGame(t, g) { return g.length >= this.limit(t) && this.score(t, g) === g.length; },
   player: () => null,
   meta(t) {
-    const i = Math.min(S.hlt.guesses.length, t.seq.length - 1), info = HLT_METRICS[t.metric];
-    return `${teamName(t.seq[i][0])}: ${info.show(t.seq[i][1])} ${info.unit}`;
+    const i = Math.min(S.hlt.guesses.length, t.rounds.length - 1), r = t.rounds[i], info = HLT_METRICS[r[4]];
+    return `${teamName(r[0])}: ${info.show(r[1])} ${info.unit} · ${teamName(r[2])}: ${info.show(r[3])}`;
   },
   endText(t, g, won) {
     const n = this.score(t, g);
@@ -4141,14 +4149,14 @@ G.hlt = {
     const marks = saved.guesses.map((x, i) => this.squares(t, x, i)).join("");
     const rows = (marks.match(/(?:🟩|🟥){1,10}/gu) || []).join("\n");
     const won = this.wonGame(t, saved.guesses);
-    return `Sweater Team H/L #${num} · ${HLT_METRICS[t.metric].name}\nStreak: ${this.score(t, saved.guesses)}${won ? " (perfect!)" : ""}\n\n${rows}${link}`;
+    return `Sweater Team H/L #${num} · Mixed stats\nStreak: ${this.score(t, saved.guesses)}${won ? " (perfect!)" : ""}\n\n${rows}${link}`;
   },
-  onFinish(st) { const k = `sweater-hlt-best-${st.target.metric}`, n = this.score(st.target, st.guesses);
+  onFinish(st) { const k = "sweater-hlt-best", n = this.score(st.target, st.guesses);
     if (n > (store.get(k) || 0)) store.set(k, n); },
   reset() { clearTimeout(this.timer); this.pending = false; },
-  card(t, i, reveal, state) {
-    const [team, value] = t.seq[i], info = HLT_METRICS[t.metric];
-    const other = teamName(t.seq[Math.max(0, i - 1)][0]);
+  card(t, i, side, reveal, state) {
+    const r = t.rounds[i], right = side === "b";
+    const team = r[right ? 2 : 0], value = r[right ? 3 : 1], other = teamName(r[right ? 0 : 2]), info = HLT_METRICS[r[4]];
     return `<div class="hlcard ${state || ""}">
       <img class="hltlogo" src="${logo(team)}" alt="" onerror="this.style.visibility='hidden'">
       <p class="hlname">${esc(teamName(team))}</p>
@@ -4162,11 +4170,11 @@ G.hlt = {
   guess(t, x, fresh) {
     if (x !== "H" && x !== "L") return null;
     const i = S.hlt.guesses.length;
-    if (i + 1 >= t.seq.length) return null;
+    if (i >= t.rounds.length) return null;
     const ok = this.correct(t, i, x);
     if (fresh) {
       this.pending = true;
-      $("htB").innerHTML = this.card(t, i + 1, true, ok ? "ok" : "bad");
+      $("htB").innerHTML = this.card(t, i, "b", true, ok ? "ok" : "bad");
       clearTimeout(this.timer);
       this.timer = setTimeout(() => { this.pending = false; if (game === "hlt") this.render(t, S.hlt, true); }, ok ? 1100 : 1400);
     }
@@ -4174,15 +4182,15 @@ G.hlt = {
   },
   render(t, st, slide = false) {
     if (this.pending) return;
-    const info = HLT_METRICS[t.metric];
+    const i = st.over ? Math.max(0, Math.min(st.guesses.length - 1, t.rounds.length - 1)) : st.guesses.length;
+    const info = HLT_METRICS[t.rounds[i][4]];
     $("htIntro").innerHTML = `Which team has the higher <b>${esc(info.name.toLowerCase())}</b>?`;
     $("htStreak").textContent = this.score(t, st.guesses);
-    $("htBest").textContent = Math.max(store.get(`sweater-hlt-best-${t.metric}`) || 0, this.score(t, st.guesses));
+    $("htBest").textContent = Math.max(store.get("sweater-hlt-best") || 0, this.score(t, st.guesses));
     $("htLeft").textContent = st.over ? "" : `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run · ties count as right`;
-    const i = st.over ? Math.max(0, Math.min(st.guesses.length, t.seq.length - 1) - 1) : st.guesses.length;
     const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
-    $("htA").innerHTML = this.card(t, i, true, "");
-    $("htB").innerHTML = this.card(t, i + 1, st.over, st.over ? (lastOk ? "ok" : "bad") : "");
+    $("htA").innerHTML = this.card(t, i, "a", true, "");
+    $("htB").innerHTML = this.card(t, i, "b", st.over, st.over ? (lastOk ? "ok" : "bad") : "");
     if (slide) { $("htPair").classList.remove("slide"); void $("htPair").offsetWidth; $("htPair").classList.add("slide"); }
   },
   squares(t, x, i) { return this.correct(t, i, x) ? "🟩" : "🟥"; },
@@ -6576,23 +6584,27 @@ def hlt_puzzle(players, rnd):
     teams = sorted(t for t, r in rosters.items() if len(r) >= 10)
     if len(teams) < 4:
         return None
-    metric = rnd.choice(HLT_METRICS)
-    values = {t: hlt_value(rosters[t], metric) for t in teams}
-    seq = []
-    while len(seq) < HL_LEN + 1:
-        recent = [x[0] for x in seq[-4:]]
-        pick = None
-        for attempt in range(60):
-            t = rnd.choice(teams)
-            if seq and values[t] == seq[-1][1]:
+    values = {metric: {t: hlt_value(rosters[t], metric) for t in teams} for metric in HLT_METRICS}
+    rounds = []
+    while len(rounds) < HL_LEN:
+        recent = [team for r in rounds[-2:] for team in (r[0], r[2])]
+        metric_choices = [m for m in HLT_METRICS if not rounds or m != rounds[-1][4]]
+        pair = None
+        for attempt in range(100):
+            metric = rnd.choice(metric_choices)
+            left, right = rnd.choice(teams), rnd.choice(teams)
+            if left == right or (attempt < 70 and (left in recent or right in recent)):
                 continue
-            if t in (recent if attempt < 40 else recent[-1:]):
+            if values[metric][left] == values[metric][right]:
                 continue
-            pick = t
+            pair = [left, values[metric][left], right, values[metric][right], metric]
             break
-        pick = pick if pick else rnd.choice(teams)
-        seq.append([pick, values[pick]])
-    return {"metric": metric, "seq": seq}
+        if pair is None:
+            metric = metric_choices[0]
+            left, right = teams[len(rounds) % len(teams)], teams[(len(rounds) + 1) % len(teams)]
+            pair = [left, values[metric][left], right, values[metric][right], metric]
+        rounds.append(pair)
+    return {"rounds": rounds}
 
 
 def season_puzzle(players, rnd):
@@ -7003,10 +7015,11 @@ def extra_ids(v):
         return []
     if "ids" in v:
         return list(v["ids"])
-    if "rounds" in v:                                    # two truths, trophy case
+    if "rounds" in v:                                    # two truths, trophy case, team H/L
         out = []
         for r in v["rounds"]:
-            out += [r["p"]] if "p" in r else list(r.get("ids", []))
+            if isinstance(r, dict):
+                out += [r["p"]] if "p" in r else list(r.get("ids", []))
         return out
     if "team" in v and "ids" in v:
         return list(v["ids"])
