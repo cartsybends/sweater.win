@@ -1359,7 +1359,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-trophy" hidden>
-    <div class="optrow"><label class="pickstat">Questions
+    <div class="optrow"><label class="pickstat">Trophy
+      <select id="trTrophy" aria-label="Trophy category"></select>
+    </label><label class="pickstat">Questions
       <select id="trRounds" aria-label="Number of questions">
         <option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option>
       </select></label></div>
@@ -3600,8 +3602,8 @@ const TROPHY_HISTORY = (() => {
   }
   return { winners: [...winners.values()], byTrophy };
 })();
-function trophyRandom(rnd) {
-  const entries = TROPHY_HISTORY.winners;
+function trophyRandom(rnd, trophy = "all") {
+  const entries = trophy === "all" ? TROPHY_HISTORY.winners : TROPHY_HISTORY.winners.filter(e => e.t === trophy);
   if (entries.length < 20) return null;
   const rounds = [], used = new Set();
   for (let i = 0; i < 3000 && rounds.length < 20; i++) {
@@ -3625,16 +3627,19 @@ G.trophy = {
   kind: "score", repeat: true, title: "Trophy Case", share: "Sweater Trophy Case", view: "view-trophy",
   max: 20, next: "Play again", hideReveal: true,
   length(t) { return Math.min(Number(store.get("sweater-trophy-rounds")) || 5, t.rounds.length); },
+  trophy() { return store.get("sweater-trophy-filter") || "all"; },
+  trophies() { return Object.keys(TROPHY_HISTORY.byTrophy).filter(t => TROPHY_HISTORY.winners.filter(e => e.t === t).length >= 20).sort(); },
   pool: () => TROPHY_HISTORY.winners.length >= 20 ? PLAYERS : [],
   daily(k) {
+    const trophy = this.trophy();
     const v = DAILY.trophy[k];
-    if (v && v.rounds && v.rounds.length >= 20 && v.rounds.every(r => (r.names || []).length === 4 || (r.ids || []).every(i => BYID.has(i)))) {
+    if (trophy === "all" && v && v.rounds && v.rounds.length >= 20 && v.rounds.every(r => (r.names || []).length === 4 || (r.ids || []).every(i => BYID.has(i)))) {
       return { rounds: v.rounds.map(r => ({ ...r, names: r.names || r.ids.map(i => (BYID.get(i) || {}).name || "?") })) };
     }
-    return trophyRandom(seeded(hash("sweater-trophy-" + k)));
+    return trophyRandom(seeded(hash(`sweater-trophy-${trophy}-${k}`)), trophy);
   },
-  random: () => trophyRandom(Math.random),
-  tid: t => `trophy:${t.rid || hash(t.rounds.map(r => `${r.t}${r.y}`).join())}`,
+  random() { return trophyRandom(Math.random, this.trophy()); },
+  tid: t => `trophy:${this.trophy()}:${t.rid || hash(t.rounds.map(r => `${r.t}${r.y}`).join())}`,
   player: () => null,
   right: (t, g, i) => Number(g) === t.rounds[i].a,
   score(t, g) { return g.filter((x, i) => this.right(t, x, i)).length * 2; },
@@ -3659,6 +3664,11 @@ G.trophy = {
   render(t, st) {
     const of = this.length(t), i = st.guesses.length, last = i - 1, showing = this.showing && last >= 0;
     const r = t.rounds[showing ? last : Math.min(i, of - 1)];
+    const selectedTrophy = this.trophy();
+    $("trTrophy").innerHTML = `<option value="all">All trophies</option>${this.trophies().map(name =>
+      `<option value="${esc(name)}">${esc(name)}</option>`).join("")}`;
+    $("trTrophy").value = selectedTrophy;
+    $("trTrophy").disabled = i > 0 && !st.over;
     $("trRounds").value = String(of);
     $("trRounds").disabled = i > 0 && !st.over;
     $("trDots").innerHTML = Array.from({ length: of }, (_, n) =>
@@ -3686,6 +3696,12 @@ $("trRounds").addEventListener("change", e => {
   const st = S.trophy;
   if (st.guesses.length && !st.over) return;          // locked once you've answered a round
   store.set("sweater-trophy-rounds", Number(e.target.value));
+  if (mode === "daily") loadDaily(); else loadUnlimited(true);
+});
+$("trTrophy").addEventListener("change", e => {
+  const st = S.trophy;
+  if (st.guesses.length && !st.over) return;
+  store.set("sweater-trophy-filter", e.target.value);
   if (mode === "daily") loadDaily(); else loadUnlimited(true);
 });
 
@@ -4993,8 +5009,8 @@ const HELP = {
   playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
   cups: `<p>A complete grid from 1980–81 through the latest Final, with three squares per season: the Stanley Cup winner, the runner-up and the Conn Smythe winner. Press Start, then type names for 10 minutes.</p>
     <p>One name fills every square it belongs in, and a team nickname or a surname is enough when only one answer matches it.</p>`,
-  trophy: `<p>A trophy and a season, and four names to choose from. Pick 5, 10, 15 or 20 questions, worth 2 points each.</p>
-    <p>It covers winners from 1967 onwards, retired players included, and the wrong answers are other winners of the same trophy.</p>`,
+  trophy: `<p>Choose all trophies or one specific trophy, then pick 5, 10, 15 or 20 questions. Each right answer is worth 2 points.</p>
+    <p>It covers winners from 1980 onwards, retired players included, and the wrong answers are nearby-era winners of the same trophy.</p>`,
   mroster: `<p>One player from a mystery team is shown, and you pick the team. Each wrong guess reveals another teammate, up to six. 4 tries, and yellow means the right team is in that division.</p>`,
   truths: `<p>You see a player and three statements about him. Two are true and one isn't. Tap the false one. Five rounds, 2 points each.</p>`,
   hlt: `<p>Two teams go head to head on their current rosters: average age, average height, total career goals, total career NHL games, or players born outside Canada and the USA.</p>
@@ -5735,6 +5751,34 @@ CONN_SMYTHE_BY_FINAL_YEAR = {
     2026: "Jordan Staal",
 }
 
+# A local copy keeps Playoff History available when a build machine cannot
+# reach Wikipedia or lacks its CA certificate. Years are season-start years.
+CUP_FINALS_FALLBACK = [
+    (1980, "New York Islanders", "Minnesota North Stars"), (1981, "New York Islanders", "Vancouver Canucks"),
+    (1982, "New York Islanders", "Edmonton Oilers"), (1983, "Edmonton Oilers", "New York Islanders"),
+    (1984, "Edmonton Oilers", "Philadelphia Flyers"), (1985, "Montreal Canadiens", "Calgary Flames"),
+    (1986, "Edmonton Oilers", "Philadelphia Flyers"), (1987, "Edmonton Oilers", "Boston Bruins"),
+    (1988, "Calgary Flames", "Montreal Canadiens"), (1989, "Edmonton Oilers", "Boston Bruins"),
+    (1990, "Pittsburgh Penguins", "Minnesota North Stars"), (1991, "Pittsburgh Penguins", "Chicago Blackhawks"),
+    (1992, "Montreal Canadiens", "Los Angeles Kings"), (1993, "New York Rangers", "Vancouver Canucks"),
+    (1994, "New Jersey Devils", "Detroit Red Wings"), (1995, "Colorado Avalanche", "Florida Panthers"),
+    (1996, "Detroit Red Wings", "Philadelphia Flyers"), (1997, "Detroit Red Wings", "Washington Capitals"),
+    (1998, "Dallas Stars", "Buffalo Sabres"), (1999, "New Jersey Devils", "Dallas Stars"),
+    (2000, "Colorado Avalanche", "New Jersey Devils"), (2001, "Detroit Red Wings", "Carolina Hurricanes"),
+    (2002, "New Jersey Devils", "Mighty Ducks of Anaheim"), (2003, "Tampa Bay Lightning", "Calgary Flames"),
+    (2005, "Carolina Hurricanes", "Edmonton Oilers"), (2006, "Anaheim Ducks", "Ottawa Senators"),
+    (2007, "Detroit Red Wings", "Pittsburgh Penguins"), (2008, "Pittsburgh Penguins", "Detroit Red Wings"),
+    (2009, "Chicago Blackhawks", "Philadelphia Flyers"), (2010, "Boston Bruins", "Vancouver Canucks"),
+    (2011, "Los Angeles Kings", "New Jersey Devils"), (2012, "Chicago Blackhawks", "Boston Bruins"),
+    (2013, "Los Angeles Kings", "New York Rangers"), (2014, "Chicago Blackhawks", "Tampa Bay Lightning"),
+    (2015, "Pittsburgh Penguins", "San Jose Sharks"), (2016, "Pittsburgh Penguins", "Nashville Predators"),
+    (2017, "Washington Capitals", "Vegas Golden Knights"), (2018, "St. Louis Blues", "Boston Bruins"),
+    (2019, "Tampa Bay Lightning", "Dallas Stars"), (2020, "Tampa Bay Lightning", "Montreal Canadiens"),
+    (2021, "Colorado Avalanche", "Tampa Bay Lightning"), (2022, "Vegas Golden Knights", "Florida Panthers"),
+    (2023, "Florida Panthers", "Edmonton Oilers"), (2024, "Florida Panthers", "Edmonton Oilers"),
+    (2025, "Carolina Hurricanes", "Vegas Golden Knights"),
+]
+
 
 def wiki_cup_finals():
     """[(year, champion, runner-up)] from Wikipedia's Stanley Cup champions table."""
@@ -5749,13 +5793,14 @@ def wiki_cup_finals():
             # Keep the first result from the actual Finals table rather than
             # allowing a later, unrelated row to replace it.
             out.setdefault(int(season.group(1)), (teams[0], teams[1]))
-    return sorted((y, a, b) for y, (a, b) in out.items())
+    finals = sorted((y, a, b) for y, (a, b) in out.items())
+    return finals if len(finals) >= 40 else CUP_FINALS_FALLBACK
 
 
 def fetch_cup_history(cache, today):
     """[(year, champion, runner-up, Conn Smythe winner)] — cached, since it barely changes."""
     saved = cache.get("_cups")
-    if (saved and saved.get("version") == 3 and saved.get("rows")
+    if (saved and saved.get("version") == 4 and saved.get("rows")
             and (today - date.fromisoformat(saved["day"])).days < 14):
         return [tuple(r) for r in saved["rows"]]
     finals = wiki_cup_finals()
@@ -5768,7 +5813,7 @@ def fetch_cup_history(cache, today):
     with_mvp = sum(1 for r in rows if r[3])
     print(f"  Cup history: {len(rows)} finals, {with_mvp} with a Conn Smythe winner"
           + ("" if with_mvp >= len(rows) * 0.6 else " (the grid will show winners and runners-up only)"))
-    cache["_cups"] = {"version": 3, "day": today.isoformat(), "rows": rows}
+    cache["_cups"] = {"version": 4, "day": today.isoformat(), "rows": rows}
     return [tuple(r) for r in rows]
 
 
