@@ -3917,7 +3917,7 @@ G.trophy = {
     return trophyRandom(seeded(hash(`sweater-trophy-${trophy}-${k}`)), trophy);
   },
   random() { return trophyRandom(Math.random, this.trophy()); },
-  tid: t => `trophy:${this.trophy()}:${t.rid || hash(t.rounds.map(r => `${r.t}${r.y}`).join())}`,
+  tid(t) { return `trophy:${this.trophy()}:${t.rid || hash(t.rounds.map(r => `${r.t}${r.y}`).join())}`; },
   player: () => null,
   right: (t, g, i) => Number(g) === t.rounds[i].a,
   score(t, g) { return g.filter((x, i) => this.right(t, x, i)).length * 2; },
