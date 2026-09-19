@@ -1493,7 +1493,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   .lockerrow em { color: var(--muted); font-size: 17px; font-style: normal; }
   .recapfact { margin-top: 3px; }
   .recapfact small { display: block; max-width: 280px; color: var(--muted); font-size: 10px; line-height: 1.3; }
-  .answerstate { display: inline-flex; align-items: center; margin-left: auto; padding: 3px 6px; border-radius: 999px; background: rgba(0,0,0,.13); color: inherit; font-size: 10px; font-weight: 800; letter-spacing: .045em; line-height: 1; text-transform: uppercase; }
   .welcomecard { width: min(430px, 92vw); text-align: center; }
   .welcomecard h2 { margin: 4px 0 8px; font-size: 29px; letter-spacing: -.045em; line-height: 1.05; }
   .welcomecard .settingsintro { margin: 0 auto; max-width: 350px; }
@@ -4476,9 +4475,8 @@ G.trophy = {
     $("trOpts").innerHTML = st.over && !showing ? "" : r.names.map((name, n) => {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
       const team = (r.teams || [])[n] || trophyTeam(r.t, r.y, name);
-      const state = showing && n === r.a ? "Correct" : showing && n === Number(st.guesses[last]) ? "Incorrect" : "";
       return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>` +
-        `${team ? `<img class="trlogo${logoToneClass(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span>${state ? `<span class="answerstate">${state}</span>` : ""}</button>`;
+        `${team ? `<img class="trlogo${logoToneClass(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
     }).join("");
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
@@ -4490,9 +4488,11 @@ G.trophy = {
         doGuess(b.dataset.c);
       };
     });
-    $("trMsg").textContent = showing
-      ? (this.right(t, st.guesses[last], last) ? "Correct!" : `It was ${t.rounds[last].names[t.rounds[last].a]}.`)
-      : st.over ? "" : "Winners from 1980 onwards, including retired players. Wrong answers are winners of this trophy from the same era.";
+    const trophyHint = !showing && !st.over
+      ? "Winners from 1980 onwards, including retired players. Wrong answers are winners of this trophy from the same era."
+      : "";
+    $("trMsg").textContent = trophyHint;
+    $("trMsg").hidden = !trophyHint;
     $("trNext").hidden = !(showing && !st.over);
   },
 };
