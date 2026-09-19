@@ -4860,7 +4860,7 @@ function renderPlayerProfile() {
   $("lockerHint").textContent = `${theme.title}: ${progress}/3 complete. ${progress >= 3 ? "Challenge cleared—nice work." : theme.copy}`;
   const gameRows = (ids, empty) => ids.length ? ids.slice(0, 3).map(id => {
     const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
-    return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${card.icon}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)} · ${esc(meta.time)}</small></span><em aria-hidden="true">›</em></button>`;
+    return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${card.icon}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></span><em aria-hidden="true">›</em></button>`;
   }).join("") : `<p class="lockerhint">${esc(empty)}</p>`;
   $("lockerBench").innerHTML = `<section class="lockerbenchsection"><b>Favourites</b><div class="lockerlist">${gameRows(favouriteIds(), "Star modes in the game library to keep them here.")}</div></section>
     <section class="lockerbenchsection"><b>Recently played</b><div class="lockerlist">${gameRows(recentIds(), "Your last few modes will show up here.")}</div></section>`;
@@ -5778,7 +5778,7 @@ function renderHub() {
   $("hubShelf").hidden = !shelfIds.length;
   $("hubShelf").innerHTML = shelfIds.length ? `<div class="shelfhead"><b>${shelfLabel}</b><span>${shelfHint}</span></div><div class="shelfscroll">${shelfIds.map(id => {
     const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
-    return `<button type="button" class="shelfcard" data-open="${id}"><span class="shelficon" aria-hidden="true">${card.icon}</span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)} · ${esc(meta.time)} · ${esc(meta.difficulty)}</small></button>`;
+    return `<button type="button" class="shelfcard" data-open="${id}"><span class="shelficon" aria-hidden="true">${card.icon}</span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></button>`;
   }).join("")}</div>` : "";
   const selectedFilter = store.get("sweater-library-filter") || "all";
   $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
@@ -5794,7 +5794,7 @@ function renderHub() {
         const meta = modeMeta(id), favourited = favourites.includes(id);
         return `<div class="librarygame ${cls}"><button type="button" class="grow" data-open="${id}"${ready ? "" : " disabled"}>
           <span class="gicon" aria-hidden="true">${icon}</span>
-          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small><span class="modebadges"><i class="modebadge">${esc(meta.type)}</i><i class="modebadge">${esc(meta.time)}</i><i class="modebadge difficulty-${meta.difficulty.toLowerCase()}">${esc(meta.difficulty)}</i></span></span>
+          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small><span class="modebadges"><i class="modebadge">${esc(meta.type)}</i></span></span>
           <span class="gstat">${ready ? esc(text) : "Not available"}</span>
           <span class="chev" aria-hidden="true">›</span>
         </button><button type="button" class="favtoggle" data-favorite="${id}" aria-label="${favourited ? "Remove" : "Add"} ${esc(cardTitle(id))} ${favourited ? "from" : "to"} favourites" aria-pressed="${favourited}" title="${favourited ? "Remove from" : "Add to"} favourites">★</button></div>`;
