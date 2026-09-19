@@ -1268,9 +1268,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   :root[data-theme="dark"] .hubdate { color: var(--accent); }
   :root[data-theme="dark"] .hubmeter { background: #242427; }
   :root[data-theme="dark"] .hubmeter i { background: var(--accent); box-shadow: none; }
-  /* The refresh label sits on the coloured home banner. Keep its hierarchy
-     crisp in light mode too, especially with the lighter custom accents. */
-  :root[data-theme="light"] .hubnext { color: rgba(255,255,255,.94); font-weight: 650; text-shadow: 0 1px 2px rgba(0,0,0,.22); }
+  /* Keep the light appearance genuinely white. The refresh label gets a
+     modest weight/contrast lift without changing the rest of the theme. */
+  :root[data-theme="light"] body, :root[data-theme="light"] body.hubmode { background: #fff; }
+  :root[data-theme="light"] .hubnext { color: rgba(255,255,255,.96); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,.18); }
   :root[data-theme="light"] .hubnext b { color: #fff; font-weight: 800; }
   :root[data-theme="dark"] .partycard { background: #111113; border-color: #2b2b2e; box-shadow: none; }
   :root[data-theme="dark"] .partycard:hover:not(:disabled) { transform: none; background: #18181a; box-shadow: inset 0 0 0 1px var(--accent); }
