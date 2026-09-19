@@ -554,7 +554,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cups-controls .intro { margin-top: 0; }
   #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: visible; }
   .cutable { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0 5px; }
-  .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 0 10px 4px; }
+  .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 8px 10px; }
+  #view-cups .cutable thead th { position: sticky; top: var(--cups-header-top, 0px); z-index: 2; background: var(--bg); box-shadow: 0 4px 0 var(--bg); }
   .cutable td { height: 34px; padding: 7px 10px; background: var(--cell); color: var(--cell-fg); font-size: 14px; overflow-wrap: anywhere; }
   .cutable td:first-child { border-radius: 8px 0 0 8px; font-weight: 600; font-variant-numeric: tabular-nums; width: 88px; }
   .cutable td:last-child { border-radius: 0 8px 8px 0; }
@@ -566,6 +567,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .culogo { width: 24px; height: 24px; flex: none; object-fit: contain; }
   @media (max-width: 700px) {
     .cups-controls { position: static; }
+    #view-cups .cutable thead th { position: static; }
     #view-cups .cuboard { overflow-x: auto; }
     #view-cups .cutable { min-width: 700px; }
     .cutable td, .cutable th { font-size: 12px; padding: 6px; }
@@ -3824,6 +3826,12 @@ function cupsKeys(rows, cols) {
   rows.forEach((r, y) => cols.forEach(c => cells.push({ row: y, col: c, full: cupsNorm(r[c]), player: c === 3 })));
   return cells;
 }
+function syncCupsStickyHeader() {
+  const view = $("view-cups"), controls = view.querySelector(".cups-controls");
+  if (!controls || view.hidden) return;
+  view.style.setProperty("--cups-header-top", `${Math.ceil(controls.getBoundingClientRect().height)}px`);
+}
+window.addEventListener("resize", () => { if (game === "cups") syncCupsStickyHeader(); });
 let cupsTimer = null, cupsMemory = null;
 G.cups = {
   kind: "score", repeat: false, title: "Playoff History", share: "Sweater Playoff History",
@@ -3891,6 +3899,7 @@ G.cups = {
         const team = c === 3 ? r[4] : r[c];
         return `<td class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? cupsAnswer(r[c], team) : ""}</td>`;
       }).join("")}</tr>`).join("");
+    requestAnimationFrame(syncCupsStickyHeader);
     if (running) {
       if (st.endsAt <= Date.now()) setTimeout(() => { if (game === "cups" && !S.cups.over) doGuess("END"); }, 0);
       else cupsTick();
