@@ -1342,8 +1342,12 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cuname { position: relative; z-index: 1; }
   .culogo { position: absolute; z-index: 0; right: -6px; top: 50%; width: 74px; height: 74px; transform: translateY(-50%); opacity: .17;
             filter: drop-shadow(0 4px 5px rgba(0,0,0,.14)); pointer-events: none; }
-  .cucell.got .culogo { opacity: .28; filter: brightness(0) invert(1) drop-shadow(0 4px 5px rgba(0,0,0,.16)); }
-  :root[data-theme="dark"] .cucell.got { background: color-mix(in srgb, var(--hit) 72%, #171718); }
+  /* A filled Playoff History square is a fact on the board, not an answer
+     button—keep it neutral, mark it with the player's chosen accent, and let
+     the actual crest carry the colour. */
+  .cucell.got { background: color-mix(in srgb, var(--accent) 6%, var(--cell)); box-shadow: inset 3px 0 0 var(--accent); }
+  .cucell.got .culogo { opacity: .31; filter: brightness(1.13) saturate(1.12) drop-shadow(0 4px 6px rgba(0,0,0,.16)); }
+  :root[data-theme="dark"] .cucell.got { background: #171718; box-shadow: inset 3px 0 0 var(--accent); }
   :root[data-theme="dark"] .cucell.miss { background: #171718; }
   @media (max-width: 700px) {
     .cucell { min-height: 48px; }
@@ -1357,7 +1361,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .trlogo.logo-blue { opacity: .31; filter: brightness(1.6) saturate(1.28) drop-shadow(0 5px 6px rgba(82, 140, 255, .18)); }
   .shopt:hover:not(:disabled) .trlogo.logo-blue { opacity: .42; }
   .culogo.logo-blue { opacity: .31; filter: brightness(1.6) saturate(1.28) drop-shadow(0 4px 6px rgba(82, 140, 255, .18)); }
-  .cucell.got .culogo.logo-blue { filter: brightness(0) invert(1) drop-shadow(0 4px 5px rgba(0,0,0,.16)); }
+  .cucell.got .culogo.logo-blue { opacity: .38; filter: brightness(1.68) saturate(1.32) drop-shadow(0 4px 6px rgba(82, 140, 255, .2)); }
   .shopt.right .trlogo.logo-blue { opacity: .48; filter: brightness(1.72) saturate(1.35) drop-shadow(0 5px 7px rgba(82, 140, 255, .22)); }
   .shopt.wrong .trlogo.logo-blue { opacity: .37; filter: brightness(1.62) saturate(1.32) drop-shadow(0 5px 7px rgba(82, 140, 255, .2)); }
 
@@ -1974,7 +1978,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="view" id="view-cups" hidden>
     <div class="cups-controls">
       <p class="intro">Stanley Cup winners, runners-up and Conn Smythe winners from 1980–81 through the latest Final. A team name or nickname works; players need a surname.</p>
-      <div class="hlscore"><span>Time<b id="cuTime">600</b></span><span>Squares<b id="cuCount">0/0</b></span></div>
+      <div class="hlscore"><span>Time<b id="cuTime">10:00</b></span><span>Squares<b id="cuCount">0/0</b></span></div>
       <div class="numrow wide">
         <input id="cuInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send"
                placeholder="Press Start to begin" aria-label="Team or player name">
@@ -4446,6 +4450,7 @@ $("mrGrid").addEventListener("click", e => {
 
 // ======================= playoff history =======================
 const CUPS_SECONDS = 600;
+const cupsClock = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.max(0, seconds) % 60).padStart(2, "0")}`;
 const cupsNorm = s => norm(s).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
 const cupsCols = t => t.mvp === false || !t.rows.some(r => r[3]) ? [1, 2] : [1, 2, 3];
 // "penguins", "pittsburgh" and "pittsburgh penguins" all fill a Penguins square.
@@ -4534,7 +4539,7 @@ G.cups = {
     const marks = this.filled(t, st.guesses), total = marks.length;
     const running = !!st.endsAt && !st.over;
     $("cuCount").textContent = `${marks.filter(Boolean).length}/${total}`;
-    $("cuTime").textContent = st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : CUPS_SECONDS;
+    $("cuTime").textContent = cupsClock(st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : CUPS_SECONDS);
     $("cuStart").hidden = running || !!st.over;
     $("cuInput").disabled = !running;
     $("cuInput").placeholder = running ? "Type a team or player, then press Enter" : st.over ? "Time's up" : "Press Start to begin";
@@ -4569,7 +4574,7 @@ function cupsTick() {
     if (!st.endsAt || st.over) { clearInterval(cupsTimer); return; }
     const left = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
     if (game === "cups") {
-      $("cuTime").textContent = left;
+      $("cuTime").textContent = cupsClock(left);
       $("cuTime").parentElement.classList.toggle("urgent", left <= 30);
     }
     if (left <= 0) { clearInterval(cupsTimer); if (game === "cups") doGuess("END"); }
