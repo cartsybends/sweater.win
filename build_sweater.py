@@ -1268,6 +1268,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   :root[data-theme="dark"] .hubdate { color: var(--accent); }
   :root[data-theme="dark"] .hubmeter { background: #242427; }
   :root[data-theme="dark"] .hubmeter i { background: var(--accent); box-shadow: none; }
+  /* The refresh label sits on the coloured home banner. Keep its hierarchy
+     crisp in light mode too, especially with the lighter custom accents. */
+  :root[data-theme="light"] .hubnext { color: rgba(255,255,255,.94); font-weight: 650; text-shadow: 0 1px 2px rgba(0,0,0,.22); }
+  :root[data-theme="light"] .hubnext b { color: #fff; font-weight: 800; }
   :root[data-theme="dark"] .partycard { background: #111113; border-color: #2b2b2e; box-shadow: none; }
   :root[data-theme="dark"] .partycard:hover:not(:disabled) { transform: none; background: #18181a; box-shadow: inset 0 0 0 1px var(--accent); }
   :root[data-theme="dark"] .partycta { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
@@ -2216,9 +2220,26 @@ const TEAM_NAMES = {
 };
 const DIV_NAMES = { A: "Atlantic", M: "Metropolitan", C: "Central", P: "Pacific" };
 const BYID = new Map(PLAYERS.map(p => [p.id, p]));
-const logo = t => `https://assets.nhle.com/logos/nhl/svg/${t}_light.svg`;
+// NHL's current logo CDN deliberately omits retired franchise codes. Keep a
+// focused archive map so historic trivia shows the proper mark instead of an
+// empty image. These are rendered PNG previews of the corresponding crest.
+const HISTORIC_LOGOS = Object.freeze({
+  MNS: "https://thumb.wikimedia.org/wikipedia/en/thumb/5/56/Minnesota_North_Stars_Logo_2.svg/250px-Minnesota_North_Stars_Logo_2.svg.png",
+  ATL: "https://thumb.wikimedia.org/wikipedia/en/thumb/0/02/Atlanta_Thrashers.svg/250px-Atlanta_Thrashers.svg.png",
+  HFD: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Hartford_Whalers_1992.svg/250px-Hartford_Whalers_1992.svg.png",
+  QUE: "https://thumb.wikimedia.org/wikipedia/en/thumb/9/96/Quebec_Nordiques_Logo.svg/250px-Quebec_Nordiques_Logo.svg.png",
+  AFM: "https://thumb.wikimedia.org/wikipedia/en/thumb/4/45/Atlanta_Flames_Logo.svg/250px-Atlanta_Flames_Logo.svg.png",
+  CLR: "https://thumb.wikimedia.org/wikipedia/en/thumb/2/24/Colorado_Rockies_%28NHL%29_logo.svg/250px-Colorado_Rockies_%28NHL%29_logo.svg.png",
+  ARI: "https://thumb.wikimedia.org/wikipedia/en/thumb/9/9e/Arizona_Coyotes_logo_%282021%29.svg/250px-Arizona_Coyotes_logo_%282021%29.svg.png",
+  PHX: "https://thumb.wikimedia.org/wikipedia/en/thumb/9/9e/Arizona_Coyotes_logo_%282021%29.svg/250px-Arizona_Coyotes_logo_%282021%29.svg.png",
+  KCS: "https://thumb.wikimedia.org/wikipedia/en/thumb/7/74/Kansas_City_Scouts_logo.svg/250px-Kansas_City_Scouts_logo.svg.png",
+  CGS: "https://thumb.wikimedia.org/wikipedia/en/thumb/1/17/California_Golden_Seals_Logo.svg/250px-California_Golden_Seals_Logo.svg.png",
+  OAK: "https://thumb.wikimedia.org/wikipedia/en/thumb/1/17/California_Golden_Seals_Logo.svg/250px-California_Golden_Seals_Logo.svg.png",
+  CLE: "https://thumb.wikimedia.org/wikipedia/en/thumb/7/7b/Cleveland_Barons_%28NHL%29_logo.svg/250px-Cleveland_Barons_%28NHL%29_logo.svg.png",
+});
+const logo = t => HISTORIC_LOGOS[t] || `https://assets.nhle.com/logos/nhl/svg/${t}_light.svg`;
 // Navy/royal crests need a little more lift on the contrast theme's black surfaces.
-const BLUE_LOGO_TEAMS = new Set(["BUF", "CBJ", "COL", "EDM", "MTL", "NYI", "NYR", "SEA", "STL", "TBL", "TOR", "UTA", "VAN", "WPG"]);
+const BLUE_LOGO_TEAMS = new Set(["ATL", "BUF", "CBJ", "COL", "EDM", "HFD", "MTL", "NYI", "NYR", "QUE", "SEA", "STL", "TBL", "TOR", "UTA", "VAN", "WPG"]);
 const logoToneClass = t => BLUE_LOGO_TEAMS.has(t) ? " logo-blue" : "";
 const FALLBACK = "data:image/svg+xml," + encodeURIComponent(
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='38' r='20'/><path d='M12 100c2-26 18-38 38-38s36 12 38 38z'/></svg>`);
@@ -2628,9 +2649,12 @@ function countUp(el) {
 }
 
 // ======================= more games: journey, blur, sweater number, roster =======================
-TEAM_NAMES.ARI = "Arizona";
-TEAM_NAMES.ATL = "Atlanta";
-const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "ATL"]);
+Object.assign(TEAM_NAMES, {
+  ARI: "Arizona Coyotes", PHX: "Phoenix Coyotes", ATL: "Atlanta Thrashers", MNS: "Minnesota North Stars",
+  HFD: "Hartford Whalers", QUE: "Quebec Nordiques", AFM: "Atlanta Flames", CLR: "Colorado Rockies",
+  KCS: "Kansas City Scouts", CGS: "California Golden Seals", OAK: "Oakland Seals", CLE: "Cleveland Barons",
+});
+const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "PHX", "ATL", "MNS", "HFD", "QUE", "AFM", "CLR", "KCS", "CGS", "OAK", "CLE"]);
 const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot",
                          "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].includes(g);
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
@@ -4499,7 +4523,7 @@ const CUP_TEAM_ABBRS = {
   "anaheim ducks":"ANA", "boston bruins":"BOS", "buffalo sabres":"BUF", "calgary flames":"CGY",
   "carolina hurricanes":"CAR", "chicago blackhawks":"CHI", "colorado avalanche":"COL", "dallas stars":"DAL",
   "detroit red wings":"DET", "edmonton oilers":"EDM", "florida panthers":"FLA", "los angeles kings":"LAK",
-  "minnesota north stars":"MNS", "montreal canadiens":"MTL", "mighty ducks of anaheim":"ANA", "nashville predators":"NSH",
+  "minnesota north stars":"MNS", "hartford whalers":"HFD", "quebec nordiques":"QUE", "atlanta thrashers":"ATL", "atlanta flames":"AFM", "colorado rockies":"CLR", "arizona coyotes":"ARI", "phoenix coyotes":"PHX", "kansas city scouts":"KCS", "california golden seals":"CGS", "oakland seals":"OAK", "cleveland barons":"CLE", "montreal canadiens":"MTL", "mighty ducks of anaheim":"ANA", "nashville predators":"NSH",
   "new jersey devils":"NJD", "new york islanders":"NYI", "new york rangers":"NYR", "ottawa senators":"OTT",
   "philadelphia flyers":"PHI", "pittsburgh penguins":"PIT", "san jose sharks":"SJS", "st louis blues":"STL",
   "tampa bay lightning":"TBL", "vancouver canucks":"VAN", "vegas golden knights":"VGK", "washington capitals":"WSH"
@@ -6022,7 +6046,9 @@ NICKNAMES = [
     ("Golden Knights", "VGK"), ("Maple Leafs", "TOR"), ("Blue Jackets", "CBJ"), ("Red Wings", "DET"),
     ("Blackhawks", "CHI"), ("Black Hawks", "CHI"), ("Utah Hockey Club", "UTA"), ("Mammoth", "UTA"),
     ("Minnesota North Stars", "MNS"), ("Hartford Whalers", "HFD"), ("Quebec Nordiques", "QUE"),
-    ("Atlanta Flames", "AFM"), ("Colorado Rockies", "CLR"),
+    ("Atlanta Flames", "AFM"), ("Colorado Rockies", "CLR"), ("Phoenix Coyotes", "PHX"),
+    ("Kansas City Scouts", "KCS"), ("California Golden Seals", "CGS"), ("Oakland Seals", "OAK"),
+    ("Cleveland Barons", "CLE"),
     ("Ducks", "ANA"), ("Bruins", "BOS"), ("Sabres", "BUF"), ("Flames", "CGY"), ("Hurricanes", "CAR"),
     ("Avalanche", "COL"), ("Stars", "DAL"), ("Oilers", "EDM"), ("Panthers", "FLA"), ("Kings", "LAK"),
     ("Wild", "MIN"), ("Canadiens", "MTL"), ("Predators", "NSH"), ("Devils", "NJD"), ("Islanders", "NYI"),
@@ -6151,7 +6177,7 @@ def plan_hl(days, pool, today):
     return dict(sorted(days.items()))
 
 
-KNOWN_TEAMS = CURRENT_TEAMS | {"ARI", "ATL"}
+KNOWN_TEAMS = CURRENT_TEAMS | {"ARI", "PHX", "ATL", "MNS", "HFD", "QUE", "AFM", "CLR", "KCS", "CGS", "OAK", "CLE"}
 
 
 def stints(p):
@@ -6174,7 +6200,11 @@ PY_TEAM_NAMES = {
     "LAK": "Los Angeles", "MIN": "Minnesota", "MTL": "Montréal", "NSH": "Nashville", "NJD": "New Jersey",
     "NYI": "NY Islanders", "NYR": "NY Rangers", "OTT": "Ottawa", "PHI": "Philadelphia", "PIT": "Pittsburgh",
     "SJS": "San Jose", "SEA": "Seattle", "STL": "St. Louis", "TBL": "Tampa Bay", "TOR": "Toronto", "UTA": "Utah",
-    "VAN": "Vancouver", "VGK": "Vegas", "WSH": "Washington", "WPG": "Winnipeg"}
+    "VAN": "Vancouver", "VGK": "Vegas", "WSH": "Washington", "WPG": "Winnipeg",
+    "ARI": "Arizona Coyotes", "ATL": "Atlanta Thrashers", "MNS": "Minnesota North Stars",
+    "HFD": "Hartford Whalers", "QUE": "Quebec Nordiques", "AFM": "Atlanta Flames", "CLR": "Colorado Rockies",
+    "PHX": "Phoenix Coyotes", "KCS": "Kansas City Scouts", "CGS": "California Golden Seals",
+    "OAK": "Oakland Seals", "CLE": "Cleveland Barons"}
 CONN_COUNTRIES = {"USA": "the USA", "NLD": "the Netherlands"}
 
 
