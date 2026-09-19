@@ -47,19 +47,19 @@ TEMPLATE = r'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sweater · The Daily NHL Player Guessing Game</title>
-<meta name="description" content="Guess the mystery NHL player in 8 tries. A new player every day at midnight ET, plus unlimited mode.">
+<title>Sweater · Daily NHL Trivia</title>
+<meta name="description" content="Daily NHL trivia with player guessing, Trophy Case, Playoff History, and more hockey challenges.">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sweater">
-<meta property="og:title" content="Sweater · The Daily NHL Player Guessing Game">
-<meta property="og:description" content="Guess the mystery NHL player in 8 tries. A new player every day.">
+<meta property="og:title" content="Sweater · Daily NHL Trivia">
+<meta property="og:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
 <meta property="og:url" content="/*__SITE__*/">
-<meta property="og:image" content="/*__SITE__*/og-image.png">
+<meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sweater · The Daily NHL Player Guessing Game">
-<meta name="twitter:description" content="Guess the mystery NHL player in 8 tries. A new player every day.">
-<meta name="twitter:image" content="/*__SITE__*/og-image.png">
+<meta name="twitter:title" content="Sweater · Daily NHL Trivia">
+<meta name="twitter:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
+<meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏒</text></svg>">
 <script>
   // Apply saved appearance choices before the page paints.
@@ -7518,9 +7518,9 @@ def main():
     out = Path(args.out).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
-    og = HERE / "og-image.png"
+    og = HERE / "sweater-trivia-preview.png"
     if og.exists() and out.parent != HERE:
-        shutil.copy(og, out.parent / "og-image.png")
+        shutil.copy(og, out.parent / "sweater-trivia-preview.png")
     # double-check the page that was written
     check = out.read_text(encoding="utf-8")
     if "/*__" in check or check.count('"headshot"') != len(embedded):
