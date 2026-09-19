@@ -3735,11 +3735,10 @@ G.playoff = {
 // ---- Trophy Case ----
 // Every trophy round the page has been given, so unlimited play draws on the same history.
 const TROPHY_HISTORY = (() => {
-  const winners = new Map(), byTrophy = {};
+  const winners = new Map();
   for (const [t, y, w] of TROPHY_WINNERS) {
     if (!t || !Number.isInteger(y) || !w) continue;
     winners.set(`${t}:${y}`, { t, y, w });
-    byTrophy[t] = [...(byTrophy[t] || []), { y, w }];
   }
   for (const day of Object.values(DAILY.trophy || {})) {
     for (const r of day.rounds || []) {
@@ -3748,7 +3747,12 @@ const TROPHY_HISTORY = (() => {
       winners.set(`${r.t}:${r.y}`, { t: r.t, y: r.y, w: names[r.a] });
     }
   }
-  return { winners: [...winners.values()], byTrophy };
+  // Build these after combining the full history and the daily fallback.  This
+  // keeps the multiple-choice pools playable even if an award-history fetch
+  // only supplied the daily rounds during a particular build.
+  const all = [...winners.values()], byTrophy = {};
+  for (const e of all) byTrophy[e.t] = [...(byTrophy[e.t] || []), { y: e.y, w: e.w }];
+  return { winners: all, byTrophy };
 })();
 function trophyRandom(rnd, trophy = "all") {
   const entries = trophy === "all" ? TROPHY_HISTORY.winners : TROPHY_HISTORY.winners.filter(e => e.t === trophy);
@@ -3825,6 +3829,16 @@ G.trophy = {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
       return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>${esc(name)}</button>`;
     }).join("");
+    // Keep each choice self-contained as well as using the delegated handler
+    // below. This avoids an interaction dead-end if a browser misses a
+    // delegated click while the setup animation is ending.
+    $("trOpts").querySelectorAll("[data-c]:not([disabled])").forEach(b => {
+      b.onclick = () => {
+        if (S.trophy.over || G.trophy.showing) return;
+        G.trophy.showing = true;
+        doGuess(b.dataset.c);
+      };
+    });
     $("trMsg").textContent = showing
       ? (this.right(t, st.guesses[last], last) ? "Correct!" : `It was ${t.rounds[last].names[t.rounds[last].a]}.`)
       : st.over ? "" : "Winners from 1980 onwards, including retired players. Wrong answers are winners of this trophy from the same era.";
