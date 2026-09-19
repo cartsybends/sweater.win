@@ -1354,6 +1354,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   .cucell.got .culogo { opacity: .31; filter: brightness(1.13) saturate(1.12) drop-shadow(0 4px 6px rgba(0,0,0,.16)); }
   :root[data-theme="dark"] .cucell.got { background: #171718; box-shadow: inset 3px 0 0 var(--accent); }
   :root[data-theme="dark"] .cucell.miss { background: #171718; }
+  /* Fill the table's row-spacing seam below the sticky Playoff History
+     headings so a scrolling season cell cannot peek through at the left. */
+  @media (min-width: 701px) {
+    #view-cups .cutable thead th { z-index: 5; box-shadow: none; isolation: isolate; }
+    #view-cups .cutable thead th::after { content: ""; position: absolute; z-index: 0; left: -1px; right: -1px; bottom: -10px;
+      height: 11px; background: var(--panel); pointer-events: none; }
+  }
   @media (max-width: 700px) {
     .cucell { min-height: 48px; }
     .cuanswer { min-height: 34px; padding-right: 46px; }
@@ -4135,7 +4142,11 @@ G.hlt = {
   wonGame(t, g) { return g.length >= this.limit(t) && this.score(t, g) === g.length; },
   player: () => null,
   meta(t) {
-    const i = Math.min(S.hlt.guesses.length, t.rounds.length - 1), r = t.rounds[i], info = HLT_METRICS[r[4]];
+    // Results are shown after the guess is recorded, so use that final round
+    // rather than advancing the small result line to the next comparison.
+    const ended = S.hlt.over && S.hlt.guesses.length;
+    const i = Math.max(0, Math.min(ended ? S.hlt.guesses.length - 1 : S.hlt.guesses.length, t.rounds.length - 1));
+    const r = t.rounds[i], info = HLT_METRICS[r[4]];
     return `${teamName(r[0])}: ${info.show(r[1])} ${info.unit} · ${teamName(r[2])}: ${info.show(r[3])}`;
   },
   endText(t, g, won) {
