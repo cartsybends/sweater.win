@@ -1456,6 +1456,41 @@ TEMPLATE = r'''<!DOCTYPE html>
     .librarytoggle { padding: 8px 10px; font-size: 12px; }
     .achievementgrid { grid-template-columns: 1fr; }
     .cudecades { grid-template-columns: repeat(3, 1fr); }
+
+    /* Shared mobile guardrails: controls should wrap instead of colliding. */
+    .optrow { flex-wrap: wrap; align-items: stretch; }
+    .optrow .pickstat { flex: 1 1 138px; justify-content: space-between; min-width: 0; }
+    .optrow .pickstat select { flex: 1; min-width: 0; max-width: 100%; }
+    .tabs { max-width: 100%; overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .numrow.wide { width: 100%; max-width: 100%; }
+
+    /* Playoff History becomes a readable set of season cards on phones. */
+    #view-cups .cups-controls { padding: 14px 13px; }
+    #view-cups .cuboard { overflow: visible; padding: 0; border: 0; background: none; box-shadow: none; }
+    #view-cups .cutable { display: block; width: 100%; min-width: 0 !important; table-layout: auto; border-spacing: 0; }
+    #view-cups .cutable thead { display: none; }
+    #view-cups .cutable tbody { display: block; }
+    #view-cups .cutable tr { display: grid; grid-template-columns: 76px minmax(0, 1fr); margin: 0 0 9px; overflow: hidden;
+                             border: 1px solid var(--line); border-radius: 13px; background: color-mix(in srgb, var(--panel) 88%, transparent); }
+    #view-cups .cutable td { display: flex; align-items: center; width: auto !important; min-width: 0 !important; height: auto; min-height: 48px;
+                             padding: 7px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; font-size: 12px; }
+    #view-cups .cutable td.cuyear { grid-row: 1 / span 3; justify-content: center; align-self: stretch; padding: 8px; background: color-mix(in srgb, var(--accent) 10%, var(--cell));
+                                    color: var(--fg); font-size: 12px; line-height: 1.2; text-align: center; white-space: nowrap; }
+    #view-cups .cutable td.cucell { position: relative; gap: 8px; border-top: 1px solid var(--line); }
+    #view-cups .cutable td.cucell:nth-child(2) { border-top: 0; }
+    #view-cups .cutable td.cucell::before { content: attr(data-label); width: 72px; flex: none; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .045em; line-height: 1.15; text-transform: uppercase; }
+    #view-cups .cutable td.cucell:not(.got):not(.miss)::after { content: "—"; color: var(--muted); font-size: 16px; }
+    #view-cups .cutable .cuanswer { flex: 1; min-width: 0; min-height: 32px; padding: 0 42px 0 0; }
+    #view-cups .cutable .culogo { right: -3px; width: 52px; height: 52px; opacity: .24; }
+    #view-cups .cutable td.cucell.got { box-shadow: inset 3px 0 0 var(--accent); }
+    #view-cups .cutable .cucell.got .culogo { opacity: .34; }
+    #view-cups .cutable .cucell.got .culogo.logo-blue { opacity: .42; }
+    #view-cups .cutable .cuname { overflow-wrap: anywhere; }
+  }
+  @media (max-width: 420px) {
+    .cngrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #view-trophy .optrow .pickstat { flex-basis: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hubfeature, .librarytoggle span { transition: none; }
@@ -4558,7 +4593,8 @@ G.cups = {
       ${cols.map((c, ci) => {
         const got = marks[i * cols.length + ci];
         const team = c === 3 ? r[4] : r[c];
-        return `<td class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? cupsAnswer(r[c], team) : ""}</td>`;
+        const label = c === 1 ? "Cup winner" : c === 2 ? "Runner-up" : "Conn Smythe";
+        return `<td data-label="${label}" class="cucell${got ? " got" : st.over ? " miss" : ""}">${got || st.over ? cupsAnswer(r[c], team) : ""}</td>`;
       }).join("")}</tr>`).join("");
     requestAnimationFrame(syncCupsStickyHeader);
     if (running) {
