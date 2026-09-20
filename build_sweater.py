@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "56 · Close-up Capital Labels"
+VERSION = "58 · Capital Label Fade"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -66,7 +66,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="sweater.webmanifest">
 <link rel="apple-touch-icon" href="sweater-icon.svg">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏒</text></svg>">
+<link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%230b0b0c'/%3E%3Cpath fill='%23f4f4f5' d='M11 4h12v3H11zM8 7h3v6H8zM11 13h9v3h-9zM20 16h3v6h-3zM8 22h12v3H8z'/%3E%3Cpath fill='%237950f2' d='M8 28h15v2H8z'/%3E%3C/svg%3E">
 <script>
   // Apply saved appearance choices before the page paints.
   try {
@@ -3366,9 +3366,17 @@ function mapZoom(f, cx = mapView.x + mapView.w / 2, cy = mapView.y + mapView.h /
 const toMap = (lat, lon) => [lon * MAP_K, -lat];
 function drawMapCities() {
   const { cw, ch } = mapSize(), k = mapView.w / cw;
+  // Reveal roughly one zoom-button step earlier, fading with zoom depth.
+  // Screen-density limits keep the same progression comfortable on phones.
+  const capitalOpacity = national => {
+    const start = Math.min(national ? 36 : 24, cw * (national ? .095 : .065));
+    const full = Math.min(national ? 24 : 16, cw * (national ? .065 : .045));
+    const t = Math.max(0, Math.min(1, (start - mapView.w) / (start - full)));
+    return t * t * (3 - 2 * t);
+  };
   // Keep world/continent views quiet, regardless of desktop or phone width.
   // Clear the previous close-up labels again when the player zooms back out.
-  if (!k || mapView.w > 24 || k > .065) {
+  if (!k || capitalOpacity(true) <= 0) {
     $("mapCities").innerHTML = "";
     return;
   }
@@ -3376,7 +3384,8 @@ function drawMapCities() {
   // National capitals take priority; smaller capitals are never discarded from
   // the data, just decluttered until there is room for their name on screen.
   for (const [name, lat, lon, national] of MAP_CAPITALS) {
-    if (!national && (mapView.w > 16 || k > .045)) continue;
+    const opacity = capitalOpacity(national);
+    if (opacity <= 0) continue;
     const [x, y] = toMap(lat, lon), px = (x - mapView.x) / k, py = (y - mapView.y) / k;
     if (px < 0 || px > cw || py < 0 || py > ch) continue;
     const width = name.length * 6.8 + 5, height = 15;
@@ -3388,8 +3397,8 @@ function drawMapCities() {
       boxes.push(box); spot = [dx, dy]; break;
     }
     const transform = `translate(${x} ${y}) scale(${k})`, cls = national ? "national" : "regional";
-    dots.push(`<g class="${cls}" transform="${transform}"><circle class="capital-dot" r="${national ? 2.6 : 2}"/></g>`);
-    if (spot) labels.push(`<g class="${cls}" transform="${transform}"><text class="capital-label" x="${spot[0]}" y="${spot[1]}">${esc(name)}</text></g>`);
+    dots.push(`<g class="${cls}" opacity="${opacity.toFixed(3)}" transform="${transform}"><circle class="capital-dot" r="${national ? 2.6 : 2}"/></g>`);
+    if (spot) labels.push(`<g class="${cls}" opacity="${opacity.toFixed(3)}" transform="${transform}"><text class="capital-label" x="${spot[0]}" y="${spot[1]}">${esc(name)}</text></g>`);
   }
   $("mapCities").innerHTML = dots.join("") + labels.join("");
 }
