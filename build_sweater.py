@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "54 · Birthplace Map"
+VERSION = "56 · Close-up Capital Labels"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -3366,12 +3366,17 @@ function mapZoom(f, cx = mapView.x + mapView.w / 2, cy = mapView.y + mapView.h /
 const toMap = (lat, lon) => [lon * MAP_K, -lat];
 function drawMapCities() {
   const { cw, ch } = mapSize(), k = mapView.w / cw;
-  if (!k) return;
+  // Keep world/continent views quiet, regardless of desktop or phone width.
+  // Clear the previous close-up labels again when the player zooms back out.
+  if (!k || mapView.w > 24 || k > .065) {
+    $("mapCities").innerHTML = "";
+    return;
+  }
   const boxes = [], dots = [], labels = [];
   // National capitals take priority; smaller capitals are never discarded from
   // the data, just decluttered until there is room for their name on screen.
   for (const [name, lat, lon, national] of MAP_CAPITALS) {
-    if (!national && k > .24) continue;
+    if (!national && (mapView.w > 16 || k > .045)) continue;
     const [x, y] = toMap(lat, lon), px = (x - mapView.x) / k, py = (y - mapView.y) / k;
     if (px < 0 || px > cw || py < 0 || py > ch) continue;
     const width = name.length * 6.8 + 5, height = 15;
@@ -3419,7 +3424,7 @@ function drawPins(t, st) {
     if (game !== "map" || !svg.getClientRects().length) { stopWheel(); return; }
     const elapsed = wheelTime ? Math.min(32, now - wheelTime) : 16.67;
     wheelTime = now;
-    const step = Math.sign(wheelPending) * Math.min(Math.abs(wheelPending) * (1 - Math.exp(-elapsed / 45)), .0015 * elapsed);
+    const step = Math.sign(wheelPending) * Math.min(Math.abs(wheelPending) * (1 - Math.exp(-elapsed / 45)), .00225 * elapsed);
     wheelPending -= step;
     const p = svgPoint(wheelPoint);
     mapZoom(Math.exp(step), p.x, p.y);
@@ -3482,9 +3487,9 @@ function drawPins(t, st) {
     if (!e.deltaY || pointers.size) return;
     // deltaMode: pixels, lines, or pages. Tiny trackpad events must stay tiny.
     const pixels = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? mapSize().ch : 1);
-    const delta = Math.max(-100, Math.min(100, pixels)) * .0012;
+    const delta = Math.max(-100, Math.min(100, pixels)) * .0018;
     if (wheelPending * delta < 0) wheelPending = 0;
-    wheelPending = Math.max(-.28, Math.min(.28, wheelPending + delta));
+    wheelPending = Math.max(-.36, Math.min(.36, wheelPending + delta));
     wheelPoint = { clientX: e.clientX, clientY: e.clientY };
     if (!wheelFrame) wheelFrame = requestAnimationFrame(animateWheel);
   }, { passive: false });
