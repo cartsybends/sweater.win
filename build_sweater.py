@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "52 · Game Lobby"
+VERSION = "53 · Visual Polish"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1562,6 +1562,125 @@ TEMPLATE = r'''<!DOCTYPE html>
     .hubfeature, .librarytoggle span { transition: none; }
     .hubfeature:hover { transform: none; }
   }
+  /* Visual polish: shared icons, lighter section framing, and a focused ballot. */
+  .ui-icon { display: block; width: 22px; height: 22px; flex: none; pointer-events: none; }
+  .navbar .iconbtn .ui-icon { width: 20px; height: 20px; }
+  .navbar .iconbtn:focus-visible, .favtoggle:focus-visible, .shelfcard:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .gticon .ui-icon { width: 27px; height: 27px; }
+  .favtoggle { display: grid; place-items: center; }
+  .favtoggle .ui-icon { width: 18px; height: 18px; }
+  .favtoggle[aria-pressed="true"] .ui-icon { fill: currentColor; }
+  #view-hub { max-width: 960px; }
+  #view-hub .hubhead { padding: 0 0 20px; margin-bottom: 20px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; box-shadow: none; }
+  #view-hub .hubhead::before, #view-hub .hubhead::after { display: none; }
+  #view-hub .hubtitle { margin: 6px 0 14px; font-size: 28px; color: var(--fg); }
+  #view-hub .hubdate { color: var(--muted); font-size: 12px; }
+  #view-hub .hubprogress, #view-hub .hubnext { color: var(--muted); font-size: 13px; font-weight: 500; text-shadow: none; }
+  #view-hub .hubnext b { color: var(--fg); }
+  #view-hub .hubmeter { height: 3px; background: var(--line); }
+  #view-hub .hubmeter i { background: var(--accent); box-shadow: none; }
+  #view-hub .hubfeatures { grid-template-columns: 1.5fr 1fr; gap: 28px; margin-bottom: 26px; }
+  #view-hub .hubfeature.primary { padding: 26px; min-height: 208px; border-radius: 18px; box-shadow: none; }
+  #view-hub .hubfeature.primary .featuretitle { margin-top: 12px; font-size: 32px; line-height: 1.12; }
+  #view-hub .featurecopy { font-size: 14px; line-height: 1.5; }
+  #view-hub .featureicon { background: transparent; width: 30px; height: 34px; color: var(--accent); }
+  #view-hub .featureicon .ui-icon { width: 28px; height: 28px; }
+  #view-hub .hubfeature.primary::after { opacity: .5; }
+  #view-hub .queststack { gap: 0; }
+  #view-hub .hubfeature.quest { padding: 18px 46px 18px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+  #view-hub .hubfeature.quest + .hubfeature.quest { border-top: 1px solid var(--line); }
+  #view-hub .hubfeature.quest:hover .featuretitle { color: var(--accent); }
+  #view-hub .hubfeature.quest .featureeyebrow { color: var(--muted); font-size: 11px; }
+  #view-hub .hubfeature.quest .featurecopy { font-size: 13px; }
+  #view-hub .questprogress { top: 20px; right: 0; background: transparent; color: var(--muted); }
+  #view-hub .hubshelf { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; margin-bottom: 24px; }
+  #view-hub .shelfhead span { display: none; }
+  #view-hub .shelfscroll { grid-template-columns: none; grid-auto-columns: minmax(180px, calc((100% - 16px) / 3)); }
+  #view-hub .shelfcard { display: flex; align-items: center; gap: 10px; min-height: 64px; padding: 12px 14px; background: var(--panel); border-radius: 12px; }
+  #view-hub .shelfcard b { margin: 0; font-size: 14px; }
+  #view-hub .shelficon { background: transparent; color: var(--muted); }
+  #view-hub .partycard { min-height: 84px; padding: 16px 20px; margin-bottom: 24px; border-radius: 14px; align-items: center; box-shadow: none; }
+  #view-hub .partycard .rink { opacity: .12; }
+  #view-hub .partytext b { font-size: 18px; }
+  #view-hub .partytext span { font-size: 13px; max-width: none; }
+  #view-hub .partycta { font-size: 13px; }
+  #view-hub .libraryhead { margin-top: 12px; }
+  #view-hub .libraryhead > div > p { display: none; }
+  #view-hub .libraryfilters { margin-top: 0; margin-bottom: 24px; }
+  #view-hub .hubsec { margin-bottom: 28px; }
+  #view-hub .hubsec h2 { font-size: 12px; margin-bottom: 8px; }
+  #view-hub .glist { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  #view-hub .librarygame { border-bottom: 1px solid var(--line); }
+  #view-hub .librarygame::before, #view-hub .grow::before { display: none; }
+  #view-hub .grow { padding: 14px 8px; min-height: 78px; border-radius: 10px; background: transparent; box-shadow: none; }
+  #view-hub .grow:hover { background: color-mix(in srgb, var(--accent) 5%, var(--panel)); transform: none; }
+  #view-hub .grow .gicon { background: transparent; box-shadow: none; color: var(--muted); }
+  #view-hub .grow .gtext small { font-size: 14px; line-height: 1.45; }
+  #view-hub .grow .gstat { background: transparent; font-size: 12px; }
+  #view-hub .modebadges { display: none; }
+  .gamebar[data-game="trophy"] { max-width: 760px; margin: 18px auto 24px; padding: 0 0 20px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; box-shadow: none; }
+  .gamebar[data-game="trophy"] .gtitle h2 { color: var(--fg); font-size: 26px; }
+  .gamebar[data-game="trophy"] .backbtn { color: var(--muted); }
+  .gamebar[data-game="trophy"] #modeLabel { color: var(--muted); }
+  .gamebar[data-game="trophy"] .gticon { background: transparent; color: var(--accent); box-shadow: none; }
+  #view-trophy { max-width: 760px; }
+  #view-trophy .optrow { width: 100%; max-width: none; margin: 0 0 22px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; display: flex; justify-content: space-between; gap: 16px; }
+  #view-trophy .pickstat { font-size: 13px; gap: 10px; }
+  #view-trophy .pickstat select { min-height: 42px; background: var(--panel); color: var(--fg); box-shadow: none; }
+  #view-trophy #trDots { margin: 0 auto 20px; flex-wrap: wrap; gap: 6px; }
+  #view-trophy #trDots .shdot { width: 27px; height: 27px; font-size: 12px; box-shadow: none; }
+  #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
+  .trophy-prompt { display: block; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .trophy-title { display: block; margin: 8px auto 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 750; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
+  .trophy-season { display: block; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted); }
+  #view-trophy #trOpts { width: 100%; max-width: none; gap: 12px; }
+  #view-trophy .shopt { min-height: 104px; padding: 22px 16px 22px 46px; border-radius: 14px; }
+  #view-trophy .trname { padding-right: 62px; font-size: 16px; line-height: 1.35; }
+  #view-trophy .trlogo { width: 110px; height: 110px; right: -4px; opacity: var(--crest-opacity, .32); filter: brightness(var(--crest-brightness, 1.15)) saturate(1.08); }
+  #view-trophy .trlogo[data-team="FLA"] { --crest-opacity: .46; --crest-brightness: 1.4; }
+  #view-trophy .trlogo[data-team="DET"] { --crest-opacity: .42; --crest-brightness: 1.35; }
+  #view-trophy .trlogo[data-team="CGY"] { --crest-opacity: .38; --crest-brightness: 1.2; }
+  #view-trophy .trlogo[data-team="COL"] { --crest-opacity: .32; --crest-brightness: 1.1; }
+  #view-trophy .trlogo.logo-blue { --crest-opacity: .42; --crest-brightness: 1.65; }
+  #view-trophy .shopt:hover:not(:disabled) .trlogo { opacity: calc(var(--crest-opacity, .32) + .08); }
+  #view-trophy .shopt.right .trlogo { opacity: .48; filter: brightness(1.15) saturate(1.1); }
+  #view-trophy .shopt.wrong .trlogo { opacity: .38; filter: brightness(1.1) saturate(1.1); }
+  :root[data-theme="light"] #view-trophy .trlogo { filter: saturate(1.05); }
+  #view-trophy #trNext { min-height: 44px; margin-top: 8px; }
+  :root[data-theme] .gamebar[data-game="trophy"],
+  :root[data-theme] #view-trophy .optrow { background: transparent; box-shadow: none; border-radius: 0; }
+  :root[data-theme] .gamebar[data-game="trophy"] .gticon { background: transparent; color: var(--accent); box-shadow: none; }
+  @media (max-width: 700px) {
+    .navbar { flex-wrap: wrap; row-gap: 8px; }
+    .navbar .navactions { margin-left: auto; }
+    #view-hub .hubfeatures { grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+    #view-hub .hubfeature.primary { min-height: 190px; padding: 22px; }
+    #view-hub .hubfeature.primary .featuretitle { font-size: 30px; }
+    #view-hub .queststack { grid-template-columns: 1fr 1fr; gap: 16px; }
+    #view-hub .hubfeature.quest { padding: 14px 0; min-height: 110px; }
+    #view-hub .hubfeature.quest + .hubfeature.quest { border-top: 0; }
+    #view-hub .questprogress { position: static; float: right; padding: 0; min-width: 0; font-size: 11px; }
+    #view-hub .hubfeature.quest .featureeyebrow { font-size: 10px; letter-spacing: .055em; }
+    #view-hub .hubfeature.quest .featuretitle { font-size: 15px; }
+    #view-hub .shelfscroll { grid-auto-columns: minmax(160px, 65%); }
+    #view-hub .partycard { grid-template-columns: 1fr auto; gap: 10px; padding: 16px; }
+    #view-hub .partycta { padding: 8px 10px; }
+    #view-hub .grow { grid-template-columns: 30px minmax(0, 1fr) 12px; gap: 10px; }
+    #view-hub .grow .gicon { width: 30px; }
+    #view-hub .grow .gstat { display: none; }
+    #view-hub .grow .gtext small { font-size: 13px; }
+    .gamebar[data-game="trophy"] { margin: 8px auto 20px; padding-bottom: 16px; }
+    #view-trophy .optrow { gap: 12px; }
+    #view-trophy .optrow .pickstat { flex: 1 1 100%; }
+    #view-trophy #trQ { padding: 6px 0; margin-bottom: 22px; }
+    #view-trophy #trOpts { grid-template-columns: 1fr; gap: 10px; }
+    #view-trophy .shopt { min-height: 88px; }
+    #view-trophy .trlogo { width: 100px; height: 100px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shelfcard { transition: none; }
+    .shelfcard:hover { transform: none; }
+  }
 </style>
 </head>
 <body class="hubmode">
@@ -2312,6 +2431,34 @@ const FALLBACK = "data:image/svg+xml," + encodeURIComponent(
 // ======================= helpers =======================
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// One stroke-based icon family keeps navigation and game identities consistent.
+const UI_ICONS = {
+  chart: '<path d="M5 20V13M12 20V4M19 20V9"/>',
+  trophy: '<path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4M12 13v6m-4 2h8m-6-2h4"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 11h18m-14 4h2m6 0h2m-10 3h2"/>',
+  help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 2M12 16h.01"/>',
+  star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
+  brush: '<path d="m14 12 6-6a2.1 2.1 0 0 0-3-3l-6 6 3 3ZM11 9l-2 3 3 3 2-3M9 12c-4 0-2 6-6 7 5 2 10-1 9-4"/>',
+  stick: '<path d="m17 3-7 14H4a2 2 0 0 0 0 4h8L21 3m-6 4 4 2"/>',
+  route: '<circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h9a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h9"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+  ice: '<path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 10 9-5m-9 5L3 8m9 5v8"/>',
+  shield: '<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/>',
+  shirt: '<path d="m8 3-5 3-2 5 5 2v8h12v-8l5-2-2-5-5-3c0 4-8 4-8 0Z"/>',
+  draft: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v4H9V3Zm0 8h6m-6 4h6"/>',
+  pin: '<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2"/>',
+  arrows: '<path d="M8 20V4L4 8m4-4 4 4m4-4v16l-4-4m4 4 4-4"/>',
+  rank: '<path d="M3 20v-7h6v7m0 0V5h6v15m0 0V9h6v11M2 20h20"/>',
+  clock: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6m-3 0v3"/>',
+  grid: '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  net: '<path d="M3 20V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v14M3 9h18M3 15h18M9 3v17m6-17v17M3 20h18"/>',
+  people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
+};
+const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
+const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", zam: "ice", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net" };
+const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
+Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 const ageOf = bd => {
@@ -4471,12 +4618,12 @@ G.trophy = {
     $("trDots").innerHTML = Array.from({ length: of }, (_, n) =>
       `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
-      : `Who won the <b>${esc(r.t)}</b> for ${seasonLabel(r.y)}?`;
+      : `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
     $("trOpts").innerHTML = st.over && !showing ? "" : r.names.map((name, n) => {
       const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
       const team = (r.teams || [])[n] || trophyTeam(r.t, r.y, name);
       return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>` +
-        `${team ? `<img class="trlogo${logoToneClass(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
+        `${team ? `<img class="trlogo${logoToneClass(team)}" data-team="${esc(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
     }).join("");
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
@@ -4488,11 +4635,9 @@ G.trophy = {
         doGuess(b.dataset.c);
       };
     });
-    const trophyHint = !showing && !st.over
-      ? "Winners from 1980 onwards, including retired players. Wrong answers are winners of this trophy from the same era."
-      : "";
-    $("trMsg").textContent = trophyHint;
-    $("trMsg").hidden = !trophyHint;
+    // Rules live in How to play; the answer tiles supply round feedback.
+    $("trMsg").textContent = "";
+    $("trMsg").hidden = true;
     $("trNext").hidden = !(showing && !st.over);
   },
 };
@@ -4860,7 +5005,7 @@ function renderPlayerProfile() {
   $("lockerHint").textContent = `${theme.title}: ${progress}/3 complete. ${progress >= 3 ? "Challenge cleared—nice work." : theme.copy}`;
   const gameRows = (ids, empty) => ids.length ? ids.slice(0, 3).map(id => {
     const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
-    return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${card.icon}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></span><em aria-hidden="true">›</em></button>`;
+    return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${modeIcon(id)}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></span><em aria-hidden="true">›</em></button>`;
   }).join("") : `<p class="lockerhint">${esc(empty)}</p>`;
   $("lockerBench").innerHTML = `<section class="lockerbenchsection"><b>Favourites</b><div class="lockerlist">${gameRows(favouriteIds(), "Star modes in the game library to keep them here.")}</div></section>
     <section class="lockerbenchsection"><b>Recently played</b><div class="lockerlist">${gameRows(recentIds(), "Your last few modes will show up here.")}</div></section>`;
@@ -5066,7 +5211,8 @@ function setGame(g) {
   document.querySelectorAll(".nodata").forEach(n => n.hidden = true);
   searches.forEach(s => s.close());
   const card = CARD[g.startsWith("hl_") ? "hl" : g] || { icon: "🏒", tone: "green" };
-  $("gIcon").textContent = card.icon;
+  $("gIcon").innerHTML = modeIcon(g);
+  $("gameBar").dataset.game = g;
   $("gameBar").dataset.tone = card.tone;
   $("gTitle").textContent = g.startsWith("hl_") ? `Higher or Lower · ${HL_STATS[G[g].stat].name}` : G[g].title;
   document.title = `${$("gTitle").textContent} · Sweater`;
@@ -5750,14 +5896,14 @@ function renderHub() {
   const primary = going ? going[0] : (gameIsReady(candidate) ? candidate : "classic");
   const primaryState = hubStatus(primary);
   const primaryIcon = (CARD[primary] || {}).icon || "🏒";
-  const primaryCopy = going ? "Your current run is waiting—pick up where you left off." : `${cardTitle(primary)} is ready for today's shift.`;
+  const primaryCopy = going ? "Your current run is waiting—pick up where you left off." : HUB.flatMap(s => s.games).find(([id]) => id === primary)?.[2] || "Your next daily puzzle is ready.";
   const hatTrickCount = dailyEntries(dayKey()).length;
   const quickGame = ["classic", "trophy", "shoot"].find(id => hubStatus(id)[0] !== "done" && gameIsReady(id)) || primary;
   const theme = activeWeeklyTheme(), completedThemeGames = weeklyDoneGames(theme);
   const weeklyGame = theme.games.find(id => !completedThemeGames.includes(id) && gameIsReady(id)) || primary;
   $("hubFeatures").innerHTML = `<button type="button" class="hubfeature primary" data-open="${primary}">
       <p class="featureeyebrow">${going ? "Continue playing" : "Today's featured game"}</p>
-      <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${primaryIcon}</span>${esc(cardTitle(primary))}</h2>
+      <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${modeIcon(primary)}</span>${esc(cardTitle(primary))}</h2>
       <p class="featurecopy">${esc(primaryCopy)}</p>
       <span class="featurefooter"><span>${primaryState[0] === "done" ? "Daily complete" : primaryState[0] === "going" ? "In progress" : "New daily puzzle"}</span><b>${going ? "Resume" : "Play"} →</b></span>
     </button><div class="queststack">
@@ -5767,18 +5913,17 @@ function renderHub() {
       </button>
       <button type="button" class="hubfeature quest" data-open="${weeklyGame}">
         <span class="questprogress">${completedThemeGames.length}/3</span><p class="featureeyebrow">Weekly challenge</p>
-        <h2 class="featuretitle"><span aria-hidden="true">${theme.icon}</span>${esc(theme.title)}</h2><p class="featurecopy">${esc(theme.copy)}</p>
+        <h2 class="featuretitle">${esc(theme.title)}</h2><p class="featurecopy">${esc(theme.copy)}</p>
       </button>
     </div>`;
   const favourites = favouriteIds(), recents = recentIds();
-  const suggested = [primary, quickGame, weeklyGame].filter((id, i, all) => all.indexOf(id) === i);
-  const shelfIds = (favourites.length ? favourites : recents.length ? recents : suggested).filter(gameIsReady).slice(0, 3);
+  const shelfIds = (favourites.length ? favourites : recents).filter(gameIsReady).slice(0, 3);
   const shelfLabel = favourites.length ? "Your favourites" : recents.length ? "Keep playing" : "Start here";
   const shelfHint = favourites.length ? "Your saved modes" : recents.length ? "Your recent modes" : "A few great first shifts";
   $("hubShelf").hidden = !shelfIds.length;
   $("hubShelf").innerHTML = shelfIds.length ? `<div class="shelfhead"><b>${shelfLabel}</b><span>${shelfHint}</span></div><div class="shelfscroll">${shelfIds.map(id => {
     const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
-    return `<button type="button" class="shelfcard" data-open="${id}"><span class="shelficon" aria-hidden="true">${card.icon}</span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></button>`;
+    return `<button type="button" class="shelfcard" data-open="${id}"><span class="shelficon" aria-hidden="true">${modeIcon(id)}</span><b>${esc(cardTitle(id))}</b></button>`;
   }).join("")}</div>` : "";
   const selectedFilter = store.get("sweater-library-filter") || "all";
   $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
@@ -5792,12 +5937,12 @@ function renderHub() {
         const [cls, text] = hubStatus(id);
         const ready = gameIsReady(id);
         const meta = modeMeta(id), favourited = favourites.includes(id);
-        return `<div class="librarygame ${cls}"><button type="button" class="grow" data-open="${id}"${ready ? "" : " disabled"}>
-          <span class="gicon" aria-hidden="true">${icon}</span>
-          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small><span class="modebadges"><i class="modebadge">${esc(meta.type)}</i></span></span>
+        return `<div class="librarygame ${cls}"><button type="button" class="grow ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
+          <span class="gicon" aria-hidden="true">${modeIcon(id)}</span>
+          <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small></span>
           <span class="gstat">${ready ? esc(text) : "Not available"}</span>
           <span class="chev" aria-hidden="true">›</span>
-        </button><button type="button" class="favtoggle" data-favorite="${id}" aria-label="${favourited ? "Remove" : "Add"} ${esc(cardTitle(id))} ${favourited ? "from" : "to"} favourites" aria-pressed="${favourited}" title="${favourited ? "Remove from" : "Add to"} favourites">★</button></div>`;
+        </button><button type="button" class="favtoggle" data-favorite="${id}" aria-label="${favourited ? "Remove" : "Add"} ${esc(cardTitle(id))} ${favourited ? "from" : "to"} favourites" aria-pressed="${favourited}" title="${favourited ? "Remove from" : "Add to"} favourites">${uiIcon("star")}</button></div>`;
       }).join("")}</div>
     </section>`).join("") : `<p class="lockerhint">No favourites yet. Tap the star beside a game to build your shelf.</p>`;
   const libraryOpen = store.get("sweater-library-open") === true;
@@ -5907,7 +6052,8 @@ function openParty(code, push = true) {
   $("view-party").hidden = false;
   $("gameBar").hidden = false;
   $("archBar").hidden = true;
-  $("gIcon").textContent = "🎉";
+  $("gIcon").innerHTML = uiIcon("people");
+  $("gameBar").dataset.game = "party";
   $("gameBar").dataset.tone = "blue";
   $("gTitle").textContent = "Party Mode";
   $("modeLabel").textContent = "Live with friends";
@@ -6154,7 +6300,7 @@ function renderHelp() {
   const current = onHub ? null : (game.startsWith("hl_") ? "hl" : game);
   $("helpGames").innerHTML = HUB.map(sec => sec.games.map(([id, icon]) => `
     <details class="helpgame tone-${sec.tone}" data-help="${id}"${id === current ? " open" : ""}>
-      <summary><span class="hicon" aria-hidden="true">${icon}</span><span>${esc(cardTitle(id))}</span></summary>
+      <summary><span class="hicon" aria-hidden="true">${modeIcon(id)}</span><span>${esc(cardTitle(id))}</span></summary>
       <div class="helpbody">${HELP[id] || ""}</div>
     </details>`).join("")).join("");
   $("helpLead").hidden = !current;
