@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "58 · Capital Label Fade"
+VERSION = "59 · Responsive Map Zoom"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -3433,7 +3433,7 @@ function drawPins(t, st) {
     if (game !== "map" || !svg.getClientRects().length) { stopWheel(); return; }
     const elapsed = wheelTime ? Math.min(32, now - wheelTime) : 16.67;
     wheelTime = now;
-    const step = Math.sign(wheelPending) * Math.min(Math.abs(wheelPending) * (1 - Math.exp(-elapsed / 45)), .00225 * elapsed);
+    const step = Math.sign(wheelPending) * Math.min(Math.abs(wheelPending) * (1 - Math.exp(-elapsed / 24)), .015 * elapsed);
     wheelPending -= step;
     const p = svgPoint(wheelPoint);
     mapZoom(Math.exp(step), p.x, p.y);
@@ -3458,7 +3458,7 @@ function drawPins(t, st) {
     const { cw } = mapSize();
     if (pointers.size === 2 && pinchStart) {
       const [a, b] = [...pointers.values()], d = Math.hypot(a.x - b.x, a.y - b.y);
-      const v = pinchStart.view, w = Math.min(Math.max(v.w * Math.pow(pinchStart.d / Math.max(1, d), .75), 6), 360 * MAP_K * 1.05);
+      const v = pinchStart.view, w = Math.min(Math.max(v.w * pinchStart.d / Math.max(1, d), 6), 360 * MAP_K * 1.05);
       const rect = svg.getBoundingClientRect(), k = w / cw;
       setView(pinchStart.anchor.x - ((a.x + b.x) / 2 - rect.left) * k,
         pinchStart.anchor.y - ((a.y + b.y) / 2 - rect.top) * k, w, v.h * w / v.w);
@@ -3496,15 +3496,17 @@ function drawPins(t, st) {
     if (!e.deltaY || pointers.size) return;
     // deltaMode: pixels, lines, or pages. Tiny trackpad events must stay tiny.
     const pixels = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? mapSize().ch : 1);
-    const delta = Math.max(-100, Math.min(100, pixels)) * .0018;
+    // A 100px wheel gesture changes scale by 2x; fine trackpad movements
+    // remain proportional. Browser-reported trackpad pinches use ctrlKey.
+    const delta = Math.max(-100, Math.min(100, pixels)) * (Math.LN2 / 100) * (e.ctrlKey ? 2 : 1);
     if (wheelPending * delta < 0) wheelPending = 0;
-    wheelPending = Math.max(-.36, Math.min(.36, wheelPending + delta));
+    wheelPending = Math.max(-Math.LN2 * 2, Math.min(Math.LN2 * 2, wheelPending + delta));
     wheelPoint = { clientX: e.clientX, clientY: e.clientY };
     if (!wheelFrame) wheelFrame = requestAnimationFrame(animateWheel);
   }, { passive: false });
   document.querySelectorAll("[data-region]").forEach(b => b.onclick = () => { stopWheel(); mapRegion(b.dataset.region); });
-  $("mapIn").onclick = () => { stopWheel(); mapZoom(1 / 1.5); };
-  $("mapOut").onclick = () => { stopWheel(); mapZoom(1.5); };
+  $("mapIn").onclick = () => { stopWheel(); mapZoom(.5); };
+  $("mapOut").onclick = () => { stopWheel(); mapZoom(2); };
   $("mpGo").onclick = () => { if (mapDraftPin) doGuess(mapDraftPin); };
   window.addEventListener("resize", () => { if (game === "map") setView(mapView.x, mapView.y, mapView.w, mapView.h); });
 })();
