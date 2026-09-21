@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "59 · Responsive Map Zoom"
+VERSION = "60 · Goalie Mode & Overtime"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1688,6 +1688,56 @@ TEMPLATE = r'''<!DOCTYPE html>
     .shelfcard { transition: none; }
     .shelfcard:hover { transform: none; }
   }
+  /* New arcade modes: scoped surfaces keep both existing themes unchanged. */
+  #view-goalie, #view-overtime { max-width: 760px; margin-inline: auto; }
+  .arc-hud { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0 16px; }
+  .arc-hud > div { padding: 14px 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); text-align: center; }
+  .arc-hud small { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .arc-hud strong { display: block; font-size: clamp(24px,5vw,34px); font-variant-numeric: tabular-nums; line-height: 1.3; }
+  .arc-controls { display: flex; justify-content: center; gap: 12px; margin: 18px 0 12px; }
+  .arc-controls button { min-height: 46px; }
+  .arc-note { text-align: center; color: var(--muted); font-size: 13px; line-height: 1.6; margin: 12px auto; max-width: 580px; }
+  .goalie-rink { position: relative; aspect-ratio: 1.6; overflow: clip; border: 1px solid var(--line); border-radius: 20px; isolation: isolate;
+    background: radial-gradient(ellipse at 50% 5%,color-mix(in srgb,var(--fg) 7%,transparent),transparent 65%),var(--bg); touch-action: pan-y; }
+  .goalie-net { position: absolute; inset: 27% 6% 6%; border: 4px solid #ce404b; border-radius: 26px 26px 8px 8px;
+    background: repeating-linear-gradient(0deg,transparent 0 23px,var(--line) 23px 24px), repeating-linear-gradient(90deg,transparent 0 23px,var(--line) 23px 24px); opacity: .65; }
+  .goalie-crease { position: absolute; width: 65%; height: 45%; border: 1px solid var(--line); border-radius: 50%; left: 17.5%; bottom: -26%; background: var(--cell); }
+  .goalie-zone { position: absolute; width: 29%; height: 27%; transform: translate(-50%,-50%); border: 1px solid transparent; border-radius: 16px;
+    background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-size: 12px; z-index: 2; touch-action: manipulation; }
+  .goalie-zone:nth-of-type(1) { left: 21%; top: 43%; } .goalie-zone:nth-of-type(2) { left: 79%; top: 43%; }
+  .goalie-zone:nth-of-type(3) { left: 21%; top: 78%; } .goalie-zone:nth-of-type(4) { left: 79%; top: 78%; }
+  .goalie-zone:nth-of-type(5) { left: 50%; top: 78%; }
+  .goalie-zone:focus-visible { outline: 3px solid var(--fg); outline-offset: -3px; }
+  .goalie-zone.chosen { background: color-mix(in srgb,var(--fg) 12%,transparent); border-color: var(--fg); color: var(--fg); }
+  .goalie-zone.saved { background: rgba(34,197,94,.2); border-color: #22c55e; }
+  .goalie-zone.conceded { background: rgba(239,68,68,.2); border-color: #ef4444; }
+  .goalie-zone kbd { display: block; font: inherit; font-size: 10px; margin-top: 3px; opacity: .6; }
+  .goalie-puck { position: absolute; left: 50%; top: 10%; width: 25px; height: 25px; border-radius: 50%; background: #151515; border: 2px solid #f4f4f5;
+    box-shadow: 0 5px 12px #0006; transform: translate(-50%,-50%); z-index: 3; pointer-events: none; }
+  .goalie-glove { position: absolute; width: 62px; height: 62px; left: 50%; top: 91%; transform: translate(-50%,-50%); color: var(--fg); z-index: 4; pointer-events: none;
+    filter: drop-shadow(0 4px 5px #0004); transition: left .13s ease-out,top .13s ease-out; }
+  .goalie-zone.chosen span,.goalie-zone.chosen kbd { visibility: hidden; }
+  .goalie-status { position: absolute; top: 7%; left: 0; width: 100%; text-align: center; color: var(--fg); font-weight: 700; font-size: clamp(15px,3vw,22px); pointer-events: none; }
+  .goalie-rink.live .goalie-status { top: 2%; font-size: 12px; color: var(--muted); }
+  .goalie-rink.live .goalie-zone span, .goalie-rink.live .goalie-zone kbd { opacity: .45; }
+  .ot-time.urgent { color: #ef4444; }
+  .ot-meter { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin: -6px 0 24px; }
+  .ot-meter i { display: block; width: 50%; height: 100%; background: var(--fg); }
+  .ot-question { text-align: center; min-height: 110px; display: grid; align-content: center; gap: 10px; margin: 18px 0; }
+  .ot-question small { color: var(--muted); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .ot-question h3 { margin: 0; font-size: clamp(22px,4vw,30px); line-height: 1.25; }
+  .ot-answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ot-answer { min-height: 82px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); color: var(--fg); padding: 16px;
+    font: inherit; font-weight: 600; font-size: 16px; cursor: pointer; text-align: left; transition: border-color .15s,background .15s; }
+  .ot-answer:not(:disabled):hover { border-color: var(--fg); }
+  .ot-answer.right { background: rgba(34,197,94,.16); border-color: #22c55e; }
+  .ot-answer.wrong { background: rgba(239,68,68,.16); border-color: #ef4444; }
+  .ot-answer:disabled { cursor: default; opacity: 1; }
+  .ot-question.next-round { animation: overtime-in .18s ease-out; }
+  @keyframes overtime-in { from { opacity: .3; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  @media(max-width:600px) { .arc-hud { gap: 6px; } .goalie-rink { aspect-ratio: 1.12; } .goalie-zone { width: 29%; height: 28%; font-size: 11px; }
+    .goalie-zone kbd { display: none; } .ot-answers { gap: 8px; } .ot-answer { padding: 12px; min-height: 86px; font-size: 14px; overflow-wrap: anywhere; } }
+  @media(prefers-reduced-motion:reduce) { .ot-question.next-round { animation: none; } .ot-answer,.goalie-glove { transition: none; } }
 </style>
 </head>
 <body class="hubmode">
@@ -2120,6 +2170,34 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="nodata" hidden>This game isn't available right now.</p>
   </section>
 
+  <section class="view" id="view-goalie" hidden>
+    <div class="arc-hud"><div><small>Score</small><strong id="glScore">0</strong></div><div><small>Save streak</small><strong id="glStreak">0</strong></div><div><small>Goals allowed</small><strong id="glLives">0 / 3</strong></div></div>
+    <div class="goalie-rink" id="glRink" aria-label="Defend the five areas of the net">
+      <div class="goalie-net" aria-hidden="true"></div><div class="goalie-crease" aria-hidden="true"></div>
+      <button type="button" class="goalie-zone" data-save="0" aria-label="Save top left" disabled><span>Top left</span><kbd>Q</kbd></button>
+      <button type="button" class="goalie-zone" data-save="1" aria-label="Save top right" disabled><span>Top right</span><kbd>E</kbd></button>
+      <button type="button" class="goalie-zone" data-save="2" aria-label="Save bottom left" disabled><span>Bottom left</span><kbd>Z</kbd></button>
+      <button type="button" class="goalie-zone" data-save="3" aria-label="Save bottom right" disabled><span>Bottom right</span><kbd>C</kbd></button>
+      <button type="button" class="goalie-zone" data-save="4" aria-label="Save five-hole" disabled><span>Five-hole</span><kbd>Space</kbd></button>
+      <div class="goalie-status" id="glStatus" role="status">Own the crease.</div><div class="goalie-puck" id="glPuck" hidden></div>
+      <div class="goalie-glove" id="glGlove" aria-hidden="true" hidden><svg viewBox="0 0 64 64" width="100%" height="100%"><path d="M18 53 8 31Q5 19 15 17L22 26 19 13Q18 5 25 5L33 7Q50 11 55 28L52 46 39 57Z" fill="currentColor" stroke="var(--bg)" stroke-width="2"/><path d="m25 18 18 5-2 17-12 5-7-12Z" fill="var(--bg)" opacity=".8"/><path d="m26 22 12 15m4-11-15 13M19 48l20 4" fill="none" stroke="var(--bg)" stroke-width="2"/></svg></div>
+    </div>
+    <div class="arc-controls"><button type="button" class="btn" id="glStart">Take the net</button><button type="button" class="btn ghost" id="glEnd" hidden>End run</button></div>
+    <p class="arc-note">Watch the puck, then tap an area of the net to commit to a save. Three goals end your run. Every five consecutive saves builds your multiplier, up to 5×.</p>
+    <p class="arc-note">Keyboard: Q / E for high shots, Z / C for low shots, Space for five-hole. Leaving or hiding the game ends a started run.</p>
+    <div class="slot"></div><p class="nodata" hidden>This game is not available yet.</p>
+  </section>
+  <section class="view" id="view-overtime" hidden>
+    <div class="arc-hud"><div><small>Time left</small><strong class="ot-time" id="otTime">0:30</strong></div><div><small>Right answers</small><strong id="otScore">0</strong></div><div><small>Streak</small><strong id="otStreak">0</strong></div></div>
+    <div class="ot-meter" aria-hidden="true"><i id="otMeter"></i></div>
+    <div class="ot-question" id="otQuestion"><small id="otRound">Sudden-death trivia</small><h3 id="otQ">Keep the clock alive.</h3></div>
+    <div class="ot-answers" id="otAnswers"></div>
+    <div class="arc-controls"><button type="button" class="btn" id="otStart">Start overtime</button><button type="button" class="btn ghost" id="otEnd" hidden>End run</button></div>
+    <p class="arc-note" id="otFeedback" role="status">Start with 30 seconds. Right answers add 3 seconds; wrong answers cost 5.</p>
+    <p class="arc-note">Keep up to 60 seconds on the clock. Clear all 100 questions for a perfect run. Use keys 1–4 or tap an answer. Leaving or hiding the game ends a started run.</p>
+    <div class="slot"></div><p class="nodata" hidden>This game needs player data. Rebuild the site to load it.</p>
+  </section>
+
   <section class="view" id="view-zam" hidden>
     <p class="intro">Drag across the ice to reveal the player, then guess who it is.</p>
     <div class="zambox"><img id="zmImg" alt="" draggable="false"><canvas id="zmIce" aria-label="Ice covering the photo. Drag to clear it."></canvas></div>
@@ -2467,6 +2545,8 @@ const UI_ICONS = {
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
 const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", zam: "ice", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net" };
+MODE_ICONS.goalie = "shield";
+MODE_ICONS.overtime = "clock";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
 Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -2508,7 +2588,7 @@ const secondsToEtMidnight = () => {
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
- "shoot", "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+ "shoot", "goalie", "overtime", "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -4242,8 +4322,217 @@ G.zam = {
   cv.addEventListener("pointercancel", up);
 })();
 
+// ---- Goalie Mode and Overtime ----
+const GL_SPOTS = [[21,43],[79,43],[21,78],[79,78],[50,78]];
+const arcadeAnswers = guesses => guesses.filter(x => x !== "START" && x !== "END");
+function goalieShot(t, index) {
+  const rnd = seeded(hash(`goalie:${t.seed}:${index}`)), zone = Math.floor(rnd() * 5);
+  return { zone, bend: index >= 5 && rnd() < .3 ? Math.floor(rnd() * 5) : zone,
+    duration: Math.max(520, 1450 - index * 28) };
+}
+function goalieTally(t, guesses) {
+  let score = 0, streak = 0, best = 0, saves = 0, goals = 0;
+  arcadeAnswers(guesses).forEach((x,i) => {
+    if (Number(x) === goalieShot(t,i).zone) { streak++; saves++; score += 10 * Math.min(5, 1 + Math.floor((streak - 1) / 5)); best = Math.max(best, streak); }
+    else { goals++; streak = 0; }
+  });
+  return { score, streak, best, saves, goals };
+}
+let goalieRun = null, overtimeRun = null;
+function stopGoalie() {
+  if (goalieRun) cancelAnimationFrame(goalieRun.raf);
+  goalieRun = null;
+  $("glPuck").hidden = true;
+  $("glGlove").hidden = true;
+  $("glRink").classList.remove("live");
+  document.querySelectorAll("[data-save]").forEach(b => b.disabled = true);
+}
+function stopOvertime() { if (overtimeRun) cancelAnimationFrame(overtimeRun.raf); overtimeRun = null; }
+function endArcade(id, quiet = false) {
+  if (game !== id || !S[id].target || S[id].over) return;
+  const started = S[id].guesses.includes("START");
+  if (id === "goalie") stopGoalie(); else stopOvertime();
+  if (started) { G[id].quietFinish=quiet; try { doGuess("END"); } finally { G[id].quietFinish=false; } }
+}
+// START is saved immediately. A reload cannot grant extra lives or reset time.
+function recoverArcade(id, st, active) {
+  if (!st.over && !active && st.guesses.includes("START")) {
+    const target = st.target;
+    setTimeout(() => { if (game === id && S[id].target === target && !S[id].over && !(id === "goalie" ? goalieRun : overtimeRun)) endArcade(id); }, 0);
+  }
+}
+function arcadeBest(id, st) {
+  const score = G[id].score(st.target, st.guesses), key = `sweater-${id}-best`;
+  store.set(key, Math.max(Number(store.get(key)) || 0, score));
+}
+G.goalie = {
+  localOnly: true,
+  kind: "score", repeat: true, title: "Goalie Mode", share: "Sweater Goalie", view: "view-goalie", max: 999, next: "Take the net again", hideReveal: true,
+  pool: () => [true], daily: k => DAILY.goalie[k] || { seed: hash(`goalie:${k}`) },
+  random: () => ({ seed: Math.floor(Math.random() * 2**32) }), tid: t => `goalie-v1:${t.seed}`,
+  player: () => null, meta: () => "", isWin: () => false,
+  score: (t,g) => goalieTally(t,g).score,
+  isDone: (t,g) => g.includes("END") || goalieTally(t,g).goals >= 3,
+  wonGame: (t,g) => goalieTally(t,g).saves >= 10,
+  endText(t,g) { const n = goalieTally(t,g); return { result: `${n.score} points`, cheer: `${n.saves} saves · Best streak ${n.best}` }; },
+  celebrate: (t,g) => goalieTally(t,g).saves >= 10,
+  archiveStatus: h => `${h.s} pts`, onFinish: st => arcadeBest("goalie", st),
+  shareText(t,s,n,link) { const r=goalieTally(t,s.guesses); return `Sweater Goalie #${n}\n${r.score} points · ${r.saves} saves\nBest save streak: ${r.best}${link}`; },
+  reset() { stopGoalie(); document.querySelectorAll("[data-save]").forEach(b => b.className="goalie-zone"); },
+  guess(t,x) { return x === "START" || x === "END" || (S.goalie.guesses.includes("START") && /^(-1|[0-4])$/.test(x)) ? false : null; },
+  render(t,st) {
+    const r=goalieTally(t,st.guesses);
+    $("glScore").textContent=r.score; $("glStreak").textContent=r.streak; $("glLives").textContent=`${r.goals} / 3`;
+    $("glStart").hidden=!!goalieRun || st.over || st.guesses.includes("START"); $("glEnd").hidden=!goalieRun || st.over;
+    if (st.over) { stopGoalie(); $("glStatus").textContent="Final buzzer"; }
+    else if (!goalieRun) $("glStatus").textContent="Own the crease.";
+    recoverArcade("goalie",st,goalieRun);
+  },
+};
+function startGoalie() {
+  const st=S.goalie;
+  if (game!=="goalie" || !st.target || st.over || goalieRun || st.guesses.includes("START")) return;
+  goalieRun={ next: performance.now()+850, shot:null, choice:null, raf:0 };
+  $("glRink").scrollIntoView({block:"center",behavior:"instant"});
+  $("glRink").classList.add("live"); $("glStatus").textContent="Get set…";
+  $("glGlove").hidden=false;$("glGlove").style.left="50%";$("glGlove").style.top="91%";
+  doGuess("START");
+  const step=now => {
+    const run=goalieRun;
+    if (!run || game!=="goalie") return;
+    if (!run.shot && now>=run.next) {
+      const index=arcadeAnswers(st.guesses).length;
+      run.shot={...goalieShot(st.target,index),born:now}; run.choice=null;
+      $("glGlove").style.left="50%";$("glGlove").style.top="91%";
+      const tally=goalieTally(st.target,st.guesses);
+      $("glStatus").textContent=`Shot ${index+1} · ${Math.min(5,1+Math.floor(tally.streak/5))}× multiplier`;
+      document.querySelectorAll("[data-save]").forEach(b=>{ b.disabled=false; b.className="goalie-zone"; });
+      $("glPuck").hidden=false;
+    }
+    if (run.shot) {
+      const shot=run.shot, p=Math.min(1,(now-shot.born)/shot.duration), [x,y]=GL_SPOTS[shot.zone];
+      const control=GL_SPOTS[shot.bend][0], px=(1-p)**2*50+2*(1-p)*p*control+p*p*x;
+      $("glPuck").style.left=`${px}%`; $("glPuck").style.top=`${10+(y-10)*p}%`;
+      $("glPuck").style.transform=`translate(-50%,-50%) scale(${.4+p*.9})`;
+      if (p>=1) {
+        const saved=run.choice===shot.zone, before=goalieTally(st.target,st.guesses).score;
+        run.shot=null; run.next=now+650;
+        document.querySelectorAll("[data-save]").forEach(b=>{ b.disabled=true; if(Number(b.dataset.save)===shot.zone)b.classList.add(saved?"saved":"conceded"); });
+        doGuess(String(run.choice ?? -1));
+        if (!goalieRun) return;
+        $("glStatus").textContent=saved?`Save! +${goalieTally(st.target,st.guesses).score-before}`:"Goal against";
+      }
+    }
+    run.raf=requestAnimationFrame(step);
+  };
+  goalieRun.raf=requestAnimationFrame(step);
+}
+function commitSave(zone) {
+  const run=goalieRun;
+  if(game!=="goalie" || !run?.shot || run.choice!==null || S.goalie.over || performance.now()>=run.shot.born+run.shot.duration) return;
+  run.choice=zone;
+  $("glGlove").style.left=`${GL_SPOTS[zone][0]}%`;$("glGlove").style.top=`${GL_SPOTS[zone][1]}%`;
+  document.querySelectorAll("[data-save]").forEach(b=>{b.disabled=true; b.classList.toggle("chosen",Number(b.dataset.save)===zone);});
+}
+$("glRink").addEventListener("click",e=>{const b=e.target.closest("[data-save]");if(b)commitSave(Number(b.dataset.save));});
+$("glStart").onclick=startGoalie; $("glEnd").onclick=()=>endArcade("goalie");
+
+function overtimeRandom(rnd) {
+  const rounds=[], seen=new Set(), used={kinds:new Set(),players:new Set()}, trophies=trophyRandom(rnd)?.rounds || [];
+  for(let attempt=0; rounds.length<100 && attempt<1000; attempt++) {
+    const trophy=rounds.length%5===4 ? trophies[Math.floor(rounds.length/5)] : null;
+    const q=trophy ? {q:`Who won the ${trophy.t} in ${seasonLabel(trophy.y)}?`,o:trophy.names,a:trophy.a,kind:"trophy"} : quizQuestion(rnd,PLAYERS,used);
+    if(!q || q.kind==="pastTeam" || seen.has(q.q)) continue;
+    seen.add(q.q); rounds.push(q);
+  }
+  return rounds.length===100?{rounds}:null;
+}
+function overtimeTally(t, guesses) {
+  let right=0, streak=0, best=0;
+  for(const x of arcadeAnswers(guesses)) { const [i,c]=x.split(":").map(Number); if(t.rounds[i]?.a===c){right++;streak++;best=Math.max(best,streak);}else streak=0; }
+  return {right,streak,best};
+}
+G.overtime = {
+  localOnly: true,
+  kind:"score",repeat:true,title:"Overtime",share:"Sweater Overtime",view:"view-overtime",max:100,next:"Play again",hideReveal:true,
+  pool:()=>PLAYERS.length>=20?PLAYERS:[], daily:k=>DAILY.overtime[k] || overtimeRandom(seeded(hash(`overtime:${k}`))),
+  random:()=>({...overtimeRandom(Math.random),rid:Math.random()}),
+  tid:t=>`overtime-v1:${t.rid || hash(JSON.stringify(t.rounds))}`,player:()=>null,meta:()=>"",isWin:()=>false,
+  score:(t,g)=>overtimeTally(t,g).right,
+  isDone:(t,g)=>g.includes("END") || arcadeAnswers(g).length>=t.rounds.length,
+  wonGame:(t,g)=>overtimeTally(t,g).right>=10, celebrate:(t,g)=>overtimeTally(t,g).right>=10,
+  archiveStatus:h=>`${h.s} right`,onFinish:st=>arcadeBest("overtime",st),
+  endText(t,g){const r=overtimeTally(t,g);return {result:`${r.right} right ${r.right===1?"answer":"answers"}`,cheer:`Best streak: ${r.best}${arcadeAnswers(g).length===100?" · Board cleared!":""}`};},
+  shareText(t,s,n,link){const r=overtimeTally(t,s.guesses);return `Sweater Overtime #${n}\n${r.right} right answers · Best streak ${r.best}${link}`;},
+  reset(){stopOvertime();$("otTime").textContent="0:30";$("otTime").classList.remove("urgent");$("otMeter").style.width="50%";$("otFeedback").textContent="Start with 30 seconds. Right answers add 3 seconds; wrong answers cost 5.";},
+  guess(t,x){
+    if(x==="START" || x==="END")return false;
+    if(!S.overtime.guesses.includes("START") || !/^\d+:[0-3]$/.test(x))return null;
+    const [i]=x.split(":").map(Number);
+    return i===arcadeAnswers(S.overtime.guesses).length && i<t.rounds.length?false:null;
+  },
+  render(t,st){
+    const r=overtimeTally(t,st.guesses),run=overtimeRun;
+    $("otScore").textContent=r.right;$("otStreak").textContent=r.streak;
+    $("otStart").hidden=!!run || st.over || st.guesses.includes("START");$("otEnd").hidden=!run || st.over;
+    if(st.over){stopOvertime();$("otTime").textContent="0:00";$("otMeter").style.width="0%";$("otRound").textContent="Final score";$("otQ").textContent="Overtime is over.";$("otAnswers").innerHTML="";$("otFeedback").textContent="";}
+    else if(run){
+      const q=t.rounds[run.index];
+      $("otRound").textContent=`Question ${run.index+1} / ${t.rounds.length}`;$("otQ").textContent=q.q;
+      $("otAnswers").innerHTML=q.o.map((o,i)=>`<button type="button" class="ot-answer${run.locked?(i===q.a?" right":i===run.choice?" wrong":""):""}" data-ot="${i}"${run.locked?" disabled":""}>${esc(o)}</button>`).join("");
+    }else{$("otRound").textContent="Sudden-death trivia";$("otQ").textContent="Keep the clock alive.";$("otAnswers").innerHTML="";}
+    recoverArcade("overtime",st,run);
+  },
+};
+function paintOvertimeClock(now){
+  if(!overtimeRun)return;
+  const seconds=Math.max(0,Math.ceil((overtimeRun.deadline-now)/1000));
+  $("otTime").textContent=`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,"0")}`;
+  $("otTime").classList.toggle("urgent",seconds<=10);$("otMeter").style.width=`${Math.max(0,Math.min(100,(overtimeRun.deadline-now)/600))}%`;
+}
+function startOvertime(){
+  const st=S.overtime;
+  if(game!=="overtime" || !st.target || st.over || overtimeRun || st.guesses.includes("START"))return;
+  overtimeRun={deadline:performance.now()+30000,index:0,locked:false,ready:0,choice:null,raf:0};
+  $("otFeedback").textContent="+3 seconds right · −5 seconds wrong";doGuess("START");
+  const step=now=>{
+    const run=overtimeRun;if(!run || game!=="overtime")return;
+    paintOvertimeClock(now);
+    if(now>=run.deadline){endArcade("overtime");return;}
+    if(run.locked && now>=run.ready){
+      run.index++;run.locked=false;run.choice=null;G.overtime.render(st.target,st);
+      $("otQuestion").classList.remove("next-round");void $("otQuestion").offsetWidth;$("otQuestion").classList.add("next-round");
+      $("otFeedback").textContent="+3 seconds right · −5 seconds wrong";
+    }
+    run.raf=requestAnimationFrame(step);
+  };
+  overtimeRun.raf=requestAnimationFrame(step);
+}
+function answerOvertime(choice){
+  const run=overtimeRun,st=S.overtime,now=performance.now();
+  if(game!=="overtime" || !run || run.locked || st.over)return;
+  if(now>=run.deadline){endArcade("overtime");return;}
+  const right=st.target.rounds[run.index].a===choice;
+  run.locked=true;run.choice=choice;run.ready=now+550;
+  run.deadline=right?Math.min(now+60000,run.deadline+3000):run.deadline-5000;
+  $("otFeedback").textContent=right?"+3 seconds":"−5 seconds";
+  paintOvertimeClock(now);doGuess(`${run.index}:${choice}`);
+  if(overtimeRun && now>=run.deadline)endArcade("overtime");
+}
+$("otStart").onclick=startOvertime;$("otEnd").onclick=()=>endArcade("overtime");
+$("otAnswers").addEventListener("click",e=>{const b=e.target.closest("[data-ot]");if(b)answerOvertime(Number(b.dataset.ot));});
+document.addEventListener("keydown",e=>{
+  if(e.repeat || onHub || document.querySelector(".modal.open") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+  if(game==="overtime" && /^[1-4]$/.test(e.key)){e.preventDefault();answerOvertime(Number(e.key)-1);}
+  if(game==="goalie" && goalieRun?.shot){const zone={q:0,e:1,z:2,c:3," ":4}[e.key.toLowerCase()];if(zone!==undefined){e.preventDefault();commitSave(zone);}}
+});
+document.addEventListener("visibilitychange",()=>{if(document.hidden){if(goalieRun)endArcade("goalie",true);if(overtimeRun)endArcade("overtime",true);}});
+window.addEventListener("pagehide",()=>{if(goalieRun)endArcade("goalie",true);if(overtimeRun)endArcade("overtime",true);});
+
 // finish a running arcade game if the player leaves it
 function leaveGame(g) {
+  if (g === "goalie" && goalieRun) endArcade("goalie",true);
+  if (g === "overtime" && overtimeRun) endArcade("overtime",true);
   if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
   if (g === "shoot" && shootUI.phase === "aim") shootUI = { phase: "ask" };
 }
@@ -5178,7 +5467,8 @@ function finish(won, fresh) {
     if (mode === "daily") {
       submitPending();
       if (unlocked.length) setTimeout(() => toast(`Achievement unlocked: ${unlocked[0].title}`), party ? 900 : 350);
-      setTimeout(() => { statsGame = null; openModal("statsModal"); }, party ? 2400 : 1600);
+      const finishedGame=game, finishedTarget=st.target;
+      if (!g.quietFinish) setTimeout(() => { if(game!==finishedGame || onHub || S[game].target!==finishedTarget)return; statsGame = null; openModal("statsModal"); }, party ? 2400 : 1600);
     }
   }
 }
@@ -5626,6 +5916,7 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) tick
 
 // ======================= switches =======================
 $("unlimited").addEventListener("change", e => {
+  if (game === "goalie" || game === "overtime") leaveGame(game);
   mode = e.target.checked ? "unlimited" : "daily";
   store.set("sweater-mode", mode);
   if (mode === "daily") loadDaily(); else loadUnlimited(true);
@@ -5709,6 +6000,8 @@ const LB_RULES = {
   rank: "Rank 'Em: 10 points on the first try, 6 on the second, 3 on the third.",
   puck: "Puck Drop: 1 point for each right tap, minus 1 for each wrong tap.",
   shoot: "Shootout: 2 points for every goal, up to 10.",
+  goalie: "Goalie Mode: 10 points per save, with a multiplier increasing every 5 consecutive saves up to 5×. Three goals end the run.",
+  overtime: "Overtime: 1 point per right answer. Start with 30 seconds; right answers add 3 seconds and wrong answers cost 5.",
   playoff: "Playoff Hero: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
   cups: "Playoff History: 1 point for every square you fill in 10 minutes.",
   trophy: "Trophy Case: 2 points for every round you get right, so 20 questions are worth up to 40.",
@@ -5756,6 +6049,7 @@ function submitPending() {
     const sent = store.get("sweater-lb-sent") || {};
     const today = dayKey(), yday = prevDayKey(today);
     for (const g of GAME_IDS) {
+      if (G[g].localOnly) continue; // New arcade scoring is local until the server supports it.
       const saved = store.get(KEYS[g].daily);
       if (!saved || (saved.date !== today && saved.date !== yday)) continue;
       const key = `${g}:${saved.date}`;
@@ -5834,6 +6128,11 @@ async function renderLeaderboard() {
   $("lbRules").textContent = LB_RULES[lbGame];
   renderLbName();
   const req = ++lbRequest, me = lbIdentity(false), name = store.get("sweater-lb-name");
+  if (G[lbGame].localOnly) {
+    $("lbList").innerHTML='<li class="empty">Scores for this new mode are saved on your device. Global rankings are not available yet.</li>';
+    $("lbYou").textContent=`Personal best: ${Number(store.get(`sweater-${lbGame}-best`)) || 0}`;
+    return;
+  }
   if (!$("lbList").children.length) $("lbList").innerHTML = '<li class="empty">Loading…</li>';
   try {
     const d = await api(`/api/leaderboard?game=${lbGame}&period=${lbPeriod}${me ? `&uid=${me.uid}` : ""}`);
@@ -5891,12 +6190,14 @@ const HUB = [
   { title: "Arcade", tone: "red", games: [
     ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
     ["shoot", "🥅", "Answer right to earn a shot, then beat the goalie."],
+    ["goalie", "🧤", "Read the shot. Make the save. Own the crease."],
+    ["overtime", "⏱️", "Fast hockey trivia. Keep the clock alive."],
   ]},
 ];
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
 const CARD = {};
 HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: sec.tone }; }));
-/* Short, repeatable labels make a 22-mode library scannable before a player
+/* Short, repeatable labels make the game library scannable before a player
    has to read a description. They also power the shelf, Locker, and results. */
 const MODE_META = Object.freeze({
   classic:  { type: "Deduction", time: "3–5 min", difficulty: "Medium", fact: "Read the board: team, position, age and more all narrow the field.", next: "statline" },
@@ -5921,6 +6222,8 @@ const MODE_META = Object.freeze({
   conn:     { type: "Puzzle", time: "3–5 min", difficulty: "Hard", fact: "The groups are hidden until you find the shared hockey connection.", next: "truths" },
   puck:     { type: "Arcade", time: "1–2 min", difficulty: "Medium", fact: "Fast answers score, but the wrong tap costs you the run.", next: "shoot" },
   shoot:    { type: "Arcade", time: "2 min", difficulty: "Medium", fact: "Answer the hockey question first—then turn it into a goal.", next: "puck" },
+  goalie:   { type: "Arcade", fact: "Read the puck's path before committing. Every five straight saves builds your multiplier.", next: "overtime" },
+  overtime: { type: "Arcade", fact: "Accuracy buys time. Keep answering until the buzzer—or clear the whole board.", next: "goalie" },
 });
 const modeMeta = id => MODE_META[id] || { type: "Daily", time: "2–4 min", difficulty: "Medium", fact: "A fresh hockey puzzle is ready every day.", next: "classic" };
 const hubIds = () => HUB.flatMap(sec => sec.games.map(([id]) => id));
@@ -6370,6 +6673,8 @@ const HELP = {
   rank: `<p>Drag the 5 players into order by the stat shown, or use the arrows, then press <b>Lock it in</b>. You get 3 tries; rows in the right spot turn green.</p>`,
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
+  goalie: `<p>Press <b>Take the net</b>. Watch the puck and tap the area it is heading for before it reaches the goal. You can commit only once per shot. Use Q/E for top left/right, Z/C for bottom left/right, or Space for five-hole.</p><p>Shots speed up and can curve after the first five. Each save earns 10 points; every five straight saves increases your multiplier, up to 5×. A goal resets the streak, and three goals end your run. Leaving, reloading, or hiding the game ends a started run.</p>`,
+  overtime: `<p>Start with <b>30 seconds</b>. Pick an answer or press 1–4: a right answer adds 3 seconds and a wrong answer costs 5. The clock keeps running during the brief answer reveal. Bank up to 60 seconds.</p><p>Each right answer earns one point. Survive until the clock runs out, or clear the 100-question board. Leaving, reloading, or hiding the game ends a started run.</p>`,
   playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
   cups: `<p>A complete grid from 1980–81 through the latest Final, with three squares per season: the Stanley Cup winner, the runner-up and the Conn Smythe winner. Press Start, then type names for 10 minutes.</p>
     <p>One name fills every square it belongs in, and a team nickname or a surname is enough when only one answer matches it.</p>`,
@@ -7371,6 +7676,29 @@ def trophy_puzzle(players, entries, rnd):
     return None
 
 
+def overtime_puzzle(players, entries, rnd):
+    """Freeze a mixed 100-question daily board so rebuilds preserve answers."""
+    if len(players) < 20:
+        return None
+    trophies = (trophy_puzzle(players, entries, rnd) or {}).get("rounds", [])
+    rounds, seen, used = [], set(), {"kinds": set(), "players": set()}
+    for _ in range(1000):
+        index = len(rounds)
+        if index >= 100:
+            return {"rounds": rounds}
+        if index % 5 == 4 and index // 5 < len(trophies):
+            r = trophies[index // 5]
+            q = {"q": f"Who won the {r['t']} in {r['y']}–{str(r['y'] + 1)[-2:]}?",
+                 "o": r["names"], "a": r["a"], "kind": "trophy"}
+        else:
+            q = quiz_question(players, rnd, used)
+        if not q or q["kind"] == "pastTeam" or q["q"] in seen:
+            continue
+        rounds.append(q)
+        seen.add(q["q"])
+    return None
+
+
 def mroster_puzzle(players, rnd):
     rosters = {}
     for p in players:
@@ -7509,6 +7837,8 @@ def update_schedule(players, today):
         "rank": (lambda pl, rnd: rank_puzzle(pl, rnd), "sweater-rank"),
         "puck": (lambda pl, rnd: puck_puzzle(pl, rules, rnd), "sweater-puck"),
         "shoot": (lambda pl, rnd: shootout_puzzle(pl, rnd), "sweater-shoot"),
+        "goalie": (lambda pl, rnd: {"seed": rnd.getrandbits(32)}, "sweater-goalie"),
+        "overtime": (lambda pl, rnd: overtime_puzzle(pl, trophy_entries(pl, award_history), rnd), "sweater-overtime"),
         "truths": (lambda pl, rnd: truths_puzzle(pl, rnd), "sweater-truths"),
         "hlt": (lambda pl, rnd: hlt_puzzle(pl, rnd), "sweater-hlt"),
         "season": (lambda pl, rnd: season_puzzle(pl, rnd), "sweater-season"),
