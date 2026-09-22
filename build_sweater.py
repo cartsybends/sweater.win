@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "65 · Answer Motion"
+VERSION = "66 · Softer Reveal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1136,7 +1136,8 @@ TEMPLATE = r'''<!DOCTYPE html>
            transition: transform .2s cubic-bezier(.22,.7,.3,1), box-shadow .2s ease, border-color .2s ease, background-color .2s ease, color .2s ease, opacity .24s ease; }
   @keyframes opt-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
   .shopt:active:not(:disabled) { transform: translateY(-1px) scale(.994); transition-duration: .08s; }
-  .shopt::before { content: ""; position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); border: 2px solid color-mix(in srgb, var(--fg) 32%, transparent); border-radius: 50%; }
+  .shopt::before { content: ""; position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); border: 2px solid color-mix(in srgb, var(--fg) 32%, transparent); border-radius: 50%;
+                   transition: border-color .34s ease, box-shadow .34s ease; }
   .trname { position: relative; z-index: 1; display: block; padding-right: 56px; }
   .trlogo { position: absolute; z-index: 0; right: -5px; top: 50%; width: 92px; height: 92px; object-fit: contain;
              transform: translateY(-50%); opacity: .18; filter: drop-shadow(0 5px 5px rgba(4, 24, 35, .14)); pointer-events: none; }
@@ -1152,11 +1153,17 @@ TEMPLATE = r'''<!DOCTYPE html>
     to { transform: translateY(-50%) scale(1); }
   }
   @keyframes trophy-answer-win {
-    from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 55%, transparent); }
-    to { box-shadow: 0 0 0 9px transparent; }
+    from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 38%, transparent); }
+    to { box-shadow: 0 0 0 11px transparent; }
   }
-  .shopt.right { animation: trophy-answer-win .5s cubic-bezier(.22,.7,.3,1) both; }
-  .shopt.dim { transition-delay: .05s; }
+  /* The answer reveal reads in order: the tile you picked settles first, the
+     right one eases in behind it, the rest recede. Each step is slow enough to
+     follow without holding the round up. */
+  .shopt.right, .shopt.right::before { transition-duration: .42s; transition-delay: .2s; }
+  .shopt.right { animation: trophy-answer-win .8s cubic-bezier(.33,0,.2,1) both; animation-delay: .2s; }
+  .shopt.right .trlogo { animation-duration: .5s; animation-delay: .2s; transition-delay: .2s; }
+  .shopt.wrong, .shopt.wrong::before { transition-duration: .3s; }
+  .shopt.dim { transition-duration: .36s; transition-delay: .14s; }
   .trlogo { transition: opacity .24s ease, transform .24s cubic-bezier(.22,.7,.3,1), filter .24s ease; }
   .shopt:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--arena-blue); background: color-mix(in srgb, var(--arena-blue) 8%, var(--panel)); box-shadow: 0 10px 18px rgba(18, 74, 92, .12); }
   .shopt.right, .shopt.wrong { color: #fff; }
