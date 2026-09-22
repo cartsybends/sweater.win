@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "67 · Round Markers"
+VERSION = "68 · Outlined Markers"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1651,10 +1651,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .pickstat select { min-height: 42px; background: var(--panel); color: var(--fg); box-shadow: none; }
   #view-trophy #trDots { margin: 0 auto 20px; flex-wrap: wrap; gap: 6px; }
   #view-trophy #trDots .shdot { width: 27px; height: 27px; font-size: 12px; box-shadow: none;
-                                transition: background-color .3s ease, border-color .3s ease, color .3s ease; }
-  /* A graded round carries its result in the circle itself, not just the mark. */
-  #view-trophy #trDots .shdot.ok { color: var(--hit-fg); border-color: transparent; background: var(--hit); }
-  #view-trophy #trDots .shdot.bad { color: #fff; border-color: transparent; background: #c0392b; }
+                                transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease; }
+  /* A graded round carries its result in the circle itself, not just the mark.
+     Outlines rather than fills, so the solid accent circle stays unambiguously
+     "the round you're on" however the player has coloured the interface. */
+  #view-trophy #trDots .shdot.ok,
+  #view-trophy #trDots .shdot.bad { background: transparent; font-weight: 700; }
+  #view-trophy #trDots .shdot.ok { color: var(--hit); border-color: var(--hit); box-shadow: inset 0 0 0 1px var(--hit); }
+  #view-trophy #trDots .shdot.bad { color: #c0392b; border-color: #c0392b; box-shadow: inset 0 0 0 1px #c0392b; }
+  :root[data-theme="dark"] #view-trophy #trDots .shdot.bad { color: #e8695f; border-color: #e8695f; box-shadow: inset 0 0 0 1px #e8695f; }
   #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   .trophy-prompt { display: block; font-size: 14px; font-weight: 500; color: var(--muted); }
   .trophy-title { display: block; margin: 8px auto 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 750; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
