@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "62 · Map Zoom Feel"
+VERSION = "63 · Day Meter"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -316,8 +316,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .hubtitle { margin: 2px 0 12px; font-size: 34px; font-weight: 700; letter-spacing: -.02em; }
   .hubmeter { height: 6px; border-radius: 3px; background: var(--sep); overflow: hidden; }
   .hubmeter i { display: block; height: 100%; width: 0; border-radius: 3px; background: var(--hit); transition: width .6s cubic-bezier(.2,.8,.2,1); }
-  .hubprogress { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; margin: 8px 0 0;
-                 color: var(--label2); font-size: 13px; text-align: left; }
+  .hubprogress { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 12px; margin: 8px 0 0;
+                 color: var(--label2); font-size: 13px; text-align: center; }
   .hubnext b { font-variant-numeric: tabular-nums; color: var(--fg); font-weight: 600; }
   .partycard { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 12px;
                width: 100%; min-height: 150px; margin: 0 0 26px; padding: 20px; border: 0; border-radius: 22px; cursor: pointer;
@@ -1771,7 +1771,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <p class="hubdate" id="hubDate"></p>
       <h1 class="hubtitle">Today's games</h1>
       <div class="hubmeter" aria-hidden="true"><i id="hubBar"></i></div>
-      <p class="hubprogress"><span id="hubProgress"></span> <span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
+      <p class="hubprogress"><span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
     <section class="hubfeatures" id="hubFeatures" aria-label="Featured games"></section>
     <section class="hubshelf" id="hubShelf" aria-label="Your game shelf" hidden></section>
@@ -5922,6 +5922,22 @@ $("lbBtn").onclick = () => openLeaderboard();
 $("stLbBtn").onclick = () => openLeaderboard(statsGame || game);
 
 // ======================= countdown + midnight rollover =======================
+// The hub meter tracks the day itself: empty just after the reset, filling as
+// the next set of puzzles gets closer.
+function dayMeter() {
+  const bar = $("hubBar");
+  if (!bar) return;
+  const gone = (86400 - secondsToEtMidnight()) / 864;   // percent of the day used
+  if (gone < Number(bar.dataset.pct || 0)) {            // rolled over: snap back, don't rewind
+    bar.style.transition = "none";
+    bar.style.width = "0%";
+    void bar.offsetWidth;
+    bar.style.transition = "";
+  }
+  bar.dataset.pct = gone;
+  bar.style.width = `${gone.toFixed(2)}%`;
+}
+
 function tick() {
   if (mode === "daily" && S[game].day && S[game].day !== dayKey()) { loadDaily(); return; }
   const s = secondsToEtMidnight();
@@ -5930,6 +5946,7 @@ function tick() {
   $("countdown").textContent = `New puzzle in ${clock}`;
   $("stNext").textContent = clock;
   $("hubNext").textContent = clock;
+  if (onHub) dayMeter();
   if (onHub && tick.lastDay && tick.lastDay !== dayKey()) renderHub();
   tick.lastDay = dayKey();
 }
@@ -6301,8 +6318,6 @@ function weeklyDoneGames(theme = activeWeeklyTheme()) {
 }
 function renderHub() {
   const allCards = HUB.flatMap(sec => sec.games);
-  const total = allCards.length;
-  const played = allCards.filter(([id]) => ["done", "missed"].includes(hubStatus(id)[0])).length;
   const going = allCards.find(([id]) => hubStatus(id)[0] === "going");
   const dateSeed = Number(dayKey().replaceAll("-", ""));
   const candidate = FEATURE_SEQUENCE[dateSeed % FEATURE_SEQUENCE.length];
@@ -6362,8 +6377,7 @@ function renderHub() {
   $("hubSections").hidden = !libraryOpen;
   $("libraryToggle").setAttribute("aria-expanded", libraryOpen ? "true" : "false");
   $("libraryToggle").innerHTML = `${libraryOpen ? "Hide game library" : "Browse all games"} <span aria-hidden="true">›</span>`;
-  $("hubProgress").textContent = `Daily Hat Trick ${Math.min(hatTrickCount, 3)}/3 · ${played} of ${total} games played today.`;
-  $("hubBar").style.width = `${Math.round(played / total * 100)}%`;
+  dayMeter();
   $("hubDate").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
   document.querySelector(".partycard").disabled = !API_ON;
   document.querySelector(".partycard .partycta").textContent = API_ON ? "Start a party" : "Not available";
