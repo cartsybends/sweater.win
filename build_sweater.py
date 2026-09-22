@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "63 · Day Meter"
+VERSION = "64 · Shelf Hover Fix"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1434,7 +1434,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shelfhead { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 2px 10px; }
   .shelfhead b { font-size: 14px; letter-spacing: -.01em; }
   .shelfhead span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
-  .shelfscroll { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(164px, 1fr); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  /* overflow-x also clips vertically, so leave room for the hover lift and the
+     focus ring; the negative margin keeps the row sitting where it did. */
+  .shelfscroll { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(164px, 1fr); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; overflow-x: auto; padding: 6px 0; margin-top: -6px; scrollbar-width: none; }
   .shelfscroll::-webkit-scrollbar { display: none; }
   .shelfcard { min-width: 0; min-height: 93px; padding: 11px; border: 1px solid var(--line); border-radius: 13px; background: var(--cell); color: var(--cell-fg); font: inherit; text-align: left; cursor: pointer; transition: transform .18s ease, border-color .18s ease; }
   .shelfcard:hover { transform: translateY(-2px); border-color: var(--accent); }
