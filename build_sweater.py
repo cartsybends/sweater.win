@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "64 · Shelf Hover Fix"
+VERSION = "65 · Answer Motion"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1131,7 +1131,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shdots { gap: 8px; margin-bottom: 13px; }
   .shdot { width: 32px; height: 32px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 74%, var(--cell)); box-shadow: 0 3px 8px rgba(17, 54, 68, .045); }
   .shdot.now { color: #06313b; border-color: transparent; background: linear-gradient(135deg, #b7f3ec, #6dd4da); box-shadow: 0 0 0 3px var(--arena-glow), 0 4px 11px rgba(36, 164, 159, .18); }
-  .shopt { position: relative; overflow: hidden; min-height: 62px; border-radius: 13px; font-weight: 700; text-align: left; padding: 13px 16px 13px 48px; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s; }
+  .shopt { position: relative; overflow: hidden; min-height: 62px; border-radius: 13px; font-weight: 700; text-align: left; padding: 13px 16px 13px 48px;
+           animation: opt-in .26s cubic-bezier(.22,.7,.3,1) both; animation-delay: calc(var(--i, 0) * 40ms);
+           transition: transform .2s cubic-bezier(.22,.7,.3,1), box-shadow .2s ease, border-color .2s ease, background-color .2s ease, color .2s ease, opacity .24s ease; }
+  @keyframes opt-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  .shopt:active:not(:disabled) { transform: translateY(-1px) scale(.994); transition-duration: .08s; }
   .shopt::before { content: ""; position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); border: 2px solid color-mix(in srgb, var(--fg) 32%, transparent); border-radius: 50%; }
   .trname { position: relative; z-index: 1; display: block; padding-right: 56px; }
   .trlogo { position: absolute; z-index: 0; right: -5px; top: 50%; width: 92px; height: 92px; object-fit: contain;
@@ -1139,20 +1143,21 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shopt:hover:not(:disabled) .trlogo { opacity: .28; transform: translateY(-50%) scale(1.06); }
   /* Keep the crest in its real team colours after a choice is graded. The
      former white inversion turned detailed crests into an unrecognizable blob. */
-  .shopt.right .trlogo { opacity: .43; filter: brightness(1.16) saturate(1.2) drop-shadow(0 5px 6px rgba(0,0,0,.2)); animation: trophy-crest-win .62s cubic-bezier(.18,.85,.25,1.16) both; }
+  .shopt.right .trlogo { opacity: .43; filter: brightness(1.16) saturate(1.2) drop-shadow(0 5px 6px rgba(0,0,0,.2)); animation: trophy-crest-win .34s cubic-bezier(.22,.7,.3,1) both; }
   .shopt.wrong .trlogo { opacity: .31; filter: brightness(1.12) saturate(1.15) drop-shadow(0 5px 6px rgba(0,0,0,.2)); }
+  /* One settle, one soft ring. The old bounce-and-pulse drew attention to the
+     animation rather than to which answer was right. */
   @keyframes trophy-crest-win {
-    0% { transform: translateY(-50%) scale(.42) rotate(-14deg); }
-    58% { transform: translateY(-50%) scale(1.28) rotate(4deg); }
-    78% { transform: translateY(-50%) scale(.93) rotate(-1deg); }
-    100% { transform: translateY(-50%) scale(1) rotate(0); }
+    from { transform: translateY(-50%) scale(.93); }
+    to { transform: translateY(-50%) scale(1); }
   }
   @keyframes trophy-answer-win {
-    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 0%, transparent); }
-    45% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--hit) 20%, transparent), 0 0 26px color-mix(in srgb, var(--hit) 48%, transparent); }
-    100% { box-shadow: 0 0 0 12px transparent, 0 0 0 transparent; }
+    from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 55%, transparent); }
+    to { box-shadow: 0 0 0 9px transparent; }
   }
-  .shopt.right { animation: trophy-answer-win .62s ease-out both; }
+  .shopt.right { animation: trophy-answer-win .5s cubic-bezier(.22,.7,.3,1) both; }
+  .shopt.dim { transition-delay: .05s; }
+  .trlogo { transition: opacity .24s ease, transform .24s cubic-bezier(.22,.7,.3,1), filter .24s ease; }
   .shopt:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--arena-blue); background: color-mix(in srgb, var(--arena-blue) 8%, var(--panel)); box-shadow: 0 10px 18px rgba(18, 74, 92, .12); }
   .shopt.right, .shopt.wrong { color: #fff; }
   .shopt.right::before { border-color: #fff; box-shadow: inset 0 0 0 4px var(--hit-fg); }
@@ -1184,7 +1189,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     #view-trophy .optrow { width: 100%; justify-content: center; gap: 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .shopt.right, .shopt.right .trlogo { animation: none; }
+    .shopt, .shopt.right, .shopt.right .trlogo { animation: none; }
     .partycard, .grow, .gcard, .btn, .profile, .shopt { transition: none; }
   }
 
@@ -4190,10 +4195,10 @@ G.shoot = {
     $("shQ").textContent = st.over && !showResult ? "Shootout over" : `Shooter ${(showResult ? lastI : i) + 1}: ${r.q}`;
     const answered = showResult || shootUI.phase === "aim";
     const chosen = showResult ? Number(st.guesses[lastI].split(":")[0]) : shootUI.choice;
-    $("shOpts").innerHTML = st.over && !showResult ? "" : r.o.map((o, n) => {
-      const cls = answered ? (n === r.a ? " right" : n === chosen ? " wrong" : " dim") : "";
-      return `<button type="button" class="shopt${cls}" data-c="${n}"${answered ? " disabled" : ""}>${esc(o)}</button>`;
-    }).join("");
+    const shRound = `${r.q}#${showResult ? lastI : Math.min(i, 4)}`;
+    const shHtml = st.over && !showResult ? "" : r.o.map((o, n) =>
+      `<button type="button" class="shopt" style="--i:${n}" data-c="${n}">${esc(o)}</button>`).join("");
+    paintOptions("shOpts", shRound, shHtml, answered ? n => n === r.a ? "right" : n === chosen ? "wrong" : "dim" : null);
     const aiming = shootUI.phase === "aim";
     $("shNet").classList.toggle("aim", aiming);
     $("shNet").querySelectorAll(".zone").forEach(z => z.classList.toggle("off", !aiming));
@@ -5020,12 +5025,16 @@ G.trophy = {
       `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
       : `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
-    $("trOpts").innerHTML = st.over && !showing ? "" : r.names.map((name, n) => {
-      const cls = showing ? (n === r.a ? " right" : n === Number(st.guesses[last]) ? " wrong" : " dim") : "";
+    // Answering keeps the same four buttons and only changes their classes, so
+    // the colours can transition. Rebuilding the markup here would hand the
+    // browser fresh nodes that snap straight to their graded state.
+    const round = `${this.tid(t)}#${showing ? last : Math.min(i, of - 1)}`;
+    const html = st.over && !showing ? "" : r.names.map((name, n) => {
       const team = (r.teams || [])[n] || trophyTeam(r.t, r.y, name);
-      return `<button type="button" class="shopt${cls}" data-c="${n}"${showing ? " disabled" : ""}>` +
+      return `<button type="button" class="shopt" style="--i:${n}" data-c="${n}">` +
         `${team ? `<img class="trlogo${logoToneClass(team)}" data-team="${esc(team)}" src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<span class="trname">${esc(name)}</span></button>`;
     }).join("");
+    paintOptions("trOpts", round, html, showing ? n => n === r.a ? "right" : n === Number(st.guesses[last]) ? "wrong" : "dim" : null);
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
     // delegated click while the setup animation is ending.
@@ -5922,6 +5931,23 @@ $("helpBtn").onclick = () => openModal("helpModal");
 $("silBtn").onclick = () => { if (!(S.classic.opts && S.classic.opts.hard)) openModal("modal"); };
 $("lbBtn").onclick = () => openLeaderboard();
 $("stLbBtn").onclick = () => openLeaderboard(statsGame || game);
+
+// Multiple-choice tiles: write the markup once per question, then grade in
+// place. Reusing the nodes is what lets the graded colours animate rather than
+// appear fully formed, and it keeps the tile the player pressed under their
+// cursor instead of swapping a new one in beneath it.
+function paintOptions(host, round, html, grade) {
+  const el = $(host);
+  if (!html) { el.dataset.round = ""; el.innerHTML = ""; return; }
+  if (el.dataset.round !== round) { el.dataset.round = round; el.innerHTML = html; }
+  [...el.children].forEach((b, n) => {
+    const state = grade ? grade(n) : "";
+    b.disabled = !!grade;
+    b.classList.toggle("right", state === "right");
+    b.classList.toggle("wrong", state === "wrong");
+    b.classList.toggle("dim", state === "dim");
+  });
+}
 
 // ======================= countdown + midnight rollover =======================
 // The hub meter tracks the day itself: empty just after the reset, filling as
