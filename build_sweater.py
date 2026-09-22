@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "66 · Softer Reveal"
+VERSION = "67 · Round Markers"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1159,11 +1159,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* The answer reveal reads in order: the tile you picked settles first, the
      right one eases in behind it, the rest recede. Each step is slow enough to
      follow without holding the round up. */
-  .shopt.right, .shopt.right::before { transition-duration: .42s; transition-delay: .2s; }
-  .shopt.right { animation: trophy-answer-win .8s cubic-bezier(.33,0,.2,1) both; animation-delay: .2s; }
-  .shopt.right .trlogo { animation-duration: .5s; animation-delay: .2s; transition-delay: .2s; }
-  .shopt.wrong, .shopt.wrong::before { transition-duration: .3s; }
-  .shopt.dim { transition-duration: .36s; transition-delay: .14s; }
+  .shopt.right, .shopt.right::before { transition-duration: .31s; transition-delay: .1s; }
+  .shopt.right { animation: trophy-answer-win .65s cubic-bezier(.33,0,.2,1) both; animation-delay: .1s; }
+  .shopt.right .trlogo { animation-duration: .42s; animation-delay: .1s; transition-delay: .1s; }
+  .shopt.wrong, .shopt.wrong::before { transition-duration: .25s; }
+  .shopt.dim { transition-duration: .31s; transition-delay: .1s; }
   .trlogo { transition: opacity .24s ease, transform .24s cubic-bezier(.22,.7,.3,1), filter .24s ease; }
   .shopt:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--arena-blue); background: color-mix(in srgb, var(--arena-blue) 8%, var(--panel)); box-shadow: 0 10px 18px rgba(18, 74, 92, .12); }
   .shopt.right, .shopt.wrong { color: #fff; }
@@ -1650,7 +1650,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .pickstat { font-size: 13px; gap: 10px; }
   #view-trophy .pickstat select { min-height: 42px; background: var(--panel); color: var(--fg); box-shadow: none; }
   #view-trophy #trDots { margin: 0 auto 20px; flex-wrap: wrap; gap: 6px; }
-  #view-trophy #trDots .shdot { width: 27px; height: 27px; font-size: 12px; box-shadow: none; }
+  #view-trophy #trDots .shdot { width: 27px; height: 27px; font-size: 12px; box-shadow: none;
+                                transition: background-color .3s ease, border-color .3s ease, color .3s ease; }
+  /* A graded round carries its result in the circle itself, not just the mark. */
+  #view-trophy #trDots .shdot.ok { color: var(--hit-fg); border-color: transparent; background: var(--hit); }
+  #view-trophy #trDots .shdot.bad { color: #fff; border-color: transparent; background: #c0392b; }
   #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   .trophy-prompt { display: block; font-size: 14px; font-weight: 500; color: var(--muted); }
   .trophy-title { display: block; margin: 8px auto 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 750; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
@@ -5028,8 +5032,11 @@ G.trophy = {
       `<option value="${esc(name)}">${esc(name)}</option>`).join("")}`;
     $("trTrophy").value = selectedTrophy;
     $("trRounds").value = String(of);
-    $("trDots").innerHTML = Array.from({ length: of }, (_, n) =>
-      `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
+    $("trDots").innerHTML = Array.from({ length: of }, (_, n) => {
+      const done = n < i, won = done && this.right(t, st.guesses[n], n);
+      const cls = done ? (won ? " ok" : " bad") : n === i && !st.over ? " now" : "";
+      return `<span class="shdot${cls}">${done ? (won ? "✓" : "✗") : n + 1}</span>`;
+    }).join("");
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
       : `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
     // Answering keeps the same four buttons and only changes their classes, so
