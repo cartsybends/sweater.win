@@ -531,8 +531,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   .team-best-actions .btn { margin: 0; }
   .teammodepanel .shdot.ok { color: var(--hit); border-color: var(--hit); background: transparent; box-shadow: inset 0 0 0 1px var(--hit); }
   .teammodepanel .shdot.bad { color: #c0392b; border-color: #c0392b; background: transparent; box-shadow: inset 0 0 0 1px #c0392b; }
-  .team-mystery-logo { display: inline-grid; width: 34px; height: 34px; margin-right: 5px; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--fg) 7%, transparent); vertical-align: -11px; overflow: hidden; }
-  .ttcard .pmeta .team-mystery-logo img { width: 31px; height: 31px; border-radius: 0; background: transparent; object-fit: contain; transform: scale(1.18); }
+  .team-mystery-logo { display: inline-grid; width: 42px; height: 42px; margin-right: 7px; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--fg) 7%, transparent); vertical-align: -14px; overflow: hidden; }
+  .ttcard .pmeta .team-mystery-logo img { width: 100%; height: 100%; max-width: none; max-height: none; border-radius: 0; background: transparent; object-fit: contain; transform: scale(1.72); transform-origin: center; }
+  .teammodepanel .team-hl-statrow { width: auto; margin: 6px 0 12px; justify-content: center; gap: 10px; }
+  .teammodepanel .team-hl-statrow .pickstat { font-size: 14px; gap: 8px; font-weight: 400; }
+  .teammodepanel .team-hl-statrow .pickstat select { min-height: 0; margin-left: 0; padding: 7px 10px; font-size: 15px; font-weight: 400; background: var(--bg); }
   :root[data-theme="dark"] .teamhero-logos img, :root[data-theme="dark"] .teams-homecard .teamlogos img { filter: saturate(1.18) brightness(1.38) drop-shadow(0 2px 6px rgba(0,0,0,.3)); }
   .teams-homecard { position: relative; isolation: isolate; overflow: hidden; width: 100%; min-height: 158px; margin: 0 0 24px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
   .teams-homecard::after { content: ""; position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--panel) 96%, transparent) 0 31%, color-mix(in srgb, var(--panel) 76%, transparent) 44%, color-mix(in srgb, var(--panel) 18%, transparent) 72%, transparent); pointer-events: none; }
@@ -6704,13 +6707,58 @@ function startTeamGuess(t){
   makeTeamSearch("teamGuessInput","teamGuessOpts",h,p=>{if(over||guesses.includes(p.id))return;if(p.id===target.id){over=true;draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max)over=true;draw();},()=>guesses);
   $("teamGuessNew").onclick=()=>startTeamGuess(t);$("teamGuessInput").focus();
 }
-function teamPeakPlayers(h, stat){return [...h.byPlayer.values()].map(p=>{const row=p.rows.reduce((best,r)=>!best||Number(r[stat]||0)>Number(best[stat]||0)?r:best,null);return row&&Number(row[stat]||0)>0?{...p,v:Number(row[stat]||0),y:row.y}:null}).filter(Boolean);}
+const TEAM_HL_STATS = {
+  points:  { name: "Points",       label: "points",          up: "More", down: "Fewer", type: "peak" },
+  assists: { name: "Assists",      label: "assists",         up: "More", down: "Fewer", type: "peak" },
+  goals:   { name: "Goals",        label: "goals",           up: "More", down: "Fewer", type: "peak" },
+  pim:     { name: "PIM",          label: "penalty minutes", up: "More", down: "Fewer", type: "peak" },
+  gp:      { name: "Games played", label: "games played",    up: "More", down: "Fewer", type: "teamCareer" },
+};
+function teamHLPlayers(h, stat){
+  return [...h.byPlayer.values()].map(p=>{
+    if(stat === "gp") {
+      const v=p.rows.reduce((n,r)=>n+Number(r.gp||0),0);
+      const latest=p.rows.reduce((best,r)=>!best||r.y>best.y?r:best,null);
+      return v&&latest?{...p,v,y:latest.y}:null;
+    }
+    const row=p.rows.reduce((best,r)=>!best||Number(r[stat]||0)>Number(best[stat]||0)?r:best,null);
+    return row&&Number(row[stat]||0)>0?{...p,v:Number(row[stat]||0),y:row.y}:null;
+  }).filter(Boolean);
+}
 function startTeamHigher(t){
-  const h=historyForTeam(t);if(!h.skaters.length)return teamModeNoData(t,"higher");const stat=pick(["points","goals","assists","pim"]),info={points:["Points","points","More","Fewer"],goals:["Goals","goals","More","Fewer"],assists:["Assists","assists","More","Fewer"],pim:["PIM","penalty minutes","More","Fewer"]}[stat],pool=teamPeakPlayers(h,stat);if(pool.length<3)return teamModeNoData(t,"higher");let seq=shuffled(pool).slice(0,2),streak=0,over=false;const bestKey=`sweater-team-hl-best-${t}`;
-  teamModeShell(t,"higher",`<p class="intro">Whose career-high <b>${info[1]}</b> in a single ${esc(teamFullName(t))} season is higher?</p><p class="hint">Ties count as right.</p><div class="hlscore"><span>Streak <b id="teamHLStreak">0</b></span><span>Best <b id="teamHLBest">${store.get(bestKey)||0}</b></span></div><div class="hlpair" id="teamHLPair"><div id="teamHLA"></div><div class="hlvs">VS</div><div id="teamHLB"></div></div><div class="team-best-actions"><button type="button" class="btn ghost" id="teamHLNew">New run</button></div>`);
-  const card=(p,reveal,state)=>`<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b>${p.v}</b></p><p class="hlunit">career-high ${info[1]}</p><p class="hlyr">in ${seasonText(p.y)}</p>`:`<p class="hlunit">career-high ${info[1]}:</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info[2]}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info[3]}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
-  const nextPlayer=()=>{const used=new Set(seq.map(p=>p.id)),options=pool.filter(p=>!used.has(p.id));return pick(options.length?options:pool);};
-  const draw=()=>{$("teamHLStreak").textContent=streak;$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);$("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;$("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw();},850);}else{over=true;}});};draw();$("teamHLNew").onclick=()=>startTeamHigher(t);
+  const h=historyForTeam(t);if(!h.skaters.length)return teamModeNoData(t,"higher");
+  const statKey=`sweater-team-hl-stat-${t}`;let stat=String(store.get(statKey)||"points");if(!TEAM_HL_STATS[stat])stat="points";
+  const info=TEAM_HL_STATS[stat],pool=teamHLPlayers(h,stat);if(pool.length<3)return teamModeNoData(t,"higher");
+  let seq=shuffled(pool).slice(0,2),streak=0,over=false;const bestKey=`sweater-team-hl-best-${t}-${stat}`;
+  const options=Object.entries(TEAM_HL_STATS).map(([v,x])=>`<option value="${v}"${v===stat?' selected':''}>${x.name}</option>`).join("");
+  const intro=info.type==="teamCareer"
+    ? `Who played more <b>regular-season games for ${esc(teamFullName(t))}</b>?`
+    : `Whose career-high <b>${info.label}</b> in a single ${esc(teamFullName(t))} season is higher?`;
+  teamModeShell(t,"higher",`<div class="optrow team-hl-statrow"><label class="pickstat">Stat <select id="teamHLStatSel" aria-label="Stat to compare">${options}</select></label></div><p class="intro">${intro}</p><p class="hint">Ties count as right.</p><div class="hlscore"><span>Streak <b id="teamHLStreak">0</b></span><span>Best <b id="teamHLBest">${store.get(bestKey)||0}</b></span></div><div class="hlpair" id="teamHLPair"><div id="teamHLA"></div><div class="hlvs">VS</div><div id="teamHLB"></div></div><div class="team-best-actions"><button type="button" class="btn ghost" id="teamHLNew">New run</button></div>`);
+  const card=(p,reveal,state)=>{
+    const unit=info.type==="teamCareer"?`regular-season games with ${esc(teamFullName(t))}`:`career-high ${info.label}`;
+    const sub=info.type==="teamCareer"?`across his ${esc(teamFullName(t))} career`:`in ${seasonText(p.y)}`;
+    const prompt=info.type==="teamCareer"?`career games with ${esc(teamFullName(t))}:`:`career-high ${info.label}:`;
+    return `<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b>${p.v}</b></p><p class="hlunit">${unit}</p><p class="hlyr">${sub}</p>`:`<p class="hlunit">${prompt}</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info.up}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info.down}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
+  };
+  const nextPlayer=()=>{
+    const used=new Set(seq.map(p=>p.id));
+    let options=pool.filter(p=>!used.has(p.id)&&p.v!==seq[1].v);
+    if(!options.length)options=pool.filter(p=>!used.has(p.id));
+    return pick(options.length?options:pool);
+  };
+  const draw=()=>{
+    $("teamHLStreak").textContent=streak;$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);
+    $("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");
+    if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{
+      const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;
+      $("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");
+      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw();},850);}else{over=true;}
+    });
+  };
+  draw();
+  $("teamHLStatSel").onchange=e=>{store.set(statKey,e.target.value);startTeamHigher(t);};
+  $("teamHLNew").onclick=()=>startTeamHigher(t);
 }
 function startTeamMystery(t){
   const h=historyForTeam(t),pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=4);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
