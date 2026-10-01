@@ -40,7 +40,7 @@ TEAMS = [
 ]
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "71 · Team Polish"
+VERSION = "72 · Home Load Fix"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -6781,7 +6781,10 @@ function route() {
   if (id && (G[id] || id === "hl")) {
     if (!onHub && id === game) return;
     openGame(id, false);
-  } else if (!onHub) {
+  } else {
+    // The hub is dynamic. Even when onHub is already true on first load, we
+    // still have to render it; otherwise only static HTML (such as Teams)
+    // appears and the normal game library stays empty/hidden.
     showHub(false);
   }
 }
