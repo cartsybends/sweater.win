@@ -40,7 +40,7 @@ TEAMS = [
 ]
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "74 · Team Best All Time"
+VERSION = "75 · Trophy Progress Motion"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1736,17 +1736,72 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .optrow { width: 100%; max-width: none; margin: 0 0 22px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; display: flex; justify-content: space-between; gap: 16px; }
   #view-trophy .pickstat { font-size: 13px; gap: 10px; }
   #view-trophy .pickstat select { min-height: 42px; background: var(--panel); color: var(--fg); box-shadow: none; }
-  #view-trophy #trDots { margin: 0 auto 20px; flex-wrap: wrap; gap: 6px; }
-  #view-trophy #trDots .shdot { width: 27px; height: 27px; font-size: 12px; box-shadow: none;
-                                transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease; }
-  /* A graded round carries its result in the circle itself, not just the mark.
-     Outlines rather than fills, so the solid accent circle stays unambiguously
-     "the round you're on" however the player has coloured the interface. */
+  #view-trophy #trDots { margin: 0 auto 20px; flex-wrap: wrap; gap: 7px; }
+  /* Trophy progress uses persistent nodes so a number can genuinely morph into
+     its result instead of being replaced by a fresh character on every render. */
+  #view-trophy #trDots .shdot {
+    position: relative; isolation: isolate; width: 28px; height: 28px; overflow: visible;
+    font-size: 12px; box-shadow: none; border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--panel) 78%, var(--cell));
+    transform: translateZ(0);
+    transition: background-color .34s cubic-bezier(.2,.8,.2,1),
+                border-color .34s cubic-bezier(.2,.8,.2,1),
+                box-shadow .34s cubic-bezier(.2,.8,.2,1),
+                transform .34s cubic-bezier(.2,.85,.25,1.25);
+  }
+  #view-trophy #trDots .shdot::after {
+    content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit;
+    border: 1.5px solid transparent; opacity: 0; pointer-events: none;
+  }
+  #view-trophy #trDots .tr-dot-number,
+  #view-trophy #trDots .tr-dot-mark {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    transition: opacity .2s ease, transform .32s cubic-bezier(.2,.85,.25,1.3);
+  }
+  #view-trophy #trDots .tr-dot-number { opacity: 1; transform: scale(1); }
+  #view-trophy #trDots .tr-dot-mark { opacity: 0; transform: scale(.58) rotate(-8deg); }
+  #view-trophy #trDots .tr-dot-mark svg { width: 16px; height: 16px; overflow: visible; }
+  #view-trophy #trDots .tr-dot-mark path {
+    fill: none; stroke: currentColor; stroke-width: 2.35; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 28; stroke-dashoffset: 28;
+    transition: stroke-dashoffset .34s cubic-bezier(.35,0,.15,1) .06s;
+  }
+  #view-trophy #trDots .shdot.now {
+    transform: scale(1.05); border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 13%, var(--panel));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 11%, transparent);
+  }
   #view-trophy #trDots .shdot.ok,
-  #view-trophy #trDots .shdot.bad { background: transparent; font-weight: 700; }
-  #view-trophy #trDots .shdot.ok { color: var(--hit); border-color: var(--hit); box-shadow: inset 0 0 0 1px var(--hit); }
-  #view-trophy #trDots .shdot.bad { color: #c0392b; border-color: #c0392b; box-shadow: inset 0 0 0 1px #c0392b; }
-  :root[data-theme="dark"] #view-trophy #trDots .shdot.bad { color: #e8695f; border-color: #e8695f; box-shadow: inset 0 0 0 1px #e8695f; }
+  #view-trophy #trDots .shdot.bad { transform: scale(1); font-weight: 700; }
+  #view-trophy #trDots .shdot.ok {
+    color: var(--hit); border-color: color-mix(in srgb, var(--hit) 72%, var(--line));
+    background: color-mix(in srgb, var(--hit) 10%, var(--panel));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hit) 24%, transparent);
+  }
+  #view-trophy #trDots .shdot.bad {
+    color: #c94a43; border-color: color-mix(in srgb, #c94a43 72%, var(--line));
+    background: color-mix(in srgb, #c94a43 9%, var(--panel));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, #c94a43 20%, transparent);
+  }
+  #view-trophy #trDots .shdot.ok .tr-dot-number,
+  #view-trophy #trDots .shdot.bad .tr-dot-number { opacity: 0; transform: scale(.66); }
+  #view-trophy #trDots .shdot.ok .tr-dot-mark,
+  #view-trophy #trDots .shdot.bad .tr-dot-mark { opacity: 1; transform: scale(1) rotate(0); }
+  #view-trophy #trDots .shdot.ok .tr-dot-mark path,
+  #view-trophy #trDots .shdot.bad .tr-dot-mark path { stroke-dashoffset: 0; }
+  #view-trophy #trDots .shdot.ok::after { border-color: color-mix(in srgb, var(--hit) 50%, transparent); animation: trophy-dot-ring .52s cubic-bezier(.2,.7,.2,1) both; }
+  #view-trophy #trDots .shdot.bad::after { border-color: color-mix(in srgb, #c94a43 45%, transparent); animation: trophy-dot-ring .46s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes trophy-dot-ring {
+    0% { opacity: .5; transform: scale(.8); }
+    70% { opacity: .18; transform: scale(1.3); }
+    100% { opacity: 0; transform: scale(1.48); }
+  }
+  :root[data-theme="dark"] #view-trophy #trDots .shdot.bad { color: #ee7168; }
+  @media (prefers-reduced-motion: reduce) {
+    #view-trophy #trDots .shdot, #view-trophy #trDots .tr-dot-number, #view-trophy #trDots .tr-dot-mark,
+    #view-trophy #trDots .tr-dot-mark path { transition: none; }
+    #view-trophy #trDots .shdot::after { animation: none !important; }
+  }
   #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   .trophy-prompt { display: block; font-size: 14px; font-weight: 500; color: var(--muted); }
   .trophy-title { display: block; margin: 8px auto 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 750; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
@@ -5173,11 +5228,26 @@ G.trophy = {
       `<option value="${esc(name)}">${esc(name)}</option>`).join("")}`;
     $("trTrophy").value = selectedTrophy;
     $("trRounds").value = String(of);
-    $("trDots").innerHTML = Array.from({ length: of }, (_, n) => {
+    // Keep these nodes alive between renders. Replacing the whole row made the
+    // old number -> check/X change snap with no meaningful transition.
+    const dots = $("trDots");
+    if (dots.children.length !== of) {
+      dots.innerHTML = Array.from({ length: of }, (_, n) =>
+        `<span class="shdot" data-round="${n}" aria-label="Question ${n + 1}">` +
+          `<span class="tr-dot-number">${n + 1}</span>` +
+          `<span class="tr-dot-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path></path></svg></span>` +
+        `</span>`
+      ).join("");
+    }
+    Array.from(dots.children).forEach((dot, n) => {
       const done = n < i, won = done && this.right(t, st.guesses[n], n);
-      const cls = done ? (won ? " ok" : " bad") : n === i && !st.over ? " now" : "";
-      return `<span class="shdot${cls}">${done ? (won ? "✓" : "✗") : n + 1}</span>`;
-    }).join("");
+      dot.classList.toggle("ok", done && won);
+      dot.classList.toggle("bad", done && !won);
+      dot.classList.toggle("now", !done && n === i && !st.over);
+      dot.setAttribute("aria-label", done ? `Question ${n + 1}: ${won ? "correct" : "incorrect"}` : `Question ${n + 1}${n === i && !st.over ? ": current" : ""}`);
+      const path = dot.querySelector(".tr-dot-mark path");
+      if (path) path.setAttribute("d", won ? "M6.5 12.5 10.2 16.2 17.8 8.4" : "M8.2 8.2 15.8 15.8 M15.8 8.2 8.2 15.8");
+    });
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
       : `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
     // Answering keeps the same four buttons and only changes their classes, so
