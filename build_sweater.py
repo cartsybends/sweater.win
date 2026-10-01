@@ -40,7 +40,7 @@ TEAMS = [
 ]
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "72 · Home Load Fix"
+VERSION = "74 · Team Best All Time"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -6669,28 +6669,40 @@ function startTeamBest(t) {
   const stats=["points","goals","assists","pim","gp"], decades=teamDecades(h);
   const decadeKey=`sweater-team-best-decade-${t}`, statKey=`sweater-team-best-stat-${t}`, roundsKey=`sweater-team-best-rounds-${t}`;
   let decade=String(store.get(decadeKey) ?? "all"), stat=String(store.get(statKey)||"points"), total=Number(store.get(roundsKey))||5;
-  if(!stats.includes(stat))stat="points"; if(![5,10,15,20].includes(total))total=5; if(decade!=="all"&&!decades.includes(Number(decade)))decade="all";
+  if(!stats.includes(stat))stat="points"; if(![5,10,15,20].includes(total))total=5; if(!["all","alltime"].includes(decade)&&!decades.includes(Number(decade)))decade="all";
   let roundIndex=0, marks=[], usedYears=new Set();
-  const controls=`<div class="optrow"><label class="pickstat">Decade <select id="teamBestDecade"><option value="all">All eras</option>${decades.map(d=>`<option value="${d}"${String(d)===decade?' selected':''}>${d}s</option>`).join("")}</select></label><label class="pickstat">Category <select id="teamBestStat">${[["points","Points"],["goals","Goals"],["assists","Assists"],["pim","PIM"],["gp","Games played"]].map(([v,l])=>`<option value="${v}"${v===stat?' selected':''}>${l}</option>`).join("")}</select></label><label class="pickstat">Questions <select id="teamBestRounds">${[5,10,15,20].map(n=>`<option value="${n}"${n===total?' selected':''}>${n}</option>`).join("")}</select></label></div><div class="shdots" id="teamBestDots"></div><div id="teamBestRound"></div>`;
+  const allTime = decade === "alltime";
+  const controls=`<div class="optrow"><label class="pickstat">Decade <select id="teamBestDecade"><option value="alltime"${allTime?' selected':''}>ALL TIME</option><option value="all"${decade==='all'?' selected':''}>Any decade</option>${decades.map(d=>`<option value="${d}"${String(d)===decade?' selected':''}>${d}s</option>`).join("")}</select></label><label class="pickstat">Category <select id="teamBestStat">${[["points","Points"],["goals","Goals"],["assists","Assists"],["pim","PIM"],["gp","Games played"]].map(([v,l])=>`<option value="${v}"${v===stat?' selected':''}>${l}</option>`).join("")}</select></label><label class="pickstat">Questions <select id="teamBestRounds"${allTime?' disabled':''}>${allTime?'<option value="1">1</option>':[5,10,15,20].map(n=>`<option value="${n}"${n===total?' selected':''}>${n}</option>`).join("")}</select></label></div><div class="shdots" id="teamBestDots"></div><div id="teamBestRound"></div>`;
   teamModeShell(t,"best",controls);
-  const restart=()=>{store.set(decadeKey,$("teamBestDecade").value);store.set(statKey,$("teamBestStat").value);store.set(roundsKey,Number($("teamBestRounds").value));startTeamBest(t);};
+  const restart=()=>{const nextDecade=$("teamBestDecade").value;store.set(decadeKey,nextDecade);store.set(statKey,$("teamBestStat").value);if(nextDecade!=="alltime")store.set(roundsKey,Number($("teamBestRounds").value));startTeamBest(t);};
   ["teamBestDecade","teamBestStat","teamBestRounds"].forEach(id=>$(id).addEventListener("change",restart));
   function finishRun(){
+    const runTotal = decade === "alltime" ? 1 : total;
     $("teamBestDots").innerHTML=marks.map((m,i)=>`<span class="shdot ${m==='ok'?'ok':'bad'}">${m==='ok'?'✓':'✗'}</span>`).join("");
-    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Run complete</span><strong>${marks.filter(x=>x==='ok').length}/${total}</strong><small>Top-five boards cleared</small></div><div class="team-best-actions"><button type="button" class="btn" id="teamBestAgain">Play again</button></div>`;
+    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Run complete</span><strong>${marks.filter(x=>x==='ok').length}/${runTotal}</strong><small>Top-five boards cleared</small></div><div class="team-best-actions"><button type="button" class="btn" id="teamBestAgain">Play again</button></div>`;
     $("teamBestAgain").onclick=()=>startTeamBest(t);
   }
   function renderRound(){
-    if(roundIndex>=total){finishRun();return;}
     stat=$("teamBestStat").value; decade=$("teamBestDecade").value;
-    let candidates=teamBestCandidates(h,decade,stat).filter(y=>!usedYears.has(y));
-    if(!candidates.length){usedYears.clear();candidates=teamBestCandidates(h,decade,stat);}
-    if(!candidates.length){$("teamBestRound").innerHTML=`<p class="hint bad">There aren't enough five-player ${esc(statWord(stat))} boards in that decade. Try another decade or category.</p>`;return;}
-    const y=pick(candidates); usedYears.add(y); const period=seasonText(y), pool=h.bySeason.get(y)||[];
-    const leaders=pool.filter(x=>Number(x[stat]||0)>0).sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
+    const runTotal = decade === "alltime" ? 1 : total;
+    if(roundIndex>=runTotal){finishRun();return;}
+    let period, pool, leaders;
+    if(decade === "alltime") {
+      period = "ALL TIME";
+      pool = aggregateTeamSkaters(h.skaters);
+      leaders = pool.filter(x=>Number(x[stat]||0)>0).sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
+      if(leaders.length<5){$("teamBestRound").innerHTML=`<p class="hint bad">There aren't enough historical ${esc(statWord(stat))} records for an all-time board.</p>`;return;}
+    } else {
+      let candidates=teamBestCandidates(h,decade,stat).filter(y=>!usedYears.has(y));
+      if(!candidates.length){usedYears.clear();candidates=teamBestCandidates(h,decade,stat);}
+      if(!candidates.length){$("teamBestRound").innerHTML=`<p class="hint bad">There aren't enough five-player ${esc(statWord(stat))} boards in that decade. Try another decade or category.</p>`;return;}
+      const y=pick(candidates); usedYears.add(y); period=seasonText(y); pool=h.bySeason.get(y)||[];
+      leaders=pool.filter(x=>Number(x[stat]||0)>0).sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
+    }
     const answerIds=new Set(leaders.map(x=>x.id)),found=new Set();let misses=0,over=false;
-    $("teamBestDots").innerHTML=Array.from({length:total},(_,i)=>`<span class="shdot${i===roundIndex?' now':''}">${i<marks.length?(marks[i]==='ok'?'✓':'✗'):i+1}</span>`).join("");
-    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Question ${roundIndex+1} of ${total}</span><strong>${period}</strong><small>${esc(teamFullName(t))} · ${esc(statWord(stat))}</small></div><p class="team-prompt">Name the top 5 ${esc(statWord(stat))} leaders</p><p class="team-subprompt">Regular season · answers stay hidden until you find them.</p><ol class="teamleaderlist" id="teamBestList"></ol>${teamSearchMarkup("teamBestInput","teamBestOpts","Type a player name")}<div class="team-best-actions"><button type="button" class="btn ghost" id="teamBestGive">Give up</button><button type="button" class="btn ghost" id="teamBestSkip">New question</button></div><p class="team-mode-msg" id="teamBestMsg"></p>`;
+    $("teamBestDots").innerHTML=Array.from({length:runTotal},(_,i)=>`<span class="shdot${i===roundIndex?' now':''}">${i<marks.length?(marks[i]==='ok'?'✓':'✗'):i+1}</span>`).join("");
+    const allTimeRound = decade === "alltime";
+    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Question ${roundIndex+1} of ${runTotal}</span><strong>${period}</strong><small>${esc(teamFullName(t))} · ${esc(statWord(stat))}</small></div><p class="team-prompt">Name the top 5 ${allTimeRound?'all-time ':''}${esc(statWord(stat))} leaders</p><p class="team-subprompt">Regular season · answers stay hidden until you find them.</p><ol class="teamleaderlist" id="teamBestList"></ol>${teamSearchMarkup("teamBestInput","teamBestOpts","Type a player name")}<div class="team-best-actions"><button type="button" class="btn ghost" id="teamBestGive">Give up</button><button type="button" class="btn ghost" id="teamBestSkip">${allTimeRound?'Restart':'New question'}</button></div><p class="team-mode-msg" id="teamBestMsg"></p>`;
     const draw=(reveal=false)=>{$("teamBestList").innerHTML=leaders.map((p,i)=>{const hit=found.has(p.id),show=hit||reveal;return `<li class="${hit?'found':''}"><span class="rank">${i+1}</span><span><b>${show?esc(p.name):"???"}</b><small>${period} · ${statLabel(stat)}</small></span><strong>${show?p[stat]:"—"}</strong></li>`}).join("");};draw();
     const advance=(cleared)=>{if(!over){over=true;draw(true);marks.push(cleared?'ok':'bad');}roundIndex++;renderRound();};
     makeTeamSearch("teamBestInput","teamBestOpts",h,p=>{if(over)return;const msg=$("teamBestMsg");msg.className="team-mode-msg";if(found.has(p.id)){msg.textContent="You already have him.";return;}if(answerIds.has(p.id)){found.add(p.id);msg.classList.add("good");msg.textContent=`Correct — ${found.size}/5.`;draw();if(found.size===5){over=true;marks.push('ok');msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},800);}}else{misses++;msg.classList.add("bad");msg.textContent=`Not in the top five · ${misses} miss${misses===1?'':'es'}.`;}},()=>[...found]);
