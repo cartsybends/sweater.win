@@ -39,7 +39,7 @@ TEAMS = [
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
 HERE = Path(__file__).resolve().parent
-VERSION = "68 · Outlined Markers"
+VERSION = "69 · Live Rosters + Team Hubs"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -470,6 +470,39 @@ TEMPLATE = r'''<!DOCTYPE html>
   .zambox img, .zambox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
   .zambox img { object-fit: cover; user-select: none; -webkit-user-drag: none; }
   .zambox canvas { touch-action: none; cursor: crosshair; }
+
+  /* team hubs */
+  #view-teams { max-width: 960px; }
+  .teamhero { margin: 0 0 18px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+  .teamherohead { display: flex; align-items: center; gap: 14px; }
+  .teamherohead img { width: 72px; height: 72px; object-fit: contain; }
+  .teamherohead h2 { margin: 0; font-size: 28px; letter-spacing: -.035em; }
+  .teamherohead p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .teamgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .teampick { min-height: 118px; padding: 13px 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--fg); font: inherit; cursor: pointer; text-align: center; transition: transform .16s ease, border-color .16s ease; }
+  .teampick:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .teampick img { display: block; width: 58px; height: 58px; margin: 0 auto 7px; object-fit: contain; }
+  .teampick b { display: block; font-size: 13px; }
+  .teammodes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+  .teammode { position: relative; min-height: 108px; padding: 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--fg); text-align: left; font: inherit; }
+  .teammode b, .teammode small { display: block; }
+  .teammode b { font-size: 16px; }
+  .teammode small { margin-top: 5px; color: var(--muted); line-height: 1.35; }
+  .teammode em { position: absolute; right: 12px; top: 12px; padding: 4px 7px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .teams-homecard { position: relative; overflow: hidden; width: 100%; min-height: 132px; margin: 0 0 24px; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .teams-homecard:hover { border-color: var(--accent); }
+  .teams-homecard .teamlogos { position: absolute; inset: -22px -12px -22px 46%; display: grid; grid-template-columns: repeat(5, 52px); gap: 8px; transform: rotate(-7deg); opacity: .18; pointer-events: none; }
+  .teams-homecard .teamlogos img { width: 52px; height: 52px; object-fit: contain; }
+  .teams-homecard > span { position: relative; z-index: 1; display: block; max-width: 52%; }
+  .teams-homecard b { display: block; font-size: 24px; letter-spacing: -.025em; }
+  .teams-homecard small { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .teams-homecard strong { display: inline-block; margin-top: 13px; color: var(--accent); font-size: 13px; }
+  @media (max-width: 700px) {
+    .teamgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .teammodes { grid-template-columns: 1fr; }
+    .teams-homecard > span { max-width: 68%; }
+    .teams-homecard .teamlogos { left: 58%; opacity: .14; }
+  }
 
   /* party mode */
   #view-party { max-width: 900px; }
@@ -1797,6 +1830,10 @@ TEMPLATE = r'''<!DOCTYPE html>
       <p class="hubprogress"><span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
     <section class="hubfeatures" id="hubFeatures" aria-label="Featured games"></section>
+    <button type="button" class="teams-homecard" data-open="teams" aria-label="Explore NHL teams">
+      <span><b>Teams</b><small>Pick your team and test how deep your franchise knowledge goes — seasons, leaders, rosters and history.</small><strong>Choose a team →</strong></span>
+      <span class="teamlogos" id="teamLogoMosaic" aria-hidden="true"></span>
+    </button>
     <section class="hubshelf" id="hubShelf" aria-label="Your game shelf" hidden></section>
     <button type="button" class="partycard" data-open="party">
       <svg class="rink" viewBox="0 0 400 160" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
@@ -2235,6 +2272,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     <ul class="wrong" id="zmWrong"></ul>
   </section>
 
+  <section class="view" id="view-teams" hidden>
+    <div id="teamsBody"></div>
+  </section>
+
   <section class="view" id="view-party" hidden>
     <div id="ptBody"></div>
   </section>
@@ -2537,6 +2578,40 @@ const logo = t => HISTORIC_LOGOS[t] || `https://assets.nhle.com/logos/nhl/svg/${
 // Navy/royal crests need a little more lift on the contrast theme's black surfaces.
 const BLUE_LOGO_TEAMS = new Set(["ATL", "BUF", "CBJ", "COL", "EDM", "HFD", "MTL", "NYI", "NYR", "QUE", "SEA", "STL", "TBL", "TOR", "UTA", "VAN", "WPG"]);
 const logoToneClass = t => BLUE_LOGO_TEAMS.has(t) ? " logo-blue" : "";
+const CURRENT_ROSTER_CACHE = "sweater-current-rosters-v1";
+async function refreshCurrentRosters(force = false) {
+  if (!/^https?:$/.test(location.protocol)) return;
+  let cached = null;
+  try { cached = JSON.parse(localStorage.getItem(CURRENT_ROSTER_CACHE) || "null"); } catch {}
+  if (!force && cached && Date.now() - cached.at < 2 * 3600e3 && cached.players) {
+    applyCurrentRosterMap(cached.players); return;
+  }
+  try {
+    const results = await Promise.allSettled(Object.keys(TEAMS).map(async team => {
+      const r = await fetch(`https://api-web.nhle.com/v1/roster/${team}/current`, { cache: "no-store" });
+      if (!r.ok) throw new Error(`${team} ${r.status}`);
+      const data = await r.json(), rows = [];
+      ["forwards", "defensemen", "goalies"].forEach(group => (data[group] || []).forEach(p => rows.push([p.id, team, p.sweaterNumber, p.headshot, p.positionCode])));
+      return rows;
+    }));
+    const map = {};
+    results.forEach(r => { if (r.status === "fulfilled") r.value.forEach(([id, team, number, headshot, pos]) => map[id] = { team, number, headshot, pos }); });
+    if (Object.keys(map).length < 500) return;
+    applyCurrentRosterMap(map);
+    try { localStorage.setItem(CURRENT_ROSTER_CACHE, JSON.stringify({ at: Date.now(), players: map })); } catch {}
+  } catch {}
+}
+function applyCurrentRosterMap(map) {
+  let changed = 0;
+  PLAYERS.forEach(p => {
+    const live = map[p.id]; if (!live) return;
+    if (p.team !== live.team) { p.team = live.team; changed++; }
+    if (live.number != null) p.number = live.number;
+    if (live.headshot) p.headshot = live.headshot;
+    if (live.pos) p.pos = live.pos;
+  });
+  if (changed && onHub) renderHub();
+}
 const FALLBACK = "data:image/svg+xml," + encodeURIComponent(
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='38' r='20'/><path d='M12 100c2-26 18-38 38-38s36 12 38 38z'/></svg>`);
 
@@ -6392,14 +6467,10 @@ function renderHub() {
       </button>
     </div>`;
   const favourites = favouriteIds(), recents = recentIds();
-  const shelfIds = (favourites.length ? favourites : recents).filter(gameIsReady).slice(0, 3);
-  const shelfLabel = favourites.length ? "Your favourites" : recents.length ? "Keep playing" : "Start here";
-  const shelfHint = favourites.length ? "Your saved modes" : recents.length ? "Your recent modes" : "A few great first shifts";
-  $("hubShelf").hidden = !shelfIds.length;
-  $("hubShelf").innerHTML = shelfIds.length ? `<div class="shelfhead"><b>${shelfLabel}</b><span>${shelfHint}</span></div><div class="shelfscroll">${shelfIds.map(id => {
-    const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
-    return `<button type="button" class="shelfcard" data-open="${id}"><span class="shelficon" aria-hidden="true">${modeIcon(id)}</span><b>${esc(cardTitle(id))}</b></button>`;
-  }).join("")}</div>` : "";
+  $("hubShelf").hidden = true;
+  $("hubShelf").innerHTML = "";
+  const mosaicTeams = ["CGY","TOR","VAN","EDM","MTL","BOS","NYR","DET","COL","DAL","PIT","CHI","VGK","WPG","OTT"];
+  $("teamLogoMosaic").innerHTML = mosaicTeams.map(t => `<img src="${logo(t)}" alt="">`).join("");
   const selectedFilter = store.get("sweater-library-filter") || "all";
   $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
   const librarySections = HUB.map(sec => ({ ...sec, games: sec.games.filter(([id]) =>
@@ -6448,8 +6519,41 @@ $("view-hub").addEventListener("click", e => {
   const b = e.target.closest("[data-open]");
   if (!b || b.disabled) return;
   if (b.dataset.open === "party") openParty("");
+  else if (b.dataset.open === "teams") openTeams();
   else openGame(b.dataset.open);
 });
+
+function teamFullName(t) { return TEAM_NAMES[t] || t; }
+function renderTeamPicker() {
+  $("teamsBody").innerHTML = `<div class="teamhero"><div class="teamherohead"><div><p class="featureeyebrow">Franchise challenges</p><h2>Choose your team</h2><p>Start with the club you know best. Team modes will reach back to 1980 or the franchise's first NHL season.</p></div></div></div>
+    <div class="teamgrid">${Object.keys(TEAMS).map(t => `<button type="button" class="teampick" data-team="${t}"><img src="${logo(t)}" alt=""><b>${esc(teamFullName(t))}</b></button>`).join("")}</div>`;
+}
+function renderTeamHub(t) {
+  const name = teamFullName(t);
+  const currentCount = PLAYERS.filter(p => p.team === t).length;
+  $("teamsBody").innerHTML = `<button class="backbtn" type="button" id="backTeamPicker"><span aria-hidden="true">‹</span> All teams</button>
+    <div class="teamhero"><div class="teamherohead"><img src="${logo(t)}" alt="${esc(name)} logo"><div><p class="featureeyebrow">Team hub</p><h2>${esc(name)}</h2><p>${currentCount} current roster players loaded · historical challenges planned back to 1980 / franchise origin</p></div></div></div>
+    <div class="teammodes">
+      <button class="teammode" type="button" disabled><em>Next</em><b>Best Of</b><small>Top 5 points, goals, assists, PIM, goalie wins and more by season, decade or all-time.</small></button>
+      <button class="teammode" type="button" disabled><em>Planned</em><b>Guess the Player</b><small>The existing player-guessing format, restricted to ${esc(name)} players and alumni.</small></button>
+      <button class="teammode" type="button" disabled><em>Planned</em><b>Higher or Lower</b><small>Head-to-head ${esc(name)} player stats across seasons and eras.</small></button>
+      <button class="teammode" type="button" disabled><em>Planned</em><b>Mystery Season</b><small>Identify a ${esc(name)} season from its roster, leaders and team results.</small></button>
+    </div>`;
+  $("backTeamPicker").onclick = () => { history.pushState(null, "", "#teams"); renderTeamPicker(); };
+}
+function openTeams(team = "", push = true) {
+  leaveGame(game); closeParty(); onHub = false;
+  document.body.classList.remove("hubmode");
+  $("view-hub").hidden = true;
+  new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = true; });
+  $("view-party").hidden = true; $("view-teams").hidden = false; $("gameBar").hidden = false; $("archBar").hidden = true;
+  $("gIcon").innerHTML = uiIcon("trophy"); $("gTitle").textContent = "Teams"; $("modeLabel").textContent = team ? teamFullName(team) : "Franchise challenges";
+  if (push) history.pushState(null, "", team ? `#team-${team}` : "#teams");
+  team ? renderTeamHub(team) : renderTeamPicker();
+  document.title = `${team ? teamFullName(team) + " · " : "Teams · "}Sweater`;
+  window.scrollTo({ top: 0 });
+}
+$("view-teams").addEventListener("click", e => { const b = e.target.closest("[data-team]"); if (b) openTeams(b.dataset.team, true); });
 
 function showHub(push = true) {
   leaveGame(game);
@@ -6458,6 +6562,7 @@ function showHub(push = true) {
   document.body.classList.add("hubmode");
   if (push && location.hash) history.pushState(null, "", location.pathname + location.search);
   $("view-hub").hidden = false;
+  $("view-teams").hidden = true;
   $("gameBar").hidden = true;
   $("archBar").hidden = true;
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = true; });
@@ -6476,6 +6581,7 @@ function openGame(id, push = true) {
   onHub = false;
   document.body.classList.remove("hubmode");
   $("view-hub").hidden = true;
+  $("view-teams").hidden = true;
   $("gameBar").hidden = false;
   setGame(id);
   window.scrollTo({ top: 0 });
@@ -6483,6 +6589,10 @@ function openGame(id, push = true) {
 
 function route() {
   const id = decodeURIComponent(location.hash.slice(1));
+  if (id === "teams" || id.startsWith("team-")) {
+    const team = id.startsWith("team-") ? id.slice(5).toUpperCase() : "";
+    openTeams(TEAMS[team] ? team : "", false); return;
+  }
   if (id === "party" || id.startsWith("party-")) {
     if ($("view-party").hidden) openParty(id.slice(6).toUpperCase(), false);
     return;
@@ -6522,6 +6632,7 @@ function openParty(code, push = true) {
   onHub = false;
   document.body.classList.remove("hubmode");
   $("view-hub").hidden = true;
+  $("view-teams").hidden = true;
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = true; });
   $("view-party").hidden = false;
   $("gameBar").hidden = false;
@@ -6794,6 +6905,7 @@ if (!store.get("sweater-seen-welcome")) { store.set("sweater-seen-welcome", true
 if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }
+window.addEventListener("load", () => refreshCurrentRosters());
 
 if (PLAYERS.length) {
   const start = decodeURIComponent(location.hash.slice(1));
@@ -8302,10 +8414,25 @@ def main():
         sys.exit(f"Only {len(players)} players came back, which is far fewer than a full league. "
                  "Nothing was changed; the next build will try again.")
 
+    # Keep a tiny roster snapshot so scheduled-build logs make trades and call-ups obvious.
+    roster_snapshot = HERE / "current_rosters.json"
+    current_map = {str(p["id"]): {"name": p["name"], "team": p["team"], "number": p["number"]} for p in players}
+    try:
+        previous = json.loads(roster_snapshot.read_text(encoding="utf-8")) if roster_snapshot.exists() else {}
+    except Exception:
+        previous = {}
+    moved = [(previous[pid].get("name") or info["name"], previous[pid].get("team"), info["team"])
+             for pid, info in current_map.items() if pid in previous and previous[pid].get("team") != info["team"]]
+    if moved:
+        print("\nRoster changes detected:")
+        for name, old, new in sorted(moved): print(f"  {name}: {old} -> {new}")
+    roster_snapshot.write_text(json.dumps(current_map, ensure_ascii=False, indent=1), encoding="utf-8")
+
     if not args.no_career:
         add_career_teams(players)
 
     today = eastern_today()
+    build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
     games, extras = update_schedule(players, today)
     embedded = players + extras
@@ -8325,7 +8452,7 @@ def main():
         "/*__TROPHIES__*/[]": esc([list(r) for r in trophy_entries(embedded, AWARD_HISTORY)]),
         "/*__SITE__*/": site,
         "/*__API__*/": args.api_url.strip(),
-        "/*__BUILT__*/": f"{today.isoformat()} · builder v{VERSION}",
+        "/*__BUILT__*/": f"{build_stamp} · builder v{VERSION}",
     }
     html = TEMPLATE
     for placeholder, value in fills.items():
@@ -8350,7 +8477,7 @@ def main():
         "description": "Daily NHL trivia, player guessing games, Trophy Case and Playoff History.",
         "icons": [{"src": "sweater-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}],
     }
-    service_worker = f'''const CACHE = "sweater-shell-{today.isoformat()}";
+    service_worker = f'''const CACHE = "sweater-shell-{build_stamp.replace(":", "-")}";
 const CORE = ["./", "./sweater.webmanifest", "./sweater-icon.svg", "./sweater-trivia-preview.png"];
 self.addEventListener("install", event => event.waitUntil(
   caches.open(CACHE).then(cache => Promise.all(CORE.map(url => cache.add(url).catch(() => undefined)))).then(() => self.skipWaiting())
