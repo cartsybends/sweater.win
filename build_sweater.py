@@ -1736,11 +1736,25 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .optrow { width: 100%; max-width: none; margin: 0 0 22px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; display: flex; justify-content: space-between; gap: 16px; }
   #view-trophy .pickstat { font-size: 13px; gap: 10px; }
   #view-trophy .pickstat select { min-height: 42px; background: var(--panel); color: var(--fg); box-shadow: none; }
-  #view-trophy #trDots { margin: 0 auto 20px; flex-wrap: wrap; gap: 7px; }
+  #view-trophy #trDots { position: relative; margin: 0 auto 20px; flex-wrap: wrap; gap: 7px; }
+  /* A single accent glider moves between questions instead of each dot abruptly
+     gaining/losing the active treatment. Keeping it as one persistent element
+     makes the progress row read as continuous motion. */
+  #view-trophy #trDots .tr-active-glider {
+    position: absolute; left: 0; top: 0; z-index: 0; width: 28px; height: 28px; border-radius: 50%;
+    pointer-events: none; opacity: 0; will-change: transform;
+    border: 1px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 13%, var(--panel));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 11%, transparent);
+    transform: translate3d(var(--tr-dot-x, 0px), var(--tr-dot-y, 0px), 0);
+    transition: transform .46s cubic-bezier(.22,.82,.2,1), opacity .18s ease,
+                background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  #view-trophy #trDots .tr-active-glider.ready { opacity: 1; }
   /* Trophy progress uses persistent nodes so a number can genuinely morph into
      its result instead of being replaced by a fresh character on every render. */
   #view-trophy #trDots .shdot {
-    position: relative; isolation: isolate; width: 28px; height: 28px; overflow: visible;
+    position: relative; z-index: 1; isolation: isolate; width: 28px; height: 28px; overflow: visible;
     font-size: 12px; box-shadow: none; border: 1px solid var(--line);
     background: color-mix(in srgb, var(--panel) 78%, var(--cell));
     transform: translateZ(0);
@@ -1767,9 +1781,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     transition: stroke-dashoffset .34s cubic-bezier(.35,0,.15,1) .06s;
   }
   #view-trophy #trDots .shdot.now {
-    transform: scale(1.05); border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 13%, var(--panel));
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 11%, transparent);
+    transform: scale(1.035); border-color: transparent; background: transparent; box-shadow: none;
+    color: var(--accent); font-weight: 750;
   }
   #view-trophy #trDots .shdot.ok,
   #view-trophy #trDots .shdot.bad { transform: scale(1); font-weight: 700; }
@@ -1799,7 +1812,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   :root[data-theme="dark"] #view-trophy #trDots .shdot.bad { color: #ee7168; }
   @media (prefers-reduced-motion: reduce) {
     #view-trophy #trDots .shdot, #view-trophy #trDots .tr-dot-number, #view-trophy #trDots .tr-dot-mark,
-    #view-trophy #trDots .tr-dot-mark path { transition: none; }
+    #view-trophy #trDots .tr-dot-mark path, #view-trophy #trDots .tr-active-glider { transition: none; }
     #view-trophy #trDots .shdot::after { animation: none !important; }
   }
   #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
@@ -5231,15 +5244,17 @@ G.trophy = {
     // Keep these nodes alive between renders. Replacing the whole row made the
     // old number -> check/X change snap with no meaningful transition.
     const dots = $("trDots");
-    if (dots.children.length !== of) {
-      dots.innerHTML = Array.from({ length: of }, (_, n) =>
+    let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
+    if (dotNodes.length !== of) {
+      dots.innerHTML = `<span class="tr-active-glider" aria-hidden="true"></span>` + Array.from({ length: of }, (_, n) =>
         `<span class="shdot" data-round="${n}" aria-label="Question ${n + 1}">` +
           `<span class="tr-dot-number">${n + 1}</span>` +
           `<span class="tr-dot-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path></path></svg></span>` +
         `</span>`
       ).join("");
+      dotNodes = Array.from(dots.querySelectorAll(".shdot"));
     }
-    Array.from(dots.children).forEach((dot, n) => {
+    dotNodes.forEach((dot, n) => {
       const done = n < i, won = done && this.right(t, st.guesses[n], n);
       dot.classList.toggle("ok", done && won);
       dot.classList.toggle("bad", done && !won);
@@ -5248,6 +5263,29 @@ G.trophy = {
       const path = dot.querySelector(".tr-dot-mark path");
       if (path) path.setAttribute("d", won ? "M6.5 12.5 10.2 16.2 17.8 8.4" : "M8.2 8.2 15.8 15.8 M15.8 8.2 8.2 15.8");
     });
+    // Move one persistent accent indicator to the current question. Because the
+    // same node survives each render, CSS interpolates its x/y position instead
+    // of the highlight snapping off one dot and onto the next.
+    const glider = dots.querySelector(".tr-active-glider");
+    const activeDot = !st.over ? dotNodes[i] : null;
+    if (glider && activeDot) {
+      const hostRect = dots.getBoundingClientRect(), dotRect = activeDot.getBoundingClientRect();
+      const x = dotRect.left - hostRect.left + dots.scrollLeft;
+      const y = dotRect.top - hostRect.top + dots.scrollTop;
+      if (!glider.classList.contains("ready")) {
+        glider.style.transition = "none";
+        glider.style.setProperty("--tr-dot-x", `${x}px`);
+        glider.style.setProperty("--tr-dot-y", `${y}px`);
+        void glider.offsetWidth;
+        glider.style.transition = "";
+        glider.classList.add("ready");
+      } else {
+        glider.style.setProperty("--tr-dot-x", `${x}px`);
+        glider.style.setProperty("--tr-dot-y", `${y}px`);
+      }
+    } else if (glider) {
+      glider.classList.remove("ready");
+    }
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
       : `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
     // Answering keeps the same four buttons and only changes their classes, so
