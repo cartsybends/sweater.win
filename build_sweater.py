@@ -40,7 +40,7 @@ TEAMS = [
 ]
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "70 · Historical Team Trivia"
+VERSION = "71 · Team Polish"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -475,16 +475,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* team hubs */
   #view-teams { max-width: 1040px; }
   .teamhero { position: relative; isolation: isolate; overflow: hidden; margin: 0 0 22px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
-  .teamhero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, var(--panel) 0 38%, color-mix(in srgb, var(--panel) 94%, transparent) 54%, color-mix(in srgb, var(--panel) 50%, transparent)); pointer-events: none; }
-  .teamherohead { position: relative; z-index: 2; display: flex; align-items: center; gap: 15px; max-width: 620px; }
+  .teamhero::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, color-mix(in srgb, var(--panel) 72%, transparent) 0 31%, color-mix(in srgb, var(--panel) 48%, transparent) 49%, color-mix(in srgb, var(--panel) 10%, transparent) 78%, transparent); pointer-events: none; }
+  .teamherohead { position: relative; z-index: 3; display: flex; align-items: center; gap: 15px; max-width: 620px; text-shadow: 0 1px 2px color-mix(in srgb, var(--panel) 92%, transparent); }
   .teamherohead > img { width: 74px; height: 74px; object-fit: contain; flex: none; }
   .teamherohead h2 { margin: 0; font-size: 30px; letter-spacing: -.04em; }
   .teamherohead p { margin: 5px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
-  .teamhero-logos { position: absolute; z-index: 0; inset: 8px 10px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 4px 10px; align-items: center; justify-items: center; opacity: .18; pointer-events: none; }
-  .teamhero-logos img { display:block; width: min(46px, 78%); height: min(46px, 78%); object-fit: contain; filter: saturate(.95); }
-  .teamhero-logos img:nth-child(3n+1) { transform: translateY(-3px) rotate(-3deg); }
-  .teamhero-logos img:nth-child(4n+2) { transform: translateY(3px) rotate(3deg); }
-  .teamhero-logos.single { display: block; inset: -34px -16px -38px auto; width: 46%; opacity: .105; }
+  .teamhero-logos { position: absolute; z-index: 1; inset: 8px 10px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 2px 8px; align-items: center; justify-items: center; opacity: .6; pointer-events: none; }
+  .teamhero-logos img { display:block; width: min(62px, 92%); height: min(62px, 92%); object-fit: contain; filter: saturate(1.08) brightness(1.12) drop-shadow(0 2px 5px rgba(0,0,0,.12)); }
+  .teamhero-logos.single { display: block; inset: -24px 6px -30px auto; width: 42%; opacity: .16; }
   .teamhero-logos.single img { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: contain; transform: none; filter: saturate(1.05); }
   .divisionblock { margin: 0 0 27px; }
   .divisionhead { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 3px 9px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
@@ -522,27 +520,39 @@ TEMPLATE = r'''<!DOCTYPE html>
   .team-mode-msg { min-height: 1.3em; margin: 9px 0 0; color: var(--muted); font-size: 13px; }
   .team-mode-msg.good { color: var(--hit); font-weight: 700; }
   .team-mode-msg.bad { color: #c0392b; font-weight: 700; }
+  .teammodepanel .optrow { width: 100%; max-width: none; margin: 2px 0 20px; padding: 0; border: 0; background: transparent; box-shadow: none; display: flex; justify-content: flex-start; gap: 16px; flex-wrap: wrap; }
+  .teammodepanel .pickstat { font-size: 13px; gap: 9px; font-weight: 700; color: var(--muted); }
+  .teammodepanel .pickstat select { min-height: 42px; margin-left: 3px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--fg); font: inherit; font-size: 14px; font-weight: 600; }
+  .team-best-season { display: grid; place-items: center; gap: 3px; margin: 6px 0 18px; padding: 17px 14px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); text-align: center; }
+  .team-best-season span { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+  .team-best-season strong { font-size: clamp(28px, 5vw, 42px); line-height: 1; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+  .team-best-season small { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .075em; text-transform: uppercase; }
+  .team-best-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .team-best-actions .btn { margin: 0; }
+  .teammodepanel .shdot.ok { color: var(--hit); border-color: var(--hit); background: transparent; box-shadow: inset 0 0 0 1px var(--hit); }
+  .teammodepanel .shdot.bad { color: #c0392b; border-color: #c0392b; background: transparent; box-shadow: inset 0 0 0 1px #c0392b; }
+  .team-mystery-logo { display: inline-grid; width: 34px; height: 34px; margin-right: 5px; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--fg) 7%, transparent); vertical-align: -11px; overflow: hidden; }
+  .ttcard .pmeta .team-mystery-logo img { width: 31px; height: 31px; border-radius: 0; background: transparent; object-fit: contain; transform: scale(1.18); }
+  :root[data-theme="dark"] .teamhero-logos img, :root[data-theme="dark"] .teams-homecard .teamlogos img { filter: saturate(1.18) brightness(1.38) drop-shadow(0 2px 6px rgba(0,0,0,.3)); }
   .teams-homecard { position: relative; isolation: isolate; overflow: hidden; width: 100%; min-height: 158px; margin: 0 0 24px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
-  .teams-homecard::after { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, var(--panel) 0 35%, color-mix(in srgb, var(--panel) 94%, transparent) 51%, color-mix(in srgb, var(--panel) 42%, transparent)); pointer-events: none; }
+  .teams-homecard::after { content: ""; position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--panel) 96%, transparent) 0 31%, color-mix(in srgb, var(--panel) 76%, transparent) 44%, color-mix(in srgb, var(--panel) 18%, transparent) 72%, transparent); pointer-events: none; }
   .teams-homecard:hover { border-color: var(--accent); }
-  .teams-homecard .teamlogos { position: absolute; z-index: 0; inset: 7px 12px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 4px 11px; align-items: center; justify-items: center; opacity: .2; pointer-events: none; }
-  .teams-homecard .teamlogos img { display:block; width: min(48px, 78%); height: min(48px, 78%); object-fit: contain; }
-  .teams-homecard .teamlogos img:nth-child(3n+1) { transform: translateY(-4px) rotate(-4deg); }
-  .teams-homecard .teamlogos img:nth-child(4n+2) { transform: translateY(4px) rotate(4deg); }
-  .teams-homecard > span:not(.teamlogos) { position: relative; z-index: 2; display: block; max-width: 50%; }
+  .teams-homecard .teamlogos { position: absolute; z-index: 1; inset: 7px 10px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 2px 8px; align-items: center; justify-items: center; opacity: .5; pointer-events: none; }
+  .teams-homecard .teamlogos img { display:block; width: min(62px, 92%); height: min(62px, 92%); object-fit: contain; filter: saturate(1.08) brightness(1.12) drop-shadow(0 2px 5px rgba(0,0,0,.12)); }
+  .teams-homecard > span:not(.teamlogos) { position: relative; z-index: 3; display: block; max-width: 52%; }
   .teams-homecard b { display: block; font-size: 25px; letter-spacing: -.03em; }
   .teams-homecard small { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.45; }
   .teams-homecard strong { display: inline-block; margin-top: 13px; color: var(--accent); font-size: 13px; }
   @media (max-width: 700px) {
     .teamhero { padding: 18px; }
-    .teamhero-logos { grid-template-columns: repeat(6, minmax(0,1fr)); grid-template-rows: auto; opacity: .105; }
-    .teamhero-logos.single { left:auto; width:52%; opacity:.08; }
+    .teamhero-logos { grid-template-columns: repeat(6, minmax(0,1fr)); grid-template-rows: auto; opacity: .5; }
+    .teamhero-logos.single { left:auto; width:52%; opacity:.14; }
     .teamgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .teampick { grid-template-columns: 38px 1fr 11px; min-height: 64px; padding: 8px 9px; gap: 8px; }
     .teampick img { width: 36px; height: 36px; }
     .teammodes { grid-template-columns: 1fr; }
     .teams-homecard > span:not(.teamlogos) { max-width: 74%; }
-    .teams-homecard .teamlogos { grid-template-columns: repeat(6, minmax(0,1fr)); grid-template-rows: auto; opacity: .13; }
+    .teams-homecard .teamlogos { grid-template-columns: repeat(6, minmax(0,1fr)); grid-template-rows: auto; opacity: .4; }
   }
 
   /* party mode */
@@ -1891,7 +1901,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <span class="partytext"><b>Party Mode</b><span>Host on a big screen. Friends answer from their phones.</span></span>
       <span class="partycta">Start a party</span>
     </button>
-    <div class="libraryhead"><div><p>All modes</p><h2>Game library</h2></div><button type="button" class="librarytoggle" id="libraryToggle" aria-expanded="false">Browse all games <span aria-hidden="true">›</span></button></div>
+    <div class="libraryhead"><div><p>All modes</p><h2>Game library</h2></div><button type="button" class="librarytoggle" id="libraryToggle" aria-expanded="true" hidden>Game library <span aria-hidden="true">›</span></button></div>
     <div class="libraryfilters" id="libraryFilters" role="group" aria-label="Filter game library"></div>
     <div id="hubSections" hidden></div>
   </section>
@@ -6538,16 +6548,16 @@ function renderHub() {
         </button><button type="button" class="favtoggle" data-favorite="${id}" aria-label="${favourited ? "Remove" : "Add"} ${esc(cardTitle(id))} ${favourited ? "from" : "to"} favourites" aria-pressed="${favourited}" title="${favourited ? "Remove from" : "Add to"} favourites">${uiIcon("star")}</button></div>`;
       }).join("")}</div>
     </section>`).join("") : `<p class="lockerhint">No favourites yet. Tap the star beside a game to build your shelf.</p>`;
-  const libraryOpen = store.get("sweater-library-open") !== false;
-  $("hubSections").hidden = !libraryOpen;
-  $("libraryToggle").setAttribute("aria-expanded", libraryOpen ? "true" : "false");
-  $("libraryToggle").innerHTML = `${libraryOpen ? "Hide game library" : "Browse all games"} <span aria-hidden="true">›</span>`;
+  // The complete game library is part of the home screen. Never make a returning
+  // player click through a collapsed state just to see the normal game modes.
+  $("hubSections").hidden = false;
+  $("libraryToggle").setAttribute("aria-expanded", "true");
   dayMeter();
   $("hubDate").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
   document.querySelector(".partycard").disabled = !API_ON;
   document.querySelector(".partycard .partycta").textContent = API_ON ? "Start a party" : "Not available";
 }
-$("libraryToggle").onclick = () => { store.set("sweater-library-open", $("hubSections").hidden); renderHub(); };
+$("libraryToggle").onclick = () => { $("hubSections").hidden = false; };
 $("libraryFilters").addEventListener("click", e => {
   const b = e.target.closest("[data-library-filter]");
   if (!b) return;
@@ -6606,7 +6616,7 @@ function renderTeamHub(t) {
   $("teamsBody").innerHTML = `<button class="backbtn" type="button" id="backTeamPicker"><span aria-hidden="true">‹</span> All teams</button>
     ${teamHero(name, `Team trivia from ${first} onward · seasons are chosen by the game, not by the player`, t)}
     <div class="teammodes">
-      <button class="teammode" type="button" data-team-mode="best"><em>Play now</em><b>Best Of</b><small>Name the five leaders for a hidden season or all-time category.</small></button>
+      <button class="teammode" type="button" data-team-mode="best"><em>Play now</em><b>Best Of</b><small>Choose an era and category, then name each season's five leaders.</small></button>
       <button class="teammode" type="button" data-team-mode="guess"><em>Play now</em><b>Guess the Player</b><small>Stat Line rules, but every possible answer has played for ${esc(name)}.</small></button>
       <button class="teammode" type="button" data-team-mode="higher"><em>Play now</em><b>Higher or Lower</b><small>Same streak game, using career highs from players who wore this sweater.</small></button>
       <button class="teammode" type="button" data-team-mode="mystery"><em>Play now</em><b>Mystery Season</b><small>Same three-try season game, limited to ${esc(name)} seasons.</small></button>
@@ -6618,54 +6628,95 @@ function teamModeShell(t, mode, body) {
   $("teamModePanel").innerHTML = `<section class="teammodepanel"><h3>${names[mode]}</h3>${body}</section>`;
   $("teamModePanel").scrollIntoView({behavior:"smooth",block:"nearest"});
 }
-function teamNameList(h, id="teamPlayerNames") { return `<datalist id="${id}">${h.names.map(p=>`<option value="${esc(p.name)}"></option>`).join("")}</datalist>`; }
+function makeTeamSearch(inputId, listId, h, onChoose, usedIds = () => []) {
+  const input=$(inputId), ul=$(listId); let idx=-1, found=[];
+  function close(){ul.hidden=true;idx=-1;input.setAttribute("aria-expanded",false);}
+  function choose(p){if(!p)return;close();input.value="";onChoose(p);}
+  function render(){
+    const q=norm(input.value.trim()); if(!q)return close();
+    const used=new Set(usedIds());
+    found=h.names.filter(p=>!used.has(p.id)&&norm(p.name).includes(q)).slice(0,30);
+    ul.innerHTML="";
+    found.forEach((p,i)=>{const li=document.createElement("li");li.role="option";li.id=`${listId}-${i}`;li.setAttribute("aria-selected",i===idx);li.innerHTML=`<span></span><small>${esc(h.team)} · ${esc(p.pos)}</small>`;li.firstChild.textContent=p.name;li.onmousedown=e=>{e.preventDefault();choose(p);};ul.appendChild(li);});
+    ul.hidden=found.length===0; input.setAttribute("aria-expanded",!ul.hidden);
+  }
+  input.addEventListener("input",()=>{idx=0;render();});
+  input.addEventListener("keydown",e=>{if(ul.hidden)return;if(e.key==="ArrowDown"){idx=Math.min(idx+1,found.length-1);render();e.preventDefault();}else if(e.key==="ArrowUp"){idx=Math.max(idx-1,0);render();e.preventDefault();}else if(e.key==="Enter"){choose(found[idx]);e.preventDefault();}else if(e.key==="Escape")close();const a=$(`${listId}-${idx}`);if(a)a.scrollIntoView({block:"nearest"});});
+  input.addEventListener("blur",close); return {close};
+}
 function teamLookupName(h, value) { const q=String(value||"").trim().toLocaleLowerCase(); return h.names.find(p=>p.name.toLocaleLowerCase()===q) || null; }
 function aggregateTeamSkaters(rows) {
   const m=new Map(); for(const r of rows){const x=m.get(r.id)||{id:r.id,name:r.name,pos:r.pos,gp:0,goals:0,assists:0,points:0,pim:0}; x.gp+=r.gp;x.goals+=r.goals;x.assists+=r.assists;x.points+=r.points;x.pim+=r.pim;m.set(r.id,x);} return [...m.values()];
 }
 function aggregateTeamGoalies(rows) { const m=new Map(); for(const r of rows){const x=m.get(r.id)||{id:r.id,name:r.name,gp:0,wins:0};x.gp+=r.gp;x.wins+=r.wins;m.set(r.id,x);}return [...m.values()]; }
 function statLabel(k){return {points:"PTS",goals:"G",assists:"A",pim:"PIM",gp:"GP",wins:"W"}[k]||k;}
-function statWord(k){return {points:"point",goals:"goal",assists:"assist",pim:"PIM",gp:"games played",wins:"win"}[k]||k;}
+function statWord(k){return {points:"points",goals:"goals",assists:"assists",pim:"PIM",gp:"games played",wins:"wins"}[k]||k;}
 function teamModeNoData(t, mode) { teamModeShell(t, mode, `<p class="hint bad">Historical data for ${esc(teamFullName(t))} is not embedded in this build yet. Run the builder once with internet access to refresh Team trivia.</p>`); }
+function teamDecades(h){return [...new Set(h.years.map(y=>Math.floor(y/10)*10))].sort((a,b)=>b-a);}
+function teamBestCandidates(h, decade, stat){
+  return h.years.filter(y=>{
+    if(decade!=="all" && Math.floor(y/10)*10!==Number(decade)) return false;
+    return (h.bySeason.get(y)||[]).filter(x=>Number(x[stat]||0)>0).length>=5;
+  });
+}
+function teamSearchMarkup(inputId,listId,placeholder){return `<div class="search narrow"><input id="${inputId}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="${listId}" placeholder="${esc(placeholder)}"><ul class="list" id="${listId}" role="listbox" hidden></ul></div>`;}
 
 function startTeamBest(t) {
-  const h=historyForTeam(t); if(!h.skaters.length) return teamModeNoData(t,"best");
-  const skStats=["points","goals","assists","pim","gp"], useGoalies=h.goalies.length>=5 && Math.random()<.12;
-  const stat=useGoalies?"wins":pick(skStats), useAll=useGoalies||Math.random()<.22;
-  let pool, period, y=null;
-  if(useAll){ pool=stat==="wins"?aggregateTeamGoalies(h.goalies):aggregateTeamSkaters(h.skaters); period="All-Time"; }
-  else {
-    const candidates=h.years.filter(y0=>(h.bySeason.get(y0)||[]).filter(x=>Number(x[stat]||0)>0).length>=5); y=pick(candidates.length?candidates:h.years); pool=(h.bySeason.get(y)||[]); period=seasonText(y);
+  const h=historyForTeam(t); h.team=t; if(!h.skaters.length)return teamModeNoData(t,"best");
+  const stats=["points","goals","assists","pim","gp"], decades=teamDecades(h);
+  const decadeKey=`sweater-team-best-decade-${t}`, statKey=`sweater-team-best-stat-${t}`, roundsKey=`sweater-team-best-rounds-${t}`;
+  let decade=String(store.get(decadeKey) ?? "all"), stat=String(store.get(statKey)||"points"), total=Number(store.get(roundsKey))||5;
+  if(!stats.includes(stat))stat="points"; if(![5,10,15,20].includes(total))total=5; if(decade!=="all"&&!decades.includes(Number(decade)))decade="all";
+  let roundIndex=0, marks=[], usedYears=new Set();
+  const controls=`<div class="optrow"><label class="pickstat">Decade <select id="teamBestDecade"><option value="all">All eras</option>${decades.map(d=>`<option value="${d}"${String(d)===decade?' selected':''}>${d}s</option>`).join("")}</select></label><label class="pickstat">Category <select id="teamBestStat">${[["points","Points"],["goals","Goals"],["assists","Assists"],["pim","PIM"],["gp","Games played"]].map(([v,l])=>`<option value="${v}"${v===stat?' selected':''}>${l}</option>`).join("")}</select></label><label class="pickstat">Questions <select id="teamBestRounds">${[5,10,15,20].map(n=>`<option value="${n}"${n===total?' selected':''}>${n}</option>`).join("")}</select></label></div><div class="shdots" id="teamBestDots"></div><div id="teamBestRound"></div>`;
+  teamModeShell(t,"best",controls);
+  const restart=()=>{store.set(decadeKey,$("teamBestDecade").value);store.set(statKey,$("teamBestStat").value);store.set(roundsKey,Number($("teamBestRounds").value));startTeamBest(t);};
+  ["teamBestDecade","teamBestStat","teamBestRounds"].forEach(id=>$(id).addEventListener("change",restart));
+  function finishRun(){
+    $("teamBestDots").innerHTML=marks.map((m,i)=>`<span class="shdot ${m==='ok'?'ok':'bad'}">${m==='ok'?'✓':'✗'}</span>`).join("");
+    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Run complete</span><strong>${marks.filter(x=>x==='ok').length}/${total}</strong><small>Top-five boards cleared</small></div><div class="team-best-actions"><button type="button" class="btn" id="teamBestAgain">Play again</button></div>`;
+    $("teamBestAgain").onclick=()=>startTeamBest(t);
   }
-  const leaders=pool.filter(x=>Number(x[stat]||0)>0).sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
-  if(leaders.length<5) return teamModeNoData(t,"best");
-  const answerIds=new Set(leaders.map(x=>x.id)), found=new Set(); let misses=0, over=false;
-  teamModeShell(t,"best",`<p class="team-prompt">Name the top 5 ${esc(statWord(stat))} leaders for ${esc(teamFullName(t))}</p><p class="team-subprompt">${period} · regular season · answers stay hidden until you find them.</p>
-    <ol class="teamleaderlist" id="teamBestList"></ol>${teamNameList(h)}<form class="teamcontrols" id="teamBestForm"><input id="teamBestInput" list="teamPlayerNames" autocomplete="off" placeholder="Type a player name"><button type="submit">Guess</button><button type="button" id="teamBestGive">Give up</button><button type="button" id="teamBestNew">New puzzle</button></form><p class="team-mode-msg" id="teamBestMsg"></p>`);
-  const draw=(reveal=false)=>{$("teamBestList").innerHTML=leaders.map((p,i)=>{const hit=found.has(p.id), show=hit||reveal;return `<li class="${hit?'found':''}"><span class="rank">${i+1}</span><span><b>${show?esc(p.name):"???"}</b><small>${period} · ${statLabel(stat)}</small></span><strong>${show?p[stat]:"—"}</strong></li>`}).join("");}; draw();
-  $("teamBestForm").onsubmit=e=>{e.preventDefault();if(over)return;const p=teamLookupName(h,$("teamBestInput").value);$("teamBestInput").value="";const msg=$("teamBestMsg");msg.className="team-mode-msg";if(!p){msg.textContent="Pick a player from the list.";return;}if(found.has(p.id)){msg.textContent="You already have him.";return;}if(answerIds.has(p.id)){found.add(p.id);msg.classList.add("good");msg.textContent=`Correct — ${found.size}/5.`;draw();if(found.size===5){over=true;msg.textContent="5/5. Perfect.";}}else{misses++;msg.classList.add("bad");msg.textContent=`Not in the top five · ${misses} miss${misses===1?'':'es'}.`;}};
-  $("teamBestGive").onclick=()=>{over=true;draw(true);$("teamBestMsg").textContent="Answers revealed.";}; $("teamBestNew").onclick=()=>startTeamBest(t); $("teamBestInput").focus();
+  function renderRound(){
+    if(roundIndex>=total){finishRun();return;}
+    stat=$("teamBestStat").value; decade=$("teamBestDecade").value;
+    let candidates=teamBestCandidates(h,decade,stat).filter(y=>!usedYears.has(y));
+    if(!candidates.length){usedYears.clear();candidates=teamBestCandidates(h,decade,stat);}
+    if(!candidates.length){$("teamBestRound").innerHTML=`<p class="hint bad">There aren't enough five-player ${esc(statWord(stat))} boards in that decade. Try another decade or category.</p>`;return;}
+    const y=pick(candidates); usedYears.add(y); const period=seasonText(y), pool=h.bySeason.get(y)||[];
+    const leaders=pool.filter(x=>Number(x[stat]||0)>0).sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
+    const answerIds=new Set(leaders.map(x=>x.id)),found=new Set();let misses=0,over=false;
+    $("teamBestDots").innerHTML=Array.from({length:total},(_,i)=>`<span class="shdot${i===roundIndex?' now':''}">${i<marks.length?(marks[i]==='ok'?'✓':'✗'):i+1}</span>`).join("");
+    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Question ${roundIndex+1} of ${total}</span><strong>${period}</strong><small>${esc(teamFullName(t))} · ${esc(statWord(stat))}</small></div><p class="team-prompt">Name the top 5 ${esc(statWord(stat))} leaders</p><p class="team-subprompt">Regular season · answers stay hidden until you find them.</p><ol class="teamleaderlist" id="teamBestList"></ol>${teamSearchMarkup("teamBestInput","teamBestOpts","Type a player name")}<div class="team-best-actions"><button type="button" class="btn ghost" id="teamBestGive">Give up</button><button type="button" class="btn ghost" id="teamBestSkip">New question</button></div><p class="team-mode-msg" id="teamBestMsg"></p>`;
+    const draw=(reveal=false)=>{$("teamBestList").innerHTML=leaders.map((p,i)=>{const hit=found.has(p.id),show=hit||reveal;return `<li class="${hit?'found':''}"><span class="rank">${i+1}</span><span><b>${show?esc(p.name):"???"}</b><small>${period} · ${statLabel(stat)}</small></span><strong>${show?p[stat]:"—"}</strong></li>`}).join("");};draw();
+    const advance=(cleared)=>{if(!over){over=true;draw(true);marks.push(cleared?'ok':'bad');}roundIndex++;renderRound();};
+    makeTeamSearch("teamBestInput","teamBestOpts",h,p=>{if(over)return;const msg=$("teamBestMsg");msg.className="team-mode-msg";if(found.has(p.id)){msg.textContent="You already have him.";return;}if(answerIds.has(p.id)){found.add(p.id);msg.classList.add("good");msg.textContent=`Correct — ${found.size}/5.`;draw();if(found.size===5){over=true;marks.push('ok');msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},800);}}else{misses++;msg.classList.add("bad");msg.textContent=`Not in the top five · ${misses} miss${misses===1?'':'es'}.`;}},()=>[...found]);
+    $("teamBestGive").onclick=()=>{if(over)return;over=true;draw(true);marks.push('bad');$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
+    $("teamBestSkip").onclick=()=>advance(false); $("teamBestInput").focus();
+  }
+  renderRound();
 }
 function teamStatCells(r){return [r.gp,r.goals,r.assists,r.points,signed(r.plusMinus)];}
 function startTeamGuess(t){
-  const h=historyForTeam(t), pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=3); if(!pool.length)return teamModeNoData(t,"guess"); const target=pick(pool), rows=target.rows.slice(), max=8; let guesses=[],over=false;
-  teamModeShell(t,"guess",`<p class="team-subprompt">Same rules as Stat Line: one season starts unlocked and every wrong guess reveals another.</p><p class="intro" id="teamGuessIntro"></p><table class="seasons"><thead><tr><th>Season</th><th>GP</th><th>G</th><th>A</th><th>PTS</th><th>+/−</th></tr></thead><tbody id="teamGuessRows"></tbody></table>${teamNameList(h,"teamGuessNames")}<form class="teamcontrols" id="teamGuessForm"><input id="teamGuessInput" list="teamGuessNames" autocomplete="off" placeholder="Guess the player"><button type="submit">Guess</button><button type="button" id="teamGuessNew">New player</button></form><ul class="wrong" id="teamGuessWrong"></ul><p class="hint" id="teamGuessLeft"></p>`);
+  const h=historyForTeam(t); h.team=t; const pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=3);if(!pool.length)return teamModeNoData(t,"guess");const target=pick(pool),rows=target.rows.slice(),max=8;let guesses=[],over=false;
+  teamModeShell(t,"guess",`<p class="team-subprompt">Same rules as Stat Line: one season starts unlocked and every wrong guess reveals another.</p><p class="intro" id="teamGuessIntro"></p><table class="seasons"><thead><tr><th>Season</th><th>GP</th><th>G</th><th>A</th><th>PTS</th><th>+/−</th></tr></thead><tbody id="teamGuessRows"></tbody></table>${teamSearchMarkup("teamGuessInput","teamGuessOpts","Guess the player")}<ul class="wrong" id="teamGuessWrong"></ul><p class="hint" id="teamGuessLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamGuessNew">New player</button></div>`);
   const draw=()=>{const shown=over?rows.length:Math.min(rows.length,1+guesses.length);$("teamGuessIntro").textContent=over?`${target.name} · ${target.pos} · ${rows.length} ${teamFullName(t)} seasons`:`${target.pos} · ${rows.length} ${teamFullName(t)} seasons`;$("teamGuessRows").innerHTML=rows.map((r,i)=>i<shown?`<tr><td>${seasonText(r.y)}</td>${teamStatCells(r).map(v=>`<td>${v}</td>`).join("")}</tr>`:`<tr class="locked"><td>${seasonText(r.y)}</td><td colspan="5">🔒 Locked</td></tr>`).join("");$("teamGuessLeft").textContent=over?`Answer: ${target.name}`:`${max-guesses.length} tries left · each wrong guess unlocks another season.`;};draw();
-  $("teamGuessForm").onsubmit=e=>{e.preventDefault();if(over)return;const p=teamLookupName(h,$("teamGuessInput").value);$("teamGuessInput").value="";if(!p)return;if(guesses.includes(p.id))return;if(p.id===target.id){over=true;draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max)over=true;draw();};$("teamGuessNew").onclick=()=>startTeamGuess(t);$("teamGuessInput").focus();
+  makeTeamSearch("teamGuessInput","teamGuessOpts",h,p=>{if(over||guesses.includes(p.id))return;if(p.id===target.id){over=true;draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max)over=true;draw();},()=>guesses);
+  $("teamGuessNew").onclick=()=>startTeamGuess(t);$("teamGuessInput").focus();
 }
 function teamPeakPlayers(h, stat){return [...h.byPlayer.values()].map(p=>{const row=p.rows.reduce((best,r)=>!best||Number(r[stat]||0)>Number(best[stat]||0)?r:best,null);return row&&Number(row[stat]||0)>0?{...p,v:Number(row[stat]||0),y:row.y}:null}).filter(Boolean);}
 function startTeamHigher(t){
-  const h=historyForTeam(t); if(!h.skaters.length)return teamModeNoData(t,"higher"); const stat=pick(["points","goals","assists","pim"]), info={points:["Points","points","More","Fewer"],goals:["Goals","goals","More","Fewer"],assists:["Assists","assists","More","Fewer"],pim:["PIM","penalty minutes","More","Fewer"]}[stat], pool=teamPeakPlayers(h,stat);if(pool.length<3)return teamModeNoData(t,"higher"); let seq=sample(pool,2),streak=0,over=false;const bestKey=`sweater-team-hl-best-${t}`;
-  teamModeShell(t,"higher",`<p class="intro">Whose career-high <b>${info[1]}</b> in a single ${esc(teamFullName(t))} season is higher?</p><p class="hint">Ties count as right.</p><div class="hlscore"><span>Streak <b id="teamHLStreak">0</b></span><span>Best <b id="teamHLBest">${store.get(bestKey)||0}</b></span></div><div class="hlpair" id="teamHLPair"><div id="teamHLA"></div><div class="hlvs">VS</div><div id="teamHLB"></div></div><div class="teamcontrols"><button type="button" id="teamHLNew">New run</button></div>`);
-  const card=(p,reveal,state,buttons)=>`<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b>${p.v}</b></p><p class="hlunit">career-high ${info[1]}</p><p class="hlyr">in ${seasonText(p.y)}</p>`:`<p class="hlunit">career-high ${info[1]}:</p><div class="hlbtns"><button class="btn teamHLBtn" data-pick="H">▲ ${info[2]}</button><button class="btn teamHLBtn" data-pick="L">▼ ${info[3]}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
-  const nextPlayer=()=>{const used=new Set(seq.map(p=>p.id));const options=pool.filter(p=>!used.has(p.id));return pick(options.length?options:pool);};
-  const draw=()=>{$("teamHLStreak").textContent=streak;$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);$("teamHLA").innerHTML=card(seq[0],true,"",false);$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"",!over);if(!over)$('teamHLB').querySelectorAll('.teamHLBtn').forEach(btn=>btn.onclick=()=>{const ok=btn.dataset.pick==='H'?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;$('teamHLB').innerHTML=card(seq[1],true,ok?'ok':'bad',false);if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{seq=[seq[1],nextPlayer()];draw();},850);}else{over=true;}});}; draw(); $("teamHLNew").onclick=()=>startTeamHigher(t);
+  const h=historyForTeam(t);if(!h.skaters.length)return teamModeNoData(t,"higher");const stat=pick(["points","goals","assists","pim"]),info={points:["Points","points","More","Fewer"],goals:["Goals","goals","More","Fewer"],assists:["Assists","assists","More","Fewer"],pim:["PIM","penalty minutes","More","Fewer"]}[stat],pool=teamPeakPlayers(h,stat);if(pool.length<3)return teamModeNoData(t,"higher");let seq=shuffled(pool).slice(0,2),streak=0,over=false;const bestKey=`sweater-team-hl-best-${t}`;
+  teamModeShell(t,"higher",`<p class="intro">Whose career-high <b>${info[1]}</b> in a single ${esc(teamFullName(t))} season is higher?</p><p class="hint">Ties count as right.</p><div class="hlscore"><span>Streak <b id="teamHLStreak">0</b></span><span>Best <b id="teamHLBest">${store.get(bestKey)||0}</b></span></div><div class="hlpair" id="teamHLPair"><div id="teamHLA"></div><div class="hlvs">VS</div><div id="teamHLB"></div></div><div class="team-best-actions"><button type="button" class="btn ghost" id="teamHLNew">New run</button></div>`);
+  const card=(p,reveal,state)=>`<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b>${p.v}</b></p><p class="hlunit">career-high ${info[1]}</p><p class="hlyr">in ${seasonText(p.y)}</p>`:`<p class="hlunit">career-high ${info[1]}:</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info[2]}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info[3]}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
+  const nextPlayer=()=>{const used=new Set(seq.map(p=>p.id)),options=pool.filter(p=>!used.has(p.id));return pick(options.length?options:pool);};
+  const draw=()=>{$("teamHLStreak").textContent=streak;$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);$("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;$("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw();},850);}else{over=true;}});};draw();$("teamHLNew").onclick=()=>startTeamHigher(t);
 }
 function startTeamMystery(t){
-  const h=historyForTeam(t), pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=4);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
-  teamModeShell(t,"mystery",`<div class="ttcard"><img id="teamMysteryImg" alt=""><div><p class="pname">${esc(target.name)}</p><p class="pmeta"><img src="${logo(t)}" alt="" style="width:18px;height:18px;vertical-align:-4px;object-fit:contain"> ${esc(teamFullName(t))} · ${esc(target.pos)}</p></div></div><div class="chips">${[['GP',row.gp],['G',row.goals],['A',row.assists],['PTS',row.points],['+/−',signed(row.plusMinus)]].map(([k,v])=>`<span class="chip"><b>${v}</b> ${k}</span>`).join('')}</div><p class="ttq">Which season is this stat line from?</p><div class="selist" id="teamMysteryList"></div><p class="hint" id="teamMysteryLeft"></p><div class="teamcontrols"><button type="button" id="teamMysteryNew">Next player</button></div>`);
+  const h=historyForTeam(t),pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=4);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
+  teamModeShell(t,"mystery",`<div class="ttcard"><img id="teamMysteryImg" alt=""><div><p class="pname">${esc(target.name)}</p><p class="pmeta"><span class="team-mystery-logo"><img src="${logo(t)}" alt=""></span>${esc(teamFullName(t))} · ${esc(target.pos)}</p></div></div><p class="ttq">Which season is this?</p><div class="chips">${[["GP",row.gp],["G",row.goals],["A",row.assists],["PTS",row.points],["+/−",signed(row.plusMinus)]].map(([k,v])=>`<span class="chip"><b>${v}</b> ${k}</span>`).join("")}</div><div class="selist" id="teamMysteryList"></div><p class="hint" id="teamMysteryLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamMysteryNew">Next player</button></div>`);
   const img=$("teamMysteryImg");img.onerror=function(){this.onerror=null;this.src=FALLBACK};img.src=teamHistHeadshot(t,target.id,row.y);
-  const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?`Answer: ${seasonText(row.y)}`:`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);if(y===row.y||guesses.length>=max)over=true;draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
+  const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);if(y===row.y||guesses.length>=max)over=true;draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
 }
 function openTeamMode(t, mode) { if(mode==="best")startTeamBest(t); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
 function openTeams(team = "", push = true) {
@@ -7038,6 +7089,11 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
 window.addEventListener("load", () => refreshCurrentRosters());
 
 if (PLAYERS.length) {
+  // A Teams visit should not become the next launch screen just because the
+  // browser preserved its hash across a reload. Root launches always return to
+  // the full Sweater lobby; in-session back/forward routing still works.
+  if (location.hash === "#teams" || location.hash.startsWith("#team-"))
+    history.replaceState(null, "", location.pathname + location.search);
   route();
   tick();
   submitPending();
