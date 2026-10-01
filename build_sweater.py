@@ -472,36 +472,64 @@ TEMPLATE = r'''<!DOCTYPE html>
   .zambox canvas { touch-action: none; cursor: crosshair; }
 
   /* team hubs */
-  #view-teams { max-width: 960px; }
-  .teamhero { margin: 0 0 18px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
-  .teamherohead { display: flex; align-items: center; gap: 14px; }
-  .teamherohead img { width: 72px; height: 72px; object-fit: contain; }
-  .teamherohead h2 { margin: 0; font-size: 28px; letter-spacing: -.035em; }
-  .teamherohead p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
-  .teamgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-  .teampick { min-height: 118px; padding: 13px 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--fg); font: inherit; cursor: pointer; text-align: center; transition: transform .16s ease, border-color .16s ease; }
-  .teampick:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .teampick img { display: block; width: 58px; height: 58px; margin: 0 auto 7px; object-fit: contain; }
-  .teampick b { display: block; font-size: 13px; }
+  #view-teams { max-width: 1040px; }
+  .teamhero { position: relative; isolation: isolate; overflow: hidden; margin: 0 0 22px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+  .teamhero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--panel) 0 42%, color-mix(in srgb, var(--panel) 86%, transparent) 64%, color-mix(in srgb, var(--panel) 45%, transparent)); pointer-events: none; }
+  .teamherohead { position: relative; z-index: 2; display: flex; align-items: center; gap: 15px; max-width: 620px; }
+  .teamherohead > img { width: 74px; height: 74px; object-fit: contain; flex: none; }
+  .teamherohead h2 { margin: 0; font-size: 30px; letter-spacing: -.04em; }
+  .teamherohead p { margin: 5px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .teamhero-logos { position: absolute; z-index: 0; inset: 9px 12px 9px 44%; display: grid; grid-template-columns: repeat(8, minmax(32px, 1fr)); grid-template-rows: repeat(4, 1fr); gap: 3px 9px; place-items: center; opacity: .14; pointer-events: none; }
+  .teamhero-logos img { width: min(44px, 80%); height: min(44px, 80%); object-fit: contain; filter: saturate(.9); }
+  .divisionblock { margin: 0 0 24px; }
+  .divisionhead { display: flex; align-items: center; gap: 9px; margin: 0 3px 9px; }
+  .divisionhead h3 { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .075em; text-transform: uppercase; }
+  .divisionhead span { color: var(--muted); font-size: 11px; }
+  .teamgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+  .teampick { display: grid; grid-template-columns: 46px 1fr 14px; align-items: center; gap: 10px; min-height: 72px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel); color: var(--fg); font: inherit; cursor: pointer; text-align: left; transition: transform .16s ease, border-color .16s ease, background-color .16s ease; }
+  .teampick:hover { transform: translateY(-2px); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--panel)); }
+  .teampick img { display: block; width: 44px; height: 44px; margin: 0; object-fit: contain; }
+  .teampick b { display: block; min-width: 0; font-size: 13px; line-height: 1.2; }
+  .teampick .teamchev { color: var(--muted); font-size: 20px; line-height: 1; }
   .teammodes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
-  .teammode { position: relative; min-height: 108px; padding: 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--fg); text-align: left; font: inherit; }
+  .teammode { position: relative; min-height: 114px; padding: 16px 46px 16px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--fg); text-align: left; font: inherit; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background-color .16s ease; }
+  .teammode:hover { transform: translateY(-2px); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--panel)); }
+  .teammode::after { content: "›"; position: absolute; right: 17px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 26px; }
   .teammode b, .teammode small { display: block; }
   .teammode b { font-size: 16px; }
-  .teammode small { margin-top: 5px; color: var(--muted); line-height: 1.35; }
-  .teammode em { position: absolute; right: 12px; top: 12px; padding: 4px 7px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-  .teams-homecard { position: relative; overflow: hidden; width: 100%; min-height: 132px; margin: 0 0 24px; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .teammode small { margin-top: 5px; color: var(--muted); line-height: 1.4; }
+  .teammode em { display: inline-block; margin-bottom: 8px; padding: 4px 7px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-size: 9px; font-style: normal; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .teammodepanel { margin-top: 16px; padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: var(--panel); }
+  .teammodepanel h3 { margin: 0 0 5px; font-size: 20px; }
+  .teamcontrols { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0; }
+  .teamcontrols select, .teamcontrols button { min-height: 40px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--cell); color: var(--fg); font: inherit; }
+  .teamcontrols button { cursor: pointer; font-weight: 750; }
+  .teamleaderlist { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 7px; }
+  .teamleaderlist li { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 10px; min-height: 50px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 11px; background: var(--cell); }
+  .teamleaderlist .rank { color: var(--muted); font-weight: 800; text-align: center; }
+  .teamleaderlist b { display: block; font-size: 14px; }
+  .teamleaderlist small { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; }
+  .teamleaderlist strong { font-variant-numeric: tabular-nums; font-size: 18px; }
+  .teams-homecard { position: relative; isolation: isolate; overflow: hidden; width: 100%; min-height: 150px; margin: 0 0 24px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .teams-homecard::after { content: ""; position: absolute; z-index: 0; inset: 0; background: linear-gradient(90deg, var(--panel) 0 38%, color-mix(in srgb, var(--panel) 88%, transparent) 55%, color-mix(in srgb, var(--panel) 30%, transparent)); pointer-events: none; }
   .teams-homecard:hover { border-color: var(--accent); }
-  .teams-homecard .teamlogos { position: absolute; inset: -22px -12px -22px 46%; display: grid; grid-template-columns: repeat(5, 52px); gap: 8px; transform: rotate(-7deg); opacity: .18; pointer-events: none; }
-  .teams-homecard .teamlogos img { width: 52px; height: 52px; object-fit: contain; }
-  .teams-homecard > span { position: relative; z-index: 1; display: block; max-width: 52%; }
-  .teams-homecard b { display: block; font-size: 24px; letter-spacing: -.025em; }
-  .teams-homecard small { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .teams-homecard .teamlogos { position: absolute; z-index: -1; inset: 8px 10px; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(4, 1fr); gap: 4px 12px; place-items: center; opacity: .15; pointer-events: none; }
+  .teams-homecard .teamlogos img { width: min(46px, 82%); height: min(46px, 82%); object-fit: contain; }
+  .teams-homecard .teamlogos img:nth-child(3n+1) { transform: translateY(-3px); }
+  .teams-homecard .teamlogos img:nth-child(4n+2) { transform: translateY(4px); }
+  .teams-homecard > span { position: relative; z-index: 2; display: block; max-width: 48%; }
+  .teams-homecard b { display: block; font-size: 25px; letter-spacing: -.03em; }
+  .teams-homecard small { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.45; }
   .teams-homecard strong { display: inline-block; margin-top: 13px; color: var(--accent); font-size: 13px; }
   @media (max-width: 700px) {
+    .teamhero { padding: 18px; }
+    .teamhero-logos { left: 38%; opacity: .09; }
     .teamgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .teampick { grid-template-columns: 38px 1fr 11px; min-height: 64px; padding: 8px 9px; gap: 8px; }
+    .teampick img { width: 36px; height: 36px; }
     .teammodes { grid-template-columns: 1fr; }
-    .teams-homecard > span { max-width: 68%; }
-    .teams-homecard .teamlogos { left: 58%; opacity: .14; }
+    .teams-homecard > span { max-width: 72%; }
+    .teams-homecard .teamlogos { grid-template-columns: repeat(6, 1fr); opacity: .1; }
   }
 
   /* party mode */
@@ -2555,7 +2583,13 @@ const TEAM_NAMES = {
   PHI:"Philadelphia", PIT:"Pittsburgh", SJS:"San Jose", SEA:"Seattle", STL:"St. Louis", TBL:"Tampa Bay",
   TOR:"Toronto", UTA:"Utah", VAN:"Vancouver", VGK:"Vegas", WSH:"Washington", WPG:"Winnipeg"
 };
+const TEAM_FULL_NAMES = {
+  ANA:"Anaheim Ducks",BOS:"Boston Bruins",BUF:"Buffalo Sabres",CGY:"Calgary Flames",CAR:"Carolina Hurricanes",CHI:"Chicago Blackhawks",COL:"Colorado Avalanche",CBJ:"Columbus Blue Jackets",DAL:"Dallas Stars",DET:"Detroit Red Wings",EDM:"Edmonton Oilers",FLA:"Florida Panthers",LAK:"Los Angeles Kings",MIN:"Minnesota Wild",MTL:"Montréal Canadiens",NSH:"Nashville Predators",NJD:"New Jersey Devils",NYI:"New York Islanders",NYR:"New York Rangers",OTT:"Ottawa Senators",PHI:"Philadelphia Flyers",PIT:"Pittsburgh Penguins",SJS:"San Jose Sharks",SEA:"Seattle Kraken",STL:"St. Louis Blues",TBL:"Tampa Bay Lightning",TOR:"Toronto Maple Leafs",UTA:"Utah Mammoth",VAN:"Vancouver Canucks",VGK:"Vegas Golden Knights",WSH:"Washington Capitals",WPG:"Winnipeg Jets"
+};
 const DIV_NAMES = { A: "Atlantic", M: "Metropolitan", C: "Central", P: "Pacific" };
+const TEAM_IDS = { ANA:24,BOS:6,BUF:7,CGY:20,CAR:12,CHI:16,COL:21,CBJ:29,DAL:25,DET:17,EDM:22,FLA:13,LAK:26,MIN:30,MTL:8,NSH:18,NJD:1,NYI:2,NYR:3,OTT:9,PHI:4,PIT:5,SJS:28,SEA:55,STL:19,TBL:14,TOR:10,UTA:59,VAN:23,VGK:54,WSH:15,WPG:52 };
+const TEAM_START = { ANA:1993,BOS:1924,BUF:1970,CGY:1980,CAR:1997,CHI:1926,COL:1995,CBJ:2000,DAL:1993,DET:1926,EDM:1979,FLA:1993,LAK:1967,MIN:2000,MTL:1917,NSH:1998,NJD:1982,NYI:1972,NYR:1926,OTT:1992,PHI:1967,PIT:1967,SJS:1991,SEA:2021,STL:1967,TBL:1992,TOR:1917,UTA:2024,VAN:1970,VGK:2017,WSH:1974,WPG:2011 };
+const TEAM_DIV_ORDER = ["A","M","C","P"];
 const BYID = new Map(PLAYERS.map(p => [p.id, p]));
 // NHL's current logo CDN deliberately omits retired franchise codes. Keep a
 // focused archive map so historic trivia shows the proper mark instead of an
@@ -6469,8 +6503,7 @@ function renderHub() {
   const favourites = favouriteIds(), recents = recentIds();
   $("hubShelf").hidden = true;
   $("hubShelf").innerHTML = "";
-  const mosaicTeams = ["CGY","TOR","VAN","EDM","MTL","BOS","NYR","DET","COL","DAL","PIT","CHI","VGK","WPG","OTT"];
-  $("teamLogoMosaic").innerHTML = mosaicTeams.map(t => `<img src="${logo(t)}" alt="">`).join("");
+  $("teamLogoMosaic").innerHTML = Object.keys(TEAMS).map(t => `<img src="${logo(t)}" alt="">`).join("");
   const selectedFilter = store.get("sweater-library-filter") || "all";
   $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
   const librarySections = HUB.map(sec => ({ ...sec, games: sec.games.filter(([id]) =>
@@ -6523,23 +6556,125 @@ $("view-hub").addEventListener("click", e => {
   else openGame(b.dataset.open);
 });
 
-function teamFullName(t) { return TEAM_NAMES[t] || t; }
+function teamFullName(t) { return TEAM_FULL_NAMES[t] || TEAM_NAMES[t] || t; }
+function allTeamLogoMosaic() {
+  return Object.keys(TEAMS).map(t => `<img src="${logo(t)}" alt="">`).join("");
+}
+function teamSeasonYears(t) {
+  const now = new Date(), start = TEAM_START[t] || 1917;
+  const seasonStart = now.getMonth() >= 6 ? now.getFullYear() : now.getFullYear() - 1;
+  return Array.from({length: Math.max(0, seasonStart - start + 1)}, (_, i) => seasonStart - i);
+}
+function seasonIdFromStart(y) { return `${y}${y + 1}`; }
+function seasonText(y) { return `${y}–${String(y + 1).slice(-2)}`; }
+const TEAM_DATA_CACHE = new Map();
+const TEAM_SEASON_LIST_CACHE = new Map();
+const TEAM_ALLTIME_CACHE = new Map();
+async function fetchTeamSeasonYears(t) {
+  if (TEAM_SEASON_LIST_CACHE.has(t)) return TEAM_SEASON_LIST_CACHE.get(t);
+  const fallback = teamSeasonYears(t);
+  try {
+    const r = await fetch(`https://api-web.nhle.com/v1/club-stats-season/${t}`, { cache: "no-store" });
+    if (!r.ok) throw new Error(`NHL season list ${r.status}`);
+    const raw = await r.json();
+    const rows = Array.isArray(raw) ? raw : (raw.seasons || raw.data || []);
+    const years = [...new Set(rows.filter(x => {
+      const gt = x.gameTypes || x.game_types || x.gameType || [];
+      return !Array.isArray(gt) || !gt.length || gt.includes(2) || gt.includes("2");
+    }).map(x => Number(String(x.season || x.seasonId || x).slice(0,4))).filter(Number.isFinite))].sort((a,b) => b-a);
+    const out = years.length ? years : fallback;
+    TEAM_SEASON_LIST_CACHE.set(t, out);
+    return out;
+  } catch {
+    TEAM_SEASON_LIST_CACHE.set(t, fallback);
+    return fallback;
+  }
+}
+async function fetchTeamSeason(t, y) {
+  const key = `${t}-${y}`;
+  if (TEAM_DATA_CACHE.has(key)) return TEAM_DATA_CACHE.get(key);
+  const season = seasonIdFromStart(y);
+  const r = await fetch(`https://api-web.nhle.com/v1/club-stats/${t}/${season}/2`, { cache: "no-store" });
+  if (!r.ok) throw new Error("NHL stats are temporarily unavailable for that season.");
+  const data = await r.json();
+  const out = { skaters: data.skaters || [], goalies: data.goalies || [] };
+  TEAM_DATA_CACHE.set(key, out);
+  return out;
+}
+async function fetchTeamAllTime(t) {
+  if (TEAM_ALLTIME_CACHE.has(t)) return TEAM_ALLTIME_CACHE.get(t);
+  const teamId = TEAM_IDS[t];
+  if (!teamId) throw new Error("All-time team stats are not available yet.");
+  const exp = encodeURIComponent(`gameTypeId=2 and teamId=${teamId}`);
+  const base = "https://api.nhle.com/stats/rest/en";
+  const [skRes, gRes] = await Promise.all([
+    fetch(`${base}/skater/summary?isAggregate=true&isGame=false&limit=-1&cayenneExp=${exp}`, { cache: "no-store" }),
+    fetch(`${base}/goalie/summary?isAggregate=true&isGame=false&limit=-1&cayenneExp=${exp}`, { cache: "no-store" })
+  ]);
+  if (!skRes.ok || !gRes.ok) throw new Error("NHL all-time stats are temporarily unavailable.");
+  const [sk, goalies] = await Promise.all([skRes.json(), gRes.json()]);
+  const out = { skaters: sk.data || [], goalies: goalies.data || [] };
+  TEAM_ALLTIME_CACHE.set(t, out);
+  return out;
+}
+function teamHero(title, copy, logoTeam = "") {
+  return `<div class="teamhero"><div class="teamhero-logos" aria-hidden="true">${allTeamLogoMosaic()}</div><div class="teamherohead">${logoTeam ? `<img src="${logo(logoTeam)}" alt="${esc(teamFullName(logoTeam))} logo">` : ""}<div><p class="featureeyebrow">Franchise challenges</p><h2>${esc(title)}</h2><p>${esc(copy)}</p></div></div></div>`;
+}
 function renderTeamPicker() {
-  $("teamsBody").innerHTML = `<div class="teamhero"><div class="teamherohead"><div><p class="featureeyebrow">Franchise challenges</p><h2>Choose your team</h2><p>Start with the club you know best. Team modes will reach back to 1980 or the franchise's first NHL season.</p></div></div></div>
-    <div class="teamgrid">${Object.keys(TEAMS).map(t => `<button type="button" class="teampick" data-team="${t}"><img src="${logo(t)}" alt=""><b>${esc(teamFullName(t))}</b></button>`).join("")}</div>`;
+  const divisions = TEAM_DIV_ORDER.map(d => {
+    const teams = Object.keys(TEAMS).filter(t => TEAMS[t][1] === d).sort((a,b) => teamFullName(a).localeCompare(teamFullName(b)));
+    return `<section class="divisionblock"><div class="divisionhead"><h3>${DIV_NAMES[d]}</h3><span>${TEAMS[teams[0]][0]} Conference</span></div><div class="teamgrid">${teams.map(t => `<button type="button" class="teampick" data-team="${t}"><img src="${logo(t)}" alt=""><b>${esc(teamFullName(t))}</b><span class="teamchev" aria-hidden="true">›</span></button>`).join("")}</div></section>`;
+  }).join("");
+  $("teamsBody").innerHTML = teamHero("Teams", "Pick the club you know best. Team modes use the full NHL history available for that current club, including active players, alumni, traded-away players and retired players.") + divisions;
 }
 function renderTeamHub(t) {
-  const name = teamFullName(t);
-  const currentCount = PLAYERS.filter(p => p.team === t).length;
+  const name = teamFullName(t), start = TEAM_START[t] || 1917;
   $("teamsBody").innerHTML = `<button class="backbtn" type="button" id="backTeamPicker"><span aria-hidden="true">‹</span> All teams</button>
-    <div class="teamhero"><div class="teamherohead"><img src="${logo(t)}" alt="${esc(name)} logo"><div><p class="featureeyebrow">Team hub</p><h2>${esc(name)}</h2><p>${currentCount} current roster players loaded · historical challenges planned back to 1980 / franchise origin</p></div></div></div>
+    ${teamHero(name, `Full supported NHL history from ${start} onward · current players and alumni are pulled from season-specific NHL club stats`, t)}
     <div class="teammodes">
-      <button class="teammode" type="button" disabled><em>Next</em><b>Best Of</b><small>Top 5 points, goals, assists, PIM, goalie wins and more by season, decade or all-time.</small></button>
-      <button class="teammode" type="button" disabled><em>Planned</em><b>Guess the Player</b><small>The existing player-guessing format, restricted to ${esc(name)} players and alumni.</small></button>
-      <button class="teammode" type="button" disabled><em>Planned</em><b>Higher or Lower</b><small>Head-to-head ${esc(name)} player stats across seasons and eras.</small></button>
-      <button class="teammode" type="button" disabled><em>Planned</em><b>Mystery Season</b><small>Identify a ${esc(name)} season from its roster, leaders and team results.</small></button>
-    </div>`;
+      <button class="teammode" type="button" data-team-mode="best"><em>Play now</em><b>Best Of</b><small>Top 5 points, goals, assists, PIM, goalie wins and more for any season or all-time.</small></button>
+      <button class="teammode" type="button" data-team-mode="guess"><em>Play now</em><b>Guess the Player</b><small>Identify a ${esc(name)} player from a season stat line. Alumni are included.</small></button>
+      <button class="teammode" type="button" data-team-mode="higher"><em>Play now</em><b>Higher or Lower</b><small>Compare two ${esc(name)} players from the same season across goals, points or PIM.</small></button>
+      <button class="teammode" type="button" data-team-mode="mystery"><em>Play now</em><b>Mystery Season</b><small>Use the club's leading scorers to identify the season.</small></button>
+    </div><div id="teamModePanel"></div>`;
   $("backTeamPicker").onclick = () => { history.pushState(null, "", "#teams"); renderTeamPicker(); };
+}
+function teamModeShell(t, mode, body) {
+  const names = {best:"Best Of",guess:"Guess the Player",higher:"Higher or Lower",mystery:"Mystery Season"};
+  $("teamModePanel").innerHTML = `<section class="teammodepanel"><h3>${names[mode]}</h3>${body}</section>`;
+  $("teamModePanel").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function teamSeasonSelect(years, id="teamSeason", includeAll = false) {
+  return `<select id="${id}" aria-label="Season">${includeAll ? '<option value="all">All-Time</option>' : ''}${years.map(y => `<option value="${y}">${seasonText(y)}</option>`).join("")}</select>`;
+}
+async function openTeamMode(t, mode) {
+  const years = await fetchTeamSeasonYears(t);
+  if (mode === "best") {
+    teamModeShell(t, mode, `<p class="featurecopy">Choose All-Time or a specific season. Results use the full NHL history available for this club, so retired and traded players are included.</p><div class="teamcontrols">${teamSeasonSelect(years, "teamSeason", true)}<select id="teamStat"><option value="points">Points</option><option value="goals">Goals</option><option value="assists">Assists</option><option value="penaltyMinutes">PIM</option><option value="gamesPlayed">Games played</option><option value="wins">Goalie wins</option></select><button id="teamLoad">Show top 5</button></div><div id="teamModeResult" class="hint">Pick a season and stat.</div>`);
+    $("teamLoad").onclick = async () => {
+      const seasonValue = $("teamSeason").value, stat = $("teamStat").value, result = $("teamModeResult"); result.className="hint"; result.textContent="Loading NHL stats…";
+      try {
+        const isAll = seasonValue === "all", y = isAll ? null : +seasonValue;
+        const data = isAll ? await fetchTeamAllTime(t) : await fetchTeamSeason(t,y), goalie = stat === "wins", rows = (goalie ? data.goalies : data.skaters).slice().filter(r => Number(r[stat] || 0) > 0).sort((a,b) => Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
+        const label = {points:"PTS",goals:"G",assists:"A",penaltyMinutes:"PIM",gamesPlayed:"GP",wins:"W"}[stat], period = isAll ? "All-Time" : seasonText(y);
+        result.className=""; result.innerHTML = rows.length ? `<ol class="teamleaderlist">${rows.map((r,i)=>`<li><span class="rank">${i+1}</span><span><b>${esc(r.skaterFullName || r.goalieFullName || "Unknown")}</b><small>${period} · ${label}</small></span><strong>${r[stat]}</strong></li>`).join("")}</ol>` : `<p class="hint">No stats were returned for that selection.</p>`;
+      } catch (e) { result.className="hint bad"; result.textContent=e.message; }
+    };
+    $("teamLoad").click(); return;
+  }
+  if (mode === "guess") {
+    teamModeShell(t, mode, `<p class="featurecopy">Pick a season. Sweater will choose a player from that team — including alumni — and show the stat line as your clue.</p><div class="teamcontrols">${teamSeasonSelect(years)}<button id="teamLoad">New player</button></div><div id="teamModeResult"></div>`);
+    $("teamLoad").onclick = async () => { const r=$("teamModeResult"); r.innerHTML='<p class="hint">Loading NHL stats…</p>'; try { const y=+$("teamSeason").value,d=await fetchTeamSeason(t,y), pool=d.skaters.filter(x=>x.gamesPlayed>=5); if(pool.length<4) throw new Error("Not enough skaters for this season."); const right=one(pool), opts=sample(pool.filter(x=>x.playerId!==right.playerId),3).concat(right).sort(()=>Math.random()-.5); r.innerHTML=`<p class="ttq">${right.gamesPlayed} GP · ${right.goals} G · ${right.assists} A · ${right.points} PTS</p><div class="shopts">${opts.map(x=>`<button class="shopt teamGuessOpt" data-right="${x.playerId===right.playerId}">${esc(x.skaterFullName)}</button>`).join("")}</div>`; r.querySelectorAll('.teamGuessOpt').forEach(b=>b.onclick=()=>{r.querySelectorAll('.teamGuessOpt').forEach(x=>{x.disabled=true;if(x.dataset.right==='true')x.classList.add('right')});if(b.dataset.right!=='true')b.classList.add('wrong')}); } catch(e){r.innerHTML=`<p class="hint bad">${esc(e.message)}</p>`;} };
+    $("teamLoad").click(); return;
+  }
+  if (mode === "higher") {
+    teamModeShell(t, mode, `<p class="featurecopy">Compare two players from one ${esc(teamFullName(t))} season.</p><div class="teamcontrols">${teamSeasonSelect(years)}<select id="teamStat"><option value="points">Points</option><option value="goals">Goals</option><option value="penaltyMinutes">PIM</option></select><button id="teamLoad">New matchup</button></div><div id="teamModeResult"></div>`);
+    $("teamLoad").onclick=async()=>{const r=$("teamModeResult");r.innerHTML='<p class="hint">Loading NHL stats…</p>';try{const y=+$("teamSeason").value,stat=$("teamStat").value,d=await fetchTeamSeason(t,y),pool=d.skaters.filter(x=>Number(x[stat]||0)>0);if(pool.length<2)throw new Error('Not enough players for this season.');const [a,b]=sample(pool,2),av=Number(a[stat]||0),bv=Number(b[stat]||0);r.innerHTML=`<div class="hlpair"><div><div class="hlcard"><div class="hlname">${esc(a.skaterFullName)}</div><div class="hlval"><b>${av}</b></div><div class="hlunit">${stat}</div></div></div><div class="hlvs">VS</div><div><div class="hlcard"><div class="hlname">${esc(b.skaterFullName)}</div><div class="hlbtns"><button class="btn teamHL" data-pick="higher">Higher</button><button class="btn teamHL" data-pick="lower">Lower</button></div><div class="hlval" id="teamHLValue"><b>?</b></div><div class="hlunit">${stat}</div></div></div></div>`;r.querySelectorAll('.teamHL').forEach(btn=>btn.onclick=()=>{const ok=btn.dataset.pick==='higher'?bv>=av:bv<=av;$("teamHLValue").innerHTML=`<b>${bv}</b>`;btn.closest('.hlcard').classList.add(ok?'ok':'bad');r.querySelectorAll('.teamHL').forEach(x=>x.disabled=true)});}catch(e){r.innerHTML=`<p class="hint bad">${esc(e.message)}</p>`;}};$("teamLoad").click();return;
+  }
+  if (mode === "mystery") {
+    teamModeShell(t,mode,`<p class="featurecopy">Three scoring leaders are your clue. Pick the season they came from.</p><div class="teamcontrols"><button id="teamLoad">New mystery season</button></div><div id="teamModeResult"></div>`);
+    $("teamLoad").onclick=async()=>{const r=$("teamModeResult");r.innerHTML='<p class="hint">Loading NHL stats…</p>';try{const right=one(years),d=await fetchTeamSeason(t,right),leaders=d.skaters.slice().sort((a,b)=>(b.points||0)-(a.points||0)).slice(0,3);if(leaders.length<3)throw new Error('Not enough data for that season.');const choices=sample(years.filter(y=>y!==right),3).concat(right).sort((a,b)=>a-b);r.innerHTML=`<ol class="teamleaderlist">${leaders.map((x,i)=>`<li><span class="rank">${i+1}</span><span><b>${esc(x.skaterFullName)}</b><small>Scoring leader</small></span><strong>${x.points} PTS</strong></li>`).join('')}</ol><div class="teamcontrols">${choices.map(y=>`<button class="teamMystery" data-y="${y}">${seasonText(y)}</button>`).join('')}</div>`;r.querySelectorAll('.teamMystery').forEach(b=>b.onclick=()=>{r.querySelectorAll('.teamMystery').forEach(x=>{x.disabled=true;if(+x.dataset.y===right)x.style.borderColor='var(--hit)'});if(+b.dataset.y!==right)b.style.borderColor='#c0392b';});}catch(e){r.innerHTML=`<p class="hint bad">${esc(e.message)}</p>`;}};$("teamLoad").click();
+  }
 }
 function openTeams(team = "", push = true) {
   leaveGame(game); closeParty(); onHub = false;
@@ -6553,7 +6688,10 @@ function openTeams(team = "", push = true) {
   document.title = `${team ? teamFullName(team) + " · " : "Teams · "}Sweater`;
   window.scrollTo({ top: 0 });
 }
-$("view-teams").addEventListener("click", e => { const b = e.target.closest("[data-team]"); if (b) openTeams(b.dataset.team, true); });
+$("view-teams").addEventListener("click", e => {
+  const teamPick = e.target.closest("[data-team]"); if (teamPick) { openTeams(teamPick.dataset.team, true); return; }
+  const mode = e.target.closest("[data-team-mode]"); if (mode) { const hash=decodeURIComponent(location.hash.slice(1)), t=hash.startsWith("team-")?hash.slice(5):""; if (TEAMS[t]) openTeamMode(t, mode.dataset.teamMode); }
+});
 
 function showHub(push = true) {
   leaveGame(game);
@@ -6908,10 +7046,7 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
 window.addEventListener("load", () => refreshCurrentRosters());
 
 if (PLAYERS.length) {
-  const start = decodeURIComponent(location.hash.slice(1));
-  if (start === "party" || start.startsWith("party-")) openParty(start.slice(6).toUpperCase(), false);
-  else if (start && (G[start] || start === "hl")) openGame(start, false);
-  else showHub(false);
+  route();
   tick();
   submitPending();
 } else {
