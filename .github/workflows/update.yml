@@ -6,10 +6,13 @@ on:
     - cron: "15 9 * * *"     # every day at 09:15 UTC (about 5 am Eastern)
   workflow_dispatch:          # lets you run it any time from the Actions tab
   push:
-    branches: [main]          # rebuild whenever you upload a new build_sweater.py
+    branches: [main]
+    paths:
+      - "build_sweater.py"
+      - ".github/workflows/update.yml"
 
 permissions:
-  contents: write             # save schedule.json and career_cache.json back to the repo
+  contents: write             # persist generated schedules/caches back to the repo
   pages: write
   id-token: write
 
@@ -30,14 +33,32 @@ jobs:
       - name: Build the game from NHL.com
         run: python build_sweater.py --quiet --out site/index.html --site-url "${{ vars.SITE_URL }}" --api-url "${{ vars.API_URL }}"
 
-      - name: Save the daily schedule and career history
+      - name: Save schedules and NHL data caches
+        shell: bash
         run: |
           git config user.name "sweater-bot"
           git config user.email "sweater-bot@users.noreply.github.com"
-          git add schedule.json career_cache.json
-          git diff --cached --quiet || git commit -m "Update daily schedule and player history"
-          git pull --rebase
-          git push
+
+          cache_files=(
+            schedule.json
+            career_cache.json
+            team_history_cache.json
+            current_rosters.json
+          )
+
+          for file in "${cache_files[@]}"; do
+            if [[ -f "$file" ]]; then
+              git add "$file"
+            fi
+          done
+
+          if git diff --cached --quiet; then
+            echo "No schedule/cache changes to save."
+          else
+            git commit -m "Update Sweater schedules and NHL caches"
+            git pull --rebase
+            git push
+          fi
 
       - uses: actions/upload-pages-artifact@v3
         with:
