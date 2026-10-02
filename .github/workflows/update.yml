@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - "build_sweater.py"
+      - "refresh_current_teams.py"
       - ".github/workflows/update.yml"
 
 permissions:
@@ -32,6 +33,9 @@ jobs:
 
       - name: Build the game from NHL.com
         run: python build_sweater.py --quiet --out site/index.html --site-url "${{ vars.SITE_URL }}" --api-url "${{ vars.API_URL }}"
+
+      - name: Refresh current teams in archived and embedded player data
+        run: python refresh_current_teams.py --html site/index.html --schedule schedule.json
 
       - name: Save schedules and NHL data caches
         shell: bash
