@@ -38,9 +38,16 @@ TEAMS = [
     "CHI", "COL", "DAL", "MIN", "NSH", "STL", "UTA", "WPG",
     "ANA", "CGY", "EDM", "LAK", "SEA", "SJS", "VAN", "VGK",
 ]
+TEAM_ID_TO_ABBR = {
+    1: "NJD", 2: "NYI", 3: "NYR", 4: "PHI", 5: "PIT", 6: "BOS", 7: "BUF", 8: "MTL",
+    9: "OTT", 10: "TOR", 12: "CAR", 13: "FLA", 14: "TBL", 15: "WSH", 16: "CHI", 17: "DET",
+    18: "NSH", 19: "STL", 20: "CGY", 21: "COL", 22: "EDM", 23: "VAN", 24: "ANA", 25: "DAL",
+    26: "LAK", 28: "SJS", 29: "CBJ", 30: "MIN", 52: "WPG", 54: "VGK", 55: "SEA", 59: "UTA",
+}
+CURRENT_PLAYER_INDEX = "https://api.nhle.com/stats/rest/en/players?limit=-1"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "75 · Trophy Progress Motion"
+VERSION = "77 · Current Team Reconciliation"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -7293,6 +7300,47 @@ def fetch(team):
     return get_json(API.format(team=team))
 
 
+def reconcile_current_teams(players):
+    """Cross-check roster team assignments against NHL's player index.
+
+    /roster/{team}/current occasionally lags around trades. The Stats REST player
+    index exposes currentTeamId independently, so use it as the final authority
+    for active players already present in our current-roster pool. This is one
+    request per build, not one request per player.
+    """
+    try:
+        rows = get_json(CURRENT_PLAYER_INDEX, timeout=35).get("data", [])
+    except Exception as e:
+        print(f"  Current-team cross-check unavailable ({e}); keeping roster assignments.", file=sys.stderr)
+        return 0
+
+    current = {}
+    for row in rows:
+        try:
+            pid = int(row.get("id"))
+        except (TypeError, ValueError):
+            continue
+        team = TEAM_ID_TO_ABBR.get(row.get("currentTeamId"))
+        if team:
+            current[pid] = (team, row.get("sweaterNumber"), row.get("positionCode"))
+
+    changed = 0
+    for player in players:
+        live = current.get(player["id"])
+        if not live:
+            continue
+        team, number, pos = live
+        if player.get("team") != team:
+            print(f"  Current-team correction: {player['name']}: {player.get('team')} -> {team}")
+            player["team"] = team
+            changed += 1
+        if number is not None:
+            player["number"] = number
+        if pos:
+            player["pos"] = pos
+    return changed
+
+
 # Team nicknames -> current abbreviations (includes older names of the same franchises)
 NICKNAMES = [
     ("Golden Knights", "VGK"), ("Maple Leafs", "TOR"), ("Blue Jackets", "CBJ"), ("Red Wings", "DET"),
@@ -8859,6 +8907,10 @@ def main():
     if len(players) < PLAYER_POOL_MIN and not args.all:
         sys.exit(f"Only {len(players)} players came back, which is far fewer than a full league. "
                  "Nothing was changed; the next build will try again.")
+
+    corrected = reconcile_current_teams(players)
+    if corrected:
+        print(f"  Corrected {corrected} current team assignment{'s' if corrected != 1 else ''} from NHL player records.\n")
 
     # Keep a tiny roster snapshot so scheduled-build logs make trades and call-ups obvious.
     roster_snapshot = HERE / "current_rosters.json"
