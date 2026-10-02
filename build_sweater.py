@@ -1003,6 +1003,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .foot small { display: block; margin-top: 6px; font-size: 12px; opacity: .85; }
   .foot { text-align: center; color: var(--muted); font-size: 13px; padding: 32px 16px 8px; }
+  .foot .creator { margin-top: 12px; opacity: 1; }
+  .foot .creator strong { color: var(--fg); font-weight: 650; }
+  .foot .creator a { color: var(--link); text-decoration: none; }
+  .foot .creator a:hover { text-decoration: underline; }
   @media (prefers-reduced-motion: no-preference) {
     td { transition: background .3s; }
     .newrow { animation: rowin .35s cubic-bezier(.2,.8,.2,1) both; }
@@ -2514,6 +2518,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <footer class="foot"><span id="foot"></span>
+    <small class="creator">Sweater was made by <strong>Carter George</strong>. Questions or inquiries? Reach out at <a href="mailto:1epiccarter1@gmail.com">1epiccarter1@gmail.com</a>.</small>
     <small>Sweater is a fan-made game and is not affiliated with or endorsed by the NHL or its teams. NHL, team names, logos and player images are the property of the NHL and its teams.</small>
   </footer>
 </main>
