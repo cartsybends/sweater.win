@@ -6,13 +6,25 @@ players from schedule.json are also embedded so older daily puzzles keep working
 Around a trade, a player can temporarily disappear from the roster feed while the
 NHL player index already has the new currentTeamId. This pass updates both the
 archive and the generated HTML from that independent current-team source.
+
+This script is deliberately fail-open: if the NHL current-player index is
+temporarily unavailable or incomplete, it leaves the build unchanged instead of
+blocking the entire GitHub Pages deploy.
 """
 import argparse
 import json
 import urllib.request
 from pathlib import Path
 
-PLAYER_INDEX = "https://api.nhle.com/stats/rest/en/players?limit=-1"
+PLAYER_INDEX_ACTIVE = (
+    "https://api.nhle.com/stats/rest/en/players"
+    "?limit=-1&cayenneExp=currentTeamId%3E0"
+)
+PLAYER_INDEX_TEAM = (
+    "https://api.nhle.com/stats/rest/en/players"
+    "?limit=-1&cayenneExp=currentTeamId%3D{team_id}"
+)
+
 TEAM_ID_TO_ABBR = {
     1: "NJD", 2: "NYI", 3: "NYR", 4: "PHI", 5: "PIT", 6: "BOS", 7: "BUF", 8: "MTL",
     9: "OTT", 10: "TOR", 12: "CAR", 13: "FLA", 14: "TBL", 15: "WSH", 16: "CHI", 17: "DET",
@@ -22,28 +34,67 @@ TEAM_ID_TO_ABBR = {
 
 
 def get_json(url, timeout=35):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Sweater current-team refresh)"})
+    req = urllib.request.Request(
+        url, headers={"User-Agent": "Mozilla/5.0 (Sweater current-team refresh)"}
+    )
     with urllib.request.urlopen(req, timeout=timeout) as response:
         return json.load(response)
 
 
-def current_index():
-    rows = get_json(PLAYER_INDEX).get("data", [])
-    out = {}
-    for row in rows:
+def add_rows(out, rows):
+    for row in rows or []:
         try:
             pid = int(row.get("id"))
+            team_id = int(row.get("currentTeamId"))
         except (TypeError, ValueError):
             continue
-        team = TEAM_ID_TO_ABBR.get(row.get("currentTeamId"))
-        if team:
-            out[pid] = {
-                "team": team,
-                "number": row.get("sweaterNumber"),
-                "pos": row.get("positionCode"),
-            }
+        team = TEAM_ID_TO_ABBR.get(team_id)
+        if not team:
+            continue
+        out[pid] = {
+            "team": team,
+            "number": row.get("sweaterNumber"),
+            "pos": row.get("positionCode"),
+        }
+
+
+def current_index():
+    out = {}
+
+    # Preferred path: ask the NHL API only for players that have a current team.
+    try:
+        add_rows(out, get_json(PLAYER_INDEX_ACTIVE).get("data", []))
+    except Exception as exc:
+        print(f"  Active-player index request failed: {exc}")
+
+    if len(out) >= 500:
+        return out
+
+    # Defensive fallback. The unfiltered /players endpoint can return a small
+    # sample of historical/free-agent records, so query each current team
+    # individually and merge the results.
+    print(
+        f"  Active-player index looked incomplete ({len(out)} players); "
+        "falling back to team-by-team NHL player lookups."
+    )
+    out = {}
+    failed = 0
+    for team_id in TEAM_ID_TO_ABBR:
+        try:
+            rows = get_json(PLAYER_INDEX_TEAM.format(team_id=team_id), timeout=20).get("data", [])
+            add_rows(out, rows)
+        except Exception as exc:
+            failed += 1
+            print(f"  Team {TEAM_ID_TO_ABBR[team_id]} current-player lookup failed: {exc}")
+
     if len(out) < 500:
-        raise RuntimeError(f"NHL player index looked incomplete ({len(out)} active players)")
+        print(
+            f"  WARNING: NHL current-player data still looked incomplete "
+            f"({len(out)} players; {failed} team requests failed). "
+            "Skipping current-team refresh so the Pages deploy can continue."
+        )
+        return {}
+
     return out
 
 
@@ -61,7 +112,10 @@ def apply(players, live, label):
             continue
         old = player.get("team")
         if old != now["team"]:
-            print(f"  Current-team correction ({label}): {player.get('name', pid)}: {old} -> {now['team']}")
+            print(
+                f"  Current-team correction ({label}): "
+                f"{player.get('name', pid)}: {old} -> {now['team']}"
+            )
             player["team"] = now["team"]
             changed += 1
         if now["number"] is not None:
@@ -92,6 +146,7 @@ def patch_html(path, live):
     end = html.find(end_token, start)
     if end < 0:
         raise RuntimeError("Couldn't find the end of embedded PLAYERS data")
+
     players = json.loads(html[start:end])
     changed = apply(players, live, "generated site")
     if changed:
@@ -109,12 +164,19 @@ def main():
 
     html_path = Path(args.html)
     schedule_path = Path(args.schedule)
-    live = current_index()
-    print(f"Loaded {len(live)} NHL players with a current team.")
 
+    live = current_index()
+    if not live:
+        print("Current-team refresh skipped; generated site left unchanged.")
+        return
+
+    print(f"Loaded {len(live)} NHL players with a current team.")
     schedule_changes = patch_schedule(schedule_path, live) if schedule_path.exists() else 0
     html_changes = patch_html(html_path, live)
-    print(f"Current-team refresh complete: {schedule_changes} archive correction(s), {html_changes} site correction(s).")
+    print(
+        f"Current-team refresh complete: {schedule_changes} archive correction(s), "
+        f"{html_changes} site correction(s)."
+    )
 
 
 if __name__ == "__main__":
