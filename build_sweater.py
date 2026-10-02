@@ -44,7 +44,7 @@ TEAM_ID_TO_ABBR = {
     18: "NSH", 19: "STL", 20: "CGY", 21: "COL", 22: "EDM", 23: "VAN", 24: "ANA", 25: "DAL",
     26: "LAK", 28: "SJS", 29: "CBJ", 30: "MIN", 52: "WPG", 54: "VGK", 55: "SEA", 59: "UTA",
 }
-CURRENT_PLAYER_INDEX = "https://api.nhle.com/stats/rest/en/players?limit=-1"
+CURRENT_PLAYER_INDEX = "https://api.nhle.com/stats/rest/en/players?limit=-1&cayenneExp=currentTeamId%3E0"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 VERSION = "77 · Current Team Reconciliation"
