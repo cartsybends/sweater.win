@@ -46,7 +46,8 @@
   "2026-10-28": 8470613,
   "2026-10-29": 8484806,
   "2026-10-30": 8483731,
-  "2026-10-31": 8475166
+  "2026-10-31": 8475166,
+  "2026-11-01": 8479314
  },
  "start": "2026-09-15",
  "statline_days": {
@@ -96,7 +97,8 @@
   "2026-10-28": 8483609,
   "2026-10-29": 8479394,
   "2026-10-30": 8478109,
-  "2026-10-31": 8479987
+  "2026-10-31": 8479987,
+  "2026-11-01": 8479410
  },
  "statline_start": "2026-09-15",
  "team_days": {
@@ -287,6 +289,10 @@
   "2026-10-31": [
    8478507,
    2022
+  ],
+  "2026-11-01": [
+   8483710,
+   2025
   ]
  },
  "team_start": "2026-09-15",
@@ -337,7 +343,8 @@
   "2026-10-28": 8474567,
   "2026-10-29": 8480950,
   "2026-10-30": 8475831,
-  "2026-10-31": 8481711
+  "2026-10-31": 8481711,
+  "2026-11-01": 8478013
  },
  "journey_start": "2026-09-15",
  "blur_days": {
@@ -387,7 +394,8 @@
   "2026-10-28": 8481581,
   "2026-10-29": 8481554,
   "2026-10-30": 8480355,
-  "2026-10-31": 8477446
+  "2026-10-31": 8477446,
+  "2026-11-01": 8478048
  },
  "blur_start": "2026-09-15",
  "number_days": {
@@ -437,7 +445,8 @@
   "2026-10-28": 8476454,
   "2026-10-29": 8480064,
   "2026-10-30": 8483752,
-  "2026-10-31": 8478872
+  "2026-10-31": 8478872,
+  "2026-11-01": 8482078
  },
  "number_start": "2026-09-15",
  "draft_days": {
@@ -486,7 +495,8 @@
   "2026-10-28": 8471724,
   "2026-10-29": 8484386,
   "2026-10-30": 8480220,
-  "2026-10-31": 8482110
+  "2026-10-31": 8482110,
+  "2026-11-01": 8481604
  },
  "draft_start": "2026-09-16",
  "map_days": {
@@ -535,7 +545,8 @@
   "2026-10-28": 8479398,
   "2026-10-29": 8480762,
   "2026-10-30": 8483525,
-  "2026-10-31": 8477938
+  "2026-10-31": 8477938,
+  "2026-11-01": 8477451
  },
  "map_start": "2026-09-16",
  "zam_days": {
@@ -583,7 +594,8 @@
   "2026-10-28": 8482148,
   "2026-10-29": 8484160,
   "2026-10-30": 8479985,
-  "2026-10-31": 8481519
+  "2026-10-31": 8481519,
+  "2026-11-01": 8481581
  },
  "zam_start": "2026-09-17",
  "roster_days": {
@@ -1246,7 +1258,8 @@
     8483468,
     8483500,
     8484145,
-    8484305
+    8484305,
+    8484797
    ]
   },
   "2026-10-09": {
@@ -1859,6 +1872,35 @@
     8484762,
     8485512
    ]
+  },
+  "2026-11-01": {
+   "team": "PIT",
+   "ids": [
+    8471215,
+    8471675,
+    8471724,
+    8474578,
+    8475810,
+    8476483,
+    8477845,
+    8478438,
+    8479398,
+    8479638,
+    8480842,
+    8480980,
+    8481481,
+    8481527,
+    8481582,
+    8481668,
+    8481725,
+    8482148,
+    8482470,
+    8482475,
+    8482758,
+    8483398,
+    8483808,
+    8485414
+   ]
   }
  },
  "roster_start": "2026-09-15",
@@ -2311,6 +2353,16 @@
     8477953,
     8482655,
     8476925
+   ]
+  },
+  "2026-11-01": {
+   "stat": "gp",
+   "ids": [
+    8481624,
+    8483570,
+    8476422,
+    8477346,
+    8475314
    ]
   }
  },
@@ -4249,6 +4301,49 @@
     8478454,
     8476875,
     8481726
+   ]
+  },
+  "2026-11-01": {
+   "kind": "nation",
+   "key": "SVK",
+   "label": "Born in Slovakia",
+   "ids": [
+    8473986,
+    8480796,
+    8482159,
+    8481028,
+    8480748,
+    8484180,
+    8475810,
+    8478397,
+    8482655,
+    8478406,
+    8478416,
+    8483495,
+    8483669,
+    8480220,
+    8475324,
+    8476882,
+    8477495,
+    8483468,
+    8479359,
+    8481525,
+    8483515,
+    8478396,
+    8480068,
+    8480036,
+    8477969,
+    8484806,
+    8482747,
+    8477465,
+    8476539,
+    8480834,
+    8477429,
+    8478424,
+    8479365,
+    8484164,
+    8479442,
+    8480069
    ]
   }
  },
@@ -7653,6 +7748,85 @@
      ]
     }
    ]
+  },
+  "2026-11-01": {
+   "rounds": [
+    {
+     "q": "Which team drafted Joel Farabee?",
+     "o": [
+      "Buffalo",
+      "Philadelphia",
+      "Nashville",
+      "Columbus"
+     ],
+     "a": 1,
+     "kind": "draftTeam",
+     "keep": [
+      1,
+      4
+     ]
+    },
+    {
+     "q": "What position does Kyle Connor play?",
+     "o": [
+      "Centre",
+      "Goalie",
+      "Left wing",
+      "Defence"
+     ],
+     "a": 2,
+     "kind": "position",
+     "keep": [
+      2,
+      4
+     ]
+    },
+    {
+     "q": "What year was Steven Stamkos drafted?",
+     "o": [
+      "2006",
+      "2007",
+      "2008",
+      "2010"
+     ],
+     "a": 2,
+     "kind": "draftYear",
+     "keep": [
+      1,
+      3
+     ]
+    },
+    {
+     "q": "In which round was Nils Lundkvist drafted?",
+     "o": [
+      "Round 6",
+      "Round 7",
+      "Round 2",
+      "Round 1"
+     ],
+     "a": 3,
+     "kind": "draftRound",
+     "keep": [
+      0,
+      2
+     ]
+    },
+    {
+     "q": "Which team does Ty Emberson play for?",
+     "o": [
+      "Edmonton",
+      "Vegas",
+      "Minnesota",
+      "Anaheim"
+     ],
+     "a": 0,
+     "kind": "team",
+     "keep": [
+      3,
+      4
+     ]
+    }
+   ]
   }
  },
  "shoot_start": "2026-09-17",
@@ -7782,6 +7956,9 @@
   },
   "2026-10-31": {
    "seed": 3089774627
+  },
+  "2026-11-01": {
+   "seed": 2628232413
   }
  },
  "goalie_start": "2026-09-20",
@@ -54153,6 +54330,1110 @@
      "kind": "trophy"
     }
    ]
+  },
+  "2026-11-01": {
+   "rounds": [
+    {
+     "q": "Which country was Ross Colton born in?",
+     "o": [
+      "France",
+      "USA",
+      "Canada",
+      "Belarus"
+     ],
+     "a": 1,
+     "kind": "nation"
+    },
+    {
+     "q": "Which of these players is the youngest?",
+     "o": [
+      "Ilya Mikheyev",
+      "Jacob Markstrom",
+      "Jordan Staal",
+      "Ryan Pulock"
+     ],
+     "a": 0,
+     "kind": "youngest"
+    },
+    {
+     "q": "Which of these players has the most career points?",
+     "o": [
+      "Matt Grzelcyk",
+      "Darren Raddysh",
+      "Alexis Lafrenière",
+      "Mark Scheifele"
+     ],
+     "a": 3,
+     "kind": "mostPoints"
+    },
+    {
+     "q": "What number does Scott Morrow wear?",
+     "o": [
+      "#11",
+      "#19",
+      "#60",
+      "#43"
+     ],
+     "a": 2,
+     "kind": "number"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 1983–84?",
+     "o": [
+      "Mario Lemieux",
+      "Wayne Gretzky",
+      "Jaromír Jágr",
+      "Martin St. Louis"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Logan Thompson play?",
+     "o": [
+      "Right wing",
+      "Goalie",
+      "Defence",
+      "Centre"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "Which city was Colton Dach born in?",
+     "o": [
+      "Caledonia, ON, Canada",
+      "Kurgan, Russia",
+      "Fort Saskatchewan, AB, Canada",
+      "Stratford, ON, Canada"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "How many NHL seasons has Jackson LaCombe played?",
+     "o": [
+      "4",
+      "2",
+      "6",
+      "7"
+     ],
+     "a": 0,
+     "kind": "seasons"
+    },
+    {
+     "q": "How tall is Jack McBain?",
+     "o": [
+      "6′3″",
+      "6′1″",
+      "6′4″",
+      "6′6″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 2021–22?",
+     "o": [
+      "Zach Werenski",
+      "Roman Josi",
+      "Quinn Hughes",
+      "Cale Makar"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players has the most career NHL games?",
+     "o": [
+      "Gage Goncalves",
+      "Dmitry Orlov",
+      "Ryan Greene",
+      "Tyler Tucker"
+     ],
+     "a": 1,
+     "kind": "mostGames"
+    },
+    {
+     "q": "Which of these players wears #27?",
+     "o": [
+      "Jonathan Huberdeau",
+      "Cole Hutson",
+      "William Eklund",
+      "Filip Hallander"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "Which team drafted Alex Turcotte?",
+     "o": [
+      "Tampa Bay",
+      "Vancouver",
+      "St. Louis",
+      "Los Angeles"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "What year was Dylan McIlrath drafted?",
+     "o": [
+      "2010",
+      "2006",
+      "2008",
+      "2012"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Who won the Frank J. Selke Trophy in 2002–03?",
+     "o": [
+      "Ron Francis",
+      "Jere Lehtinen",
+      "Steve Yzerman",
+      "Kris Draper"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players is a goalie?",
+     "o": [
+      "Konsta Helenius",
+      "Arturs Silovs",
+      "Alexander Kerfoot",
+      "Egor Chinakhov"
+     ],
+     "a": 1,
+     "kind": "goalie"
+    },
+    {
+     "q": "Which team does Mattias Samuelsson play for?",
+     "o": [
+      "Buffalo",
+      "Colorado",
+      "Minnesota",
+      "Utah"
+     ],
+     "a": 0,
+     "kind": "team"
+    },
+    {
+     "q": "Which of these players is the tallest?",
+     "o": [
+      "Isaac Howard",
+      "Kyle Capobianco",
+      "Jared Spurgeon",
+      "Ondrej Palat"
+     ],
+     "a": 1,
+     "kind": "tallest"
+    },
+    {
+     "q": "What's the most goals Arshdeep Bains has scored in one NHL season?",
+     "o": [
+      "1",
+      "5",
+      "9",
+      "7"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2018–19?",
+     "o": [
+      "Jeff Skinner",
+      "Auston Matthews",
+      "Matty Beniers",
+      "Elias Pettersson"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players has the most career goals?",
+     "o": [
+      "Jack Eichel",
+      "Olen Zellweger",
+      "Yan Kuznetsov",
+      "Ryan McDonagh"
+     ],
+     "a": 0,
+     "kind": "mostGoals"
+    },
+    {
+     "q": "In which round was Brady Skjei drafted?",
+     "o": [
+      "Round 1",
+      "Round 7",
+      "Round 5",
+      "Round 2"
+     ],
+     "a": 0,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which of these players was born in Canada?",
+     "o": [
+      "Ivan Provorov",
+      "Gabriel Vilardi",
+      "Michael Eyssimont",
+      "Zach Metsa"
+     ],
+     "a": 1,
+     "kind": "bornIn"
+    },
+    {
+     "q": "Which of these players is a defenceman?",
+     "o": [
+      "Brett Howden",
+      "Noah Hanifin",
+      "Dominic James",
+      "Luke Evangelista"
+     ],
+     "a": 1,
+     "kind": "defence"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2012–13?",
+     "o": [
+      "Steve Mason",
+      "Gabriel Landeskog",
+      "Jonathan Huberdeau",
+      "Jeff Skinner"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players is the oldest?",
+     "o": [
+      "Evgeni Malkin",
+      "Sam Steel",
+      "Easton Cowan",
+      "Bo Groulx"
+     ],
+     "a": 0,
+     "kind": "oldest"
+    },
+    {
+     "q": "Which city was Matt Coronato born in?",
+     "o": [
+      "Greenlawn, NY, USA",
+      "Waterford, MI, USA",
+      "Prince Albert, SK, Canada",
+      "Hilton Head Island, SC, USA"
+     ],
+     "a": 0,
+     "kind": "city"
+    },
+    {
+     "q": "Which country was Roman Josi born in?",
+     "o": [
+      "Canada",
+      "Belarus",
+      "Australia",
+      "Switzerland"
+     ],
+     "a": 3,
+     "kind": "nation"
+    },
+    {
+     "q": "What's the most goals Zemgus Girgensons has scored in one NHL season?",
+     "o": [
+      "17",
+      "13",
+      "19",
+      "15"
+     ],
+     "a": 3,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the Frank J. Selke Trophy in 2012–13?",
+     "o": [
+      "Anže Kopitar",
+      "Ryan Kesler",
+      "Jonathan Toews",
+      "Pavel Datsyuk"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Mitch Marner play?",
+     "o": [
+      "Right wing",
+      "Left wing",
+      "Defence",
+      "Goalie"
+     ],
+     "a": 0,
+     "kind": "position"
+    },
+    {
+     "q": "Which country was Ryan Poehling born in?",
+     "o": [
+      "USA",
+      "Canada",
+      "Czechia",
+      "Denmark"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "Which country was Jakub Dobes born in?",
+     "o": [
+      "Czechia",
+      "Latvia",
+      "Belarus",
+      "Slovakia"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "How many NHL seasons has Ilya Solovyov played?",
+     "o": [
+      "4",
+      "3",
+      "6",
+      "7"
+     ],
+     "a": 1,
+     "kind": "seasons"
+    },
+    {
+     "q": "Who won the Frank J. Selke Trophy in 2006–07?",
+     "o": [
+      "Pavel Datsyuk",
+      "Rod Brind'Amour",
+      "Ryan O'Reilly",
+      "Jonathan Toews"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was Alexandre Texier drafted?",
+     "o": [
+      "Round 3",
+      "Round 1",
+      "Round 6",
+      "Round 2"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "What number does Darnell Nurse wear?",
+     "o": [
+      "#35",
+      "#25",
+      "#79",
+      "#43"
+     ],
+     "a": 1,
+     "kind": "number"
+    },
+    {
+     "q": "Which of these players wears #90?",
+     "o": [
+      "Josh Norris",
+      "Jaccob Slavin",
+      "Claude Giroux",
+      "Corey Perry"
+     ],
+     "a": 3,
+     "kind": "wears"
+    },
+    {
+     "q": "In which round was Cody Ceci drafted?",
+     "o": [
+      "Round 6",
+      "Round 5",
+      "Round 4",
+      "Round 1"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Ted Lindsay Award in 2003–04?",
+     "o": [
+      "Carey Price",
+      "Markus Näslund",
+      "Martin St. Louis",
+      "Sergei Fedorov"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Jamie Oleksiak born in?",
+     "o": [
+      "Oxford, MI, USA",
+      "Manchester, NH, USA",
+      "Turku, Finland",
+      "Toronto, ON, Canada"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "What position does Tyler Seguin play?",
+     "o": [
+      "Left wing",
+      "Goalie",
+      "Defence",
+      "Centre"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "How many NHL seasons has Pavel Dorofeyev played?",
+     "o": [
+      "6",
+      "8",
+      "5",
+      "4"
+     ],
+     "a": 0,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which team does Nick Blankenburg play for?",
+     "o": [
+      "Carolina",
+      "Toronto",
+      "Nashville",
+      "Pittsburgh"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2025–26?",
+     "o": [
+      "Moritz Seider",
+      "Mathew Barzal",
+      "Connor Bedard",
+      "Matthew Schaefer"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Sean Couturier play?",
+     "o": [
+      "Right wing",
+      "Defence",
+      "Centre",
+      "Left wing"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "What's the most goals Josh Manson has scored in one NHL season?",
+     "o": [
+      "8",
+      "10",
+      "12",
+      "14"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "How many NHL seasons has Tyler Myers played?",
+     "o": [
+      "15",
+      "20",
+      "17",
+      "14"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which team does Brayden McNabb play for?",
+     "o": [
+      "Columbus",
+      "Vegas",
+      "Philadelphia",
+      "Nashville"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Who won the Ted Lindsay Award in 1990–91?",
+     "o": [
+      "Mark Messier",
+      "Brett Hull",
+      "Joe Sakic",
+      "Sergei Fedorov"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Jack Roslovic born in?",
+     "o": [
+      "Huntsville, AL, USA",
+      "Umea, Sweden",
+      "Columbus, OH, USA",
+      "Novokuznetsk, Russia"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "Which team does Ryan Lindgren play for?",
+     "o": [
+      "St. Louis",
+      "NY Rangers",
+      "Minnesota",
+      "Seattle"
+     ],
+     "a": 3,
+     "kind": "team"
+    },
+    {
+     "q": "Which of these players wears #33?",
+     "o": [
+      "Josh Anderson",
+      "Jacob Melanson",
+      "Nikolas Matinpalo",
+      "MacKenzie Weegar"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "Which of these players wears #34?",
+     "o": [
+      "Auston Matthews",
+      "Juraj Slafkovský",
+      "Lawson Crouse",
+      "Logan Stankoven"
+     ],
+     "a": 0,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 1987–88?",
+     "o": [
+      "Wayne Gretzky",
+      "Dominik Hašek",
+      "Brett Hull",
+      "Mario Lemieux"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team drafted Cale Makar?",
+     "o": [
+      "St. Louis",
+      "Buffalo",
+      "Colorado",
+      "Boston"
+     ],
+     "a": 2,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which team does Tanner Jeannot play for?",
+     "o": [
+      "Boston",
+      "Florida",
+      "Edmonton",
+      "Washington"
+     ],
+     "a": 0,
+     "kind": "team"
+    },
+    {
+     "q": "What year was Elias Pettersson drafted?",
+     "o": [
+      "2016",
+      "2021",
+      "2019",
+      "2017"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "In which round was Victor Olofsson drafted?",
+     "o": [
+      "Round 4",
+      "Round 7",
+      "Round 3",
+      "Round 1"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 2016–17?",
+     "o": [
+      "P. K. Subban",
+      "Roman Josi",
+      "Brent Burns",
+      "Victor Hedman"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team does Jet Greaves play for?",
+     "o": [
+      "Columbus",
+      "Seattle",
+      "Vegas",
+      "Winnipeg"
+     ],
+     "a": 0,
+     "kind": "team"
+    },
+    {
+     "q": "Which of these players was born in Slovakia?",
+     "o": [
+      "Marco Kasper",
+      "Alexandre Carrier",
+      "Simon Nemec",
+      "Bobby Brink"
+     ],
+     "a": 2,
+     "kind": "bornIn"
+    },
+    {
+     "q": "Which team drafted Adam Lowry?",
+     "o": [
+      "Detroit",
+      "Boston",
+      "Montréal",
+      "Winnipeg"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which team drafted Jackson Blake?",
+     "o": [
+      "Carolina",
+      "New Jersey",
+      "Minnesota",
+      "Philadelphia"
+     ],
+     "a": 0,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 1999–00?",
+     "o": [
+      "Wayne Gretzky",
+      "Joe Thornton",
+      "Evgeni Malkin",
+      "Jaromír Jágr"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What year was Sam Rinzel drafted?",
+     "o": [
+      "2022",
+      "2019",
+      "2024",
+      "2026"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "In which round was Linus Ullmark drafted?",
+     "o": [
+      "Round 6",
+      "Round 3",
+      "Round 7",
+      "Round 1"
+     ],
+     "a": 0,
+     "kind": "draftRound"
+    },
+    {
+     "q": "How tall is Mattias Janmark?",
+     "o": [
+      "6′0″",
+      "6′3″",
+      "5′10″",
+      "6′1″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "In which round was Pavel Mintyukov drafted?",
+     "o": [
+      "Round 7",
+      "Round 1",
+      "Round 5",
+      "Round 6"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 2013–14?",
+     "o": [
+      "Connor McDavid",
+      "Evgeni Malkin",
+      "Alexander Ovechkin",
+      "Sidney Crosby"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which country was Gabe Perreault born in?",
+     "o": [
+      "Czechia",
+      "Germany",
+      "Canada",
+      "Russia"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "In which round was Dustin Wolf drafted?",
+     "o": [
+      "Round 5",
+      "Round 6",
+      "Round 4",
+      "Round 7"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which city was Tyson Foerster born in?",
+     "o": [
+      "Houston, TX, USA",
+      "Malmo, Sweden",
+      "Alliston, ON, Canada",
+      "Phoenix, AZ, USA"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "What position does Olli Maatta play?",
+     "o": [
+      "Goalie",
+      "Defence",
+      "Left wing",
+      "Centre"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Maurice Richard Trophy in 2022–23?",
+     "o": [
+      "Sidney Crosby",
+      "Corey Perry",
+      "Alexander Ovechkin",
+      "Connor McDavid"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Zeev Buium has scored in one NHL season?",
+     "o": [
+      "12",
+      "14",
+      "6",
+      "10"
+     ],
+     "a": 2,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "What's the most goals Adam Wilsby has scored in one NHL season?",
+     "o": [
+      "9",
+      "5",
+      "3",
+      "1"
+     ],
+     "a": 3,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which of these players wears #25?",
+     "o": [
+      "Denton Mateychuk",
+      "Pontus Holmberg",
+      "Jeffrey Viel",
+      "Samuel Montembeault"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "How tall is Vincent Desharnais?",
+     "o": [
+      "6′3″",
+      "6′4″",
+      "6′7″",
+      "6′5″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the Frank J. Selke Trophy in 2018–19?",
+     "o": [
+      "Jonathan Toews",
+      "Aleksander Barkov",
+      "Rod Brind'Amour",
+      "Ryan O'Reilly"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is Ryan Ufko?",
+     "o": [
+      "6′2″",
+      "5′8″",
+      "6′4″",
+      "6′0″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "Which team drafted Connor Dewar?",
+     "o": [
+      "Washington",
+      "Ottawa",
+      "Tampa Bay",
+      "Minnesota"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which team does Marco Rossi play for?",
+     "o": [
+      "Philadelphia",
+      "Vancouver",
+      "Ottawa",
+      "Washington"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Which country was Eetu Luostarinen born in?",
+     "o": [
+      "Slovakia",
+      "Finland",
+      "Latvia",
+      "Russia"
+     ],
+     "a": 1,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 2020–21?",
+     "o": [
+      "Anže Kopitar",
+      "Brian Campbell",
+      "Jaccob Slavin",
+      "Jiří Hudler"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "What number does Ben Kindel wear?",
+     "o": [
+      "#27",
+      "#81",
+      "#28",
+      "#83"
+     ],
+     "a": 1,
+     "kind": "number"
+    },
+    {
+     "q": "Which team drafted Oskar Bäck?",
+     "o": [
+      "Washington",
+      "Edmonton",
+      "Dallas",
+      "Utah"
+     ],
+     "a": 2,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which of these players wears #14?",
+     "o": [
+      "Liam O'Brien",
+      "Nick Robertson",
+      "Ilya Lyubushkin",
+      "Ville Koivunen"
+     ],
+     "a": 1,
+     "kind": "wears"
+    },
+    {
+     "q": "How many NHL seasons has Bryan Rust played?",
+     "o": [
+      "8",
+      "11",
+      "12",
+      "13"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 1993–94?",
+     "o": [
+      "Joe Sakic",
+      "Wayne Gretzky",
+      "Alexander Mogilny",
+      "Mats Näslund"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Fabian Zetterlund born in?",
+     "o": [
+      "Pickering, ON, Canada",
+      "Jericho, NY, USA",
+      "Dallas, TX, USA",
+      "Karlstad, Sweden"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "Which team drafted Declan Chisholm?",
+     "o": [
+      "Colorado",
+      "Tampa Bay",
+      "Winnipeg",
+      "Seattle"
+     ],
+     "a": 2,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "What number does Ryan Lomberg wear?",
+     "o": [
+      "#94",
+      "#2",
+      "#35",
+      "#32"
+     ],
+     "a": 0,
+     "kind": "number"
+    },
+    {
+     "q": "In which round was Teuvo Teravainen drafted?",
+     "o": [
+      "Round 4",
+      "Round 1",
+      "Round 2",
+      "Round 5"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2024–25?",
+     "o": [
+      "Auston Matthews",
+      "Connor McDavid",
+      "Connor Hellebuyck",
+      "Patrick Kane"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Nikita Kucherov born in?",
+     "o": [
+      "Maykop, Russia",
+      "Stillwater, MN, USA",
+      "Bern, Switzerland",
+      "Plano, TX, USA"
+     ],
+     "a": 0,
+     "kind": "city"
+    },
+    {
+     "q": "What position does Anders Lee play?",
+     "o": [
+      "Left wing",
+      "Centre",
+      "Defence",
+      "Goalie"
+     ],
+     "a": 0,
+     "kind": "position"
+    },
+    {
+     "q": "How many NHL seasons has William Karlsson played?",
+     "o": [
+      "9",
+      "11",
+      "14",
+      "13"
+     ],
+     "a": 3,
+     "kind": "seasons"
+    },
+    {
+     "q": "What's the most goals Nick Jensen has scored in one NHL season?",
+     "o": [
+      "11",
+      "5",
+      "1",
+      "13"
+     ],
+     "a": 1,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 2006–07?",
+     "o": [
+      "Peter Forsberg",
+      "Connor McDavid",
+      "Sidney Crosby",
+      "Mario Lemieux"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    }
+   ]
   }
  },
  "overtime_start": "2026-09-20",
@@ -56310,6 +57591,55 @@
       "Wears #40"
      ],
      "f": 0
+    }
+   ]
+  },
+  "2026-11-01": {
+   "rounds": [
+    {
+     "p": 8478970,
+     "s": [
+      "Wears #1",
+      "Once scored 8 goals in a season",
+      "Is 6′1″ tall"
+     ],
+     "f": 0
+    },
+    {
+     "p": 8478458,
+     "s": [
+      "Is a goalie",
+      "Once scored 22 goals in a season",
+      "Has played 10 NHL seasons"
+     ],
+     "f": 0
+    },
+    {
+     "p": 8475692,
+     "s": [
+      "Once scored 18 goals in a season",
+      "Was born in Norway",
+      "Plays for Los Angeles"
+     ],
+     "f": 0
+    },
+    {
+     "p": 8479193,
+     "s": [
+      "Has played over 200 NHL games",
+      "Has played 8 NHL seasons",
+      "Is 5′10″ tall"
+     ],
+     "f": 2
+    },
+    {
+     "p": 8480834,
+     "s": [
+      "Has played over 100 NHL games",
+      "Has played 1 NHL seasons",
+      "Plays for Edmonton"
+     ],
+     "f": 1
     }
    ]
   }
@@ -65131,6 +66461,290 @@
      "abroad"
     ]
    ]
+  },
+  "2026-11-01": {
+   "rounds": [
+    [
+     "WPG",
+     10314,
+     "TBL",
+     11364,
+     "games"
+    ],
+    [
+     "STL",
+     1335,
+     "DAL",
+     2862,
+     "goals"
+    ],
+    [
+     "SEA",
+     8600,
+     "OTT",
+     7750,
+     "games"
+    ],
+    [
+     "VAN",
+     27.2,
+     "PHI",
+     27.3,
+     "age"
+    ],
+    [
+     "SJS",
+     1286,
+     "BOS",
+     1748,
+     "goals"
+    ],
+    [
+     "NJD",
+     29.5,
+     "CBJ",
+     28.5,
+     "age"
+    ],
+    [
+     "TOR",
+     2621,
+     "VAN",
+     1561,
+     "goals"
+    ],
+    [
+     "CGY",
+     73.8,
+     "COL",
+     73.2,
+     "height"
+    ],
+    [
+     "NSH",
+     9840,
+     "CBJ",
+     9955,
+     "games"
+    ],
+    [
+     "UTA",
+     73.4,
+     "PIT",
+     73.2,
+     "height"
+    ],
+    [
+     "OTT",
+     1755,
+     "WPG",
+     2262,
+     "goals"
+    ],
+    [
+     "NYR",
+     73.9,
+     "CBJ",
+     73.3,
+     "height"
+    ],
+    [
+     "DET",
+     9016,
+     "COL",
+     12054,
+     "games"
+    ],
+    [
+     "PHI",
+     6,
+     "EDM",
+     7,
+     "abroad"
+    ],
+    [
+     "BUF",
+     5765,
+     "STL",
+     7539,
+     "games"
+    ],
+    [
+     "UTA",
+     1890,
+     "BOS",
+     1748,
+     "goals"
+    ],
+    [
+     "MTL",
+     73.2,
+     "NYR",
+     73.9,
+     "height"
+    ],
+    [
+     "NYI",
+     10824,
+     "PIT",
+     10686,
+     "games"
+    ],
+    [
+     "TOR",
+     31.5,
+     "CGY",
+     27.3,
+     "age"
+    ],
+    [
+     "STL",
+     7539,
+     "NSH",
+     9840,
+     "games"
+    ],
+    [
+     "CAR",
+     2226,
+     "ANA",
+     1114,
+     "goals"
+    ],
+    [
+     "VGK",
+     10235,
+     "VAN",
+     7727,
+     "games"
+    ],
+    [
+     "UTA",
+     1890,
+     "NYI",
+     2071,
+     "goals"
+    ],
+    [
+     "DET",
+     9016,
+     "NSH",
+     9840,
+     "games"
+    ],
+    [
+     "CBJ",
+     1915,
+     "LAK",
+     2789,
+     "goals"
+    ],
+    [
+     "MIN",
+     11302,
+     "PHI",
+     8079,
+     "games"
+    ],
+    [
+     "MTL",
+     1674,
+     "CAR",
+     2226,
+     "goals"
+    ],
+    [
+     "CGY",
+     9,
+     "BUF",
+     5,
+     "abroad"
+    ],
+    [
+     "SJS",
+     7732,
+     "ANA",
+     5645,
+     "games"
+    ],
+    [
+     "COL",
+     73.2,
+     "OTT",
+     73.6,
+     "height"
+    ],
+    [
+     "UTA",
+     5,
+     "CHI",
+     4,
+     "abroad"
+    ],
+    [
+     "DET",
+     9016,
+     "VGK",
+     10235,
+     "games"
+    ],
+    [
+     "CAR",
+     2226,
+     "SEA",
+     1582,
+     "goals"
+    ],
+    [
+     "NJD",
+     73.4,
+     "LAK",
+     73.8,
+     "height"
+    ],
+    [
+     "VGK",
+     5,
+     "BOS",
+     7,
+     "abroad"
+    ],
+    [
+     "PHI",
+     8079,
+     "EDM",
+     10359,
+     "games"
+    ],
+    [
+     "CGY",
+     9,
+     "UTA",
+     5,
+     "abroad"
+    ],
+    [
+     "SJS",
+     27.5,
+     "VGK",
+     30.6,
+     "age"
+    ],
+    [
+     "ANA",
+     6,
+     "PIT",
+     10,
+     "abroad"
+    ],
+    [
+     "VAN",
+     7727,
+     "MTL",
+     7756,
+     "games"
+    ]
+   ]
   }
  },
  "hlt_start": "2026-09-18",
@@ -65310,6 +66924,10 @@
   "2026-10-31": {
    "id": 8478009,
    "y": 2023
+  },
+  "2026-11-01": {
+   "id": 8480069,
+   "y": 2022
   }
  },
  "season_start": "2026-09-18",
@@ -65445,6 +67063,9 @@
   },
   "2026-10-31": {
    "id": 8479525
+  },
+  "2026-11-01": {
+   "id": 8475184
   }
  },
  "playoff_start": "2026-09-18",
@@ -76189,6 +77810,350 @@
      "a": 3
     }
    ]
+  },
+  "2026-11-01": {
+   "rounds": [
+    {
+     "t": "James Norris Memorial Trophy",
+     "y": 1989,
+     "names": [
+      "Ray Bourque",
+      "Rod Langway",
+      "Doug Wilson",
+      "Chris Chelios"
+     ],
+     "teams": [
+      "BOS",
+      "WSH",
+      "CHI",
+      "MTL"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 2023,
+     "names": [
+      "Braden Holtby",
+      "Henrik Lundqvist",
+      "Connor Hellebuyck",
+      "Tuukka Rask"
+     ],
+     "teams": [
+      "WSH",
+      "NYR",
+      "WPG",
+      "BOS"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2024,
+     "names": [
+      "Connor Hellebuyck",
+      "Leon Draisaitl",
+      "Nikita Kucherov",
+      "Connor McDavid"
+     ],
+     "teams": [
+      "WPG",
+      "EDM",
+      "TBL",
+      "EDM"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2024,
+     "names": [
+      "Patrice Bergeron",
+      "Nick Suzuki",
+      "Jonathan Toews",
+      "Aleksander Barkov"
+     ],
+     "teams": [
+      "BOS",
+      "MTL",
+      "CHI",
+      "FLA"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2003,
+     "names": [
+      "Jaromír Jágr",
+      "Jarome Iginla",
+      "Martin St. Louis",
+      "Mark Messier"
+     ],
+     "teams": [
+      "NYR",
+      "CGY",
+      "TBL",
+      "NYR"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 2025,
+     "names": [
+      "Linus Ullmark",
+      "Sergei Bobrovsky",
+      "Andrei Vasilevskiy",
+      "Pekka Rinne"
+     ],
+     "teams": [
+      "BOS",
+      "CBJ",
+      "TBL",
+      "NSH"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1995,
+     "names": [
+      "Ron Francis",
+      "Pavol Demitra",
+      "Joe Sakic",
+      "Paul Kariya"
+     ],
+     "teams": [
+      "PIT",
+      "STL",
+      "COL",
+      "ANA"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2019,
+     "names": [
+      "Sidney Crosby",
+      "Alexander Ovechkin",
+      "Nikita Kucherov",
+      "Leon Draisaitl"
+     ],
+     "teams": [
+      "PIT",
+      "WSH",
+      "TBL",
+      "EDM"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1996,
+     "names": [
+      "Ron Francis",
+      "Joe Mullen",
+      "Jari Kurri",
+      "Paul Kariya"
+     ],
+     "teams": [
+      "PIT",
+      "CGY",
+      "EDM",
+      "ANA"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2010,
+     "names": [
+      "Pavol Demitra",
+      "Jiří Hudler",
+      "Martin St. Louis",
+      "Ryan O'Reilly"
+     ],
+     "teams": [
+      "STL",
+      "CGY",
+      "TBL",
+      "COL"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 1988,
+     "names": [
+      "John Vanbiesbrouck",
+      "Patrick Roy",
+      "Ed Belfour",
+      "Grant Fuhr"
+     ],
+     "teams": [
+      "NYR",
+      "MTL",
+      "CHI",
+      "EDM"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2024,
+     "names": [
+      "Leon Draisaitl",
+      "Sidney Crosby",
+      "Connor McDavid",
+      "Nathan MacKinnon"
+     ],
+     "teams": [
+      "EDM",
+      "PIT",
+      "EDM",
+      "COL"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1988,
+     "names": [
+      "Joe Mullen",
+      "Rick Kehoe",
+      "Joe Sakic",
+      "Paul Kariya"
+     ],
+     "teams": [
+      "CGY",
+      "PIT",
+      "COL",
+      "ANA"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2014,
+     "names": [
+      "Connor McDavid",
+      "Leon Draisaitl",
+      "Alexander Ovechkin",
+      "Nathan MacKinnon"
+     ],
+     "teams": [
+      "EDM",
+      "EDM",
+      "WSH",
+      "COL"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2016,
+     "names": [
+      "Johnny Gaudreau",
+      "William Karlsson",
+      "Jaccob Slavin",
+      "Nathan MacKinnon"
+     ],
+     "teams": [
+      "CGY",
+      "VGK",
+      "CAR",
+      "COL"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 1981,
+     "names": [
+      "Dirk Graham",
+      "Bobby Clarke",
+      "Troy Murray",
+      "Steve Kasper"
+     ],
+     "teams": [
+      "CHI",
+      "PHI",
+      "CHI",
+      "BOS"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Art Ross Trophy",
+     "y": 1988,
+     "names": [
+      "Jarome Iginla",
+      "Wayne Gretzky",
+      "Alexander Ovechkin",
+      "Mario Lemieux"
+     ],
+     "teams": [
+      "CGY",
+      "LAK",
+      "WSH",
+      "PIT"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2008,
+     "names": [
+      "Martin St. Louis",
+      "Alexander Ovechkin",
+      "Markus Näslund",
+      "Dominik Hašek"
+     ],
+     "teams": [
+      "TBL",
+      "WSH",
+      "VAN",
+      "BUF"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 1981,
+     "names": [
+      "Pavel Bure",
+      "Dale Hawerchuk",
+      "Sergei Makarov",
+      "Brian Leetch"
+     ],
+     "teams": [
+      "VAN",
+      "WPG",
+      "CGY",
+      "NYR"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Art Ross Trophy",
+     "y": 1984,
+     "names": [
+      "Mario Lemieux",
+      "Jarome Iginla",
+      "Jaromír Jágr",
+      "Wayne Gretzky"
+     ],
+     "teams": [
+      "PIT",
+      "CGY",
+      "PIT",
+      "EDM"
+     ],
+     "a": 3
+    }
+   ]
   }
  },
  "trophy_start": "2026-09-18",
@@ -76675,6 +78640,17 @@
     8481533,
     8480220,
     8477948
+   ]
+  },
+  "2026-11-01": {
+   "team": "TOR",
+   "ids": [
+    8477426,
+    8475683,
+    8483565,
+    8475166,
+    8475171,
+    8477939
    ]
   }
  },
@@ -84669,6 +86645,326 @@
     ]
    ],
    "mvp": true
+  },
+  "2026-11-01": {
+   "rows": [
+    [
+     1980,
+     "New York Islanders",
+     "Minnesota North Stars",
+     "Butch Goring",
+     "NYI"
+    ],
+    [
+     1981,
+     "New York Islanders",
+     "Vancouver Canucks",
+     "Mike Bossy",
+     "NYI"
+    ],
+    [
+     1982,
+     "New York Islanders",
+     "Edmonton Oilers",
+     "Billy Smith",
+     "NYI"
+    ],
+    [
+     1983,
+     "Edmonton Oilers",
+     "New York Islanders",
+     "Mark Messier",
+     "EDM"
+    ],
+    [
+     1984,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1985,
+     "Montreal Canadiens",
+     "Calgary Flames",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1986,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Ron Hextall",
+     "PHI"
+    ],
+    [
+     1987,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1988,
+     "Calgary Flames",
+     "Montreal Canadiens",
+     "Al MacInnis",
+     "CGY"
+    ],
+    [
+     1989,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Bill Ranford",
+     "EDM"
+    ],
+    [
+     1990,
+     "Pittsburgh Penguins",
+     "Minnesota North Stars",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1991,
+     "Pittsburgh Penguins",
+     "Chicago Blackhawks",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1992,
+     "Montreal Canadiens",
+     "Los Angeles Kings",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1993,
+     "New York Rangers",
+     "Vancouver Canucks",
+     "Brian Leetch",
+     "NYR"
+    ],
+    [
+     1994,
+     "New Jersey Devils",
+     "Detroit Red Wings",
+     "Claude Lemieux",
+     "NJD"
+    ],
+    [
+     1995,
+     "Colorado Avalanche",
+     "Florida Panthers",
+     "Joe Sakic",
+     "COL"
+    ],
+    [
+     1996,
+     "Detroit Red Wings",
+     "Philadelphia Flyers",
+     "Mike Vernon",
+     "DET"
+    ],
+    [
+     1997,
+     "Detroit Red Wings",
+     "Washington Capitals",
+     "Steve Yzerman",
+     "DET"
+    ],
+    [
+     1998,
+     "Dallas Stars",
+     "Buffalo Sabres",
+     "Joe Nieuwendyk",
+     "DAL"
+    ],
+    [
+     1999,
+     "New Jersey Devils",
+     "Dallas Stars",
+     "Scott Stevens",
+     "NJD"
+    ],
+    [
+     2000,
+     "Colorado Avalanche",
+     "New Jersey Devils",
+     "Patrick Roy",
+     "COL"
+    ],
+    [
+     2001,
+     "Detroit Red Wings",
+     "Carolina Hurricanes",
+     "Nicklas Lidstrom",
+     "DET"
+    ],
+    [
+     2002,
+     "New Jersey Devils",
+     "Mighty Ducks of Anaheim",
+     "Jean-Sebastien Giguere",
+     "ANA"
+    ],
+    [
+     2003,
+     "Tampa Bay Lightning",
+     "Calgary Flames",
+     "Brad Richards",
+     "TBL"
+    ],
+    [
+     2005,
+     "Carolina Hurricanes",
+     "Edmonton Oilers",
+     "Cam Ward",
+     "CAR"
+    ],
+    [
+     2006,
+     "Anaheim Ducks",
+     "Ottawa Senators",
+     "Scott Niedermayer",
+     "ANA"
+    ],
+    [
+     2007,
+     "Detroit Red Wings",
+     "Pittsburgh Penguins",
+     "Henrik Zetterberg",
+     "DET"
+    ],
+    [
+     2008,
+     "Pittsburgh Penguins",
+     "Detroit Red Wings",
+     "Evgeni Malkin",
+     "PIT"
+    ],
+    [
+     2009,
+     "Chicago Blackhawks",
+     "Philadelphia Flyers",
+     "Jonathan Toews",
+     "CHI"
+    ],
+    [
+     2010,
+     "Boston Bruins",
+     "Vancouver Canucks",
+     "Tim Thomas",
+     "BOS"
+    ],
+    [
+     2011,
+     "Los Angeles Kings",
+     "New Jersey Devils",
+     "Jonathan Quick",
+     "LAK"
+    ],
+    [
+     2012,
+     "Chicago Blackhawks",
+     "Boston Bruins",
+     "Patrick Kane",
+     "CHI"
+    ],
+    [
+     2013,
+     "Los Angeles Kings",
+     "New York Rangers",
+     "Justin Williams",
+     "LAK"
+    ],
+    [
+     2014,
+     "Chicago Blackhawks",
+     "Tampa Bay Lightning",
+     "Duncan Keith",
+     "CHI"
+    ],
+    [
+     2015,
+     "Pittsburgh Penguins",
+     "San Jose Sharks",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2016,
+     "Pittsburgh Penguins",
+     "Nashville Predators",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2017,
+     "Washington Capitals",
+     "Vegas Golden Knights",
+     "Alexander Ovechkin",
+     "WSH"
+    ],
+    [
+     2018,
+     "St. Louis Blues",
+     "Boston Bruins",
+     "Ryan O'Reilly",
+     "STL"
+    ],
+    [
+     2019,
+     "Tampa Bay Lightning",
+     "Dallas Stars",
+     "Victor Hedman",
+     "TBL"
+    ],
+    [
+     2020,
+     "Tampa Bay Lightning",
+     "Montreal Canadiens",
+     "Andrei Vasilevskiy",
+     "TBL"
+    ],
+    [
+     2021,
+     "Colorado Avalanche",
+     "Tampa Bay Lightning",
+     "Cale Makar",
+     "COL"
+    ],
+    [
+     2022,
+     "Vegas Golden Knights",
+     "Florida Panthers",
+     "Jonathan Marchessault",
+     "VGK"
+    ],
+    [
+     2023,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Connor McDavid",
+     "EDM"
+    ],
+    [
+     2024,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Sam Bennett",
+     "FLA"
+    ],
+    [
+     2025,
+     "Carolina Hurricanes",
+     "Vegas Golden Knights",
+     "Jordan Staal",
+     "CAR"
+    ]
+   ],
+   "mvp": true
   }
  },
  "cups_start": "2026-09-18",
@@ -86418,6 +88714,44 @@
      8476393,
      8476469,
      8476474
+    ]
+   }
+  ],
+  "2026-11-01": [
+   {
+    "label": "Plays for St. Louis",
+    "ids": [
+     8476412,
+     8478443,
+     8481580,
+     8482733
+    ]
+   },
+   {
+    "label": "Born in Russia",
+    "ids": [
+     8475200,
+     8479410,
+     8481624,
+     8482166
+    ]
+   },
+   {
+    "label": "Wears #47",
+    "ids": [
+     8477446,
+     8478454,
+     8480355,
+     8481593
+    ]
+   },
+   {
+    "label": "Drafted in 2023",
+    "ids": [
+     8484144,
+     8484158,
+     8484221,
+     8484223
     ]
    }
   ]
@@ -102685,6 +105019,352 @@
     8477950,
     8476927
    ]
+  },
+  "2026-11-01": {
+   "goals": [
+    8477919,
+    8479353,
+    8480878,
+    8478500,
+    8476826,
+    8481559,
+    8478133,
+    8478233,
+    8479998,
+    8481557,
+    8482730,
+    8476869,
+    8478402,
+    8477479,
+    8482089,
+    8482740,
+    8479442,
+    8480043,
+    8479999,
+    8478434,
+    8480028,
+    8482078,
+    8474586,
+    8475799,
+    8478891,
+    8480208,
+    8480002,
+    8478413,
+    8480014,
+    8474013,
+    8482062,
+    8481789,
+    8480800,
+    8480802,
+    8477444,
+    8477960,
+    8476469,
+    8476892,
+    8477429,
+    8476455,
+    8475848
+   ],
+   "assists": [
+    8477986,
+    8476429,
+    8476463,
+    8478463,
+    8477939,
+    8483515,
+    8476873,
+    8476389,
+    8476468,
+    8483490,
+    8482079,
+    8480023,
+    8479365,
+    8479400,
+    8482737,
+    8478468,
+    8474600,
+    8482660,
+    8480049,
+    8480459,
+    8482111,
+    8478856,
+    8480835,
+    8474013,
+    8481527,
+    8479066,
+    8479314,
+    8477447,
+    8478454,
+    8480002,
+    8482858,
+    8478462,
+    8481013,
+    8482665,
+    8476474,
+    8480281,
+    8478483,
+    8481725,
+    8479983,
+    8480807,
+    8478055
+   ],
+   "points": [
+    8478416,
+    8479369,
+    8480891,
+    8478424,
+    8479542,
+    8478569,
+    8481725,
+    8481014,
+    8476468,
+    8477446,
+    8477365,
+    8474564,
+    8482740,
+    8471724,
+    8480336,
+    8480802,
+    8478413,
+    8482691,
+    8477456,
+    8477942,
+    8482699,
+    8478010,
+    8482073,
+    8481524,
+    8478038,
+    8482177,
+    8481606,
+    8480027,
+    8476925,
+    8481605,
+    8476881,
+    8478882,
+    8475208,
+    8476480,
+    8477505,
+    8481024,
+    8478055,
+    8478109,
+    8482809,
+    8480039,
+    8476624
+   ],
+   "pim": [
+    8476422,
+    8474590,
+    8476854,
+    8477478,
+    8477934,
+    8483489,
+    8480817,
+    8478460,
+    8475179,
+    8480185,
+    8483570,
+    8476539,
+    8481617,
+    8477365,
+    8482476,
+    8481524,
+    8475913,
+    8483808,
+    8475287,
+    8481527,
+    8478975,
+    8482726,
+    8475168,
+    8477950,
+    8480891,
+    8479982,
+    8477511,
+    8476372,
+    8475208,
+    8476399,
+    8476441,
+    8477938,
+    8479576,
+    8481711,
+    8482929,
+    8477955,
+    8475314,
+    8481523,
+    8475692,
+    8480802,
+    8477505
+   ],
+   "gp": [
+    8480113,
+    8484958,
+    8482858,
+    8475220,
+    8482659,
+    8480835,
+    8482665,
+    8476456,
+    8480839,
+    8481481,
+    8478840,
+    8482929,
+    8480028,
+    8477409,
+    8482705,
+    8479323,
+    8476432,
+    8481711,
+    8475455,
+    8481167,
+    8478519,
+    8474151,
+    8482737,
+    8476292,
+    8477497,
+    8482055,
+    8477951,
+    8478399,
+    8484911,
+    8481580,
+    8476483,
+    8478398,
+    8482720,
+    8478493,
+    8481557,
+    8479982,
+    8480036,
+    8477950,
+    8482726,
+    8482062,
+    8476921
+   ],
+   "height": [
+    8483457,
+    8479996,
+    8480049,
+    8473986,
+    8477015,
+    8481013,
+    8475842,
+    8474568,
+    8478416,
+    8482149,
+    8482110,
+    8475287,
+    8477447,
+    8477989,
+    8474590,
+    8480801,
+    8478519,
+    8480246,
+    8482116,
+    8475188,
+    8478013,
+    8474578,
+    8476981,
+    8474151,
+    8480039,
+    8475799,
+    8476927,
+    8483515,
+    8475786,
+    8479520,
+    8480145,
+    8476419,
+    8475692,
+    8478840,
+    8482077,
+    8477479,
+    8477511,
+    8476891,
+    8479576,
+    8477365,
+    8475158
+   ],
+   "weight": [
+    8477451,
+    8483495,
+    8480830,
+    8477021,
+    8480796,
+    8480220,
+    8476461,
+    8477446,
+    8478550,
+    8481532,
+    8479992,
+    8484227,
+    8476278,
+    8471214,
+    8477407,
+    8481593,
+    8481568,
+    8479420,
+    8476469,
+    8474151,
+    8478493,
+    8479591,
+    8484387,
+    8481122,
+    8477938,
+    8476905,
+    8478133,
+    8475794,
+    8475795,
+    8476885,
+    8482175,
+    8477369,
+    8478882,
+    8481716,
+    8483565,
+    8478851,
+    8478399,
+    8474716,
+    8476878,
+    8480027,
+    8482116
+   ],
+   "age": [
+    8474151,
+    8478421,
+    8477496,
+    8483490,
+    8477506,
+    8478424,
+    8480990,
+    8480012,
+    8480023,
+    8480865,
+    8476869,
+    8474600,
+    8476905,
+    8475184,
+    8476880,
+    8477346,
+    8484145,
+    8480807,
+    8480003,
+    8470621,
+    8481580,
+    8478109,
+    8480185,
+    8471214,
+    8477404,
+    8478438,
+    8476854,
+    8482964,
+    8479992,
+    8477220,
+    8477498,
+    8471724,
+    8478427,
+    8478458,
+    8478911,
+    8476925,
+    8476463,
+    8474564,
+    8479638,
+    8477478,
+    8478434
+   ]
   }
  },
  "hl_start": "2026-09-15",
@@ -102933,6 +105613,16 @@
      35,
      32,
      33
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -104249,6 +106939,16 @@
      61,
      61,
      13
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -104688,6 +107388,16 @@
      74,
      44,
      0
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -105141,6 +107851,16 @@
      34,
      38,
      -4
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -105899,6 +108619,16 @@
      4,
      17,
      0
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -106606,6 +109336,16 @@
      36,
      29,
      5
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -107812,6 +110552,16 @@
      23,
      50,
      16
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -108176,6 +110926,16 @@
      57,
      16,
      -1
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     1,
+     0,
+     1,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -108531,6 +111291,16 @@
      43,
      16,
      7
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -108791,6 +111561,16 @@
      21,
      6,
      14
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -109174,6 +111954,16 @@
      15,
      12,
      5
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -109521,6 +112311,16 @@
      23,
      40,
      4
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     1,
+     1,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -109858,6 +112658,16 @@
      66,
      58,
      -17
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -110237,6 +113047,16 @@
      6,
      18,
      8
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -110574,6 +113394,16 @@
      0,
      11,
      -1
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     1,
+     1,
+     2,
+     3
     ]
    ],
    "draft": [
@@ -111179,6 +114009,16 @@
      66,
      22,
      8
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -111457,6 +114297,16 @@
      55,
      28,
      2
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -111720,6 +114570,16 @@
      10,
      14,
      6,
+     -2
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
      -2
     ]
    ],
@@ -112065,6 +114925,15 @@
      3.07,
      0.883,
      1
+    ],
+    [
+     2026,
+     "FLA",
+     1,
+     1,
+     0.0,
+     1.0,
+     1
     ]
    ],
    "draft": [
@@ -112252,6 +115121,15 @@
      2.74,
      0.904,
      1
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     1,
+     1.89,
+     0.92,
+     0
     ]
    ],
    "draft": [
@@ -112493,6 +115371,16 @@
      55,
      30,
      -15
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -112790,6 +115678,16 @@
      22,
      14,
      2
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     1,
+     1,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -113114,6 +116012,16 @@
      18,
      8,
      -2
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -113410,6 +116318,16 @@
      74,
      22,
      8
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -113711,6 +116629,16 @@
      71,
      28,
      -28
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     1,
+     1,
+     4,
+     -1
     ]
    ],
    "draft": [
@@ -114012,6 +116940,16 @@
      17,
      10,
      -1
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -114681,6 +117619,16 @@
      11,
      19,
      -5
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -114963,6 +117911,16 @@
      39,
      70,
      -6
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     0,
+     0,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -115223,6 +118181,16 @@
      9,
      6,
      -3
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     2,
+     2,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -115538,6 +118506,16 @@
      0,
      10,
      -5
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     1,
+     1,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -115812,6 +118790,16 @@
      50,
      34,
      -4
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -116096,6 +119084,16 @@
      12,
      26,
      2
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     2,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -116377,6 +119375,16 @@
      37,
      48,
      -28
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -116658,6 +119666,16 @@
      15,
      17,
      22,
+     -1
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     1,
+     0,
+     1,
+     0,
      -1
     ]
    ],
@@ -116962,6 +119980,16 @@
      41,
      30,
      32
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     0,
+     0,
+     0,
+     5
     ]
    ],
    "draft": [
@@ -117265,6 +120293,16 @@
      13,
      67,
      -12
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -117522,6 +120560,16 @@
      18,
      20,
      -3
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -117787,6 +120835,16 @@
      0,
      1,
      1,
+     5,
+     0
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
      5,
      0
     ]
@@ -118229,6 +121287,16 @@
      38,
      64,
      -15
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -118500,6 +121568,15 @@
      2.78,
      0.891,
      3
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     8.08,
+     0.724,
+     0
     ]
    ],
    "draft": [
@@ -118733,6 +121810,16 @@
      42,
      44,
      0
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -119159,6 +122246,16 @@
      5,
      20,
      2
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -119435,6 +122532,16 @@
      15,
      89,
      -13
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -119706,6 +122813,16 @@
      13,
      67,
      -2
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -120506,6 +123623,16 @@
      2,
      0,
      8
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -120776,6 +123903,16 @@
      54,
      20,
      -5
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     2
     ]
    ],
    "draft": 0,
@@ -121585,6 +124722,16 @@
      49,
      10,
      -12
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -121866,6 +125013,16 @@
      58,
      14,
      3
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     3,
+     3,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -122588,6 +125745,16 @@
      65,
      36,
      15
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     1,
+     2,
+     3,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -123827,6 +126994,16 @@
      52,
      28,
      13
+    ],
+    [
+     2026,
+     "EDM",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -124146,6 +127323,16 @@
      3,
      19,
      6
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -124424,6 +127611,16 @@
      48,
      44,
      6
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -126415,6 +129612,16 @@
      6,
      12,
      4
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -126608,6 +129815,16 @@
      23,
      39,
      0
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -127136,6 +130353,16 @@
      73,
      9,
      26
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     1,
+     0,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -127593,6 +130820,16 @@
      5,
      2,
      -6
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -127866,6 +131103,16 @@
      31,
      91,
      42
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -128602,6 +131849,16 @@
      10,
      38,
      1
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -128754,6 +132011,16 @@
      16,
      22,
      41,
+     0
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
      0
     ]
    ],
@@ -128990,6 +132257,16 @@
      53,
      64,
      -16
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -129680,6 +132957,16 @@
      35,
      49,
      12
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     1,
+     0,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -130076,6 +133363,16 @@
      35,
      4,
      0
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -131143,6 +134440,16 @@
      23,
      25,
      14
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -131393,6 +134700,16 @@
      7,
      4,
      -1
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -131644,6 +134961,16 @@
      130,
      50,
      43
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     1,
+     0,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -132214,6 +135541,16 @@
      35,
      47,
      29
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     1,
+     0,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -132715,6 +136052,16 @@
      25,
      42,
      0
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -132951,6 +136298,16 @@
      12,
      8,
      -3
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     1,
+     0,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -133174,6 +136531,16 @@
      78,
      14,
      -20
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     1,
+     1,
+     2,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -133676,6 +137043,16 @@
      36,
      30,
      -5
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     1,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -133917,6 +137294,16 @@
      39,
      50,
      -2
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     1,
+     0,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -134168,6 +137555,16 @@
      18,
      16,
      19
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -134483,6 +137880,16 @@
      15,
      36,
      9
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     1,
+     2,
+     3,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -134717,6 +138124,16 @@
      53,
      33,
      -30
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     4,
+     0
     ]
    ],
    "draft": [
@@ -134952,6 +138369,16 @@
      25,
      30,
      1
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -135177,6 +138604,16 @@
      4,
      25,
      1
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -135384,6 +138821,16 @@
      7,
      33,
      -12
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -135598,6 +139045,16 @@
      12,
      20,
      -6
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -136149,6 +139606,16 @@
      48,
      8,
      -2
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -136380,6 +139847,16 @@
      31,
      30,
      -18
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": 0,
@@ -136629,6 +140106,16 @@
      12,
      73,
      -18
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -137093,6 +140580,16 @@
      36,
      29,
      -18
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     2,
+     2,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -137356,6 +140853,16 @@
      26,
      58,
      3
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     1,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -137728,6 +141235,16 @@
      26,
      40,
      -7
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -137982,6 +141499,16 @@
      8,
      14,
      -2
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -138178,6 +141705,16 @@
      21,
      16,
      7
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -138422,6 +141959,16 @@
      14,
      2,
      -1
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -138646,6 +142193,16 @@
      37,
      34,
      9
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -138859,6 +142416,16 @@
      20,
      31,
      1
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -139057,6 +142624,16 @@
      9,
      16,
      -10
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     1,
+     1,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -139597,6 +143174,16 @@
      58,
      39,
      -17
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -139840,6 +143427,16 @@
      35,
      6,
      -30
+    ],
+    [
+     2026,
+     "CHI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -140065,6 +143662,15 @@
      2.31,
      0.912,
      2
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     4.3,
+     0.833,
+     0
     ]
    ],
    "draft": [
@@ -140361,6 +143967,16 @@
      35,
      31,
      -1
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     5,
+     0
     ]
    ],
    "draft": [
@@ -140618,6 +144234,16 @@
      75,
      34,
      -2
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -141939,6 +145565,16 @@
      49,
      14,
      -24
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -142174,6 +145810,16 @@
      50,
      22,
      11
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -142552,6 +146198,16 @@
      16,
      50,
      4
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -142755,6 +146411,16 @@
      29,
      35,
      6
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -143623,6 +147289,16 @@
      25,
      64,
      3
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     0,
+     0,
+     4,
+     0
     ]
    ],
    "draft": [
@@ -143778,6 +147454,15 @@
      10,
      3.28,
      0.893,
+     0
+    ],
+    [
+     2026,
+     "TOR",
+     1,
+     1,
+     1.03,
+     0.963,
      0
     ]
    ],
@@ -144163,6 +147848,16 @@
      8,
      4,
      8
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -144442,6 +148137,16 @@
      3,
      3,
      10,
+     1
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     0,
+     0,
+     0,
      1
     ]
    ],
@@ -144886,6 +148591,16 @@
      23,
      90,
      -4
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -145665,6 +149380,16 @@
      13,
      23,
      0
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -146301,6 +150026,16 @@
      22,
      22,
      31
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": 0,
@@ -146620,6 +150355,16 @@
      7,
      19,
      2
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     0,
+     0,
+     5,
+     0
     ]
    ],
    "draft": [
@@ -146774,6 +150519,16 @@
      6,
      53,
      5
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -147484,6 +151239,16 @@
      88,
      61,
      13
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -147985,6 +151750,16 @@
      27,
      12,
      0
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -148128,6 +151903,16 @@
      55,
      32,
      -14
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -148357,6 +152142,16 @@
      32,
      16,
      -14
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -148597,6 +152392,15 @@
      28,
      3.16,
      0.894,
+     0
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     3.09,
+     0.9,
      0
     ]
    ],
@@ -149634,6 +153438,16 @@
      5,
      20,
      -1
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -149817,6 +153631,16 @@
      39,
      24,
      19
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     2,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -150282,6 +154106,16 @@
      20,
      43,
      48,
+     -1
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     2,
      -1
     ]
    ],
@@ -150839,6 +154673,15 @@
      3.86,
      0.858,
      1
+    ],
+    [
+     2026,
+     "EDM",
+     1,
+     0,
+     5.85,
+     0.739,
+     0
     ]
    ],
    "draft": [
@@ -151018,6 +154861,16 @@
      48,
      16,
      32
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     2,
+     0,
+     2,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -151238,6 +155091,16 @@
      18,
      18,
      5
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -151468,6 +155331,16 @@
      58,
      42,
      -16
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -151766,6 +155639,16 @@
      7,
      6,
      -11
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -151987,6 +155870,16 @@
      127,
      39,
      57
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     2,
+     0,
+     2,
+     5,
+     -2
     ]
    ],
    "draft": [
@@ -152549,6 +156442,16 @@
      32,
      18,
      -3
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -152790,6 +156693,16 @@
      48,
      38,
      -7
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -153015,6 +156928,16 @@
      36,
      12,
      -1
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -153224,6 +157147,16 @@
      24,
      104,
      -12
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     4,
+     0
     ]
    ],
    "draft": [
@@ -153467,6 +157400,16 @@
      14,
      16,
      10
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -153640,6 +157583,16 @@
      57,
      40,
      8
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -153824,6 +157777,16 @@
      49,
      26,
      9
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -154473,6 +158436,16 @@
      55,
      18,
      -25
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -154684,6 +158657,16 @@
      27,
      16,
      9
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -154921,6 +158904,16 @@
      22,
      152,
      18
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -155148,6 +159141,16 @@
      64,
      43,
      10
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -156307,6 +160310,16 @@
      14,
      18,
      6
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": 0,
@@ -156544,6 +160557,16 @@
      3,
      59,
      -6
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     4,
+     0
     ]
    ],
    "draft": 0,
@@ -156724,6 +160747,16 @@
      24,
      11,
      -1
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -156920,6 +160953,16 @@
      26,
      55,
      -5
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -157147,6 +161190,16 @@
      61,
      10,
      -18
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -157348,6 +161401,16 @@
      97,
      26,
      13
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     2,
+     2,
+     4,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -157604,6 +161667,16 @@
      58,
      82,
      -10
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     1,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -158025,6 +162098,16 @@
      79,
      16,
      -14
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     2,
+     0,
+     2,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -158258,6 +162341,16 @@
      71,
      14,
      8
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -158870,6 +162963,16 @@
      37,
      20,
      12
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     1,
+     1,
+     2,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -159221,6 +163324,16 @@
      35,
      43,
      -5
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -159395,6 +163508,16 @@
      74,
      28,
      17
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -159580,6 +163703,16 @@
      17,
      14,
      5
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     1,
+     1,
+     2,
+     2,
+     -4
     ]
    ],
    "draft": [
@@ -159815,6 +163948,16 @@
      40,
      11,
      -7
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     3,
+     3,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -160006,6 +164149,16 @@
      100,
      72,
      4
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -160233,6 +164386,16 @@
      73,
      58,
      14
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -160436,6 +164599,16 @@
      61,
      14,
      20
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     2,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -160936,6 +165109,16 @@
      18,
      60,
      -19
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -161274,6 +165457,16 @@
      32,
      45,
      -21
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -161476,6 +165669,16 @@
      30,
      46,
      -16
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     5,
+     -3
     ]
    ],
    "draft": [
@@ -161640,6 +165843,16 @@
      51,
      27,
      11
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -162246,6 +166459,15 @@
      2.68,
      0.906,
      7
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     2.07,
+     0.923,
+     0
     ]
    ],
    "draft": [
@@ -162404,6 +166626,16 @@
      50,
      14,
      12
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -162629,6 +166861,16 @@
      20,
      10,
      -17
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -3
     ]
    ],
    "draft": [
@@ -163192,6 +167434,16 @@
      24,
      32,
      37
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     2,
+     2,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -163857,6 +168109,16 @@
      10,
      8,
      6
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -163991,6 +168253,15 @@
      2.5,
      0.912,
      1
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     1,
+     1.51,
+     0.936,
+     0
     ]
    ],
    "draft": [
@@ -164156,6 +168427,16 @@
      28,
      51,
      -5
+    ],
+    [
+     2026,
+     "FLA",
+     1,
+     1,
+     0,
+     1,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -164455,6 +168736,16 @@
      6,
      0,
      -1
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -164719,6 +169010,16 @@
      24,
      28,
      -8
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -164883,6 +169184,16 @@
      16,
      76,
      2
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -165543,6 +169854,16 @@
      2,
      6,
      -2
+    ],
+    [
+     2026,
+     "CHI",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -165937,6 +170258,16 @@
      28,
      14,
      0
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -166140,6 +170471,16 @@
      17,
      18,
      1
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -166505,6 +170846,16 @@
      16,
      48,
      -9
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -166845,6 +171196,16 @@
      65,
      28,
      4
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -167026,6 +171387,16 @@
      138,
      44,
      17
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     1,
+     6,
+     7,
+     0,
+     5
     ]
    ],
    "draft": [
@@ -167315,6 +171686,16 @@
      90,
      18,
      23
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     1,
+     2,
+     3,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -167476,6 +171857,15 @@
      2.51,
      0.904,
      3
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     1,
+     4.0,
+     0.871,
+     0
     ]
    ],
    "draft": [
@@ -167623,6 +172013,16 @@
      44,
      54,
      -24
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     2,
+     3,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -167793,6 +172193,16 @@
      6,
      29,
      -10
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -167986,6 +172396,16 @@
      44,
      22,
      -16
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -168147,6 +172567,16 @@
      11,
      74,
      3
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -168745,6 +173175,16 @@
      8,
      28,
      -6
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -168906,6 +173346,16 @@
      80,
      46,
      11
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     4,
+     0
     ]
    ],
    "draft": [
@@ -169239,6 +173689,15 @@
      2.42,
      0.906,
      0
+    ],
+    [
+     2026,
+     "PHI",
+     1,
+     0,
+     7.04,
+     0.816,
+     0
     ]
    ],
    "draft": [
@@ -169359,6 +173818,16 @@
      42,
      24,
      1
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -169510,6 +173979,16 @@
      68,
      59,
      14
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     1,
+     1,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -170065,6 +174544,16 @@
      48,
      8,
      -48
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     1,
+     2,
+     3,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -170518,6 +175007,16 @@
      30,
      55,
      17
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -171138,6 +175637,16 @@
      81,
      18,
      7
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     2,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -171319,6 +175828,16 @@
      5,
      13,
      0
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -171737,6 +176256,16 @@
      13,
      89,
      -3
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -172179,6 +176708,16 @@
      0,
      5,
      -2
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     1,
+     1,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -172357,6 +176896,16 @@
      44,
      46,
      20
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -172634,6 +177183,16 @@
      80,
      24,
      17
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -172865,6 +177424,16 @@
      51,
      32,
      16
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -173068,6 +177637,16 @@
      42,
      12,
      -31
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     1,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -173669,6 +178248,16 @@
      36,
      16,
      42
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -173833,6 +178422,16 @@
      23,
      38,
      13
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -174004,6 +178603,16 @@
      52,
      48,
      38
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -174260,6 +178869,16 @@
      31,
      38,
      -16
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": 0,
@@ -174470,6 +179089,16 @@
      27,
      6,
      9
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     1,
+     0,
+     1,
+     0,
+     -2
     ]
    ],
    "draft": 0,
@@ -174718,6 +179347,16 @@
      25,
      25,
      14
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -3
     ]
    ],
    "draft": 0,
@@ -174908,6 +179547,16 @@
      18,
      24,
      -9
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -175069,6 +179718,16 @@
      15,
      41,
      3
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -175289,6 +179948,16 @@
      22,
      34,
      2
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     1,
+     1,
+     2,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -175402,6 +180071,16 @@
      35,
      22,
      30
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -175536,6 +180215,16 @@
      7,
      4,
      -6
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -175670,6 +180359,16 @@
      11,
      47,
      -1
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -175821,6 +180520,16 @@
      89,
      28,
      10
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -175955,6 +180664,15 @@
      2.75,
      0.897,
      2
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     1,
+     0.0,
+     1.0,
+     1
     ]
    ],
    "draft": [
@@ -176365,6 +181083,16 @@
      35,
      50,
      -8
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -177040,6 +181768,15 @@
      3.03,
      0.897,
      2
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     1.01,
+     0.96,
+     0
     ]
    ],
    "draft": [
@@ -177211,6 +181948,16 @@
      17,
      18,
      15
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -177369,6 +182116,16 @@
      32,
      30,
      21
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     1,
+     0,
+     1,
+     2,
+     0
     ]
    ],
    "draft": 0,
@@ -177648,6 +182405,16 @@
      9,
      59,
      -4
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -178472,6 +183239,16 @@
      34,
      48,
      -6
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -178683,6 +183460,16 @@
      53,
      18,
      -4
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -178900,6 +183687,16 @@
      53,
      20,
      5
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     2,
+     2,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -179070,6 +183867,16 @@
      9,
      60,
      -2
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -179526,6 +184333,16 @@
      13,
      19,
      7
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -179833,6 +184650,16 @@
      88,
      38,
      21
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     2,
+     2,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -180284,6 +185111,16 @@
      22,
      41,
      -9
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -180433,6 +185270,16 @@
      14,
      38,
      0
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -180531,6 +185378,15 @@
      3.34,
      0.899,
      2
+    ],
+    [
+     2026,
+     "PHI",
+     1,
+     0,
+     2.87,
+     0.932,
+     0
     ]
    ],
    "draft": [
@@ -180764,6 +185620,16 @@
      7,
      58,
      -15
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     1,
+     0,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -180938,6 +185804,16 @@
      5,
      9,
      3
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -4
     ]
    ],
    "draft": [
@@ -181347,6 +186223,16 @@
      3,
      16,
      8
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -182193,6 +187079,15 @@
      2.71,
      0.891,
      0
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     1,
+     2.0,
+     0.923,
+     0
     ]
    ],
    "draft": [
@@ -182355,6 +187250,16 @@
      7,
      8,
      5
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     2,
+     2,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -182886,6 +187791,16 @@
      71,
      12,
      -11
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     1,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -183050,6 +187965,16 @@
      59,
      44,
      2
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -183263,6 +188188,16 @@
      81,
      35,
      -6
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -183396,6 +188331,16 @@
      49,
      33,
      -23
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     4,
+     4,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -183584,6 +188529,16 @@
      14,
      12,
      -8
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     2
     ]
    ],
    "draft": 0,
@@ -183997,6 +188952,16 @@
      24,
      13,
      9
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -184176,6 +189141,16 @@
      74,
      58,
      34
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -184725,6 +189700,16 @@
      31,
      22,
      4
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": 0,
@@ -184934,6 +189919,16 @@
      22,
      66,
      -4
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": 0,
@@ -185082,6 +190077,16 @@
      26,
      101,
      13
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     1,
+     0,
+     1,
+     7,
+     2
     ]
    ],
    "draft": 0,
@@ -185219,6 +190224,16 @@
      19,
      32,
      8,
+     0
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     1,
+     0,
+     1,
+     0,
      0
     ]
    ],
@@ -185369,6 +190384,16 @@
      7,
      10,
      49,
+     -2
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     2,
      -2
     ]
    ],
@@ -186489,6 +191514,16 @@
      15,
      47,
      -10
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -187101,6 +192136,16 @@
      68,
      22,
      -5
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -187365,6 +192410,16 @@
      26,
      39,
      3
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -187496,6 +192551,16 @@
      20,
      22,
      8
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -187690,6 +192755,16 @@
      42,
      12,
      12
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -187963,6 +193038,16 @@
      66,
      29,
      -6
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -188263,6 +193348,16 @@
      36,
      30,
      -18
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -188404,6 +193499,16 @@
      51,
      20,
      -30
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     2,
+     2,
+     4,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -188686,6 +193791,16 @@
      51,
      32,
      -6
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -188807,6 +193922,16 @@
      101,
      28,
      37
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -189422,6 +194547,16 @@
      43,
      28,
      -16
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -189939,6 +195074,16 @@
      100,
      30,
      47
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -190248,6 +195393,15 @@
      2.52,
      0.91,
      1
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     5.07,
+     0.773,
+     0
     ]
    ],
    "draft": [
@@ -190740,6 +195894,16 @@
      34,
      28,
      11
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -190966,6 +196130,16 @@
      79,
      24,
      32
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     2,
+     2,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -191182,6 +196356,16 @@
      20,
      24,
      9
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -191985,6 +197169,16 @@
      33,
      32,
      4
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     2,
+     0,
+     2,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -192694,6 +197888,16 @@
      47,
      44,
      26
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -192836,6 +198040,16 @@
      13,
      20,
      -14
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -193064,6 +198278,15 @@
      2.71,
      0.908,
      2
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     1,
+     0.0,
+     1.0,
+     1
     ]
    ],
    "draft": [
@@ -193779,6 +199002,16 @@
      31,
      59,
      6
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": 0,
@@ -193903,6 +199136,16 @@
      22,
      140,
      6
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     1,
+     0,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -193954,6 +199197,16 @@
      29,
      112,
      -4
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -194044,6 +199297,16 @@
      27,
      50,
      -12
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -194167,6 +199430,16 @@
      35,
      30,
      18
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": 0,
@@ -194451,6 +199724,16 @@
      10,
      10,
      2
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": 0,
@@ -194628,6 +199911,16 @@
      13,
      28,
      -8
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     4,
+     0
     ]
    ],
    "draft": 0,
@@ -194777,6 +200070,16 @@
      18,
      8,
      7
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -195042,6 +200345,16 @@
      38,
      28,
      -9
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     4,
+     -2
     ]
    ],
    "draft": [
@@ -195175,6 +200488,16 @@
      53,
      20,
      6
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -195324,6 +200647,16 @@
      59,
      71,
      4
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     7,
+     -1
     ]
    ],
    "draft": [
@@ -195437,6 +200770,16 @@
      54,
      16,
      25
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -195588,6 +200931,16 @@
      95,
      30,
      25
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     4,
+     4,
+     8,
+     0,
+     5
     ]
    ],
    "draft": [
@@ -195840,6 +201193,16 @@
      41,
      28,
      41
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     1,
+     0,
+     1,
+     4,
+     -2
     ]
    ],
    "draft": [
@@ -195982,6 +201345,16 @@
      5,
      19,
      -12
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -196085,6 +201458,16 @@
      37,
      56,
      7
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -196528,6 +201911,16 @@
      70,
      66,
      1
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -196852,6 +202245,16 @@
      27,
      31,
      15
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -197003,6 +202406,16 @@
      74,
      76,
      18
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -197454,6 +202867,16 @@
      25,
      54,
      3
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -197681,6 +203104,16 @@
      25,
      84,
      11
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -197784,6 +203217,16 @@
      18,
      47,
      2
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -197897,6 +203340,16 @@
      47,
      34,
      5
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -198020,6 +203473,16 @@
      5,
      0,
      4
+    ],
+    [
+     2026,
+     "TOR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -198215,6 +203678,16 @@
      2,
      16,
      -4
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -198704,6 +204177,16 @@
      2,
      50,
      0
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -198870,6 +204353,15 @@
      11,
      3.7,
      0.875,
+     0
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     1,
+     8.66,
+     0.789,
      0
     ]
    ],
@@ -199140,6 +204632,16 @@
      30,
      19,
      16
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -199339,6 +204841,16 @@
      7,
      4,
      3
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -199410,6 +204922,16 @@
      22,
      31,
      1
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -199685,6 +205207,16 @@
      1,
      6,
      -7
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -199861,6 +205393,16 @@
      35,
      42,
      -28
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     1,
+     1,
+     2,
+     -4
     ]
    ],
    "draft": [
@@ -199932,6 +205474,16 @@
      3,
      17,
      -4
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -200075,6 +205627,16 @@
      15,
      19,
      -24
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     3,
+     1,
+     4,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -200170,6 +205732,15 @@
      2.59,
      0.893,
      2
+    ],
+    [
+     2026,
+     "FLA",
+     1,
+     0,
+     3.8,
+     0.875,
+     0
     ]
    ],
    "draft": [
@@ -200659,6 +206230,16 @@
      29,
      12,
      -20
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -200846,6 +206427,16 @@
      6,
      41,
      -22
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": 0,
@@ -201014,6 +206605,16 @@
      3,
      8,
      -7
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": 0
@@ -201324,6 +206925,16 @@
      13,
      43,
      30
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": 0,
@@ -201812,6 +207423,16 @@
      19,
      25,
      6
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -202034,6 +207655,15 @@
      2.82,
      0.902,
      3
+    ],
+    [
+     2026,
+     "CHI",
+     1,
+     0,
+     4.01,
+     0.889,
+     0
     ]
    ],
    "draft": [
@@ -202207,6 +207837,16 @@
      39,
      78,
      13
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -202320,6 +207960,16 @@
      15,
      31,
      -2
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -202444,6 +208094,16 @@
      42,
      48,
      15
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -4
     ]
    ],
    "draft": [
@@ -202612,6 +208272,16 @@
      16,
      26,
      6
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     2,
+     2,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -202883,6 +208553,16 @@
      14,
      21,
      -8
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     1,
+     1,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -202996,6 +208676,16 @@
      67,
      62,
      0
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -203099,6 +208789,16 @@
      5,
      8,
      -4
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -203227,6 +208927,16 @@
      88,
      14,
      29
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -203515,6 +209225,16 @@
      26,
      28,
      5
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -3
     ]
    ],
    "draft": [
@@ -203685,6 +209405,16 @@
      4,
      4,
      -2
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -203808,6 +209538,16 @@
      40,
      14,
      14
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     1,
+     2,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -204013,6 +209753,16 @@
      85,
      30,
      18
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -204154,6 +209904,16 @@
      77,
      10,
      0
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     1,
+     0,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -204442,6 +210202,16 @@
      21,
      17,
      -16
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -3
     ]
    ],
    "draft": [
@@ -204821,6 +210591,16 @@
      32,
      10,
      -13
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     2,
+     0,
+     2,
+     2,
+     2
     ]
    ],
    "draft": [
@@ -204989,6 +210769,16 @@
      12,
      58,
      4
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -205314,6 +211104,16 @@
      41,
      16,
      4
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -205407,6 +211207,16 @@
      64,
      24,
      -3
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     1,
+     1,
+     2,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -205996,6 +211806,16 @@
      37,
      63,
      16
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     3,
+     1,
+     4,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -206119,6 +211939,16 @@
      25,
      10,
      9
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -206280,6 +212110,16 @@
      36,
      18,
      2
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": 0,
@@ -206727,6 +212567,15 @@
      3.07,
      0.888,
      2
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     1,
+     0.0,
+     1.0,
+     1
     ]
    ],
    "draft": [
@@ -206899,6 +212748,15 @@
      3.01,
      0.899,
      2
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     6.02,
+     0.812,
+     0
     ]
    ],
    "draft": [
@@ -207161,6 +213019,16 @@
      32,
      59,
      -1
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -207332,6 +213200,16 @@
      31,
      26,
      -3
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -207403,6 +213281,16 @@
      10,
      11,
      3
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -207476,6 +213364,16 @@
      5,
      2,
      1
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -207692,6 +213590,16 @@
      14,
      17,
      0
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": 0,
@@ -207755,6 +213663,16 @@
      25,
      63,
      -2
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -207922,6 +213840,16 @@
      29,
      47,
      -12
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     1,
+     1,
+     0,
+     -3
     ]
    ],
    "draft": 0,
@@ -208031,6 +213959,16 @@
      2,
      9,
      0
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": 0,
@@ -208295,6 +214233,16 @@
      18,
      26,
      -5
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     4,
+     1
     ]
    ],
    "draft": [
@@ -208386,6 +214334,16 @@
      25,
      22,
      -9
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -208714,6 +214672,16 @@
      22,
      8,
      -20
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     3,
+     1,
+     4,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -209358,6 +215326,16 @@
      6,
      6,
      -3
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -209540,6 +215518,16 @@
      51,
      18,
      4
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     1,
+     0,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -209817,6 +215805,16 @@
      57,
      20,
      -7
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -209928,6 +215926,16 @@
      42,
      33,
      -2
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -210132,6 +216140,16 @@
      44,
      34,
      -8
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -210658,6 +216676,16 @@
      49,
      46,
      -2
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -211070,6 +217098,15 @@
      3.63,
      0.884,
      0
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     1,
+     2.85,
+     0.885,
+     0
     ]
    ],
    "draft": [
@@ -211171,6 +217208,16 @@
      32,
      33,
      -3
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -4
     ]
    ],
    "draft": [
@@ -211244,6 +217291,16 @@
      41,
      22,
      6
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -211347,6 +217404,16 @@
      56,
      28,
      1
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     0,
+     1,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -211430,6 +217497,16 @@
      16,
      31,
      0
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     1,
+     1,
+     2,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -211629,6 +217706,16 @@
      44,
      18,
      3
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     2,
+     2,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -211730,6 +217817,16 @@
      38,
      65,
      -12
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -211811,6 +217908,16 @@
      17,
      22,
      8
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -3
     ]
    ],
    "draft": [
@@ -211899,6 +218006,16 @@
      12,
      28,
      -8
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -211960,6 +218077,16 @@
      12,
      22,
      -3
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -6
     ]
    ],
    "draft": [
@@ -212206,6 +218333,16 @@
      47,
      28,
      6
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -212287,6 +218424,16 @@
      17,
      34,
      -16
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -212358,6 +218505,16 @@
      33,
      16,
      12
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     1,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -212692,6 +218849,16 @@
      33,
      41,
      26
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -213123,6 +219290,16 @@
      14,
      2,
      0
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": 0,
@@ -213347,6 +219524,15 @@
      3.51,
      0.86,
      0
+    ],
+    [
+     2026,
+     "VAN",
+     1,
+     0,
+     1.96,
+     0.909,
+     0
     ]
    ],
    "draft": [
@@ -213433,6 +219619,16 @@
      1,
      11,
      -4
+    ],
+    [
+     2026,
+     "NYR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -213701,6 +219897,16 @@
      36,
      4,
      4
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -213774,6 +219980,16 @@
      31,
      18,
      -13
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -213874,6 +220090,16 @@
      16,
      29,
      2
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -213920,6 +220146,15 @@
      29,
      2.78,
      0.901,
+     0
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     1,
+     2.01,
+     0.929,
      0
     ]
    ],
@@ -214041,6 +220276,16 @@
      26,
      20,
      17
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -214515,6 +220760,16 @@
      29,
      69,
      41
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     4,
+     -1
     ]
    ],
    "draft": [
@@ -214599,6 +220854,16 @@
      52,
      25,
      -4
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -214690,6 +220955,16 @@
      22,
      20,
      -8
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     1,
+     1,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -214746,6 +221021,15 @@
      2.61,
      0.916,
      4
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     1,
+     1.01,
+     0.95,
+     0
     ]
    ],
    "draft": [
@@ -214885,6 +221169,16 @@
      50,
      23,
      -8
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -215142,6 +221436,16 @@
      29,
      16,
      9
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     2,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -215277,6 +221581,16 @@
      45,
      32,
      -29
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -215346,6 +221660,16 @@
      35,
      32,
      -4
+    ],
+    [
+     2026,
+     "NJD",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -215581,6 +221905,16 @@
      73,
      28,
      7
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     2,
+     0,
+     2,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -215705,6 +222039,16 @@
      44,
      25,
      12
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -215804,6 +222148,16 @@
      4,
      5,
      0
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -4
     ]
    ],
    "draft": [
@@ -215894,6 +222248,16 @@
      25,
      33,
      37,
+     2
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     1,
+     0,
+     1,
+     4,
      2
     ]
    ],
@@ -216050,6 +222414,16 @@
      11,
      6,
      0
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -216121,6 +222495,16 @@
      66,
      29,
      -30
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     2,
+     1,
+     3,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -216202,6 +222586,16 @@
      9,
      50,
      -6
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -216293,6 +222687,16 @@
      40,
      63,
      11
+    ],
+    [
+     2026,
+     "LAK",
+     1,
+     0,
+     0,
+     0,
+     5,
+     0
     ]
    ],
    "draft": [
@@ -216488,6 +222892,16 @@
      30,
      28,
      -6
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     1,
+     0,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -216971,6 +223385,16 @@
      18,
      15,
      0
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -217020,6 +223444,16 @@
      7,
      10,
      -10
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     1,
+     0,
+     1,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -217816,6 +224250,16 @@
      53,
      40,
      4
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -217918,6 +224362,15 @@
      3.8,
      0.88,
      1
+    ],
+    [
+     2026,
+     "CHI",
+     1,
+     0,
+     6.0,
+     0.812,
+     0
     ]
    ],
    "draft": 0
@@ -217972,6 +224425,16 @@
      17,
      40,
      5
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -218043,6 +224506,16 @@
      7,
      45,
      -11
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -218318,6 +224791,16 @@
      5,
      32,
      -9
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -218357,6 +224840,16 @@
      6,
      11,
      -2
+    ],
+    [
+     2026,
+     "NYR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -218912,6 +225405,16 @@
      4,
      116,
      -8
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0,
@@ -218994,6 +225497,15 @@
      2.6,
      0.908,
      2
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     1,
+     3.0,
+     0.885,
+     0
     ]
    ],
    "draft": 0
@@ -219308,6 +225820,16 @@
      5,
      12,
      -3
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": 0
@@ -219450,6 +225972,16 @@
      3,
      40,
      5
+    ],
+    [
+     2026,
+     "PIT",
+     1,
+     0,
+     1,
+     1,
+     4,
+     1
     ]
    ],
    "draft": 0,
@@ -219792,6 +226324,16 @@
      43,
      28,
      3
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -220088,6 +226630,16 @@
      3,
      8,
      -3
+    ],
+    [
+     2026,
+     "TBL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -220208,6 +226760,16 @@
      29,
      14,
      -14
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     1,
+     1,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -220286,6 +226848,16 @@
      5,
      12,
      -6
+    ],
+    [
+     2026,
+     "EDM",
+     2,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -220345,6 +226917,16 @@
      78,
      34,
      36
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -220761,6 +227343,16 @@
      5,
      4,
      -4
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -220945,6 +227537,16 @@
      3,
      0,
      -3
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -221092,6 +227694,16 @@
      31,
      8,
      12
+    ],
+    [
+     2026,
+     "CBJ",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -221212,6 +227824,16 @@
      35,
      20,
      21
+    ],
+    [
+     2026,
+     "BOS",
+     1,
+     1,
+     1,
+     2,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -221425,6 +228047,16 @@
      41,
      26,
      -21
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -3
     ]
    ],
    "draft": [
@@ -221486,6 +228118,16 @@
      26,
      26,
      -11
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -221623,6 +228265,16 @@
      18,
      2,
      -16
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     2,
+     2,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -221672,6 +228324,16 @@
      27,
      14,
      11
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     2,
+     2,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -221792,6 +228454,16 @@
      14,
      44,
      -7
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -221970,6 +228642,16 @@
      8,
      17,
      -12
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -222061,6 +228743,16 @@
      73,
      52,
      9
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -222294,6 +228986,16 @@
      27,
      10,
      6
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -222333,6 +229035,16 @@
      27,
      28,
      -7
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     1,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -222554,6 +229266,15 @@
      2.47,
      0.895,
      2
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0.92,
+     0.95,
+     0
     ]
    ],
    "draft": 0,
@@ -222617,6 +229338,16 @@
      7,
      10,
      -3
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     1,
+     1,
+     2,
+     1
     ]
    ],
    "draft": 0
@@ -222992,6 +229723,16 @@
      18,
      112,
      -12
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": 0
@@ -223224,6 +229965,16 @@
      10,
      39,
      -16
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     0,
+     0,
+     2,
+     2
     ]
    ],
    "draft": [
@@ -223395,6 +230146,16 @@
      24,
      31,
      2
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     0,
+     1,
+     1,
+     4,
+     -1
     ]
    ],
    "draft": [
@@ -223808,6 +230569,16 @@
      9,
      2,
      3
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -224259,6 +231030,16 @@
      5,
      4,
      -1
+    ],
+    [
+     2026,
+     "FLA",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -224595,6 +231376,16 @@
      26,
      12,
      -16
+    ],
+    [
+     2026,
+     "VGK",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": 0,
@@ -224807,6 +231598,16 @@
      19,
      26,
      -13
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     1,
+     1,
+     2,
+     2,
+     -1
     ]
    ],
    "draft": 0
@@ -225057,6 +231858,16 @@
      43,
      42,
      27
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     1,
+     1,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -225460,6 +232271,16 @@
      29,
      45,
      -5
+    ],
+    [
+     2026,
+     "TOR",
+     2,
+     1,
+     2,
+     3,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -225940,6 +232761,16 @@
      4,
      2,
      1
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -226006,6 +232837,16 @@
      15,
      10,
      -18
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -3
     ]
    ],
    "draft": [
@@ -226263,6 +233104,16 @@
      19,
      19,
      -15
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -226501,6 +233352,16 @@
      27,
      10,
      0
+    ],
+    [
+     2026,
+     "NYR",
+     2,
+     1,
+     0,
+     1,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -226672,6 +233533,16 @@
      30,
      22,
      -14
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -226782,6 +233653,16 @@
      59,
      16,
      1
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     2,
+     1,
+     3,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -226963,6 +233844,16 @@
      21,
      28,
      -23
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     1,
+     1,
+     2,
+     -2
     ]
    ],
    "draft": [
@@ -227012,6 +233903,16 @@
      30,
      14,
      -3
+    ],
+    [
+     2026,
+     "NSH",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -227193,6 +234094,16 @@
      40,
      22,
      43
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": 0,
@@ -227342,6 +234253,16 @@
      15,
      30,
      -13
+    ],
+    [
+     2026,
+     "FLA",
+     1,
+     0,
+     0,
+     0,
+     7,
+     0
     ]
    ],
    "draft": 0,
@@ -227394,6 +234315,16 @@
      6,
      8,
      16
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     0,
+     0,
+     0,
+     5,
+     -1
     ]
    ],
    "draft": 0,
@@ -227574,6 +234505,16 @@
      1,
      23,
      -11
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     0,
+     1,
+     1,
+     0,
+     3
     ]
    ],
    "draft": [
@@ -227623,6 +234564,16 @@
      51,
      71,
      0
+    ],
+    [
+     2026,
+     "PHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -227673,6 +234624,16 @@
      4,
      7,
      8,
+     1
+    ],
+    [
+     2026,
+     "UTA",
+     1,
+     1,
+     0,
+     1,
+     0,
      1
     ]
    ],
@@ -227968,6 +234929,16 @@
      2,
      15,
      5
+    ],
+    [
+     2026,
+     "CAR",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": [
@@ -228677,6 +235648,16 @@
      9,
      8,
      -9
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -3
     ]
    ],
    "draft": [
@@ -228922,6 +235903,16 @@
      24,
      44,
      -41
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -229027,6 +236018,16 @@
      4,
      0,
      1
+    ],
+    [
+     2026,
+     "BUF",
+     1,
+     1,
+     0,
+     1,
+     0,
+     2
     ]
    ],
    "draft": [
@@ -229090,6 +236091,16 @@
      12,
      33,
      -24
+    ],
+    [
+     2026,
+     "VAN",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -229141,6 +236152,16 @@
      17,
      31,
      -8
+    ],
+    [
+     2026,
+     "SEA",
+     1,
+     0,
+     0,
+     0,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -229190,6 +236211,16 @@
      115,
      44,
      8
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     3,
+     3,
+     0,
+     1
     ]
    ],
    "draft": [
@@ -229667,6 +236698,16 @@
      20,
      2,
      -14
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -229885,6 +236926,16 @@
      46,
      12,
      6
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     5,
+     0
     ]
    ],
    "draft": 0
@@ -230066,6 +237117,16 @@
      2,
      0,
      -8
+    ],
+    [
+     2026,
+     "CGY",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0
@@ -230110,6 +237171,16 @@
      62,
      34,
      3
+    ],
+    [
+     2026,
+     "MTL",
+     1,
+     0,
+     0,
+     0,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -230198,6 +237269,16 @@
      19,
      6,
      2
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -230715,6 +237796,16 @@
      59,
      38,
      13
+    ],
+    [
+     2026,
+     "NYI",
+     1,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -230907,6 +237998,16 @@
      9,
      4,
      -1
+    ],
+    [
+     2026,
+     "CHI",
+     2,
+     0,
+     0,
+     0,
+     0,
+     -4
     ]
    ],
    "draft": [
@@ -231019,6 +238120,16 @@
      21,
      10,
      -2
+    ],
+    [
+     2026,
+     "SJS",
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1
     ]
    ],
    "draft": [
@@ -231657,6 +238768,16 @@
      18,
      2,
      -5
+    ],
+    [
+     2026,
+     "MIN",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
     ]
    ],
    "draft": 0
