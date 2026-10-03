@@ -1133,7 +1133,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .btn, .profile { border-radius: 10px; box-shadow: 0 3px 9px rgba(11, 42, 57, .12); }
   .ttcard, .ptquestion { border: 1px solid var(--line); border-radius: 18px; padding: 16px 20px; margin: 10px auto;
                           width: min(660px, 100%); background: color-mix(in srgb, var(--panel) 92%, transparent); box-shadow: 0 9px 24px rgba(23, 59, 75, .05); }
-  .ttcard img { border: 4px solid color-mix(in srgb, var(--hit) 12%, var(--panel)); box-shadow: 0 4px 16px rgba(15, 48, 64, .12); }
+  .ttcard > img { border: 1px solid var(--line); box-shadow: none; }
   .ttq { font-size: 20px; font-weight: 650; letter-spacing: -.02em; }
   .shopts { gap: 10px; }
   .shopt { border-radius: 12px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 90%, transparent);
