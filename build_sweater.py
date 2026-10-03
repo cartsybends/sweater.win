@@ -47,7 +47,7 @@ TEAM_ID_TO_ABBR = {
 CURRENT_PLAYER_INDEX = "https://api.nhle.com/stats/rest/en/players?limit=-1&cayenneExp=currentTeamId%3E0"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "77 · Current Team Reconciliation"
+VERSION = "78 · Best Of Ranked Guesses"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -524,6 +524,34 @@ TEMPLATE = r'''<!DOCTYPE html>
   .teamleaderlist b { display: block; font-size: 14px; }
   .teamleaderlist small { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; }
   .teamleaderlist strong { font-variant-numeric: tabular-nums; font-size: 18px; }
+  .teamleaderlist .best-rankface { position: relative; display: grid; width: 38px; height: 38px; place-items: center; justify-self: center; border-radius: 50%; background: color-mix(in srgb, var(--fg) 7%, transparent); color: var(--muted); font-size: 13px; font-weight: 850; overflow: visible; }
+  .teamleaderlist .best-rankface img { position: absolute; inset: 0; width: 38px; height: 38px; border-radius: 50%; object-fit: cover; object-position: center top; background: color-mix(in srgb, var(--fg) 6%, var(--panel)); opacity: 0; transform: scale(.72); }
+  .teamleaderlist li.found .best-rankface img, .teamleaderlist li.revealed .best-rankface img { opacity: 1; transform: scale(1); transition: opacity .28s ease, transform .42s cubic-bezier(.2,.9,.2,1.18); }
+  .teamleaderlist .best-rankface em { position: absolute; right: -5px; bottom: -4px; display: none; min-width: 19px; height: 19px; padding: 0 4px; place-items: center; border: 2px solid var(--panel); border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 9px; font-style: normal; line-height: 15px; font-weight: 900; box-shadow: 0 2px 7px rgba(0,0,0,.18); }
+  .teamleaderlist li.found .best-rankface em, .teamleaderlist li.revealed .best-rankface em { display: grid; }
+  .teamleaderlist li.just-found { animation: bestFound .52s cubic-bezier(.2,.85,.2,1) both; }
+  @keyframes bestFound { 0% { transform: translateY(5px) scale(.985); } 55% { transform: translateY(-2px) scale(1.012); } 100% { transform: none; } }
+  .team-rank-pop-wrap { min-height: 0; display: grid; place-items: center; margin-top: 10px; }
+  .team-rank-pop { width: min(100%, 430px); display: grid; grid-template-columns: 50px 1fr auto; align-items: center; gap: 12px; padding: 11px 13px; border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); box-shadow: 0 12px 30px rgba(0,0,0,.12); animation: bestRankPop .72s cubic-bezier(.18,.84,.22,1) both; }
+  .team-rank-pop img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; object-position: center top; background: var(--cell); }
+  .team-rank-pop span { display: block; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+  .team-rank-pop b { display: block; margin-top: 2px; font-size: 15px; }
+  .team-rank-pop strong { font-size: 27px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+  @keyframes bestRankPop { 0% { opacity: 0; transform: translateY(9px) scale(.96); } 35% { opacity: 1; transform: translateY(-2px) scale(1.015); } 76% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(4px) scale(.985); } }
+  .team-wrong-section { margin-top: 12px; }
+  .team-wrong-section[hidden] { display: none; }
+  .team-wrong-title { margin: 0 0 7px; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+  .teamwronglist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .teamwronglist li { display: grid; grid-template-columns: 36px 40px 1fr auto; align-items: center; gap: 9px; min-height: 48px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 11px; background: color-mix(in srgb, var(--cell) 82%, transparent); animation: bestWrongSettle .38s cubic-bezier(.2,.8,.2,1) both; }
+  .teamwronglist .wrank { color: var(--muted); font-size: 12px; font-weight: 900; text-align: center; font-variant-numeric: tabular-nums; }
+  .teamwronglist img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center top; background: var(--cell); }
+  .teamwronglist b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+  .teamwronglist strong { font-size: 13px; font-variant-numeric: tabular-nums; }
+  @keyframes bestWrongSettle { from { opacity: 0; transform: translateY(-7px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .teamleaderlist li.just-found, .team-rank-pop, .teamwronglist li { animation: none !important; }
+    .teamleaderlist .best-rankface img { transition: none !important; }
+  }
   .team-mode-msg { min-height: 1.3em; margin: 9px 0 0; color: var(--muted); font-size: 13px; }
   .team-mode-msg.good { color: var(--hit); font-weight: 700; }
   .team-mode-msg.bad { color: #c0392b; font-weight: 700; }
@@ -6769,7 +6797,7 @@ function makeTeamSearch(inputId, listId, h, onChoose, usedIds = () => []) {
 }
 function teamLookupName(h, value) { const q=String(value||"").trim().toLocaleLowerCase(); return h.names.find(p=>p.name.toLocaleLowerCase()===q) || null; }
 function aggregateTeamSkaters(rows) {
-  const m=new Map(); for(const r of rows){const x=m.get(r.id)||{id:r.id,name:r.name,pos:r.pos,gp:0,goals:0,assists:0,points:0,pim:0}; x.gp+=r.gp;x.goals+=r.goals;x.assists+=r.assists;x.points+=r.points;x.pim+=r.pim;m.set(r.id,x);} return [...m.values()];
+  const m=new Map(); for(const r of rows){const x=m.get(r.id)||{id:r.id,name:r.name,pos:r.pos,y:r.y,gp:0,goals:0,assists:0,points:0,pim:0}; x.y=Math.max(x.y||0,r.y||0);x.gp+=r.gp;x.goals+=r.goals;x.assists+=r.assists;x.points+=r.points;x.pim+=r.pim;m.set(r.id,x);} return [...m.values()];
 }
 function aggregateTeamGoalies(rows) { const m=new Map(); for(const r of rows){const x=m.get(r.id)||{id:r.id,name:r.name,gp:0,wins:0};x.gp+=r.gp;x.wins+=r.wins;m.set(r.id,x);}return [...m.values()]; }
 function statLabel(k){return {points:"PTS",goals:"G",assists:"A",pim:"PIM",gp:"GP",wins:"W"}[k]||k;}
@@ -6819,13 +6847,44 @@ function startTeamBest(t) {
       const y=pick(candidates); usedYears.add(y); period=seasonText(y); pool=h.bySeason.get(y)||[];
       leaders=pool.filter(x=>Number(x[stat]||0)>0).sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)).slice(0,5);
     }
-    const answerIds=new Set(leaders.map(x=>x.id)),found=new Set();let misses=0,over=false;
+    const rankedPool=pool.slice().sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)||String(a.name).localeCompare(String(b.name)));\n    const rankById=new Map(rankedPool.map((p,i)=>[p.id,i+1])), rowById=new Map(rankedPool.map(p=>[p.id,p]));\n    const answerIds=new Set(leaders.map(x=>x.id)),found=new Set(),guessed=new Set(),wrong=[];let misses=0,over=false,lastFound=0,popTimer=0;
     $("teamBestDots").innerHTML=Array.from({length:runTotal},(_,i)=>`<span class="shdot${i===roundIndex?' now':''}">${i<marks.length?(marks[i]==='ok'?'✓':'✗'):i+1}</span>`).join("");
     const allTimeRound = decade === "alltime";
-    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Question ${roundIndex+1} of ${runTotal}</span><strong>${period}</strong><small>${esc(teamFullName(t))} · ${esc(statWord(stat))}</small></div><p class="team-prompt">Name the top 5 ${allTimeRound?'all-time ':''}${esc(statWord(stat))} leaders</p><p class="team-subprompt">Regular season · answers stay hidden until you find them.</p><ol class="teamleaderlist" id="teamBestList"></ol>${teamSearchMarkup("teamBestInput","teamBestOpts","Type a player name")}<div class="team-best-actions"><button type="button" class="btn ghost" id="teamBestGive">Give up</button><button type="button" class="btn ghost" id="teamBestSkip">${allTimeRound?'Restart':'New question'}</button></div><p class="team-mode-msg" id="teamBestMsg"></p>`;
-    const draw=(reveal=false)=>{$("teamBestList").innerHTML=leaders.map((p,i)=>{const hit=found.has(p.id),show=hit||reveal;return `<li class="${hit?'found':''}"><span class="rank">${i+1}</span><span><b>${show?esc(p.name):"???"}</b><small>${period} · ${statLabel(stat)}</small></span><strong>${show?p[stat]:"—"}</strong></li>`}).join("");};draw();
+    $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Question ${roundIndex+1} of ${runTotal}</span><strong>${period}</strong><small>${esc(teamFullName(t))} · ${esc(statWord(stat))}</small></div><p class="team-prompt">Name the top 5 ${allTimeRound?'all-time ':''}${esc(statWord(stat))} leaders</p><p class="team-subprompt">Regular season · answers stay hidden until you find them.</p><ol class="teamleaderlist" id="teamBestList"></ol>${teamSearchMarkup("teamBestInput","teamBestOpts","Type a player name")}<div class="team-rank-pop-wrap" id="teamBestRankPop" aria-live="polite"></div><div class="team-wrong-section" id="teamBestWrongWrap" hidden><p class="team-wrong-title">Guessed outside the Top 5</p><ol class="teamwronglist" id="teamBestWrong"></ol></div><div class="team-best-actions"><button type="button" class="btn ghost" id="teamBestGive">Give up</button><button type="button" class="btn ghost" id="teamBestSkip">${allTimeRound?'Restart':'New question'}</button></div><p class="team-mode-msg" id="teamBestMsg"></p>`;
+    const headshotFor=p=>teamHistHeadshot(t,p.id,p.y||((h.byPlayer.get(p.id)||{}).rows||[]).slice(-1)[0]?.y||h.years[0]);
+    const avatar=(p,rank,cls="")=>`<span class="best-rankface ${cls}"><span>${rank}</span><img src="${headshotFor(p)}" alt="" onerror="this.onerror=null;this.src='${logo(t)}';this.classList.add('fallback')"><em>#${rank}</em></span>`;
+    const drawWrong=()=>{
+      const wrap=$("teamBestWrongWrap"), list=$("teamBestWrong"); if(!wrap||!list)return;
+      wrap.hidden=!wrong.length;
+      list.innerHTML=wrong.slice().sort((a,b)=>(a.rank??9999)-(b.rank??9999)||a.p.name.localeCompare(b.p.name)).map(x=>`<li><span class="wrank">${x.rank?`#${x.rank}`:"NR"}</span><img src="${headshotFor(x.row||x.p)}" alt="" onerror="this.onerror=null;this.src='${logo(t)}'"><b>${esc(x.p.name)}</b><strong>${x.rank&&x.row?x.row[stat]:"—"}</strong></li>`).join("");
+    };
+    const flashRank=(p,rank,row)=>{
+      const box=$("teamBestRankPop"); if(!box)return;
+      clearTimeout(popTimer);
+      box.innerHTML=`<div class="team-rank-pop"><img src="${headshotFor(row||p)}" alt="" onerror="this.onerror=null;this.src='${logo(t)}'"><div><span>${rank?"Not Top 5":"Not ranked on this board"}</span><b>${esc(p.name)}</b></div><strong>${rank?`#${rank}`:"—"}</strong></div>`;
+      popTimer=setTimeout(()=>{ if(box)box.innerHTML=""; drawWrong(); },720);
+    };
+    const draw=(reveal=false)=>{
+      $("teamBestList").innerHTML=leaders.map((p,i)=>{const hit=found.has(p.id),show=hit||reveal,just=hit&&p.id===lastFound;return `<li class="${hit?"found":reveal?"revealed":""}${just?" just-found":""}">${show?avatar(p,i+1):`<span class="best-rankface"><span>${i+1}</span></span>`}<span><b>${show?esc(p.name):"???"}</b><small>${period} · ${statLabel(stat)}</small></span><strong>${show?p[stat]:"—"}</strong></li>`}).join("");
+      lastFound=0;
+    };
+    draw();
     const advance=(cleared)=>{if(!over){over=true;draw(true);marks.push(cleared?'ok':'bad');}roundIndex++;renderRound();};
-    makeTeamSearch("teamBestInput","teamBestOpts",h,p=>{if(over)return;const msg=$("teamBestMsg");msg.className="team-mode-msg";if(found.has(p.id)){msg.textContent="You already have him.";return;}if(answerIds.has(p.id)){found.add(p.id);msg.classList.add("good");msg.textContent=`Correct — ${found.size}/5.`;draw();if(found.size===5){over=true;marks.push('ok');msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},800);}}else{misses++;msg.classList.add("bad");msg.textContent=`Not in the top five · ${misses} miss${misses===1?'':'es'}.`;}},()=>[...found]);
+    makeTeamSearch("teamBestInput","teamBestOpts",h,p=>{
+      if(over)return;
+      const msg=$("teamBestMsg"); msg.className="team-mode-msg";
+      if(guessed.has(p.id)){msg.textContent="You already guessed him.";return;}
+      guessed.add(p.id);
+      if(answerIds.has(p.id)){
+        found.add(p.id); lastFound=p.id; msg.classList.add("good"); msg.textContent=`Correct — ${found.size}/5.`; draw();
+        if(found.size===5){over=true;marks.push("ok");msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},900);}
+      } else {
+        misses++;
+        const rank=rankById.get(p.id)||null, row=rowById.get(p.id)||null;
+        wrong.push({p,rank,row}); flashRank(p,rank,row);
+        msg.textContent=rank?`${p.name} is #${rank} on this board.`:`${p.name} isn't ranked on this board.`;
+      }
+    },()=>[...guessed]);
     $("teamBestGive").onclick=()=>{if(over)return;over=true;draw(true);marks.push('bad');$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
     $("teamBestSkip").onclick=()=>advance(false); $("teamBestInput").focus();
   }
