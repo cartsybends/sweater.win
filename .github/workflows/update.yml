@@ -37,6 +37,36 @@ jobs:
       - name: Refresh current teams in archived and embedded player data
         run: python refresh_current_teams.py --html site/index.html --schedule schedule.json
 
+      - name: Validate generated JavaScript
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          html = Path("site/index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, flags=re.I | re.S)
+          out = Path("/tmp/sweater-js")
+          out.mkdir(exist_ok=True)
+
+          written = 0
+          for i, source in enumerate(scripts):
+              if not source.strip():
+                  continue
+              path = out / f"script-{i}.js"
+              path.write_text(source, encoding="utf-8")
+              written += 1
+
+          if not written:
+              raise SystemExit("No inline JavaScript found in generated site.")
+          print(f"Extracted {written} inline script(s) for syntax validation.")
+          PY
+
+          for file in /tmp/sweater-js/*.js; do
+            echo "Checking $file"
+            node --check "$file"
+          done
+
       - name: Save schedules and NHL data caches
         shell: bash
         run: |
