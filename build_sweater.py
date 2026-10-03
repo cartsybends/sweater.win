@@ -6812,11 +6812,11 @@ function teamBestCandidates(h, decade, stat){
 }
 function teamSearchMarkup(inputId,listId,placeholder){return `<div class="search narrow"><input id="${inputId}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="${listId}" placeholder="${esc(placeholder)}"><ul class="list" id="${listId}" role="listbox" hidden></ul></div>`;}
 
-function startTeamBest(t) {
+function startTeamBest(t, initial = false) {
   const h=historyForTeam(t); h.team=t; if(!h.skaters.length)return teamModeNoData(t,"best");
   const stats=["points","goals","assists","pim","gp"], decades=teamDecades(h);
   const decadeKey=`sweater-team-best-decade-${t}`, statKey=`sweater-team-best-stat-${t}`, roundsKey=`sweater-team-best-rounds-${t}`;
-  let decade=String(store.get(decadeKey) ?? "all"), stat=String(store.get(statKey)||"points"), total=Number(store.get(roundsKey))||5;
+  let decade=initial ? "alltime" : String(store.get(decadeKey) ?? "alltime"), stat=String(store.get(statKey)||"points"), total=Number(store.get(roundsKey))||5;
   if(!stats.includes(stat))stat="points"; if(![5,10,15,20].includes(total))total=5; if(!["all","alltime"].includes(decade)&&!decades.includes(Number(decade)))decade="all";
   let roundIndex=0, marks=[], usedYears=new Set();
   const allTime = decade === "alltime";
@@ -6959,7 +6959,7 @@ function startTeamMystery(t){
   const img=$("teamMysteryImg");img.onerror=function(){this.onerror=null;this.src=FALLBACK};img.src=teamHistHeadshot(t,target.id,row.y);
   const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);if(y===row.y||guesses.length>=max)over=true;draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
 }
-function openTeamMode(t, mode) { if(mode==="best")startTeamBest(t); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
+function openTeamMode(t, mode) { if(mode==="best")startTeamBest(t, true); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
 function openTeams(team = "", push = true) {
   leaveGame(game); closeParty(); onHub = false;
   document.body.classList.remove("hubmode");
