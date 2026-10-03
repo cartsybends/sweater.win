@@ -6372,6 +6372,54 @@ function paintOptions(host, round, html, grade) {
     b.classList.toggle("dim", state === "dim");
   });
 }
+function paintQuestionProgress(host, total, current, results = []) {
+  const dots = $(host);
+  if (!dots) return;
+  dots.classList.add("question-progress");
+  let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
+  if (dotNodes.length !== total) {
+    dots.innerHTML = `<span class="tr-active-glider" aria-hidden="true"></span>` + Array.from({ length: total }, (_, n) =>
+      `<span class="shdot" data-round="${n}" aria-label="Question ${n + 1}">` +
+        `<span class="tr-dot-number">${n + 1}</span>` +
+        `<span class="tr-dot-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path></path></svg><span class="tr-dot-custom"></span></span>` +
+      `</span>`
+    ).join("");
+    dotNodes = Array.from(dots.querySelectorAll(".shdot"));
+  }
+  dotNodes.forEach((dot, n) => {
+    const result = results[n] || null, status = result && result.status;
+    const done = !!status, active = !done && n === current && current >= 0 && current < total;
+    dot.classList.toggle("ok", status === "ok");
+    dot.classList.toggle("bad", status === "bad");
+    dot.classList.toggle("neutral", status === "neutral");
+    dot.classList.toggle("now", active);
+    const mark = dot.querySelector(".tr-dot-mark"), path = mark && mark.querySelector("path"), custom = mark && mark.querySelector(".tr-dot-custom");
+    const kind = result && result.mark || (status === "ok" ? "check" : status === "bad" ? "x" : "");
+    const textMark = result && result.text || "";
+    if (path) path.setAttribute("d", kind === "check" ? "M6.5 12.5 10.2 16.2 17.8 8.4" : kind === "x" ? "M8.2 8.2 15.8 15.8 M15.8 8.2 8.2 15.8" : "");
+    if (custom) custom.textContent = textMark;
+    if (mark) mark.classList.toggle("has-custom", !!textMark);
+    dot.setAttribute("aria-label", done
+      ? `Question ${n + 1}: ${result.label || (status === "ok" ? "correct" : status === "bad" ? "incorrect" : "complete")}`
+      : `Question ${n + 1}${active ? ": current" : ""}`);
+  });
+  const glider = dots.querySelector(".tr-active-glider"), activeDot = current >= 0 && current < total ? dotNodes[current] : null;
+  if (glider && activeDot) {
+    const hostRect = dots.getBoundingClientRect(), dotRect = activeDot.getBoundingClientRect();
+    const x = dotRect.left - hostRect.left + dots.scrollLeft, y = dotRect.top - hostRect.top + dots.scrollTop;
+    if (!glider.classList.contains("ready")) {
+      glider.style.transition = "none";
+      glider.style.setProperty("--tr-dot-x", `${x}px`);
+      glider.style.setProperty("--tr-dot-y", `${y}px`);
+      void glider.offsetWidth;
+      glider.style.transition = "";
+      glider.classList.add("ready");
+    } else {
+      glider.style.setProperty("--tr-dot-x", `${x}px`);
+      glider.style.setProperty("--tr-dot-y", `${y}px`);
+    }
+  } else if (glider) glider.classList.remove("ready");
+}
 
 // ======================= countdown + midnight rollover =======================
 // The hub meter tracks the day itself: empty just after the reset, filling as
