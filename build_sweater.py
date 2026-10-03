@@ -2516,12 +2516,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="slot"></div><p class="nodata" hidden>This game is not available yet.</p>
   </section>
   <section class="view" id="view-overtime" hidden>
-    <div class="arc-hud"><div><small>Time left</small><strong class="ot-time" id="otTime">0:30</strong></div><div><small>Right answers</small><strong id="otScore">0</strong></div><div><small>Streak</small><strong id="otStreak">0</strong></div></div>
+    <div class="arc-hud"><div><small>Time left</small><strong class="ot-time" id="otTime">0:45</strong></div><div><small>Right answers</small><strong id="otScore">0</strong></div><div><small>Streak</small><strong id="otStreak">0</strong></div></div>
     <div class="ot-meter" aria-hidden="true"><i id="otMeter"></i></div>
     <div class="ot-question" id="otQuestion"><small id="otRound">Sudden-death trivia</small><h3 id="otQ">Keep the clock alive.</h3></div>
     <div class="ot-answers" id="otAnswers"></div>
     <div class="arc-controls"><button type="button" class="btn" id="otStart">Start overtime</button><button type="button" class="btn ghost" id="otEnd" hidden>End run</button></div>
-    <p class="arc-note" id="otFeedback" role="status">Start with 30 seconds. Right answers add 3 seconds; wrong answers cost 5.</p>
+    <p class="arc-note" id="otFeedback" role="status">Start with 45 seconds. Right answers add 5 seconds; wrong answers cost 3.</p>
     <p class="arc-note">Keep up to 60 seconds on the clock. Clear all 100 questions for a perfect run. Use keys 1–4 or tap an answer. Leaving or hiding the game ends a started run.</p>
     <div class="slot"></div><p class="nodata" hidden>This game needs player data. Rebuild the site to load it.</p>
   </section>
@@ -4874,7 +4874,7 @@ G.overtime = {
   archiveStatus:h=>`${h.s} right`,onFinish:st=>arcadeBest("overtime",st),
   endText(t,g){const r=overtimeTally(t,g);return {result:`${r.right} right ${r.right===1?"answer":"answers"}`,cheer:`Best streak: ${r.best}${arcadeAnswers(g).length===100?" · Board cleared!":""}`};},
   shareText(t,s,n,link){const r=overtimeTally(t,s.guesses);return `Sweater Overtime #${n}\n${r.right} right answers · Best streak ${r.best}${link}`;},
-  reset(){stopOvertime();$("otTime").textContent="0:30";$("otTime").classList.remove("urgent");$("otMeter").style.width="50%";$("otFeedback").textContent="Start with 30 seconds. Right answers add 3 seconds; wrong answers cost 5.";},
+  reset(){stopOvertime();$("otTime").textContent="0:45";$("otTime").classList.remove("urgent");$("otMeter").style.width="75%";$("otFeedback").textContent="Start with 45 seconds. Right answers add 5 seconds; wrong answers cost 3.";},
   guess(t,x){
     if(x==="START" || x==="END")return false;
     if(!S.overtime.guesses.includes("START") || !/^\d+:[0-3]$/.test(x))return null;
@@ -4903,8 +4903,8 @@ function paintOvertimeClock(now){
 function startOvertime(){
   const st=S.overtime;
   if(game!=="overtime" || !st.target || st.over || overtimeRun || st.guesses.includes("START"))return;
-  overtimeRun={deadline:performance.now()+30000,index:0,locked:false,ready:0,choice:null,raf:0};
-  $("otFeedback").textContent="+3 seconds right · −5 seconds wrong";doGuess("START");
+  overtimeRun={deadline:performance.now()+45000,index:0,locked:false,ready:0,choice:null,raf:0};
+  $("otFeedback").textContent="+5 seconds right · −3 seconds wrong";doGuess("START");
   const step=now=>{
     const run=overtimeRun;if(!run || game!=="overtime")return;
     paintOvertimeClock(now);
@@ -4924,8 +4924,8 @@ function answerOvertime(choice){
   if(now>=run.deadline){endArcade("overtime");return;}
   const right=st.target.rounds[run.index].a===choice;
   run.locked=true;run.choice=choice;run.ready=now+550;
-  run.deadline=right?Math.min(now+60000,run.deadline+3000):run.deadline-5000;
-  $("otFeedback").textContent=right?"+3 seconds":"−5 seconds";
+  run.deadline=right?Math.min(now+60000,run.deadline+5000):run.deadline-3000;
+  $("otFeedback").textContent=right?"+5 seconds":"−3 seconds";
   paintOvertimeClock(now);doGuess(`${run.index}:${choice}`);
   if(overtimeRun && now>=run.deadline)endArcade("overtime");
 }
@@ -6499,7 +6499,7 @@ const LB_RULES = {
   puck: "Puck Drop: 1 point for each right tap, minus 1 for each wrong tap.",
   shoot: "Shootout: 2 points for every goal, up to 10.",
   goalie: "Goalie Mode: 10 points per save, with a multiplier increasing every 5 consecutive saves up to 5×. Three goals end the run.",
-  overtime: "Overtime: 1 point per right answer. Start with 30 seconds; right answers add 3 seconds and wrong answers cost 5.",
+  overtime: "Overtime: 1 point per right answer. Start with 45 seconds; right answers add 5 seconds and wrong answers cost 3.",
   playoff: "Playoff Hero: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
   cups: "Playoff History: 1 point for every square you fill in 10 minutes.",
   trophy: "Trophy Case: 2 points for every round you get right, so 20 questions are worth up to 40.",
@@ -7421,7 +7421,7 @@ const HELP = {
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
   goalie: `<p>Press <b>Take the net</b>. Watch the puck and tap the area it is heading for before it reaches the goal. You can commit only once per shot. Use Q/E for top left/right, Z/C for bottom left/right, or Space for five-hole.</p><p>Shots speed up and can curve after the first five. Each save earns 10 points; every five straight saves increases your multiplier, up to 5×. A goal resets the streak, and three goals end your run. Leaving, reloading, or hiding the game ends a started run.</p>`,
-  overtime: `<p>Start with <b>30 seconds</b>. Pick an answer or press 1–4: a right answer adds 3 seconds and a wrong answer costs 5. The clock keeps running during the brief answer reveal. Bank up to 60 seconds.</p><p>Each right answer earns one point. Survive until the clock runs out, or clear the 100-question board. Leaving, reloading, or hiding the game ends a started run.</p>`,
+  overtime: `<p>Start with <b>45 seconds</b>. Pick an answer or press 1–4: a right answer adds 5 seconds and a wrong answer costs 3. The clock keeps running during the brief answer reveal. Bank up to 60 seconds.</p><p>Each right answer earns one point. Survive until the clock runs out, or clear the 100-question board. Leaving, reloading, or hiding the game ends a started run.</p>`,
   playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
   cups: `<p>A complete grid from 1980–81 through the latest Final, with three squares per season: the Stanley Cup winner, the runner-up and the Conn Smythe winner. Press Start, then type names for 10 minutes.</p>
     <p>One name fills every square it belongs in, and a team nickname or a surname is enough when only one answer matches it.</p>`,
