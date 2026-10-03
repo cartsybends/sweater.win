@@ -7015,7 +7015,7 @@ function startTeamBest(t, initial = false) {
   ["teamBestDecade","teamBestStat","teamBestRounds"].forEach(id=>$(id).addEventListener("change",restart));
   function finishRun(){
     const runTotal = decade === "alltime" ? 1 : total;
-    $("teamBestDots").innerHTML=marks.map((m,i)=>`<span class="shdot ${m==='ok'?'ok':'bad'}">${m==='ok'?'✓':'✗'}</span>`).join("");
+    paintQuestionProgress("teamBestDots", runTotal, -1, marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));
     $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Run complete</span><strong>${marks.filter(x=>x==='ok').length}/${runTotal}</strong><small>Top-five boards cleared</small></div><div class="team-best-actions"><button type="button" class="btn" id="teamBestAgain">Play again</button></div>`;
     $("teamBestAgain").onclick=()=>startTeamBest(t);
   }
@@ -7039,7 +7039,7 @@ function startTeamBest(t, initial = false) {
     const rankedPool=pool.slice().sort((a,b)=>Number(b[stat]||0)-Number(a[stat]||0)||String(a.name).localeCompare(String(b.name)));
     const rankById=new Map(rankedPool.map((p,i)=>[p.id,i+1])), rowById=new Map(rankedPool.map(p=>[p.id,p]));
     const answerIds=new Set(leaders.map(x=>x.id)),found=new Set(),guessed=new Set(),wrong=[];let misses=0,over=false,lastFound=0,popTimer=0;
-    $("teamBestDots").innerHTML=Array.from({length:runTotal},(_,i)=>`<span class="shdot${i===roundIndex?' now':''}">${i<marks.length?(marks[i]==='ok'?'✓':'✗'):i+1}</span>`).join("");
+    paintQuestionProgress("teamBestDots", runTotal, roundIndex, marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));
     const allTimeRound = decade === "alltime";
     $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Question ${roundIndex+1} of ${runTotal}</span><strong>${period}</strong><small>${esc(teamFullName(t))} · ${esc(statWord(stat))}</small></div><p class="team-prompt">Name the top 5 ${allTimeRound?'all-time ':''}${esc(statWord(stat))} leaders</p><p class="team-subprompt">Regular season · answers stay hidden until you find them.</p><ol class="teamleaderlist" id="teamBestList"></ol>${teamSearchMarkup("teamBestInput","teamBestOpts","Type a player name")}<div class="team-rank-pop-wrap" id="teamBestRankPop" aria-live="polite"></div><div class="team-wrong-section" id="teamBestWrongWrap" hidden><p class="team-wrong-title">Guessed outside the Top 5</p><ol class="teamwronglist" id="teamBestWrong"></ol></div><div class="team-best-actions"><button type="button" class="btn ghost" id="teamBestGive">Give up</button><button type="button" class="btn ghost" id="teamBestSkip">${allTimeRound?'Restart':'New question'}</button></div><p class="team-mode-msg" id="teamBestMsg"></p>`;
     const headshotFor=p=>teamHistHeadshot(t,p.id,p.y||((h.byPlayer.get(p.id)||{}).rows||[]).slice(-1)[0]?.y||h.years[0]);
@@ -7068,7 +7068,7 @@ function startTeamBest(t, initial = false) {
       guessed.add(p.id);
       if(answerIds.has(p.id)){
         found.add(p.id); lastFound=p.id; msg.classList.add("good"); msg.textContent=`Correct — ${found.size}/5.`; draw();
-        if(found.size===5){over=true;marks.push("ok");msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},900);}
+        if(found.size===5){over=true;marks.push("ok");paintQuestionProgress("teamBestDots",runTotal,roundIndex+1<runTotal?roundIndex+1:-1,marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},900);}
       } else {
         misses++;
         const rank=rankById.get(p.id)||null, row=rowById.get(p.id)||null;
@@ -7076,7 +7076,7 @@ function startTeamBest(t, initial = false) {
         msg.textContent="";
       }
     },()=>[...guessed]);
-    $("teamBestGive").onclick=()=>{if(over)return;over=true;draw(true);marks.push('bad');$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
+    $("teamBestGive").onclick=()=>{if(over)return;over=true;draw(true);marks.push('bad');paintQuestionProgress("teamBestDots",runTotal,roundIndex+1<runTotal?roundIndex+1:-1,marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
     $("teamBestSkip").onclick=()=>advance(false); $("teamBestInput").focus();
   }
   renderRound();
