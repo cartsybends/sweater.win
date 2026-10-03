@@ -6884,7 +6884,7 @@ function startTeamBest(t) {
         misses++;
         const rank=rankById.get(p.id)||null, row=rowById.get(p.id)||null;
         wrong.push({p,rank,row}); flashRank(p,rank,row);
-        msg.textContent=rank?`${p.name} is #${rank} on this board.`:`${p.name} isn't ranked on this board.`;
+        msg.textContent="";
       }
     },()=>[...guessed]);
     $("teamBestGive").onclick=()=>{if(over)return;over=true;draw(true);marks.push('bad');$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
