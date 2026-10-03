@@ -815,6 +815,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ttcard { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 4px 0; }
   .ttcard img { width: 96px; height: 96px; border-radius: 50%; background: var(--cream); object-fit: cover; }
   .ttcard .pname { margin: 0; }
+  .ttcard .nationflag { display: inline-block; margin-left: 2px; font-size: 18px; line-height: 1; vertical-align: -2px; }
   .ttq { text-align: center; font-size: 19px; margin: 14px 0 10px; }
   .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
   .chip { background: var(--cell); color: var(--cell-fg); border-radius: 999px; padding: 6px 14px; font-size: 14px;
@@ -3063,7 +3064,7 @@ const G = {
       $("ttImg").src = p.headshot || FALLBACK;
       $("ttImg").alt = p.name;
       $("ttName").textContent = p.name;
-      $("ttMeta").textContent = `${posName(p)} · born ${p.nation}`;
+      $("ttMeta").innerHTML = `${esc(posName(p))} · born <span class="nationflag" title="${esc(countryName(p.nation))}" aria-label="${esc(countryName(p.nation))}">${countryFlag(p.nation)}</span>`;
       $("ttSeason").textContent = seasonLabel(t.r.y);
       $("ttStats").innerHTML = statHeads(p).map((h, i) =>
         `<span class="chip"><b>${statCells(p, t.r)[i]}</b> ${h}</span>`).join("");
@@ -3580,6 +3581,19 @@ const COUNTRY_NAMES = {
   ISR: "Israel", IRL: "Ireland", MEX: "Mexico", VEN: "Venezuela", KEN: "Kenya", GHA: "Ghana", HTI: "Haiti", THA: "Thailand"
 };
 const countryName = c => COUNTRY_NAMES[c] || c;
+const COUNTRY_ALPHA2 = {
+  CAN:"CA", USA:"US", SWE:"SE", FIN:"FI", CZE:"CZ", RUS:"RU", SVK:"SK",
+  CHE:"CH", DEU:"DE", AUT:"AT", DNK:"DK", NOR:"NO", LVA:"LV", FRA:"FR",
+  GBR:"GB", SVN:"SI", BLR:"BY", UKR:"UA", KAZ:"KZ", AUS:"AU", NLD:"NL",
+  POL:"PL", ITA:"IT", JPN:"JP", KOR:"KR", HUN:"HU", BRA:"BR", JAM:"JM",
+  NGA:"NG", ZAF:"ZA", LTU:"LT", EST:"EE", BEL:"BE", CHN:"CN", TWN:"TW",
+  HRV:"HR", SRB:"RS", BGR:"BG", ROU:"RO", ISR:"IL", IRL:"IE", MEX:"MX",
+  VEN:"VE", KEN:"KE", GHA:"GH", HTI:"HT", THA:"TH"
+};
+const countryFlag = c => {
+  const iso = COUNTRY_ALPHA2[c];
+  return iso ? [...iso].map(ch => String.fromCodePoint(127397 + ch.charCodeAt(0))).join("") : esc(c || "?");
+};
 const ordinal = n => { const v = n % 100; return n + (v >= 11 && v <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[n % 10] || "th"); };
 function shuffled(arr, rnd = Math.random) {
   const a = arr.slice();
