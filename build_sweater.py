@@ -1906,6 +1906,57 @@ TEMPLATE = r'''<!DOCTYPE html>
     .shelfcard { transition: none; }
     .shelfcard:hover { transform: none; }
   }
+  /* Home rhythm polish: keep Sweater's restrained look, but give the lobby
+     clearer hierarchy and more breathing room between major decisions. */
+  #view-hub { max-width: 1000px; padding-top: 24px; }
+  #view-hub .hubhead { margin-bottom: 30px; padding-bottom: 24px; }
+  #view-hub .hubfeatures { grid-template-columns: 1.6fr 1fr; gap: 32px; margin-bottom: 42px; }
+  #view-hub .hubfeature.primary { min-height: 220px; padding: 30px; }
+  #view-hub .hubfeature.primary .featuretitle { font-size: 34px; }
+  #view-hub .hubfeature.primary .featurecopy { max-width: 38ch; margin-top: 10px; }
+  #view-hub .queststack { align-self: stretch; }
+  #view-hub .hubfeature.quest { padding-top: 20px; padding-bottom: 20px; }
+
+  #view-hub .explorehead { margin: 0 4px 16px; }
+  #view-hub .explorehead p { margin: 0 0 5px; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .105em; text-transform: uppercase; }
+  #view-hub .explorehead h2 { margin: 0; font-size: 25px; font-weight: 760; letter-spacing: -.035em; }
+  #view-hub .teams-homecard { min-height: 150px; margin-bottom: 14px; padding: 24px; border-radius: 18px; }
+  #view-hub .teams-homecard b { font-size: 26px; }
+  #view-hub .teams-homecard small { max-width: 42ch; line-height: 1.55; }
+  #view-hub .partycard { min-height: 100px; margin-bottom: 44px; padding: 18px 22px; }
+  #view-hub .partytext span { color: rgba(255,255,255,.78); }
+
+  #view-hub .libraryhead { margin: 0 4px 18px; }
+  #view-hub .libraryhead h2 { font-size: 27px; }
+  #view-hub .libraryfilters { margin-bottom: 30px; }
+  #view-hub .hubsec { margin-bottom: 36px; }
+  #view-hub .hubsec h2 { margin-bottom: 11px; font-size: 13px; letter-spacing: .105em; }
+  #view-hub .grow { min-height: 84px; padding: 16px 10px; }
+  #view-hub .grow .gicon { width: 42px; height: 42px; }
+  #view-hub .grow .gtext b { font-size: 16px; font-weight: 650; }
+  #view-hub .grow .gtext small { margin-top: 3px; font-size: 13px; line-height: 1.5; color: color-mix(in srgb, var(--muted) 90%, var(--fg)); }
+  #view-hub .grow .gstat { font-size: 12px; color: var(--muted); }
+  #view-hub .chev { opacity: .42; }
+
+  @media (max-width: 700px) {
+    #view-hub { padding-top: 18px; }
+    #view-hub .hubhead { margin-bottom: 22px; padding-bottom: 20px; }
+    #view-hub .hubfeatures { gap: 10px; margin-bottom: 32px; }
+    #view-hub .hubfeature.primary { min-height: 188px; padding: 22px; }
+    #view-hub .hubfeature.primary .featuretitle { font-size: 30px; }
+    #view-hub .explorehead { margin-bottom: 12px; }
+    #view-hub .explorehead h2 { font-size: 22px; }
+    #view-hub .teams-homecard { min-height: 144px; margin-bottom: 12px; padding: 19px; }
+    #view-hub .partycard { min-height: 104px; margin-bottom: 36px; padding: 16px; }
+    #view-hub .libraryhead { margin-bottom: 14px; }
+    #view-hub .libraryhead h2 { font-size: 24px; }
+    #view-hub .libraryfilters { margin-bottom: 24px; }
+    #view-hub .hubsec { margin-bottom: 32px; }
+    #view-hub .grow { min-height: 76px; padding: 13px 6px; }
+    #view-hub .grow .gicon { width: 34px; height: 34px; }
+    #view-hub .grow .gtext small { font-size: 12.5px; line-height: 1.42; }
+  }
+
   /* New arcade modes: scoped surfaces keep both existing themes unchanged. */
   #view-goalie, #view-overtime { max-width: 760px; margin-inline: auto; }
   .arc-hud { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0 16px; }
@@ -1991,6 +2042,10 @@ TEMPLATE = r'''<!DOCTYPE html>
       <p class="hubprogress"><span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
     <section class="hubfeatures" id="hubFeatures" aria-label="Featured games"></section>
+    <div class="explorehead">
+      <p>Explore Sweater</p>
+      <h2>More ways to play</h2>
+    </div>
     <button type="button" class="teams-homecard" data-open="teams" aria-label="Explore NHL teams">
       <span><b>Teams</b><small>Pick your team and test how deep your franchise knowledge goes — seasons, leaders, rosters and history.</small><strong>Choose a team →</strong></span>
       <span class="teamlogos" id="teamLogoMosaic" aria-hidden="true"></span>
