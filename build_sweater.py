@@ -532,18 +532,18 @@ TEMPLATE = r'''<!DOCTYPE html>
   .teamleaderlist li.just-found { animation: bestFound .52s cubic-bezier(.2,.85,.2,1) both; }
   @keyframes bestFound { 0% { transform: translateY(5px) scale(.985); } 55% { transform: translateY(-2px) scale(1.012); } 100% { transform: none; } }
   .team-rank-pop-wrap { min-height: 0; display: grid; place-items: center; margin-top: 10px; }
-  .team-rank-pop { width: min(100%, 430px); display: grid; grid-template-columns: 50px 1fr auto; align-items: center; gap: 12px; padding: 11px 13px; border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); box-shadow: 0 12px 30px rgba(0,0,0,.12); animation: bestRankPop .72s cubic-bezier(.18,.84,.22,1) both; }
+  .team-rank-pop { width: min(100%, 430px); display: grid; grid-template-columns: 50px 1fr auto; align-items: center; gap: 12px; padding: 11px 13px; border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); box-shadow: 0 12px 30px rgba(0,0,0,.12); animation: bestRankPop 1.55s cubic-bezier(.18,.84,.22,1) both; }
   .team-rank-pop img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; object-position: center top; background: var(--cell); }
   .team-rank-pop span { display: block; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
   .team-rank-pop b { display: block; margin-top: 2px; font-size: 15px; }
   .team-rank-pop strong { font-size: 27px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
-  @keyframes bestRankPop { 0% { opacity: 0; transform: translateY(9px) scale(.96); } 35% { opacity: 1; transform: translateY(-2px) scale(1.015); } 76% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(4px) scale(.985); } }
+  @keyframes bestRankPop { 0% { opacity: 0; transform: translateY(9px) scale(.96); } 18% { opacity: 1; transform: translateY(-2px) scale(1.015); } 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(4px) scale(.985); } }
   .team-wrong-section { margin-top: 12px; }
   .team-wrong-section[hidden] { display: none; }
   .team-wrong-title { margin: 0 0 7px; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
   .teamwronglist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  .teamwronglist li { display: grid; grid-template-columns: 36px 40px 1fr auto; align-items: center; gap: 9px; min-height: 48px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 11px; background: color-mix(in srgb, var(--cell) 82%, transparent); animation: bestWrongSettle .38s cubic-bezier(.2,.8,.2,1) both; }
-  .teamwronglist .wrank { color: var(--muted); font-size: 12px; font-weight: 900; text-align: center; font-variant-numeric: tabular-nums; }
+  .teamwronglist li { display: grid; grid-template-columns: 48px 40px 1fr auto; align-items: center; gap: 9px; min-height: 48px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 11px; background: color-mix(in srgb, var(--cell) 82%, transparent); animation: bestWrongSettle .38s cubic-bezier(.2,.8,.2,1) both; }
+  .teamwronglist .wrank { color: var(--fg); font-size: 20px; font-weight: 900; letter-spacing: -.045em; text-align: center; font-variant-numeric: tabular-nums; }
   .teamwronglist img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center top; background: var(--cell); }
   .teamwronglist b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
   .teamwronglist strong { font-size: 13px; font-variant-numeric: tabular-nums; }
@@ -6864,7 +6864,7 @@ function startTeamBest(t) {
       const box=$("teamBestRankPop"); if(!box)return;
       clearTimeout(popTimer);
       box.innerHTML=`<div class="team-rank-pop"><img src="${headshotFor(row||p)}" alt="" onerror="this.onerror=null;this.src='${logo(t)}'"><div><span>${rank?"Not Top 5":"Not ranked on this board"}</span><b>${esc(p.name)}</b></div><strong>${rank?`#${rank}`:"—"}</strong></div>`;
-      popTimer=setTimeout(()=>{ if(box)box.innerHTML=""; drawWrong(); },720);
+      popTimer=setTimeout(()=>{ if(box)box.innerHTML=""; drawWrong(); },1550);
     };
     const draw=(reveal=false)=>{
       $("teamBestList").innerHTML=leaders.map((p,i)=>{const hit=found.has(p.id),show=hit||reveal,just=hit&&p.id===lastFound;return `<li class="${hit?"found":reveal?"revealed":""}${just?" just-found":""}">${show?avatar(p,i+1):`<span class="best-rankface"><span>${i+1}</span></span>`}<span><b>${show?esc(p.name):"???"}</b><small>${period} · ${statLabel(stat)}</small></span><strong>${show?p[stat]:"—"}</strong></li>`}).join("");
