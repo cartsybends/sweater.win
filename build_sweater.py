@@ -4971,7 +4971,7 @@ function startOvertime(){
     if(run.locked && now>=run.ready){
       run.index++;run.locked=false;run.choice=null;G.overtime.render(st.target,st);
       $("otQuestion").classList.remove("next-round");void $("otQuestion").offsetWidth;$("otQuestion").classList.add("next-round");
-      $("otFeedback").textContent="+3 seconds right · −5 seconds wrong";
+      $("otFeedback").textContent="+5 seconds right · −3 seconds wrong";
     }
     run.raf=requestAnimationFrame(step);
   };
