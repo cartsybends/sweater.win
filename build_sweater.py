@@ -5095,25 +5095,21 @@ G.truths = {
     const i = st.guesses.length, last = i - 1;
     const showing = this.showing && last >= 0;
     const r = t.rounds[showing ? last : Math.min(i, 4)], p = BYID.get(r.p);
-    $("twDots").innerHTML = [0, 1, 2, 3, 4].map(n =>
-      `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? (this.right(t, st.guesses[n], n) ? "✓" : "✗") : n + 1}</span>`).join("");
+    paintQuestionProgress("twDots", 5, st.over ? -1 : i, [0, 1, 2, 3, 4].map(n =>
+      n < i ? { status: this.right(t, st.guesses[n], n) ? "ok" : "bad", mark: this.right(t, st.guesses[n], n) ? "check" : "x" } : null));
     $("twImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
     $("twImg").src = p.headshot || FALLBACK;
     $("twName").textContent = p.name;
     $("twQ").textContent = st.over && !showing ? "That's the game" : "Which one is false?";
     const myPick = showing ? Number(st.guesses[last]) : -1;
-    $("twList").innerHTML = st.over && !showing ? "" : r.s.map((line, n) => {
-      const isFalse = n === r.f, mine = n === myPick;
-      const cls = showing ? (isFalse ? " isfalse" : " istrue") + (mine ? " mine" : "") : "";
-      const tag = showing ? `<span class="twtag">${isFalse ? "False" : "True"}${mine ? " · your pick" : ""}</span>` : "";
-      return `<button type="button" class="twline${cls}" data-c="${n}"${showing ? " disabled" : ""}>
-        <span class="twmark">${showing ? (isFalse ? "✗" : "✓") : String.fromCharCode(65 + n)}</span>
-        <span class="twtext">${esc(line)}</span>${tag}</button>`;
+    const truthRound = `${this.tid(t)}#${showing ? last : Math.min(i, 4)}`;
+    const truthHtml = st.over && !showing ? "" : r.s.map((line, n) => {
+      const tag = showing ? `<span class="twtag">${n === r.f ? "False · answer" : n === myPick ? "True · your pick" : "True"}</span>` : "";
+      return `<button type="button" class="shopt" style="--i:${n}" data-c="${n}"><span class="twtext">${esc(line)}</span>${tag}</button>`;
     }).join("");
-    $("twMsg").innerHTML = showing
-      ? (this.right(t, st.guesses[last], last) ? '<b class="good">Right!</b> You found the false statement.'
-        : '<b class="bad">Not quite.</b> The false statement is marked ✗.')
-      : st.over ? "" : "Two of these are true.";
+    paintOptions("twList", truthRound, truthHtml, showing ? n => n === r.f ? "right" : n === myPick ? "wrong" : "dim" : null);
+    $("twMsg").textContent = "";
+    $("twMsg").hidden = true;
     $("twNext").hidden = !(showing && !st.over);
   },
 };
