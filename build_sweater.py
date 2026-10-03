@@ -365,10 +365,16 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rklist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; touch-action: none; }
   .rkrow { display: grid; grid-template-columns: 24px 44px 1fr auto auto; align-items: center; gap: 10px; padding: 8px 10px;
            border-radius: 12px; background: var(--cell); color: var(--cell-fg); border: 2px solid transparent;
-           user-select: none; transition: border-color .2s, box-shadow .2s; }
+           user-select: none; transition: border-color .2s, box-shadow .2s, opacity .16s ease, transform .16s cubic-bezier(.2,.8,.2,1); will-change: transform; }
   .rkrow.done { grid-template-columns: 24px 44px 1fr auto; }
   .rkrow.good { border-color: var(--hit); }
-  .rkrow.lifted { box-shadow: 0 8px 22px rgba(0,0,0,.18); }
+  .rkrow.lifted { transform: scale(1.045) rotate(var(--rk-tilt, 0deg));
+                  box-shadow: 0 14px 34px rgba(0,0,0,.22), 0 3px 8px rgba(0,0,0,.12);
+                  border-color: color-mix(in srgb, var(--fg) 10%, transparent); z-index: 3; }
+  .rkrow.drag-source { opacity: .14; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg) 10%, transparent); }
+  .rkdragghost { position: fixed; margin: 0; z-index: 9999; pointer-events: none; transform-origin: 50% 50%;
+                 will-change: transform; }
+  .rkrow.settling { animation: rksettle .24s cubic-bezier(.2,.9,.25,1.15); }
   .rkpos { font-weight: 700; font-size: 18px; text-align: center; font-variant-numeric: tabular-nums; }
   .rkrow img { width: 44px; height: 44px; border-radius: 50%; background: var(--cream); object-fit: cover; pointer-events: none; }
   .rkname b { display: block; font-size: 15px; }
@@ -379,6 +385,12 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rkbtns button:disabled { opacity: .3; cursor: default; }
   .rkgrip { cursor: grab; font-size: 20px; color: var(--muted); padding: 0 2px; }
   .rklist.dragging { cursor: grabbing; }
+  .rklist.dragging .rkrow:not(.drag-source) { transition: border-color .2s, box-shadow .2s, opacity .16s ease; }
+  @keyframes rksettle {
+    0% { transform: scale(1.035); }
+    58% { transform: scale(.992); }
+    100% { transform: scale(1); }
+  }
 
   /* puck drop */
   .pkrule { text-align: center; font-size: 17px; margin: 4px 0 8px; }
@@ -769,6 +781,25 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* higher or lower */
   .hlscore { display: flex; justify-content: center; gap: 22px; font-size: 15px; color: var(--muted); margin: 0 0 6px; }
   .hlscore b { color: var(--fg); font-size: 22px; font-variant-numeric: tabular-nums; margin-left: 4px; }
+  .hlscore b.hot-streak { position: relative; display: inline-block; isolation: isolate;
+                          text-shadow: 0 0 8px rgba(255,126,38,.12); }
+  .hlscore b.hot-streak::before, .hlscore b.hot-streak::after { content: ""; position: absolute; left: 50%; pointer-events: none;
+                                                                  transform-origin: 50% 82%; }
+  .hlscore b.hot-streak::before { width: 20px; height: 20px; bottom: 12px; margin-left: -10px;
+    border-radius: 68% 32% 64% 36% / 70% 34% 66% 30%;
+    background: linear-gradient(135deg, rgba(255,225,118,.92) 0 28%, rgba(255,137,43,.82) 48% 70%, rgba(229,72,77,.58) 100%);
+    filter: drop-shadow(0 0 5px rgba(255,126,38,.25)); z-index: -2; animation: streakflame 1.05s ease-in-out infinite; }
+  .hlscore b.hot-streak::after { width: 9px; height: 9px; bottom: 14px; margin-left: -4px;
+    border-radius: 68% 32% 64% 36% / 70% 34% 66% 30%; background: rgba(255,241,183,.86);
+    z-index: -1; animation: streakflame .82s ease-in-out -.18s infinite reverse; }
+  @keyframes streakflame {
+    0%, 100% { transform: translateY(1px) rotate(43deg) scale(.72,.78); opacity: .62; }
+    50% { transform: translateY(-3px) rotate(47deg) scale(.82,.94); opacity: .88; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hlscore b.hot-streak::before, .hlscore b.hot-streak::after, .rkrow.settling { animation: none; }
+    .rkrow, .rkdragghost { transition: none !important; }
+  }
   .hlpair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 14px;
             max-width: 760px; margin: 10px auto 0; }
   .hlpair.slide .hlcard { animation: rowin .4s cubic-bezier(.2,.8,.2,1) both; }
@@ -3197,6 +3228,12 @@ const G = {
   }
 };
 
+function paintHotStreak(id, value) {
+  const el = $(id), n = Number(value) || 0;
+  el.textContent = n;
+  el.classList.toggle("hot-streak", n >= 5);
+}
+
 // ======================= higher or lower =======================
 const HL_STATS = {
   goals:   { type: "high", key: "a", name: "Goals",   label: "goals",           one: "goal" },
@@ -3346,7 +3383,7 @@ function makeHL(stat) {
       $("hlIntro").innerHTML = info.type === "high" ? `Whose career-high <b>${info.label}</b> in a single season is higher?` : esc(info.q);
       $("hlNote").textContent = info.type === "high" ? "Career high means his best single regular season. Ties count as right." : "Ties count as right.";
       $("hlStat").textContent = info.name;
-      $("hlStreak").textContent = this.score(t, st.guesses);
+      paintHotStreak("hlStreak", this.score(t, st.guesses));
       $("hlBest").textContent = Math.max(store.get(`sweater-hl-best-${stat}`) || 0, this.score(t, st.guesses));
       $("hlLeft").textContent = t.fixed ? `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run` : "";
       let i;
@@ -4385,11 +4422,28 @@ G.rank = {
   },
   squares(t, key) { const ans = this.answer(t); return key.split(",").map((id, i) => Number(id) === ans[i] ? "🟩" : "⬛").join("") + "\n"; }
 };
-function rkMove(from, to) {
+const rkReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function rkRowRects() {
+  return new Map([...$("rkList").children].map(row => [Number(row.dataset.id), row.getBoundingClientRect()]));
+}
+function rkAnimateRows(before, draggedId = null) {
+  if (rkReducedMotion()) return;
+  [...$("rkList").children].forEach(row => {
+    const id = Number(row.dataset.id), old = before.get(id);
+    if (!old || id === draggedId || !row.animate) return;
+    const now = row.getBoundingClientRect(), dy = old.top - now.top;
+    if (Math.abs(dy) < 1) return;
+    row.animate([{ transform: `translateY(${dy}px)` }, { transform: "translateY(0)" }],
+      { duration: 180, easing: "cubic-bezier(.2,.8,.2,1)" });
+  });
+}
+function rkMove(from, to, draggedId = null) {
   if (to < 0 || to > 4 || from === to) return;
+  const before = rkRowRects();
   const [id] = rkOrder.splice(from, 1);
   rkOrder.splice(to, 0, id);
   G.rank.render(S.rank.target, S.rank);
+  rkAnimateRows(before, draggedId);
 }
 $("rkList").addEventListener("click", e => {
   const b = e.target.closest("[data-mv]");
@@ -4399,23 +4453,67 @@ $("rkList").addEventListener("click", e => {
 });
 (() => {
   let drag = null;
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+  const markSource = id => {
+    const row = $("rkList").querySelector(`[data-id="${id}"]`);
+    if (row) row.classList.add("drag-source");
+  };
   $("rkList").addEventListener("pointerdown", e => {
     const row = e.target.closest(".rkrow");
     if (!row || S.rank.over || e.target.closest("button")) return;
-    drag = { id: Number(row.dataset.id), y: e.clientY };
-    $("rkList").setPointerCapture(e.pointerId);
-    $("rkList").classList.add("dragging");
-    row.classList.add("lifted");
+    e.preventDefault();
+    const list = $("rkList"), rect = row.getBoundingClientRect(), ghost = row.cloneNode(true);
+    ghost.classList.remove("good", "done", "drag-source", "settling");
+    ghost.classList.add("rkdragghost", "lifted");
+    ghost.setAttribute("aria-hidden", "true");
+    ghost.querySelectorAll("button").forEach(b => { b.disabled = true; b.tabIndex = -1; });
+    Object.assign(ghost.style, { left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`,
+      height: `${rect.height}px`, boxSizing: "border-box", transform: "translate3d(0,0,0) scale(1.045) rotate(0deg)" });
+    document.body.appendChild(ghost);
+    drag = { id: Number(row.dataset.id), pointerId: e.pointerId, startX: e.clientX, startY: e.clientY,
+      lastX: e.clientX, lastY: e.clientY, dx: 0, dy: 0, tilt: 0, rect, ghost };
+    list.setPointerCapture(e.pointerId);
+    list.classList.add("dragging");
+    row.classList.add("drag-source");
   });
   $("rkList").addEventListener("pointermove", e => {
-    if (!drag) return;
-    const rows = [...$("rkList").children];
-    const from = rkOrder.indexOf(drag.id);
+    if (!drag || e.pointerId !== drag.pointerId) return;
+    const dx = e.clientX - drag.startX, dy = e.clientY - drag.startY;
+    const vx = e.clientX - drag.lastX, vy = e.clientY - drag.lastY;
+    const tilt = clamp(-(vx * .15 + vy * .045), -3.2, 3.2);
+    drag.dx = dx; drag.dy = dy; drag.tilt = tilt; drag.lastX = e.clientX; drag.lastY = e.clientY;
+    drag.ghost.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(1.045) rotate(${tilt}deg)`;
+    const rows = [...$("rkList").children], from = rkOrder.indexOf(drag.id);
     let to = rows.findIndex(r => e.clientY < r.getBoundingClientRect().top + r.offsetHeight / 2);
     if (to === -1) to = rows.length - 1; else if (to > from) to -= 1;
-    if (to !== from) { rkMove(from, to); $("rkList").querySelector(`[data-id="${drag.id}"]`).classList.add("lifted"); }
+    if (to !== from) { rkMove(from, to, drag.id); markSource(drag.id); }
   });
-  const stop = () => { if (!drag) return; drag = null; $("rkList").classList.remove("dragging"); G.rank.render(S.rank.target, S.rank); };
+  const stop = e => {
+    if (!drag || (e && e.pointerId != null && e.pointerId !== drag.pointerId)) return;
+    const d = drag, list = $("rkList");
+    drag = null;
+    list.classList.remove("dragging");
+    if (list.hasPointerCapture && list.hasPointerCapture(d.pointerId)) list.releasePointerCapture(d.pointerId);
+    const target = list.querySelector(`[data-id="${d.id}"]`);
+    const finish = () => {
+      d.ghost.remove();
+      G.rank.render(S.rank.target, S.rank);
+      const settled = $("rkList").querySelector(`[data-id="${d.id}"]`);
+      if (settled && !rkReducedMotion()) {
+        settled.classList.add("settling");
+        setTimeout(() => settled.classList.remove("settling"), 260);
+      }
+    };
+    if (!target || rkReducedMotion()) { finish(); return; }
+    const targetRect = target.getBoundingClientRect();
+    const tx = targetRect.left - d.rect.left, ty = targetRect.top - d.rect.top;
+    d.ghost.style.transition = "transform .22s cubic-bezier(.18,.9,.24,1.12), box-shadow .18s ease, opacity .18s ease";
+    requestAnimationFrame(() => {
+      d.ghost.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(1) rotate(0deg)`;
+      d.ghost.style.boxShadow = "0 2px 8px rgba(0,0,0,.08)";
+    });
+    setTimeout(finish, 230);
+  };
   $("rkList").addEventListener("pointerup", stop);
   $("rkList").addEventListener("pointercancel", stop);
 })();
@@ -5242,7 +5340,7 @@ G.hlt = {
     const i = st.over ? Math.max(0, Math.min(st.guesses.length - 1, t.rounds.length - 1)) : st.guesses.length;
     const info = HLT_METRICS[t.rounds[i][4]];
     $("htIntro").innerHTML = `Which team has the higher <b>${esc(info.name.toLowerCase())}</b>?`;
-    $("htStreak").textContent = this.score(t, st.guesses);
+    paintHotStreak("htStreak", this.score(t, st.guesses));
     $("htBest").textContent = Math.max(store.get("sweater-hlt-best") || 0, this.score(t, st.guesses));
     $("htLeft").textContent = st.over ? "" : `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run · ties count as right`;
     const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
@@ -7130,7 +7228,7 @@ function startTeamHigher(t){
     return pick(options.length?options:pool);
   };
   const draw=()=>{
-    $("teamHLStreak").textContent=streak;$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);
+    paintHotStreak("teamHLStreak", streak);$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);
     $("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");
     if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{
       const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;
