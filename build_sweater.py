@@ -80,7 +80,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   try {
     const root = document.documentElement, theme = JSON.parse(localStorage.getItem("sweater-theme"));
     const accent = JSON.parse(localStorage.getItem("sweater-accent"));
-    if (theme) root.dataset.theme = theme;
+    if (theme) { root.dataset.theme = theme; root.style.colorScheme = theme; }
     if (/^#[0-9a-f]{6}$/i.test(accent || "")) root.style.setProperty("--accent", accent);
   } catch {}
 </script>
@@ -815,7 +815,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ttcard { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 4px 0; }
   .ttcard img { width: 96px; height: 96px; border-radius: 50%; background: var(--cream); object-fit: cover; }
   .ttcard .pname { margin: 0; }
-  .ttcard .nationflag { display: inline-block; margin-left: 2px; font-size: 18px; line-height: 1; vertical-align: -2px; }
+  .ttcard .nationflag { display: inline-block; width: 24px; height: 18px; margin-left: 3px; border: 0; border-radius: 3px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--fg) 12%, transparent); object-fit: cover; vertical-align: -4px; }
+  .ttcard .nationcode { margin-left: 3px; font-weight: 700; }
   .ttq { text-align: center; font-size: 19px; margin: 14px 0 10px; }
   .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
   .chip { background: var(--cell); color: var(--cell-fg); border-radius: 999px; padding: 6px 14px; font-size: 14px;
@@ -1958,6 +1959,55 @@ TEMPLATE = r'''<!DOCTYPE html>
     #view-hub .grow .gtext small { font-size: 12.5px; line-height: 1.42; }
   }
 
+  /* Explicit light appearance. Older visual layers are intentionally overridden
+     here so choosing Light always produces a genuinely light interface. */
+  :root[data-theme="light"] {
+    --bg: #ffffff; --fg: #171719; --muted: #6d6d72; --cell: #f3f3f5; --cell-fg: #202023;
+    --panel: #ffffff; --line: #dedee2; --grouped: #f6f6f4; --row: #ffffff; --sep: rgba(60,60,67,.13); --label2: #707078;
+    --scrim: rgba(20,20,24,.38); --cream: #f1efe8; --silbg: #f3f3f5; --link: var(--accent);
+    --hit: #1b9853; --hit-fg: #ffffff; --near: #ddb237; --near-fg: #2b2108;
+    --sea: #e6f0f5; --land: #f0eee5; --coast: #aaa89f;
+  }
+  :root[data-theme="light"] body, :root[data-theme="light"] body.hubmode { background: #ffffff; color: var(--fg); }
+  :root[data-theme="light"] body::before { opacity: .08; }
+  :root[data-theme="light"] .navbar, :root[data-theme="light"] body.hubmode .navbar {
+    color: var(--fg); background: rgba(255,255,255,.96); border-bottom-color: var(--line); box-shadow: 0 1px 0 var(--line);
+  }
+  :root[data-theme="light"] .navbar .brand, :root[data-theme="light"] .navbar .switch { color: var(--fg); }
+  :root[data-theme="light"] .navbar .brand span {
+    background-color: transparent; background-image: linear-gradient(90deg, var(--accent), var(--accent), var(--accent));
+  }
+  :root[data-theme="light"] .navbar .navactions .iconbtn, :root[data-theme="light"] .navbar .themebtn {
+    color: var(--fg); background: #f4f4f5; border-color: transparent; box-shadow: none;
+  }
+  :root[data-theme="light"] .navbar .navactions .iconbtn:hover, :root[data-theme="light"] .navbar .themebtn:hover { background: #eaeaed; }
+  :root[data-theme="light"] .navbar .switch { background: #f4f4f5; border-color: #e0e0e4; }
+  :root[data-theme="light"] .navbar .track { background: #c9c9cf; }
+  :root[data-theme="light"] .navbar .switch input:checked + .track { background: var(--accent); }
+
+  :root[data-theme="light"] .gamebar {
+    color: var(--fg); background: #ffffff; border-color: var(--line); box-shadow: none;
+  }
+  :root[data-theme="light"] .gamebar::after { display: none; }
+  :root[data-theme="light"] .gamebar .backbtn, :root[data-theme="light"] .gamebar #modeLabel { color: var(--muted); }
+  :root[data-theme="light"] .gamebar .gtitle h2 { color: var(--fg); }
+  :root[data-theme="light"] .gamebar .gticon { color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, #fff); box-shadow: none; }
+
+  :root[data-theme="light"] .partycard {
+    color: var(--fg); border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+    background: color-mix(in srgb, var(--accent) 7%, #fff); box-shadow: none;
+  }
+  :root[data-theme="light"] .partycard:hover:not(:disabled) {
+    transform: translateY(-2px); background: color-mix(in srgb, var(--accent) 10%, #fff);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+  :root[data-theme="light"] .partycard .rink { color: var(--accent); opacity: .09; }
+  :root[data-theme="light"] #view-hub .partytext span { color: var(--muted); }
+  :root[data-theme="light"] .partycta { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+  :root[data-theme="light"] .card, :root[data-theme="light"] .ttcard, :root[data-theme="light"] .teammodepanel {
+    background: var(--panel); border-color: var(--line);
+  }
+
   /* New arcade modes: scoped surfaces keep both existing themes unchanged. */
   #view-goalie, #view-overtime { max-width: 760px; margin-inline: auto; }
   .arc-hud { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0 16px; }
@@ -3064,7 +3114,7 @@ const G = {
       $("ttImg").src = p.headshot || FALLBACK;
       $("ttImg").alt = p.name;
       $("ttName").textContent = p.name;
-      $("ttMeta").innerHTML = `${esc(posName(p))} · born <span class="nationflag" title="${esc(countryName(p.nation))}" aria-label="${esc(countryName(p.nation))}">${countryFlag(p.nation)}</span>`;
+      $("ttMeta").innerHTML = `${esc(posName(p))} · born ${countryFlagHtml(p.nation)}`;
       $("ttSeason").textContent = seasonLabel(t.r.y);
       $("ttStats").innerHTML = statHeads(p).map((h, i) =>
         `<span class="chip"><b>${statCells(p, t.r)[i]}</b> ${h}</span>`).join("");
@@ -3590,9 +3640,11 @@ const COUNTRY_ALPHA2 = {
   HRV:"HR", SRB:"RS", BGR:"BG", ROU:"RO", ISR:"IL", IRL:"IE", MEX:"MX",
   VEN:"VE", KEN:"KE", GHA:"GH", HTI:"HT", THA:"TH"
 };
-const countryFlag = c => {
-  const iso = COUNTRY_ALPHA2[c];
-  return iso ? [...iso].map(ch => String.fromCodePoint(127397 + ch.charCodeAt(0))).join("") : esc(c || "?");
+const countryFlagHtml = c => {
+  const iso = COUNTRY_ALPHA2[c], name = countryName(c);
+  return iso
+    ? `<img class="nationflag" src="https://flagcdn.com/24x18/${iso.toLowerCase()}.png" srcset="https://flagcdn.com/48x36/${iso.toLowerCase()}.png 2x" width="24" height="18" alt="${esc(name)} flag" title="${esc(name)}">`
+    : `<span class="nationcode" title="${esc(name)}">${esc(c || "?")}</span>`;
 };
 const ordinal = n => { const v = n % 100; return n + (v >= 11 && v <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[n % 10] || "th"); };
 function shuffled(arr, rnd = Math.random) {
@@ -6392,30 +6444,37 @@ function paintAccentControls() {
 }
 function applyAccent(value, save = true) {
   if (!HEX_COLOUR.test(value || "")) return;
-  const accent = value.toLowerCase(), root = document.documentElement;
+  const accent = value.toLowerCase(), root = document.documentElement, ink = accentInk(accent);
   root.style.setProperty("--accent", accent);
-  root.style.setProperty("--accent-ink", accentInk(accent));
+  root.style.setProperty("--accent-ink", ink);
+  root.style.setProperty("--link", accent);
+  root.style.setProperty("--arena", accent);
+  root.style.setProperty("--arena-blue", accent);
+  root.style.setProperty("--arena-mint", accent);
+  root.style.setProperty("--arena-deep", `color-mix(in srgb, ${accent} 62%, #000)`);
+  root.style.setProperty("--arena-glow", `color-mix(in srgb, ${accent} 20%, transparent)`);
   if (save) store.set("sweater-accent", accent);
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = accent;
   paintAccentControls();
 }
+function applyAppearance(theme, save = true) {
+  if (!["dark", "light"].includes(theme)) return;
+  const root = document.documentElement;
+  root.dataset.theme = theme;
+  root.style.colorScheme = theme;
+  if (save) store.set("sweater-theme", theme);
+  applyAccent(HEX_COLOUR.test(store.get("sweater-accent") || "") ? store.get("sweater-accent") : DEFAULT_ACCENT, false);
+  paintAppearanceControls();
+}
 $("settingsBtn").onclick = () => { paintAccentControls(); paintAppearanceControls(); openModal("settingsModal"); };
-$("accentGrid").addEventListener("click", e => {
-  const b = e.target.closest("[data-accent]");
-  if (b) applyAccent(b.dataset.accent);
-});
+document.querySelectorAll("[data-accent]").forEach(b => b.addEventListener("click", () => applyAccent(b.dataset.accent)));
 $("accentPicker").addEventListener("input", e => applyAccent(e.target.value));
+$("accentPicker").addEventListener("change", e => applyAccent(e.target.value));
 applyAccent(HEX_COLOUR.test(store.get("sweater-accent") || "") ? store.get("sweater-accent") : DEFAULT_ACCENT, false);
 
-$("appearanceChoice").addEventListener("click", e => {
-  const b = e.target.closest("[data-theme-choice]");
-  if (!b) return;
-  document.documentElement.dataset.theme = b.dataset.themeChoice;
-  store.set("sweater-theme", b.dataset.themeChoice);
-  paintAppearanceControls();
-});
-paintAppearanceControls();
+document.querySelectorAll("[data-theme-choice]").forEach(b => b.addEventListener("click", () => applyAppearance(b.dataset.themeChoice)));
+applyAppearance(isDark() ? "dark" : "light", false);
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
 document.addEventListener("keydown", e => {
   if (onHub || !game.startsWith("hl_") || document.querySelector(".modal.open") || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
