@@ -5455,51 +5455,9 @@ G.trophy = {
       `<option value="${esc(name)}">${esc(name)}</option>`).join("")}`;
     $("trTrophy").value = selectedTrophy;
     $("trRounds").value = String(of);
-    // Keep these nodes alive between renders. Replacing the whole row made the
-    // old number -> check/X change snap with no meaningful transition.
-    const dots = $("trDots");
-    let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
-    if (dotNodes.length !== of) {
-      dots.innerHTML = `<span class="tr-active-glider" aria-hidden="true"></span>` + Array.from({ length: of }, (_, n) =>
-        `<span class="shdot" data-round="${n}" aria-label="Question ${n + 1}">` +
-          `<span class="tr-dot-number">${n + 1}</span>` +
-          `<span class="tr-dot-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path></path></svg></span>` +
-        `</span>`
-      ).join("");
-      dotNodes = Array.from(dots.querySelectorAll(".shdot"));
-    }
-    dotNodes.forEach((dot, n) => {
-      const done = n < i, won = done && this.right(t, st.guesses[n], n);
-      dot.classList.toggle("ok", done && won);
-      dot.classList.toggle("bad", done && !won);
-      dot.classList.toggle("now", !done && n === i && !st.over);
-      dot.setAttribute("aria-label", done ? `Question ${n + 1}: ${won ? "correct" : "incorrect"}` : `Question ${n + 1}${n === i && !st.over ? ": current" : ""}`);
-      const path = dot.querySelector(".tr-dot-mark path");
-      if (path) path.setAttribute("d", won ? "M6.5 12.5 10.2 16.2 17.8 8.4" : "M8.2 8.2 15.8 15.8 M15.8 8.2 8.2 15.8");
-    });
-    // Move one persistent accent indicator to the current question. Because the
-    // same node survives each render, CSS interpolates its x/y position instead
-    // of the highlight snapping off one dot and onto the next.
-    const glider = dots.querySelector(".tr-active-glider");
-    const activeDot = !st.over ? dotNodes[i] : null;
-    if (glider && activeDot) {
-      const hostRect = dots.getBoundingClientRect(), dotRect = activeDot.getBoundingClientRect();
-      const x = dotRect.left - hostRect.left + dots.scrollLeft;
-      const y = dotRect.top - hostRect.top + dots.scrollTop;
-      if (!glider.classList.contains("ready")) {
-        glider.style.transition = "none";
-        glider.style.setProperty("--tr-dot-x", `${x}px`);
-        glider.style.setProperty("--tr-dot-y", `${y}px`);
-        void glider.offsetWidth;
-        glider.style.transition = "";
-        glider.classList.add("ready");
-      } else {
-        glider.style.setProperty("--tr-dot-x", `${x}px`);
-        glider.style.setProperty("--tr-dot-y", `${y}px`);
-      }
-    } else if (glider) {
-      glider.classList.remove("ready");
-    }
+    paintQuestionProgress("trDots", of, st.over ? -1 : i, Array.from({ length: of }, (_, n) =>
+      n < i ? { status: this.right(t, st.guesses[n], n) ? "ok" : "bad", mark: this.right(t, st.guesses[n], n) ? "check" : "x" } : null
+    ));
     $("trQ").innerHTML = st.over && !showing ? "That's the game"
       : `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
     // Answering keeps the same four buttons and only changes their classes, so
