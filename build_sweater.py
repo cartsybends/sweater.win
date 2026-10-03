@@ -4623,7 +4623,13 @@ G.shoot = {
   guess(t, x) { return typeof x === "string" && /^[0-3]:(-1|[0-4])$/.test(x) ? false : null; },
   render(t, st) {
     const i = st.guesses.length, icon = { goal: "🚨", save: "🧤", miss: "❌" };
-    $("shDots").innerHTML = [0, 1, 2, 3, 4].map(n => `<span class="shdot${n === i && !st.over ? " now" : ""}">${n < i ? icon[this.outcome(t, st.guesses[n], n)] : n + 1}</span>`).join("");
+    paintQuestionProgress("shDots", 5, st.over ? -1 : i, [0, 1, 2, 3, 4].map(n => {
+      if (n >= i) return null;
+      const out = this.outcome(t, st.guesses[n], n);
+      return out === "goal" ? { status: "ok", text: "🚨", label: "goal" }
+        : out === "save" ? { status: "neutral", text: "🧤", label: "saved" }
+        : { status: "bad", mark: "x", label: "missed" };
+    }));
     const lastI = i - 1, showResult = shootUI.phase === "result" && lastI >= 0;
     const r = t.rounds[showResult ? lastI : Math.min(i, 4)];
     $("shQ").textContent = st.over && !showResult ? "Shootout over" : `Shooter ${(showResult ? lastI : i) + 1}: ${r.q}`;
