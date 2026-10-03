@@ -1856,6 +1856,59 @@ TEMPLATE = r'''<!DOCTYPE html>
     #view-trophy #trDots .tr-dot-mark path, #view-trophy #trDots .tr-active-glider { transition: none; }
     #view-trophy #trDots .shdot::after { animation: none !important; }
   }
+  /* Shared numbered-question progress: Trophy Case is the canonical motion/style. */
+  .question-progress { position: relative; }
+  .question-progress .tr-active-glider {
+    position: absolute; left: 0; top: 0; z-index: 0; width: 28px; height: 28px; border-radius: 50%;
+    pointer-events: none; opacity: 0; will-change: transform; border: 1px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 13%, var(--panel));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 11%, transparent);
+    transform: translate3d(var(--tr-dot-x, 0px), var(--tr-dot-y, 0px), 0);
+    transition: transform .46s cubic-bezier(.22,.82,.2,1), opacity .18s ease, background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .question-progress .tr-active-glider.ready { opacity: 1; }
+  .question-progress .shdot {
+    position: relative; z-index: 1; isolation: isolate; width: 28px; height: 28px; overflow: visible; font-size: 12px;
+    box-shadow: none; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 78%, var(--cell)); transform: translateZ(0);
+    transition: background-color .34s cubic-bezier(.2,.8,.2,1), border-color .34s cubic-bezier(.2,.8,.2,1),
+                box-shadow .34s cubic-bezier(.2,.8,.2,1), transform .34s cubic-bezier(.2,.85,.25,1.25);
+  }
+  .question-progress .shdot::after {
+    content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit; border: 1.5px solid transparent; opacity: 0; pointer-events: none;
+  }
+  .question-progress .tr-dot-number, .question-progress .tr-dot-mark {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    transition: opacity .2s ease, transform .32s cubic-bezier(.2,.85,.25,1.3);
+  }
+  .question-progress .tr-dot-number { opacity: 1; transform: scale(1); }
+  .question-progress .tr-dot-mark { opacity: 0; transform: scale(.58) rotate(-8deg); }
+  .question-progress .tr-dot-mark svg { width: 16px; height: 16px; overflow: visible; }
+  .question-progress .tr-dot-mark path {
+    fill: none; stroke: currentColor; stroke-width: 2.35; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 28; stroke-dashoffset: 28; transition: stroke-dashoffset .34s cubic-bezier(.35,0,.15,1) .06s;
+  }
+  .question-progress .tr-dot-custom { display: none; font-size: 13px; line-height: 1; }
+  .question-progress .tr-dot-mark.has-custom svg { display: none; }
+  .question-progress .tr-dot-mark.has-custom .tr-dot-custom { display: block; }
+  .question-progress .shdot.now { transform: scale(1.035); border-color: transparent; background: transparent; box-shadow: none; color: var(--accent); font-weight: 750; }
+  .question-progress .shdot.ok, .question-progress .shdot.bad, .question-progress .shdot.neutral { transform: scale(1); font-weight: 700; }
+  .question-progress .shdot.ok { color: var(--hit); border-color: color-mix(in srgb, var(--hit) 72%, var(--line)); background: color-mix(in srgb, var(--hit) 10%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hit) 24%, transparent); }
+  .question-progress .shdot.bad { color: #c94a43; border-color: color-mix(in srgb, #c94a43 72%, var(--line)); background: color-mix(in srgb, #c94a43 9%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, #c94a43 20%, transparent); }
+  .question-progress .shdot.neutral { color: var(--near); border-color: color-mix(in srgb, var(--near) 72%, var(--line)); background: color-mix(in srgb, var(--near) 10%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--near) 22%, transparent); }
+  .question-progress .shdot.ok .tr-dot-number, .question-progress .shdot.bad .tr-dot-number, .question-progress .shdot.neutral .tr-dot-number { opacity: 0; transform: scale(.66); }
+  .question-progress .shdot.ok .tr-dot-mark, .question-progress .shdot.bad .tr-dot-mark, .question-progress .shdot.neutral .tr-dot-mark { opacity: 1; transform: scale(1) rotate(0); }
+  .question-progress .shdot.ok .tr-dot-mark path, .question-progress .shdot.bad .tr-dot-mark path, .question-progress .shdot.neutral .tr-dot-mark path { stroke-dashoffset: 0; }
+  .question-progress .shdot.ok::after { border-color: color-mix(in srgb, var(--hit) 50%, transparent); animation: trophy-dot-ring .52s cubic-bezier(.2,.7,.2,1) both; }
+  .question-progress .shdot.bad::after { border-color: color-mix(in srgb, #c94a43 45%, transparent); animation: trophy-dot-ring .46s cubic-bezier(.2,.7,.2,1) both; }
+  .question-progress .shdot.neutral::after { border-color: color-mix(in srgb, var(--near) 45%, transparent); animation: trophy-dot-ring .46s cubic-bezier(.2,.7,.2,1) both; }
+  :root[data-theme="dark"] .question-progress .shdot.bad { color: #ee7168; }
+  @media (prefers-reduced-motion: reduce) {
+    .question-progress .shdot, .question-progress .tr-dot-number, .question-progress .tr-dot-mark, .question-progress .tr-dot-mark path, .question-progress .tr-active-glider { transition: none; }
+    .question-progress .shdot::after { animation: none !important; }
+  }
+  #view-truths .twlist .shopt { width: 100%; min-height: 72px; padding: 16px 18px 16px 48px; border-radius: 13px; text-align: left; }
+  #view-truths .twtext { display: block; padding-right: 96px; font-size: 15px; line-height: 1.4; }
+  #view-truths .twtag { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .055em; text-transform: uppercase; }
   #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   .trophy-prompt { display: block; font-size: 14px; font-weight: 500; color: var(--muted); }
   .trophy-title { display: block; margin: 8px auto 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 750; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
