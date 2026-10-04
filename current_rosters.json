@@ -934,11 +934,6 @@
   "team": "CAR",
   "number": 4
  },
- "8484428": {
-  "name": "Charles Alexis Legault",
-  "team": "CAR",
-  "number": 62
- },
  "8480817": {
   "name": "K'Andre Miller",
   "team": "CAR",
@@ -963,6 +958,11 @@
   "name": "Brandon Bussi",
   "team": "CAR",
   "number": 32
+ },
+ "8481611": {
+  "name": "Pyotr Kochetkov",
+  "team": "CAR",
+  "number": 52
  },
  "8475745": {
   "name": "Charlie Coyle",
