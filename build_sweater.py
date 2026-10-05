@@ -201,12 +201,44 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (prefers-reduced-motion: reduce) { .shake, .jystop, .hintchip { animation: none; } .blurbox img { transition: none; } }
 
   /* draft day */
-  #drHist { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 8px 0; }
-  .drrow { display: flex; gap: 6px; }
-  #drHints .hintchip { background: var(--near); color: var(--near-fg); border-color: color-mix(in srgb, var(--near-fg) 18%, transparent);
-                       font-weight: 650; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--near-fg) 10%, transparent); }
-  #drHints .hintchip b { color: inherit; }
-  #drHints .hintchip img { background: #fff; border-radius: 5px; padding: 1px; }
+  .drinputs { margin-bottom: 8px; }
+  .drlegend { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px 13px; color: var(--muted); font-size: 11px; font-weight: 700;
+              letter-spacing: .025em; margin: 0 auto 10px; }
+  .drlegend span { display: inline-flex; align-items: center; gap: 5px; }
+  .drlegendbox { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .drlegendbox.exact { background: var(--hit); }
+  .drlegendbox.close { background: var(--near); }
+  .drboard { width: min(430px, 100%); margin: 10px auto 0; overflow: hidden; border: 1px solid var(--line); border-radius: 14px;
+             background: color-mix(in srgb, var(--panel) 91%, transparent); }
+  .drhead, .drrow { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+  .drhead { background: var(--line); }
+  .drhead span { padding: 7px 12px; background: color-mix(in srgb, var(--panel) 92%, var(--cell)); color: var(--muted); font-size: 10px;
+                 font-weight: 850; letter-spacing: .075em; text-transform: uppercase; text-align: center; }
+  #drHist { display: flex; flex-direction: column; gap: 1px; background: var(--line); }
+  .drguess { min-height: 45px; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 12px;
+             background: var(--panel); color: var(--fg); font-size: 15px; font-weight: 750; font-variant-numeric: tabular-nums; }
+  .drguess.hit { background: var(--hit); color: var(--hit-fg); }
+  .drguess.near { background: var(--near); color: var(--near-fg); }
+  .drguess .dir { font-size: 15px; font-weight: 900; }
+  .drscout { width: min(430px, 100%); margin: 10px auto; display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+             border: 1px solid color-mix(in srgb, var(--near) 58%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--near) 22%, var(--panel));
+             color: var(--fg); animation: drscoutin .38s cubic-bezier(.2,.8,.2,1) both; }
+  .drscout img { width: 42px; height: 42px; flex: none; object-fit: contain; background: #fff; border-radius: 9px; padding: 3px; }
+  .drscout small, .drreveal small { display: block; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+  .drscout b { display: block; margin-top: 2px; font-size: 15px; }
+  .drreveal { width: min(520px, 100%); margin: 14px auto 4px; padding: 15px 16px; border: 1px solid color-mix(in srgb, var(--hit) 48%, var(--line));
+              border-radius: 16px; background: color-mix(in srgb, var(--hit) 10%, var(--panel)); animation: drrevealpop .38s cubic-bezier(.2,.85,.25,1.08) both; }
+  .drrevealmain { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 13px; margin-top: 7px; }
+  .drrevealmain img { width: 52px; height: 52px; object-fit: contain; background: #fff; border-radius: 10px; padding: 4px; }
+  .drrevealmain b { display: block; font-size: 20px; line-height: 1.15; }
+  .drrevealmain span { display: block; color: var(--muted); margin-top: 3px; font-size: 13px; }
+  @keyframes drscoutin { from { opacity: 0; transform: translateY(-5px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes drrevealpop { from { opacity: 0; transform: translateY(5px) scale(.97); } to { opacity: 1; transform: none; } }
+  @media (max-width: 520px) {
+    .drinputs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(105px, .75fr); }
+    .drinputs .btn { grid-column: 1 / -1; min-height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .drscout, .drreveal { animation: none; } }
   .numrow select { padding: 11px 10px; font-size: 16px; border: 1px solid #bbb; border-radius: 6px; background: var(--bg); color: var(--fg); }
 
   /* birthplace map */
@@ -2442,13 +2474,20 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div><p class="pname" id="drName"></p><p class="pmeta tmeta" id="drMeta"></p></div>
     </div>
     <p class="ttq">When was he drafted, and in which round?</p>
-    <div class="numrow wide">
-      <input id="drYear" type="text" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="Draft year">
+    <div class="numrow wide drinputs">
+      <input id="drYear" type="text" inputmode="numeric" maxlength="4" autocomplete="off" enterkeyhint="next" aria-label="Draft year">
       <select id="drRound" aria-label="Draft round"></select>
       <button class="btn" id="drGo" type="button">Guess</button>
     </div>
-    <div class="chips hints" id="drHints"></div>
-    <div id="drHist"></div>
+    <div class="drlegend" aria-label="Draft Day feedback legend">
+      <span><i class="drlegendbox exact"></i>Exact</span><span><i class="drlegendbox close"></i>Close</span><span>↑ Later</span><span>↓ Earlier</span>
+    </div>
+    <section class="drscout" id="drScout" hidden aria-live="polite"></section>
+    <div class="drboard" id="drBoard" hidden>
+      <div class="drhead"><span>Year</span><span>Round</span></div>
+      <div id="drHist"></div>
+    </div>
+    <section class="drreveal" id="drReveal" hidden aria-live="polite"></section>
     <p class="hint" id="drLeft"></p>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs draft info. Rebuild the site to load it.</p>
@@ -3904,7 +3943,22 @@ function shuffled(arr, rnd = Math.random) {
 const hasDraft = p => Array.isArray(p.draft) && p.draft.length >= 2;
 const DR_POOL = PLAYERS.filter(hasDraft);
 const draftKey = p => `${p.draft[0]}-${p.draft[1]}`;
-const DR_MIN_YEAR = 1985, DR_MAX_ROUND = 9;
+const DR_MIN_YEAR = 1985;
+const DR_ROUNDS_BY_YEAR = new Map();
+for (const p of DR_POOL) {
+  const [y, r] = p.draft;
+  DR_ROUNDS_BY_YEAR.set(y, Math.max(DR_ROUNDS_BY_YEAR.get(y) || 0, r || 0));
+}
+function draftRoundLimit(year) {
+  const observed = DR_ROUNDS_BY_YEAR.get(year) || 0;
+  const era = year >= 2005 ? 7 : year >= 1995 ? 9 : year >= 1992 ? 11 : 12;
+  return Math.max(observed, era);
+}
+function paintDraftRounds(year, keep = true) {
+  const sel = $("drRound"), prev = keep ? Number(sel.value) : 0, max = draftRoundLimit(year);
+  sel.innerHTML = '<option value="">Round</option>' + Array.from({ length: max }, (_, i) => `<option value="${i + 1}">Round ${i + 1}</option>`).join("");
+  if (prev && prev <= max) sel.value = String(prev);
+}
 G.draft = {
   title: "Draft Day", share: "Sweater Draft", view: "view-draft", max: 5, next: "Next player",
   cheers: ["Scouting genius! 🔭", "Snipe! 🎯", "Hat trick! 🎩", "Got there! 💪", "Buzzer beater! 🚨"],
@@ -3922,39 +3976,58 @@ G.draft = {
   },
   reset(t) {
     $("drHist").innerHTML = "";
+    $("drBoard").hidden = true;
+    $("drScout").hidden = true;
+    $("drReveal").hidden = true;
     $("drImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
     $("drImg").src = t.headshot || FALLBACK;
     $("drName").textContent = t.name;
-    $("drMeta").innerHTML = `<img src="${logo(t.team)}" alt="" onerror="this.remove()"> ${esc(teamName(t.team))} · ${posName(t)} · age ${ageOf(t.birth)}`;
+    $("drMeta").innerHTML = `<img src="${logo(t.team)}" alt="" onerror="this.remove()"> ${esc(teamName(t.team))} · ${posName(t)}`;
     $("drYear").value = "";
-    $("drRound").value = "";
+    paintDraftRounds(new Date().getFullYear(), false);
   },
   guess(t, x) {
     if (typeof x !== "string" || !/^\d{4}-\d{1,2}$/.test(x)) return null;
-    const [ys, rs, y, r] = this.states(t, x), [ty, tr] = t.draft;
-    const cls = s => s === true ? "hit" : s === "near" ? "near" : "";
-    const row = document.createElement("div");
-    row.className = "drrow newrow";
-    row.innerHTML = `<span class="chip ${cls(ys)}">${y}${ys === true ? " ✓" : y < ty ? " ↑" : " ↓"}</span>
-      <span class="chip ${cls(rs)}">Round ${r}${rs === true ? " ✓" : r < tr ? " ↑" : " ↓"}</span>`;
-    $("drHist").appendChild(row);
+    const [ys, rs] = this.states(t, x);
     return ys === true && rs === true;
   },
   render(t, st) {
-    const wrong = st.guesses.filter(x => x !== draftKey(t)).length;
-    const next = hintChips("drHints", t.draft[3] ? [
-      { at: 3, html: `Drafted by <img src="${logo(t.draft[3])}" alt="" onerror="this.remove()"> <b>${esc(teamName(t.draft[3]))}</b>` },
-    ] : [], wrong, st.over);
-    const left = this.max - st.guesses.length;
-    $("drLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left. ↑ means later, ↓ earlier. Yellow: year within 2 or round within 1.${next}`;
+    const wrong = st.guesses.filter(x => x !== draftKey(t)).length, left = this.max - st.guesses.length;
+    const cls = s => s === true ? "hit" : s === "near" ? "near" : "";
+    $("drBoard").hidden = !st.guesses.length;
+    $("drHist").innerHTML = st.guesses.map((x, i) => {
+      const [ys, rs, y, r] = this.states(t, x), [ty, tr] = t.draft;
+      const dir = (v, target, ok) => ok === true ? "✓" : v < target ? "↑" : "↓";
+      return `<div class="drrow${i === st.guesses.length - 1 ? " newrow" : ""}">
+        <div class="drguess ${cls(ys)}"><span>${y}</span><span class="dir" aria-label="${ys === true ? "exact" : y < ty ? "later" : "earlier"}">${dir(y, ty, ys)}</span></div>
+        <div class="drguess ${cls(rs)}"><span>Round ${r}</span><span class="dir" aria-label="${rs === true ? "exact" : r < tr ? "later" : "earlier"}">${dir(r, tr, rs)}</span></div>
+      </div>`;
+    }).join("");
+
+    const scout = $("drScout"), showScout = !st.over && !!t.draft[3] && wrong >= 3;
+    scout.hidden = !showScout;
+    if (showScout) scout.innerHTML = `<img src="${logo(t.draft[3])}" alt="" onerror="this.remove()"><div><small>Scouting report</small><b>Drafted by ${esc(teamName(t.draft[3]))}</b></div>`;
+
+    const reveal = $("drReveal");
+    reveal.hidden = !st.over;
+    if (st.over) {
+      const team = t.draft[3], overall = t.draft[2] ? `${ordinal(t.draft[2])} overall` : "Overall pick unavailable";
+      reveal.innerHTML = `<small>Draft result</small><div class="drrevealmain">${team ? `<img src="${logo(team)}" alt="" onerror="this.remove()">` : ""}
+        <div><b>${t.draft[0]} · Round ${t.draft[1]}</b><span>${esc(overall)}${team ? ` · ${esc(teamName(team))}` : ""}</span></div></div>`;
+    }
+
+    if (st.over) $("drLeft").textContent = "";
+    else if (t.draft[3] && wrong < 3) {
+      const n = 3 - wrong;
+      $("drLeft").textContent = `${left} ${left === 1 ? "try" : "tries"} left · scouting report after ${n} more wrong ${n === 1 ? "guess" : "guesses"}`;
+    } else $("drLeft").textContent = `${left} ${left === 1 ? "try" : "tries"} left`;
     ["drYear", "drRound", "drGo"].forEach(id => { $(id).disabled = !!st.over; });
   },
   squares(t, x) { const [a, b] = this.states(t, x); return `${sq(a)}${sq(b)} `; }
 };
 (() => {
   const now = new Date().getFullYear();
-  $("drRound").innerHTML = '<option value="">Round</option>' +
-    Array.from({ length: DR_MAX_ROUND }, (_, i) => `<option value="${i + 1}">Round ${i + 1}</option>`).join("");
+  paintDraftRounds(now, false);
   $("drYear").placeholder = `Year (${DR_MIN_YEAR}–${now})`;
 })();
 function submitDraft() {
@@ -3966,7 +4039,22 @@ function submitDraft() {
   doGuess(key);
 }
 $("drGo").onclick = submitDraft;
-$("drYear").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitDraft(); } });
+$("drYear").addEventListener("input", () => {
+  const y = Number($("drYear").value.trim());
+  if (Number.isInteger(y) && y >= DR_MIN_YEAR && y <= new Date().getFullYear()) paintDraftRounds(y);
+});
+$("drYear").addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  const y = Number($("drYear").value.trim());
+  if (!Number.isInteger(y) || y < DR_MIN_YEAR || y > new Date().getFullYear()) return submitDraft();
+  paintDraftRounds(y);
+  $("drRound").focus();
+});
+$("drRound").addEventListener("change", () => {
+  if ($("drRound").value && $("drYear").value.trim().length === 4) $("drGo").focus();
+});
+$("drRound").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submitDraft(); } });
 
 // ---- Birthplace: drop pins on the map ----
 const MAP_K = 0.72;                     // squash longitude so the map looks natural
