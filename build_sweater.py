@@ -1028,6 +1028,105 @@ TEMPLATE = r'''<!DOCTYPE html>
   .wrong li small { margin-left: auto; color: var(--muted); }
   .wrong .x { color: #c0392b; font-weight: 700; }
 
+  /* Stat Line — progressive career reveal */
+  #view-statline .intro { margin-bottom: 12px; }
+  .slcareer {
+    width: min(650px, 100%); margin: 0 auto 14px; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 17px;
+    background: color-mix(in srgb, var(--panel) 94%, transparent);
+    box-shadow: 0 10px 28px rgba(23,59,75,.055);
+  }
+  .slcareerhead {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 13px 15px 11px; border-bottom: 1px solid var(--line);
+  }
+  .slcareerhead span { display: flex; flex-direction: column; gap: 1px; }
+  .slcareerhead small {
+    color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .slcareerhead b { font-size: 15px; letter-spacing: -.01em; }
+  .slcareerhead em {
+    font-style: normal; color: var(--muted); font-size: 12px; font-weight: 700;
+  }
+  .sltablewrap { overflow-x: auto; padding: 8px 10px 4px; }
+  .sltable { border-collapse: separate; border-spacing: 0 6px; width: 100%; min-width: 500px; }
+  .sltable th {
+    padding: 0 8px 2px; color: var(--muted); font-size: 10px; font-weight: 800;
+    letter-spacing: .055em; text-transform: uppercase; text-align: center;
+  }
+  .sltable th:first-child, .sltable td:first-child { text-align: left; }
+  .sltable td {
+    height: 43px; padding: 0 8px; background: color-mix(in srgb, var(--cell) 80%, var(--panel));
+    color: var(--cell-fg); text-align: center; font-size: 15px; font-variant-numeric: tabular-nums;
+    border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  }
+  .sltable td:first-child {
+    border-left: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    border-radius: 9px 0 0 9px; font-weight: 750;
+  }
+  .sltable td:last-child {
+    border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    border-radius: 0 9px 9px 0;
+  }
+  .sltable tr.slrow-new td { animation: slrowin .34s cubic-bezier(.2,.85,.2,1) both; }
+  .sltable tr.slrow-new td:nth-child(2) { animation-delay: 20ms; }
+  .sltable tr.slrow-new td:nth-child(3) { animation-delay: 35ms; }
+  .sltable tr.slrow-new td:nth-child(4) { animation-delay: 50ms; }
+  .sltable tr.slrow-new td:nth-child(5) { animation-delay: 65ms; }
+  .sltable tr.slrow-new td:nth-child(6) { animation-delay: 80ms; }
+  @keyframes slrowin {
+    from { opacity: 0; transform: translateY(-6px); background: color-mix(in srgb, var(--link) 12%, var(--panel)); }
+    to { opacity: 1; transform: none; }
+  }
+  .slclues {
+    display: flex; flex-wrap: wrap; gap: 7px; min-height: 0; padding: 0 13px 12px;
+  }
+  .slclue {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 31px; padding: 5px 9px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 80%, var(--cell)); font-size: 11px;
+    animation: slcluein .28s ease both;
+  }
+  .slclue img { width: 20px; height: 20px; object-fit: contain; }
+  .slclue small { color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; }
+  .slclue b { font-size: 11px; }
+  @keyframes slcluein { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+
+  #view-statline .search { width: min(560px,100%); margin-top: 3px; }
+  #slWrong.slwrong {
+    width: min(560px,100%); margin: 10px auto 0; display: flex; flex-direction: column; gap: 6px;
+  }
+  #slWrong > .slmiss {
+    box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 10px;
+    border: 1px solid rgba(239,68,68,.32); border-radius: 10px; background: rgba(239,68,68,.07);
+  }
+  #slWrong > .slmiss.slmiss-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
+  #slWrong > .slmiss .x {
+    display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
+    color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
+  }
+  #slWrong > .slmiss .who {
+    min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    color: var(--fg); font-size: 14px; font-weight: 700;
+  }
+  .slmatch {
+    flex: none; padding: 3px 7px; border-radius: 999px;
+    background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850;
+  }
+  #view-statline #slLeft { margin-top: 8px; }
+  @media (max-width: 520px) {
+    .slcareer { border-radius: 14px; }
+    .slcareerhead { padding: 11px 12px 9px; }
+    .sltablewrap { padding-left: 7px; padding-right: 7px; }
+    .sltable { min-width: 470px; }
+    .sltable td { height: 40px; padding: 0 6px; font-size: 14px; }
+    .slclues { padding-left: 10px; padding-right: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sltable tr.slrow-new td, .slclue, #slWrong > .slmiss { animation: none; }
+  }
+
   /* stats: guess the team */
   .ttcard { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 4px 0; }
   .ttcard img { width: 96px; height: 96px; border-radius: 50%; background: var(--cream); object-fit: cover; }
@@ -2426,26 +2525,29 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-statline" hidden>
-    <p class="intro" id="slIntro"></p>
-    <div class="search">
+    <p class="intro" id="slIntro">Name the player from their NHL career.</p>
+    <div class="slcareer" id="slCareer">
+      <div class="slcareerhead">
+        <span><small>Career clues</small><b id="slProgress">1 revealed</b></span>
+        <em id="slCareerNote">One season to start</em>
+      </div>
+      <div class="sltablewrap">
+        <table class="sltable">
+          <thead><tr id="slHead"></tr></thead>
+          <tbody id="slRows"></tbody>
+        </table>
+      </div>
+      <div class="slclues" id="slClues"></div>
+    </div>
+    <div class="search narrow">
       <input id="slGuess" autocomplete="off" role="combobox" aria-expanded="false"
-             aria-controls="slOpts" placeholder="Guess 1 of 8">
+             aria-controls="slOpts" placeholder="Guess 1 of 6">
       <ul class="list" id="slOpts" role="listbox" hidden></ul>
     </div>
+    <p class="hint" id="slLeft"></p>
+    <div class="slwrong" id="slWrong"></div>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
-    <div class="tabrow"><div class="tabs small" role="tablist" aria-label="Reveal order">
-      <button type="button" role="tab" data-order="oldest">Oldest season first</button>
-      <button type="button" role="tab" data-order="newest">Newest season first</button>
-    </div></div>
-    <p class="optnote center" id="slOrderNote"></p>
-    <p class="slhint" id="slHint" hidden></p>
-    <table class="seasons">
-      <thead><tr id="slHead"></tr></thead>
-      <tbody id="slRows"></tbody>
-    </table>
-    <p class="hint" id="slLeft"></p>
-    <ul class="wrong" id="slWrong"></ul>
   </section>
 
   <section class="view" id="view-hl" hidden>
@@ -3275,7 +3377,37 @@ const statCells = (p, r) => p.pos === "G"
   ? [r.gp, r.a, r.b.toFixed(2), r.c.toFixed(3).replace(/^0/, ""), r.d]
   : [r.gp, r.a, r.b, r.c, signed(r.e)];
 const statHeads = p => p.pos === "G" ? ["GP", "W", "GAA", "SV%", "SO"] : ["GP", "G", "A", "PTS", "+/−"];
-const HINT_AT = 4;   // wrong guesses before the team-logo hint in "guess the player"
+
+function slRevealRows(p) {
+  const all = seasonsOf(p);
+  if (all.length <= 1) return all.slice();
+  const score = r => p.pos === "G" ? (r.a * 3 + r.d * 4 + r.gp * .2) : r.c;
+  const best = all.reduce((bi, r, i) => score(r) > score(all[bi]) ? i : bi, 0);
+  const indices = [
+    Math.floor((all.length - 1) / 2),
+    best,
+    all.length - 1,
+    0,
+    Math.round((all.length - 1) * .75),
+    Math.round((all.length - 1) * .25),
+  ];
+  const out = [], used = new Set();
+  const take = i => {
+    if (i < 0 || i >= all.length || used.has(i) || out.length >= 6) return;
+    used.add(i); out.push(all[i]);
+  };
+  indices.forEach(take);
+  [...all.keys()].sort((a, b) => score(all[b]) - score(all[a])).forEach(take);
+  return out;
+}
+function slGuessMatches(target, p) {
+  const a = seasonsOf(target), b = seasonsOf(p);
+  const debutA = a[0] && a[0].y, debutB = b[0] && b[0].y;
+  return {
+    samePos: p.pos === target.pos,
+    sameEra: Number.isInteger(debutA) && Number.isInteger(debutB) && Math.abs(debutA - debutB) <= 3,
+  };
+}
 
 const SL_POOL = PLAYERS.filter(p => seasonsOf(p).length >= 3);
 const TT_POOL = PLAYERS.filter(p => teamSeasonsOf(p).length);
@@ -3320,9 +3452,9 @@ const G = {
   },
 
   statline: {
-    title: "Stat Line", share: "Sweater Stat Line", view: "view-statline", max: 8, next: "Next player",
+    title: "Stat Line", share: "Sweater Stat Line", view: "view-statline", max: 6, next: "Next player",
     cheers: ["Stat nerd, first try! 🤓", "Snipe! 🎯", "Hat trick! 🎩", "Nice read! 🧠",
-             "Got there! 🙌", "Solid shift! 💪", "Clutch! ⏱️", "Buzzer beater! 🚨"],
+             "Got there! 🙌", "Buzzer beater! 🚨"],
     pool: () => SL_POOL,
     daily(k) {
       const p = BYID.get(DAILY.statline[k]);
@@ -3333,40 +3465,64 @@ const G = {
     player: t => t,
     meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
     isWin: (t, id) => id === t.id,
-    reset() { $("slWrong").innerHTML = ""; this.shown = 0; },
+    reset() {
+      $("slWrong").innerHTML = "";
+      $("slClues").innerHTML = "";
+      this.shown = 0;
+    },
     guess(t, id) {
       const p = BYID.get(id);
-      if (!p) return null;
-      if (p.id !== t.id) {
-        const li = document.createElement("li");
-        li.className = "newrow";
-        li.innerHTML = `<span class="x">✕</span><span></span><small>${esc(p.team)} · ${esc(p.pos)}</small>`;
-        li.children[1].textContent = p.name;
-        $("slWrong").prepend(li);
-      }
-      return p.id === t.id;
+      return p ? p.id === t.id : null;
     },
     render(t, st) {
-      const all = seasonsOf(t), newest = (st.opts || {}).order === "newest";
-      const rows = newest ? all.slice().reverse() : all;
-      const wrong = st.guesses.filter(id => id !== t.id).length;
-      const shown = st.over ? rows.length : Math.min(rows.length, 1 + wrong);
-      $("slIntro").textContent =
-        `${posName(t)} · ${all.length} NHL seasons · ${seasonLabel(all[0].y)} to ${seasonLabel(all[all.length - 1].y)}`;
-      const hint = !st.over && wrong >= HINT_AT;
-      $("slHint").hidden = !hint;
-      if (hint) $("slHint").innerHTML = `Hint: he plays for <img src="${logo(t.team)}" alt="" onerror="this.remove()"><b>${esc(TEAM_NAMES[t.team] || t.team)}</b> now`;
-      $("slHead").innerHTML = `<th>Season</th>${statHeads(t).map(h => `<th>${h}</th>`).join("")}` +
-        (st.over ? "<th>Team</th>" : "");
+      const revealRows = slRevealRows(t), wrongIds = st.guesses.filter(id => id !== t.id), wrong = wrongIds.length;
+      const shown = st.over ? revealRows.length : Math.min(revealRows.length, 1 + wrong);
+      const freshIndex = !st.over && this.shown && shown > this.shown ? shown - 1 : -1;
+      const displayed = revealRows.slice(0, shown);
+      const heads = statHeads(t);
+
+      $("slIntro").textContent = st.over ? "Career revealed." : "Name the player from their NHL career.";
+      $("slProgress").textContent = st.over
+        ? `${seasonsOf(t).length} NHL ${seasonsOf(t).length === 1 ? "season" : "seasons"}`
+        : `${shown} of ${revealRows.length} stat lines revealed`;
+      $("slCareerNote").textContent = st.over ? `${seasonLabel(seasonsOf(t)[0].y)} – ${seasonLabel(seasonsOf(t).at(-1).y)}`
+        : wrong === 0 ? "One season to start" : "Every miss adds context";
+
+      $("slHead").innerHTML = `<th>Season</th>${heads.map(h => `<th>${h}</th>`).join("")}` + (st.over ? "<th>Team</th>" : "");
+      const rows = st.over ? seasonsOf(t) : displayed;
       $("slRows").innerHTML = rows.map((r, i) => {
-        if (i >= shown) return `<tr class="locked"><td>${seasonLabel(r.y)}</td><td colspan="${statHeads(t).length}">🔒 Locked</td></tr>`;
-        const cls = i >= (this.shown || 0) && this.shown ? ' class="newrow"' : "";
+        const cls = i === freshIndex ? ' class="slrow-new"' : "";
         return `<tr${cls}><td>${seasonLabel(r.y)}</td>${statCells(t, r).map(v => `<td>${v}</td>`).join("")}` +
           (st.over ? `<td>${r.teams.map(esc).join(" / ")}</td>` : "") + "</tr>";
       }).join("");
-      $("slLeft").textContent = st.over ? "" :
-        (shown < rows.length ? `Each wrong guess unlocks the next ${newest ? "older" : ""} season.`.replace("  ", " ") : "Every season is unlocked.")
-        + (wrong < HINT_AT ? ` A team hint unlocks after ${HINT_AT} wrong guesses.` : "");
+
+      const clues = [];
+      if (wrong >= 2 || st.over) clues.push(`<span class="slclue"><small>Position</small><b>${esc(posName(t))}</b></span>`);
+      if (wrong >= 3 || st.over) clues.push(`<span class="slclue"><small>${t.pos === "G" ? "Catches" : "Shoots"}</small><b>${esc(t.shoots || "?")}</b></span>`);
+      if (wrong >= 4 || st.over) clues.push(`<span class="slclue"><img src="${logo(t.team)}" alt="" onerror="this.remove()"><small>Current team</small><b>${esc(TEAM_NAMES[t.team] || t.team)}</b></span>`);
+      if (wrong >= 5 || st.over) clues.push(`<span class="slclue"><small>Player detail</small><b>${esc(countryName(t.nation))}${t.number ? ` · #${t.number}` : ""}</b></span>`);
+      $("slClues").innerHTML = clues.join("");
+
+      $("slWrong").innerHTML = wrongIds.slice().reverse().map((id, i) => {
+        const p = BYID.get(id);
+        if (!p) return "";
+        const m = slGuessMatches(t, p);
+        return `<div class="slmiss${i === 0 ? " slmiss-new" : ""}"><span class="x" aria-hidden="true">×</span><span class="who">${esc(p.name)}</span>` +
+          `${m.samePos ? '<span class="slmatch">Same position</span>' : ""}${m.sameEra ? '<span class="slmatch">Same era</span>' : ""}</div>`;
+      }).join("");
+
+      if (st.over) {
+        $("slLeft").textContent = "";
+      } else {
+        const left = this.max - st.guesses.length;
+        const next = wrong < 1 ? "another season"
+          : wrong < 2 ? "another season + position"
+          : wrong < 3 ? "another season + handedness"
+          : wrong < 4 ? "another season + current team"
+          : wrong < 5 ? "final player detail"
+          : "";
+        $("slLeft").textContent = `${left} ${left === 1 ? "try" : "tries"} left${next ? ` · next miss reveals ${next}` : ""}`;
+      }
       this.shown = shown;
     },
     squares: (t, id) => id === t.id ? "🟩" : "⬛"
@@ -6327,8 +6483,8 @@ const S = Object.fromEntries(GAME_IDS.map(g => [g, { target: null, guesses: [], 
 
 function hideBanner() { $("banner").style.display = "none"; }
 
-// ---- per-game options (hard mode, reveal order); locked while a game is in progress ----
-const OPTION_DEFAULTS = { classic: { hard: false }, statline: { order: "oldest" } };
+// ---- per-game options; locked while a game is in progress ----
+const OPTION_DEFAULTS = { classic: { hard: false } };
 const prefOpts = g => Object.assign({}, OPTION_DEFAULTS[g] || {}, store.get(`sweater-opts-${g}`) || {});
 const optsLocked = st => st.guesses.length > 0 && !st.over;
 
@@ -6596,13 +6752,6 @@ function renderOptions() {
     $("hardMode").disabled = locked;
     $("hardNote").textContent = locked ? "Locked until this game ends" : opts.hard ? "No silhouette" : "";
   }
-  if (game === "statline") {
-    document.querySelectorAll("[data-order]").forEach(b => {
-      b.setAttribute("aria-selected", b.dataset.order === opts.order);
-      b.disabled = locked;
-    });
-    $("slOrderNote").textContent = locked ? "Reveal order is locked until this game ends" : "";
-  }
 }
 
 function changeOption(key, value) {
@@ -6615,7 +6764,6 @@ function changeOption(key, value) {
   renderOptions();
 }
 $("hardMode").addEventListener("change", e => changeOption("hard", e.target.checked));
-document.querySelectorAll("[data-order]").forEach(b => b.addEventListener("click", () => changeOption("order", b.dataset.order)));
 
 function setGame(g) {
   if (g !== game) leaveGame(game);
@@ -7326,7 +7474,7 @@ HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: 
    has to read a description. They also power the shelf, Locker, and results. */
 const MODE_META = Object.freeze({
   classic:  { type: "Deduction", time: "3–5 min", difficulty: "Medium", fact: "Read the board: team, position, age and more all narrow the field.", next: "statline" },
-  statline: { type: "Stats", time: "3–5 min", difficulty: "Hard", fact: "Each wrong guess reveals another season from the player’s career.", next: "playoff" },
+  statline: { type: "Stats", time: "2–4 min", difficulty: "Hard", fact: "Each miss reveals another carefully chosen season and more of the player’s career fingerprint.", next: "playoff" },
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
   blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every guess sharpens the photo—risk a name early for the best score.", next: "zam" },
