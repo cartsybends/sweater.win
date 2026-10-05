@@ -2972,7 +2972,7 @@ const TEAM_IDS = { ANA:24,BOS:6,BUF:7,CGY:20,CAR:12,CHI:16,COL:21,CBJ:29,DAL:25,
 const TEAM_START = { ANA:1993,BOS:1924,BUF:1970,CGY:1980,CAR:1997,CHI:1926,COL:1995,CBJ:2000,DAL:1993,DET:1926,EDM:1979,FLA:1993,LAK:1967,MIN:2000,MTL:1917,NSH:1998,NJD:1982,NYI:1972,NYR:1926,OTT:1992,PHI:1967,PIT:1967,SJS:1991,SEA:2021,STL:1967,TBL:1992,TOR:1917,UTA:2024,VAN:1970,VGK:2017,WSH:1974,WPG:2011 };
 const TEAM_HISTORY = /*__TEAM_HISTORY__*/{}; // compact historical regular-season rows, built server-side
 const TEAM_DIV_ORDER = ["A","M","C","P"];
-const BYID = new Map([...PLAYERS, ...ROSTER_PLAYERS].map(p => [p.id, p]));
+const BYID = new Map([...ROSTER_PLAYERS, ...PLAYERS].map(p => [p.id, p]));
 // NHL's current logo CDN deliberately omits retired franchise codes. Keep a
 // focused archive map so historic trivia shows the proper mark instead of an
 // empty image. These are rendered PNG previews of the corresponding crest.
@@ -7853,14 +7853,17 @@ def _infer_game_lineups(game):
         g_ids = [int(r["playerId"]) for r in g_rows if r.get("playerId")]
         positions = {int(r["playerId"]): r.get("position") or "" for r in forwards + defense if r.get("playerId")}
         toi = {int(r["playerId"]): _clock_seconds(r.get("toi")) for r in forwards + defense if r.get("playerId")}
-        side_info[team] = {"f": f_ids[:12], "d": d_ids[:6], "g": g_ids[:2], "pos": positions, "toi": toi}
+        side_info[team] = {
+            "f": f_ids[:12], "d": d_ids[:6], "g": g_ids[:2],
+            "all_f": f_ids, "all_d": d_ids, "pos": positions, "toi": toi,
+        }
 
     if len(side_info) != 2:
         return {}
 
     skater_team = {}
     for team, info in side_info.items():
-        for pid in info["f"] + info["d"]:
+        for pid in info["all_f"] + info["all_d"]:
             skater_team[pid] = team
 
     intervals = defaultdict(lambda: defaultdict(list))
