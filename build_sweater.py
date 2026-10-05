@@ -233,7 +233,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mapsvg .maparrow.warm { fill: #d2912b; }
   .mapsvg .maparrow.close { fill: var(--near); }
   .mapsvg .maparrow.hit { fill: var(--hit); }
-  .mapsvg .mapring { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0; }
+  .mapsvg .mapring { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0;
+                     transform-box: fill-box; transform-origin: center; }
   .mapsvg .mapring.far { stroke: #c6534c; }
   .mapsvg .mapring.warm { stroke: #d2912b; }
   .mapsvg .mapring.close { stroke: var(--near); }
@@ -4165,11 +4166,14 @@ function drawPins(t, st) {
     const ray = Math.min(mapView.w * .105, Math.max(r * 5.2, len * .28));
     return [x1, y1, x1 + dx / len * ray, y1 + dy / len * ray];
   };
-  const badge = (g, d) => {
-    const [x, y] = toMap(...g), text = fmtKm(d);
-    const bw = Math.max(r * 5.2, text.length * r * .72), bh = r * 2.05;
-    const bx = x + r * 1.45, by = y - bh - r * .75;
-    return `<g class="mapbadge"><rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="${r * .72}" stroke-width="${sw}"/><text x="${bx + bw / 2}" y="${by + bh * .68}" font-size="${r * .92}" text-anchor="middle">${text}</text></g>`;
+  const badge = (g, d, customText = "") => {
+    const [x, y] = toMap(...g), text = customText || fmtKm(d);
+    const bw = Math.max(r * 5.2, text.length * r * .62), bh = r * 2.05;
+    const putRight = x < mapView.x + mapView.w * .68;
+    const putAbove = y > mapView.y + mapView.h * .2;
+    const bx = putRight ? x + r * 1.45 : x - bw - r * 1.45;
+    const by = putAbove ? y - bh - r * .75 : y + r * .75;
+    return `<g class="mapbadge"><rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="${r * .72}" stroke-width="${sw}"/><text x="${bx + bw / 2}" y="${by + bh * .68}" font-size="${r * .92}" text-anchor="middle">${esc(text)}</text></g>`;
   };
 
   let html = "";
@@ -4195,9 +4199,7 @@ function drawPins(t, st) {
       const [x, y] = toMap(...g);
       return `<line x1="${x}" y1="${y}" x2="${ax}" y2="${ay}" stroke-width="${sw * 1.7}" class="pinline"/>`;
     }).join("");
-    html += `<circle class="answer finalanswer" cx="${ax}" cy="${ay}" r="${r * 1.25}" stroke-width="${sw * 2.2}"/>
-      <g class="mapbadge"><rect x="${ax + r * 1.5}" y="${ay - r * 3}" width="${Math.max(r * 8, (t.bp[2] || "Birthplace").length * r * .62)}" height="${r * 2.15}" rx="${r * .72}" stroke-width="${sw}"/>
-      <text x="${ax + r * 1.5 + Math.max(r * 8, (t.bp[2] || "Birthplace").length * r * .62) / 2}" y="${ay - r * 1.58}" font-size="${r * .86}" text-anchor="middle">${esc(t.bp[2] || "Birthplace")}</text></g>`;
+    html += `<circle class="answer finalanswer" cx="${ax}" cy="${ay}" r="${r * 1.25}" stroke-width="${sw * 2.2}"/>${badge([t.bp[0], t.bp[1]], 0, t.bp[2] || "Birthplace")}`;
   }
   $("mapPins").innerHTML = html;
   if (animatedIndex >= 0) mapAnimatedGuessCount = st.guesses.length;
