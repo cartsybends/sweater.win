@@ -220,15 +220,48 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mapsvg .regional .capital-label { font-weight: 500; }
   .mapcredit { font-size: 11px; color: var(--muted); margin: 7px 0 0; text-align: center; }
   .mapcredit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
-  .mapsvg .pin { fill: #c0392b; stroke: #fff; }
-  .mapsvg .draftpin { fill: var(--fg); opacity: .85; }
+  .mapsvg .pin { fill: var(--accent); stroke: #fff; }
+  .mapsvg .draftpin { fill: var(--fg); opacity: .8; }
   .mapsvg .answer { fill: var(--hit); stroke: #fff; }
-  .mapsvg .pinline { stroke: #c0392b; stroke-dasharray: 1 1; opacity: .7; }
+  .mapsvg .pinline { stroke: color-mix(in srgb, var(--fg) 45%, transparent); stroke-dasharray: 3 3; opacity: .55; }
+  .mapsvg .maptrail { fill: none; stroke-linecap: round; opacity: .92; }
+  .mapsvg .maptrail.far { stroke: #c6534c; }
+  .mapsvg .maptrail.warm { stroke: #d2912b; }
+  .mapsvg .maptrail.close { stroke: var(--near); }
+  .mapsvg .maptrail.hit { stroke: var(--hit); }
+  .mapsvg .maparrow.far { fill: #c6534c; }
+  .mapsvg .maparrow.warm { fill: #d2912b; }
+  .mapsvg .maparrow.close { fill: var(--near); }
+  .mapsvg .maparrow.hit { fill: var(--hit); }
+  .mapsvg .mapring { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0; }
+  .mapsvg .mapring.far { stroke: #c6534c; }
+  .mapsvg .mapring.warm { stroke: #d2912b; }
+  .mapsvg .mapring.close { stroke: var(--near); }
+  .mapsvg .mapring.hit { stroke: var(--hit); }
+  .mapsvg .mapbadge rect { fill: color-mix(in srgb, var(--panel) 92%, transparent); stroke: color-mix(in srgb, var(--fg) 22%, transparent); }
+  .mapsvg .mapbadge text { fill: var(--fg); font-weight: 800; letter-spacing: .01em; }
+  .mapsvg .mapguess.old { opacity: .48; }
+  .mapsvg .mapguess.latest .maptrail { animation: maptraildraw .52s cubic-bezier(.2,.78,.2,1) both; }
+  .mapsvg .mapguess.latest .mapring { animation: mapringpulse .75s ease-out .08s both; }
+  .mapsvg .mapguess.latest .mapbadge { animation: mapbadgein .28s ease-out .3s both; transform-box: fill-box; transform-origin: center; }
+  .mapsvg .mapguess.latest .pin { animation: mappinpop .32s cubic-bezier(.2,.9,.24,1.22) both; transform-box: fill-box; transform-origin: center; }
+  .mapsvg .answer.finalanswer { animation: mapanswerpop .42s cubic-bezier(.2,.9,.24,1.18) both; transform-box: fill-box; transform-origin: center; }
+  @keyframes maptraildraw { from { stroke-dashoffset: 1; opacity: .15; } to { stroke-dashoffset: 0; opacity: .92; } }
+  @keyframes mapringpulse { 0% { opacity: .75; transform: scale(.55); } 100% { opacity: 0; transform: scale(2.35); } }
+  @keyframes mapbadgein { from { opacity: 0; transform: translateY(3px) scale(.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes mappinpop { 0% { transform: scale(.15); opacity: .2; } 72% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes mapanswerpop { 0% { transform: scale(.2); opacity: 0; } 70% { transform: scale(1.35); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
   .mapsvg text { fill: #fff; font-weight: 700; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .mapsvg .mapguess.latest .maptrail, .mapsvg .mapguess.latest .mapring, .mapsvg .mapguess.latest .mapbadge,
+    .mapsvg .mapguess.latest .pin, .mapsvg .answer.finalanswer { animation: none; }
+  }
   .mapctl { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 0; }
   .zoombtns { display: flex; gap: 6px; }
   #mpGo { min-width: 240px; }
   #mpHist { margin: 4px auto; }
+  .mapannounce { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px !important;
+                 overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
   /* connections */
   .cngrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 640px; margin: 6px auto; }
@@ -2435,7 +2468,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <p class="mapcredit">Capital labels reveal as you zoom · Map data: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener noreferrer">Natural Earth</a></p>
     </div>
     <div class="numrow"><button class="btn" id="mpGo" type="button" disabled>Tap the map to place a pin</button></div>
-    <div class="chips" id="mpHist"></div>
+    <p id="mpHist" class="mapannounce" aria-live="polite"></p>
     <p class="hint" id="mpLeft"></p>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs birthplace info. Rebuild the site to load it.</p>
@@ -3951,18 +3984,23 @@ function distanceKm([la1, lo1], [la2, lo2]) {
     + Math.cos(la1 * r) * Math.cos(la2 * r) * Math.sin((lo2 - lo1) * r / 2) ** 2;
   return 6371 * 2 * Math.asin(Math.min(1, Math.sqrt(a)));
 }
-function bearingArrow([la1, lo1], [la2, lo2]) {
+function bearingDeg([la1, lo1], [la2, lo2]) {
   const r = Math.PI / 180, y = Math.sin((lo2 - lo1) * r) * Math.cos(la2 * r);
   const x = Math.cos(la1 * r) * Math.sin(la2 * r) - Math.sin(la1 * r) * Math.cos(la2 * r) * Math.cos((lo2 - lo1) * r);
-  const deg = (Math.atan2(y, x) / r + 360) % 360;
-  return ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"][Math.round(deg / 45) % 8];
+  return (Math.atan2(y, x) / r + 360) % 360;
+}
+function bearingArrow(a, b) {
+  return ["⬆️", "↗️", "➡️", "↘️", "⬇️", "↙️", "⬅️", "↖️"][Math.round(bearingDeg(a, b) / 45) % 8];
+}
+function bearingName(a, b) {
+  return ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"][Math.round(bearingDeg(a, b) / 45) % 8];
 }
 const fmtKm = d => d < 10 ? `${d.toFixed(1)} km` : `${Math.round(d).toLocaleString()} km`;
 const mapPoints = (best, pins) => {
   const tier = [[100, 10], [250, 8], [500, 6], [1000, 4], [2500, 2]].find(([km]) => best <= km);
   return Math.max(0, (tier ? tier[1] : 0) - 2 * (pins - 1));
 };
-let mapDraftPin = null;
+let mapDraftPin = null, mapAnimatedGuessCount = 0, mapRevealFitDone = false;
 const mapView = { x: 0, y: 0, w: 0, h: 0 };
 
 G.map = {
@@ -3992,6 +4030,8 @@ G.map = {
   },
   reset(t) {
     mapDraftPin = null;
+    mapAnimatedGuessCount = (S.map && S.map.guesses ? S.map.guesses.length : 0);
+    mapRevealFitDone = false;
     $("mpImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
     $("mpImg").src = t.headshot || FALLBACK;
     $("mpName").textContent = t.name;
@@ -4002,20 +4042,22 @@ G.map = {
   guess(t, x) {
     if (!Array.isArray(x) || x.length !== 2 || !x.every(Number.isFinite) || Math.abs(x[0]) > 90 || Math.abs(x[1]) > 180) return null;
     const d = this.dist(t, x);
-    const chip = document.createElement("span");
-    chip.className = `chip newrow ${d <= MAP_WIN_KM ? "hit" : d <= 500 ? "near" : ""}`;
-    chip.textContent = `📍${S.map.guesses.length + 1}: ${fmtKm(d)} ${d <= MAP_WIN_KM ? "🎯" : bearingArrow(x, t.bp)}`;
-    chip.title = d <= MAP_WIN_KM ? "Right on" : "The arrow points toward his birthplace";
-    $("mpHist").appendChild(chip);
+    $("mpHist").textContent = d <= MAP_WIN_KM
+      ? `Pin ${S.map.guesses.length + 1}: ${fmtKm(d)} away. Correct.`
+      : `Pin ${S.map.guesses.length + 1}: ${fmtKm(d)} away. Go ${bearingName(x, t.bp)}.`;
     mapDraftPin = null;
     return d <= MAP_WIN_KM;
   },
   render(t, st) {
     const left = MAP_PINS - st.guesses.length;
-    $("mpLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "pin" : "pins"} left. Land within ${MAP_WIN_KM} km to win; the arrow shows which way to go.`;
+    $("mpLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "pin" : "pins"} left · within ${MAP_WIN_KM} km wins`;
     $("mpGo").disabled = st.over || !mapDraftPin;
     $("mpGo").textContent = mapDraftPin ? "Drop pin here" : "Tap the map to place a pin";
     drawPins(t, st);
+    if (st.over && !mapRevealFitDone) {
+      mapRevealFitDone = true;
+      requestAnimationFrame(() => mapFitReveal(t, st));
+    }
   },
 };
 
@@ -4095,19 +4137,70 @@ function svgPoint(evt) {
   pt.x = evt.clientX; pt.y = evt.clientY;
   return pt.matrixTransform($("mapSvg").getScreenCTM().inverse());
 }
+function mapFitReveal(t, st) {
+  const pts = [...st.guesses, [t.bp[0], t.bp[1]]];
+  if (!pts.length) return;
+  const xs = pts.map(([lat, lon]) => toMap(lat, lon)[0]), ys = pts.map(([lat, lon]) => toMap(lat, lon)[1]);
+  let minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const padX = Math.max(7 * MAP_K, (maxX - minX) * .22), padY = Math.max(5, (maxY - minY) * .22);
+  minX -= padX; maxX += padX; minY -= padY; maxY += padY;
+  setView(minX, minY, Math.max(MAP_MIN_W, maxX - minX), Math.max(3, maxY - minY));
+  document.querySelectorAll("[data-region]").forEach(b => b.setAttribute("aria-selected", false));
+}
 function drawPins(t, st) {
   const r = mapView.w / 110, sw = mapView.w / 700;
-  const pin = ([lat, lon], cls, label = "") => { const [x, y] = toMap(lat, lon);
-    return `<circle class="${cls}" cx="${x}" cy="${y}" r="${r}" stroke-width="${sw * 2}"/>${label ? `<text x="${x}" y="${y + r * 0.38}" font-size="${r * 1.1}" text-anchor="middle">${label}</text>` : ""}`; };
+  const animatedIndex = st.guesses.length > mapAnimatedGuessCount ? st.guesses.length - 1 : -1;
+  const pin = ([lat, lon], cls, label = "") => {
+    const [x, y] = toMap(lat, lon);
+    return `<circle class="${cls}" cx="${x}" cy="${y}" r="${r}" stroke-width="${sw * 2}"/>${label ? `<text x="${x}" y="${y + r * 0.38}" font-size="${r * 1.1}" text-anchor="middle">${label}</text>` : ""}`;
+  };
+  const feedbackTier = d => d <= MAP_WIN_KM ? "hit" : d <= 500 ? "close" : d <= 1500 ? "warm" : "far";
+  const directionEnd = (g, target) => {
+    const [x1, y1] = toMap(...g), [tx, ty] = toMap(...target);
+    let dx = tx - x1, dy = ty - y1;
+    const wrap = 360 * MAP_K;
+    if (dx > wrap / 2) dx -= wrap;
+    if (dx < -wrap / 2) dx += wrap;
+    const len = Math.hypot(dx, dy) || 1;
+    const ray = Math.min(mapView.w * .105, Math.max(r * 5.2, len * .28));
+    return [x1, y1, x1 + dx / len * ray, y1 + dy / len * ray];
+  };
+  const badge = (g, d) => {
+    const [x, y] = toMap(...g), text = fmtKm(d);
+    const bw = Math.max(r * 5.2, text.length * r * .72), bh = r * 2.05;
+    const bx = x + r * 1.45, by = y - bh - r * .75;
+    return `<g class="mapbadge"><rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="${r * .72}" stroke-width="${sw}"/><text x="${bx + bw / 2}" y="${by + bh * .68}" font-size="${r * .92}" text-anchor="middle">${text}</text></g>`;
+  };
+
   let html = "";
+  st.guesses.forEach((g, i) => {
+    const d = G.map.dist(t, g), tier = feedbackTier(d), latest = i === animatedIndex, old = i < st.guesses.length - 1;
+    const [x1, y1, x2, y2] = directionEnd(g, t.bp);
+    const ang = Math.atan2(y2 - y1, x2 - x1), ah = r * 1.05;
+    const p1 = [x2, y2], p2 = [x2 - Math.cos(ang - .62) * ah, y2 - Math.sin(ang - .62) * ah],
+          p3 = [x2 - Math.cos(ang + .62) * ah, y2 - Math.sin(ang + .62) * ah];
+    html += `<g class="mapguess ${latest ? "latest" : ""} ${old ? "old" : ""}">
+      <line class="maptrail ${tier}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${sw * 3.2}"/>
+      <path class="maparrow ${tier}" d="M${p1[0]},${p1[1]}L${p2[0]},${p2[1]}L${p3[0]},${p3[1]}Z"/>
+      <circle class="mapring ${tier}" cx="${x1}" cy="${y1}" r="${r * 1.25}"/>
+      ${pin(g, "pin", i + 1)}
+      ${latest || st.over ? badge(g, d) : ""}
+    </g>`;
+  });
+  if (mapDraftPin && !st.over) html += pin(mapDraftPin, "pin draftpin");
+
   if (st.over) {
     const [ax, ay] = toMap(...t.bp);
-    html += st.guesses.map(g => { const [x, y] = toMap(...g); return `<line x1="${x}" y1="${y}" x2="${ax}" y2="${ay}" stroke-width="${sw * 2}" class="pinline"/>`; }).join("");
+    html += st.guesses.map(g => {
+      const [x, y] = toMap(...g);
+      return `<line x1="${x}" y1="${y}" x2="${ax}" y2="${ay}" stroke-width="${sw * 1.7}" class="pinline"/>`;
+    }).join("");
+    html += `<circle class="answer finalanswer" cx="${ax}" cy="${ay}" r="${r * 1.25}" stroke-width="${sw * 2.2}"/>
+      <g class="mapbadge"><rect x="${ax + r * 1.5}" y="${ay - r * 3}" width="${Math.max(r * 8, (t.bp[2] || "Birthplace").length * r * .62)}" height="${r * 2.15}" rx="${r * .72}" stroke-width="${sw}"/>
+      <text x="${ax + r * 1.5 + Math.max(r * 8, (t.bp[2] || "Birthplace").length * r * .62) / 2}" y="${ay - r * 1.58}" font-size="${r * .86}" text-anchor="middle">${esc(t.bp[2] || "Birthplace")}</text></g>`;
   }
-  html += st.guesses.map((g, i) => pin(g, "pin", i + 1)).join("");
-  if (mapDraftPin && !st.over) html += pin(mapDraftPin, "pin draftpin");
-  if (st.over) { const [x, y] = toMap(...t.bp); html += `<circle class="answer" cx="${x}" cy="${y}" r="${r * 1.2}" stroke-width="${sw * 2}"/>`; }
   $("mapPins").innerHTML = html;
+  if (animatedIndex >= 0) mapAnimatedGuessCount = st.guesses.length;
 }
 (() => {
   const svg = $("mapSvg"), pointers = new Map();
