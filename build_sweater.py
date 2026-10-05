@@ -723,7 +723,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .roslot.empty::after { content: "—"; color: var(--muted); text-align: center; font-weight: 700; }
   .roslot b { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 1.15; }
   .roslot small { margin-top: 2px; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
-  .roslot.hit { border-style: solid; border-color: var(--hit); background: color-mix(in srgb, var(--hit) 17%, var(--cell)); animation: roslotpop .24s ease-out; }
+  .roslot.hit { border-style: solid; border-color: var(--hit); background: color-mix(in srgb, var(--hit) 17%, var(--cell)); }
+  .roslot.hit.fresh { animation: roslotpop .24s ease-out; }
   .roslot.missed { border-style: solid; border-color: color-mix(in srgb, #c0392b 55%, var(--line)); background: color-mix(in srgb, #c0392b 8%, var(--cell)); opacity: .76; }
   @keyframes roslotpop { 0% { transform: scale(.95); } 70% { transform: scale(1.035); } 100% { transform: scale(1); } }
   .roextras { min-width: 0; }
@@ -739,7 +740,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .roslot b { font-size: 11px; }
     .roextrasgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  @media (prefers-reduced-motion: reduce) { .roslot.hit { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .roslot.hit.fresh { animation: none; } }
 
   /* mystery roster */
   .mrlist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; }
@@ -3712,11 +3713,11 @@ G.roster = {
     $("roInput").placeholder = running ? "Type a player's name and press Enter"
       : st.over ? "Time's up" : "Press Start to begin";
     $("roTime").textContent = st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : RO_SECONDS;
-    const layout = rosterLayout(t), foundSet = new Set(found);
+    const layout = rosterLayout(t), foundSet = new Set(found), latestFound = found.at(-1);
     const slot = p => {
       if (!p) return '<div class="roslot empty" aria-hidden="true"></div>';
       const named = foundSet.has(p.id), reveal = named || st.over;
-      const cls = named ? "hit" : st.over ? "missed" : "empty";
+      const cls = named ? `hit${p.id === latestFound ? " fresh" : ""}` : st.over ? "missed" : "empty";
       if (!reveal) return `<div class="roslot ${cls}" data-player="${p.id}" aria-label="Unnamed roster slot"></div>`;
       const meta = [p.pos, p.number ? `#${p.number}` : ""].filter(Boolean).join(" · ");
       return `<div class="roslot ${cls}" data-player="${p.id}"><b>${esc(p.name)}</b><small>${esc(meta)}</small></div>`;
