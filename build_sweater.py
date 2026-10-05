@@ -1012,6 +1012,42 @@ TEMPLATE = r'''<!DOCTYPE html>
   .wrong li small { margin-left: auto; color: var(--muted); }
   .wrong .x { color: #c0392b; font-weight: 700; }
 
+  /* Playoff Run: make misses feel clearly eliminated without changing other modes. */
+  #phWrong { display: grid; gap: 8px; margin-top: 14px; }
+  #phWrong li {
+    position: relative; overflow: hidden; min-height: 48px; padding: 10px 12px;
+    border: 1px solid rgba(239,68,68,.28); border-radius: 12px;
+    background: linear-gradient(90deg, rgba(239,68,68,.10), rgba(239,68,68,.035));
+    animation: playoff-wrong-in .32s cubic-bezier(.2,.8,.2,1);
+  }
+  #phWrong li::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
+    background: #ef4444; opacity: .85;
+  }
+  #phWrong .x {
+    display: grid; place-items: center; flex: 0 0 26px; width: 26px; height: 26px;
+    border-radius: 999px; background: rgba(239,68,68,.14); color: #ef4444;
+    font-size: 14px; font-weight: 900;
+  }
+  #phWrong li > span:nth-child(2) { position: relative; font-weight: 700; }
+  #phWrong li > span:nth-child(2)::after {
+    content: ""; position: absolute; left: -2px; right: -2px; top: 52%; height: 2px;
+    border-radius: 999px; background: #ef4444;
+    transform: scaleX(0); transform-origin: left center;
+    animation: playoff-wrong-strike .24s .11s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  #phWrong li small { opacity: .7; }
+  @keyframes playoff-wrong-in {
+    0% { opacity: 0; transform: translateX(-10px) scale(.985); }
+    52% { opacity: 1; transform: translateX(3px) scale(1.005); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  @keyframes playoff-wrong-strike { to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    #phWrong li { animation: none; }
+    #phWrong li > span:nth-child(2)::after { animation: none; transform: scaleX(1); }
+  }
+
   /* stats: guess the team */
   .ttcard { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 4px 0; }
   .ttcard img { width: 96px; height: 96px; border-radius: 50%; background: var(--cream); object-fit: cover; }
