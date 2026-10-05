@@ -9272,6 +9272,9 @@ def update_schedule(players, today, roster_players):
         for i in ids_of(v):
             if i in roster_pool:
                 roster_archive[i] = roster_pool[i]
+            elif i in archive:
+                # Older Roster Recall days were stored in the shared player archive.
+                roster_archive[i] = archive[i]
     new["players"] = {str(k): v for k, v in sorted(archive.items())}
     new["roster_players"] = {str(k): v for k, v in sorted(roster_archive.items())}
     SCHEDULE.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
