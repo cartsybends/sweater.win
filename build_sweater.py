@@ -704,6 +704,44 @@ TEMPLATE = r'''<!DOCTYPE html>
   .sebtn.miss { opacity: .45; }
   .sebtn:disabled { cursor: default; }
 
+  /* roster recall lineup board */
+  #view-roster { max-width: 980px; }
+  .roboard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(190px, 240px); gap: 12px;
+             width: min(920px, 100%); margin: 14px auto 0; align-items: start; }
+  .rolines { display: grid; gap: 10px; min-width: 0; }
+  .rogroup, .roextras { padding: 11px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+  .rogrouphead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 0 2px 6px; }
+  .rogrouphead b { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .rogrouphead small { color: var(--muted); font-size: 10px; }
+  .roline { display: grid; grid-template-columns: 46px repeat(3, minmax(0, 1fr)); gap: 6px; align-items: stretch; margin-top: 6px; }
+  .roline.defense, .roline.goalies { grid-template-columns: 46px repeat(2, minmax(0, 1fr)); }
+  .rolabel { display: grid; place-items: center; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+  .roslot { min-width: 0; min-height: 46px; padding: 7px 8px; border: 1px dashed color-mix(in srgb, var(--fg) 22%, transparent);
+            border-radius: 10px; background: color-mix(in srgb, var(--fg) 3%, var(--cell)); color: var(--cell-fg);
+            display: flex; flex-direction: column; justify-content: center; transition: transform .16s ease, border-color .16s ease, background-color .16s ease; }
+  .roslot.empty { opacity: .72; }
+  .roslot.empty::after { content: "—"; color: var(--muted); text-align: center; font-weight: 700; }
+  .roslot b { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 1.15; }
+  .roslot small { margin-top: 2px; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+  .roslot.hit { border-style: solid; border-color: var(--hit); background: color-mix(in srgb, var(--hit) 17%, var(--cell)); }
+  .roslot.hit.fresh { animation: roslotpop .24s ease-out; }
+  .roslot.missed { border-style: solid; border-color: color-mix(in srgb, #c0392b 55%, var(--line)); background: color-mix(in srgb, #c0392b 8%, var(--cell)); opacity: .76; }
+  @keyframes roslotpop { 0% { transform: scale(.95); } 70% { transform: scale(1.035); } 100% { transform: scale(1); } }
+  .roextras { min-width: 0; }
+  .roextrasgrid { display: grid; gap: 6px; }
+  .roextras .roslot { min-height: 42px; }
+  .roempty { margin: 4px 2px; color: var(--muted); font-size: 12px; }
+  @media (max-width: 700px) {
+    .roboard { grid-template-columns: 1fr; gap: 10px; }
+    .roline { grid-template-columns: 38px repeat(3, minmax(0, 1fr)); gap: 5px; }
+    .roline.defense, .roline.goalies { grid-template-columns: 38px repeat(2, minmax(0, 1fr)); }
+    .rogroup, .roextras { padding: 9px; }
+    .roslot { min-height: 43px; padding: 6px; }
+    .roslot b { font-size: 11px; }
+    .roextrasgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .roslot.hit.fresh { animation: none; } }
+
   /* mystery roster */
   .mrlist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; }
   .mrrow { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 12px;
@@ -2336,7 +2374,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="view" id="view-roster" hidden>
     <div class="ttcard">
       <img id="roLogo" class="rologo" alt="">
-      <div><p class="pname" id="roTeam"></p><p class="pmeta">Name as many players on this team's roster as you can in 60 seconds.</p></div>
+      <div><p class="pname" id="roTeam"></p><p class="pmeta">Fill the lineup in 60 seconds: four forward lines, three defense pairs, two goalies, plus roster extras.</p></div>
     </div>
     <div class="hlscore"><span>Time<b id="roTime">60</b></span><span>Named<b id="roCount">0</b>/<span id="roTotal">0</span></span></div>
     <div class="numrow wide">
@@ -2346,7 +2384,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="hint romsg" id="roMsg" aria-live="polite"></p>
     <div class="slot"></div>
     <p class="nodata" hidden>This game isn't available right now.</p>
-    <div class="chips" id="roFound"></div>
+    <div class="roboard" id="roBoard" aria-label="Roster lineup board"></div>
   </section>
 
   <section class="view" id="view-draft" hidden>
@@ -3603,6 +3641,18 @@ const RO_SECONDS = 60;
 const rosterOf = team => PLAYERS.filter(p => p.team === team).map(p => p.id).sort((a, b) => a - b);
 const RO_TEAMS = Object.keys(TEAMS).filter(t => rosterOf(t).length >= 10);
 const nameKey = s => norm(s).replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
+const roPlayerSort = (a, b) => (Number(a.number) || 999) - (Number(b.number) || 999) || a.name.localeCompare(b.name);
+function rosterLayout(t) {
+  const players = t.ids.map(id => BYID.get(id)).filter(Boolean);
+  const forwards = players.filter(p => p.pos !== "D" && p.pos !== "G").sort(roPlayerSort);
+  const defense = players.filter(p => p.pos === "D").sort(roPlayerSort);
+  const goalies = players.filter(p => p.pos === "G").sort(roPlayerSort);
+  const lines = Array.from({ length: 4 }, (_, i) => forwards.slice(i * 3, i * 3 + 3));
+  const pairs = Array.from({ length: 3 }, (_, i) => defense.slice(i * 2, i * 2 + 2));
+  const goalieSlots = goalies.slice(0, 2);
+  const extras = [...forwards.slice(12), ...defense.slice(6), ...goalies.slice(2)].sort(roPlayerSort);
+  return { lines, pairs, goalies: goalieSlots, extras };
+}
 let roTimer = null, roMemory = null;
 
 G.roster = {
@@ -3648,7 +3698,7 @@ G.roster = {
     $("roTotal").textContent = t.ids.length;
     $("roInput").value = "";
     $("roMsg").textContent = "";
-    $("roFound").innerHTML = "";
+    $("roBoard").innerHTML = "";
   },
   guess(t, x) {
     if (x === "END") return false;
@@ -3663,9 +3713,29 @@ G.roster = {
     $("roInput").placeholder = running ? "Type a player's name and press Enter"
       : st.over ? "Time's up" : "Press Start to begin";
     $("roTime").textContent = st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : RO_SECONDS;
-    const chip = (id, cls) => { const p = BYID.get(id); return p ? `<span class="chip ${cls}">${esc(p.name)}</span>` : ""; };
-    $("roFound").innerHTML = found.slice().reverse().map(id => chip(id, "hit")).join("")
-      + (st.over ? t.ids.filter(id => !found.includes(id)).map(id => chip(id, "missed")).join("") : "");
+    const layout = rosterLayout(t), foundSet = new Set(found), latestFound = found.at(-1);
+    const slot = p => {
+      if (!p) return '<div class="roslot empty" aria-hidden="true"></div>';
+      const named = foundSet.has(p.id), reveal = named || st.over;
+      const cls = named ? `hit${p.id === latestFound ? " fresh" : ""}` : st.over ? "missed" : "empty";
+      if (!reveal) return `<div class="roslot ${cls}" data-player="${p.id}" aria-label="Unnamed roster slot"></div>`;
+      const meta = [p.pos, p.number ? `#${p.number}` : ""].filter(Boolean).join(" · ");
+      return `<div class="roslot ${cls}" data-player="${p.id}"><b>${esc(p.name)}</b><small>${esc(meta)}</small></div>`;
+    };
+    const forwardHtml = layout.lines.map((line, i) =>
+      `<div class="roline"><span class="rolabel">Line ${i + 1}</span>${[0,1,2].map(n => slot(line[n])).join("")}</div>`).join("");
+    const defenseHtml = layout.pairs.map((pair, i) =>
+      `<div class="roline defense"><span class="rolabel">Pair ${i + 1}</span>${[0,1].map(n => slot(pair[n])).join("")}</div>`).join("");
+    const goalieHtml = `<div class="roline goalies"><span class="rolabel">Goalies</span>${[0,1].map(n => slot(layout.goalies[n])).join("")}</div>`;
+    const extrasHtml = layout.extras.length
+      ? layout.extras.map(slot).join("")
+      : '<p class="roempty">No extra roster players</p>';
+    $("roBoard").classList.toggle("done", st.over);
+    $("roBoard").innerHTML = `<div class="rolines">
+      <section class="rogroup"><div class="rogrouphead"><b>Forwards</b><small>4 lines · 12 slots</small></div>${forwardHtml}</section>
+      <section class="rogroup"><div class="rogrouphead"><b>Defense</b><small>3 pairs · 6 slots</small></div>${defenseHtml}</section>
+      <section class="rogroup"><div class="rogrouphead"><b>Goalies</b><small>2 slots</small></div>${goalieHtml}</section>
+    </div><aside class="roextras"><div class="rogrouphead"><b>Extras</b><small>Rostered</small></div><div class="roextrasgrid">${extrasHtml}</div></aside>`;
     if (running) {
       if (st.endsAt <= Date.now()) setTimeout(() => { if (game === "roster" && !S.roster.over) doGuess("END"); }, 0);
       else roTick();
