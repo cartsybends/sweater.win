@@ -217,12 +217,36 @@ TEMPLATE = r'''<!DOCTYPE html>
   .phclue small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .075em; text-transform: uppercase; }
   .phclue b { display: block; margin-top: 1px; font-size: 14px; }
   .phclue.final { border-color: color-mix(in srgb, var(--near) 54%, var(--line)); background: color-mix(in srgb, var(--near) 15%, var(--panel)); }
-  .phwrong { width: min(560px,100%); margin: 9px auto 0; display: grid; gap: 6px; }
-  .phwrongrow { display: flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px;
-                background: color-mix(in srgb, var(--panel) 88%, transparent); animation: rowin .28s ease both; }
-  .phwrongrow .x { color: #c0392b; font-weight: 900; }
-  .phwrongrow .who { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+  .phwrong { width: min(560px,100%); margin: 10px auto 0; display: grid; gap: 7px; }
+  .phwrongrow {
+    position: relative; overflow: hidden; display: flex; align-items: center; gap: 9px; min-height: 46px; padding: 9px 10px;
+    border: 1px solid color-mix(in srgb, #ef4444 30%, var(--line)); border-left: 3px solid #ef4444; border-radius: 11px;
+    background: linear-gradient(90deg, color-mix(in srgb, #ef4444 10%, var(--panel)), color-mix(in srgb, #ef4444 3%, var(--panel)));
+  }
+  .phwrongrow.newrow { animation: phwrongin .34s cubic-bezier(.2,.85,.2,1) both; }
+  .phwrongrow .x {
+    display: grid; place-items: center; flex: 0 0 25px; width: 25px; height: 25px; border-radius: 999px;
+    background: color-mix(in srgb, #ef4444 14%, transparent); color: #ef4444; font-size: 13px; font-weight: 950;
+  }
+  .phwrongrow .who {
+    min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700;
+    color: color-mix(in srgb, var(--fg) 78%, var(--muted));
+  }
+  .phwrongrow .who > span { position: relative; display: inline-block; max-width: 100%; }
+  .phwrongrow .who > span::after {
+    content: ""; position: absolute; left: -2px; right: -2px; top: 52%; height: 2px; border-radius: 999px; background: #ef4444;
+    transform: scaleX(1); transform-origin: left center;
+  }
+  .phwrongrow.newrow .who > span::after {
+    transform: scaleX(0); animation: phwrongstrike .24s .12s cubic-bezier(.2,.8,.2,1) forwards;
+  }
   .phmatch { flex: none; padding: 3px 7px; border-radius: 999px; background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850; }
+  @keyframes phwrongin {
+    0% { opacity: 0; transform: translateX(-10px) scale(.985); box-shadow: 0 0 0 rgba(239,68,68,0); }
+    52% { opacity: 1; transform: translateX(3px) scale(1.006); box-shadow: 0 0 0 3px rgba(239,68,68,.08); }
+    100% { opacity: 1; transform: none; box-shadow: 0 0 0 rgba(239,68,68,0); }
+  }
+  @keyframes phwrongstrike { to { transform: scaleX(1); } }
   .phreveal { width: min(560px,100%); margin: 12px auto 5px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center;
               padding: 13px 14px; border: 1px solid color-mix(in srgb, var(--hit) 50%, var(--line)); border-radius: 15px;
               background: color-mix(in srgb, var(--hit) 10%, var(--panel)); animation: phcluein .36s cubic-bezier(.2,.85,.25,1.08) both; }
@@ -238,7 +262,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     .phstat b { font-size: 17px; }
     .phwrongrow { flex-wrap: wrap; }
   }
-  @media (prefers-reduced-motion: reduce) { .phclue, .phwrongrow, .phreveal { animation: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .phclue, .phwrongrow, .phreveal { animation: none; }
+    .phwrongrow.newrow .who > span::after { animation: none; transform: scaleX(1); }
+  }
 
   /* draft day */
   .drinputs { margin-bottom: 8px; }
@@ -1011,42 +1038,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   .wrong li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
   .wrong li small { margin-left: auto; color: var(--muted); }
   .wrong .x { color: #c0392b; font-weight: 700; }
-
-  /* Playoff Run: make misses feel clearly eliminated without changing other modes. */
-  #phWrong { display: grid; gap: 8px; margin-top: 14px; }
-  #phWrong li {
-    position: relative; overflow: hidden; min-height: 48px; padding: 10px 12px;
-    border: 1px solid rgba(239,68,68,.28); border-radius: 12px;
-    background: linear-gradient(90deg, rgba(239,68,68,.10), rgba(239,68,68,.035));
-    animation: playoff-wrong-in .32s cubic-bezier(.2,.8,.2,1);
-  }
-  #phWrong li::before {
-    content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
-    background: #ef4444; opacity: .85;
-  }
-  #phWrong .x {
-    display: grid; place-items: center; flex: 0 0 26px; width: 26px; height: 26px;
-    border-radius: 999px; background: rgba(239,68,68,.14); color: #ef4444;
-    font-size: 14px; font-weight: 900;
-  }
-  #phWrong li > span:nth-child(2) { position: relative; font-weight: 700; }
-  #phWrong li > span:nth-child(2)::after {
-    content: ""; position: absolute; left: -2px; right: -2px; top: 52%; height: 2px;
-    border-radius: 999px; background: #ef4444;
-    transform: scaleX(0); transform-origin: left center;
-    animation: playoff-wrong-strike .24s .11s cubic-bezier(.2,.8,.2,1) forwards;
-  }
-  #phWrong li small { opacity: .7; }
-  @keyframes playoff-wrong-in {
-    0% { opacity: 0; transform: translateX(-10px) scale(.985); }
-    52% { opacity: 1; transform: translateX(3px) scale(1.005); }
-    100% { opacity: 1; transform: translateX(0) scale(1); }
-  }
-  @keyframes playoff-wrong-strike { to { transform: scaleX(1); } }
-  @media (prefers-reduced-motion: reduce) {
-    #phWrong li { animation: none; }
-    #phWrong li > span:nth-child(2)::after { animation: none; transform: scaleX(1); }
-  }
 
   /* stats: guess the team */
   .ttcard { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 4px 0; }
@@ -5923,7 +5914,7 @@ G.playoff = {
       const g = BYID.get(id);
       if (!g) return "";
       const m = poGuessMatches(t, g);
-      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x">✕</span><span class="who">${esc(g.name)}</span>
+      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x">✕</span><span class="who"><span>${esc(g.name)}</span></span>
         ${m.sameTeam ? '<span class="phmatch">Same team</span>' : ""}${m.samePos ? '<span class="phmatch">Same position</span>' : ""}</div>`;
     }).join("");
 
