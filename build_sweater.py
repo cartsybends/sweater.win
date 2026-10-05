@@ -224,15 +224,16 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mapsvg .draftpin { fill: var(--fg); opacity: .8; }
   .mapsvg .answer { fill: var(--hit); stroke: #fff; }
   .mapsvg .pinline { stroke: color-mix(in srgb, var(--fg) 45%, transparent); stroke-dasharray: 3 3; opacity: .55; }
-  .mapsvg .maptrail { fill: none; stroke-linecap: round; opacity: .92; }
-  .mapsvg .maptrail.far { stroke: #c6534c; }
-  .mapsvg .maptrail.warm { stroke: #d2912b; }
-  .mapsvg .maptrail.close { stroke: var(--near); }
-  .mapsvg .maptrail.hit { stroke: var(--hit); }
-  .mapsvg .maparrow.far { fill: #c6534c; }
-  .mapsvg .maparrow.warm { fill: #d2912b; }
-  .mapsvg .maparrow.close { fill: var(--near); }
-  .mapsvg .maparrow.hit { fill: var(--hit); }
+  .mapsvg .maptrailbed, .mapsvg .maptrail { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .mapsvg .maptrailbed { stroke: color-mix(in srgb, var(--fg) 16%, transparent); opacity: .7; }
+  .mapsvg .maptrail { opacity: .96; }
+  .mapsvg .maptrail.far, .mapsvg .maparrow.far { stroke: #c6534c; }
+  .mapsvg .maptrail.warm, .mapsvg .maparrow.warm { stroke: #d2912b; }
+  .mapsvg .maptrail.close, .mapsvg .maparrow.close { stroke: var(--near); }
+  .mapsvg .maptrail.hit, .mapsvg .maparrow.hit { stroke: var(--hit); }
+  .mapsvg .maparrow { fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: .96; }
+  .mapsvg .mapdistance { fill: var(--fg); stroke: color-mix(in srgb, var(--panel) 94%, transparent); stroke-width: 2.7;
+                         paint-order: stroke fill; stroke-linejoin: round; font-weight: 850; letter-spacing: .015em; }
   .mapsvg .mapring { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0;
                      transform-box: fill-box; transform-origin: center; }
   .mapsvg .mapring.far { stroke: #c6534c; }
@@ -242,19 +243,23 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mapsvg .mapbadge rect { fill: color-mix(in srgb, var(--panel) 92%, transparent); stroke: color-mix(in srgb, var(--fg) 22%, transparent); }
   .mapsvg .mapbadge text { fill: var(--fg); font-weight: 800; letter-spacing: .01em; }
   .mapsvg .mapguess.old { opacity: .48; }
-  .mapsvg .mapguess.latest .maptrail { animation: maptraildraw .52s cubic-bezier(.2,.78,.2,1) both; }
+  .mapsvg .mapguess.latest .maptrail { animation: maptraildraw .62s cubic-bezier(.16,.82,.22,1) both; }
+  .mapsvg .mapguess.latest .maparrow { animation: maparrowin .22s ease-out .46s both; transform-box: fill-box; transform-origin: center; }
+  .mapsvg .mapguess.latest .mapdistance { animation: mapdistancein .28s ease-out .34s both; }
   .mapsvg .mapguess.latest .mapring { animation: mapringpulse .75s ease-out .08s both; }
-  .mapsvg .mapguess.latest .mapbadge { animation: mapbadgein .28s ease-out .3s both; transform-box: fill-box; transform-origin: center; }
   .mapsvg .mapguess.latest .pin { animation: mappinpop .32s cubic-bezier(.2,.9,.24,1.22) both; transform-box: fill-box; transform-origin: center; }
   .mapsvg .answer.finalanswer { animation: mapanswerpop .42s cubic-bezier(.2,.9,.24,1.18) both; transform-box: fill-box; transform-origin: center; }
-  @keyframes maptraildraw { from { stroke-dashoffset: 1; opacity: .15; } to { stroke-dashoffset: 0; opacity: .92; } }
+  @keyframes maptraildraw { from { stroke-dashoffset: 1; opacity: .12; } to { stroke-dashoffset: 0; opacity: .96; } }
+  @keyframes maparrowin { from { opacity: 0; transform: translate(-2px, 1px) scale(.72); } to { opacity: .96; transform: translate(0, 0) scale(1); } }
+  @keyframes mapdistancein { from { opacity: 0; } to { opacity: 1; } }
   @keyframes mapringpulse { 0% { opacity: .75; transform: scale(.55); } 100% { opacity: 0; transform: scale(2.35); } }
   @keyframes mapbadgein { from { opacity: 0; transform: translateY(3px) scale(.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
   @keyframes mappinpop { 0% { transform: scale(.15); opacity: .2; } 72% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
   @keyframes mapanswerpop { 0% { transform: scale(.2); opacity: 0; } 70% { transform: scale(1.35); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
   .mapsvg text { fill: #fff; font-weight: 700; pointer-events: none; }
   @media (prefers-reduced-motion: reduce) {
-    .mapsvg .mapguess.latest .maptrail, .mapsvg .mapguess.latest .mapring, .mapsvg .mapguess.latest .mapbadge,
+    .mapsvg .mapguess.latest .maptrail, .mapsvg .mapguess.latest .maparrow, .mapsvg .mapguess.latest .mapdistance,
+    .mapsvg .mapguess.latest .mapring, .mapsvg .mapguess.latest .mapbadge,
     .mapsvg .mapguess.latest .pin, .mapsvg .answer.finalanswer { animation: none; }
   }
   .mapctl { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 0; }
@@ -4156,15 +4161,20 @@ function drawPins(t, st) {
     return `<circle class="${cls}" cx="${x}" cy="${y}" r="${r}" stroke-width="${sw * 2}"/>${label ? `<text x="${x}" y="${y + r * 0.38}" font-size="${r * 1.1}" text-anchor="middle">${label}</text>` : ""}`;
   };
   const feedbackTier = d => d <= MAP_WIN_KM ? "hit" : d <= 500 ? "close" : d <= 1500 ? "warm" : "far";
-  const directionEnd = (g, target) => {
+  const directionCurve = (g, target) => {
     const [x1, y1] = toMap(...g), [tx, ty] = toMap(...target);
     let dx = tx - x1, dy = ty - y1;
     const wrap = 360 * MAP_K;
     if (dx > wrap / 2) dx -= wrap;
     if (dx < -wrap / 2) dx += wrap;
-    const len = Math.hypot(dx, dy) || 1;
-    const ray = Math.min(mapView.w * .105, Math.max(r * 5.2, len * .28));
-    return [x1, y1, x1 + dx / len * ray, y1 + dy / len * ray];
+    const len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+    const ray = Math.min(mapView.w * .135, Math.max(r * 6.2, len * .3));
+    const x2 = x1 + ux * ray, y2 = y1 + uy * ray;
+    const nx = -uy, ny = ux, bend = Math.min(ray * .16, r * 2.15);
+    const cx = (x1 + x2) / 2 + nx * bend, cy = (y1 + y2) / 2 + ny * bend;
+    const d = `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
+    const labelD = x1 <= x2 ? d : `M${x2},${y2} Q${cx},${cy} ${x1},${y1}`;
+    return { x1, y1, x2, y2, cx, cy, d, labelD };
   };
   const badge = (g, d, customText = "") => {
     const [x, y] = toMap(...g), text = customText || fmtKm(d);
@@ -4179,16 +4189,21 @@ function drawPins(t, st) {
   let html = "";
   st.guesses.forEach((g, i) => {
     const d = G.map.dist(t, g), tier = feedbackTier(d), latest = i === animatedIndex, old = i < st.guesses.length - 1;
-    const [x1, y1, x2, y2] = directionEnd(g, t.bp);
-    const ang = Math.atan2(y2 - y1, x2 - x1), ah = r * 1.05;
-    const p1 = [x2, y2], p2 = [x2 - Math.cos(ang - .62) * ah, y2 - Math.sin(ang - .62) * ah],
-          p3 = [x2 - Math.cos(ang + .62) * ah, y2 - Math.sin(ang + .62) * ah];
+    const curve = directionCurve(g, t.bp);
+    const tx = curve.x2 - curve.cx, ty = curve.y2 - curve.cy, tlen = Math.hypot(tx, ty) || 1;
+    const ux = tx / tlen, uy = ty / tlen, nx = -uy, ny = ux;
+    const ah = r * .92, back = r * 1.28;
+    const ax1 = curve.x2 - ux * back + nx * ah, ay1 = curve.y2 - uy * back + ny * ah;
+    const ax2 = curve.x2 - ux * back - nx * ah, ay2 = curve.y2 - uy * back - ny * ah;
+    const trailId = `maptrail-label-${i}`;
     html += `<g class="mapguess ${latest ? "latest" : ""} ${old ? "old" : ""}">
-      <line class="maptrail ${tier}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${sw * 3.2}"/>
-      <path class="maparrow ${tier}" d="M${p1[0]},${p1[1]}L${p2[0]},${p2[1]}L${p3[0]},${p3[1]}Z"/>
-      <circle class="mapring ${tier}" cx="${x1}" cy="${y1}" r="${r * 1.25}"/>
+      <path class="maptrailbed" d="${curve.d}" stroke-width="${sw * 6.4}"/>
+      <path class="maptrail ${tier}" d="${curve.d}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" stroke-width="${sw * 2.35}"/>
+      <path id="${trailId}" d="${curve.labelD}" fill="none" stroke="none"/>
+      <path class="maparrow ${tier}" d="M${ax1},${ay1}L${curve.x2},${curve.y2}L${ax2},${ay2}" stroke-width="${sw * 2.25}"/>
+      <text class="mapdistance" font-size="${r * .82}" dy="-${r * .42}"><textPath href="#${trailId}" startOffset="50%" text-anchor="middle">${esc(fmtKm(d))}</textPath></text>
+      <circle class="mapring ${tier}" cx="${curve.x1}" cy="${curve.y1}" r="${r * 1.25}"/>
       ${pin(g, "pin", i + 1)}
-      ${latest || st.over ? badge(g, d) : ""}
     </g>`;
   });
   if (mapDraftPin && !st.over) html += pin(mapDraftPin, "pin draftpin");
