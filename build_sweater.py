@@ -219,34 +219,31 @@ TEMPLATE = r'''<!DOCTYPE html>
   .phclue.final { border-color: color-mix(in srgb, var(--near) 54%, var(--line)); background: color-mix(in srgb, var(--near) 15%, var(--panel)); }
   .phwrong { width: min(560px,100%); margin: 10px auto 0; display: grid; gap: 7px; }
   .phwrongrow {
-    position: relative; overflow: hidden; display: flex; align-items: center; gap: 9px; min-height: 46px; padding: 9px 10px;
-    border: 1px solid color-mix(in srgb, #ef4444 30%, var(--line)); border-left: 3px solid #ef4444; border-radius: 11px;
-    background: linear-gradient(90deg, color-mix(in srgb, #ef4444 10%, var(--panel)), color-mix(in srgb, #ef4444 3%, var(--panel)));
+    position: relative; overflow: hidden; display: flex; align-items: center; gap: 9px; min-height: 46px; padding: 9px 11px;
+    border: 1px solid color-mix(in srgb, #ef4444 28%, var(--line)); border-left: 3px solid color-mix(in srgb, #ef4444 78%, var(--line)); border-radius: 11px;
+    background: linear-gradient(90deg, color-mix(in srgb, #ef4444 8%, var(--panel)), color-mix(in srgb, #ef4444 2%, var(--panel)));
   }
-  .phwrongrow.newrow { animation: phwrongin .34s cubic-bezier(.2,.85,.2,1) both; }
+  .phwrongrow.newrow { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
   .phwrongrow .x {
-    display: grid; place-items: center; flex: 0 0 25px; width: 25px; height: 25px; border-radius: 999px;
-    background: color-mix(in srgb, #ef4444 14%, transparent); color: #ef4444; font-size: 13px; font-weight: 950;
+    position: relative; flex: 0 0 20px; width: 20px; height: 20px; color: transparent; font-size: 0;
   }
+  .phwrongrow .x::before,
+  .phwrongrow .x::after {
+    content: ""; position: absolute; left: 3px; top: 9px; width: 14px; height: 1.5px; border-radius: 999px;
+    background: color-mix(in srgb, var(--muted) 72%, #ef4444 28%);
+  }
+  .phwrongrow .x::before { transform: rotate(45deg); }
+  .phwrongrow .x::after { transform: rotate(-45deg); }
   .phwrongrow .who {
     min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700;
-    color: color-mix(in srgb, var(--fg) 78%, var(--muted));
-  }
-  .phwrongrow .who > span { position: relative; display: inline-block; max-width: 100%; }
-  .phwrongrow .who > span::after {
-    content: ""; position: absolute; left: -2px; right: -2px; top: 52%; height: 2px; border-radius: 999px; background: #ef4444;
-    transform: scaleX(1); transform-origin: left center;
-  }
-  .phwrongrow.newrow .who > span::after {
-    transform: scaleX(0); animation: phwrongstrike .24s .12s cubic-bezier(.2,.8,.2,1) forwards;
+    color: color-mix(in srgb, var(--fg) 88%, var(--muted));
   }
   .phmatch { flex: none; padding: 3px 7px; border-radius: 999px; background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850; }
   @keyframes phwrongin {
-    0% { opacity: 0; transform: translateX(-10px) scale(.985); box-shadow: 0 0 0 rgba(239,68,68,0); }
-    52% { opacity: 1; transform: translateX(3px) scale(1.006); box-shadow: 0 0 0 3px rgba(239,68,68,.08); }
-    100% { opacity: 1; transform: none; box-shadow: 0 0 0 rgba(239,68,68,0); }
+    0% { opacity: 0; transform: translateX(-8px) scale(.99); }
+    55% { opacity: 1; transform: translateX(2px); }
+    100% { opacity: 1; transform: none; }
   }
-  @keyframes phwrongstrike { to { transform: scaleX(1); } }
   .phreveal { width: min(560px,100%); margin: 12px auto 5px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center;
               padding: 13px 14px; border: 1px solid color-mix(in srgb, var(--hit) 50%, var(--line)); border-radius: 15px;
               background: color-mix(in srgb, var(--hit) 10%, var(--panel)); animation: phcluein .36s cubic-bezier(.2,.85,.25,1.08) both; }
@@ -262,10 +259,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .phstat b { font-size: 17px; }
     .phwrongrow { flex-wrap: wrap; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .phclue, .phwrongrow, .phreveal { animation: none; }
-    .phwrongrow.newrow .who > span::after { animation: none; transform: scaleX(1); }
-  }
+  @media (prefers-reduced-motion: reduce) { .phclue, .phwrongrow, .phreveal { animation: none; } }
 
   /* draft day */
   .drinputs { margin-bottom: 8px; }
@@ -5914,7 +5908,7 @@ G.playoff = {
       const g = BYID.get(id);
       if (!g) return "";
       const m = poGuessMatches(t, g);
-      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x">✕</span><span class="who"><span>${esc(g.name)}</span></span>
+      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x">✕</span><span class="who">${esc(g.name)}</span>
         ${m.sameTeam ? '<span class="phmatch">Same team</span>' : ""}${m.samePos ? '<span class="phmatch">Same position</span>' : ""}</div>`;
     }).join("");
 
