@@ -217,17 +217,20 @@ TEMPLATE = r'''<!DOCTYPE html>
   .phclue small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .075em; text-transform: uppercase; }
   .phclue b { display: block; margin-top: 1px; font-size: 14px; }
   .phclue.final { border-color: color-mix(in srgb, var(--near) 54%, var(--line)); background: color-mix(in srgb, var(--near) 15%, var(--panel)); }
-  .phwrong { width: min(560px,100%); margin: 10px auto 0; display: grid; gap: 6px; }
-  #phWrong > .phwrongrow {
-    box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 10px;
-    border: 1px solid rgba(239,68,68,.30); border-radius: 10px; background: rgba(239,68,68,.065);
+  #phWrong.phwrong {
+    width: min(560px,100%); margin: 10px auto 0; display: flex; flex-direction: column; gap: 6px;
   }
-  #phWrong > .phwrongrow.newrow { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
-  #phWrong > .phwrongrow .x {
+  #phWrong > .phmiss {
+    box-sizing: border-box; width: 100%; flex: 0 0 auto; display: flex; align-items: center; gap: 9px;
+    min-height: 42px; padding: 8px 10px; border: 1px solid rgba(239,68,68,.34); border-radius: 10px;
+    background: rgba(239,68,68,.075);
+  }
+  #phWrong > .phmiss.phmiss-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
+  #phWrong > .phmiss .x {
     display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
     color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
   }
-  #phWrong > .phwrongrow .who {
+  #phWrong > .phmiss .who {
     display: block; min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     color: var(--fg); font-size: 14px; font-weight: 700; line-height: 1.25;
   }
@@ -251,7 +254,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .phstat { padding: 9px 4px; }
     .phstat b { font-size: 17px; }
   }
-  @media (prefers-reduced-motion: reduce) { .phclue, .phwrongrow, .phreveal { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .phclue, .phmiss, .phreveal { animation: none; } }
 
   /* draft day */
   .drinputs { margin-bottom: 8px; }
@@ -5901,7 +5904,7 @@ G.playoff = {
       const g = BYID.get(id);
       if (!g) return "";
       const m = poGuessMatches(t, g);
-      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x" aria-hidden="true">×</span><span class="who">${esc(g.name)}</span>
+      return `<div class="phmiss${i === 0 ? " phmiss-new" : ""}"><span class="x" aria-hidden="true">×</span><span class="who">${esc(g.name)}</span>
         ${m.sameTeam ? '<span class="phmatch">Same team</span>' : ""}${m.samePos ? '<span class="phmatch">Same position</span>' : ""}</div>`;
     }).join("");
 
