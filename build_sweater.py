@@ -232,7 +232,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mapsvg .maptrail.close, .mapsvg .maparrow.close { stroke: var(--near); }
   .mapsvg .maptrail.hit, .mapsvg .maparrow.hit { stroke: var(--hit); }
   .mapsvg .maparrow { fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: .96; }
-  .mapsvg .mapdistance { fill: var(--fg); stroke: color-mix(in srgb, var(--panel) 94%, transparent); stroke-width: 2.7;
+  .mapsvg .mapdistance { fill: var(--fg); stroke: color-mix(in srgb, var(--panel) 94%, transparent); stroke-width: .22em;
                          paint-order: stroke fill; stroke-linejoin: round; font-weight: 850; letter-spacing: .015em; }
   .mapsvg .mapring { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0;
                      transform-box: fill-box; transform-origin: center; }
