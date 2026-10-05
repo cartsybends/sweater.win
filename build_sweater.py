@@ -217,22 +217,19 @@ TEMPLATE = r'''<!DOCTYPE html>
   .phclue small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .075em; text-transform: uppercase; }
   .phclue b { display: block; margin-top: 1px; font-size: 14px; }
   .phclue.final { border-color: color-mix(in srgb, var(--near) 54%, var(--line)); background: color-mix(in srgb, var(--near) 15%, var(--panel)); }
-  .phwrong { width: min(560px,100%); margin: 10px auto 0; display: grid; gap: 7px; }
+  .phwrong { width: min(560px,100%); margin: 10px auto 0; display: grid; gap: 6px; }
   #phWrong > .phwrongrow {
-    position: relative; overflow: hidden; display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 9px 11px;
-    border: 1px solid rgba(239,68,68,.34); border-left: 3px solid rgba(239,68,68,.82); border-radius: 11px;
-    background: rgba(239,68,68,.075);
+    box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 10px;
+    border: 1px solid rgba(239,68,68,.30); border-radius: 10px; background: rgba(239,68,68,.065);
   }
   #phWrong > .phwrongrow.newrow { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
   #phWrong > .phwrongrow .x {
-    display: grid; place-items: center; flex: 0 0 20px; width: 20px; height: 20px; color: var(--muted);
-  }
-  #phWrong > .phwrongrow .x svg { display: block; width: 18px; height: 18px; }
-  #phWrong > .phwrongrow .x path {
-    fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round;
+    display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
+    color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
   }
   #phWrong > .phwrongrow .who {
-    min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; color: var(--fg);
+    display: block; min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    color: var(--fg); font-size: 14px; font-weight: 700; line-height: 1.25;
   }
   .phmatch { flex: none; padding: 3px 7px; border-radius: 999px; background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850; }
   @keyframes phwrongin {
@@ -253,7 +250,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     .phstats { gap: 5px; }
     .phstat { padding: 9px 4px; }
     .phstat b { font-size: 17px; }
-    .phwrongrow { flex-wrap: wrap; }
   }
   @media (prefers-reduced-motion: reduce) { .phclue, .phwrongrow, .phreveal { animation: none; } }
 
@@ -5905,7 +5901,7 @@ G.playoff = {
       const g = BYID.get(id);
       if (!g) return "";
       const m = poGuessMatches(t, g);
-      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15"></path></svg></span><span class="who">${esc(g.name)}</span>
+      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x" aria-hidden="true">×</span><span class="who">${esc(g.name)}</span>
         ${m.sameTeam ? '<span class="phmatch">Same team</span>' : ""}${m.samePos ? '<span class="phmatch">Same position</span>' : ""}</div>`;
     }).join("");
 
