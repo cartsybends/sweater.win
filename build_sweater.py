@@ -2130,7 +2130,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   #view-truths .twlist .shopt { width: 100%; min-height: 72px; padding: 16px 18px 16px 48px; border-radius: 13px; text-align: left; }
   #view-truths .twtext { display: block; padding-right: 96px; font-size: 15px; line-height: 1.4; }
-  #view-truths .twtag { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .055em; text-transform: uppercase; }
+  #view-truths .twtag { position: absolute; right: 14px; top: 18px; transform: none; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .055em; text-transform: uppercase; }
   #view-trophy #trQ { width: 100%; max-width: none; margin: 0 0 26px; padding: 16px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   .trophy-prompt { display: block; font-size: 14px; font-weight: 500; color: var(--muted); }
   .trophy-title { display: block; margin: 8px auto 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 750; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
@@ -5552,10 +5552,11 @@ function truthsRandom(rnd) {
     if (seen.has(p.id)) continue;
     const kinds = shuffled(FACT_KINDS, rnd).filter(k => factText(p, k, rnd) && factText(p, k, rnd, true));
     if (kinds.length < 3) continue;
+    const actual = factText(p, kinds[2], rnd);
     const lines = [factText(p, kinds[0], rnd), factText(p, kinds[1], rnd), factText(p, kinds[2], rnd, true)];
-    if (new Set(lines).size < 3) continue;
+    if (!actual || new Set(lines).size < 3) continue;
     const order = shuffled([0, 1, 2], rnd);
-    rounds.push({ p: p.id, s: order.map(i => lines[i]), f: order.indexOf(2) });
+    rounds.push({ p: p.id, s: order.map(i => lines[i]), f: order.indexOf(2), c: actual });
     seen.add(p.id);
   }
   return rounds.length === 5 ? { rounds, rid: Math.random() } : null;
@@ -5602,11 +5603,11 @@ G.truths = {
     $("twName").textContent = p.name;
     $("twQ").textContent = st.over && !showing ? "That's the game" : "Which one is false?";
     const myPick = showing ? Number(st.guesses[last]) : -1;
-    const truthRound = `${this.tid(t)}#${showing ? last : Math.min(i, 4)}`;
+    const truthRound = `${this.tid(t)}#${showing ? last : Math.min(i, 4)}${showing ? ":reveal" : ""}`;
     const truthHtml = st.over && !showing ? "" : r.s.map((line, n) => {
       const isFalse = showing && n === r.f;
       const tag = showing ? `<span class="twtag">${isFalse ? "False · answer" : n === myPick ? "True · your pick" : "True"}</span>` : "";
-      const actual = isFalse ? truthActualText(p, line) : "";
+      const actual = isFalse ? (r.c || truthActualText(p, line)) : "";
       const correction = actual ? `<span class="twactual"><small>Actually</small><b>${esc(actual)}</b></span>` : "";
       return `<button type="button" class="shopt${isFalse ? " twfalse-reveal" : ""}" style="--i:${n}" data-c="${n}"><span class="twtext">${esc(line)}</span>${tag}${correction}</button>`;
     }).join("");
@@ -8969,7 +8970,7 @@ def truths_puzzle(players, rnd):
         if len(set(lines)) < 3:
             continue
         order = rnd.sample(range(3), 3)
-        rounds.append({"p": p["id"], "s": [lines[i] for i in order], "f": order.index(2)})
+        rounds.append({"p": p["id"], "s": [lines[i] for i in order], "f": order.index(2), "c": picks[2][0]})
         seen.add(p["id"])
     return None
 
