@@ -5878,7 +5878,7 @@ G.playoff = {
       clues.push(`<div class="phclue"><img src="${logo(team)}" alt="" onerror="this.remove()"><div><small>Team that postseason</small><b>${esc(poFullTeamName(team))}</b></div></div>`);
     }
     if (wrong >= 4 || st.over) {
-      const bits = [p.number ? `#${p.number}` : "", countryName(p.nation), poRunOrdinal(p, r)].filter(Boolean).join(" · ");
+      const bits = [p.number ? `Current #${p.number}` : "", countryName(p.nation), poRunOrdinal(p, r)].filter(Boolean).join(" · ");
       clues.push(`<div class="phclue final"><div><small>Final scouting clue</small><b>${esc(bits)}</b></div></div>`);
     }
     $("phClues").innerHTML = clues.join("");
