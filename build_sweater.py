@@ -744,6 +744,7 @@ TEMPLATE = r'''<!DOCTYPE html>
            font: inherit; font-size: 15px; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color .2s; }
   .sebtn:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
   .sebtn.hit { background: var(--hit); color: var(--hit-fg); }
+  .sebtn.near { background: var(--near); color: var(--near-fg); opacity: 1; }
   .sebtn.miss { opacity: .45; }
   .sebtn:disabled { cursor: default; }
 
@@ -5629,13 +5630,14 @@ G.season = {
     const rows = seasonsOf(t.p), left = this.max - st.guesses.length;
     $("seList").innerHTML = rows.map(r => {
       const tried = st.guesses.includes(r.y);
-      const cls = st.over && r.y === t.y ? " hit" : tried ? " miss" : "";
+      const close = tried && r.y !== t.y && Math.abs(r.y - t.y) <= 2;
+      const cls = st.over && r.y === t.y ? " hit" : close ? " near" : tried ? " miss" : "";
       const arrow = tried && r.y !== t.y ? (t.y > r.y ? " ↑" : " ↓") : "";
       return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried || st.over ? " disabled" : ""}>${seasonLabel(r.y)}${arrow}</button>`;
     }).join("");
-    $("seLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left · arrows point to a later or earlier season`;
+    $("seLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left · yellow means within 2 seasons · arrows point later or earlier`;
   },
-  squares: (t, y) => y === t.y ? "🟩" : "⬛",
+  squares: (t, y) => y === t.y ? "🟩" : Math.abs(y - t.y) <= 2 ? "🟨" : "⬛",
 };
 $("seList").addEventListener("click", e => {
   const b = e.target.closest("[data-y]");
