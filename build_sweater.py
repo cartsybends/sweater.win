@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "79 · Last Game Lineups"
+VERSION = "80 · Playoff Run"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -199,6 +199,46 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shake { animation: shake .35s ease; }
   @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
   @media (prefers-reduced-motion: reduce) { .shake, .jystop, .hintchip { animation: none; } .blurbox img { transition: none; } }
+
+  /* playoff run */
+  .phrun { width: min(560px, 100%); margin: 8px auto 10px; padding: 15px; border: 1px solid var(--line); border-radius: 16px;
+           background: color-mix(in srgb, var(--panel) 91%, transparent); box-shadow: 0 8px 22px rgba(23,59,75,.05); }
+  .phrunhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .phrunhead b { font-size: 18px; }
+  .phrunhead span { color: var(--muted); font-size: 12px; font-weight: 700; }
+  .phstats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 7px; }
+  .phstat { padding: 10px 7px; border-radius: 11px; background: var(--cell); color: var(--cell-fg); text-align: center; }
+  .phstat b { display: block; font-size: 20px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .phstat small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+  .phclues { width: min(560px,100%); margin: 8px auto 12px; display: grid; gap: 7px; }
+  .phclue { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px;
+            background: color-mix(in srgb, var(--panel) 90%, transparent); animation: phcluein .32s cubic-bezier(.2,.8,.2,1) both; }
+  .phclue img { width: 34px; height: 34px; flex: none; object-fit: contain; background: #fff; border-radius: 7px; padding: 2px; }
+  .phclue small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .075em; text-transform: uppercase; }
+  .phclue b { display: block; margin-top: 1px; font-size: 14px; }
+  .phclue.final { border-color: color-mix(in srgb, var(--near) 54%, var(--line)); background: color-mix(in srgb, var(--near) 15%, var(--panel)); }
+  .phwrong { width: min(560px,100%); margin: 9px auto 0; display: grid; gap: 6px; }
+  .phwrongrow { display: flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px;
+                background: color-mix(in srgb, var(--panel) 88%, transparent); animation: rowin .28s ease both; }
+  .phwrongrow .x { color: #c0392b; font-weight: 900; }
+  .phwrongrow .who { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+  .phmatch { flex: none; padding: 3px 7px; border-radius: 999px; background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850; }
+  .phreveal { width: min(560px,100%); margin: 12px auto 5px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center;
+              padding: 13px 14px; border: 1px solid color-mix(in srgb, var(--hit) 50%, var(--line)); border-radius: 15px;
+              background: color-mix(in srgb, var(--hit) 10%, var(--panel)); animation: phcluein .36s cubic-bezier(.2,.85,.25,1.08) both; }
+  .phreveal > img { width: 56px; height: 56px; object-fit: cover; border-radius: 50%; background: var(--cream); }
+  .phreveal small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+  .phreveal b { display: block; margin-top: 2px; font-size: 18px; }
+  .phreveal span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+  @keyframes phcluein { from { opacity: 0; transform: translateY(-4px) scale(.985); } to { opacity: 1; transform: none; } }
+  @media (max-width: 520px) {
+    .phrun { padding: 12px; }
+    .phstats { gap: 5px; }
+    .phstat { padding: 9px 4px; }
+    .phstat b { font-size: 17px; }
+    .phwrongrow { flex-wrap: wrap; }
+  }
+  @media (prefers-reduced-motion: reduce) { .phclue, .phwrongrow, .phreveal { animation: none; } }
 
   /* draft day */
   .drinputs { margin-bottom: 8px; }
@@ -2800,17 +2840,18 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-playoff" hidden>
-    <p class="intro" id="phIntro"></p>
-    <p class="slhint" id="phHint" hidden></p>
+    <p class="intro" id="phIntro">Name the player from one postseason run.</p>
+    <div class="phrun" id="phRun"></div>
+    <div class="phclues" id="phClues"></div>
     <div class="search narrow">
       <input id="phGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="phOpts" placeholder="Guess 1 of 6">
       <ul class="list" id="phOpts" role="listbox" hidden></ul>
     </div>
+    <p class="hint" id="phLeft"></p>
+    <div class="phwrong" id="phWrong"></div>
+    <div class="phreveal" id="phReveal" hidden></div>
     <div class="slot"></div>
     <p class="nodata" hidden>This game needs playoff stats. Rebuild the site to load them.</p>
-    <table class="seasons"><thead><tr id="phHead"></tr></thead><tbody id="phRows"></tbody></table>
-    <p class="hint" id="phLeft"></p>
-    <ul class="wrong" id="phWrong"></ul>
   </section>
 
   <section class="view" id="view-trophy" hidden>
@@ -5736,61 +5777,133 @@ $("seList").addEventListener("click", e => {
   if (b && !b.disabled) doGuess(Number(b.dataset.y));
 });
 
-// ======================= playoff hero, trophy case, mystery roster =======================
+// ======================= playoff run, trophy case, mystery roster =======================
 const poSeasons = p => {
   const by = new Map();
-  for (const [y, t, gp, a, b, c] of (p.po || [])) {
+  for (const [y, team, gp, a, b, c] of (p.po || [])) {
     const r = by.get(y) || { y, teams: [], gp: 0, a: 0, b: 0, c: 0 };
-    r.teams.push(t); r.gp += gp; r.a += a; r.b += b; r.c += c;
+    if (team && !r.teams.includes(team)) r.teams.push(team);
+    const total = r.gp + gp;
+    if (p.pos === "G") {
+      r.b = total ? (r.b * r.gp + b * gp) / total : 0;
+      r.c = total ? (r.c * r.gp + c * gp) / total : 0;
+      r.a += a;
+    } else {
+      r.a += a; r.b += b; r.c += c;
+    }
+    r.gp = total;
     by.set(y, r);
   }
   return [...by.values()].sort((x, y) => x.y - y.y);
 };
-const PO_POOL = PLAYERS.filter(p => poSeasons(p).length >= 3);
 const poHeads = p => p.pos === "G" ? ["GP", "W", "GAA", "SV%"] : ["GP", "G", "A", "PTS"];
 const poCells = (p, r) => p.pos === "G"
-  ? [r.gp, r.a, (r.gp ? r.b / r.teams.length : 0).toFixed(2), (r.gp ? r.c / r.teams.length : 0).toFixed(3).replace(/^0/, "")]
+  ? [r.gp, r.a, r.b.toFixed(2), r.c.toFixed(3).replace(/^0/, "")]
   : [r.gp, r.a, r.b, r.c];
+const poMeaningful = (p, r) => p.pos === "G" ? (r.gp >= 6 || r.a >= 4) : (r.gp >= 8 || r.c >= 6);
+const poRuns = p => poSeasons(p).filter(r => poMeaningful(p, r));
+const PO_POOL = PLAYERS.filter(p => poRuns(p).length);
+const PO_RUN_POOL = PO_POOL.flatMap(p => poRuns(p).map(r => ({ p, r })));
+const poRunScore = (p, r) => p.pos === "G" ? r.gp * 2 + r.a * 3 : r.gp + r.c * 2;
+const poTargetFor = (p, year, key = "") => {
+  if (!p) return null;
+  const all = poSeasons(p), good = all.filter(r => poMeaningful(p, r));
+  let r = all.find(x => x.y === Number(year));
+  if (!r) {
+    const choices = good.length ? good : all;
+    if (!choices.length) return null;
+    r = year == null
+      ? choices.slice().sort((a, b) => poRunScore(p, b) - poRunScore(p, a) || b.y - a.y)[0]
+      : choices[hash(`sweater-po-run-${key}-${p.id}`) % choices.length];
+  }
+  return { p, r };
+};
+const poFullTeamName = ab => TEAM_FULL_NAMES[ab] || TEAM_NAMES[ab] || ab;
+const poSameTeamName = (ab, name) => norm(poFullTeamName(ab)).replace("montréal", "montreal") === norm(name || "").replace("montréal", "montreal");
+function poFinishLabel(r) {
+  const cup = CUP_ROWS.find(x => Number(x[0]) === r.y), team = r.teams[0];
+  if (!cup || !team) return "Postseason result unavailable";
+  if (poSameTeamName(team, cup[1])) return "Stanley Cup champion";
+  if (poSameTeamName(team, cup[2])) return "Reached the Stanley Cup Final";
+  return "Did not reach the Stanley Cup Final";
+}
+function poRunOrdinal(p, r) {
+  const rows = poSeasons(p), i = rows.findIndex(x => x.y === r.y);
+  return i >= 0 ? `${ordinal(i + 1)} of ${rows.length} career playoff appearances` : "";
+}
+function poGuessMatches(target, p) {
+  const samePos = p.pos === target.p.pos;
+  const guessed = poSeasons(p).find(r => r.y === target.r.y);
+  const sameTeam = !!guessed && guessed.teams.some(t => target.r.teams.includes(t));
+  return { samePos, sameTeam };
+}
 
 G.playoff = {
-  title: "Playoff Hero", share: "Sweater Playoff Hero", view: "view-playoff", max: 6, next: "Next player",
-  cheers: ["Playoff legend! 🏆", "Snipe! 🎯", "Hat trick! 🎩", "Nice read! 🏒", "Got there! 💪", "Buzzer beater! 🚨"],
+  title: "Playoff Run", share: "Sweater Playoff Run", view: "view-playoff", max: 6, next: "Next run",
+  cheers: ["Called it! 🏆", "Snipe! 🎯", "Clutch read! 🔥", "Nice scouting! 🏒", "Got there! 💪", "Game 7 winner! 🚨"],
   pool: () => PO_POOL,
   daily(k) {
-    const p = BYID.get((DAILY.playoff[k] || {}).id);
-    return p && poSeasons(p).length >= 3 ? p : PO_POOL[hash("sweater-po-" + k) % PO_POOL.length];
+    const v = (DAILY.playoff || {})[k] || {}, p = BYID.get(v.id);
+    if (p) return poTargetFor(p, v.y, k);
+    const fallback = PO_POOL[hash("sweater-po-" + k) % PO_POOL.length];
+    return poTargetFor(fallback, null, k);
   },
-  random: () => pick(PO_POOL),
-  tid: t => t.id, player: t => t, isWin: (t, id) => id === t.id,
-  meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
-  reset() { $("phWrong").innerHTML = ""; this.shown = 0; },
+  random: () => {
+    const x = pick(PO_RUN_POOL);
+    return x ? { p: x.p, r: x.r } : null;
+  },
+  tid: t => t.p.id,
+  player: t => t.p,
+  isWin: (t, id) => id === t.p.id,
+  meta: t => `${seasonLabel(t.r.y)} · ${poFullTeamName(t.r.teams[0])} · ${poCells(t.p, t.r).join(" / ")}`,
+  reset() {
+    $("phWrong").innerHTML = "";
+    $("phClues").innerHTML = "";
+    $("phReveal").hidden = true;
+  },
   guess(t, id) {
-    const p = BYID.get(id);
-    if (!p) return null;
-    if (p.id !== t.id) addWrong("phWrong", p);
-    return p.id === t.id;
+    return BYID.has(id) ? id === t.p.id : null;
   },
   render(t, st) {
-    const rows = poSeasons(t), wrong = st.guesses.filter(id => id !== t.id).length;
-    const shown = st.over ? rows.length : Math.min(rows.length, 1 + wrong);
-    const runs = rows.reduce((n, r) => n + r.gp, 0), pts = rows.reduce((n, r) => n + (t.pos === "G" ? r.a : r.c), 0);
-    $("phIntro").textContent = `${posName(t)} · ${rows.length} playoff runs · ${runs} playoff games · ${pts} career playoff ${t.pos === "G" ? "wins" : "points"}`;
-    const hint = !st.over && wrong >= 4;
-    $("phHint").hidden = !hint;
-    if (hint) $("phHint").innerHTML = `Hint: he plays for <img src="${logo(t.team)}" alt="" onerror="this.remove()"><b>${esc(teamName(t.team))}</b> now`;
-    $("phHead").innerHTML = `<th>Playoffs</th>${poHeads(t).map(h => `<th>${h}</th>`).join("")}${st.over ? "<th>Team</th>" : ""}`;
-    $("phRows").innerHTML = rows.map((r, i) => {
-      if (i >= shown) return `<tr class="locked"><td>${seasonLabel(r.y)}</td><td colspan="${poHeads(t).length}">🔒 Locked</td></tr>`;
-      const cls = this.shown && i >= this.shown ? ' class="newrow"' : "";
-      return `<tr${cls}><td>${seasonLabel(r.y)}</td>${poCells(t, r).map(v => `<td>${v}</td>`).join("")}` +
-        (st.over ? `<td>${r.teams.map(x => esc(x || "?")).join(" / ")}</td>` : "") + "</tr>";
+    const p = t.p, r = t.r, wrongIds = st.guesses.filter(id => id !== p.id), wrong = wrongIds.length;
+    const heads = poHeads(p), cells = poCells(p, r);
+    $("phRun").innerHTML = `<div class="phrunhead"><b>${seasonLabel(r.y)} Playoff Run</b><span>Who is this?</span></div>
+      <div class="phstats">${heads.map((h, i) => `<div class="phstat"><b>${esc(String(cells[i]))}</b><small>${esc(h)}</small></div>`).join("")}</div>`;
+
+    const clues = [];
+    if (wrong >= 1 || st.over) clues.push(`<div class="phclue"><div><small>Position</small><b>${esc(posName(p))}</b></div></div>`);
+    if (wrong >= 2 || st.over) clues.push(`<div class="phclue"><div><small>Run result</small><b>${esc(poFinishLabel(r))}</b></div></div>`);
+    if (wrong >= 3 || st.over) {
+      const team = r.teams[0];
+      clues.push(`<div class="phclue"><img src="${logo(team)}" alt="" onerror="this.remove()"><div><small>Team that postseason</small><b>${esc(poFullTeamName(team))}</b></div></div>`);
+    }
+    if (wrong >= 4 || st.over) {
+      const bits = [p.number ? `Current #${p.number}` : "", countryName(p.nation), poRunOrdinal(p, r)].filter(Boolean).join(" · ");
+      clues.push(`<div class="phclue final"><div><small>Final scouting clue</small><b>${esc(bits)}</b></div></div>`);
+    }
+    $("phClues").innerHTML = clues.join("");
+
+    $("phWrong").innerHTML = wrongIds.slice().reverse().map((id, i) => {
+      const g = BYID.get(id);
+      if (!g) return "";
+      const m = poGuessMatches(t, g);
+      return `<div class="phwrongrow${i === 0 ? " newrow" : ""}><span class="x">✕</span><span class="who">${esc(g.name)}</span>
+        ${m.sameTeam ? '<span class="phmatch">Same team</span>' : ""}${m.samePos ? '<span class="phmatch">Same position</span>' : ""}</div>`;
     }).join("");
-    $("phLeft").textContent = st.over ? "" :
-      `${this.max - st.guesses.length} tries left. Each wrong guess unlocks another playoff run.` +
-      (wrong < 4 ? " A team hint unlocks after 4 wrong guesses." : "");
-    this.shown = shown;
+
+    const reveal = $("phReveal");
+    reveal.hidden = !st.over;
+    if (st.over) {
+      const team = r.teams[0], line = heads.map((h, i) => `${h} ${cells[i]}`).join(" · ");
+      reveal.innerHTML = `<img src="${p.headshot || FALLBACK}" alt="" onerror="this.src='${FALLBACK}'"><div><small>Playoff run revealed</small>
+        <b>${esc(p.name)}</b><span>${esc(seasonLabel(r.y))} · ${esc(poFullTeamName(team))}<br>${esc(line)}</span></div>`;
+    }
+
+    const left = this.max - st.guesses.length;
+    const next = wrong === 0 ? "position" : wrong === 1 ? "run result" : wrong === 2 ? "team" : wrong === 3 ? "number, country and career context" : "";
+    $("phLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left${next ? ` · next miss reveals ${next}` : ""}`;
   },
-  squares: (t, id) => id === t.id ? "🟩" : "⬛",
+  squares: (t, id) => id === t.p.id ? "🟩" : "⬛",
 };
 
 // ---- Trophy Case ----
@@ -6997,7 +7110,7 @@ const LB_RULES = {
   shoot: "Shootout: 2 points for every goal, up to 10.",
   goalie: "Goalie Mode: 10 points per save, with a multiplier increasing every 5 consecutive saves up to 5×. Three goals end the run.",
   overtime: "Overtime: 1 point per right answer. Start with 45 seconds; right answers add 5 seconds and wrong answers cost 3.",
-  playoff: "Playoff Hero: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
+  playoff: "Playoff Run: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
   cups: "Playoff History: 1 point for every square you fill in 10 minutes.",
   trophy: "Trophy Case: 2 points for every round you get right, so 20 questions are worth up to 40.",
   mroster: "Mystery Roster: 10 points on the first try, then 6, 3 and 1.",
@@ -7159,7 +7272,7 @@ const HUB = [
   { title: "Name the player", tone: "green", games: [
     ["classic", "🏒", "Guess the player from his team, position, age and more."],
     ["statline", "📈", "Name him from his season-by-season stats."],
-    ["playoff", "🏒", "Name him from his playoff runs."],
+    ["playoff", "🏒", "Name him from one postseason run as clues build."],
     ["journey", "🧭", "Name him from the teams he's played for."],
     ["blur", "🔍", "Name him from a blurry photo that sharpens as you guess."],
     ["zam", "🧊", "Clear the ice to reveal him. Guess early for more points."],
@@ -7197,7 +7310,7 @@ HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: 
 const MODE_META = Object.freeze({
   classic:  { type: "Deduction", time: "3–5 min", difficulty: "Medium", fact: "Read the board: team, position, age and more all narrow the field.", next: "statline" },
   statline: { type: "Stats", time: "3–5 min", difficulty: "Hard", fact: "Each wrong guess reveals another season from the player’s career.", next: "playoff" },
-  playoff:  { type: "History", time: "3–5 min", difficulty: "Hard", fact: "Use postseason runs to identify the player behind the playoff résumé.", next: "trophy" },
+  playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
   blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every guess sharpens the photo—risk a name early for the best score.", next: "zam" },
   zam:      { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Clear the ice quickly, but one early correct guess is worth the gamble.", next: "classic" },
@@ -7933,7 +8046,8 @@ const HELP = {
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
   goalie: `<p>Press <b>Take the net</b>. Watch the puck and tap the area it is heading for before it reaches the goal. You can commit only once per shot. Use Q/E for top left/right, Z/C for bottom left/right, or Space for five-hole.</p><p>Shots speed up and can curve after the first five. Each save earns 10 points; every five straight saves increases your multiplier, up to 5×. A goal resets the streak, and three goals end your run. Leaving, reloading, or hiding the game ends a started run.</p>`,
   overtime: `<p>Start with <b>45 seconds</b>. Pick an answer or press 1–4: a right answer adds 5 seconds and a wrong answer costs 3. The clock keeps running during the brief answer reveal. Bank up to 60 seconds.</p><p>Each right answer earns one point. Survive until the clock runs out, or clear the 100-question board. Leaving, reloading, or hiding the game ends a started run.</p>`,
-  playoff: `<p>Name the player from his playoff stat lines. You start with his first playoff run, and each wrong guess unlocks another. 6 tries, with a team hint after 4 misses.</p>`,
+  playoff: `<p>Name the player from <b>one postseason run</b>. You start with that year's playoff stat line.</p>
+    <p>Each wrong guess reveals a useful clue in order: position, whether the team reached the Stanley Cup Final, the team itself, then number/country/career context. Wrong player guesses can also flag a matching position or a teammate from that same postseason. You get 6 tries.</p>`,
   cups: `<p>A complete grid from 1980–81 through the latest Final, with three squares per season: the Stanley Cup winner, the runner-up and the Conn Smythe winner. Press Start, then type names for 10 minutes.</p>
     <p>One name fills every square it belongs in, and a team nickname or a surname is enough when only one answer matches it.</p>`,
   trophy: `<p>Choose all trophies or one specific trophy, then pick 5, 10, 15 or 20 questions. Each right answer is worth 2 points.</p>
@@ -8897,7 +9011,7 @@ def season_puzzle(players, rnd):
     return {"id": p["id"], "y": rnd.choice(sorted(season_groups(p)))}
 
 
-# ---- Playoff Hero, Trophy Case, Mystery Roster ----
+# ---- Playoff Run, Trophy Case, Mystery Roster ----
 def playoff_seasons(p):
     years = {}
     for r in p.get("po", []):
@@ -8905,13 +9019,29 @@ def playoff_seasons(p):
     return years
 
 
+def playoff_run_ok(p, rows):
+    gp = sum(int(r[2] or 0) for r in rows)
+    if p.get("pos") == "G":
+        wins = sum(int(r[3] or 0) for r in rows)
+        return gp >= 6 or wins >= 4
+    points = sum(int(r[5] or 0) for r in rows)
+    return gp >= 8 or points >= 6
+
+
+def playoff_runs(p):
+    return [y for y, rows in playoff_seasons(p).items() if playoff_run_ok(p, rows)]
+
+
 def playoff_ok(p):
-    return len(playoff_seasons(p)) >= 3
+    return bool(playoff_runs(p))
 
 
 def playoff_puzzle(players, rnd):
     pool = [p for p in players if playoff_ok(p)]
-    return {"id": rnd.choice(pool)["id"]} if pool else None
+    if not pool:
+        return None
+    p = rnd.choice(pool)
+    return {"id": p["id"], "y": rnd.choice(playoff_runs(p))}
 
 
 TROPHY_SKIP = ("Stanley Cup", "Presidents' Trophy", "Prince of Wales", "Clarence S. Campbell")
