@@ -203,6 +203,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* draft day */
   #drHist { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 8px 0; }
   .drrow { display: flex; gap: 6px; }
+  #drHints .hintchip { background: var(--near); color: var(--near-fg); border-color: color-mix(in srgb, var(--near-fg) 18%, transparent);
+                       font-weight: 650; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--near-fg) 10%, transparent); }
+  #drHints .hintchip b { color: inherit; }
+  #drHints .hintchip img { background: #fff; border-radius: 5px; padding: 1px; }
   .numrow select { padding: 11px 10px; font-size: 16px; border: 1px solid #bbb; border-radius: 6px; background: var(--bg); color: var(--fg); }
 
   /* birthplace map */
