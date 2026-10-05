@@ -19,11 +19,11 @@ permissions:
 
 concurrency:
   group: sweater-update
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
@@ -101,7 +101,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment:
       name: github-pages
     steps:
