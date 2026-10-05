@@ -6899,7 +6899,15 @@ function rememberGame(id) {
   store.set("sweater-recent-games", [hubId, ...recentIds().filter(x => x !== hubId)].slice(0, 6));
 }
 const cardTitle = id => id === "hl" ? "Higher or Lower" : G[id].title;
-let onHub = true, statsGame = null;
+let onHub = true, statsGame = null, hubReturnScroll = null;
+function rememberHubScroll() {
+  if (!onHub || $("view-hub").hidden) return;
+  hubReturnScroll = window.scrollY;
+}
+function restoreHubScroll() {
+  const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  window.scrollTo(0, hubReturnScroll == null ? 0 : Math.min(hubReturnScroll, max));
+}
 
 function hubStatus(id) {
   const today = dayKey();
@@ -7248,6 +7256,7 @@ function startTeamMystery(t){
 }
 function openTeamMode(t, mode) { if(mode==="best")startTeamBest(t, true); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
 function openTeams(team = "", push = true) {
+  if (push) rememberHubScroll();
   leaveGame(game); closeParty(); onHub = false;
   document.body.classList.remove("hubmode");
   $("view-hub").hidden = true;
@@ -7265,6 +7274,7 @@ $("view-teams").addEventListener("click", e => {
 });
 
 function showHub(push = true) {
+  const returningToHub = !onHub;
   leaveGame(game);
   closeParty();
   onHub = true;
@@ -7278,9 +7288,11 @@ function showHub(push = true) {
   searches.forEach(s => s.close());
   renderHub();
   document.title = "Sweater · NHL player guessing games";
+  if (returningToHub) requestAnimationFrame(restoreHubScroll);
 }
 
 function openGame(id, push = true) {
+  if (push) rememberHubScroll();
   if (id === "hl") id = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
   if (!G[id]) return showHub(push);
   if (id.startsWith("hl_")) store.set("sweater-hl-game", id);
@@ -7339,6 +7351,7 @@ let party = null, partyTimer = null, partyBusy = false;
 const partySaved = () => { const p = store.get("sweater-party"); return p && Date.now() - p.at < 6 * 3600e3 ? p : null; };
 
 function openParty(code, push = true) {
+  if (push) rememberHubScroll();
   if (push) history.pushState(null, "", code ? `#party-${code}` : "#party");
   leaveGame(game);
   onHub = false;
