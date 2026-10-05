@@ -2526,6 +2526,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="view" id="view-statline" hidden>
     <p class="intro" id="slIntro">Name the player from their NHL career.</p>
+    <div class="slot"></div>
     <div class="slcareer" id="slCareer">
       <div class="slcareerhead">
         <span><small>Career clues</small><b id="slProgress">1 revealed</b></span>
@@ -2546,7 +2547,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <p class="hint" id="slLeft"></p>
     <div class="slwrong" id="slWrong"></div>
-    <div class="slot"></div>
     <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
   </section>
 
