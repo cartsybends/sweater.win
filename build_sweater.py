@@ -670,7 +670,19 @@ TEMPLATE = r'''<!DOCTYPE html>
   .twmark { width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center;
             background: color-mix(in srgb, var(--fg) 12%, transparent); font-weight: 700; font-size: 14px; }
   .twtext { flex: 1; }
-  .twtag { font-size: 12px; font-weight: 600; letter-spacing: .03em; opacity: .8; white-space: nowrap; }
+  #twList .shopt { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 10px; text-align: left; }
+  .twtag { font-size: 12px; font-weight: 700; letter-spacing: .035em; opacity: .82; white-space: nowrap; }
+  .twactual { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 7px; margin-top: 3px; padding-top: 9px;
+              border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+  .twactual small { flex: none; font-size: 10px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; opacity: .72; }
+  .twactual b { font-size: 13px; line-height: 1.3; }
+  #twList .shopt.twfalse-reveal { animation: twanswerpop .42s cubic-bezier(.2,.9,.25,1.15); }
+  @keyframes twanswerpop {
+    0% { transform: scale(.96); box-shadow: 0 0 0 rgba(0,0,0,0); }
+    58% { transform: scale(1.035); box-shadow: 0 10px 24px rgba(0,0,0,.14); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(0,0,0,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { #twList .shopt.twfalse-reveal { animation: none; } }
   .twline.istrue { background: var(--cell); opacity: .65; }
   .twline.isfalse { background: color-mix(in srgb, var(--hit) 18%, var(--cell)); box-shadow: inset 0 0 0 2px var(--hit); opacity: 1; }
   .twline.isfalse .twmark { background: var(--hit); color: var(--hit-fg); }
@@ -5149,6 +5161,24 @@ function factText(p, kind, rnd, wrong = false) {
   const floor = Math.floor(games / 100) * 100;
   return `Has played over ${wrong ? floor + 300 : floor} NHL games`;
 }
+function truthActualText(p, falseLine) {
+  const inches = v => `${Math.floor(v / 12)}′${v % 12}″`;
+  const seasons = seasonsOf(p).length;
+  const games = seasonsOf(p).reduce((n, r) => n + r.gp, 0);
+  if (falseLine.startsWith("Plays for ")) return `Plays for ${teamName(p.team)}`;
+  if (falseLine.startsWith("Is a ") && POS_LABELS[p.pos]) return `Is a ${POS_LABELS[p.pos].toLowerCase()}`;
+  if (falseLine.startsWith("Was born in ")) return `Was born in ${(COUNTRY_NAMES[p.nation] || p.nation).replace(/^the /, "")}`;
+  if (falseLine.startsWith("Wears #") && p.number) return `Wears #${p.number}`;
+  if (falseLine.startsWith("Was drafted in ") && hasDraft(p)) return `Was drafted in ${p.draft[0]}`;
+  if (falseLine.startsWith("Has played ") && falseLine.endsWith(" NHL seasons")) return `Has played ${seasons} NHL seasons`;
+  if (falseLine.startsWith("Is ") && falseLine.endsWith(" tall") && p.ht) return `Is ${inches(p.ht)} tall`;
+  if (falseLine.startsWith("Once scored ")) {
+    const goals = p.pos === "G" ? 0 : hlValue(p, "goals").v;
+    if (goals) return `Once scored ${goals} goals in a season`;
+  }
+  if (falseLine.startsWith("Has played over ")) return `Has played ${games.toLocaleString()} NHL games`;
+  return "";
+}
 function truthsRandom(rnd) {
   const rounds = [], seen = new Set();
   for (let i = 0; i < 400 && rounds.length < 5; i++) {
@@ -5208,8 +5238,11 @@ G.truths = {
     const myPick = showing ? Number(st.guesses[last]) : -1;
     const truthRound = `${this.tid(t)}#${showing ? last : Math.min(i, 4)}`;
     const truthHtml = st.over && !showing ? "" : r.s.map((line, n) => {
-      const tag = showing ? `<span class="twtag">${n === r.f ? "False · answer" : n === myPick ? "True · your pick" : "True"}</span>` : "";
-      return `<button type="button" class="shopt" style="--i:${n}" data-c="${n}"><span class="twtext">${esc(line)}</span>${tag}</button>`;
+      const isFalse = showing && n === r.f;
+      const tag = showing ? `<span class="twtag">${isFalse ? "False · answer" : n === myPick ? "True · your pick" : "True"}</span>` : "";
+      const actual = isFalse ? truthActualText(p, line) : "";
+      const correction = actual ? `<span class="twactual"><small>Actually</small><b>${esc(actual)}</b></span>` : "";
+      return `<button type="button" class="shopt${isFalse ? " twfalse-reveal" : ""}" style="--i:${n}" data-c="${n}"><span class="twtext">${esc(line)}</span>${tag}${correction}</button>`;
     }).join("");
     paintOptions("twList", truthRound, truthHtml, showing ? n => n === r.f ? "right" : n === myPick ? "wrong" : "dim" : null);
     $("twMsg").textContent = "";
