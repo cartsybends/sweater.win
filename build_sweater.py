@@ -730,7 +730,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .roextras { min-width: 0; }
   .roextrasgrid { display: grid; gap: 6px; }
   .roextras .roslot { min-height: 42px; }
-  .roboard.done .roslot.empty { display: none; }
+  .roempty { margin: 4px 2px; color: var(--muted); font-size: 12px; }
   @media (max-width: 700px) {
     .roboard { grid-template-columns: 1fr; gap: 10px; }
     .roline { grid-template-columns: 38px repeat(3, minmax(0, 1fr)); gap: 5px; }
@@ -3729,7 +3729,7 @@ G.roster = {
     const goalieHtml = `<div class="roline goalies"><span class="rolabel">Goalies</span>${[0,1].map(n => slot(layout.goalies[n])).join("")}</div>`;
     const extrasHtml = layout.extras.length
       ? layout.extras.map(slot).join("")
-      : '<div class="roslot empty" aria-hidden="true"></div>';
+      : '<p class="roempty">No extra roster players</p>';
     $("roBoard").classList.toggle("done", st.over);
     $("roBoard").innerHTML = `<div class="rolines">
       <section class="rogroup"><div class="rogrouphead"><b>Forwards</b><small>4 lines · 12 slots</small></div>${forwardHtml}</section>
