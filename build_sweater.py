@@ -17,6 +17,7 @@ import argparse
 import random
 import shutil
 import json
+from collections import defaultdict
 import sys
 import time
 from concurrent.futures import TimeoutError as FuturesTimeout, as_completed
@@ -45,9 +46,12 @@ TEAM_ID_TO_ABBR = {
     26: "LAK", 28: "SJS", 29: "CBJ", 30: "MIN", 52: "WPG", 54: "VGK", 55: "SEA", 59: "UTA",
 }
 CURRENT_PLAYER_INDEX = "https://api.nhle.com/stats/rest/en/players?limit=-1&cayenneExp=currentTeamId%3E0"
+TEAM_SCHEDULE_API = "https://api-web.nhle.com/v1/club-schedule-season/{team}/now"
+BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
+SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "78 · Best Of Ranked Guesses"
+VERSION = "79 · Last Game Lineups"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2377,6 +2381,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div><p class="pname" id="roTeam"></p><p class="pmeta">Fill the lineup in 60 seconds: four forward lines, three defense pairs, two goalies, plus roster extras.</p></div>
     </div>
     <div class="hlscore"><span>Time<b id="roTime">60</b></span><span>Named<b id="roCount">0</b>/<span id="roTotal">0</span></span></div>
+    <p class="optnote center" id="roSource"></p>
     <div class="numrow wide">
       <input id="roInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send" placeholder="Press Start to begin" aria-label="Player name">
       <button class="btn" id="roStart" type="button">Start</button>
@@ -2933,6 +2938,8 @@ TEMPLATE = r'''<!DOCTYPE html>
 <script>
 // ======================= data (filled in by build_sweater.py) =======================
 const PLAYERS = /*__PLAYERS__*/[].sort((a, b) => a.id - b.id);
+const ROSTER_PLAYERS = /*__ROSTER_PLAYERS__*/[].sort((a, b) => a.id - b.id);
+const ROSTER_LINEUPS = /*__ROSTER_LINEUPS__*/{};
 const BUILT = "/*__BUILT__*/";
 const SITE = "/*__SITE__*/";
 const API = "/*__API__*/".replace(/\/+$/, "");
@@ -2965,7 +2972,7 @@ const TEAM_IDS = { ANA:24,BOS:6,BUF:7,CGY:20,CAR:12,CHI:16,COL:21,CBJ:29,DAL:25,
 const TEAM_START = { ANA:1993,BOS:1924,BUF:1970,CGY:1980,CAR:1997,CHI:1926,COL:1995,CBJ:2000,DAL:1993,DET:1926,EDM:1979,FLA:1993,LAK:1967,MIN:2000,MTL:1917,NSH:1998,NJD:1982,NYI:1972,NYR:1926,OTT:1992,PHI:1967,PIT:1967,SJS:1991,SEA:2021,STL:1967,TBL:1992,TOR:1917,UTA:2024,VAN:1970,VGK:2017,WSH:1974,WPG:2011 };
 const TEAM_HISTORY = /*__TEAM_HISTORY__*/{}; // compact historical regular-season rows, built server-side
 const TEAM_DIV_ORDER = ["A","M","C","P"];
-const BYID = new Map(PLAYERS.map(p => [p.id, p]));
+const BYID = new Map([...PLAYERS, ...ROSTER_PLAYERS].map(p => [p.id, p]));
 // NHL's current logo CDN deliberately omits retired franchise codes. Keep a
 // focused archive map so historic trivia shows the proper mark instead of an
 // empty image. These are rendered PNG previews of the corresponding crest.
@@ -3638,11 +3645,11 @@ $("numGuess").addEventListener("keydown", e => { if (e.key === "Enter") { e.prev
 
 // ---- Roster Recall: name as many players on a roster as you can in 60 seconds ----
 const RO_SECONDS = 60;
-const rosterOf = team => PLAYERS.filter(p => p.team === team).map(p => p.id).sort((a, b) => a - b);
+const rosterOf = team => ROSTER_PLAYERS.filter(p => p.team === team).map(p => p.id).sort((a, b) => a - b);
 const RO_TEAMS = Object.keys(TEAMS).filter(t => rosterOf(t).length >= 10);
 const nameKey = s => norm(s).replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
 const roPlayerSort = (a, b) => (Number(a.number) || 999) - (Number(b.number) || 999) || a.name.localeCompare(b.name);
-function rosterLayout(t) {
+function rosterFallbackLayout(t) {
   const players = t.ids.map(id => BYID.get(id)).filter(Boolean);
   const forwards = players.filter(p => p.pos !== "D" && p.pos !== "G").sort(roPlayerSort);
   const defense = players.filter(p => p.pos === "D").sort(roPlayerSort);
@@ -3651,7 +3658,23 @@ function rosterLayout(t) {
   const pairs = Array.from({ length: 3 }, (_, i) => defense.slice(i * 2, i * 2 + 2));
   const goalieSlots = goalies.slice(0, 2);
   const extras = [...forwards.slice(12), ...defense.slice(6), ...goalies.slice(2)].sort(roPlayerSort);
-  return { lines, pairs, goalies: goalieSlots, extras };
+  return { lines, pairs, goalies: goalieSlots, extras, source: null };
+}
+function rosterLayout(t) {
+  const live = ROSTER_LINEUPS[t.team];
+  if (!live || !Array.isArray(live.f) || !Array.isArray(live.d) || !Array.isArray(live.g)) return rosterFallbackLayout(t);
+  const allowed = new Set(t.ids), used = new Set();
+  const get = id => {
+    if (!id || !allowed.has(id)) return null;
+    const p = BYID.get(id);
+    if (p) used.add(id);
+    return p || null;
+  };
+  const lines = Array.from({ length: 4 }, (_, i) => (live.f[i] || []).slice(0, 3).map(get));
+  const pairs = Array.from({ length: 3 }, (_, i) => (live.d[i] || []).slice(0, 2).map(get));
+  const goalies = (live.g || []).slice(0, 2).map(get);
+  const extras = t.ids.filter(id => !used.has(id)).map(id => BYID.get(id)).filter(Boolean).sort(roPlayerSort);
+  return { lines, pairs, goalies, extras, source: live };
 }
 let roTimer = null, roMemory = null;
 
@@ -3696,6 +3719,14 @@ G.roster = {
     $("roLogo").src = logo(t.team);
     $("roTeam").textContent = teamName(t.team);
     $("roTotal").textContent = t.ids.length;
+    const live = ROSTER_LINEUPS[t.team];
+    if (live && live.date) {
+      const day = new Date(live.date + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" });
+      const place = live.home ? "vs" : "at";
+      $("roSource").textContent = `Lineup from ${day} ${place} ${teamName(live.opp)} · ${live.method === "shifts" ? "5-on-5 shift combinations" : "players dressed / TOI order"}`;
+    } else {
+      $("roSource").textContent = "Last-game line data unavailable · using position-based roster layout";
+    }
     $("roInput").value = "";
     $("roMsg").textContent = "";
     $("roBoard").innerHTML = "";
@@ -7689,7 +7720,8 @@ const HELP = {
     <p>Drag to move the map. Pinch, scroll or use + and − to zoom.</p>`,
   hl: `<p>Is the second player's number higher or lower than the first? Pick what to compare from the <b>Stat</b> menu: best-season goals, assists, points or PIM, career games, height, weight or age.</p>
     <p>A right answer keeps your run going and ties count as right. The daily run has 40 matchups. On a keyboard, use ↑ and ↓.</p>`,
-  roster: `<p>Press <b>Start</b>, then type as many players on the team's roster as you can in 60 seconds. A last name is enough unless two players share it.</p>`,
+  roster: `<p>Press <b>Start</b>, then fill the team's roster in 60 seconds. The board uses the club's most recent completed game to estimate four forward lines and three defense pairs from 5-on-5 shift overlap, with the starting goalie first. Current roster players outside those slots appear under Extras.</p>
+    <p>A last name is enough unless two players share it. If the NHL shift feed is unavailable, Sweater falls back to a position-based lineup so the game still works.</p>`,
   zam: `<p>Drag across the ice to clear it and reveal the player's photo. Guess whenever you're ready. You get 3 guesses.</p>
     <p>The less ice you've cleared when you get it, the more points you score.</p>`,
   rank: `<p>Drag the 5 players into order by the stat shown, or use the arrows, then press <b>Lock it in</b>. You get 3 tries; rows in the right spot turn green.</p>`,
@@ -7769,6 +7801,196 @@ def fetch(team):
     return get_json(API.format(team=team))
 
 
+def _clock_seconds(value):
+    try:
+        minutes, seconds = str(value).split(":", 1)
+        return int(minutes) * 60 + int(seconds)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _line_groups(player_ids, combo_seconds, toi_seconds, size, count, positions=None):
+    """Choose disjoint, most-used combinations, then fill any gaps by ice time."""
+    remaining = set(player_ids)
+    groups = []
+    ranked = sorted(combo_seconds.items(), key=lambda item: (-item[1], item[0]))
+    for combo, seconds in ranked:
+        if len(groups) >= count:
+            break
+        if seconds <= 0 or len(combo) != size or not set(combo).issubset(remaining):
+            continue
+        group = list(combo)
+        remaining.difference_update(group)
+        groups.append(group)
+    rest = sorted(remaining, key=lambda pid: (-toi_seconds.get(pid, 0), pid))
+    while len(groups) < count:
+        group, rest = rest[:size], rest[size:]
+        groups.append(group)
+    if positions:
+        order = {"L": 0, "LW": 0, "C": 1, "R": 2, "RW": 2}
+        groups = [sorted(group, key=lambda pid: (order.get(positions.get(pid, ""), 9), pid)) for group in groups]
+    return groups
+
+
+def _infer_game_lineups(game):
+    """Infer both clubs' four lines / three pairs from one completed game's 5-on-5 shifts."""
+    game_id = int(game["id"])
+    box = get_json(BOXSCORE_API.format(game=game_id), timeout=25)
+    shifts = get_json(SHIFT_API.format(game=game_id), timeout=25).get("data", [])
+    stats = box.get("playerByGameStats") or {}
+    side_info = {}
+    for side in ("homeTeam", "awayTeam"):
+        team = (box.get(side) or {}).get("abbrev")
+        rows = stats.get(side) or {}
+        if not team:
+            continue
+        forwards = rows.get("forwards") or []
+        defense = rows.get("defense") or []
+        goalies = rows.get("goalies") or []
+        f_ids = [int(r["playerId"]) for r in sorted(forwards, key=lambda r: (-_clock_seconds(r.get("toi")), int(r.get("playerId") or 0))) if r.get("playerId")]
+        d_ids = [int(r["playerId"]) for r in sorted(defense, key=lambda r: (-_clock_seconds(r.get("toi")), int(r.get("playerId") or 0))) if r.get("playerId")]
+        g_rows = sorted(goalies, key=lambda r: (not bool(r.get("starter")), -_clock_seconds(r.get("toi")), int(r.get("playerId") or 0)))
+        g_ids = [int(r["playerId"]) for r in g_rows if r.get("playerId")]
+        positions = {int(r["playerId"]): r.get("position") or "" for r in forwards + defense if r.get("playerId")}
+        toi = {int(r["playerId"]): _clock_seconds(r.get("toi")) for r in forwards + defense if r.get("playerId")}
+        side_info[team] = {"f": f_ids[:12], "d": d_ids[:6], "g": g_ids[:2], "pos": positions, "toi": toi}
+
+    if len(side_info) != 2:
+        return {}
+
+    skater_team = {}
+    for team, info in side_info.items():
+        for pid in info["f"] + info["d"]:
+            skater_team[pid] = team
+
+    intervals = defaultdict(lambda: defaultdict(list))
+    for row in shifts:
+        if row.get("eventDescription") not in (None, ""):
+            continue
+        try:
+            pid = int(row.get("playerId"))
+            period = int(row.get("period"))
+        except (TypeError, ValueError):
+            continue
+        if pid not in skater_team or period not in (1, 2, 3):
+            continue
+        start, end = _clock_seconds(row.get("startTime")), _clock_seconds(row.get("endTime"))
+        if end > start:
+            intervals[period][pid].append((start, end))
+
+    combo_f = {team: defaultdict(float) for team in side_info}
+    combo_d = {team: defaultdict(float) for team in side_info}
+    fivevfive = 0.0
+    for period in (1, 2, 3):
+        by_player = intervals.get(period, {})
+        bounds = sorted({x for spans in by_player.values() for span in spans for x in span})
+        for start, end in zip(bounds, bounds[1:]):
+            if end <= start:
+                continue
+            mid = (start + end) / 2
+            active = {pid for pid, spans in by_player.items() if any(a <= mid < b for a, b in spans)}
+            active_by_team = {team: {pid for pid in active if skater_team.get(pid) == team} for team in side_info}
+            if any(len(ids) != 5 for ids in active_by_team.values()):
+                continue
+            seconds = end - start
+            fivevfive += seconds
+            for team, ids in active_by_team.items():
+                info = side_info[team]
+                fs = tuple(sorted(ids.intersection(info["f"])))
+                ds = tuple(sorted(ids.intersection(info["d"])))
+                if len(fs) == 3:
+                    combo_f[team][fs] += seconds
+                if len(ds) == 2:
+                    combo_d[team][ds] += seconds
+
+    home = (box.get("homeTeam") or {}).get("abbrev")
+    away = (box.get("awayTeam") or {}).get("abbrev")
+    result = {}
+    for team, info in side_info.items():
+        used_shifts = fivevfive >= 300 and bool(combo_f[team]) and bool(combo_d[team])
+        f_groups = _line_groups(info["f"], combo_f[team] if used_shifts else {}, info["toi"], 3, 4, info["pos"])
+        d_groups = _line_groups(info["d"], combo_d[team] if used_shifts else {}, info["toi"], 2, 3)
+        opponent = away if team == home else home
+        result[team] = {
+            "game": game_id,
+            "date": box.get("gameDate") or game.get("gameDate") or "",
+            "opp": opponent or "",
+            "home": team == home,
+            "method": "shifts" if used_shifts else "dressed",
+            "f": f_groups,
+            "d": d_groups,
+            "g": info["g"],
+        }
+    return result
+
+
+def fetch_roster_lineups():
+    """Latest completed-game lineup for each club, cached until that club plays again."""
+    try:
+        saved = json.loads(LINEUP_CACHE.read_text(encoding="utf-8")) if LINEUP_CACHE.exists() else {}
+    except Exception:
+        saved = {}
+    cached = saved.get("teams", {}) if isinstance(saved, dict) else {}
+    latest = {}
+
+    def latest_game(team):
+        data = get_json(TEAM_SCHEDULE_API.format(team=team), timeout=25)
+        completed = [g for g in data.get("games", []) if g.get("gameState") in ("OFF", "FINAL")]
+        return team, (max(completed, key=lambda g: (g.get("gameDate") or "", int(g.get("id") or 0))) if completed else None)
+
+    print(f"\n{stamp()} Loading last-game line combinations...")
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = [pool.submit(latest_game, team) for team in TEAMS]
+        for f in as_completed(futures):
+            try:
+                team, game = f.result()
+                if game:
+                    latest[team] = game
+            except Exception as e:
+                print(f"  Lineup schedule lookup failed: {e}", file=sys.stderr)
+
+    result = {}
+    needs = {}
+    for team in TEAMS:
+        game = latest.get(team)
+        old = cached.get(team)
+        if not game:
+            if old:
+                result[team] = old
+            continue
+        if old and int(old.get("game") or 0) == int(game["id"]):
+            result[team] = old
+        else:
+            needs.setdefault(int(game["id"]), game)
+
+    def load_game(game):
+        return int(game["id"]), _infer_game_lineups(game)
+
+    if needs:
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            futures = [pool.submit(load_game, game) for game in needs.values()]
+            for f in as_completed(futures):
+                try:
+                    game_id, lineups = f.result()
+                except Exception as e:
+                    print(f"  Lineup shift lookup failed: {e}", file=sys.stderr)
+                    continue
+                for team, lineup in lineups.items():
+                    if team in latest and int(latest[team]["id"]) == game_id:
+                        result[team] = lineup
+
+    # Keep a previously successful lineup when the newest feed is temporarily unavailable.
+    for team, old in cached.items():
+        result.setdefault(team, old)
+    try:
+        LINEUP_CACHE.write_text(json.dumps({"v": 1, "teams": result}, ensure_ascii=False, indent=1), encoding="utf-8")
+    except Exception:
+        pass
+    shifts = sum(1 for v in result.values() if v.get("method") == "shifts")
+    print(f"  {stamp()} Last-game lineups ready for {len(result)} clubs ({shifts} from 5-on-5 shift overlap).")
+    return result
+
+
 def reconcile_current_teams(players):
     """Cross-check roster team assignments against NHL's player index.
 
@@ -7830,6 +8052,7 @@ CACHE = HERE / "career_cache.json"
 CACHE_DAYS = 7
 TEAM_HISTORY_CACHE = HERE / "team_history_cache.json"
 TEAM_HISTORY_CACHE_DAYS = 7
+LINEUP_CACHE = HERE / "lineup_cache.json"
 
 
 SCHEDULE = HERE / "schedule.json"
@@ -8947,16 +9170,18 @@ def plan_days(days, candidates, today, seed, no_repeat=NO_REPEAT_DAYS):
     return dict(sorted(days.items()))
 
 
-def update_schedule(players, today):
+def update_schedule(players, today, roster_players):
     """Keep a fixed day-by-day list of puzzles for each game. Past days and tomorrow never change."""
     try:
         sched = json.loads(SCHEDULE.read_text(encoding="utf-8"))
     except Exception:
         sched = {}
     archive = {int(k): v for k, v in sched.get("players", {}).items()}
+    roster_archive = {int(k): v for k, v in sched.get("roster_players", {}).items()}
     pool = {p["id"]: p for p in players}
+    roster_pool = {p["id"]: p for p in roster_players}
     roster_teams = {}
-    for i, p in pool.items():
+    for i, p in roster_pool.items():
         roster_teams.setdefault(p["team"], []).append(i)
     games = {
         # game: (days key, start key, candidates, seed[, no-repeat days])
@@ -9040,13 +9265,20 @@ def update_schedule(players, today):
             for i in seq:
                 if i in pool:
                     archive[i] = pool[i]
+    for v in new.get("roster_days", {}).values():
+        for i in ids_of(v):
+            if i in roster_pool:
+                roster_archive[i] = roster_pool[i]
     new["players"] = {str(k): v for k, v in sorted(archive.items())}
+    new["roster_players"] = {str(k): v for k, v in sorted(roster_archive.items())}
     SCHEDULE.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    needed = {i for g, (_, window) in result.items() if g != "hl" for v in window.values() for i in ids_of(v)}
+    needed = {i for g, (_, window) in result.items() if g not in ("hl", "roster") for v in window.values() for i in ids_of(v)}
     needed |= {i for day in hl_window.values() for seq in day.values() for i in seq}
     extras = [archive[i] for i in sorted(needed) if i not in pool and i in archive]
-    return result, extras
+    roster_needed = {i for v in result.get("roster", ("", {}))[1].values() for i in ids_of(v)}
+    roster_extras = [roster_archive[i] for i in sorted(roster_needed) if i not in roster_pool and i in roster_archive]
+    return result, extras, roster_extras
 
 
 def abbrev_for(name):
@@ -9355,19 +9587,26 @@ def main():
             print(f"  Found {len(games)} players with NHL games.\n")
 
     players, seen = [], set()
+    roster_players, roster_seen = [], set()
     for team in TEAMS:
         try:
-            batch = players_from(team, fetch(team), args.all)
+            roster = fetch(team)
+            roster_batch = players_from(team, roster, True)
+            batch = players_from(team, roster, args.all)
             if games:
                 batch = [p for p in batch if games.get(p["id"], 0) >= args.min_games]
         except Exception as e:  # keep going if one team fails
             print(f"  {team}: failed ({e})", file=sys.stderr)
             continue
+        for p in roster_batch:
+            if p["id"] not in roster_seen:
+                roster_seen.add(p["id"])
+                roster_players.append(p)
         for p in batch:
             if p["id"] not in seen:
                 seen.add(p["id"])
                 players.append(p)
-        print(f"  {stamp()} {team}: {len(batch)} players")
+        print(f"  {stamp()} {team}: {len(batch)} game-pool · {len(roster_batch)} roster")
         time.sleep(0.3)  # be polite to the NHL API
 
     if not players:
@@ -9395,6 +9634,8 @@ def main():
         for name, old, new in sorted(moved): print(f"  {name}: {old} -> {new}")
     roster_snapshot.write_text(json.dumps(current_map, ensure_ascii=False, indent=1), encoding="utf-8")
 
+    roster_lineups = fetch_roster_lineups()
+
     if not args.no_career:
         add_career_teams(players)
 
@@ -9402,8 +9643,9 @@ def main():
     today = eastern_today()
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
-    games, extras = update_schedule(players, today)
+    games, extras, roster_extras = update_schedule(players, today, roster_players)
     embedded = players + extras
+    roster_embedded = list({p["id"]: p for p in roster_players + roster_extras}.values())
     for g, (start, window) in games.items():
         print(f"Daily {g}: {len(window)} days in this page" + (f", Daily #1 was {start}." if start else " (not available)."))
 
@@ -9413,6 +9655,8 @@ def main():
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     fills = {
         "/*__PLAYERS__*/[]": esc(embedded),
+        "/*__ROSTER_PLAYERS__*/[]": esc(roster_embedded),
+        "/*__ROSTER_LINEUPS__*/{}": esc(roster_lineups),
         "/*__TEAM_HISTORY__*/{}": esc(team_history),
         "/*__DAILY_ALL__*/{}": esc({g: w for g, (_, w) in games.items() if g != "hl"}),
         "/*__START_ALL__*/{}": esc({g: st for g, (st, _) in games.items()}),
@@ -9465,8 +9709,8 @@ self.addEventListener("fetch", event => {{
     (out.parent / "sw.js").write_text(service_worker, encoding="utf-8")
     # double-check the page that was written
     check = out.read_text(encoding="utf-8")
-    if "/*__" in check or check.count('"headshot"') != len(embedded):
-        sys.exit(f"The game file was written but the player data didn't go in correctly ({check.count(chr(34) + 'headshot' + chr(34))} of {len(embedded)}).")
+    if "/*__" in check or check.count('"headshot"') < len(embedded):
+        sys.exit(f"The game file was written but the player data didn't go in correctly ({check.count(chr(34) + 'headshot' + chr(34))} player records found; expected at least {len(embedded)}).")
     print("\nDone! Built the game with", len(players), "players.")
     print("Your game file is:\n  ", out)
     if not args.quiet:
