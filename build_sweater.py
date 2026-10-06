@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "105 · Message Preview Cache Reset"
+VERSION = "106 · Professional SEO Metadata"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -62,25 +62,40 @@ TEMPLATE = r'''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sweater · Daily NHL Trivia</title>
-<meta name="description" content="Daily NHL trivia with player guessing, Trophy Case, Playoff History, and more hockey challenges.">
+<title>Sweater | NHL Trivia, Hockey Quizzes & Daily Games</title>
+<meta name="description" content="Sweater is an NHL trivia and hockey quiz platform with daily player challenges, team and history games, awards, stats, and NHL EDGE tracking data.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="application-name" content="Sweater">
+<meta name="apple-mobile-web-app-title" content="Sweater">
+<link rel="canonical" href="/*__SITE__*/">
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sweater">
-<meta property="og:title" content="Sweater · Daily NHL Trivia">
-<meta property="og:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
+<meta property="og:title" content="Sweater | NHL Trivia, Hockey Quizzes & Daily Games">
+<meta property="og:description" content="Daily NHL trivia, hockey quizzes, player challenges, team history, awards, stats, and NHL EDGE tracking games.">
 <meta property="og:url" content="/*__SITE__*/">
 <meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
 <meta property="og:image:secure_url" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Sweater · Daily NHL Trivia">
+<meta property="og:image:alt" content="Sweater NHL trivia and hockey quiz platform">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sweater · Daily NHL Trivia">
-<meta name="twitter:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
+<meta name="twitter:title" content="Sweater | NHL Trivia, Hockey Quizzes & Daily Games">
+<meta name="twitter:description" content="Daily NHL trivia, hockey quizzes, player challenges, team history, awards, stats, and NHL EDGE tracking games.">
 <meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
 <meta name="theme-color" content="#111113">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Sweater",
+  "alternateName": ["Sweater NHL Trivia", "Sweater Hockey Trivia"],
+  "url": "/*__SITE__*/",
+  "description": "Sweater is an NHL trivia and hockey quiz platform with daily player challenges, team and history games, awards, stats, and NHL EDGE tracking data.",
+  "inLanguage": "en"
+}
+</script>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -8808,7 +8823,7 @@ function showHub(push = true) {
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = true; });
   searches.forEach(s => s.close());
   renderHub();
-  document.title = "Sweater · NHL player guessing games";
+  document.title = "Sweater | NHL Trivia, Hockey Quizzes & Daily Games";
   if (returningToHub) requestAnimationFrame(restoreHubScroll);
 }
 
@@ -11220,13 +11235,13 @@ def main():
     # matter of uploading the build folder rather than hand-editing a host.
     pwa_icon = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#111113"/><path d="M82 252h348M112 174h288M112 330h288" stroke="#fff" stroke-opacity=".16" stroke-width="10"/><circle cx="256" cy="256" r="118" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="12"/><circle cx="256" cy="256" r="55" fill="#fff"/><circle cx="238" cy="238" r="13" fill="#111113"/><circle cx="274" cy="274" r="13" fill="#111113"/></svg>'''
     manifest = {
-        "name": "Sweater · Daily NHL Trivia",
+        "name": "Sweater — NHL Trivia & Hockey Quizzes",
         "short_name": "Sweater",
         "start_url": "./",
         "display": "standalone",
         "background_color": "#111113",
         "theme_color": "#111113",
-        "description": "Daily NHL trivia, player guessing games, Trophy Case and Playoff History.",
+        "description": "Daily NHL trivia, hockey quizzes, player challenges, team history, awards, stats and NHL EDGE tracking games.",
         "icons": [{"src": "sweater-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}],
     }
     service_worker = f'''const CACHE = "sweater-shell-{build_stamp.replace(":", "-")}";
