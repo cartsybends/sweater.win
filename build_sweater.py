@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "111 · Blur Construction Pause"
+VERSION = "112 · Restore Root Message Preview"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -71,19 +71,14 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta name="theme-color" content="#0b0b0c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sweater">
-<meta property="og:title" content="Sweater | NHL Trivia, Hockey Quizzes & Daily Games">
-<meta property="og:description" content="Daily NHL trivia, hockey quizzes, player challenges, team history, awards, stats, and NHL EDGE tracking games.">
+<meta property="og:title" content="Sweater · Daily NHL Trivia">
+<meta property="og:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
 <meta property="og:url" content="/*__SITE__*/">
-<meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
-<meta property="og:image:secure_url" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Sweater NHL trivia and hockey quiz platform">
+<meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sweater | NHL Trivia, Hockey Quizzes & Daily Games">
-<meta name="twitter:description" content="Daily NHL trivia, hockey quizzes, player challenges, team history, awards, stats, and NHL EDGE tracking games.">
-<meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
+<meta name="twitter:title" content="Sweater · Daily NHL Trivia">
+<meta name="twitter:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
+<meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png">
 <meta name="theme-color" content="#111113">
 <script type="application/ld+json">
 {
