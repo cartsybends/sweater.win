@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "99 · Full NHL EDGE Player Pool"
+VERSION = "100 · Full NHL EDGE Pool Cache"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -9086,11 +9086,12 @@ def fetch_edge_data(players, today):
     except Exception:
         cache_doc = {}
     cached = cache_doc.get("players", {}) if cache_doc.get("season") == season else {}
+    unavailable = set(cache_doc.get("unavailable", [])) if cache_doc.get("season") == season else set()
     rows = {str(p["id"]): cached[str(p["id"])] for p in candidates if str(p["id"]) in cached}
-    missing = [p for p in candidates if str(p["id"]) not in rows]
+    missing = [p for p in candidates if str(p["id"]) not in rows and str(p["id"]) not in unavailable]
 
     if missing:
-        print(f"\n{stamp()} Loading NHL EDGE {season[:4]}-{season[6:]} tracking data for {len(missing)} players...")
+        print(f"\n{stamp()} Loading NHL EDGE {season[:4]}-{season[6:]} tracking data for {len(missing)} of {len(candidates)} active skaters...")
         with ThreadPoolExecutor(max_workers=6) as ex:
             futures = {ex.submit(edge_player_data, p, season): p for p in missing}
             for future in as_completed(futures):
@@ -9099,9 +9100,15 @@ def fetch_edge_data(players, today):
                     row = future.result()
                     rows[str(p["id"])] = row
                 except Exception as exc:
+                    if getattr(exc, "code", None) == 404 or str(exc) in ("EDGE detail response was empty", "no EDGE metrics found"):
+                        unavailable.add(str(p["id"]))
                     print(f"  EDGE {p['name']}: skipped ({exc})", file=sys.stderr)
         try:
-            EDGE_CACHE.write_text(json.dumps({"season": season, "players": rows}, ensure_ascii=False, indent=1), encoding="utf-8")
+            EDGE_CACHE.write_text(json.dumps({
+                "season": season,
+                "players": rows,
+                "unavailable": sorted(unavailable, key=int),
+            }, ensure_ascii=False, indent=1), encoding="utf-8")
         except Exception as exc:
             print(f"  Couldn't save EDGE cache ({exc})", file=sys.stderr)
 
