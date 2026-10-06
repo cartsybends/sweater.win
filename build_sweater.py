@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "93 · EDGE Duel Reveal Polish"
+VERSION = "94 · Larger EDGE Watermarks"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -768,9 +768,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* Speed Trap gets a broadcast-style player card without making the rest of EDGE noisy. */
   .speedtrap-card .edge-speed-media { position: relative; display: block; height: 155px; overflow: hidden; background: var(--cream); }
   .edge-duel-card.speedtrap-card .edge-team-watermark {
-    position: absolute; z-index: 0; left: 50%; top: 50%; width: 66%; height: 66%;
+    position: absolute; z-index: 0; left: 50%; top: 50%; width: 82%; height: 82%;
     object-fit: contain; object-position: center; background: transparent;
-    opacity: .11; filter: grayscale(1) saturate(.2); transform: translate(-50%, -48%) scale(1.04);
+    opacity: .10; filter: grayscale(1) saturate(.2); transform: translate(-50%, -48%) scale(1.06);
     pointer-events: none;
   }
   .edge-duel-card.speedtrap-card .edge-player-shot {
