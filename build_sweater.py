@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "112 · Restore Root Message Preview"
+VERSION = "113 · Remove Goalie Mode"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2822,7 +2822,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
 
   /* New arcade modes: scoped surfaces keep both existing themes unchanged. */
-  #view-goalie, #view-overtime { max-width: 760px; margin-inline: auto; }
+  #view-overtime { max-width: 760px; margin-inline: auto; }
   .arc-hud { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0 16px; }
   .arc-hud > div { padding: 14px 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); text-align: center; }
   .arc-hud small { display: block; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
@@ -2830,30 +2830,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .arc-controls { display: flex; justify-content: center; gap: 12px; margin: 18px 0 12px; }
   .arc-controls button { min-height: 46px; }
   .arc-note { text-align: center; color: var(--muted); font-size: 13px; line-height: 1.6; margin: 12px auto; max-width: 580px; }
-  .goalie-rink { position: relative; aspect-ratio: 1.6; overflow: clip; border: 1px solid var(--line); border-radius: 20px; isolation: isolate;
-    background: radial-gradient(ellipse at 50% 5%,color-mix(in srgb,var(--fg) 7%,transparent),transparent 65%),var(--bg); touch-action: pan-y; }
-  .goalie-net { position: absolute; inset: 27% 6% 6%; border: 4px solid #ce404b; border-radius: 26px 26px 8px 8px;
-    background: repeating-linear-gradient(0deg,transparent 0 23px,var(--line) 23px 24px), repeating-linear-gradient(90deg,transparent 0 23px,var(--line) 23px 24px); opacity: .65; }
-  .goalie-crease { position: absolute; width: 65%; height: 45%; border: 1px solid var(--line); border-radius: 50%; left: 17.5%; bottom: -26%; background: var(--cell); }
-  .goalie-zone { position: absolute; width: 29%; height: 27%; transform: translate(-50%,-50%); border: 1px solid transparent; border-radius: 16px;
-    background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-size: 12px; z-index: 2; touch-action: manipulation; }
-  .goalie-zone:nth-of-type(1) { left: 21%; top: 43%; } .goalie-zone:nth-of-type(2) { left: 79%; top: 43%; }
-  .goalie-zone:nth-of-type(3) { left: 21%; top: 78%; } .goalie-zone:nth-of-type(4) { left: 79%; top: 78%; }
-  .goalie-zone:nth-of-type(5) { left: 50%; top: 78%; }
-  .goalie-zone:focus-visible { outline: 3px solid var(--fg); outline-offset: -3px; }
-  .goalie-zone.chosen { background: color-mix(in srgb,var(--fg) 12%,transparent); border-color: var(--fg); color: var(--fg); }
-  .goalie-zone.saved { background: rgba(34,197,94,.2); border-color: #22c55e; }
-  .goalie-zone.conceded { background: rgba(239,68,68,.2); border-color: #ef4444; }
-  .goalie-zone kbd { display: block; font: inherit; font-size: 10px; margin-top: 3px; opacity: .6; }
-  .goalie-puck { position: absolute; left: 50%; top: 10%; width: 25px; height: 25px; border-radius: 50%; background: #151515; border: 2px solid #f4f4f5;
-    box-shadow: 0 5px 12px #0006; transform: translate(-50%,-50%); z-index: 3; pointer-events: none; }
-  .goalie-glove { position: absolute; width: 62px; height: 62px; left: 50%; top: 91%; transform: translate(-50%,-50%); color: var(--fg); z-index: 4; pointer-events: none;
-    filter: drop-shadow(0 4px 5px #0004); transition: left .13s ease-out,top .13s ease-out; }
-  .goalie-zone.chosen span,.goalie-zone.chosen kbd { visibility: hidden; }
-  .goalie-status { position: absolute; top: 7%; left: 0; width: 100%; text-align: center; color: var(--fg); font-weight: 700; font-size: clamp(15px,3vw,22px); pointer-events: none; }
-  .goalie-rink.live .goalie-status { top: 2%; font-size: 12px; color: var(--muted); }
-  .goalie-rink.live .goalie-zone span, .goalie-rink.live .goalie-zone kbd { opacity: .45; }
-  .ot-time.urgent { color: #ef4444; }
+  .ot-time.urgent { color: #ef4444; }  .ot-time.urgent { color: #ef4444; }
   .ot-meter { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin: -6px 0 24px; }
   .ot-meter i { display: block; width: 50%; height: 100%; background: var(--fg); }
   .ot-question { text-align: center; min-height: 110px; display: grid; align-content: center; gap: 10px; margin: 18px 0; }
@@ -3343,23 +3320,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="nodata" hidden>This game isn't available right now.</p>
   </section>
 
-  <section class="view" id="view-goalie" hidden>
-    <div class="arc-hud"><div><small>Score</small><strong id="glScore">0</strong></div><div><small>Save streak</small><strong id="glStreak">0</strong></div><div><small>Goals allowed</small><strong id="glLives">0 / 3</strong></div></div>
-    <div class="goalie-rink" id="glRink" aria-label="Defend the five areas of the net">
-      <div class="goalie-net" aria-hidden="true"></div><div class="goalie-crease" aria-hidden="true"></div>
-      <button type="button" class="goalie-zone" data-save="0" aria-label="Save top left" disabled><span>Top left</span><kbd>Q</kbd></button>
-      <button type="button" class="goalie-zone" data-save="1" aria-label="Save top right" disabled><span>Top right</span><kbd>E</kbd></button>
-      <button type="button" class="goalie-zone" data-save="2" aria-label="Save bottom left" disabled><span>Bottom left</span><kbd>Z</kbd></button>
-      <button type="button" class="goalie-zone" data-save="3" aria-label="Save bottom right" disabled><span>Bottom right</span><kbd>C</kbd></button>
-      <button type="button" class="goalie-zone" data-save="4" aria-label="Save five-hole" disabled><span>Five-hole</span><kbd>Space</kbd></button>
-      <div class="goalie-status" id="glStatus" role="status">Own the crease.</div><div class="goalie-puck" id="glPuck" hidden></div>
-      <div class="goalie-glove" id="glGlove" aria-hidden="true" hidden><svg viewBox="0 0 64 64" width="100%" height="100%"><path d="M18 53 8 31Q5 19 15 17L22 26 19 13Q18 5 25 5L33 7Q50 11 55 28L52 46 39 57Z" fill="currentColor" stroke="var(--bg)" stroke-width="2"/><path d="m25 18 18 5-2 17-12 5-7-12Z" fill="var(--bg)" opacity=".8"/><path d="m26 22 12 15m4-11-15 13M19 48l20 4" fill="none" stroke="var(--bg)" stroke-width="2"/></svg></div>
-    </div>
-    <div class="arc-controls"><button type="button" class="btn" id="glStart">Take the net</button><button type="button" class="btn ghost" id="glEnd" hidden>End run</button></div>
-    <p class="arc-note">Watch the puck, then tap an area of the net to commit to a save. Three goals end your run. Every five consecutive saves builds your multiplier, up to 5×.</p>
-    <p class="arc-note">Keyboard: Q / E for high shots, Z / C for low shots, Space for five-hole. Leaving or hiding the game ends a started run.</p>
-    <div class="slot"></div><p class="nodata" hidden>This game is not available yet.</p>
-  </section>
+  <section class="view" id="view-overtime" hidden>
   <section class="view" id="view-overtime" hidden>
     <div class="arc-hud"><div><small>Time left</small><strong class="ot-time" id="otTime">0:45</strong></div><div><small>Right answers</small><strong id="otScore">0</strong></div><div><small>Streak</small><strong id="otStreak">0</strong></div></div>
     <div class="ot-meter" aria-hidden="true"><i id="otMeter"></i></div>
@@ -3812,7 +3773,6 @@ const UI_ICONS = {
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
 const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
   edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
-MODE_ICONS.goalie = "shield";
 MODE_ICONS.overtime = "clock";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
 Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
@@ -3855,7 +3815,7 @@ const secondsToEtMidnight = () => {
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
- "shoot", "goalie", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups",
+ "shoot", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups",
  "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 ["edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { START[g] = START[g] || "2026-10-05"; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
@@ -5910,122 +5870,28 @@ $("shNet").addEventListener("click", e => {
 });
 $("shNext").onclick = () => { shootUI = { phase: "ask" }; G.shoot.render(S.shoot.target, S.shoot); };
 
-// ---- Goalie Mode and Overtime ----
-const GL_SPOTS = [[21,43],[79,43],[21,78],[79,78],[50,78]];
+// ---- Overtime ----
 const arcadeAnswers = guesses => guesses.filter(x => x !== "START" && x !== "END");
-function goalieShot(t, index) {
-  const rnd = seeded(hash(`goalie:${t.seed}:${index}`)), zone = Math.floor(rnd() * 5);
-  return { zone, bend: index >= 5 && rnd() < .3 ? Math.floor(rnd() * 5) : zone,
-    duration: Math.max(520, 1450 - index * 28) };
-}
-function goalieTally(t, guesses) {
-  let score = 0, streak = 0, best = 0, saves = 0, goals = 0;
-  arcadeAnswers(guesses).forEach((x,i) => {
-    if (Number(x) === goalieShot(t,i).zone) { streak++; saves++; score += 10 * Math.min(5, 1 + Math.floor((streak - 1) / 5)); best = Math.max(best, streak); }
-    else { goals++; streak = 0; }
-  });
-  return { score, streak, best, saves, goals };
-}
-let goalieRun = null, overtimeRun = null;
-function stopGoalie() {
-  if (goalieRun) cancelAnimationFrame(goalieRun.raf);
-  goalieRun = null;
-  $("glPuck").hidden = true;
-  $("glGlove").hidden = true;
-  $("glRink").classList.remove("live");
-  document.querySelectorAll("[data-save]").forEach(b => b.disabled = true);
-}
+let overtimeRun = null;
 function stopOvertime() { if (overtimeRun) cancelAnimationFrame(overtimeRun.raf); overtimeRun = null; }
 function endArcade(id, quiet = false) {
   if (game !== id || !S[id].target || S[id].over) return;
   const started = S[id].guesses.includes("START");
-  if (id === "goalie") stopGoalie(); else stopOvertime();
+  stopOvertime();
   if (started) { G[id].quietFinish=quiet; try { doGuess("END"); } finally { G[id].quietFinish=false; } }
 }
-// START is saved immediately. A reload cannot grant extra lives or reset time.
+// START is saved immediately. A reload cannot grant extra time.
 function recoverArcade(id, st, active) {
   if (!st.over && !active && st.guesses.includes("START")) {
     const target = st.target;
-    setTimeout(() => { if (game === id && S[id].target === target && !S[id].over && !(id === "goalie" ? goalieRun : overtimeRun)) endArcade(id); }, 0);
+    setTimeout(() => { if (game === id && S[id].target === target && !S[id].over && !overtimeRun) endArcade(id); }, 0);
   }
 }
 function arcadeBest(id, st) {
   const score = G[id].score(st.target, st.guesses), key = `sweater-${id}-best`;
   store.set(key, Math.max(Number(store.get(key)) || 0, score));
 }
-G.goalie = {
-  localOnly: true,
-  kind: "score", repeat: true, title: "Goalie Mode", share: "Sweater Goalie", view: "view-goalie", max: 999, next: "Take the net again", hideReveal: true,
-  pool: () => [true], daily: k => DAILY.goalie[k] || { seed: hash(`goalie:${k}`) },
-  random: () => ({ seed: Math.floor(Math.random() * 2**32) }), tid: t => `goalie-v1:${t.seed}`,
-  player: () => null, meta: () => "", isWin: () => false,
-  score: (t,g) => goalieTally(t,g).score,
-  isDone: (t,g) => g.includes("END") || goalieTally(t,g).goals >= 3,
-  wonGame: (t,g) => goalieTally(t,g).saves >= 10,
-  endText(t,g) { const n = goalieTally(t,g); return { result: `${n.score} points`, cheer: `${n.saves} saves · Best streak ${n.best}` }; },
-  celebrate: (t,g) => goalieTally(t,g).saves >= 10,
-  archiveStatus: h => `${h.s} pts`, onFinish: st => arcadeBest("goalie", st),
-  shareText(t,s,n,link) { const r=goalieTally(t,s.guesses); return `Sweater Goalie #${n}\n${r.score} points · ${r.saves} saves\nBest save streak: ${r.best}${link}`; },
-  reset() { stopGoalie(); document.querySelectorAll("[data-save]").forEach(b => b.className="goalie-zone"); },
-  guess(t,x) { return x === "START" || x === "END" || (S.goalie.guesses.includes("START") && /^(-1|[0-4])$/.test(x)) ? false : null; },
-  render(t,st) {
-    const r=goalieTally(t,st.guesses);
-    $("glScore").textContent=r.score; $("glStreak").textContent=r.streak; $("glLives").textContent=`${r.goals} / 3`;
-    $("glStart").hidden=!!goalieRun || st.over || st.guesses.includes("START"); $("glEnd").hidden=!goalieRun || st.over;
-    if (st.over) { stopGoalie(); $("glStatus").textContent="Final buzzer"; }
-    else if (!goalieRun) $("glStatus").textContent="Own the crease.";
-    recoverArcade("goalie",st,goalieRun);
-  },
-};
-function startGoalie() {
-  const st=S.goalie;
-  if (game!=="goalie" || !st.target || st.over || goalieRun || st.guesses.includes("START")) return;
-  goalieRun={ next: performance.now()+850, shot:null, choice:null, raf:0 };
-  $("glRink").scrollIntoView({block:"center",behavior:"instant"});
-  $("glRink").classList.add("live"); $("glStatus").textContent="Get set…";
-  $("glGlove").hidden=false;$("glGlove").style.left="50%";$("glGlove").style.top="91%";
-  doGuess("START");
-  const step=now => {
-    const run=goalieRun;
-    if (!run || game!=="goalie") return;
-    if (!run.shot && now>=run.next) {
-      const index=arcadeAnswers(st.guesses).length;
-      run.shot={...goalieShot(st.target,index),born:now}; run.choice=null;
-      $("glGlove").style.left="50%";$("glGlove").style.top="91%";
-      const tally=goalieTally(st.target,st.guesses);
-      $("glStatus").textContent=`Shot ${index+1} · ${Math.min(5,1+Math.floor(tally.streak/5))}× multiplier`;
-      document.querySelectorAll("[data-save]").forEach(b=>{ b.disabled=false; b.className="goalie-zone"; });
-      $("glPuck").hidden=false;
-    }
-    if (run.shot) {
-      const shot=run.shot, p=Math.min(1,(now-shot.born)/shot.duration), [x,y]=GL_SPOTS[shot.zone];
-      const control=GL_SPOTS[shot.bend][0], px=(1-p)**2*50+2*(1-p)*p*control+p*p*x;
-      $("glPuck").style.left=`${px}%`; $("glPuck").style.top=`${10+(y-10)*p}%`;
-      $("glPuck").style.transform=`translate(-50%,-50%) scale(${.4+p*.9})`;
-      if (p>=1) {
-        const saved=run.choice===shot.zone, before=goalieTally(st.target,st.guesses).score;
-        run.shot=null; run.next=now+650;
-        document.querySelectorAll("[data-save]").forEach(b=>{ b.disabled=true; if(Number(b.dataset.save)===shot.zone)b.classList.add(saved?"saved":"conceded"); });
-        doGuess(String(run.choice ?? -1));
-        if (!goalieRun) return;
-        $("glStatus").textContent=saved?`Save! +${goalieTally(st.target,st.guesses).score-before}`:"Goal against";
-      }
-    }
-    run.raf=requestAnimationFrame(step);
-  };
-  goalieRun.raf=requestAnimationFrame(step);
-}
-function commitSave(zone) {
-  const run=goalieRun;
-  if(game!=="goalie" || !run?.shot || run.choice!==null || S.goalie.over || performance.now()>=run.shot.born+run.shot.duration) return;
-  run.choice=zone;
-  $("glGlove").style.left=`${GL_SPOTS[zone][0]}%`;$("glGlove").style.top=`${GL_SPOTS[zone][1]}%`;
-  document.querySelectorAll("[data-save]").forEach(b=>{b.disabled=true; b.classList.toggle("chosen",Number(b.dataset.save)===zone);});
-}
-$("glRink").addEventListener("click",e=>{const b=e.target.closest("[data-save]");if(b)commitSave(Number(b.dataset.save));});
-$("glStart").onclick=startGoalie; $("glEnd").onclick=()=>endArcade("goalie");
-
-function overtimeRandom(rnd) {
+function overtimeRandom(rnd) {function overtimeRandom(rnd) {
   const rounds=[], seen=new Set(), used={kinds:new Set(),players:new Set()}, trophies=trophyRandom(rnd)?.rounds || [];
   for(let attempt=0; rounds.length<100 && attempt<1000; attempt++) {
     const trophy=rounds.length%5===4 ? trophies[Math.floor(rounds.length/5)] : null;
@@ -6112,14 +5978,12 @@ $("otAnswers").addEventListener("click",e=>{const b=e.target.closest("[data-ot]"
 document.addEventListener("keydown",e=>{
   if(e.repeat || onHub || document.querySelector(".modal.open") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
   if(game==="overtime" && /^[1-4]$/.test(e.key)){e.preventDefault();answerOvertime(Number(e.key)-1);}
-  if(game==="goalie" && goalieRun?.shot){const zone={q:0,e:1,z:2,c:3," ":4}[e.key.toLowerCase()];if(zone!==undefined){e.preventDefault();commitSave(zone);}}
 });
-document.addEventListener("visibilitychange",()=>{if(document.hidden){if(goalieRun)endArcade("goalie",true);if(overtimeRun)endArcade("overtime",true);}});
-window.addEventListener("pagehide",()=>{if(goalieRun)endArcade("goalie",true);if(overtimeRun)endArcade("overtime",true);});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&overtimeRun)endArcade("overtime",true);});
+window.addEventListener("pagehide",()=>{if(overtimeRun)endArcade("overtime",true);});
 
 // finish a running arcade game if the player leaves it
 function leaveGame(g) {
-  if (g === "goalie" && goalieRun) endArcade("goalie",true);
   if (g === "overtime" && overtimeRun) endArcade("overtime",true);
   if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
   if (g === "shoot" && shootUI.phase === "aim") shootUI = { phase: "ask" };
@@ -8195,7 +8059,6 @@ const LB_RULES = {
   rank: "Rank 'Em: 10 points on the first try, 6 on the second, 3 on the third.",
   puck: "Puck Drop: 1 point for each right tap, minus 1 for each wrong tap.",
   shoot: "Shootout: 2 points for every goal, up to 10.",
-  goalie: "Goalie Mode: 10 points per save, with a multiplier increasing every 5 consecutive saves up to 5×. Three goals end the run.",
   overtime: "Overtime: 1 point per right answer. Start with 45 seconds; right answers add 5 seconds and wrong answers cost 3.",
   playoff: "Playoff Run: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
   edgespeed: "Speed Trap: 1 point per correct head-to-head pick across 10 rounds.",
@@ -8387,7 +8250,6 @@ const HUB = [
   { title: "Arcade", tone: "red", games: [
     ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
     ["shoot", "🥅", "Answer right to earn a shot, then beat the goalie."],
-    ["goalie", "🧤", "Read the shot. Make the save. Own the crease."],
     ["overtime", "⏱️", "Fast hockey trivia. Keep the clock alive."],
   ]},
 ];
@@ -8430,8 +8292,7 @@ const MODE_META = Object.freeze({
   conn:     { type: "Puzzle", time: "3–5 min", difficulty: "Hard", fact: "The groups are hidden until you find the shared hockey connection.", next: "truths" },
   puck:     { type: "Arcade", time: "1–2 min", difficulty: "Medium", fact: "Fast answers score, but the wrong tap costs you the run.", next: "shoot" },
   shoot:    { type: "Arcade", time: "2 min", difficulty: "Medium", fact: "Answer the hockey question first—then turn it into a goal.", next: "puck" },
-  goalie:   { type: "Arcade", fact: "Read the puck's path before committing. Every five straight saves builds your multiplier.", next: "overtime" },
-  overtime: { type: "Arcade", fact: "Accuracy buys time. Keep answering until the buzzer—or clear the whole board.", next: "goalie" },
+  overtime: { type: "Arcade", fact: "Accuracy buys time. Keep answering until the buzzer—or clear the whole board.", next: "puck" },
 });
 const modeMeta = id => MODE_META[id] || { type: "Daily", time: "2–4 min", difficulty: "Medium", fact: "A fresh hockey puzzle is ready every day.", next: "classic" };
 const hubIds = () => [...HUB.flatMap(sec => sec.games.map(([id]) => id)), ...EDGE_GAMES.map(x => x.id)];
@@ -8877,6 +8738,11 @@ function openGame(id, push = true) {
 
 function route() {
   const id = decodeURIComponent(location.hash.slice(1));
+  if (id === "goalie") {
+    history.replaceState(null, "", location.pathname + location.search);
+    showHub(false);
+    return;
+  }
   if (id === "teams" || id.startsWith("team-")) {
     const team = id.startsWith("team-") ? id.slice(5).toUpperCase() : "";
     openTeams(TEAMS[team] ? team : "", false); return;
@@ -9158,7 +9024,6 @@ const HELP = {
   rank: `<p>Drag the 5 players into order by the stat shown, or use the arrows, then press <b>Lock it in</b>. You get 3 tries; rows in the right spot turn green.</p>`,
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
-  goalie: `<p>Press <b>Take the net</b>. Watch the puck and tap the area it is heading for before it reaches the goal. You can commit only once per shot. Use Q/E for top left/right, Z/C for bottom left/right, or Space for five-hole.</p><p>Shots speed up and can curve after the first five. Each save earns 10 points; every five straight saves increases your multiplier, up to 5×. A goal resets the streak, and three goals end your run. Leaving, reloading, or hiding the game ends a started run.</p>`,
   overtime: `<p>Start with <b>45 seconds</b>. Pick an answer or press 1–4: a right answer adds 5 seconds and a wrong answer costs 3. The clock keeps running during the brief answer reveal. Bank up to 60 seconds.</p><p>Each right answer earns one point. Survive until the clock runs out, or clear the 100-question board. Leaving, reloading, or hiding the game ends a started run.</p>`,
   playoff: `<p>Name the player from <b>one postseason run</b>. You start with that year's playoff stat line.</p>
     <p>Each wrong guess reveals a useful clue in order: position, whether the team reached the Stanley Cup Final, the team itself, then number/country/career context. Wrong player guesses can also flag a matching position or a teammate from that same postseason. You get 6 tries.</p>`,
@@ -10794,7 +10659,6 @@ def update_schedule(players, today, roster_players):
         "rank": (lambda pl, rnd: rank_puzzle(pl, rnd), "sweater-rank"),
         "puck": (lambda pl, rnd: puck_puzzle(pl, rules, rnd), "sweater-puck"),
         "shoot": (lambda pl, rnd: shootout_puzzle(pl, rnd), "sweater-shoot"),
-        "goalie": (lambda pl, rnd: {"seed": rnd.getrandbits(32)}, "sweater-goalie"),
         "overtime": (lambda pl, rnd: overtime_puzzle(pl, trophy_entries(pl, award_history), rnd), "sweater-overtime"),
         "truths": (lambda pl, rnd: truths_puzzle(pl, rnd), "sweater-truths"),
         "hlt": (lambda pl, rnd: hlt_puzzle(pl, rnd), "sweater-hlt"),
