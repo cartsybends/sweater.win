@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "104 · Full Message Link Preview"
+VERSION = "105 · Message Preview Cache Reset"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -70,14 +70,16 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta property="og:title" content="Sweater · Daily NHL Trivia">
 <meta property="og:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
 <meta property="og:url" content="/*__SITE__*/">
-<meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png">
-<meta property="og:image:secure_url" content="/*__SITE__*/sweater-trivia-preview.png">
+<meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
+<meta property="og:image:secure_url" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
 <meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Sweater · Daily NHL Trivia">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sweater · Daily NHL Trivia">
 <meta name="twitter:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
-<meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png">
+<meta name="twitter:image" content="/*__SITE__*/sweater-trivia-preview.png?v=2">
 <meta name="theme-color" content="#111113">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -7879,15 +7881,16 @@ function renderStats() {
   renderStatsLb(game);
 }
 
-function shareUrl(game = statsGame || currentGame()) {
+function shareUrl(game = statsGame || currentGame(), date = dayKey()) {
   if (!SITE || /__SITE__/.test(SITE)) return location.href;
-  return `${SITE}#${game}`;
+  const stamp = encodeURIComponent(`${date}-${game}`);
+  return `${SITE}?share=${stamp}#${game}`;
 }
 function shareText(includeLink = true) {
   const game = statsGame || currentGame();
   const g = G[game], saved = store.get(KEYS[game].daily);
   const t = g.daily(saved.date);
-  const link = includeLink ? `\n\n${shareUrl(game)}` : "";
+  const link = includeLink ? `\n\n${shareUrl(game, saved.date)}` : "";
   if (g.shareText) return g.shareText(t, saved, dailyNumber(game, saved.date), link);
   if (g.kind === "streak") {
     const n = g.score(t, saved.guesses), won = g.wonGame(t, saved.guesses);
@@ -7914,19 +7917,10 @@ async function copyToClipboard(text, message = "Result copied to clipboard") {
   }
 }
 async function shareResult() {
-  const text = shareText();
-  // Keep the Sweater URL inside the plain-text payload instead of attaching it
-  // as a separate Web Share URL. Messages/iMessage then treats it like a pasted
-  // link and can build the full Open Graph card (image + title + sweater.win).
-  if (navigator.share) {
-    try {
-      await navigator.share({ text });
-      return;
-    } catch (err) {
-      if (err && err.name === "AbortError") return;
-    }
-  }
-  await copyToClipboard(text);
+  // Copying the result is deliberate: when the user pastes it into Messages,
+  // iOS builds the rich link preview on the sender's device. Web Share can hand
+  // the URL off as an untrusted attachment and produce "Tap to Load Preview".
+  await copyToClipboard(shareText(), "Result copied — paste it into Messages");
 }
 $("shareBtn").onclick = shareResult;
 $("resultRecap").addEventListener("click", async e => {
@@ -7934,7 +7928,7 @@ $("resultRecap").addEventListener("click", async e => {
   const next = e.target.closest("[data-result-next]");
   if (next) openGame(next.dataset.resultNext);
   if (e.target.closest("[data-result-challenge]")) {
-    const base = !SITE || /__SITE__/.test(SITE) ? location.href : `${SITE}#${game}`;
+    const base = shareUrl(game);
     await copyToClipboard(`Can you beat my ${cardTitle(game)} result on Sweater?\n\n${base}`, "Challenge link copied to clipboard");
   }
 });
