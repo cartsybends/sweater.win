@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "89 · NHL EDGE API"
+VERSION = "90 · NHL EDGE Shot Zones"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -8773,10 +8773,12 @@ def edge_player_data(player, season):
         except (TypeError, ValueError):
             zones[key] = None
 
+    # NHL EDGE currently uses compact danger-bucket location codes:
+    # all / high / mid / long. Keep the longer aliases for compatibility.
     total = zones.get("all")
-    hd = zones.get("highdanger")
-    mid = zones.get("midrange")
-    long = zones.get("longrange")
+    hd = zones.get("high") if zones.get("high") is not None else zones.get("highdanger")
+    mid = zones.get("mid") if zones.get("mid") is not None else zones.get("midrange")
+    long = zones.get("long") if zones.get("long") is not None else zones.get("longrange")
 
     if shot is not None and not 40 <= shot <= 120: shot = None
     if speed is not None and not 15 <= speed <= 30: speed = None
