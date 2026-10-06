@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "82 · Roster Boost + Map Polish"
+VERSION = "83 · Seamless Blur Frost"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -210,20 +210,20 @@ TEMPLATE = r'''<!DOCTYPE html>
   .blphoto[data-stage="4"] > img, .blphoto.revealed > img { filter: none; transform: scale(1); }
   .blfrost {
     position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr);
-    gap: 3px; pointer-events: none;
+    gap: 0; pointer-events: none;
   }
   .blfrost span {
-    position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.42); border-radius: 10px;
+    position: relative; overflow: hidden; border: 0; border-radius: 0;
     background:
       radial-gradient(circle at 28% 18%, rgba(255,255,255,.42), transparent 34%),
-      linear-gradient(145deg, rgba(242,250,253,.88), rgba(196,221,232,.80));
+      linear-gradient(145deg, rgba(242,250,253,.94), rgba(196,221,232,.90));
     -webkit-backdrop-filter: blur(18px) saturate(.72);
     backdrop-filter: blur(18px) saturate(.72);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.72),
-      inset 0 -1px 0 rgba(111,155,174,.10),
-      0 2px 7px rgba(23,59,75,.10);
-    opacity: 1; transform: scale(1); filter: blur(0);
+      inset 0 0 0 .5px rgba(255,255,255,.28),
+      inset 0 1px 0 rgba(255,255,255,.58),
+      inset 0 -1px 0 rgba(111,155,174,.10);
+    opacity: 1; transform: scale(1.006); filter: blur(0);
     transition:
       opacity .26s ease,
       transform .34s cubic-bezier(.2,.8,.2,1),
