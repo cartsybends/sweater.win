@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "119 · The Rush"
+VERSION = "120 · Rush Broadcast Motion"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1120,22 +1120,78 @@ TEMPLATE = r'''<!DOCTYPE html>
     position: absolute; left: 50%; top: calc(100% + 3px); padding: 2px 5px; border-radius: 5px; transform: translateX(-50%);
     background: rgba(15,31,45,.82); color: #fff; font-size: 6px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
   }
-  .rush-defender, .rush-goalie {
+  .rush-defender {
     position: absolute; z-index: 5; left: 0; top: 0; display: grid; place-items: center; width: clamp(34px,5.8vw,47px); height: clamp(34px,5.8vw,47px);
-    border: 2px solid rgba(74,91,103,.46); border-radius: 50%; background: rgba(100,116,127,.22); color: rgba(39,57,68,.72);
-    font-size: 12px; font-weight: 950; will-change: transform;
+    border: 2px solid rgba(74,91,103,.38); border-radius: 50%; background: rgba(89,107,119,.20); color: rgba(39,57,68,.72);
+    font-size: 11px; font-weight: 950; will-change: transform; box-shadow: 0 5px 10px rgba(18,38,52,.10);
   }
-  .rush-goalie { width: clamp(39px,6.5vw,52px); height: clamp(39px,6.5vw,52px); background: rgba(100,116,127,.31); }
+  .rush-defender::after {
+    content: ""; position: absolute; right: -19px; bottom: 2px; width: 29px; height: 2px; border-radius: 2px;
+    background: #68523e; transform: rotate(20deg); transform-origin: left center; opacity: .72;
+  }
+  .rush-goalie {
+    position: absolute; z-index: 7; left: 0; top: 0; width: clamp(43px,7.1vw,58px); height: clamp(50px,8vw,65px);
+    will-change: transform; filter: drop-shadow(0 7px 7px rgba(12,35,50,.20));
+  }
+  .rush-g-shadow { position:absolute; left:50%; bottom:1px; width:72%; height:15%; border-radius:50%; background:rgba(15,35,49,.16); filter:blur(2px); transform:translateX(-50%); }
+  .rush-g-body { position:absolute; inset:0; }
+  .rush-g-mask {
+    position:absolute; z-index:4; left:50%; top:2%; width:28%; aspect-ratio:1; border:2px solid rgba(255,255,255,.95); border-radius:45% 45% 50% 50%;
+    background:#526979; transform:translateX(-50%); box-shadow:inset 0 -3px 0 rgba(14,29,39,.18);
+  }
+  .rush-g-mask::after { content:""; position:absolute; inset:22% 15%; border-top:1px solid rgba(255,255,255,.58); border-bottom:1px solid rgba(255,255,255,.42); }
+  .rush-g-chest {
+    position:absolute; z-index:3; left:50%; top:23%; width:52%; height:37%; border-radius:44% 44% 26% 26%;
+    background:linear-gradient(180deg,#718796,#425967); border:2px solid rgba(255,255,255,.82); transform:translateX(-50%);
+  }
+  .rush-g-blocker,.rush-g-glove {
+    position:absolute; z-index:3; top:37%; width:18%; aspect-ratio:1; border:2px solid rgba(255,255,255,.86); background:#667d8c;
+  }
+  .rush-g-blocker { right:5%; border-radius:4px; transform:rotate(11deg); }
+  .rush-g-glove { left:4%; border-radius:50% 45% 50% 38%; transform:rotate(-12deg); }
+  .rush-g-pad {
+    position:absolute; z-index:2; top:56%; width:20%; height:38%; border:2px solid rgba(255,255,255,.90); border-radius:6px 6px 10px 10px;
+    background:linear-gradient(90deg,#dfe8ed,#f8fbfc 45%,#c9d6dd);
+  }
+  .rush-g-pad.left { left:27%; transform:rotate(4deg); transform-origin:top center; }
+  .rush-g-pad.right { right:27%; transform:rotate(-4deg); transform-origin:top center; }
+  .rush-g-stick {
+    position:absolute; z-index:1; left:52%; top:54%; width:48%; height:3px; border-radius:3px; background:#6d523c;
+    transform:rotate(52deg); transform-origin:left center;
+  }
+  .rush-g-stick::after { content:""; position:absolute; right:-2px; top:-4px; width:13px; height:5px; border-radius:3px; background:#27333a; transform:rotate(12deg); }
+  .rush-goalie.tracking .rush-g-body { animation:rushGoalieSet .68s ease-in-out infinite alternate; }
+  .rush-goalie.save .rush-g-pad.left { animation:rushPadLeft .42s cubic-bezier(.18,.82,.22,1) both; }
+  .rush-goalie.save .rush-g-pad.right { animation:rushPadRight .42s cubic-bezier(.18,.82,.22,1) both; }
+  .rush-goalie.save .rush-g-chest { animation:rushChestDrop .42s cubic-bezier(.18,.82,.22,1) both; }
+  .rush-goalie.beaten .rush-g-body { animation:rushGoalieReach .48s cubic-bezier(.2,.8,.25,1) both; }
   .rush-puck {
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
     box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
   }
-  .rush-puck.shooting { box-shadow: -18px 0 12px rgba(18,38,52,.22), 0 2px 4px rgba(0,0,0,.35); }
-  .rush-goal-light {
-    position: absolute; z-index: 7; right: 2.8%; top: 45%; width: 11px; height: 11px; border-radius: 50%; background: #801f25;
-    box-shadow: 0 0 0 rgba(239,68,68,0); transition: .16s ease;
+  .rush-puck::after {
+    content:""; position:absolute; right:6px; top:50%; width:0; height:3px; border-radius:50%;
+    background:linear-gradient(90deg,rgba(20,42,58,.34),transparent); transform:translateY(-50%); opacity:0;
+    transition:width .14s ease,opacity .14s ease;
   }
-  .rush-stage.goal .rush-goal-light { background: #ef4444; box-shadow: 0 0 12px 5px rgba(239,68,68,.55); }
+  .rush-puck.shooting::after { width:34px; opacity:1; }
+  .rush-speed-lines {
+    position:absolute; z-index:3; inset:8% 8% 8% 3%; opacity:0; pointer-events:none;
+    background:repeating-linear-gradient(90deg,transparent 0 39px,rgba(59,135,187,.13) 40px 41px,transparent 42px 83px);
+    mask-image:linear-gradient(90deg,transparent,black 24%,black 76%,transparent);
+  }
+  .rush-speed-lines.on { animation:rushSpeedWash 1.15s ease both; }
+  .rush-goal-light {
+    position: absolute; z-index: 6; right: .7%; top: 50%; width: 9px; height: 9px; border-radius: 50%; background: #ef4444;
+    opacity: 0; transform: translateY(-50%) scale(.65); box-shadow: 0 0 0 rgba(239,68,68,0); transition: .16s ease;
+  }
+  .rush-stage.goal .rush-goal-light { opacity:1; transform:translateY(-50%) scale(1); box-shadow: 0 0 15px 6px rgba(239,68,68,.58); }
+  @keyframes rushGoalieSet { from{transform:translateY(-1px) scaleY(.99)} to{transform:translateY(1px) scaleY(1.01)} }
+  @keyframes rushPadLeft { to{transform:translate(-9px,5px) rotate(24deg)} }
+  @keyframes rushPadRight { to{transform:translate(9px,5px) rotate(-24deg)} }
+  @keyframes rushChestDrop { to{transform:translate(-50%,5px) scaleY(.90)} }
+  @keyframes rushGoalieReach { 55%{transform:translate(-5px,-1px) rotate(-7deg)} 100%{transform:translate(-8px,2px) rotate(-10deg)} }
+  @keyframes rushSpeedWash { 0%{opacity:0;transform:translateX(-3%)} 18%{opacity:.8} 100%{opacity:0;transform:translateX(6%)} }
   .rush-lines { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 9px; }
   .rush-line {
     position: relative; overflow: hidden; min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 14px;
@@ -3489,12 +3545,13 @@ TEMPLATE = r'''<!DOCTYPE html>
           <line class="rush-goalline" x1="660" y1="55" x2="660" y2="350"/>
           <circle class="rush-circle" cx="568" cy="116" r="42"/><circle class="rush-circle" cx="568" cy="289" r="42"/>
           <circle class="rush-dot" cx="568" cy="116" r="4"/><circle class="rush-dot" cx="568" cy="289" r="4"/>
-          <path class="rush-crease" d="M660 174a29 29 0 0 0 0 57h-20v-57Z"/>
+          <path class="rush-crease" d="M660 174A29 29 0 0 0 660 231Z"/>
           <path class="rush-net" d="M662 177h31q12 0 12 12v27q0 12-12 12h-31Z"/>
         </svg>
         <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
         <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em>MPH</em></b></div>
         <div id="erActors"></div>
+        <div class="rush-speed-lines" id="erSpeedLines" aria-hidden="true"></div>
         <span class="rush-goal-light" aria-hidden="true"></span>
         <div class="rush-callout" id="erCallout"><strong id="erCalloutMain"></strong><span id="erCalloutSub"></span></div>
       </div>
@@ -7456,14 +7513,25 @@ function edgeRushActor(id,role) {
   const p=BYID.get(Number(id));
   return `<div class="rush-actor" data-rush-id="${id}"><span class="rush-body"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><span class="rush-stick"></span><span class="rush-role">${role}</span></div>`;
 }
-function edgeRushSet(el,x,y){
-  if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;
+function edgeRushSet(el,x,y,rot=0,scale=1){
+  if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
 }
-function edgeRushMove(el,from,to,duration,delay=0,easing="cubic-bezier(.22,.76,.24,1)") {
+function edgeRushTransform(p){
+  return `translate3d(${p.x}px,${p.y}px,0) translate(-50%,-50%) rotate(${p.r||0}deg) scale(${p.s||1})`;
+}
+function edgeRushPath(el,points,duration,easing="linear"){
   if(!el)return Promise.resolve();
-  const a=`translate3d(${from[0]}px,${from[1]}px,0) translate(-50%,-50%)`,b=`translate3d(${to[0]}px,${to[1]}px,0) translate(-50%,-50%)`;
-  const anim=el.animate([{transform:a},{transform:b}],{duration,delay,easing,fill:"forwards"});
-  return anim.finished.catch(()=>{}).then(()=>{el.style.transform=b;});
+  const frames=points.map(p=>({transform:edgeRushTransform(p),offset:p.o,easing:p.e||"linear"}));
+  const anim=el.animate(frames,{duration,easing,fill:"forwards"});
+  return anim.finished.catch(()=>{}).then(()=>{
+    const p=points[points.length-1]; if(el.isConnected)el.style.transform=edgeRushTransform(p);
+  });
+}
+function edgeRushLater(ms,token,fn){
+  setTimeout(()=>{if(token===rushAnimToken&&game==="edgerush")fn();},ms);
+}
+function edgeRushGoalieMarkup(){
+  return '<div class="rush-goalie tracking" data-goalie><span class="rush-g-shadow"></span><span class="rush-g-stick"></span><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-glove"></i><i class="rush-g-blocker"></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i></span></div>';
 }
 function edgeRushRadar(value,token) {
   const box=$("erRadar"),num=$("erRadarValue"); if(!box||!num)return;
@@ -7482,64 +7550,109 @@ function edgeRushRadar(value,token) {
 async function edgeRushAnimate(r,picked,correct) {
   const token=++rushAnimToken,stage=$("erStage"),actors=$("erActors");
   if(!stage||!actors)return;
-  stage.classList.remove("goal");$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");$("erPhase").textContent="LIVE RUSH";
+  stage.classList.remove("goal");
+  $("erRadar").classList.remove("on");
+  $("erCallout").classList.remove("on");
+  $("erPhase").textContent="LIVE RUSH";
+
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,finisherId]=calc.roles;
   actors.innerHTML=edgeRushActor(carrierId,"Carrier")+edgeRushActor(supportId,"Support")+edgeRushActor(finisherId,"Finisher")
-    +'<div class="rush-defender" data-def="1">D</div><div class="rush-defender" data-def="2">D</div><div class="rush-goalie" data-goalie>G</div><span class="rush-puck" data-rush-puck></span>';
-  const carrier=actors.querySelector(`[data-rush-id="${carrierId}"]`),support=actors.querySelector(`[data-rush-id="${supportId}"]`),finisher=actors.querySelector(`[data-rush-id="${finisherId}"]`);
-  const d1=actors.querySelector('[data-def="1"]'),d2=actors.querySelector('[data-def="2"]'),goalie=actors.querySelector("[data-goalie]"),puck=actors.querySelector("[data-rush-puck]");
+    +'<div class="rush-defender" data-def="1">D</div><div class="rush-defender" data-def="2">D</div>'+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
+
+  const carrier=actors.querySelector(`[data-rush-id="${carrierId}"]`),
+        support=actors.querySelector(`[data-rush-id="${supportId}"]`),
+        finisher=actors.querySelector(`[data-rush-id="${finisherId}"]`),
+        d1=actors.querySelector('[data-def="1"]'),
+        d2=actors.querySelector('[data-def="2"]'),
+        goalie=actors.querySelector("[data-goalie]"),
+        puck=actors.querySelector("[data-rush-puck]");
+
   await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));
   if(token!==rushAnimToken)return;
-  const w=stage.clientWidth,h=stage.clientHeight,P=(x,y)=>[w*x,h*y];
-  const startC=P(.10,.50),startS=P(.08,.31),startF=P(.08,.69),entryC=P(.43,.50),entryS=P(.47,.30),entryF=P(.49,.70);
-  const zone=edgeRushZone(finisherId),finish=zone==="high"?P(.79,.50):zone==="mid"?P(.73,.64):P(.66,.39);
-  const supportLane=P(.58,.31),carrierLane=P(.60,.51),net=P(.925,.50),goal=P(.865,.50);
-  edgeRushSet(carrier,...startC);edgeRushSet(support,...startS);edgeRushSet(finisher,...startF);edgeRushSet(d1,...P(.67,.39));edgeRushSet(d2,...P(.69,.63));edgeRushSet(goalie,...goal);edgeRushSet(puck,...P(.135,.52));
+
+  const w=stage.clientWidth,h=stage.clientHeight,P=(x,y)=>[w*x,h*y],pt=(xy,o,r=0,s=1,e)=>({x:xy[0],y:xy[1],o,r,s,e});
+  const startC=P(.10,.50),startS=P(.075,.30),startF=P(.075,.70);
+  const entryC=P(.42,.50),entryS=P(.45,.30),entryF=P(.47,.70);
+  const carrierLane=P(.62,.51),supportLane=P(.61,.29);
+  const zone=edgeRushZone(finisherId);
+  const finish=zone==="high"?P(.795,.50):zone==="mid"?P(.745,.64):P(.685,.39);
+  const finishPrep=zone==="high"?P(.70,.57):zone==="mid"?P(.67,.67):P(.64,.41);
+  const d1Start=P(.67,.38),d2Start=P(.69,.63),d1End=P(.80,.42),d2End=P(.81,.59);
+  const goalieHome=P(.885,.50),goalieRead=P(.875,.44),goalieShot=P(.872,Math.max(.40,Math.min(.60,finish[1]/h)));
+  const net=P(.945,.50),save=P(.878,Math.max(.44,Math.min(.57,finish[1]/h))),rebound=P(.78,.58);
+  const puckStart=P(.135,.515),passOne=P(.60,.305),shotStart=[finish[0]-5,finish[1]+4];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  edgeRushSet(carrier,...startC,-3);edgeRushSet(support,...startS,-4);edgeRushSet(finisher,...startF,5);
+  edgeRushSet(d1,...d1Start,8);edgeRushSet(d2,...d2Start,-8);edgeRushSet(goalie,...goalieHome);
+  edgeRushSet(puck,...puckStart);
+
   if(reduced){
-    edgeRushSet(carrier,...carrierLane);edgeRushSet(support,...supportLane);edgeRushSet(finisher,...finish);edgeRushSet(puck,...net);
-    $("erPhase").textContent="SHOT";
-    edgeRushRadar(edgeValue(finisherId,"shot"),token);
+    edgeRushSet(carrier,...carrierLane);edgeRushSet(support,...supportLane);edgeRushSet(finisher,...finish);
+    edgeRushSet(goalie,...goalieShot);edgeRushSet(puck,...(correct?net:save));
+    goalie.classList.remove("tracking");goalie.classList.add(correct?"beaten":"save");
+    $("erPhase").textContent="SHOT";edgeRushRadar(edgeValue(finisherId,"shot"),token);
   } else {
-    const speedPct=edgePercentile("speed",edgeValue(carrierId,"speed")),entryDur=Math.round(900-speedPct*2.8);
+    const speedPct=edgePercentile("speed",edgeValue(carrierId,"speed"));
+    const total=Math.round(3150-speedPct*3.0);
+    const shotAt=Math.round(total*.82),shotDur=total-shotAt;
+    const entryEnd=.42,passEnd=.64,setEnd=.82;
+
+    $("erSpeedLines").classList.remove("on");void $("erSpeedLines").offsetWidth;$("erSpeedLines").classList.add("on");
     $("erPhase").textContent="ZONE ENTRY";
-    await Promise.all([
-      edgeRushMove(carrier,startC,entryC,entryDur),
-      edgeRushMove(support,startS,entryS,entryDur+90),
-      edgeRushMove(finisher,startF,entryF,entryDur+130),
-      edgeRushMove(d1,P(.67,.39),P(.75,.40),entryDur+100),
-      edgeRushMove(d2,P(.69,.63),P(.77,.62),entryDur+100),
-      edgeRushMove(puck,P(.135,.52),P(.445,.515),entryDur),
-    ]);
-    if(token!==rushAnimToken)return;
-    $("erPhase").textContent="MOVE THE PUCK";
-    await Promise.all([
-      edgeRushMove(carrier,entryC,carrierLane,420),
-      edgeRushMove(support,entryS,supportLane,390),
-      edgeRushMove(finisher,entryF,P(.64,.68),470),
-      edgeRushMove(puck,P(.445,.515),P(.575,.33),270,70,"cubic-bezier(.18,.8,.3,1)"),
-    ]);
-    if(token!==rushAnimToken)return;
-    $("erPhase").textContent="CROSS-SEAM";
-    await Promise.all([
-      edgeRushMove(finisher,P(.64,.68),finish,390),
-      edgeRushMove(d1,P(.75,.40),P(.82,.43),390),
-      edgeRushMove(d2,P(.77,.62),P(.82,.58),390),
-      edgeRushMove(puck,P(.575,.33),[finish[0]-6,finish[1]+5],280,70,"cubic-bezier(.18,.8,.3,1)"),
-    ]);
-    if(token!==rushAnimToken)return;
-    $("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";
-    puck.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
-    const shotMs=Math.max(170,310-edgePercentile("shot",edgeValue(finisherId,"shot"))*1.15);
-    await edgeRushMove(puck,[finish[0]-6,finish[1]+5],correct?net:goal,shotMs,180,"cubic-bezier(.3,.05,.7,.2)");
+    edgeRushLater(Math.round(total*.42),token,()=>{$("erPhase").textContent="MOVE THE PUCK";});
+    edgeRushLater(Math.round(total*.64),token,()=>{$("erPhase").textContent="CROSS-SEAM";});
+    edgeRushLater(shotAt-80,token,()=>{
+      $("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";
+      puck.classList.add("shooting");finisher.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
+    });
+    edgeRushLater(shotAt+Math.round(shotDur*.50),token,()=>{
+      goalie.classList.remove("tracking");
+      goalie.classList.add(correct?"beaten":"save");
+    });
+
+    const smooth="cubic-bezier(.2,.72,.22,1)";
+    const skaterJobs=[
+      edgeRushPath(carrier,[
+        pt(startC,0,-3),pt(P(.25,.48),.20,-1,1.01),pt(entryC,entryEnd,2,1.01),pt(P(.53,.49),.55,4),pt(carrierLane,.76,-2),pt(P(.70,.52),1,1)
+      ],total,smooth),
+      edgeRushPath(support,[
+        pt(startS,0,-5),pt(P(.24,.27),.20,-2),pt(entryS,entryEnd,3),pt(supportLane,.64,7),pt(P(.72,.32),.84,2),pt(P(.78,.35),1,-1)
+      ],total,smooth),
+      edgeRushPath(finisher,[
+        pt(startF,0,6),pt(P(.24,.73),.20,3),pt(entryF,entryEnd,-4),pt(P(.58,.71),.58,-6),pt(finishPrep,.72,-4),pt(finish,setEnd,0,1.04),pt(finish,1,0,1.04)
+      ],total,smooth),
+      edgeRushPath(d1,[
+        pt(d1Start,0,8),pt(P(.70,.39),.30,5),pt(P(.74,.40),.54,1),pt(d1End,.78,-6),pt(P(.835,.45),1,-9)
+      ],total,smooth),
+      edgeRushPath(d2,[
+        pt(d2Start,0,-8),pt(P(.72,.62),.30,-5),pt(P(.76,.62),.56,-2),pt(d2End,.80,7),pt(P(.835,.56),1,10)
+      ],total,smooth),
+      edgeRushPath(goalie,[
+        pt(goalieHome,0,0),pt(goalieHome,.45,0),pt(goalieRead,.64,-2),pt(goalieShot,.82,0),pt(correct?P(.867,.44):save,1,correct?-7:0,correct?.97:1)
+      ],total,smooth),
+    ];
+
+    const puckPoints=[
+      pt(puckStart,0,0),pt(P(.26,.50),.20,0),pt([entryC[0]+7,entryC[1]+4],entryEnd,0),
+      pt(passOne,.59,0),pt(passOne,.64,0),pt(shotStart,.78,0),pt(shotStart,.82,0),
+    ];
+    if(correct){
+      puckPoints.push(pt(net,.97,0,1.05),pt(P(.965,.50),1,0,.72));
+    }else{
+      puckPoints.push(pt(save,.94,0,1),pt(rebound,1,-8,.9));
+    }
+    const puckJob=edgeRushPath(puck,puckPoints,total,"linear");
+    await Promise.all([...skaterJobs,puckJob]);
     if(token!==rushAnimToken)return;
   }
+
   $("erPhase").textContent=correct?"BEST PROFILE":"TRACKING VERDICT";
   if(correct)stage.classList.add("goal");
   $("erCalloutMain").textContent=correct?"GOAL":"SAVED";
   $("erCalloutSub").textContent=`${line.rating} EDGE RUSH · ${edgeValue(finisherId,"shot").toFixed(2)} MPH`;
   $("erCallout").classList.remove("on");void $("erCallout").offsetWidth;$("erCallout").classList.add("on");
-  await new Promise(res=>setTimeout(res,reduced?450:1050));
+  await new Promise(res=>setTimeout(res,reduced?450:950));
   if(token!==rushAnimToken)return;
   if(S.edgerush?.over){
     $("banner").style.display="block";
@@ -7564,7 +7677,7 @@ G.edgerush={
     if(fresh){
       const r=t.rounds[i],picked=Number(x);this.pending=true;this.lastCorrect=this.right(t,x,i);
       clearTimeout(this.timer);
-      this.timer=setTimeout(()=>{this.pending=false;if(game==="edgerush"&&!S.edgerush.over)this.render(t,S.edgerush);},4300);
+      this.timer=setTimeout(()=>{this.pending=false;if(game==="edgerush"&&!S.edgerush.over)this.render(t,S.edgerush);},4550);
       setTimeout(()=>{if(game==="edgerush")edgeRushAnimate(r,picked,this.lastCorrect);},30);
     }
     return false;
