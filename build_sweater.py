@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "116 · Tune Teams Landing"
+VERSION = "117 · QA Reliability Fixes"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1333,7 +1333,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-cups { max-width: 1440px; }
   .cups-controls { position: sticky; top: 0; z-index: 3; padding: 6px 0 10px; background: var(--bg); border-bottom: 1px solid var(--sep); }
   .cups-controls .intro { margin-top: 0; }
-  #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: visible; }
+  #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: auto; }
+  #view-cups .cutable { min-width: 0; }
   .cutable { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0 5px; }
   .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 8px 10px; }
   #view-cups .cutable thead th { position: sticky; top: var(--cups-header-top, 0px); z-index: 2; background: var(--bg); box-shadow: 0 4px 0 var(--bg); }
@@ -2927,7 +2928,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <div class="search">
       <input id="guess" autocomplete="off" role="combobox" aria-expanded="false"
-             aria-controls="opts" placeholder="Guess 1 of 8">
+             aria-controls="opts" aria-label="Player name" placeholder="Guess 1 of 8">
       <ul class="list" id="opts" role="listbox" hidden></ul>
     </div>
     <div class="slot">
@@ -2970,7 +2971,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <div class="search narrow">
       <input id="slGuess" autocomplete="off" role="combobox" aria-expanded="false"
-             aria-controls="slOpts" placeholder="Guess 1 of 6">
+             aria-controls="slOpts" aria-label="Player name" placeholder="Guess 1 of 6">
       <ul class="list" id="slOpts" role="listbox" hidden></ul>
     </div>
     <p class="hint" id="slLeft"></p>
@@ -2998,7 +2999,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="jypath" id="jyPath"></div>
     <div class="chips hints" id="jyHints"></div>
     <div class="search narrow">
-      <input id="jyGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="jyOpts" placeholder="Guess 1 of 6">
+      <input id="jyGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="jyOpts" aria-label="Player name" placeholder="Guess 1 of 6">
       <ul class="list" id="jyOpts" role="listbox" hidden></ul>
     </div>
     <div class="slot"></div>
@@ -3023,7 +3024,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <div class="blclues" id="blClues"></div>
     <div class="search narrow">
-      <input id="blGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="blOpts" placeholder="Guess 1 of 5">
+      <input id="blGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="blOpts" aria-label="Player name" placeholder="Guess 1 of 5">
       <ul class="list" id="blOpts" role="listbox" hidden></ul>
     </div>
     <p class="hint" id="blLeft"></p>
@@ -3421,7 +3422,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="phrun" id="phRun"></div>
     <div class="phclues" id="phClues"></div>
     <div class="search narrow">
-      <input id="phGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="phOpts" placeholder="Guess 1 of 6">
+      <input id="phGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="phOpts" aria-label="Player name" placeholder="Guess 1 of 6">
       <ul class="list" id="phOpts" role="listbox" hidden></ul>
     </div>
     <p class="hint" id="phLeft"></p>
@@ -3805,6 +3806,9 @@ function etParts(d = new Date()) {
 }
 const dayKey = (d = new Date()) => { const o = etParts(d); return `${o.year}-${o.month}-${o.day}`; };
 const keyUTC = k => { const [y, m, d] = k.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+const dayDate = k => new Date(keyUTC(k) + 12 * 3600e3);
+const shortDay = k => dayDate(k).toLocaleDateString(undefined, { month: "short", day: "numeric", timeZone: "UTC" });
+const longDay = k => dayDate(k).toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" });
 const shiftKey = (k, n) => new Date(keyUTC(k) + n * 864e5).toISOString().slice(0, 10);
 const prevDayKey = k => shiftKey(k, -1);
 const secondsToEtMidnight = () => {
@@ -6054,7 +6058,7 @@ function truthActualText(p, falseLine) {
 function truthsRandom(rnd) {
   const rounds = [], seen = new Set();
   for (let i = 0; i < 400 && rounds.length < 5; i++) {
-    const p = pick(PLAYERS);
+    const p = PLAYERS[Math.floor(rnd() * PLAYERS.length)];
     if (seen.has(p.id)) continue;
     const kinds = shuffled(FACT_KINDS, rnd).filter(k => factText(p, k, rnd) && factText(p, k, rnd, true));
     if (kinds.length < 3) continue;
@@ -6065,7 +6069,7 @@ function truthsRandom(rnd) {
     rounds.push({ p: p.id, s: order.map(i => lines[i]), f: order.indexOf(2), c: actual });
     seen.add(p.id);
   }
-  return rounds.length === 5 ? { rounds, rid: Math.random() } : null;
+  return rounds.length === 5 ? { rounds, rid: Math.floor(rnd() * 0xffffffff) + 1 } : null;
 }
 G.truths = {
   kind: "score", repeat: true, title: "Two Truths", share: "Sweater Two Truths", view: "view-truths",
@@ -6483,13 +6487,16 @@ function trophyRandom(rnd, trophy = "all") {
     rounds.push({ t: e.t, y: e.y, names: choices.map(x => x.w), teams: choices.map(x => x.team || ""), a });
     used.add(`${e.t}:${e.y}`);
   }
-  return rounds.length === 20 ? { rounds, rid: Math.random() } : null;
+  return rounds.length === 20 ? { rounds, rid: Math.floor(rnd() * 0xffffffff) + 1 } : null;
 }
 G.trophy = {
   kind: "score", repeat: true, title: "Trophy Case", share: "Sweater Trophy Case", view: "view-trophy",
   max: 20, next: "Play again", hideReveal: true,
   length(t) { return Math.min(Number(store.get("sweater-trophy-rounds")) || 5, t.rounds.length); },
-  trophy() { return store.get("sweater-trophy-filter") || "all"; },
+  trophy() {
+    const saved = store.get("sweater-trophy-filter") || "all";
+    return saved === "all" || this.trophies().includes(saved) ? saved : "all";
+  },
   trophies() { return Object.keys(TROPHY_HISTORY.byTrophy).filter(t => TROPHY_HISTORY.winners.filter(e => e.t === t).length >= 20).sort(); },
   pool: () => TROPHY_HISTORY.winners.length >= 20 ? PLAYERS : [],
   daily(k) {
@@ -6602,7 +6609,7 @@ function mrosterRandom(rnd) {
   const teams = Object.keys(TEAMS).filter(t => PLAYERS.filter(p => p.team === t).length >= 6);
   if (!teams.length) return null;
   const team = teams[Math.floor(rnd() * teams.length)];
-  return { team, ids: shuffled(PLAYERS.filter(p => p.team === team), rnd).slice(0, 6).map(p => p.id), rid: Math.random() };
+  return { team, ids: shuffled(PLAYERS.filter(p => p.team === team), rnd).slice(0, 6).map(p => p.id), rid: Math.floor(rnd() * 0xffffffff) + 1 };
 }
 G.mroster = {
   title: "Mystery Roster", share: "Sweater Mystery Roster", view: "view-mroster", max: 4, next: "Next team",
@@ -7515,7 +7522,7 @@ function updateLabels() {
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
   for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "phGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
-  const today = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const today = shortDay(dayKey());
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
     : mode === "archive" ? `Archive · #${dailyNumber(game, archiveDay)}` : "Unlimited play";
   $("unlimited").checked = mode === "unlimited";
@@ -8150,7 +8157,7 @@ function openLeaderboard(g = game) {
 function renderLbName() {
   const box = $("lbNameBox"), name = store.get("sweater-lb-name");
   if (lbEditing || !name) {
-    box.innerHTML = `<input id="lbName" maxlength="16" autocomplete="nickname" placeholder="Pick a leaderboard name">
+    box.innerHTML = `<input id="lbName" maxlength="16" autocomplete="nickname" aria-label="Leaderboard name" placeholder="Pick a leaderboard name">
       <button class="btn" id="lbSave" type="button">${name ? "Save" : "Join"}</button>
       ${name ? '<button class="linkbtn" id="lbCancel" type="button">Cancel</button>' : ""}
       <p class="lberr" id="lbErr"></p>`;
@@ -8420,7 +8427,7 @@ function renderHub() {
   $("hubSections").hidden = false;
   $("libraryToggle").setAttribute("aria-expanded", "true");
   dayMeter();
-  $("hubDate").textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  $("hubDate").textContent = longDay(dayKey());
   document.querySelector(".partycard").disabled = !API_ON;
   document.querySelector(".partycard .partycta").textContent = API_ON ? "Start a party" : "Not available";
 }
@@ -8544,7 +8551,7 @@ function aggregateTeamSkaters(rows) {
 function aggregateTeamGoalies(rows) { const m=new Map(); for(const r of rows){const x=m.get(r.id)||{id:r.id,name:r.name,gp:0,wins:0};x.gp+=r.gp;x.wins+=r.wins;m.set(r.id,x);}return [...m.values()]; }
 function statLabel(k){return {points:"PTS",goals:"G",assists:"A",pim:"PIM",gp:"GP",wins:"W"}[k]||k;}
 function statWord(k){return {points:"points",goals:"goals",assists:"assists",pim:"PIM",gp:"games played",wins:"wins"}[k]||k;}
-function teamModeNoData(t, mode) { teamModeShell(t, mode, `<p class="hint bad">Historical data for ${esc(teamFullName(t))} is not embedded in this build yet. Run the builder once with internet access to refresh Team trivia.</p>`); }
+function teamModeNoData(t, mode) { teamModeShell(t, mode, `<p class="hint bad">There isn't enough historical data for ${esc(teamFullName(t))} in this mode yet.</p>`); }
 function teamDecades(h){return [...new Set(h.years.map(y=>Math.floor(y/10)*10))].sort((a,b)=>b-a);}
 function teamBestCandidates(h, decade, stat){
   return h.years.filter(y=>{
@@ -8552,7 +8559,7 @@ function teamBestCandidates(h, decade, stat){
     return (h.bySeason.get(y)||[]).filter(x=>Number(x[stat]||0)>0).length>=5;
   });
 }
-function teamSearchMarkup(inputId,listId,placeholder){return `<div class="search narrow"><input id="${inputId}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="${listId}" placeholder="${esc(placeholder)}"><ul class="list" id="${listId}" role="listbox" hidden></ul></div>`;}
+function teamSearchMarkup(inputId,listId,placeholder){return `<div class="search narrow"><input id="${inputId}" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="${listId}" aria-label="Player name" placeholder="${esc(placeholder)}"><ul class="list" id="${listId}" role="listbox" hidden></ul></div>`;}
 
 function startTeamBest(t, initial = false) {
   const h=historyForTeam(t); h.team=t; if(!h.skaters.length)return teamModeNoData(t,"best");
@@ -8636,7 +8643,7 @@ function startTeamBest(t, initial = false) {
 }
 function teamStatCells(r){return [r.gp,r.goals,r.assists,r.points,signed(r.plusMinus)];}
 function startTeamGuess(t){
-  const h=historyForTeam(t); h.team=t; const pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=3);if(!pool.length)return teamModeNoData(t,"guess");const target=pick(pool),rows=target.rows.slice(),max=8;let guesses=[],over=false;
+  const h=historyForTeam(t); h.team=t; const minSeasons=Math.min(3,Math.max(2,h.years.length));const pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=minSeasons);if(!pool.length)return teamModeNoData(t,"guess");const target=pick(pool),rows=target.rows.slice(),max=8;let guesses=[],over=false;
   teamModeShell(t,"guess",`<p class="team-subprompt">Same rules as Stat Line: one season starts unlocked and every wrong guess reveals another.</p><p class="intro" id="teamGuessIntro"></p><table class="seasons"><thead><tr><th>Season</th><th>GP</th><th>G</th><th>A</th><th>PTS</th><th>+/−</th></tr></thead><tbody id="teamGuessRows"></tbody></table>${teamSearchMarkup("teamGuessInput","teamGuessOpts","Guess the player")}<ul class="wrong" id="teamGuessWrong"></ul><p class="hint" id="teamGuessLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamGuessNew">New player</button></div>`);
   const draw=()=>{const shown=over?rows.length:Math.min(rows.length,1+guesses.length);$("teamGuessIntro").textContent=over?`${target.name} · ${target.pos} · ${rows.length} ${teamFullName(t)} seasons`:`${target.pos} · ${rows.length} ${teamFullName(t)} seasons`;$("teamGuessRows").innerHTML=rows.map((r,i)=>i<shown?`<tr><td>${seasonText(r.y)}</td>${teamStatCells(r).map(v=>`<td>${v}</td>`).join("")}</tr>`:`<tr class="locked"><td>${seasonText(r.y)}</td><td colspan="5">🔒 Locked</td></tr>`).join("");$("teamGuessLeft").textContent=over?`Answer: ${target.name}`:`${max-guesses.length} tries left · each wrong guess unlocks another season.`;};draw();
   makeTeamSearch("teamGuessInput","teamGuessOpts",h,p=>{if(over||guesses.includes(p.id))return;if(p.id===target.id){over=true;draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max)over=true;draw();},()=>guesses);
@@ -8696,7 +8703,7 @@ function startTeamHigher(t){
   $("teamHLNew").onclick=()=>startTeamHigher(t);
 }
 function startTeamMystery(t){
-  const h=historyForTeam(t),pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=4);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
+  const h=historyForTeam(t),minSeasons=Math.min(4,Math.max(2,h.years.length)),pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=minSeasons);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
   teamModeShell(t,"mystery",`<div class="ttcard"><img id="teamMysteryImg" alt=""><div><p class="pname">${esc(target.name)}</p><p class="pmeta"><span class="team-mystery-logo"><img src="${logo(t)}" alt=""></span>${esc(teamFullName(t))} · ${esc(target.pos)}</p></div></div><p class="ttq">Which season is this?</p><div class="chips">${[["GP",row.gp],["G",row.goals],["A",row.assists],["PTS",row.points],["+/−",signed(row.plusMinus)]].map(([k,v])=>`<span class="chip"><b>${v}</b> ${k}</span>`).join("")}</div><div class="selist" id="teamMysteryList"></div><p class="hint" id="teamMysteryLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamMysteryNew">Next player</button></div>`);
   const img=$("teamMysteryImg");img.onerror=function(){this.onerror=null;this.src=FALLBACK};img.src=teamHistHeadshot(t,target.id,row.y);
   const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);if(y===row.y||guesses.length>=max)over=true;draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
@@ -8950,8 +8957,8 @@ function partyRender(message = "") {
         </section>
         <section class="ptpanel">
           <h3>Join a game</h3>
-          <label>Code <input id="ptCode" maxlength="4" autocomplete="off" autocapitalize="characters" placeholder="ABCD" value="${esc(party ? party.joinCode || "" : "")}"></label>
-          <label>Your name <input id="ptName" maxlength="14" autocomplete="nickname" placeholder="Name" value="${esc(store.get("sweater-party-name") || "")}"></label>
+          <label>Code <input id="ptCode" maxlength="4" autocomplete="off" autocapitalize="characters" aria-label="Party code" placeholder="ABCD" value="${esc(party ? party.joinCode || "" : "")}"></label>
+          <label>Your name <input id="ptName" maxlength="14" autocomplete="nickname" aria-label="Party player name" placeholder="Name" value="${esc(store.get("sweater-party-name") || "")}"></label>
           <button type="button" class="btn" id="ptJoin">Join</button>
         </section>
       </div>`;
@@ -9516,24 +9523,48 @@ NO_REPEAT_DAYS = 365
 
 
 
-def _compact_team_history(team, team_id):
-    """Fetch one current NHL club's complete regular-season player history.
+def _team_history_ids():
+    """Current and historical NHL team IDs by tricode.
 
-    The Stats REST API returns one player/season row with isAggregate=false. Keeping
-    this server-side avoids browser CORS/network failures and means Team trivia can
-    include retired players and alumni without bloating the normal current-roster pool.
+    Utah Hockey Club and Utah Mammoth share UTA, so a tricode can legitimately
+    map to more than one Stats API team ID.
     """
-    base = "https://api.nhle.com/stats/rest/en"
-    common = {
-        "isAggregate": "false", "isGame": "false", "start": "0", "limit": "-1",
-        "factCayenneExp": "gamesPlayed>=1",
-        "cayenneExp": f"teamId={team_id} and gameTypeId=2",
-    }
-    def grab(kind):
-        url = f"{base}/{kind}/summary?" + urllib.parse.urlencode(common)
-        return get_json(url, timeout=50).get("data", [])
+    out = {t: {TEAM_ID_MAP[t]} for t in TEAMS}
+    try:
+        rows = get_json("https://api.nhle.com/stats/rest/en/team?limit=-1", timeout=30).get("data", [])
+        for row in rows:
+            code = row.get("triCode") or row.get("rawTricode") or row.get("teamAbbrev") or row.get("abbrev")
+            try:
+                tid = int(row.get("id") or row.get("teamId"))
+            except (TypeError, ValueError):
+                continue
+            code = str(code or "").upper()
+            if code in out:
+                out[code].add(tid)
+    except Exception as e:
+        print(f"  Team ID catalogue unavailable; using known IDs ({e})", file=sys.stderr)
+    return {t: sorted(ids) for t, ids in out.items()}
 
-    skaters = []
+
+def _compact_team_history(team, team_ids):
+    """Fetch one current club's complete regular-season history across all IDs."""
+    base = "https://api.nhle.com/stats/rest/en"
+
+    def grab(kind):
+        rows = []
+        for team_id in team_ids:
+            common = {
+                "isAggregate": "false", "isGame": "false", "start": "0", "limit": "-1",
+                "factCayenneExp": "gamesPlayed>=1",
+                "cayenneExp": f"teamId={team_id} and gameTypeId=2",
+            }
+            url = f"{base}/{kind}/summary?" + urllib.parse.urlencode(common)
+            rows.extend(get_json(url, timeout=50).get("data", []))
+        return rows
+
+    # If two IDs are aliases for the same franchise/season, keep the more
+    # complete row instead of double-counting it.
+    skater_by_key = {}
     for r in grab("skater"):
         try:
             y = int(str(r.get("seasonId"))[:4])
@@ -9541,14 +9572,17 @@ def _compact_team_history(team, team_id):
         except (TypeError, ValueError):
             continue
         name = r.get("skaterFullName") or r.get("playerName") or "Unknown"
-        skaters.append([
+        item = [
             pid, name, r.get("positionCode") or "?", y,
             int(r.get("gamesPlayed") or 0), int(r.get("goals") or 0),
             int(r.get("assists") or 0), int(r.get("points") or 0),
             int(r.get("penaltyMinutes") or 0), int(r.get("plusMinus") or 0),
-        ])
+        ]
+        key = (pid, y)
+        if key not in skater_by_key or item[4] > skater_by_key[key][4]:
+            skater_by_key[key] = item
 
-    goalies = []
+    goalie_by_key = {}
     for r in grab("goalie"):
         try:
             y = int(str(r.get("seasonId"))[:4])
@@ -9556,17 +9590,63 @@ def _compact_team_history(team, team_id):
         except (TypeError, ValueError):
             continue
         name = r.get("goalieFullName") or r.get("playerName") or "Unknown"
-        goalies.append([pid, name, y, int(r.get("gamesPlayed") or 0), int(r.get("wins") or 0)])
+        item = [pid, name, y, int(r.get("gamesPlayed") or 0), int(r.get("wins") or 0)]
+        key = (pid, y)
+        if key not in goalie_by_key or item[3] > goalie_by_key[key][3]:
+            goalie_by_key[key] = item
 
-    # Stable ordering makes builds deterministic and keeps diffs readable.
-    skaters.sort(key=lambda x: (x[3], x[1], x[0]))
-    goalies.sort(key=lambda x: (x[2], x[1], x[0]))
+    skaters = sorted(skater_by_key.values(), key=lambda x: (x[3], x[1], x[0]))
+    goalies = sorted(goalie_by_key.values(), key=lambda x: (x[2], x[1], x[0]))
     if not skaters:
         raise RuntimeError(f"no historical skater rows returned for {team}")
     return {"s": skaters, "g": goalies}
 
 
-def load_team_history():
+def _supplement_team_history(history, players):
+    """Fill missing/stale recent rows from the NHL player-career data already fetched."""
+    skaters, goalies = {}, {}
+    for p in players:
+        for r in p.get("car", []):
+            if len(r) < 4:
+                continue
+            y, team, gp = r[0], r[1], int(r[2] or 0)
+            if team not in history or gp <= 0:
+                continue
+            key = (p["id"], int(y))
+            if p.get("pos") == "G":
+                bucket = goalies.setdefault(team, {})
+                row = bucket.setdefault(key, [p["id"], p["name"], int(y), 0, 0])
+                row[3] += gp
+                row[4] += int(r[3] or 0)
+            else:
+                bucket = skaters.setdefault(team, {})
+                row = bucket.setdefault(key, [p["id"], p["name"], p.get("pos") or "?", int(y), 0, 0, 0, 0, 0, 0])
+                row[4] += gp
+                for dst, src in zip(range(5, 10), range(3, 8)):
+                    row[dst] += int(r[src] or 0) if len(r) > src else 0
+
+    changed = 0
+    for team, data in history.items():
+        smap = {(int(r[0]), int(r[3])): i for i, r in enumerate(data.get("s", []))}
+        for key, row in skaters.get(team, {}).items():
+            i = smap.get(key)
+            if i is None:
+                data.setdefault("s", []).append(row); changed += 1
+            elif row[4] > int(data["s"][i][4] or 0):
+                data["s"][i] = row; changed += 1
+        gmap = {(int(r[0]), int(r[2])): i for i, r in enumerate(data.get("g", []))}
+        for key, row in goalies.get(team, {}).items():
+            i = gmap.get(key)
+            if i is None:
+                data.setdefault("g", []).append(row); changed += 1
+            elif row[3] > int(data["g"][i][3] or 0):
+                data["g"][i] = row; changed += 1
+        data["s"].sort(key=lambda x: (x[3], x[1], x[0]))
+        data["g"].sort(key=lambda x: (x[2], x[1], x[0]))
+    return changed
+
+
+def load_team_history(players):
     """Historical data for all 32 current clubs, cached between builds."""
     today = date.today()
     try:
@@ -9578,31 +9658,48 @@ def load_team_history():
         cache_day = date.fromisoformat(cached.get("day", "1900-01-01"))
     except Exception:
         cache_day = date(1900, 1, 1)
-    if old_teams and cached.get("v") == 2 and (today - cache_day).days < TEAM_HISTORY_CACHE_DAYS and all(t in old_teams for t in TEAMS):
-        print(f"{stamp()} Team history: using {TEAM_HISTORY_CACHE.name} ({len(old_teams)} clubs).")
-        return old_teams
 
-    print(f"{stamp()} Loading historical team trivia data...")
+    cache_fresh = bool(old_teams and cached.get("v") == 3
+                       and (today - cache_day).days < TEAM_HISTORY_CACHE_DAYS
+                       and all(t in old_teams for t in TEAMS))
     result = dict(old_teams)
-    def one_team(t):
-        return t, _compact_team_history(t, TEAM_ID_MAP[t])
-    with ThreadPoolExecutor(max_workers=5) as ex:
-        futures = {ex.submit(one_team, t): t for t in TEAMS}
-        for fut in as_completed(futures):
-            t = futures[fut]
-            try:
-                _, data = fut.result()
-                result[t] = data
-                print(f"  {stamp()} {t}: {len(data['s'])} skater-seasons, {len(data['g'])} goalie-seasons")
-            except Exception as e:
-                if t in result:
-                    print(f"  {t}: history refresh failed; keeping cached copy ({e})", file=sys.stderr)
-                else:
-                    print(f"  {t}: history unavailable ({e})", file=sys.stderr)
-    try:
-        TEAM_HISTORY_CACHE.write_text(json.dumps({"v": 2, "day": today.isoformat(), "teams": result}, ensure_ascii=False), encoding="utf-8")
-    except Exception as e:
-        print(f"  Couldn't write {TEAM_HISTORY_CACHE.name}: {e}", file=sys.stderr)
+    refreshed = False
+    if cache_fresh:
+        print(f"{stamp()} Team history: using {TEAM_HISTORY_CACHE.name} ({len(old_teams)} clubs).")
+    else:
+        print(f"{stamp()} Loading historical team trivia data...")
+        ids_by_team = _team_history_ids()
+        multi = {t: ids for t, ids in ids_by_team.items() if len(ids) > 1}
+        if multi:
+            print("  Multiple NHL team IDs found for: " + ", ".join(f"{t}={ids}" for t, ids in sorted(multi.items())))
+        def one_team(t):
+            return t, _compact_team_history(t, ids_by_team[t])
+        with ThreadPoolExecutor(max_workers=5) as ex:
+            futures = {ex.submit(one_team, t): t for t in TEAMS}
+            for fut in as_completed(futures):
+                t = futures[fut]
+                try:
+                    _, data = fut.result()
+                    result[t] = data
+                    print(f"  {stamp()} {t}: {len(data['s'])} skater-seasons, {len(data['g'])} goalie-seasons")
+                except Exception as e:
+                    if t in result:
+                        print(f"  {t}: history refresh failed; keeping cached copy ({e})", file=sys.stderr)
+                    else:
+                        print(f"  {t}: history unavailable ({e})", file=sys.stderr)
+        refreshed = True
+
+    supplemented = _supplement_team_history(result, players)
+    if supplemented:
+        print(f"  Team history: filled/refreshed {supplemented} recent player-season row(s) from career data.")
+
+    if refreshed or supplemented:
+        try:
+            TEAM_HISTORY_CACHE.write_text(
+                json.dumps({"v": 3, "day": today.isoformat(), "teams": result}, ensure_ascii=False),
+                encoding="utf-8")
+        except Exception as e:
+            print(f"  Couldn't write {TEAM_HISTORY_CACHE.name}: {e}", file=sys.stderr)
     return result
 
 def eastern_today():
@@ -10174,6 +10271,13 @@ def playoff_puzzle(players, rnd):
 
 TROPHY_SKIP = ("Stanley Cup", "Presidents' Trophy", "Prince of Wales", "Clarence S. Campbell")
 TROPHY_FIRST_YEAR = 1980          # Trophy Case covers 1980 onwards
+TROPHY_HISTORY_FILE = HERE / "trophy_history.json"
+TROPHY_HISTORY_VERSION = 1
+TROPHY_CORE = [
+    "Hart Memorial Trophy", "Vezina Trophy", "James Norris Memorial Trophy", "Calder Memorial Trophy",
+    "Art Ross Trophy", "Maurice Richard Trophy", "Conn Smythe Trophy", "Frank J. Selke Trophy",
+    "Lady Byng Memorial Trophy", "Ted Lindsay Award",
+]
 TROPHY_URLS = [
     "https://records.nhl.com/site/api/trophy?include=seasons&limit=-1",
     "https://records.nhl.com/site/api/award-winner?limit=-1",
@@ -10196,10 +10300,7 @@ def dig(obj, *names):
 
 WIKI_API = ("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvslots=main&rvprop=content"
             "&format=json&formatversion=2&redirects=1&titles={titles}")
-WIKI_TROPHIES = ["Hart Memorial Trophy", "Vezina Trophy", "James Norris Memorial Trophy", "Calder Memorial Trophy",
-                 "Art Ross Trophy", "Maurice Richard Trophy", "Conn Smythe Trophy", "Frank J. Selke Trophy",
-                 "Lady Byng Memorial Trophy", "Ted Lindsay Award", "Bill Masterton Memorial Trophy",
-                 "King Clancy Memorial Trophy"]
+WIKI_TROPHIES = TROPHY_CORE
 NOT_A_PLAYER = re.compile(r"(season|NHL|Trophy|Award|List of|Stanley Cup|Conference|Division|Hockey League"
                           r"|Ducks|Bruins|Sabres|Flames|Hurricanes|Blackhawks|Avalanche|Blue Jackets|Stars|Red Wings"
                           r"|Oilers|Panthers|Kings|Wild|Canadiens|Predators|Devils|Islanders|Rangers|Senators|Flyers"
@@ -10401,18 +10502,98 @@ def report_trophies(rows):
                              for t, n in sorted(counts.items())))
 
 
+def _expected_trophy_season(today):
+    """Latest season-start year whose awards should be complete.
+
+    NHL awards are announced in June. Waiting until July avoids repeatedly
+    querying external sources while a new award cycle is still being announced.
+    """
+    return today.year - 1 if today.month >= 7 else today.year - 2
+
+
+def _clean_trophy_history(rows):
+    """Keep only game-supported trophies and one trustworthy winner per season."""
+    clean = {}
+    for row in rows or []:
+        if len(row) < 3:
+            continue
+        trophy, year, winner = str(row[0]).strip(), row[1], str(row[2]).strip()
+        if trophy not in TROPHY_CORE:
+            continue
+        try:
+            year = int(year)
+        except (TypeError, ValueError):
+            continue
+        if year < TROPHY_FIRST_YEAR or not winner:
+            continue
+        team = str(row[3]).upper().strip() if len(row) > 3 and row[3] else ""
+        if team and not re.fullmatch(r"[A-Z]{2,4}", team):
+            team = abbrev_for(team) or ""
+        key = (trophy, year)
+        old = clean.get(key)
+        if old is None or (team and not old[3]):
+            clean[key] = (trophy, year, winner, team)
+
+    # Conn Smythe is small enough to keep verified in-repo and also acts as a
+    # safety net for the external awards feeds, which have omitted it before.
+    for final_year, winner in CONN_SMYTHE_BY_FINAL_YEAR.items():
+        season = final_year - 1
+        if season >= TROPHY_FIRST_YEAR:
+            clean[("Conn Smythe Trophy", season)] = (
+                "Conn Smythe Trophy", season, winner,
+                CONN_SMYTHE_TEAM_BY_FINAL_YEAR.get(final_year, ""),
+            )
+    return sorted(clean.values())
+
+
+def _trophy_coverage(rows):
+    latest = {t: -1 for t in TROPHY_CORE}
+    for trophy, year, *_ in rows:
+        if trophy in latest:
+            latest[trophy] = max(latest[trophy], int(year))
+    return latest
+
+
+def _load_trophy_history_file():
+    if not TROPHY_HISTORY_FILE.exists():
+        return []
+    try:
+        saved = json.loads(TROPHY_HISTORY_FILE.read_text(encoding="utf-8"))
+        if saved.get("version") != TROPHY_HISTORY_VERSION:
+            return []
+        return _clean_trophy_history(saved.get("rows") or [])
+    except Exception as e:
+        print(f"  Couldn't read {TROPHY_HISTORY_FILE.name}: {e}", file=sys.stderr)
+        return []
+
+
+def _save_trophy_history(rows, today):
+    coverage = _trophy_coverage(rows)
+    through = min(coverage.values()) if coverage else -1
+    payload = {
+        "version": TROPHY_HISTORY_VERSION,
+        "through_season": through,
+        "updated": today.isoformat(),
+        "rows": [list(r) for r in rows],
+    }
+    TROPHY_HISTORY_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+
 def fetch_award_history(cache, today):
-    """[(trophy, season start year, winner name, team)] for every winner the NHL lists."""
-    saved = cache.get("_trophies")
-    if (saved and saved.get("team_version") == 1
-            and (today - date.fromisoformat(saved["day"])).days < 14 and saved.get("rows")):
-        rows = [tuple(r) for r in saved["rows"]]
-        if any("Conn Smythe" in r[0] for r in rows):
-            print(f"  Award history: {len(rows)} winners saved from an earlier build")
-            report_trophies(rows)
-            return rows
-        print("  Award history: the saved copy has no Conn Smythe winners, so it's being looked up again")
-    rows, source = [], None
+    """Stable historical trophy data with at most one refresh cycle per year."""
+    expected = _expected_trophy_season(today)
+    saved = _load_trophy_history_file()
+    if saved:
+        coverage = _trophy_coverage(saved)
+        if all(coverage[t] >= expected for t in TROPHY_CORE):
+            print(f"  Award history: {len(saved)} winners from {TROPHY_HISTORY_FILE.name} "
+                  f"(complete through {expected}–{str(expected + 1)[-2:]})")
+            report_trophies(saved)
+            return saved
+        print(f"  Award history: local history is complete through {min(coverage.values())}; "
+              f"checking once for the {expected} award cycle.")
+
+    fetched, source = [], None
     for url in TROPHY_URLS:
         try:
             data = get_json(url, timeout=20)
@@ -10422,7 +10603,7 @@ def fetch_award_history(cache, today):
         if not isinstance(items, list):
             continue
         found = []
-        for item in items if isinstance(items, list) else []:
+        for item in items:
             if not isinstance(item, dict):
                 continue
             name = dig(item, "trophy", "trophyName", "awardName", "name")
@@ -10444,22 +10625,36 @@ def fetch_award_history(cache, today):
                 if name and winner and 1900 < year < 2100:
                     found.append((str(name), year, str(winner).strip(), team))
         if len(found) >= 200:
-            rows, source = sorted(set(found)), url
+            fetched, source = sorted(set(found)), url
             break
-    if not rows:
-        rows, source = wiki_award_history(), "Wikipedia"
-    if rows:
-        print(f"  Award history: {len(rows)} winners from {source}")
-        report_trophies(rows)
-        if not any("Conn Smythe" in r[0] for r in rows):
-            print("    (no Conn Smythe winners yet, so this isn't saved and will be looked up again next build)")
-            return rows
-        cache["_trophies"] = {"team_version": 1, "day": today.isoformat(), "rows": [list(r) for r in rows]}
-    else:
-        print("  Award history: neither the NHL's award lists nor Wikipedia were reachable, "
-              "so Trophy Case uses current players only.")
-    return rows
 
+    if not fetched:
+        fetched, source = wiki_award_history(), "Wikipedia"
+
+    candidate = _clean_trophy_history(saved + fetched)
+    coverage = _trophy_coverage(candidate)
+    complete = all(coverage[t] >= expected for t in TROPHY_CORE)
+
+    if complete:
+        try:
+            _save_trophy_history(candidate, today)
+            print(f"  Award history: verified {len(candidate)} winners from {source}; "
+                  f"saved to {TROPHY_HISTORY_FILE.name}")
+        except Exception as e:
+            print(f"  Award history: verified data but couldn't save {TROPHY_HISTORY_FILE.name}: {e}", file=sys.stderr)
+        report_trophies(candidate)
+        return candidate
+
+    missing = ", ".join(t.replace(" Trophy", "").replace(" Memorial", "")
+                        for t in TROPHY_CORE if coverage[t] < expected)
+    if saved:
+        print(f"  Award history: annual refresh was incomplete ({missing}); keeping the verified local copy.")
+        report_trophies(saved)
+        return saved
+
+    print(f"  Award history: bootstrap is incomplete ({missing}); using the available history for this build.")
+    report_trophies(candidate)
+    return candidate
 
 def trophy_team_for(player, year):
     """The team a current/archived player spent most of an award season with."""
@@ -11105,7 +11300,7 @@ def main():
     if not args.no_career:
         add_career_teams(players)
 
-    team_history = load_team_history()
+    team_history = load_team_history(players)
     today = eastern_today()
     edge_data = fetch_edge_data(roster_players, today)
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
