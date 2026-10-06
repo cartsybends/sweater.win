@@ -86,6 +86,7 @@ jobs:
             current_rosters.json
             lineup_cache.json
             edge_cache.json
+            trophy_history.json
           )
 
           for file in "${cache_files[@]}"; do
