@@ -3956,7 +3956,15 @@ G.journey = {
 };
 
 // ---- Blur: clear a frosted portrait window by window ----
-const BL_FROST_CLEAR_AT = [4, 2, 4, 3, 1, 2, 3, 1, 3, 4, 0, 4];
+const BL_FROST_STAGES = [0, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4];
+function blFrostStages(seed) {
+  let x = hash(`blur-frost-${seed}`) || 1;
+  const rnd = () => {
+    x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
+    return (x >>> 0) / 4294967296;
+  };
+  return shuffled(BL_FROST_STAGES, rnd);
+}
 const BL_POOL = PLAYERS.filter(p => p.headshot);
 function blGuessMatch(t, p) {
   return p.team === t.team ? "Same team" : p.pos === t.pos ? "Same position" : "";
@@ -3975,7 +3983,12 @@ G.blur = {
   reset(t) {
     $("blWrong").innerHTML = "";
     $("blClues").innerHTML = "";
-    $("blFrost").innerHTML = BL_FROST_CLEAR_AT.map((at, i) => `<span data-clear-at="${at}" data-frost-tile="${i}"></span>`).join("");
+    const st = S.blur;
+    if (!Number.isInteger(st.opts && st.opts.frostSeed)) {
+      st.opts = { ...(st.opts || {}), frostSeed: Math.floor(Math.random() * 4294967296) };
+    }
+    const frostStages = blFrostStages(st.opts.frostSeed);
+    $("blFrost").innerHTML = frostStages.map((at, i) => `<span data-clear-at="${at}" data-frost-tile="${i}"></span>`).join("");
     $("blMeter").innerHTML = Array.from({ length: 5 }, (_, i) => `<i data-bl-meter="${i}"></i>`).join("");
     $("blPhoto").classList.remove("revealed");
     $("blPhoto").dataset.stage = "0";
