@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "88 · NHL EDGE Hub"
+VERSION = "89 · NHL EDGE API"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -6783,7 +6783,7 @@ $("esDuel").addEventListener("click",e=>{const b=e.target.closest("[data-edge-si
 $("ehDuel").addEventListener("click",e=>{const b=e.target.closest("[data-edge-side]");if(b&&!G.edgeshot.pending)doGuess(b.dataset.edgeSide);});
 
 function edgeMapRandom(rnd) {
-  const pool=EDGE_POOL.filter(p=>["hd","mid","long"].every(k=>Number(p.edge[k])>=0) && Number(p.edge.total)>0);
+  const pool=EDGE_POOL.filter(p=>["hd","mid","long"].every(k=>p.edge[k] != null && Number.isFinite(Number(p.edge[k])) && Number(p.edge[k]) >= 0) && Number(p.edge.total)>0);
   if(pool.length<16)return null;
   const rounds=[], used=new Set();
   for(let tries=0;tries<500&&rounds.length<5;tries++){
@@ -8737,43 +8737,57 @@ def _edge_completed_season(today):
     return f"{end_year - 1}{end_year}"
 
 
-def _edge_plain_page(url, timeout=30):
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "Mozilla/5.0 (Sweater NHL trivia builder)",
-        "Accept-Language": "en-US,en;q=0.9",
-    })
-    with urllib.request.urlopen(req, timeout=timeout) as response:
-        raw = response.read().decode("utf-8", "replace")
-    text = html_lib.unescape(re.sub(r"<[^>]+>", " ", raw))
-    return re.sub(r"\s+", " ", text)
+def _edge_measure(obj):
+    if not isinstance(obj, dict):
+        return None
+    value = obj.get("imperial")
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
 
 
-def _edge_before(text, label):
-    match = re.search(r"(\d{1,3}(?:\.\d{1,3})?)\s+" + re.escape(label), text, re.I)
-    return float(match.group(1)) if match else None
-
-
-def _edge_zone(text, label):
-    match = re.search(r"(\d+)\s+\d+\s+" + re.escape(label), text, re.I)
-    return int(match.group(1)) if match else None
+def _edge_location_key(value):
+    return re.sub(r"[^a-z]", "", str(value or "").lower())
 
 
 def edge_player_data(player, season):
-    slug = _edge_slug(player["name"])
-    url = f"https://www.nhl.com/nhl-edge/skaters/{slug}-{player['id']}/{season}/2"
-    text = _edge_plain_page(url)
-    shot = _edge_before(text, "Hardest Shot")
-    speed = _edge_before(text, "Max Skating Speed")
-    miles = _edge_before(text, "Most Miles Skated")
-    total = _edge_zone(text, "All Locations")
-    hd = _edge_zone(text, "High-Danger")
-    mid = _edge_zone(text, "Mid-Range")
-    long = _edge_zone(text, "Long-Range")
+    """Read the same public JSON payload that powers the NHL EDGE skater overview."""
+    url = f"https://api-web.nhle.com/v1/edge/skater-detail/{player['id']}/{season}/2"
+    data = get_json(url, timeout=25)
+    if not isinstance(data, dict):
+        raise ValueError("EDGE detail response was empty")
+
+    shot = _edge_measure(data.get("topShotSpeed"))
+    skating = data.get("skatingSpeed") if isinstance(data.get("skatingSpeed"), dict) else {}
+    speed = _edge_measure(skating.get("speedMax"))
+    miles = _edge_measure(data.get("distanceMaxGame"))
+
+    zones = {}
+    for row in data.get("sogSummary") or []:
+        if not isinstance(row, dict):
+            continue
+        key = _edge_location_key(row.get("locationCode"))
+        try:
+            zones[key] = int(row.get("shots")) if row.get("shots") is not None else None
+        except (TypeError, ValueError):
+            zones[key] = None
+
+    total = zones.get("all")
+    hd = zones.get("highdanger")
+    mid = zones.get("midrange")
+    long = zones.get("longrange")
+
     if shot is not None and not 40 <= shot <= 120: shot = None
     if speed is not None and not 15 <= speed <= 30: speed = None
     if miles is not None and not 1 <= miles <= 8: miles = None
+    if total is not None and total < 0: total = None
+    if hd is not None and hd < 0: hd = None
+    if mid is not None and mid < 0: mid = None
+    if long is not None and long < 0: long = None
     if not any(v is not None for v in (shot, speed, miles, total, hd, mid, long)):
         raise ValueError("no EDGE metrics found")
+
     return {
         "id": player["id"], "season": season,
         "shot": round(shot, 2) if shot is not None else None,
