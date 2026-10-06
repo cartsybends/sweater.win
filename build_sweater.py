@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "85 · Global Roster Search"
+VERSION = "86 · Eyes Only Reveal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -719,11 +719,40 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shopt.dim { opacity: .45; }
   .shopt:disabled { cursor: default; }
 
-  /* zamboni */
-  .zambox { position: relative; width: min(300px, 80vw); aspect-ratio: 1; margin: 6px auto 12px; border-radius: 24px; overflow: hidden; background: var(--cream); }
-  .zambox img, .zambox canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .zambox img { object-fit: cover; user-select: none; -webkit-user-drag: none; }
-  .zambox canvas { touch-action: none; cursor: crosshair; }
+  /* zamboni reveal — eyes only */
+  .zambox {
+    position: relative; width: min(320px, 84vw); aspect-ratio: 1; margin: 8px auto 14px;
+    overflow: hidden; border: 1px solid var(--line); border-radius: 22px;
+    background: color-mix(in srgb, var(--panel) 86%, var(--cell));
+    box-shadow: 0 12px 30px rgba(23,59,75,.08);
+  }
+  .zambox img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top;
+    user-select: none; -webkit-user-drag: none;
+  }
+  .zameyemask { position: absolute; inset: 0; pointer-events: none; }
+  .zameyemask::before, .zameyemask::after {
+    content: ""; position: absolute; left: 0; right: 0;
+    background:
+      radial-gradient(circle at 50% 34%, rgba(255,255,255,.10), transparent 36%),
+      linear-gradient(145deg, rgba(229,242,248,.97), rgba(184,211,224,.96));
+    -webkit-backdrop-filter: blur(20px) saturate(.72);
+    backdrop-filter: blur(20px) saturate(.72);
+  }
+  .zameyemask::before { top: 0; height: 30%; }
+  .zameyemask::after { bottom: 0; height: 48%; }
+  .zameyeslit {
+    position: absolute; left: 7%; right: 7%; top: 30%; height: 22%;
+    border: 1px solid rgba(255,255,255,.56); border-radius: 10px;
+    box-shadow: inset 0 0 0 1px rgba(20,54,70,.08), 0 4px 12px rgba(23,59,75,.12);
+    pointer-events: none;
+  }
+  .zameyeslit::after {
+    content: "EYES ONLY"; position: absolute; right: 7px; bottom: 5px;
+    padding: 2px 5px; border-radius: 999px; background: rgba(9,22,29,.58); color: #fff;
+    font-size: 8px; font-weight: 850; letter-spacing: .08em;
+  }
+  .zambox.revealed .zameyemask, .zambox.revealed .zameyeslit { display: none; }
 
   /* team hubs */
   #view-teams { max-width: 1040px; }
@@ -3019,8 +3048,12 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-zam" hidden>
-    <p class="intro">Drag across the ice to reveal the player, then guess who it is.</p>
-    <div class="zambox"><img id="zmImg" alt="" draggable="false"><canvas id="zmIce" aria-label="Ice covering the photo. Drag to clear it."></canvas></div>
+    <p class="intro">Can you identify the player from just their eyes?</p>
+    <div class="zambox" id="zmBox">
+      <img id="zmImg" alt="" draggable="false">
+      <div class="zameyemask" aria-hidden="true"></div>
+      <div class="zameyeslit" aria-hidden="true"></div>
+    </div>
     <div class="search narrow">
       <input id="zmGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="zmOpts" placeholder="Guess 1 of 3">
       <ul class="list" id="zmOpts" role="listbox" hidden></ul>
@@ -5506,36 +5539,6 @@ $("shNext").onclick = () => { shootUI = { phase: "ask" }; G.shoot.render(S.shoot
 
 // ---- Zamboni Reveal: clear the ice to find the player ----
 const ZAM_BRUSH = 24;
-let zamCtx = null, zamLast = null, zamMax = 0;
-function zamPaint(t) {
-  const cv = $("zmIce"), dpr = window.devicePixelRatio || 1, size = cv.clientWidth || 300;
-  cv.width = cv.height = Math.round(size * dpr);
-  zamCtx = cv.getContext("2d");
-  zamCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  const g = zamCtx.createLinearGradient(0, 0, size, size);
-  g.addColorStop(0, "#f4f9fc"); g.addColorStop(1, "#cfe1ec");
-  zamCtx.globalCompositeOperation = "source-over";
-  zamCtx.fillStyle = g; zamCtx.fillRect(0, 0, size, size);
-  const rnd = seeded(hash(String(t.id)));
-  zamCtx.strokeStyle = "rgba(255,255,255,.75)";
-  for (let i = 0; i < 40; i++) {
-    zamCtx.lineWidth = .5 + rnd() * 1.5;
-    zamCtx.beginPath();
-    const x = rnd() * size, y = rnd() * size, a = rnd() * Math.PI;
-    zamCtx.moveTo(x, y); zamCtx.lineTo(x + Math.cos(a) * 60 * rnd(), y + Math.sin(a) * 60 * rnd());
-    zamCtx.stroke();
-  }
-  zamCtx.globalCompositeOperation = "destination-out";
-  zamCtx.lineCap = "round"; zamCtx.lineWidth = ZAM_BRUSH * 2;
-}
-function zamPct() {
-  if (!zamCtx) return zamMax;
-  const cv = $("zmIce"), data = zamCtx.getImageData(0, 0, cv.width, cv.height).data;
-  let clear = 0, n = 0;
-  for (let i = 3; i < data.length; i += 4 * 7) { n++; if (data[i] < 128) clear++; }
-  zamMax = Math.max(zamMax, Math.round(clear / n * 100));
-  return zamMax;
-}
 G.zam = {
   kind: "score", title: "Zamboni Reveal", share: "Sweater Zamboni", view: "view-zam", max: 3, next: "Next player",
   pool: () => BL_POOL,
@@ -5545,75 +5548,43 @@ G.zam = {
   },
   random: () => pick(BL_POOL),
   tid: t => t.id, player: t => t,
-  parse: x => String(x).split("@").map(Number),
-  isWin(t, x) { return this.parse(x)[0] === t.id; },
-  isDone(t, g) { return g.some(x => this.isWin(t, x)) || g.length >= 3; },
-  wonGame(t, g) { return g.some(x => this.isWin(t, x)); },
+  isWin: (t, id) => Number(id) === t.id,
+  isDone(t, g) { return g.some(id => this.isWin(t, id)) || g.length >= 3; },
+  wonGame(t, g) { return g.some(id => this.isWin(t, id)); },
   score(t, g) {
-    const i = g.findIndex(x => this.isWin(t, x));
-    return i < 0 ? 0 : Math.max(1, 10 - Math.floor(this.parse(g[i])[1] / 10) - 2 * i);
+    const i = g.findIndex(id => this.isWin(t, id));
+    return i < 0 ? 0 : [10, 7, 4][i];
   },
   meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
   endText(t, g, won) {
-    const pct = won ? this.parse(g[g.length - 1])[1] : 0;
-    return won ? { result: `Got him with ${pct}% of the ice cleared`, cheer: `${this.score(t, g)} points` }
-               : { result: "Out of guesses", cheer: "The mystery player was" };
+    return won
+      ? { result: `Got him on guess ${g.length}`, cheer: `${this.score(t, g)} points · eagle eyes 👀` }
+      : { result: "Out of guesses", cheer: "The mystery player was" };
   },
   celebrate: (t, g, won) => won,
   archiveStatus: h => h.w ? `${h.s} pts` : "✗",
   shareText(t, saved, num, link) {
-    const won = this.wonGame(t, saved.guesses), pct = this.parse(saved.guesses[saved.guesses.length - 1])[1];
-    return `Sweater Zamboni #${num} · ${this.score(t, saved.guesses)} pts\n${won ? `🧊 ${pct}% of the ice cleared · ${saved.guesses.length} ${saved.guesses.length === 1 ? "guess" : "guesses"}` : "❌ Missed"}${link}`;
+    const won = this.wonGame(t, saved.guesses);
+    return `Sweater Zamboni #${num} · ${this.score(t, saved.guesses)} pts\n${won ? `👀 Got it in ${saved.guesses.length} ${saved.guesses.length === 1 ? "guess" : "guesses"}` : "❌ Missed"}${link}`;
   },
   reset(t) {
     $("zmWrong").innerHTML = "";
+    $("zmBox").classList.remove("revealed");
     $("zmImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
     $("zmImg").src = t.headshot || FALLBACK;
-    zamMax = 0;
-    requestAnimationFrame(() => {
-      zamPaint(t);
-      const done = S.zam.guesses;
-      if (done.length && !S.zam.over) {   // after a reload, clear a matching area in the middle
-        const pct = this.parse(done[done.length - 1])[1], size = $("zmIce").clientWidth;
-        zamCtx.beginPath(); zamCtx.arc(size / 2, size / 2, Math.sqrt(pct / 100 * size * size / Math.PI), 0, Math.PI * 2);
-        zamCtx.fill();
-        zamMax = pct;
-      }
-      this.render(t, S.zam);
-    });
   },
-  guess(t, x) {
-    if (typeof x !== "string" || !/^\d+@\d{1,3}$/.test(x)) return null;
-    const [id] = this.parse(x), p = BYID.get(id);
+  guess(t, id) {
+    const p = BYID.get(Number(id));
     if (!p) return null;
-    if (id !== t.id) addWrong("zmWrong", p);
-    return id === t.id;
+    if (p.id !== t.id) addWrong("zmWrong", p);
+    return p.id === t.id;
   },
   render(t, st) {
-    if (st.over && zamCtx) { const cv = $("zmIce"); zamCtx.clearRect(0, 0, cv.width, cv.height); }
+    $("zmBox").classList.toggle("revealed", st.over);
     const left = this.max - st.guesses.length;
-    $("zmLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "guess" : "guesses"} left · ${zamMax}% of the ice cleared. The less you clear, the more points you get.`;
+    $("zmLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "guess" : "guesses"} left · only the eyes are visible.`;
   },
 };
-(() => {
-  const cv = $("zmIce");
-  const at = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-  cv.addEventListener("pointerdown", e => {
-    if (S.zam.over || !zamCtx) return;
-    cv.setPointerCapture(e.pointerId);
-    zamLast = at(e);
-    zamCtx.beginPath(); zamCtx.arc(zamLast[0], zamLast[1], ZAM_BRUSH, 0, Math.PI * 2); zamCtx.fill();
-  });
-  cv.addEventListener("pointermove", e => {
-    if (!zamLast || S.zam.over) return;
-    const p = at(e);
-    zamCtx.beginPath(); zamCtx.moveTo(zamLast[0], zamLast[1]); zamCtx.lineTo(p[0], p[1]); zamCtx.stroke();
-    zamLast = p;
-  });
-  const up = () => { if (!zamLast) return; zamLast = null; zamPct(); G.zam.render(S.zam.target, S.zam); };
-  cv.addEventListener("pointerup", up);
-  cv.addEventListener("pointercancel", up);
-})();
 
 // ---- Goalie Mode and Overtime ----
 const GL_SPOTS = [[21,43],[79,43],[21,78],[79,78],[50,78]];
@@ -7089,7 +7060,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
 }
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
-                  makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`), makeSearch("phGuess", "phOpts"),
+                  makeSearch("zmGuess", "zmOpts"), makeSearch("phGuess", "phOpts"),
                   makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p))];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
