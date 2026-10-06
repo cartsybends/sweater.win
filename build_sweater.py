@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "92 · Longer Speed Trap Reveal"
+VERSION = "93 · EDGE Duel Reveal Polish"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -6767,14 +6767,14 @@ function edgePairRandom(rnd, metric, count = 10) {
 function edgeDuelCard(p, metric, reveal, cls, side) {
   if (!p) return "";
   const raw = edgeValue(p.id, metric), value = EDGE_METRICS[metric].show(raw);
-  if (metric === "speed") {
+  if (metric === "speed" || metric === "shot") {
     return `<button type="button" class="edge-duel-card speedtrap-card ${cls || ""}" data-edge-side="${side}"${reveal ? " disabled" : ""}>
       <span class="edge-speed-media">
         <img class="edge-team-watermark" src="${logo(p.team)}" alt="" aria-hidden="true" onerror="this.style.display='none'">
         <img class="edge-player-shot" src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
       </span>
       <b>${esc(p.name)}</b><small>${esc(posName(p))}</small>
-      ${reveal ? `<div class="edge-speed-reveal" data-edge-speed="${raw.toFixed(2)}"><span class="edge-speed-label">Max speed</span><strong class="edge-speed-number">0.00</strong><em class="edge-speed-unit">MPH</em></div>` : ""}
+      ${reveal ? `<div class="edge-speed-reveal" data-edge-speed="${raw.toFixed(2)}"><span class="edge-speed-label">${metric === "speed" ? "Max speed" : "Hardest shot"}</span><strong class="edge-speed-number">0.00</strong><em class="edge-speed-unit">MPH</em></div>` : ""}
     </button>`;
   }
   return `<button type="button" class="edge-duel-card ${cls || ""}" data-edge-side="${side}"${reveal ? " disabled" : ""}>
@@ -6839,7 +6839,7 @@ function makeEdgeDuel(id, title, view, metric, prefix) {
       if (fresh) {
         this.lastCorrect=this.right(t,x,i); this.pending=true;
         clearTimeout(this.timer);
-        const revealHold = metric === "speed" ? 2750 : 850;
+        const revealHold = (metric === "speed" || metric === "shot") ? 2000 : 850;
         this.timer=setTimeout(()=>{ this.pending=false; if(game===id && !S[id].over) this.render(t,S[id]); }, revealHold);
       }
       return false;
@@ -6851,7 +6851,7 @@ function makeEdgeDuel(id, title, view, metric, prefix) {
       $(prefix+"Score").textContent=this.score(t,st.guesses);
       $(prefix+"Duel").innerHTML=edgeDuelCard(a,metric,showing||st.over,showing?(correct==="a"?"right":picked==="a"?"wrong":""):"","a")
         +edgeDuelCard(b,metric,showing||st.over,showing?(correct==="b"?"right":picked==="b"?"wrong":""):"","b");
-      if (metric === "speed" && showing) animateEdgeSpeedReveal($(prefix+"Duel"));
+      if ((metric === "speed" || metric === "shot") && showing) animateEdgeSpeedReveal($(prefix+"Duel"));
       $(prefix+"Feedback").textContent=showing ? (this.lastCorrect ? "Right." : "Not quite.") : st.over ? "" : `Choose the higher ${EDGE_METRICS[metric].label.toLowerCase()}.`;
     },
   };
