@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "115 · Center Teams Games"
+VERSION = "116 · Tune Teams Landing"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -8491,14 +8491,21 @@ function renderTeamHub(t) {
   $("backTeamPicker").onclick = () => { history.pushState(null, "", "#teams"); renderTeamPicker(); };
 }
 function centerTeamMode(mode) {
-  // Each Teams game has a different visual centre. Anchor the part the player
-  // actually interacts with instead of using "nearest", which can leave the
-  // newly opened game below the fold when the team page is already visible.
+  // Best Of should open with the mode title and all three selectors at the top
+  // of the viewport, matching the intended game framing. The other Team modes
+  // keep their actual play surface centered.
   requestAnimationFrame(() => requestAnimationFrame(() => {
     const panel = $("teamModePanel")?.querySelector(".teammodepanel");
     if (!panel) return;
+
+    if (mode === "best") {
+      const rect = panel.getBoundingClientRect();
+      const target = Math.max(0, window.scrollY + rect.top - 6);
+      window.scrollTo({ top: target, behavior: "smooth" });
+      return;
+    }
+
     const anchors = {
-      best: panel.querySelector(".optrow"),       // keep Decade / Category / Questions visible
       guess: panel.querySelector(".seasons"),
       higher: panel.querySelector(".hlpair"),
       mystery: panel.querySelector(".ttcard"),
