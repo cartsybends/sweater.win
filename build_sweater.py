@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "91 · Speed Trap Broadcast Reveal"
+VERSION = "92 · Longer Speed Trap Reveal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -6839,7 +6839,8 @@ function makeEdgeDuel(id, title, view, metric, prefix) {
       if (fresh) {
         this.lastCorrect=this.right(t,x,i); this.pending=true;
         clearTimeout(this.timer);
-        this.timer=setTimeout(()=>{ this.pending=false; if(game===id && !S[id].over) this.render(t,S[id]); },850);
+        const revealHold = metric === "speed" ? 2750 : 850;
+        this.timer=setTimeout(()=>{ this.pending=false; if(game===id && !S[id].over) this.render(t,S[id]); }, revealHold);
       }
       return false;
     },
