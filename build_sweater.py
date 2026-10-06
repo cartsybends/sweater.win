@@ -175,9 +175,102 @@ TEMPLATE = r'''<!DOCTYPE html>
   .chips.hints { margin: 0 0 10px; }
   .chip.hintchip { background: var(--near); color: var(--near-fg); display: inline-flex; align-items: center; gap: 4px; animation: rowin .35s ease both; }
   .hintchip img { width: 20px; height: 20px; }
-  .blurbox { width: 220px; height: 220px; margin: 4px auto 12px; border-radius: 50%; overflow: hidden; background: var(--cream); }
-  .blurbox img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: filter .6s ease;
-                 user-select: none; -webkit-user-drag: none; }
+  /* Blur — frosted portrait reveal */
+  .blcard {
+    width: min(360px, 100%); margin: 5px auto 12px; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 19px;
+    background: color-mix(in srgb, var(--panel) 92%, var(--cell));
+    box-shadow: 0 14px 34px rgba(23,59,75,.075);
+  }
+  .blcardhead {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 13px 9px; border-bottom: 1px solid var(--line);
+  }
+  .blcardhead span { display: flex; flex-direction: column; gap: 1px; }
+  .blcardhead small {
+    color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .blcardhead b { font-size: 14px; letter-spacing: -.01em; }
+  .blcardhead em { color: var(--muted); font-size: 11px; font-style: normal; font-weight: 750; }
+  .blphoto {
+    position: relative; width: 100%; aspect-ratio: 1 / 1.04; overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--link) 12%, transparent), transparent 42%),
+      linear-gradient(180deg, color-mix(in srgb, var(--cream) 92%, white), var(--cream));
+  }
+  .blphoto > img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top;
+    transform: scale(1.025); user-select: none; -webkit-user-drag: none;
+    transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .45s ease;
+  }
+  .blphoto[data-stage="0"] > img { filter: saturate(.78) contrast(.93); }
+  .blphoto[data-stage="1"] > img { filter: saturate(.82) contrast(.95); }
+  .blphoto[data-stage="2"] > img { filter: saturate(.88) contrast(.97); }
+  .blphoto[data-stage="3"] > img { filter: saturate(.94) contrast(.99); }
+  .blphoto[data-stage="4"] > img, .blphoto.revealed > img { filter: none; transform: scale(1); }
+  .blfrost {
+    position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr);
+    gap: 1px; pointer-events: none;
+  }
+  .blfrost span {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 24% 18%, rgba(255,255,255,.78), transparent 27%),
+      radial-gradient(circle at 78% 72%, rgba(181,222,235,.42), transparent 34%),
+      linear-gradient(145deg, rgba(225,244,249,.80), rgba(185,216,228,.68));
+    -webkit-backdrop-filter: blur(16px) saturate(.58);
+    backdrop-filter: blur(16px) saturate(.58);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.24);
+    opacity: 1; transform: scale(1.015);
+    transition: opacity .36s ease, transform .44s cubic-bezier(.2,.85,.2,1);
+  }
+  .blfrost span::after {
+    content: ""; position: absolute; inset: 0; opacity: .42;
+    background:
+      linear-gradient(28deg, transparent 45%, rgba(255,255,255,.75) 46%, transparent 48%),
+      linear-gradient(152deg, transparent 57%, rgba(255,255,255,.55) 58%, transparent 60%);
+  }
+  .blfrost span.clear { opacity: 0; transform: scale(.94); }
+  .blmeter { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 9px 12px 11px; }
+  .blmeter i {
+    height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--line) 78%, transparent);
+    transition: background .28s ease, transform .28s ease;
+  }
+  .blmeter i.on { background: var(--link); transform: scaleY(1.15); }
+  .blclues {
+    width: min(560px,100%); min-height: 0; margin: 0 auto 10px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 7px;
+  }
+  .blclue {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 31px; padding: 5px 9px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 82%, var(--cell)); font-size: 11px;
+    animation: blcluein .30s ease both;
+  }
+  .blclue img { width: 20px; height: 20px; object-fit: contain; }
+  .blclue small { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .045em; text-transform: uppercase; }
+  .blclue b { font-size: 11px; }
+  @keyframes blcluein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  #blWrong.blwrong {
+    width: min(560px,100%); margin: 10px auto 0; display: flex; flex-direction: column; gap: 6px;
+  }
+  #blWrong > .blmiss {
+    box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 10px;
+    border: 1px solid rgba(239,68,68,.32); border-radius: 10px; background: rgba(239,68,68,.07);
+  }
+  #blWrong > .blmiss.blmiss-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
+  #blWrong > .blmiss .x {
+    display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
+    color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
+  }
+  #blWrong > .blmiss .who {
+    min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    color: var(--fg); font-size: 14px; font-weight: 700;
+  }
+  .blmatch {
+    flex: none; padding: 3px 7px; border-radius: 999px;
+    background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850;
+  }
   .numrow { display: flex; justify-content: center; gap: 8px; margin: 10px auto; max-width: 320px; }
   .numrow.wide { max-width: 560px; }
   .numrow input { flex: 1; min-width: 0; padding: 12px 14px; font-size: 18px; border: 1px solid #bbb; border-radius: 6px;
@@ -198,7 +291,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   .hlscore .urgent b { color: #c0392b; }
   .shake { animation: shake .35s ease; }
   @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-  @media (prefers-reduced-motion: reduce) { .shake, .jystop, .hintchip { animation: none; } .blurbox img { transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .shake, .jystop, .hintchip, .blclue, #blWrong > .blmiss { animation: none; }
+    .blphoto > img, .blfrost span, .blmeter i { transition: none; }
+  }
 
   /* playoff run */
   .phrun { width: min(560px, 100%); margin: 8px auto 10px; padding: 15px; border: 1px solid var(--line); border-radius: 16px;
@@ -1328,7 +1424,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     .mapsvg { aspect-ratio: 4 / 3; }
     .mapctl .tabs button { padding: 5px 9px; font-size: 12px; }
     .jyarrow { display: none; }
-    .blurbox { width: 180px; height: 180px; }
     .tabs button { padding: 6px 11px; }
     .hlpair { grid-template-columns: 1fr 1fr; gap: 8px; }
     .hlvs { display: none; }
@@ -2580,17 +2675,27 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-blur" hidden>
-    <p class="intro">Who's behind the blur?</p>
-    <div class="blurbox"><img id="blImg" alt="Blurred photo of the mystery player" draggable="false"></div>
-    <div class="chips hints" id="blHints"></div>
+    <p class="intro" id="blIntro">Who's under the frost?</p>
+    <div class="slot"></div>
+    <div class="blcard">
+      <div class="blcardhead">
+        <span><small>Photo reveal</small><b id="blStage">1 of 5</b></span>
+        <em id="blStageNote">Tiny window to start</em>
+      </div>
+      <div class="blphoto" id="blPhoto" data-stage="0">
+        <img id="blImg" alt="" draggable="false">
+        <div class="blfrost" id="blFrost" aria-hidden="true"></div>
+      </div>
+      <div class="blmeter" id="blMeter" aria-label="Photo reveal progress"></div>
+    </div>
+    <div class="blclues" id="blClues"></div>
     <div class="search narrow">
-      <input id="blGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="blOpts" placeholder="Guess 1 of 6">
+      <input id="blGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="blOpts" placeholder="Guess 1 of 5">
       <ul class="list" id="blOpts" role="listbox" hidden></ul>
     </div>
-    <div class="slot"></div>
-    <p class="nodata" hidden>This game isn't available right now.</p>
     <p class="hint" id="blLeft"></p>
-    <ul class="wrong" id="blWrong"></ul>
+    <div class="blwrong" id="blWrong"></div>
+    <p class="nodata" hidden>This game isn't available right now.</p>
   </section>
 
   <section class="view" id="view-number" hidden>
@@ -3850,12 +3955,15 @@ G.journey = {
   squares: (t, id) => id === t.id ? "🟩" : "⬛"
 };
 
-// ---- Blur: the headshot gets sharper with every wrong guess ----
-const BLUR_STEPS = [28, 20, 14, 9, 5, 2];
+// ---- Blur: clear a frosted portrait window by window ----
+const BL_FROST_CLEAR_AT = [4, 2, 4, 3, 1, 2, 3, 1, 3, 4, 0, 4];
 const BL_POOL = PLAYERS.filter(p => p.headshot);
+function blGuessMatch(t, p) {
+  return p.team === t.team ? "Same team" : p.pos === t.pos ? "Same position" : "";
+}
 G.blur = {
-  title: "Blur", share: "Sweater Blur", view: "view-blur", max: 6, next: "Next player",
-  cheers: ["Eagle eyes! 🦅", "Snipe! 🎯", "Hat trick! 🎩", "Nice read! 🏒", "Got there! 💪", "Buzzer beater! 🚨"],
+  title: "Blur", share: "Sweater Blur", view: "view-blur", max: 5, next: "Next player",
+  cheers: ["Eagle eyes! 🦅", "Snipe! 🎯", "Great read! 👀", "Clutch! 🧊", "Last look! 🚨"],
   pool: () => BL_POOL,
   daily(k) {
     const p = BYID.get((DAILY.blur || {})[k]);
@@ -3863,27 +3971,68 @@ G.blur = {
   },
   random: () => pick(BL_POOL),
   tid: t => t.id, player: t => t, isWin: (t, id) => id === t.id,
-  meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
+  meta: t => `${t.team} · #${t.number} · ${posName(t)} · ${countryName(t.nation)}`,
   reset(t) {
     $("blWrong").innerHTML = "";
-    $("blImg").style.filter = `blur(${BLUR_STEPS[0]}px)`;
+    $("blClues").innerHTML = "";
+    $("blFrost").innerHTML = BL_FROST_CLEAR_AT.map((at, i) => `<span data-clear-at="${at}" data-frost-tile="${i}"></span>`).join("");
+    $("blMeter").innerHTML = Array.from({ length: 5 }, (_, i) => `<i data-bl-meter="${i}"></i>`).join("");
+    $("blPhoto").classList.remove("revealed");
+    $("blPhoto").dataset.stage = "0";
     $("blImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
     $("blImg").src = t.headshot || FALLBACK;
   },
   guess(t, id) {
     const p = BYID.get(id);
-    if (!p) return null;
-    if (p.id !== t.id) addWrong("blWrong", p);
-    return p.id === t.id;
+    return p ? p.id === t.id : null;
   },
   render(t, st) {
-    const wrong = st.guesses.filter(id => id !== t.id).length;
-    $("blImg").style.filter = st.over ? "none" : `blur(${BLUR_STEPS[Math.min(wrong, BLUR_STEPS.length - 1)]}px)`;
-    const next = hintChips("blHints", [
-      { at: 3, html: `Position: <b>${posName(t)}</b>` },
-      { at: 5, html: `Plays for <img src="${logo(t.team)}" alt="" onerror="this.remove()"> <b>${esc(teamName(t.team))}</b>` },
-    ], wrong, st.over);
-    $("blLeft").textContent = st.over ? "" : `${this.max - st.guesses.length} tries left. Each wrong guess sharpens the photo.${next}`;
+    const wrongIds = st.guesses.filter(id => id !== t.id), wrong = wrongIds.length;
+    const stage = st.over ? 4 : Math.min(wrong, 4);
+    $("blPhoto").dataset.stage = String(stage);
+    $("blPhoto").classList.toggle("revealed", st.over);
+
+    $("blFrost").querySelectorAll("[data-clear-at]").forEach(tile => {
+      tile.classList.toggle("clear", st.over || Number(tile.dataset.clearAt) <= stage);
+    });
+    $("blMeter").querySelectorAll("[data-bl-meter]").forEach((bar, i) => {
+      bar.classList.toggle("on", st.over || i <= stage);
+    });
+
+    $("blStage").textContent = st.over ? "Fully revealed" : `${stage + 1} of 5`;
+    $("blStageNote").textContent = st.over ? "Photo cleared"
+      : stage === 0 ? "Tiny window to start"
+      : stage === 1 ? "Face starting to show"
+      : stage === 2 ? "Half the frost is gone"
+      : stage === 3 ? "Almost fully clear"
+      : "Final look";
+    $("blIntro").textContent = st.over ? "Player revealed." : "Who's under the frost?";
+
+    const clues = [];
+    if (wrong >= 2 || st.over) clues.push(`<span class="blclue"><small>Position</small><b>${esc(posName(t))}</b></span>`);
+    if (wrong >= 3 || st.over) clues.push(`<span class="blclue"><small>Country</small><b>${esc(countryName(t.nation))}</b></span>`);
+    if (wrong >= 4 || st.over) clues.push(`<span class="blclue"><img src="${logo(t.team)}" alt="" onerror="this.remove()"><small>Current team</small><b>${esc(teamName(t.team))}</b></span>`);
+    $("blClues").innerHTML = clues.join("");
+
+    $("blWrong").innerHTML = wrongIds.slice().reverse().map((id, i) => {
+      const p = BYID.get(id);
+      if (!p) return "";
+      const match = blGuessMatch(t, p);
+      return `<div class="blmiss${i === 0 ? " blmiss-new" : ""}"><span class="x" aria-hidden="true">×</span><span class="who">${esc(p.name)}</span>` +
+        `${match ? `<span class="blmatch">${esc(match)}</span>` : ""}</div>`;
+    }).join("");
+
+    if (st.over) {
+      $("blLeft").textContent = "";
+    } else {
+      const left = this.max - st.guesses.length;
+      const next = wrong < 1 ? "more of the portrait"
+        : wrong < 2 ? "more portrait + position"
+        : wrong < 3 ? "more portrait + country"
+        : wrong < 4 ? "the final photo + current team"
+        : "";
+      $("blLeft").textContent = `${left} ${left === 1 ? "try" : "tries"} left${next ? ` · next miss reveals ${next}` : ""}`;
+    }
   },
   squares: (t, id) => id === t.id ? "🟩" : "⬛"
 };
@@ -7439,7 +7588,7 @@ const HUB = [
     ["statline", "📈", "Name him from his season-by-season stats."],
     ["playoff", "🏒", "Name him from one postseason run as clues build."],
     ["journey", "🧭", "Name him from the teams he's played for."],
-    ["blur", "🔍", "Name him from a blurry photo that sharpens as you guess."],
+    ["blur", "🔍", "Piece together a frosted portrait as every miss opens another window."],
     ["zam", "🧊", "Clear the ice to reveal him. Guess early for more points."],
   ]},
   { title: "Know the details", tone: "blue", games: [
@@ -7477,7 +7626,7 @@ const MODE_META = Object.freeze({
   statline: { type: "Stats", time: "2–4 min", difficulty: "Hard", fact: "Each miss reveals another carefully chosen season and more of the player’s career fingerprint.", next: "playoff" },
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
-  blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every guess sharpens the photo—risk a name early for the best score.", next: "zam" },
+  blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "zam" },
   zam:      { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Clear the ice quickly, but one early correct guess is worth the gamble.", next: "classic" },
   team:     { type: "Seasons", time: "1–2 min", difficulty: "Medium", fact: "The right answer is the sweater the player wore in that exact season.", next: "season" },
   number:   { type: "Details", time: "1 min", difficulty: "Easy", fact: "A player’s number is a small detail—unless it is the one you miss.", next: "draft" },
