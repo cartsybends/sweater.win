@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "97 · Shot Map Contours"
+VERSION = "98 · Build a Player Number Reveal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -762,6 +762,21 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-duel-card b { display: block; margin: 11px 10px 2px; font-size: 16px; }
   .edge-duel-card small { color: var(--muted); font-size: 11px; }
   .edge-duel-card .edge-value { margin-top: 9px; font-size: 23px; font-weight: 850; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+  .edge-build-value {
+    position: relative; isolation: isolate; overflow: hidden; width: calc(100% - 24px); min-height: 45px; margin: 8px auto 0;
+    padding: 8px 9px 7px; border: 1px solid color-mix(in srgb, var(--link) 25%, var(--line)); border-radius: 10px;
+    background: color-mix(in srgb, var(--link) 7%, var(--panel)); line-height: 1;
+  }
+  .edge-build-value::before {
+    content: ""; position: absolute; z-index: -1; inset: -18% auto -18% -34%; width: 30%;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--link) 30%, white), transparent);
+    transform: skewX(-18deg) translateX(-220%); opacity: 0;
+  }
+  .edge-duel-card.build-value-anim .edge-build-value::before { animation: edgeSpeedSweep .72s cubic-bezier(.2,.75,.2,1) .08s both; }
+  .edge-build-number { display: inline-block; min-width: 58px; font-size: 23px; font-weight: 900; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+  .edge-build-unit { margin-left: 4px; color: var(--muted); font-size: 9px; font-style: normal; font-weight: 850; letter-spacing: .06em; }
+  .edge-duel-card.build-value-anim .edge-build-number { animation: edgeSpeedPop .48s cubic-bezier(.18,.9,.28,1.22) both; }
+  .edge-duel-card.right.build-value-anim { animation: edgeWinnerPulse .62s ease both; }
   .edge-duel-card.right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 11%, var(--panel)); }
   .edge-duel-card.wrong { border-color: #c0392b; }
 
@@ -817,6 +832,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes edgeWinnerPulse {
     0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 0%, transparent); }
     45% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--hit) 18%, transparent), 0 12px 26px color-mix(in srgb, var(--hit) 13%, transparent); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .edge-duel-card.build-value-anim, .edge-duel-card.build-value-anim .edge-build-number,
+    .edge-duel-card.build-value-anim .edge-build-value::before { animation: none; }
   }
   .edge-feedback { min-height: 22px; margin: 5px 0 10px; color: var(--muted); font-size: 12px; font-weight: 700; text-align: center; }
   .edge-map-card {
@@ -6880,6 +6899,29 @@ function animateEdgeSpeedReveal(root) {
     requestAnimationFrame(frame);
   });
 }
+function animateEdgeBuildReveal(root) {
+  const boxes = [...root.querySelectorAll("[data-edge-build-value]")];
+  if (!boxes.length) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  boxes.forEach(box => {
+    const number = box.querySelector(".edge-build-number");
+    if (!number) return;
+    const target = Number(box.dataset.edgeBuildValue), decimals = Number(box.dataset.edgeBuildDecimals) || 0;
+    if (!Number.isFinite(target)) return;
+    box.closest(".edge-duel-card")?.classList.add("build-value-anim");
+    const finish = () => { number.textContent = target.toFixed(decimals); };
+    if (reduced) { finish(); return; }
+    const started = performance.now(), duration = 760;
+    const frame = now => {
+      const t = Math.min(1, (now - started) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      number.textContent = (target * eased).toFixed(decimals);
+      if (t < 1 && box.isConnected) requestAnimationFrame(frame);
+      else finish();
+    };
+    requestAnimationFrame(frame);
+  });
+}
 function edgeBest(id, st) {
   const n = G[id].score(st.target, st.guesses), k = `sweater-${id}-best`;
   store.set(k, Math.max(Number(store.get(k)) || 0, n));
@@ -7106,7 +7148,7 @@ G.edgebuild={
   reset(){clearTimeout(this.timer);this.pending=false;},
   guess(t,x,fresh){
     const id=Number(x),i=S.edgebuild.guesses.length;if(i>=4||!t.rounds[i].ids.includes(id))return null;
-    if(fresh){this.pending=true;clearTimeout(this.timer);this.timer=setTimeout(()=>{this.pending=false;if(game==="edgebuild"&&!S.edgebuild.over)this.render(t,S.edgebuild);},900);}
+    if(fresh){this.pending=true;clearTimeout(this.timer);this.timer=setTimeout(()=>{this.pending=false;if(game==="edgebuild"&&!S.edgebuild.over)this.render(t,S.edgebuild);},1500);}
     return false;
   },
   render(t,st){
@@ -7114,7 +7156,8 @@ G.edgebuild={
     $("ebRound").textContent=`${Math.min(done+1,4)} / 4`;$("ebScore").textContent=done?this.score(t,st.guesses):"—";
     $("ebBoard").innerHTML=EDGE_BUILD_CATS.map((c,n)=>{const id=st.guesses[n],p=id?BYID.get(Number(id)):null,pct=id?edgePercentile(c.metric,edgeValue(id,c.metric)):0;return`<div class="edge-build-slot"><small>${c.label}</small><b>${p?esc(p.name):"Open slot"}</b><em>${p?`${EDGE_METRICS[c.metric].show(edgeValue(id,c.metric))} · ${pct}th pct`:"Choose one player"}</em></div>`;}).join("");
     const selected=showing?Number(st.guesses[done-1]):null;
-    $("ebChoices").innerHTML=r.ids.map(id=>{const p=BYID.get(id),picked=selected===id,metric=EDGE_METRICS[r.metric];return`<button type="button" class="edge-duel-card ${picked?"right":""}" data-eb="${id}"${showing||st.over?" disabled":""}><img src="${esc(p?.headshot||FALLBACK)}" alt=""><b>${esc(p?.name||"Unknown")}</b><small>${esc(posName(p||{}))}</small>${showing?`<div class="edge-value">${esc(metric.show(edgeValue(id,r.metric)))}</div>`:""}</button>`;}).join("");
+    $("ebChoices").innerHTML=r.ids.map(id=>{const p=BYID.get(id),picked=selected===id,metric=EDGE_METRICS[r.metric],raw=edgeValue(id,r.metric),decimals=r.metric==="hd"?0:2,unit=r.metric==="miles"?"mi":r.metric==="hd"?"HD SOG":"MPH";return`<button type="button" class="edge-duel-card ${picked?"right":""}" data-eb="${id}"${showing||st.over?" disabled":""}><img src="${esc(p?.headshot||FALLBACK)}" alt=""><b>${esc(p?.name||"Unknown")}</b><small>${esc(posName(p||{}))}</small>${showing?`<div class="edge-build-value" data-edge-build-value="${raw}" data-edge-build-decimals="${decimals}"><strong class="edge-build-number">${decimals?"0.00":"0"}</strong><em class="edge-build-unit">${unit}</em></div>`:""}</button>`;}).join("");
+    if(showing)animateEdgeBuildReveal($("ebChoices"));
     $("ebFeedback").textContent=showing?`You drafted ${BYID.get(selected)?.name||"that player"} for ${cat.label.toLowerCase()}.`:st.over?"":`${cat.label}: ${cat.copy}. Pick the trait you want.`;
   }
 };
