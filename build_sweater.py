@@ -17,6 +17,8 @@ import argparse
 import random
 import shutil
 import json
+import html as html_lib
+import unicodedata
 from collections import defaultdict
 import sys
 import time
@@ -51,7 +53,8 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "87 · Remove Zamboni Reveal"
+EDGE_CACHE = HERE / "edge_cache.json"
+VERSION = "88 · NHL EDGE Hub"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -718,6 +721,93 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shopt.wrong { background: #c0392b; color: #fff; }
   .shopt.dim { opacity: .45; }
   .shopt:disabled { cursor: default; }
+
+
+  /* NHL EDGE hub + games */
+  .edgehome { margin: 20px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 18px;
+              background: color-mix(in srgb, var(--panel) 94%, transparent); }
+  .edgehomehead { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 13px; }
+  .edgehomehead p { margin: 0 0 5px; color: var(--link); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+  .edgehomehead h2 { margin: 0; font-size: 24px; letter-spacing: -.035em; }
+  .edgehomehead small { display: block; margin-top: 5px; max-width: 560px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .edgehomebadge { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border: 1px solid var(--line);
+                   border-radius: 999px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+  .edgehomebadge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--link); }
+  .edgegrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+  .edgecard { position: relative; min-width: 0; min-height: 132px; padding: 14px; border: 1px solid var(--line); border-radius: 14px;
+              background: var(--cell); color: var(--cell-fg); font: inherit; text-align: left; cursor: pointer;
+              transition: transform .18s ease, border-color .18s ease, background-color .18s ease; }
+  .edgecard:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--link); background: color-mix(in srgb, var(--link) 7%, var(--cell)); }
+  .edgecard:disabled { cursor: default; opacity: .52; }
+  .edgecardtop { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .edgecardicon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px;
+                  background: color-mix(in srgb, var(--link) 13%, transparent); color: var(--link); }
+  .edgecardtag { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .edgecard b, .edgecard small { display: block; }
+  .edgecard b { margin-top: 12px; font-size: 15px; letter-spacing: -.015em; }
+  .edgecard small { margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.35; }
+  .edge-shell { max-width: 760px; margin: 0 auto; }
+  .edge-kicker { margin: 0 0 6px; color: var(--link); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; text-align: center; }
+  .edge-intro { max-width: 600px; margin: 0 auto 16px; color: var(--muted); text-align: center; line-height: 1.45; }
+  .edge-hud { display: flex; justify-content: center; gap: 9px; margin: 0 auto 14px; }
+  .edge-hud span { min-width: 92px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); text-align: center; }
+  .edge-hud small, .edge-hud b { display: block; }
+  .edge-hud small { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+  .edge-hud b { margin-top: 2px; font-size: 17px; font-variant-numeric: tabular-nums; }
+  .edge-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 660px; margin: 0 auto 10px; }
+  .edge-duel-card { position: relative; overflow: hidden; min-height: 235px; padding: 0 0 14px; border: 1px solid var(--line); border-radius: 17px;
+                    background: var(--panel); color: var(--fg); font: inherit; cursor: pointer; text-align: center; }
+  .edge-duel-card:hover:not(:disabled) { border-color: var(--link); }
+  .edge-duel-card img { display: block; width: 100%; height: 155px; object-fit: contain; object-position: center bottom; background: var(--cream); }
+  .edge-duel-card b { display: block; margin: 11px 10px 2px; font-size: 16px; }
+  .edge-duel-card small { color: var(--muted); font-size: 11px; }
+  .edge-duel-card .edge-value { margin-top: 9px; font-size: 23px; font-weight: 850; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+  .edge-duel-card.right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 11%, var(--panel)); }
+  .edge-duel-card.wrong { border-color: #c0392b; }
+  .edge-feedback { min-height: 22px; margin: 5px 0 10px; color: var(--muted); font-size: 12px; font-weight: 700; text-align: center; }
+  .edge-map-card { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(180px, .75fr); gap: 14px; max-width: 720px;
+                   margin: 0 auto 12px; padding: 14px; border: 1px solid var(--line); border-radius: 17px; background: var(--panel); }
+  .edge-rink { width: 100%; min-height: 240px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--cream) 28%, var(--panel)); }
+  .edge-rink text { fill: var(--fg); font-family: inherit; font-weight: 800; }
+  .edge-rink .rinkline { fill: none; stroke: var(--muted); stroke-opacity: .38; }
+  .edge-rink .zone-long { fill: color-mix(in srgb, var(--link) 15%, transparent); }
+  .edge-rink .zone-mid { fill: color-mix(in srgb, var(--near) 22%, transparent); }
+  .edge-rink .zone-high { fill: color-mix(in srgb, var(--hit) 28%, transparent); }
+  .edge-zone-list { display: grid; align-content: center; gap: 10px; }
+  .edge-zone-row { padding: 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--cell); }
+  .edge-zone-row span { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 750; }
+  .edge-zone-row b { font-variant-numeric: tabular-nums; }
+  .edge-zone-bar { height: 5px; margin-top: 7px; overflow: hidden; border-radius: 999px; background: color-mix(in srgb, var(--fg) 8%, transparent); }
+  .edge-zone-bar i { display: block; height: 100%; border-radius: inherit; background: var(--link); }
+  .edge-choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; max-width: 660px; margin: 0 auto; }
+  .edge-choice { min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--cell);
+                 color: var(--cell-fg); font: inherit; font-weight: 750; cursor: pointer; }
+  .edge-choice.right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 16%, var(--cell)); }
+  .edge-choice.wrong { border-color: #c0392b; }
+  .edge-build-board { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 7px; max-width: 720px; margin: 0 auto 12px; }
+  .edge-build-slot { min-height: 72px; padding: 9px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+  .edge-build-slot small, .edge-build-slot b, .edge-build-slot em { display: block; }
+  .edge-build-slot small { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+  .edge-build-slot b { margin-top: 5px; font-size: 12px; line-height: 1.2; }
+  .edge-build-slot em { margin-top: 4px; color: var(--link); font-size: 11px; font-style: normal; font-weight: 800; }
+  .edge-draft { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .edge-draft .edge-duel-card { min-height: 220px; }
+  @media (max-width: 900px) { .edgegrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 620px) {
+    .edgehome { padding: 14px; }
+    .edgehomehead { align-items: flex-start; flex-direction: column; }
+    .edgegrid { grid-template-columns: 1fr; }
+    .edgecard { min-height: 108px; }
+    .edge-duel { gap: 7px; }
+    .edge-duel-card { min-height: 205px; }
+    .edge-duel-card img { height: 132px; }
+    .edge-map-card { grid-template-columns: 1fr; }
+    .edge-rink { min-height: 210px; }
+    .edge-build-board { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .edge-draft { grid-template-columns: 1fr; }
+    .edge-draft .edge-duel-card { min-height: 120px; display: grid; grid-template-columns: 92px 1fr; align-items: center; padding: 0 10px 0 0; text-align: left; }
+    .edge-draft .edge-duel-card img { width: 92px; height: 112px; grid-row: 1 / span 4; }
+  }
 
   /* team hubs */
   #view-teams { max-width: 1040px; }
@@ -2562,6 +2652,13 @@ TEMPLATE = r'''<!DOCTYPE html>
       <span><b>Teams</b><small>Pick your team and test how deep your franchise knowledge goes — seasons, leaders, rosters and history.</small><strong>Choose a team →</strong></span>
       <span class="teamlogos" id="teamLogoMosaic" aria-hidden="true"></span>
     </button>
+    <section class="edgehome" aria-labelledby="edgeHomeTitle">
+      <div class="edgehomehead">
+        <div><p>Player tracking</p><h2 id="edgeHomeTitle">NHL EDGE</h2><small>Games built from real puck-and-player tracking: skating speed, shot velocity, distance and shot-location zones.</small></div>
+        <span class="edgehomebadge" id="edgeSeasonBadge">NHL EDGE</span>
+      </div>
+      <div class="edgegrid" id="edgeHomeGrid"></div>
+    </section>
     <section class="hubshelf" id="hubShelf" aria-label="Your game shelf" hidden></section>
     <button type="button" class="partycard" data-open="party">
       <svg class="rink" viewBox="0 0 400 160" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
@@ -3012,6 +3109,53 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="slot"></div><p class="nodata" hidden>This game needs player data. Rebuild the site to load it.</p>
   </section>
 
+
+  <section class="view" id="view-edgespeed" hidden>
+    <div class="edge-shell">
+      <p class="edge-kicker">NHL EDGE · Skating</p>
+      <p class="edge-intro">Who posted the higher max skating speed? Build a 10-round streak.</p>
+      <div class="edge-hud"><span><small>Round</small><b id="esRound">1 / 10</b></span><span><small>Right</small><b id="esScore">0</b></span></div>
+      <div class="edge-duel" id="esDuel"></div>
+      <p class="edge-feedback" id="esFeedback"></p>
+      <div class="slot"></div><p class="nodata" hidden>NHL EDGE data is unavailable in this build.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-edgeshot" hidden>
+    <div class="edge-shell">
+      <p class="edge-kicker">NHL EDGE · Shot speed</p>
+      <p class="edge-intro">Pick the player with the harder recorded shot. Ten rounds, one point each.</p>
+      <div class="edge-hud"><span><small>Round</small><b id="ehRound">1 / 10</b></span><span><small>Right</small><b id="ehScore">0</b></span></div>
+      <div class="edge-duel" id="ehDuel"></div>
+      <p class="edge-feedback" id="ehFeedback"></p>
+      <div class="slot"></div><p class="nodata" hidden>NHL EDGE data is unavailable in this build.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-edgemap" hidden>
+    <div class="edge-shell">
+      <p class="edge-kicker">NHL EDGE · Shot location</p>
+      <p class="edge-intro">Identify the player from their real high-danger, mid-range and long-range shot-on-goal profile.</p>
+      <div class="edge-hud"><span><small>Round</small><b id="emRound">1 / 5</b></span><span><small>Right</small><b id="emScore">0</b></span></div>
+      <div id="emMap"></div>
+      <div class="edge-choices" id="emChoices"></div>
+      <p class="edge-feedback" id="emFeedback"></p>
+      <div class="slot"></div><p class="nodata" hidden>NHL EDGE shot-location data is unavailable in this build.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-edgebuild" hidden>
+    <div class="edge-shell">
+      <p class="edge-kicker">NHL EDGE · Draft room</p>
+      <p class="edge-intro">Build one super-player. Draft a different tracking trait each round, then see your final EDGE rating.</p>
+      <div class="edge-build-board" id="ebBoard"></div>
+      <div class="edge-hud"><span><small>Pick</small><b id="ebRound">1 / 4</b></span><span><small>Projected</small><b id="ebScore">—</b></span></div>
+      <div class="edge-duel edge-draft" id="ebChoices"></div>
+      <p class="edge-feedback" id="ebFeedback"></p>
+      <div class="slot"></div><p class="nodata" hidden>NHL EDGE data is unavailable in this build.</p>
+    </div>
+  </section>
+
   <section class="view" id="view-teams" hidden>
     <div id="teamsBody"></div>
   </section>
@@ -3275,6 +3419,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 const PLAYERS = /*__PLAYERS__*/[].sort((a, b) => a.id - b.id);
 const ROSTER_PLAYERS = /*__ROSTER_PLAYERS__*/[].sort((a, b) => a.id - b.id);
 const ROSTER_LINEUPS = /*__ROSTER_LINEUPS__*/{};
+const EDGE_DATA = /*__EDGE_DATA__*/[];
 const BUILT = "/*__BUILT__*/";
 const SITE = "/*__SITE__*/";
 const API = "/*__API__*/".replace(/\/+$/, "");
@@ -3308,6 +3453,15 @@ const TEAM_START = { ANA:1993,BOS:1924,BUF:1970,CGY:1980,CAR:1997,CHI:1926,COL:1
 const TEAM_HISTORY = /*__TEAM_HISTORY__*/{}; // compact historical regular-season rows, built server-side
 const TEAM_DIV_ORDER = ["A","M","C","P"];
 const BYID = new Map([...ROSTER_PLAYERS, ...PLAYERS].map(p => [p.id, p]));
+const EDGE_BYID = new Map(EDGE_DATA.map(e => [Number(e.id), e]));
+const EDGE_POOL = EDGE_DATA.map(e => {
+  const p = BYID.get(Number(e.id));
+  return p ? { ...p, edge: e } : null;
+}).filter(Boolean);
+const edgeSeasonLabel = () => {
+  const s = String(EDGE_DATA[0]?.season || "");
+  return /^\d{8}$/.test(s) ? `${s.slice(0,4)}–${s.slice(6,8)}` : "NHL EDGE";
+};
 // NHL's current logo CDN deliberately omits retired franchise codes. Keep a
 // focused archive map so historic trivia shows the proper mark instead of an
 // empty image. These are rendered PNG previews of the corresponding crest.
@@ -3394,7 +3548,8 @@ const UI_ICONS = {
   people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
-const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net" };
+const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
+  edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.goalie = "shield";
 MODE_ICONS.overtime = "clock";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
@@ -3438,7 +3593,9 @@ const secondsToEtMidnight = () => {
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
- "shoot", "goalie", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+ "shoot", "goalie", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups",
+ "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+["edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { START[g] = START[g] || "2026-10-05"; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -6534,6 +6691,204 @@ function cupsEnter() {
 $("cuStart").onclick = cupsStart;
 $("cuInput").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); cupsEnter(); } });
 
+
+// ======================= NHL EDGE games =======================
+const EDGE_METRICS = {
+  speed: { label: "Max speed", unit: "MPH", show: v => `${Number(v).toFixed(2)} MPH` },
+  shot:  { label: "Hardest shot", unit: "MPH", show: v => `${Number(v).toFixed(2)} MPH` },
+  miles: { label: "Most miles / game", unit: "MI", show: v => `${Number(v).toFixed(2)} mi` },
+  hd:    { label: "High-danger SOG", unit: "SOG", show: v => `${Number(v)} HD SOG` },
+};
+const edgeValue = (id, metric) => Number(EDGE_BYID.get(Number(id))?.[metric] || 0);
+const edgeEligible = metric => EDGE_POOL.filter(p => edgeValue(p.id, metric) > 0);
+function edgePercentile(metric, value) {
+  const vals = edgeEligible(metric).map(p => edgeValue(p.id, metric)).sort((a,b) => a-b);
+  if (!vals.length || !Number.isFinite(value)) return 0;
+  return Math.max(1, Math.min(99, Math.round(vals.filter(v => v <= value).length / vals.length * 99)));
+}
+function edgePairRandom(rnd, metric, count = 10) {
+  const pool = edgeEligible(metric);
+  if (pool.length < 12) return null;
+  const rounds = [], used = new Set();
+  for (let tries = 0; tries < 500 && rounds.length < count; tries++) {
+    const a = pool[Math.floor(rnd() * pool.length)], b = pool[Math.floor(rnd() * pool.length)];
+    if (!a || !b || a.id === b.id || edgeValue(a.id, metric) === edgeValue(b.id, metric)) continue;
+    const key = [a.id,b.id].sort((x,y)=>x-y).join(":");
+    if (used.has(key)) continue;
+    used.add(key); rounds.push([a.id,b.id]);
+  }
+  return rounds.length === count ? { metric, rounds } : null;
+}
+function edgeDuelCard(p, metric, reveal, cls, side) {
+  if (!p) return "";
+  const value = EDGE_METRICS[metric].show(edgeValue(p.id, metric));
+  return `<button type="button" class="edge-duel-card ${cls || ""}" data-edge-side="${side}"${reveal ? " disabled" : ""}>
+    <img src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
+    <b>${esc(p.name)}</b><small>${esc(posName(p))}</small>
+    ${reveal ? `<div class="edge-value">${esc(value)}</div>` : ""}
+  </button>`;
+}
+function edgeBest(id, st) {
+  const n = G[id].score(st.target, st.guesses), k = `sweater-${id}-best`;
+  store.set(k, Math.max(Number(store.get(k)) || 0, n));
+}
+function makeEdgeDuel(id, title, view, metric, prefix) {
+  return {
+    id, localOnly: true, kind: "score", repeat: true, title, share: `Sweater ${title}`, view, max: 10, next: "Play again", hideReveal: true,
+    pool: () => edgeEligible(metric).length >= 12 ? EDGE_POOL : [],
+    daily(k) { return edgePairRandom(seeded(hash(`sweater-${id}-${k}`)), metric); },
+    random() { const t = edgePairRandom(Math.random, metric); if (t) t.rid = Math.random(); return t; },
+    tid: t => `${id}:${t.rid || hash(JSON.stringify(t.rounds))}`,
+    player: () => null, meta: () => "",
+    right(t, x, i) {
+      const r = t.rounds[i], av = edgeValue(r[0], metric), bv = edgeValue(r[1], metric);
+      return x === (av >= bv ? "a" : "b");
+    },
+    score(t, g) { return g.filter((x,i) => this.right(t,x,i)).length; },
+    isWin: () => false,
+    isDone: (t,g) => g.length >= t.rounds.length,
+    wonGame(t,g) { return this.score(t,g) >= 7; },
+    archiveStatus: h => `${h.s}/10 right`,
+    onFinish(st) { edgeBest(id, st); },
+    endText(t,g) {
+      const n=this.score(t,g); return { result: `${n} of 10 right`, cheer: n>=9 ? "Tracking-room elite 📡" : n>=7 ? "Great read 🏒" : "EDGE has receipts." };
+    },
+    shareText(t,s,n,link) { return `Sweater ${title} #${n}\n${this.score(t,s.guesses)}/10 right · ${edgeSeasonLabel()}${link}`; },
+    reset() { clearTimeout(this.timer); this.pending=false; this.lastCorrect=null; },
+    guess(t,x,fresh) {
+      if (!["a","b"].includes(x)) return null;
+      const i=S[id].guesses.length;
+      if (i>=t.rounds.length) return null;
+      if (fresh) {
+        this.lastCorrect=this.right(t,x,i); this.pending=true;
+        clearTimeout(this.timer);
+        this.timer=setTimeout(()=>{ this.pending=false; if(game===id && !S[id].over) this.render(t,S[id]); },850);
+      }
+      return false;
+    },
+    render(t,st) {
+      const done=st.guesses.length, showing=this.pending && done>0, i=showing ? done-1 : Math.min(done,t.rounds.length-1), r=t.rounds[i];
+      const a=BYID.get(r[0]), b=BYID.get(r[1]), picked=showing ? st.guesses[done-1] : null, correct=showing ? (edgeValue(r[0],metric)>=edgeValue(r[1],metric)?"a":"b") : null;
+      $(prefix+"Round").textContent=`${Math.min(done+1,10)} / 10`;
+      $(prefix+"Score").textContent=this.score(t,st.guesses);
+      $(prefix+"Duel").innerHTML=edgeDuelCard(a,metric,showing||st.over,showing?(correct==="a"?"right":picked==="a"?"wrong":""):"","a")
+        +edgeDuelCard(b,metric,showing||st.over,showing?(correct==="b"?"right":picked==="b"?"wrong":""):"","b");
+      $(prefix+"Feedback").textContent=showing ? (this.lastCorrect ? "Right." : "Not quite.") : st.over ? "" : `Choose the higher ${EDGE_METRICS[metric].label.toLowerCase()}.`;
+    },
+  };
+}
+G.edgespeed = makeEdgeDuel("edgespeed","Speed Trap","view-edgespeed","speed","es");
+G.edgeshot = makeEdgeDuel("edgeshot","Hardest Shot","view-edgeshot","shot","eh");
+$("esDuel").addEventListener("click",e=>{const b=e.target.closest("[data-edge-side]");if(b&&!G.edgespeed.pending)doGuess(b.dataset.edgeSide);});
+$("ehDuel").addEventListener("click",e=>{const b=e.target.closest("[data-edge-side]");if(b&&!G.edgeshot.pending)doGuess(b.dataset.edgeSide);});
+
+function edgeMapRandom(rnd) {
+  const pool=EDGE_POOL.filter(p=>["hd","mid","long"].every(k=>Number(p.edge[k])>=0) && Number(p.edge.total)>0);
+  if(pool.length<16)return null;
+  const rounds=[], used=new Set();
+  for(let tries=0;tries<500&&rounds.length<5;tries++){
+    const target=pool[Math.floor(rnd()*pool.length)];
+    if(!target||used.has(target.id))continue;
+    const others=shuffled(pool.filter(p=>p.id!==target.id),rnd).slice(0,3);
+    if(others.length<3)continue;
+    const ids=shuffled([target,...others],rnd).map(p=>p.id);
+    rounds.push({id:target.id,ids,a:ids.indexOf(target.id)});used.add(target.id);
+  }
+  return rounds.length===5?{rounds}:null;
+}
+function edgeShotMapMarkup(p) {
+  const e=p.edge, total=Math.max(1,Number(e.hd)+Number(e.mid)+Number(e.long));
+  const rows=[["High-danger",Number(e.hd)],["Mid-range",Number(e.mid)],["Long-range",Number(e.long)]];
+  const pct=n=>Math.round(n/total*100);
+  const op=n=>(.18+.62*Math.min(1,n/Math.max(...rows.map(x=>x[1]),1))).toFixed(2);
+  return `<div class="edge-map-card">
+    <svg class="edge-rink" viewBox="0 0 320 220" role="img" aria-label="Shot-on-goal distribution by NHL EDGE zone">
+      <rect x="8" y="8" width="304" height="204" rx="52" class="rinkline"/>
+      <line x1="8" y1="62" x2="312" y2="62" class="rinkline"/><circle cx="160" cy="110" r="34" class="rinkline"/>
+      <path class="zone-long" style="opacity:${op(e.long)}" d="M20 20h280v78H20z"/>
+      <path class="zone-mid" style="opacity:${op(e.mid)}" d="M82 86h156l-25 73H107z"/>
+      <path class="zone-high" style="opacity:${op(e.hd)}" d="M120 128h80l-17 55h-46z"/>
+      <path class="rinkline" d="M136 187h48v12h-48z"/><path class="rinkline" d="M127 187a33 33 0 0 0 66 0"/>
+      <text x="160" y="47" text-anchor="middle" font-size="11">LONG RANGE</text>
+      <text x="160" y="121" text-anchor="middle" font-size="11">MID RANGE</text>
+      <text x="160" y="159" text-anchor="middle" font-size="10">HIGH DANGER</text>
+    </svg>
+    <div class="edge-zone-list">${rows.map(([label,n])=>`<div class="edge-zone-row"><span><span>${label}</span><b>${n} · ${pct(n)}%</b></span><div class="edge-zone-bar"><i style="width:${pct(n)}%"></i></div></div>`).join("")}</div>
+  </div>`;
+}
+G.edgemap = {
+  localOnly:true,kind:"score",repeat:true,title:"Shot Map",share:"Sweater Shot Map",view:"view-edgemap",max:5,next:"Play again",hideReveal:true,
+  pool:()=>EDGE_POOL.filter(p=>Number(p.edge.total)>0).length>=16?EDGE_POOL:[],
+  daily(k){return edgeMapRandom(seeded(hash(`sweater-edgemap-${k}`)));},
+  random(){const t=edgeMapRandom(Math.random);if(t)t.rid=Math.random();return t;},
+  tid:t=>`edgemap:${t.rid||hash(JSON.stringify(t.rounds))}`,player:()=>null,meta:()=>"",
+  right:(t,x,i)=>Number(x)===t.rounds[i].a,
+  score(t,g){return g.filter((x,i)=>this.right(t,x,i)).length*2;},
+  isWin:()=>false,isDone:(t,g)=>g.length>=t.rounds.length,wonGame(t,g){return this.score(t,g)>=6;},
+  archiveStatus:h=>`${h.s/2}/5 right`,onFinish(st){edgeBest("edgemap",st);},
+  endText(t,g){const n=this.score(t,g)/2;return{result:`${n} of 5 right`,cheer:n>=4?"You see the ice like a tracking camera. 📡":"Shot profiles are tougher than they look."};},
+  shareText(t,s,n,link){return`Sweater Shot Map #${n}\n${this.score(t,s.guesses)/2}/5 right · ${edgeSeasonLabel()}${link}`;},
+  reset(){clearTimeout(this.timer);this.pending=false;this.lastCorrect=null;},
+  guess(t,x,fresh){
+    if(!/^[0-3]$/.test(String(x)))return null;
+    const i=S.edgemap.guesses.length;if(i>=t.rounds.length)return null;
+    if(fresh){this.lastCorrect=this.right(t,x,i);this.pending=true;clearTimeout(this.timer);this.timer=setTimeout(()=>{this.pending=false;if(game==="edgemap"&&!S.edgemap.over)this.render(t,S.edgemap);},900);}
+    return false;
+  },
+  render(t,st){
+    const done=st.guesses.length,showing=this.pending&&done>0,i=showing?done-1:Math.min(done,t.rounds.length-1),r=t.rounds[i],p=EDGE_POOL.find(x=>x.id===r.id);
+    $("emRound").textContent=`${Math.min(done+1,5)} / 5`;$("emScore").textContent=this.score(t,st.guesses)/2;
+    $("emMap").innerHTML=p?edgeShotMapMarkup(p):"";
+    const picked=showing?Number(st.guesses[done-1]):-1;
+    $("emChoices").innerHTML=r.ids.map((id,n)=>{const q=BYID.get(id);const cls=showing?(n===r.a?" right":n===picked?" wrong":""):"";return`<button type="button" class="edge-choice ${cls}" data-em="${n}"${showing||st.over?" disabled":""}>${esc(q?.name||"Unknown")}</button>`;}).join("");
+    $("emFeedback").textContent=showing?(this.lastCorrect?`Right — ${p.name}.`:`It was ${p.name}.`):st.over?"":"Who owns this shot-location profile?";
+  }
+};
+$("emChoices").addEventListener("click",e=>{const b=e.target.closest("[data-em]");if(b&&!G.edgemap.pending)doGuess(b.dataset.em);});
+
+const EDGE_BUILD_CATS=[
+  {metric:"speed",label:"Speed",copy:"Max skating speed"},
+  {metric:"shot",label:"Shot",copy:"Hardest recorded shot"},
+  {metric:"miles",label:"Engine",copy:"Most miles skated in a game"},
+  {metric:"hd",label:"Danger",copy:"High-danger shots on goal"},
+];
+function edgeBuildRandom(rnd){
+  const rounds=[],used=new Set();
+  for(const c of EDGE_BUILD_CATS){
+    const pool=edgeEligible(c.metric).filter(p=>!used.has(p.id));
+    if(pool.length<3)return null;
+    const picks=shuffled(pool,rnd).slice(0,3);picks.forEach(p=>used.add(p.id));
+    rounds.push({metric:c.metric,ids:picks.map(p=>p.id)});
+  }
+  return {rounds};
+}
+G.edgebuild={
+  localOnly:true,kind:"score",repeat:true,title:"Build a Player",share:"Sweater Build a Player",view:"view-edgebuild",max:4,next:"Build another",hideReveal:true,
+  pool:()=>EDGE_BUILD_CATS.every(c=>edgeEligible(c.metric).length>=12)?EDGE_POOL:[],
+  daily(k){return edgeBuildRandom(seeded(hash(`sweater-edgebuild-${k}`)));},
+  random(){const t=edgeBuildRandom(Math.random);if(t)t.rid=Math.random();return t;},
+  tid:t=>`edgebuild:${t.rid||hash(JSON.stringify(t.rounds))}`,player:()=>null,meta:()=>"",
+  score(t,g){if(!g.length)return 0;const vals=g.map((id,i)=>edgePercentile(t.rounds[i].metric,edgeValue(id,t.rounds[i].metric)));return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);},
+  isWin:()=>false,isDone:(t,g)=>g.length>=4,wonGame(t,g){return this.score(t,g)>=75;},archiveStatus:h=>`${h.s} rating`,onFinish(st){edgeBest("edgebuild",st);},
+  endText(t,g){const n=this.score(t,g);return{result:`EDGE build: ${n}/100`,cheer:n>=90?"Generational build. 🚨":n>=75?"Elite tracking profile. 🏒":n>=60?"Strong NHL toolkit.":"Back to the scouting room."};},
+  shareText(t,s,n,link){return`Sweater Build a Player #${n}\nEDGE rating: ${this.score(t,s.guesses)}/100 · ${edgeSeasonLabel()}${link}`;},
+  reset(){clearTimeout(this.timer);this.pending=false;},
+  guess(t,x,fresh){
+    const id=Number(x),i=S.edgebuild.guesses.length;if(i>=4||!t.rounds[i].ids.includes(id))return null;
+    if(fresh){this.pending=true;clearTimeout(this.timer);this.timer=setTimeout(()=>{this.pending=false;if(game==="edgebuild"&&!S.edgebuild.over)this.render(t,S.edgebuild);},900);}
+    return false;
+  },
+  render(t,st){
+    const done=st.guesses.length,showing=this.pending&&done>0,i=showing?done-1:Math.min(done,3),r=t.rounds[i],cat=EDGE_BUILD_CATS[i];
+    $("ebRound").textContent=`${Math.min(done+1,4)} / 4`;$("ebScore").textContent=done?this.score(t,st.guesses):"—";
+    $("ebBoard").innerHTML=EDGE_BUILD_CATS.map((c,n)=>{const id=st.guesses[n],p=id?BYID.get(Number(id)):null,pct=id?edgePercentile(c.metric,edgeValue(id,c.metric)):0;return`<div class="edge-build-slot"><small>${c.label}</small><b>${p?esc(p.name):"Open slot"}</b><em>${p?`${EDGE_METRICS[c.metric].show(edgeValue(id,c.metric))} · ${pct}th pct`:"Choose one player"}</em></div>`;}).join("");
+    const selected=showing?Number(st.guesses[done-1]):null;
+    $("ebChoices").innerHTML=r.ids.map(id=>{const p=BYID.get(id),picked=selected===id,metric=EDGE_METRICS[r.metric];return`<button type="button" class="edge-duel-card ${picked?"right":""}" data-eb="${id}"${showing||st.over?" disabled":""}><img src="${esc(p?.headshot||FALLBACK)}" alt=""><b>${esc(p?.name||"Unknown")}</b><small>${esc(posName(p||{}))}</small>${showing?`<div class="edge-value">${esc(metric.show(edgeValue(id,r.metric)))}</div>`:""}</button>`;}).join("");
+    $("ebFeedback").textContent=showing?`You drafted ${BYID.get(selected)?.name||"that player"} for ${cat.label.toLowerCase()}.`:st.over?"":`${cat.label}: ${cat.copy}. Pick the trait you want.`;
+  }
+};
+$("ebChoices").addEventListener("click",e=>{const b=e.target.closest("[data-eb]");if(b&&!G.edgebuild.pending)doGuess(b.dataset.eb);});
+
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
 const KEYS = Object.fromEntries(Object.keys(G).map(g => [g, g === "classic"
@@ -7344,6 +7699,10 @@ const LB_RULES = {
   goalie: "Goalie Mode: 10 points per save, with a multiplier increasing every 5 consecutive saves up to 5×. Three goals end the run.",
   overtime: "Overtime: 1 point per right answer. Start with 45 seconds; right answers add 5 seconds and wrong answers cost 3.",
   playoff: "Playoff Run: 10 points for 1 guess, then 8, 6, 4, 2 and 1.",
+  edgespeed: "Speed Trap: 1 point per correct head-to-head pick across 10 rounds.",
+  edgeshot: "Hardest Shot: 1 point per correct head-to-head pick across 10 rounds.",
+  edgemap: "Shot Map: 2 points per correct player across 5 rounds.",
+  edgebuild: "Build a Player: 0–100 rating from the average percentile of your four drafted EDGE traits.",
   cups: "Playoff History: 1 point for every square you fill in 10 minutes.",
   trophy: "Trophy Case: 2 points for every round you get right, so 20 questions are worth up to 40.",
   mroster: "Mystery Roster: 10 points on the first try, then 6, 3 and 1.",
@@ -7533,9 +7892,16 @@ const HUB = [
     ["overtime", "⏱️", "Fast hockey trivia. Keep the clock alive."],
   ]},
 ];
+const EDGE_GAMES = [
+  { id:"edgespeed", title:"Speed Trap", tag:"Skating speed", blurb:"Pick the faster skater from their recorded max speed." },
+  { id:"edgeshot", title:"Hardest Shot", tag:"Shot velocity", blurb:"Two players. One radar gun. Who fired the harder shot?" },
+  { id:"edgemap", title:"Shot Map", tag:"Shot location", blurb:"Read a player's high-danger, mid-range and long-range shooting profile." },
+  { id:"edgebuild", title:"Build a Player", tag:"Draft room", blurb:"Draft Speed, Shot, Engine and Danger into one tracking-data super-player." },
+];
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
 const CARD = {};
 HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: sec.tone }; }));
+EDGE_GAMES.forEach(x => { CARD[x.id] = { icon: "📡", tone: "blue" }; });
 /* Short, repeatable labels make the game library scannable before a player
    has to read a description. They also power the shelf, Locker, and results. */
 const MODE_META = Object.freeze({
@@ -7544,6 +7910,10 @@ const MODE_META = Object.freeze({
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
   blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "classic" },
+  edgespeed:{ type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Max skating speed comes directly from NHL EDGE player tracking.", next: "edgeshot" },
+  edgeshot: { type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Hardest Shot uses tracked in-game shot velocity from NHL EDGE.", next: "edgemap" },
+  edgemap:  { type: "NHL EDGE", time: "2 min", difficulty: "Hard", fact: "Shot Map compares real high-danger, mid-range and long-range shots on goal.", next: "edgebuild" },
+  edgebuild:{ type: "NHL EDGE", time: "2 min", difficulty: "Medium", fact: "Your rating is built from percentiles inside Sweater's embedded EDGE player pool.", next: "edgespeed" },
   team:     { type: "Seasons", time: "1–2 min", difficulty: "Medium", fact: "The right answer is the sweater the player wore in that exact season.", next: "season" },
   number:   { type: "Details", time: "1 min", difficulty: "Easy", fact: "A player’s number is a small detail—unless it is the one you miss.", next: "draft" },
   draft:    { type: "Draft", time: "2 min", difficulty: "Hard", fact: "Draft position turns hockey memory into a genuine scouting test.", next: "trophy" },
@@ -7564,7 +7934,7 @@ const MODE_META = Object.freeze({
   overtime: { type: "Arcade", fact: "Accuracy buys time. Keep answering until the buzzer—or clear the whole board.", next: "goalie" },
 });
 const modeMeta = id => MODE_META[id] || { type: "Daily", time: "2–4 min", difficulty: "Medium", fact: "A fresh hockey puzzle is ready every day.", next: "classic" };
-const hubIds = () => HUB.flatMap(sec => sec.games.map(([id]) => id));
+const hubIds = () => [...HUB.flatMap(sec => sec.games.map(([id]) => id)), ...EDGE_GAMES.map(x => x.id)];
 const cleanHubIds = ids => [...new Set((Array.isArray(ids) ? ids : []).filter(id => hubIds().includes(id)))];
 const favouriteIds = () => cleanHubIds(store.get("sweater-favourites"));
 const recentIds = () => cleanHubIds(store.get("sweater-recent-games"));
@@ -7655,6 +8025,14 @@ function renderHub() {
   $("hubShelf").hidden = true;
   $("hubShelf").innerHTML = "";
   $("teamLogoMosaic").innerHTML = Object.keys(TEAMS).map(t => `<img src="${logo(t)}" alt="">`).join("");
+  $("edgeSeasonBadge").textContent = EDGE_DATA.length ? `NHL EDGE · ${edgeSeasonLabel()}` : "NHL EDGE · data unavailable";
+  $("edgeHomeGrid").innerHTML = EDGE_GAMES.map(x => {
+    const ready = gameIsReady(x.id);
+    return `<button type="button" class="edgecard" data-open="${x.id}"${ready ? "" : " disabled"}>
+      <span class="edgecardtop"><span class="edgecardicon" aria-hidden="true">${modeIcon(x.id)}</span><span class="edgecardtag">${esc(x.tag)}</span></span>
+      <b>${esc(x.title)}</b><small>${esc(ready ? x.blurb : "Tracking data will appear after the next successful build.")}</small>
+    </button>`;
+  }).join("");
   const selectedFilter = store.get("sweater-library-filter") || "all";
   $("libraryFilters").innerHTML = LIBRARY_FILTERS.map(([id, label]) => `<button type="button" class="libraryfilter" data-library-filter="${id}" aria-pressed="${selectedFilter === id}">${label}</button>`).join("");
   const librarySections = HUB.map(sec => ({ ...sec, games: sec.games.filter(([id]) =>
@@ -8285,13 +8663,18 @@ const HELP = {
   hlt: `<p>Two teams go head to head on their current rosters: average age, average height, total career goals, total career NHL games, or players born outside Canada and the USA.</p>
     <p>Guess whether the second team's number is higher or lower. A right answer keeps the run going, and ties count as right.</p>`,
   season: `<p>You see a player and one of his season stat lines. Pick which season it came from, in 3 tries. Arrows point to a later or earlier season.</p>`,
+  edgespeed: `<p>Pick which of two players recorded the higher NHL EDGE max skating speed. Ten rounds; one point for every correct pick.</p>`,
+  edgeshot: `<p>Pick which player recorded the harder in-game shot according to NHL EDGE. Ten rounds; one point for every correct pick.</p>`,
+  edgemap: `<p>Identify the player from his NHL EDGE shot-on-goal distribution across high-danger, mid-range and long-range areas. Five rounds.</p>`,
+  edgebuild: `<p>Draft one player for each trait: Speed, Shot, Engine and Danger. Your final rating is the average percentile of the four traits inside Sweater's EDGE pool.</p>`,
   conn: `<p>Find 4 groups of 4 players who share something, like a team, a birth country, a sweater number or a birth year. Select 4, then <b>Submit</b>.</p>
     <p>Groups go from yellow (easiest) to purple (hardest). Your 4th mistake ends the game.</p>`,
 };
 
 function renderHelp() {
   const current = onHub ? null : (game.startsWith("hl_") ? "hl" : game);
-  $("helpGames").innerHTML = HUB.map(sec => sec.games.map(([id, icon]) => `
+  const helpSections = [...HUB, { title:"NHL EDGE", tone:"blue", games:EDGE_GAMES.map(x => [x.id, "📡", x.blurb]) }];
+  $("helpGames").innerHTML = helpSections.map(sec => sec.games.map(([id, icon]) => `
     <details class="helpgame tone-${sec.tone}" data-help="${id}"${id === current ? " open" : ""}>
       <summary><span class="hicon" aria-hidden="true">${modeIcon(id)}</span><span>${esc(cardTitle(id))}</span></summary>
       <div class="helpbody">${HELP[id] || ""}</div>
@@ -8304,7 +8687,7 @@ function renderHelp() {
 }
 
 // ======================= start =======================
-$("foot").textContent = `Player data from NHL.com · refreshed ${BUILT.split(" · ")[0]} · ${PLAYERS.length} players`;
+$("foot").textContent = `Player data from NHL.com · NHL EDGE tracking · refreshed ${BUILT.split(" · ")[0]} · ${PLAYERS.length} players`;
 if (!store.get("sweater-seen-welcome")) { store.set("sweater-seen-welcome", true); openModal("welcomeModal"); }
 // Hosting this site over HTTPS also turns it into an installable, resilient
 // phone app. Local file previews deliberately skip service-worker registration.
@@ -8341,6 +8724,113 @@ def get_json(url, timeout=30):
                                  headers={"User-Agent": "Mozilla/5.0 (Sweater game builder)"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.load(r)
+
+
+
+def _edge_slug(name):
+    text = unicodedata.normalize("NFKD", str(name)).encode("ascii", "ignore").decode("ascii").lower()
+    return re.sub(r"[^a-z0-9]+", "-", text).strip("-")
+
+
+def _edge_completed_season(today):
+    end_year = today.year if today.month >= 7 else today.year - 1
+    return f"{end_year - 1}{end_year}"
+
+
+def _edge_plain_page(url, timeout=30):
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (Sweater NHL trivia builder)",
+        "Accept-Language": "en-US,en;q=0.9",
+    })
+    with urllib.request.urlopen(req, timeout=timeout) as response:
+        raw = response.read().decode("utf-8", "replace")
+    text = html_lib.unescape(re.sub(r"<[^>]+>", " ", raw))
+    return re.sub(r"\s+", " ", text)
+
+
+def _edge_before(text, label):
+    match = re.search(r"(\d{1,3}(?:\.\d{1,3})?)\s+" + re.escape(label), text, re.I)
+    return float(match.group(1)) if match else None
+
+
+def _edge_zone(text, label):
+    match = re.search(r"(\d+)\s+\d+\s+" + re.escape(label), text, re.I)
+    return int(match.group(1)) if match else None
+
+
+def edge_player_data(player, season):
+    slug = _edge_slug(player["name"])
+    url = f"https://www.nhl.com/nhl-edge/skaters/{slug}-{player['id']}/{season}/2"
+    text = _edge_plain_page(url)
+    shot = _edge_before(text, "Hardest Shot")
+    speed = _edge_before(text, "Max Skating Speed")
+    miles = _edge_before(text, "Most Miles Skated")
+    total = _edge_zone(text, "All Locations")
+    hd = _edge_zone(text, "High-Danger")
+    mid = _edge_zone(text, "Mid-Range")
+    long = _edge_zone(text, "Long-Range")
+    if shot is not None and not 40 <= shot <= 120: shot = None
+    if speed is not None and not 15 <= speed <= 30: speed = None
+    if miles is not None and not 1 <= miles <= 8: miles = None
+    if not any(v is not None for v in (shot, speed, miles, total, hd, mid, long)):
+        raise ValueError("no EDGE metrics found")
+    return {
+        "id": player["id"], "season": season,
+        "shot": round(shot, 2) if shot is not None else None,
+        "speed": round(speed, 2) if speed is not None else None,
+        "miles": round(miles, 2) if miles is not None else None,
+        "total": total, "hd": hd, "mid": mid, "long": long,
+    }
+
+
+def fetch_edge_data(players, today):
+    """Embed a representative cross-team NHL EDGE pool using the last completed regular season."""
+    season = _edge_completed_season(today)
+    by_team = defaultdict(list)
+    for p in players:
+        if p.get("pos") != "G":
+            by_team[p.get("team")].append(p)
+
+    def career_points(p):
+        try:
+            return sum(int(row[5] or 0) for row in p.get("car", []) if len(row) > 5)
+        except Exception:
+            return 0
+
+    candidates = []
+    for team in TEAMS:
+        group = sorted(by_team.get(team, []), key=lambda p: (career_points(p), p.get("id", 0)), reverse=True)
+        candidates.extend(group[:4])
+
+    try:
+        cache_doc = json.loads(EDGE_CACHE.read_text(encoding="utf-8")) if EDGE_CACHE.exists() else {}
+    except Exception:
+        cache_doc = {}
+    cached = cache_doc.get("players", {}) if cache_doc.get("season") == season else {}
+    rows = {str(p["id"]): cached[str(p["id"])] for p in candidates if str(p["id"]) in cached}
+    missing = [p for p in candidates if str(p["id"]) not in rows]
+
+    if missing:
+        print(f"\n{stamp()} Loading NHL EDGE {season[:4]}-{season[6:]} tracking data for {len(missing)} players...")
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            futures = {ex.submit(edge_player_data, p, season): p for p in missing}
+            for future in as_completed(futures):
+                p = futures[future]
+                try:
+                    row = future.result()
+                    rows[str(p["id"])] = row
+                except Exception as exc:
+                    print(f"  EDGE {p['name']}: skipped ({exc})", file=sys.stderr)
+        try:
+            EDGE_CACHE.write_text(json.dumps({"season": season, "players": rows}, ensure_ascii=False, indent=1), encoding="utf-8")
+        except Exception as exc:
+            print(f"  Couldn't save EDGE cache ({exc})", file=sys.stderr)
+
+    out = [rows[str(p["id"])] for p in candidates if str(p["id"]) in rows]
+    complete = sum(1 for e in out if e.get("shot") and e.get("speed"))
+    mapped = sum(1 for e in out if e.get("total") is not None and e.get("hd") is not None and e.get("mid") is not None and e.get("long") is not None)
+    print(f"{stamp()} NHL EDGE: {len(out)} players embedded · {complete} speed/shot · {mapped} shot-location profiles.")
+    return out
 
 
 def fetch(team):
@@ -10208,6 +10698,7 @@ def main():
 
     team_history = load_team_history()
     today = eastern_today()
+    edge_data = fetch_edge_data(players, today)
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
     games, extras, roster_extras = update_schedule(players, today, roster_players)
@@ -10224,6 +10715,7 @@ def main():
         "/*__PLAYERS__*/[]": esc(embedded),
         "/*__ROSTER_PLAYERS__*/[]": esc(roster_embedded),
         "/*__ROSTER_LINEUPS__*/{}": esc(roster_lineups),
+        "/*__EDGE_DATA__*/[]": esc(edge_data),
         "/*__TEAM_HISTORY__*/{}": esc(team_history),
         "/*__DAILY_ALL__*/{}": esc({g: w for g, (_, w) in games.items() if g != "hl"}),
         "/*__START_ALL__*/{}": esc({g: st for g, (st, _) in games.items()}),
