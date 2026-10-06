@@ -10,6 +10,7 @@ on:
     paths:
       - "build_sweater.py"
       - "refresh_current_teams.py"
+      - "make_preview_shell.py"
       - ".github/workflows/update.yml"
 
 permissions:
@@ -68,6 +69,9 @@ jobs:
             echo "Checking $file"
             node --check "$file"
           done
+
+      - name: Make homepage preview-friendly
+        run: python make_preview_shell.py --site site --site-url "${{ vars.SITE_URL }}"
 
       - name: Save schedules and NHL data caches
         shell: bash
