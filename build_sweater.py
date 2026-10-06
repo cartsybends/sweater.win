@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "106 · Professional SEO Metadata"
+VERSION = "107 · Dedicated Message Preview Page"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -7898,8 +7898,7 @@ function renderStats() {
 
 function shareUrl(game = statsGame || currentGame(), date = dayKey()) {
   if (!SITE || /__SITE__/.test(SITE)) return location.href;
-  const stamp = encodeURIComponent(`${date}-${game}`);
-  return `${SITE}?share=${stamp}#${game}`;
+  return `${SITE}share/#${game}`;
 }
 function shareText(includeLink = true) {
   const game = statsGame || currentGame();
@@ -11245,7 +11244,7 @@ def main():
         "icons": [{"src": "sweater-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}],
     }
     service_worker = f'''const CACHE = "sweater-shell-{build_stamp.replace(":", "-")}";
-const CORE = ["./", "./sweater.webmanifest", "./sweater-icon.svg", "./sweater-trivia-preview.png"];
+const CORE = ["./", "./share/", "./sweater.webmanifest", "./sweater-icon.svg", "./sweater-trivia-preview.png"];
 self.addEventListener("install", event => event.waitUntil(
   caches.open(CACHE).then(cache => Promise.all(CORE.map(url => cache.add(url).catch(() => undefined)))).then(() => self.skipWaiting())
 ));
@@ -11261,6 +11260,56 @@ self.addEventListener("fetch", event => {{
     (out.parent / "sweater.webmanifest").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     (out.parent / "sweater-icon.svg").write_text(pwa_icon, encoding="utf-8")
     (out.parent / "sw.js").write_text(service_worker, encoding="utf-8")
+
+    # Messages/iMessage gets a tiny, crawler-friendly page instead of the multi-megabyte
+    # game bundle. The hash is invisible to link-preview crawlers but is preserved for
+    # real visitors, who are immediately forwarded into the selected Sweater game.
+    share_dir = out.parent / "share"
+    share_dir.mkdir(parents=True, exist_ok=True)
+    share_page = f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sweater · Daily NHL Trivia</title>
+<meta name="description" content="Daily NHL trivia, hockey quizzes, player challenges, team history, awards, stats, and NHL EDGE tracking games.">
+<meta name="robots" content="noindex,follow,max-image-preview:large">
+<link rel="canonical" href="{site}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sweater">
+<meta property="og:title" content="Sweater · Daily NHL Trivia">
+<meta property="og:description" content="Test your hockey knowledge with daily NHL trivia, player challenges, team history, awards, stats, and more.">
+<meta property="og:url" content="{site}share/">
+<meta property="og:image" content="{site}sweater-trivia-preview.png">
+<meta property="og:image:secure_url" content="{site}sweater-trivia-preview.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sweater · Daily NHL Trivia">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sweater · Daily NHL Trivia">
+<meta name="twitter:description" content="Daily NHL trivia and hockey quizzes on Sweater.">
+<meta name="twitter:image" content="{site}sweater-trivia-preview.png">
+<meta name="theme-color" content="#111113">
+<style>
+html,body{{margin:0;min-height:100%;background:#111113;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}}
+body{{display:grid;place-items:center;padding:24px;text-align:center}}
+a{{color:#fff}}
+</style>
+</head>
+<body>
+<p>Opening Sweater…<br><small><a href="../">Continue to Sweater</a></small></p>
+<script>
+(() => {{
+  const game=(location.hash||"").slice(1);
+  const safe=/^[a-z0-9_-]+$/i.test(game)?game:"";
+  location.replace("../"+(safe?"#"+safe:""));
+}})();
+</script>
+</body>
+</html>
+'''
+    (share_dir / "index.html").write_text(share_page, encoding="utf-8")
     # double-check the page that was written
     check = out.read_text(encoding="utf-8")
     if "/*__" in check or check.count('"headshot"') < len(embedded):
