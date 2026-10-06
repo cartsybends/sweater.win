@@ -1509,6 +1509,7 @@
     8479337,
     8479992,
     8480193,
+    8480326,
     8480879,
     8481542,
     8481607,
@@ -176746,7 +176747,8 @@
    "past": [
     "BUF",
     "COL",
-    "FLA"
+    "FLA",
+    "TBL"
    ],
    "car": [
     [
@@ -259038,6 +259040,21 @@
    "bc": "Calgary",
    "bs": "AB",
    "wt": 205
+  },
+  "8480326": {
+   "id": 8480326,
+   "name": "Sheldon Dries",
+   "team": "DET",
+   "pos": "C",
+   "shoots": "L",
+   "birth": "1994-04-23",
+   "nation": "USA",
+   "number": 15,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DET/8480326.png",
+   "ht": 70,
+   "bc": "Macomb",
+   "bs": "MI",
+   "wt": 184
   },
   "8480336": {
    "id": 8480336,
