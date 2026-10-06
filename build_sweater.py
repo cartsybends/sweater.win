@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "108 · Consistent EDGE Team Watermarks"
+VERSION = "109 · EDGE Watermark Contrast Fixes"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -813,6 +813,19 @@ TEMPLATE = r'''<!DOCTYPE html>
     opacity: .10; filter: grayscale(1) saturate(.2); transform: translate(-50%, -48%) scale(1.06);
     pointer-events: none;
   }
+  /* Toronto and Tampa need a little extra ink because their marks contain
+     more fine/negative-space detail than the average NHL crest. Keep the
+     adjustment subtle so they read at the same visual weight as other teams. */
+  .edge-duel-card .edge-team-watermark[data-team="TOR"] {
+    width: 88%; height: 88%; opacity: .145;
+    filter: grayscale(1) saturate(.15) contrast(1.24);
+    transform: translate(-50%, -48%) scale(1.07);
+  }
+  .edge-duel-card .edge-team-watermark[data-team="TBL"] {
+    width: 88%; height: 88%; opacity: .155;
+    filter: grayscale(1) saturate(.12) contrast(1.34) brightness(.86);
+    transform: translate(-50%, -48%) scale(1.07);
+  }
   .edge-duel-card .edge-player-shot {
     position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
     background: transparent;
@@ -1041,8 +1054,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edge-duel-card.speedtrap-card { grid-template-rows: 132px 46px 18px 58px; min-height: 268px; }
     .speedtrap-card .edge-speed-media { height: 132px; }
     .edge-duel-card.speedtrap-card .edge-team-watermark { width: 82%; height: 66%; }
+    .edge-duel-card.speedtrap-card .edge-team-watermark[data-team="TOR"],
+    .edge-duel-card.speedtrap-card .edge-team-watermark[data-team="TBL"] { width: 88%; height: 72%; }
     .edge-draft .edge-speed-media { width: 92px; height: 112px; grid-row: 1 / span 4; }
     .edge-draft .edge-team-watermark { width: 82%; height: 66%; }
+    .edge-draft .edge-team-watermark[data-team="TOR"],
+    .edge-draft .edge-team-watermark[data-team="TBL"] { width: 88%; height: 72%; }
     .edge-map-card { grid-template-columns: 1fr; }
     .edge-rink { aspect-ratio: 510 / 450; }
     .edge-zone-list { grid-template-columns: repeat(3, minmax(0,1fr)); }
@@ -6972,7 +6989,7 @@ function edgeDuelCard(p, metric, reveal, cls, side) {
   if (metric === "speed" || metric === "shot") {
     return `<button type="button" class="edge-duel-card speedtrap-card ${cls || ""}" data-edge-side="${side}"${reveal ? " disabled" : ""}>
       <span class="edge-speed-media">
-        <img class="edge-team-watermark" src="${logo(p.team)}" alt="" aria-hidden="true" onerror="this.style.display='none'">
+        <img class="edge-team-watermark" data-team="${p.team}" src="${logo(p.team)}" alt="" aria-hidden="true" onerror="this.style.display='none'">
         <img class="edge-player-shot" src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
       </span>
       <b>${esc(p.name)}</b><small>${esc(posName(p))}</small>
@@ -7356,7 +7373,7 @@ G.edgebuild={
     $("ebRound").textContent=`${Math.min(done+1,4)} / 4`;$("ebScore").textContent=done?this.score(t,st.guesses):"—";
     $("ebBoard").innerHTML=EDGE_BUILD_CATS.map((c,n)=>{const id=st.guesses[n],p=id?BYID.get(Number(id)):null,pct=id?edgePercentile(c.metric,edgeValue(id,c.metric)):0;return`<div class="edge-build-slot"><small>${c.label}</small><b>${p?esc(p.name):"Open slot"}</b><em>${p?`${EDGE_METRICS[c.metric].show(edgeValue(id,c.metric))} · ${pct}th pct`:"Choose one player"}</em></div>`;}).join("");
     const selected=showing?Number(st.guesses[done-1]):null;
-    $("ebChoices").innerHTML=r.ids.map(id=>{const p=BYID.get(id),picked=selected===id,metric=EDGE_METRICS[r.metric],raw=edgeValue(id,r.metric),decimals=r.metric==="hd"?0:2,unit=r.metric==="miles"?"mi":r.metric==="hd"?"HD SOG":"MPH";return`<button type="button" class="edge-duel-card edge-build-card ${picked?"right":""}" data-eb="${id}"${showing||st.over?" disabled":""}><span class="edge-speed-media"><img class="edge-team-watermark" src="${logo(p?.team)}" alt="" aria-hidden="true" onerror="this.style.display='none'"><img class="edge-player-shot" src="${esc(p?.headshot||FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK"></span><b>${esc(p?.name||"Unknown")}</b><small>${esc(posName(p||{}))}</small>${showing?`<div class="edge-build-value" data-edge-build-value="${raw}" data-edge-build-decimals="${decimals}"><strong class="edge-build-number">${decimals?"0.00":"0"}</strong><em class="edge-build-unit">${unit}</em></div>`:""}</button>`;}).join("");
+    $("ebChoices").innerHTML=r.ids.map(id=>{const p=BYID.get(id),picked=selected===id,metric=EDGE_METRICS[r.metric],raw=edgeValue(id,r.metric),decimals=r.metric==="hd"?0:2,unit=r.metric==="miles"?"mi":r.metric==="hd"?"HD SOG":"MPH";return`<button type="button" class="edge-duel-card edge-build-card ${picked?"right":""}" data-eb="${id}"${showing||st.over?" disabled":""}><span class="edge-speed-media"><img class="edge-team-watermark" data-team="${p?.team||""}" src="${logo(p?.team)}" alt="" aria-hidden="true" onerror="this.style.display='none'"><img class="edge-player-shot" src="${esc(p?.headshot||FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK"></span><b>${esc(p?.name||"Unknown")}</b><small>${esc(posName(p||{}))}</small>${showing?`<div class="edge-build-value" data-edge-build-value="${raw}" data-edge-build-decimals="${decimals}"><strong class="edge-build-number">${decimals?"0.00":"0"}</strong><em class="edge-build-unit">${unit}</em></div>`:""}</button>`;}).join("");
     if(showing)animateEdgeBuildReveal($("ebChoices"));
     $("ebFeedback").textContent=showing?`You drafted ${BYID.get(selected)?.name||"that player"} for ${cat.label.toLowerCase()}.`:st.over?"":`${cat.label}: ${cat.copy}. Pick the trait you want.`;
   }
