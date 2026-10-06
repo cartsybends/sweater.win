@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "114 · Fix Goalie Removal"
+VERSION = "115 · Center Teams Games"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -8490,10 +8490,29 @@ function renderTeamHub(t) {
     </div><div id="teamModePanel"></div>`;
   $("backTeamPicker").onclick = () => { history.pushState(null, "", "#teams"); renderTeamPicker(); };
 }
+function centerTeamMode(mode) {
+  // Each Teams game has a different visual centre. Anchor the part the player
+  // actually interacts with instead of using "nearest", which can leave the
+  // newly opened game below the fold when the team page is already visible.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const panel = $("teamModePanel")?.querySelector(".teammodepanel");
+    if (!panel) return;
+    const anchors = {
+      best: panel.querySelector(".optrow"),       // keep Decade / Category / Questions visible
+      guess: panel.querySelector(".seasons"),
+      higher: panel.querySelector(".hlpair"),
+      mystery: panel.querySelector(".ttcard"),
+    };
+    const anchor = anchors[mode] || panel;
+    const rect = anchor.getBoundingClientRect();
+    const target = Math.max(0, window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2);
+    window.scrollTo({ top: target, behavior: "smooth" });
+  }));
+}
 function teamModeShell(t, mode, body) {
   const names = {best:"Best Of",guess:"Guess the Player",higher:"Higher or Lower",mystery:"Mystery Season"};
   $("teamModePanel").innerHTML = `<section class="teammodepanel"><h3>${names[mode]}</h3>${body}</section>`;
-  $("teamModePanel").scrollIntoView({behavior:"smooth",block:"nearest"});
+  centerTeamMode(mode);
 }
 function makeTeamSearch(inputId, listId, h, onChoose, usedIds = () => []) {
   const input=$(inputId), ul=$(listId); let idx=-1, found=[];
