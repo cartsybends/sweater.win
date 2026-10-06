@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "95 · Aligned EDGE Reveal Panels"
+VERSION = "96 · Pro Shot Map Rink"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -819,20 +819,70 @@ TEMPLATE = r'''<!DOCTYPE html>
     45% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--hit) 18%, transparent), 0 12px 26px color-mix(in srgb, var(--hit) 13%, transparent); }
   }
   .edge-feedback { min-height: 22px; margin: 5px 0 10px; color: var(--muted); font-size: 12px; font-weight: 700; text-align: center; }
-  .edge-map-card { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(180px, .75fr); gap: 14px; max-width: 720px;
-                   margin: 0 auto 12px; padding: 14px; border: 1px solid var(--line); border-radius: 17px; background: var(--panel); }
-  .edge-rink { width: 100%; min-height: 240px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--cream) 28%, var(--panel)); }
-  .edge-rink text { fill: var(--fg); font-family: inherit; font-weight: 800; }
-  .edge-rink .rinkline { fill: none; stroke: var(--muted); stroke-opacity: .38; }
-  .edge-rink .zone-long { fill: color-mix(in srgb, var(--link) 15%, transparent); }
-  .edge-rink .zone-mid { fill: color-mix(in srgb, var(--near) 22%, transparent); }
-  .edge-rink .zone-high { fill: color-mix(in srgb, var(--hit) 28%, transparent); }
-  .edge-zone-list { display: grid; align-content: center; gap: 10px; }
-  .edge-zone-row { padding: 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--cell); }
-  .edge-zone-row span { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 750; }
-  .edge-zone-row b { font-variant-numeric: tabular-nums; }
+  .edge-map-card {
+    display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(190px, .7fr); gap: 14px; max-width: 760px;
+    margin: 0 auto 12px; padding: 14px; border: 1px solid var(--line); border-radius: 17px;
+    background: var(--panel); overflow: hidden;
+  }
+  .edge-rink-stage { position: relative; min-width: 0; border: 1px solid var(--line); border-radius: 15px; overflow: hidden;
+                     background: color-mix(in srgb, var(--cream) 42%, var(--panel)); }
+  .edge-rink { display: block; width: 100%; height: auto; aspect-ratio: 510 / 450; }
+  .edge-rink text { font-family: inherit; }
+  .edge-rink .ice-sheet { fill: color-mix(in srgb, var(--cream) 52%, var(--panel)); }
+  .edge-rink .ice-board { fill: none; stroke: color-mix(in srgb, var(--fg) 46%, transparent); stroke-width: 2.25; }
+  .edge-rink .ice-red { fill: none; stroke: #c84b4b; stroke-width: 2; stroke-opacity: .72; }
+  .edge-rink .ice-blue { fill: none; stroke: #3f78bd; stroke-width: 7; stroke-opacity: .78; }
+  .edge-rink .ice-mark { fill: none; stroke: color-mix(in srgb, var(--fg) 30%, transparent); stroke-width: 1.6; }
+  .edge-rink .ice-faceoff { fill: none; stroke: #c84b4b; stroke-width: 2; stroke-opacity: .66; }
+  .edge-rink .ice-dot { fill: #c84b4b; fill-opacity: .76; }
+  .edge-rink .ice-crease { fill: color-mix(in srgb, #6caee8 19%, transparent); stroke: #4d8bc4; stroke-width: 1.7; }
+  .edge-rink .ice-net { fill: color-mix(in srgb, var(--panel) 72%, transparent); stroke: #c84b4b; stroke-width: 2.2; }
+  .edge-rink .ice-netmesh { fill: none; stroke: color-mix(in srgb, var(--fg) 22%, transparent); stroke-width: 1; }
+  .edge-rink .edge-heat { opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .edge-rink .heat-long { fill: color-mix(in srgb, var(--link) 44%, transparent); }
+  .edge-rink .heat-mid { fill: color-mix(in srgb, var(--near) 58%, transparent); }
+  .edge-rink .heat-high { fill: color-mix(in srgb, var(--hit) 64%, transparent); }
+  .edge-rink .zone-tag rect { fill: color-mix(in srgb, var(--panel) 86%, transparent); stroke: color-mix(in srgb, var(--fg) 14%, transparent); }
+  .edge-rink .zone-tag text { fill: var(--fg); font-size: 10px; font-weight: 850; letter-spacing: .07em; }
+  .edge-map-card.map-enter .edge-heat { animation: edgeHeatIn .62s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--delay); }
+  .edge-map-card.map-enter .edge-rink-stage { animation: edgeRinkIn .38s cubic-bezier(.2,.75,.2,1) both; }
+  .edge-map-card.map-answer .edge-rink-stage { animation: edgeRinkAnswer .46s ease both; }
+  .edge-zone-list { display: grid; align-content: center; gap: 8px; min-width: 0; }
+  .edge-zone-summary { padding: 11px 11px 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--cell); }
+  .edge-zone-summary small, .edge-zone-summary strong, .edge-zone-summary span { display: block; }
+  .edge-zone-summary small { color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+  .edge-zone-summary strong { margin-top: 3px; font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+  .edge-zone-summary span { margin-top: 4px; color: var(--muted); font-size: 9px; }
+  .edge-zone-row { --zone: var(--link); padding: 9px 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--cell); }
+  .edge-zone-row[data-zone="mid"] { --zone: var(--near); }
+  .edge-zone-row[data-zone="high"] { --zone: var(--hit); }
+  .edge-zone-row > span { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 10px; font-weight: 780; }
+  .edge-zone-row .edge-zone-name { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+  .edge-zone-row .edge-zone-name::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--zone); flex: none; }
+  .edge-zone-row b { font-size: 12px; font-variant-numeric: tabular-nums; }
+  .edge-zone-row em { margin-left: 3px; color: var(--muted); font-size: 9px; font-style: normal; font-weight: 700; }
   .edge-zone-bar { height: 5px; margin-top: 7px; overflow: hidden; border-radius: 999px; background: color-mix(in srgb, var(--fg) 8%, transparent); }
-  .edge-zone-bar i { display: block; height: 100%; border-radius: inherit; background: var(--link); }
+  .edge-zone-bar i { display: block; width: var(--share); height: 100%; border-radius: inherit; background: var(--zone);
+                     transform: scaleX(0); transform-origin: left center; }
+  .edge-map-card.map-enter .edge-zone-bar i { animation: edgeBarGrow .6s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--delay); }
+  .edge-choice { transition: transform .18s ease, border-color .18s ease, background-color .18s ease, opacity .18s ease; }
+  .edge-choice.right { animation: edgeMapRight .46s cubic-bezier(.2,.8,.2,1) both; }
+  .edge-choice.wrong { animation: edgeMapWrong .36s ease both; }
+  @keyframes edgeHeatIn {
+    from { opacity: 0; transform: scale(.82); }
+    to { opacity: var(--zone-opacity); transform: scale(1); }
+  }
+  @keyframes edgeRinkIn {
+    from { opacity: .35; transform: translateY(5px) scale(.992); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes edgeRinkAnswer {
+    0%,100% { border-color: var(--line); }
+    50% { border-color: color-mix(in srgb, var(--link) 50%, var(--line)); }
+  }
+  @keyframes edgeBarGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes edgeMapRight { 0% { transform: scale(.985); } 65% { transform: scale(1.025); } 100% { transform: scale(1); } }
+  @keyframes edgeMapWrong { 0%,100% { transform: translateX(0); } 35% { transform: translateX(-3px); } 70% { transform: translateX(3px); } }
   .edge-choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; max-width: 660px; margin: 0 auto; }
   .edge-choice { min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--cell);
                  color: var(--cell-fg); font: inherit; font-weight: 750; cursor: pointer; }
@@ -859,7 +909,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     .speedtrap-card .edge-speed-media { height: 132px; }
     .edge-duel-card.speedtrap-card .edge-team-watermark { height: 66%; }
     .edge-map-card { grid-template-columns: 1fr; }
-    .edge-rink { min-height: 210px; }
+    .edge-rink { aspect-ratio: 510 / 450; }
+    .edge-zone-list { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .edge-zone-summary { grid-column: 1 / -1; }
+    .edge-zone-row { padding: 8px; }
+    .edge-zone-row > span { display: block; }
+    .edge-zone-row b { display: block; margin-top: 4px; }
     .edge-build-board { grid-template-columns: repeat(2, minmax(0,1fr)); }
     .edge-draft { grid-template-columns: 1fr; }
     .edge-draft .edge-duel-card { min-height: 120px; display: grid; grid-template-columns: 92px 1fr; align-items: center; padding: 0 10px 0 0; text-align: left; }
@@ -3192,7 +3247,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="view" id="view-edgemap" hidden>
     <div class="edge-shell">
       <p class="edge-kicker">NHL EDGE · Shot location</p>
-      <p class="edge-intro">Identify the player from their real high-danger, mid-range and long-range shot-on-goal profile.</p>
+      <p class="edge-intro">Read the offensive-zone profile: high-danger, mid-range and long-range shots on goal from NHL EDGE.</p>
       <div class="edge-hud"><span><small>Round</small><b id="emRound">1 / 5</b></span><span><small>Right</small><b id="emScore">0</b></span></div>
       <div id="emMap"></div>
       <div class="edge-choices" id="emChoices"></div>
@@ -6887,25 +6942,71 @@ function edgeMapRandom(rnd) {
   }
   return rounds.length===5?{rounds}:null;
 }
-function edgeShotMapMarkup(p) {
+function edgeShotMapMarkup(p, answer = false) {
   const e=p.edge, total=Math.max(1,Number(e.hd)+Number(e.mid)+Number(e.long));
-  const rows=[["High-danger",Number(e.hd)],["Mid-range",Number(e.mid)],["Long-range",Number(e.long)]];
-  const pct=n=>Math.round(n/total*100);
-  const op=n=>(.18+.62*Math.min(1,n/Math.max(...rows.map(x=>x[1]),1))).toFixed(2);
-  return `<div class="edge-map-card">
-    <svg class="edge-rink" viewBox="0 0 320 220" role="img" aria-label="Shot-on-goal distribution by NHL EDGE zone">
-      <rect x="8" y="8" width="304" height="204" rx="52" class="rinkline"/>
-      <line x1="8" y1="62" x2="312" y2="62" class="rinkline"/><circle cx="160" cy="110" r="34" class="rinkline"/>
-      <path class="zone-long" style="opacity:${op(e.long)}" d="M20 20h280v78H20z"/>
-      <path class="zone-mid" style="opacity:${op(e.mid)}" d="M82 86h156l-25 73H107z"/>
-      <path class="zone-high" style="opacity:${op(e.hd)}" d="M120 128h80l-17 55h-46z"/>
-      <path class="rinkline" d="M136 187h48v12h-48z"/><path class="rinkline" d="M127 187a33 33 0 0 0 66 0"/>
-      <text x="160" y="47" text-anchor="middle" font-size="11">LONG RANGE</text>
-      <text x="160" y="121" text-anchor="middle" font-size="11">MID RANGE</text>
-      <text x="160" y="159" text-anchor="middle" font-size="10">HIGH DANGER</text>
-    </svg>
-    <div class="edge-zone-list">${rows.map(([label,n])=>`<div class="edge-zone-row"><span><span>${label}</span><b>${n} · ${pct(n)}%</b></span><div class="edge-zone-bar"><i style="width:${pct(n)}%"></i></div></div>`).join("")}</div>
+  const rows=[
+    {key:"high",label:"High danger",n:Number(e.hd),delay:".12s"},
+    {key:"mid",label:"Mid range",n:Number(e.mid),delay:".20s"},
+    {key:"long",label:"Long range",n:Number(e.long),delay:".28s"},
+  ];
+  const pct=n=>Math.max(0,Math.min(100,Math.round(n/total*100)));
+  const max=Math.max(...rows.map(x=>x.n),1);
+  const opacity=n=>(.16+.54*(n/max)).toFixed(2);
+  return `<div class="edge-map-card map-enter${answer?" map-answer":""}">
+    <div class="edge-rink-stage">
+      <svg class="edge-rink" viewBox="0 0 510 450" role="img" aria-label="Top-down offensive-zone NHL rink showing EDGE shot-location distribution">
+        <defs>
+          <clipPath id="edgeZoneClip"><path d="M62 12H448Q498 12 498 62V430H12V62Q12 12 62 12Z"/></clipPath>
+        </defs>
+        <path class="ice-sheet" d="M62 12H448Q498 12 498 62V430H12V62Q12 12 62 12Z"/>
+        <g clip-path="url(#edgeZoneClip)">
+          <path class="edge-heat heat-long" style="--zone-opacity:${opacity(e.long)};--delay:.28s" d="M25 265C95 278 157 309 255 324C353 309 415 278 485 265V427H25Z"/>
+          <path class="edge-heat heat-mid" style="--zone-opacity:${opacity(e.mid)};--delay:.20s" d="M85 140C126 118 176 123 255 145C334 123 384 118 425 140L390 300C342 286 304 270 255 258C206 270 168 286 120 300Z"/>
+          <path class="edge-heat heat-high" style="--zone-opacity:${opacity(e.hd)};--delay:.12s" d="M194 93H316L301 242C285 252 271 258 255 263C239 258 225 252 209 242Z"/>
+        </g>
+
+        <path class="ice-board" d="M62 12H448Q498 12 498 62V430H12V62Q12 12 62 12Z"/>
+        <line class="ice-blue" x1="12" y1="429" x2="498" y2="429"/>
+        <line class="ice-red" x1="18" y1="78" x2="492" y2="78"/>
+
+        <path class="ice-red" d="M190 78L164 16M320 78L346 16" opacity=".42"/>
+        <path class="ice-crease" d="M225 78A30 30 0 0 0 285 78V100H225Z"/>
+        <path class="ice-net" d="M229 77V59Q229 52 237 52H273Q281 52 281 59V77Z"/>
+        <path class="ice-netmesh" d="M236 54V76M246 53V77M256 53V77M266 53V77M276 54V76M230 61H280M229 69H281"/>
+
+        <circle class="ice-faceoff" cx="145" cy="205" r="48"/><circle class="ice-faceoff" cx="365" cy="205" r="48"/>
+        <circle class="ice-dot" cx="145" cy="205" r="4.5"/><circle class="ice-dot" cx="365" cy="205" r="4.5"/>
+        <path class="ice-red" d="M105 190h18m44 0h18M105 220h18m44 0h18M325 190h18m44 0h18M325 220h18m44 0h18"/>
+        <path class="ice-mark" d="M140 157v14m10-14v14M140 239v14m10-14v14M360 157v14m10-14v14M360 239v14m10-14v14"/>
+        <circle class="ice-dot" cx="255" cy="350" r="4" opacity=".48"/>
+
+        <g class="zone-tag" transform="translate(213 122)"><rect width="84" height="23" rx="11.5"/><text x="42" y="15" text-anchor="middle">HIGH DANGER</text></g>
+        <g class="zone-tag" transform="translate(215 247)"><rect width="80" height="23" rx="11.5"/><text x="40" y="15" text-anchor="middle">MID RANGE</text></g>
+        <g class="zone-tag" transform="translate(214 364)"><rect width="82" height="23" rx="11.5"/><text x="41" y="15" text-anchor="middle">LONG RANGE</text></g>
+      </svg>
+    </div>
+    <div class="edge-zone-list">
+      <div class="edge-zone-summary"><small>Tracked shots on goal</small><strong data-edge-count="${total}">0</strong><span>${esc(edgeSeasonLabel())} regular season</span></div>
+      ${rows.map(row=>`<div class="edge-zone-row" data-zone="${row.key}" style="--share:${pct(row.n)}%;--delay:${row.delay}">
+        <span><span class="edge-zone-name">${row.label}</span><span><b data-edge-count="${row.n}">0</b><em>${pct(row.n)}%</em></span></span>
+        <div class="edge-zone-bar"><i></i></div>
+      </div>`).join("")}
+    </div>
   </div>`;
+}
+function animateEdgeMapStats(root) {
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  root.querySelectorAll("[data-edge-count]").forEach(el=>{
+    const target=Number(el.dataset.edgeCount)||0;
+    if(reduced){el.textContent=target;return;}
+    const start=performance.now(),duration=520;
+    const frame=now=>{
+      const t=Math.min(1,(now-start)/duration),eased=1-Math.pow(1-t,3);
+      el.textContent=String(Math.round(target*eased));
+      if(t<1&&el.isConnected)requestAnimationFrame(frame);else el.textContent=String(target);
+    };
+    requestAnimationFrame(frame);
+  });
 }
 G.edgemap = {
   localOnly:true,kind:"score",repeat:true,title:"Shot Map",share:"Sweater Shot Map",view:"view-edgemap",max:5,next:"Play again",hideReveal:true,
@@ -6923,13 +7024,14 @@ G.edgemap = {
   guess(t,x,fresh){
     if(!/^[0-3]$/.test(String(x)))return null;
     const i=S.edgemap.guesses.length;if(i>=t.rounds.length)return null;
-    if(fresh){this.lastCorrect=this.right(t,x,i);this.pending=true;clearTimeout(this.timer);this.timer=setTimeout(()=>{this.pending=false;if(game==="edgemap"&&!S.edgemap.over)this.render(t,S.edgemap);},900);}
+    if(fresh){this.lastCorrect=this.right(t,x,i);this.pending=true;clearTimeout(this.timer);this.timer=setTimeout(()=>{this.pending=false;if(game==="edgemap"&&!S.edgemap.over)this.render(t,S.edgemap);},1500);}
     return false;
   },
   render(t,st){
     const done=st.guesses.length,showing=this.pending&&done>0,i=showing?done-1:Math.min(done,t.rounds.length-1),r=t.rounds[i],p=EDGE_POOL.find(x=>x.id===r.id);
     $("emRound").textContent=`${Math.min(done+1,5)} / 5`;$("emScore").textContent=this.score(t,st.guesses)/2;
-    $("emMap").innerHTML=p?edgeShotMapMarkup(p):"";
+    $("emMap").innerHTML=p?edgeShotMapMarkup(p,showing):"";
+    animateEdgeMapStats($("emMap"));
     const picked=showing?Number(st.guesses[done-1]):-1;
     $("emChoices").innerHTML=r.ids.map((id,n)=>{const q=BYID.get(id);const cls=showing?(n===r.a?" right":n===picked?" wrong":""):"";return`<button type="button" class="edge-choice ${cls}" data-em="${n}"${showing||st.over?" disabled":""}>${esc(q?.name||"Unknown")}</button>`;}).join("");
     $("emFeedback").textContent=showing?(this.lastCorrect?`Right — ${p.name}.`:`It was ${p.name}.`):st.over?"":"Who owns this shot-location profile?";
