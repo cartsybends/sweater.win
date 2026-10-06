@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "113 · Remove Goalie Mode"
+VERSION = "114 · Fix Goalie Removal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2830,7 +2830,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .arc-controls { display: flex; justify-content: center; gap: 12px; margin: 18px 0 12px; }
   .arc-controls button { min-height: 46px; }
   .arc-note { text-align: center; color: var(--muted); font-size: 13px; line-height: 1.6; margin: 12px auto; max-width: 580px; }
-  .ot-time.urgent { color: #ef4444; }  .ot-time.urgent { color: #ef4444; }
+  .ot-time.urgent { color: #ef4444; }
   .ot-meter { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin: -6px 0 24px; }
   .ot-meter i { display: block; width: 50%; height: 100%; background: var(--fg); }
   .ot-question { text-align: center; min-height: 110px; display: grid; align-content: center; gap: 10px; margin: 18px 0; }
@@ -3320,7 +3320,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="nodata" hidden>This game isn't available right now.</p>
   </section>
 
-  <section class="view" id="view-overtime" hidden>
   <section class="view" id="view-overtime" hidden>
     <div class="arc-hud"><div><small>Time left</small><strong class="ot-time" id="otTime">0:45</strong></div><div><small>Right answers</small><strong id="otScore">0</strong></div><div><small>Streak</small><strong id="otStreak">0</strong></div></div>
     <div class="ot-meter" aria-hidden="true"><i id="otMeter"></i></div>
@@ -5891,7 +5890,7 @@ function arcadeBest(id, st) {
   const score = G[id].score(st.target, st.guesses), key = `sweater-${id}-best`;
   store.set(key, Math.max(Number(store.get(key)) || 0, score));
 }
-function overtimeRandom(rnd) {function overtimeRandom(rnd) {
+function overtimeRandom(rnd) {
   const rounds=[], seen=new Set(), used={kinds:new Set(),players:new Set()}, trophies=trophyRandom(rnd)?.rounds || [];
   for(let attempt=0; rounds.length<100 && attempt<1000; attempt++) {
     const trophy=rounds.length%5===4 ? trophies[Math.floor(rounds.length/5)] : null;
