@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "109 · EDGE Watermark Contrast Fixes"
+VERSION = "110 · Stable Blur Frost Layout"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -4401,10 +4401,16 @@ G.blur = {
     $("blWrong").innerHTML = "";
     $("blClues").innerHTML = "";
     const st = S.blur;
-    if (!Number.isInteger(st.opts && st.opts.frostSeed)) {
-      st.opts = { ...(st.opts || {}), frostSeed: Math.floor(Math.random() * 4294967296) };
-    }
-    const frostStages = blFrostStages(st.opts.frostSeed);
+    // The frost pattern belongs to the puzzle, not to the render session.
+    // Reopening Blur must never expose a different set of tiles for free.
+    // Daily/archive layouts vary by date; Unlimited stays fixed for the
+    // current player even if the user leaves the mode and comes back.
+    const frostKey = st.mode === "unlimited"
+      ? `unlimited:${t.id}`
+      : `${st.mode || "daily"}:${st.day || dayKey()}:${t.id}`;
+    const frostSeed = hash(`sweater-blur-frost:${frostKey}`);
+    st.opts = { ...(st.opts || {}), frostSeed };
+    const frostStages = blFrostStages(frostSeed);
     $("blFrost").innerHTML = frostStages.map((at, i) => `<span data-clear-at="${at}" data-frost-tile="${i}"></span>`).join("");
     $("blMeter").innerHTML = Array.from({ length: 5 }, (_, i) => `<i data-bl-meter="${i}"></i>`).join("");
     $("blPhoto").classList.remove("revealed");
