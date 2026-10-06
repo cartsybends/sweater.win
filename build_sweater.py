@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "86 · Eyes Only Reveal"
+VERSION = "87 · Remove Zamboni Reveal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -718,41 +718,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shopt.wrong { background: #c0392b; color: #fff; }
   .shopt.dim { opacity: .45; }
   .shopt:disabled { cursor: default; }
-
-  /* zamboni reveal — eyes only */
-  .zambox {
-    position: relative; width: min(320px, 84vw); aspect-ratio: 1; margin: 8px auto 14px;
-    overflow: hidden; border: 1px solid var(--line); border-radius: 22px;
-    background: color-mix(in srgb, var(--panel) 86%, var(--cell));
-    box-shadow: 0 12px 30px rgba(23,59,75,.08);
-  }
-  .zambox img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top;
-    user-select: none; -webkit-user-drag: none;
-  }
-  .zameyemask { position: absolute; inset: 0; pointer-events: none; }
-  .zameyemask::before, .zameyemask::after {
-    content: ""; position: absolute; left: 0; right: 0;
-    background:
-      radial-gradient(circle at 50% 34%, rgba(255,255,255,.10), transparent 36%),
-      linear-gradient(145deg, rgba(229,242,248,.97), rgba(184,211,224,.96));
-    -webkit-backdrop-filter: blur(20px) saturate(.72);
-    backdrop-filter: blur(20px) saturate(.72);
-  }
-  .zameyemask::before { top: 0; height: 30%; }
-  .zameyemask::after { bottom: 0; height: 48%; }
-  .zameyeslit {
-    position: absolute; left: 7%; right: 7%; top: 30%; height: 22%;
-    border: 1px solid rgba(255,255,255,.56); border-radius: 10px;
-    box-shadow: inset 0 0 0 1px rgba(20,54,70,.08), 0 4px 12px rgba(23,59,75,.12);
-    pointer-events: none;
-  }
-  .zameyeslit::after {
-    content: "EYES ONLY"; position: absolute; right: 7px; bottom: 5px;
-    padding: 2px 5px; border-radius: 999px; background: rgba(9,22,29,.58); color: #fff;
-    font-size: 8px; font-weight: 850; letter-spacing: .08em;
-  }
-  .zambox.revealed .zameyemask, .zambox.revealed .zameyeslit { display: none; }
 
   /* team hubs */
   #view-teams { max-width: 1040px; }
@@ -3047,23 +3012,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="slot"></div><p class="nodata" hidden>This game needs player data. Rebuild the site to load it.</p>
   </section>
 
-  <section class="view" id="view-zam" hidden>
-    <p class="intro">Can you identify the player from just their eyes?</p>
-    <div class="zambox" id="zmBox">
-      <img id="zmImg" alt="" draggable="false">
-      <div class="zameyemask" aria-hidden="true"></div>
-      <div class="zameyeslit" aria-hidden="true"></div>
-    </div>
-    <div class="search narrow">
-      <input id="zmGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="zmOpts" placeholder="Guess 1 of 3">
-      <ul class="list" id="zmOpts" role="listbox" hidden></ul>
-    </div>
-    <p class="hint" id="zmLeft"></p>
-    <div class="slot"></div>
-    <p class="nodata" hidden>This game isn't available right now.</p>
-    <ul class="wrong" id="zmWrong"></ul>
-  </section>
-
   <section class="view" id="view-teams" hidden>
     <div id="teamsBody"></div>
   </section>
@@ -3446,7 +3394,7 @@ const UI_ICONS = {
   people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
-const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", zam: "ice", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net" };
+const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net" };
 MODE_ICONS.goalie = "shield";
 MODE_ICONS.overtime = "clock";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
@@ -3490,7 +3438,7 @@ const secondsToEtMidnight = () => {
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
- "shoot", "goalie", "overtime", "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+ "shoot", "goalie", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -3920,7 +3868,7 @@ Object.assign(TEAM_NAMES, {
 });
 const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "PHX", "ATL", "MNS", "HFD", "QUE", "AFM", "CLR", "KCS", "CGS", "OAK", "CLE"]);
 const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot",
-                         "zam", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].includes(g);
+                         "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].includes(g);
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
 const teamName = t => TEAM_NAMES[t] || t;
 
@@ -5537,55 +5485,6 @@ $("shNet").addEventListener("click", e => {
 });
 $("shNext").onclick = () => { shootUI = { phase: "ask" }; G.shoot.render(S.shoot.target, S.shoot); };
 
-// ---- Zamboni Reveal: clear the ice to find the player ----
-const ZAM_BRUSH = 24;
-G.zam = {
-  kind: "score", title: "Zamboni Reveal", share: "Sweater Zamboni", view: "view-zam", max: 3, next: "Next player",
-  pool: () => BL_POOL,
-  daily(k) {
-    const p = BYID.get(DAILY.zam[k]);
-    return p && p.headshot ? p : BL_POOL[hash("sweater-zam-" + k) % BL_POOL.length];
-  },
-  random: () => pick(BL_POOL),
-  tid: t => t.id, player: t => t,
-  isWin: (t, id) => Number(id) === t.id,
-  isDone(t, g) { return g.some(id => this.isWin(t, id)) || g.length >= 3; },
-  wonGame(t, g) { return g.some(id => this.isWin(t, id)); },
-  score(t, g) {
-    const i = g.findIndex(id => this.isWin(t, id));
-    return i < 0 ? 0 : [10, 7, 4][i];
-  },
-  meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
-  endText(t, g, won) {
-    return won
-      ? { result: `Got him on guess ${g.length}`, cheer: `${this.score(t, g)} points · eagle eyes 👀` }
-      : { result: "Out of guesses", cheer: "The mystery player was" };
-  },
-  celebrate: (t, g, won) => won,
-  archiveStatus: h => h.w ? `${h.s} pts` : "✗",
-  shareText(t, saved, num, link) {
-    const won = this.wonGame(t, saved.guesses);
-    return `Sweater Zamboni #${num} · ${this.score(t, saved.guesses)} pts\n${won ? `👀 Got it in ${saved.guesses.length} ${saved.guesses.length === 1 ? "guess" : "guesses"}` : "❌ Missed"}${link}`;
-  },
-  reset(t) {
-    $("zmWrong").innerHTML = "";
-    $("zmBox").classList.remove("revealed");
-    $("zmImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
-    $("zmImg").src = t.headshot || FALLBACK;
-  },
-  guess(t, id) {
-    const p = BYID.get(Number(id));
-    if (!p) return null;
-    if (p.id !== t.id) addWrong("zmWrong", p);
-    return p.id === t.id;
-  },
-  render(t, st) {
-    $("zmBox").classList.toggle("revealed", st.over);
-    const left = this.max - st.guesses.length;
-    $("zmLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "guess" : "guesses"} left · only the eyes are visible.`;
-  },
-};
-
 // ---- Goalie Mode and Overtime ----
 const GL_SPOTS = [[21,43],[79,43],[21,78],[79,78],[50,78]];
 const arcadeAnswers = guesses => guesses.filter(x => x !== "START" && x !== "END");
@@ -6902,7 +6801,7 @@ function updateLabels() {
     : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
-  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "zmGuess", "phGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
+  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "phGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
   const today = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
     : mode === "archive" ? `Archive · #${dailyNumber(game, archiveDay)}` : "Unlimited play";
@@ -7060,7 +6959,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
 }
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
-                  makeSearch("zmGuess", "zmOpts"), makeSearch("phGuess", "phOpts"),
+                  makeSearch("phGuess", "phOpts"),
                   makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p))];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
@@ -7451,7 +7350,6 @@ const LB_RULES = {
   truths: "Two Truths: 2 points for every round you get right, up to 10.",
   hlt: "Team Higher or Lower: 1 point for every right answer in a row, up to 40.",
   season: "Mystery Season: 10 points on the first try, 6 on the second, 3 on the third.",
-  zam: "Zamboni Reveal: up to 10 points, minus 1 for every 10% of the ice cleared and 2 for each extra guess.",
   ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
@@ -7609,7 +7507,6 @@ const HUB = [
     ["playoff", "🏒", "Name him from one postseason run as clues build."],
     ["journey", "🧭", "Name him from the teams he's played for."],
     ["blur", "🔍", "Piece together a frosted portrait as every miss opens another window."],
-    ["zam", "🧊", "Clear the ice to reveal him. Guess early for more points."],
   ]},
   { title: "Know the details", tone: "blue", games: [
     ["team", "🛡️", "Which team was he on that season?"],
@@ -7646,8 +7543,7 @@ const MODE_META = Object.freeze({
   statline: { type: "Stats", time: "2–4 min", difficulty: "Hard", fact: "Each miss reveals another carefully chosen season and more of the player’s career fingerprint.", next: "playoff" },
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
-  blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "zam" },
-  zam:      { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Clear the ice quickly, but one early correct guess is worth the gamble.", next: "classic" },
+  blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "classic" },
   team:     { type: "Seasons", time: "1–2 min", difficulty: "Medium", fact: "The right answer is the sweater the player wore in that exact season.", next: "season" },
   number:   { type: "Details", time: "1 min", difficulty: "Easy", fact: "A player’s number is a small detail—unless it is the one you miss.", next: "draft" },
   draft:    { type: "Draft", time: "2 min", difficulty: "Hard", fact: "Draft position turns hockey memory into a genuine scouting test.", next: "trophy" },
@@ -8373,8 +8269,6 @@ const HELP = {
     <p>A right answer keeps your run going and ties count as right. The daily run has 40 matchups. On a keyboard, use ↑ and ↓.</p>`,
   roster: `<p>Press <b>Start</b>, then fill the team's roster in 60 seconds. The board uses the club's most recent completed game to estimate four forward lines and three defense pairs from 5-on-5 shift overlap, with the starting goalie first. Current roster players outside those slots appear under Extras.</p>
     <p>A last name is enough unless two players share it. If the NHL shift feed is unavailable, Sweater falls back to a position-based lineup so the game still works.</p>`,
-  zam: `<p>Drag across the ice to clear it and reveal the player's photo. Guess whenever you're ready. You get 3 guesses.</p>
-    <p>The less ice you've cleared when you get it, the more points you score.</p>`,
   rank: `<p>Drag the 5 players into order by the stat shown, or use the arrows, then press <b>Lock it in</b>. You get 3 tries; rows in the right spot turn green.</p>`,
   puck: `<p>Press <b>Drop the puck</b>. Player names slide across the ice. Tap only the ones who fit the rule before they pass. Each right tap is a point and each wrong tap costs one.</p>`,
   shoot: `<p>Five shooters. Answer each question right to earn a shot, then pick a spot on the net. If the goalie guessed the same spot, it's a save. Score 3 or more to win.</p>`,
@@ -9008,7 +8902,7 @@ def plan_conn(days, pool, today):
     return dict(sorted(days.items()))
 
 
-# ---- Rank 'Em, Puck Drop, Shootout, Zamboni ----
+# ---- Rank 'Em, Puck Drop, Shootout ----
 RANK_STATS = ["goals", "points", "gp", "height", "weight", "age"]
 
 
@@ -9870,7 +9764,6 @@ def update_schedule(players, today, roster_players):
                   {str(i): i for i, p in pool.items() if isinstance(p.get("draft"), list) and len(p["draft"]) >= 2},
                   "sweater-dr"),
         "map": ("map_days", "map_start", {str(i): i for i, p in pool.items() if p.get("bp")}, "sweater-map"),
-        "zam": ("zam_days", "zam_start", {str(i): i for i, p in pool.items() if p.get("headshot")}, "sweater-zam"),
         "roster": ("roster_days", "roster_start",
                    {t: {"team": t, "ids": sorted(ids)} for t, ids in roster_teams.items() if len(ids) >= 10},
                    "sweater-ro", 20),
