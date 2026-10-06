@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "101 · Shot Map Drag Rink"
+VERSION = "102 · Shot Map Construction Pause"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -996,6 +996,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edge-shot-cluster,.edge-rink-player-reveal,.edge-mini-player.shoot .edge-mini-stick { animation:none; }
     .edge-mini-player { transition:none; }
   }
+  .edgecard.construction:disabled { opacity: .62; cursor: not-allowed; border-style: dashed; }
+  .edgecard.construction:disabled .edgecardtag { color: var(--near); }
+  .edgecard.construction:disabled b { opacity: .78; }
+
   .edge-build-board { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 7px; max-width: 720px; margin: 0 auto 12px; }
   .edge-build-slot { min-height: 72px; padding: 9px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
   .edge-build-slot small, .edge-build-slot b, .edge-build-slot em { display: block; }
@@ -8342,7 +8346,7 @@ const HUB = [
 const EDGE_GAMES = [
   { id:"edgespeed", title:"Speed Trap", tag:"Skating speed", blurb:"Pick the faster skater from their recorded max speed." },
   { id:"edgeshot", title:"Hardest Shot", tag:"Shot velocity", blurb:"Two players. One radar gun. Who fired the harder shot?" },
-  { id:"edgemap", title:"Shot Map", tag:"Shot location", blurb:"Read the shot-on-goal profile, then drag the right player onto the ice." },
+  { id:"edgemap", title:"Shot Map", tag:"Under construction", blurb:"We’re rebuilding this mode. Check back soon.", maintenance:true },
   { id:"edgebuild", title:"Build a Player", tag:"Draft room", blurb:"Draft Speed, Shot, Engine and Danger into one tracking-data super-player." },
 ];
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
@@ -8358,7 +8362,7 @@ const MODE_META = Object.freeze({
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
   blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "classic" },
   edgespeed:{ type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Max skating speed comes directly from NHL EDGE player tracking.", next: "edgeshot" },
-  edgeshot: { type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Hardest Shot uses tracked in-game shot velocity from NHL EDGE.", next: "edgemap" },
+  edgeshot: { type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Hardest Shot uses tracked in-game shot velocity from NHL EDGE.", next: "edgebuild" },
   edgemap:  { type: "NHL EDGE", time: "2 min", difficulty: "Hard", fact: "Drag the player onto a rink built from real NHL EDGE high-danger, mid-range and long-range shot-on-goal totals.", next: "edgebuild" },
   edgebuild:{ type: "NHL EDGE", time: "2 min", difficulty: "Medium", fact: "Your rating is built from percentiles inside Sweater's embedded EDGE player pool.", next: "edgespeed" },
   team:     { type: "Seasons", time: "1–2 min", difficulty: "Medium", fact: "The right answer is the sweater the player wore in that exact season.", next: "season" },
@@ -8474,10 +8478,11 @@ function renderHub() {
   $("teamLogoMosaic").innerHTML = Object.keys(TEAMS).map(t => `<img src="${logo(t)}" alt="">`).join("");
   $("edgeSeasonBadge").textContent = EDGE_DATA.length ? `NHL EDGE · ${edgeSeasonLabel()}` : "NHL EDGE · data unavailable";
   $("edgeHomeGrid").innerHTML = EDGE_GAMES.map(x => {
-    const ready = gameIsReady(x.id);
-    return `<button type="button" class="edgecard" data-open="${x.id}"${ready ? "" : " disabled"}>
+    const ready = gameIsReady(x.id) && !x.maintenance;
+    const copy = x.maintenance ? x.blurb : (ready ? x.blurb : "Tracking data will appear after the next successful build.");
+    return `<button type="button" class="edgecard${x.maintenance ? " construction" : ""}" data-open="${x.id}"${ready ? "" : " disabled"} aria-disabled="${!ready}">
       <span class="edgecardtop"><span class="edgecardicon" aria-hidden="true">${modeIcon(x.id)}</span><span class="edgecardtag">${esc(x.tag)}</span></span>
-      <b>${esc(x.title)}</b><small>${esc(ready ? x.blurb : "Tracking data will appear after the next successful build.")}</small>
+      <b>${esc(x.title)}</b><small>${esc(copy)}</small>
     </button>`;
   }).join("");
   const selectedFilter = store.get("sweater-library-filter") || "all";
@@ -8798,6 +8803,12 @@ function showHub(push = true) {
 }
 
 function openGame(id, push = true) {
+  if (id === "edgemap") {
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    showHub(false);
+    toast("Shot Map is under construction. Check back soon.");
+    return;
+  }
   if (push) rememberHubScroll();
   if (id === "hl") id = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
   if (!G[id]) return showHub(push);
