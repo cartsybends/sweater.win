@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "84 · Roster Autocomplete"
+VERSION = "85 · Global Roster Search"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -7052,7 +7052,7 @@ function addClassicRow(p, t) {
 }
 
 // ======================= player search (autocomplete) =======================
-function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS, onChoose = null) {
+function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS, onChoose = null, metaFn = p => `${p.team} · ${p.pos}`) {
   const input = $(inputId), ul = $(listId);
   let idx = -1, found = [];
   function close() { ul.hidden = true; idx = -1; input.setAttribute("aria-expanded", false); }
@@ -7067,7 +7067,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
       const li = document.createElement("li");
       li.role = "option"; li.id = `${listId}-${i}`;
       li.setAttribute("aria-selected", i === idx);
-      li.innerHTML = `<span></span><small>${esc(p.team)} · ${esc(p.pos)}</small>`;
+      li.innerHTML = `<span></span><small>${esc(metaFn(p))}</small>`;
       li.firstChild.textContent = p.name;
       li.onmousedown = e => { e.preventDefault(); choose(p); };
       ul.appendChild(li);
@@ -7090,9 +7090,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
                   makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`), makeSearch("phGuess", "phOpts"),
-                  makeSearch("roInput", "roOpts", id => id,
-                    () => (S.roster.target ? S.roster.target.ids.map(id => BYID.get(id)).filter(Boolean) : []),
-                    p => roAccept(p))];
+                  makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p))];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
 
