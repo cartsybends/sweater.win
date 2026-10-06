@@ -1,0 +1,2599 @@
+{
+ "version": 1,
+ "through_season": 2025,
+ "updated": "2026-10-06",
+ "rows": [
+  [
+   "Art Ross Trophy",
+   1980,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1981,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1982,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1983,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1984,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1985,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1986,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   1987,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1988,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1989,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Art Ross Trophy",
+   1990,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Art Ross Trophy",
+   1991,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1992,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1993,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Art Ross Trophy",
+   1994,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1995,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1996,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1997,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1998,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   1999,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   2000,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   2001,
+   "Jarome Iginla",
+   "CGY"
+  ],
+  [
+   "Art Ross Trophy",
+   2002,
+   "Peter Forsberg",
+   "COL"
+  ],
+  [
+   "Art Ross Trophy",
+   2003,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Art Ross Trophy",
+   2005,
+   "Joe Thornton",
+   "BOS"
+  ],
+  [
+   "Art Ross Trophy",
+   2006,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   2007,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Art Ross Trophy",
+   2008,
+   "Evgeni Malkin",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   2009,
+   "Henrik Sedin",
+   "VAN"
+  ],
+  [
+   "Art Ross Trophy",
+   2010,
+   "Daniel Sedin",
+   "VAN"
+  ],
+  [
+   "Art Ross Trophy",
+   2011,
+   "Evgeni Malkin",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   2012,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Art Ross Trophy",
+   2013,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Art Ross Trophy",
+   2014,
+   "Jamie Benn",
+   "DAL"
+  ],
+  [
+   "Art Ross Trophy",
+   2015,
+   "Patrick Kane",
+   "CHI"
+  ],
+  [
+   "Art Ross Trophy",
+   2016,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   2017,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   2018,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "Art Ross Trophy",
+   2019,
+   "Leon Draisaitl",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   2020,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   2021,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   2022,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Art Ross Trophy",
+   2023,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "Art Ross Trophy",
+   2024,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "Art Ross Trophy",
+   2025,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1980,
+   "Peter Šťastný",
+   "QUE"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1981,
+   "Dale Hawerchuk",
+   "WPG"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1982,
+   "Steve Larmer",
+   "CHI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1983,
+   "Tom Barrasso",
+   "BUF"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1984,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1985,
+   "Gary Suter",
+   "CGY"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1986,
+   "Luc Robitaille",
+   "LAK"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1987,
+   "Joe Nieuwendyk",
+   "CGY"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1988,
+   "Brian Leetch",
+   "NYR"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1989,
+   "Sergei Makarov",
+   "CGY"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1990,
+   "Ed Belfour",
+   "CHI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1991,
+   "Pavel Bure",
+   "VAN"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1992,
+   "Teemu Selänne",
+   "WPG"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1993,
+   "Martin Brodeur",
+   "NJD"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1994,
+   "Peter Forsberg",
+   "QUE"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1995,
+   "Daniel Alfredsson",
+   "OTT"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1996,
+   "Bryan Berard",
+   "NYI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1997,
+   "Sergei Samsonov",
+   "BOS"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1998,
+   "Chris Drury",
+   "COL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   1999,
+   "Scott Gomez",
+   "NJD"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2000,
+   "Evgeni Nabokov",
+   "SJS"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2001,
+   "Dany Heatley",
+   "ATL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2002,
+   "Barret Jackman",
+   "STL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2003,
+   "Andrew Raycroft",
+   "BOS"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2005,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2006,
+   "Evgeni Malkin",
+   "PIT"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2007,
+   "Patrick Kane",
+   "CHI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2008,
+   "Steve Mason",
+   "CBJ"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2009,
+   "Tyler Myers",
+   "BUF"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2010,
+   "Jeff Skinner",
+   "CAR"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2011,
+   "Gabriel Landeskog",
+   "COL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2012,
+   "Jonathan Huberdeau",
+   "FLA"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2013,
+   "Nathan MacKinnon",
+   "COL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2014,
+   "Aaron Ekblad",
+   "FLA"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2015,
+   "Artemi Panarin",
+   "CHI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2016,
+   "Auston Matthews",
+   "TOR"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2017,
+   "Mathew Barzal",
+   "NYI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2018,
+   "Elias Pettersson",
+   "VAN"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2019,
+   "Cale Makar",
+   "COL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2020,
+   "Kirill Kaprizov",
+   "MIN"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2021,
+   "Moritz Seider",
+   "DET"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2022,
+   "Matty Beniers",
+   "SEA"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2023,
+   "Connor Bedard",
+   "CHI"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2024,
+   "Lane Hutson",
+   "MTL"
+  ],
+  [
+   "Calder Memorial Trophy",
+   2025,
+   "Matthew Schaefer",
+   "NYI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1980,
+   "Butch Goring",
+   "NYI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1981,
+   "Mike Bossy",
+   "NYI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1982,
+   "Billy Smith",
+   "NYI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1983,
+   "Mark Messier",
+   "EDM"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1984,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1985,
+   "Patrick Roy",
+   "MTL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1986,
+   "Ron Hextall",
+   "PHI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1987,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1988,
+   "Al MacInnis",
+   "CGY"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1989,
+   "Bill Ranford",
+   "EDM"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1990,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1991,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1992,
+   "Patrick Roy",
+   "MTL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1993,
+   "Brian Leetch",
+   "NYR"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1994,
+   "Claude Lemieux",
+   "NJD"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1995,
+   "Joe Sakic",
+   "COL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1996,
+   "Mike Vernon",
+   "DET"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1997,
+   "Steve Yzerman",
+   "DET"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1998,
+   "Joe Nieuwendyk",
+   "DAL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   1999,
+   "Scott Stevens",
+   "NJD"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2000,
+   "Patrick Roy",
+   "COL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2001,
+   "Nicklas Lidstrom",
+   "DET"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2002,
+   "Jean-Sebastien Giguere",
+   "ANA"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2003,
+   "Brad Richards",
+   "TBL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2005,
+   "Cam Ward",
+   "CAR"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2006,
+   "Scott Niedermayer",
+   "ANA"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2007,
+   "Henrik Zetterberg",
+   "DET"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2008,
+   "Evgeni Malkin",
+   "PIT"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2009,
+   "Jonathan Toews",
+   "CHI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2010,
+   "Tim Thomas",
+   "BOS"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2011,
+   "Jonathan Quick",
+   "LAK"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2012,
+   "Patrick Kane",
+   "CHI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2013,
+   "Justin Williams",
+   "LAK"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2014,
+   "Duncan Keith",
+   "CHI"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2015,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2016,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2017,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2018,
+   "Ryan O'Reilly",
+   "STL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2019,
+   "Victor Hedman",
+   "TBL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2020,
+   "Andrei Vasilevskiy",
+   "TBL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2021,
+   "Cale Makar",
+   "COL"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2022,
+   "Jonathan Marchessault",
+   "VGK"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2023,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2024,
+   "Sam Bennett",
+   "FLA"
+  ],
+  [
+   "Conn Smythe Trophy",
+   2025,
+   "Jordan Staal",
+   "CAR"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1980,
+   "Bob Gainey",
+   "MTL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1981,
+   "Steve Kasper",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1982,
+   "Bobby Clarke",
+   "PHI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1983,
+   "Doug Jarvis",
+   "WSH"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1984,
+   "Craig Ramsay",
+   "BUF"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1985,
+   "Troy Murray",
+   "CHI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1986,
+   "Dave Poulin",
+   "PHI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1987,
+   "Guy Carbonneau",
+   "MTL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1988,
+   "Guy Carbonneau",
+   "MTL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1989,
+   "Rick Meagher",
+   "STL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1990,
+   "Dirk Graham",
+   "CHI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1991,
+   "Guy Carbonneau",
+   "MTL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1992,
+   "Doug Gilmour",
+   "TOR"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1993,
+   "Sergei Fedorov",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1994,
+   "Ron Francis",
+   "PIT"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1995,
+   "Sergei Fedorov",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1996,
+   "Michael Peca",
+   "BUF"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1997,
+   "Jere Lehtinen",
+   "DAL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1998,
+   "Jere Lehtinen",
+   "DAL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   1999,
+   "Steve Yzerman",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2000,
+   "John Madden",
+   "NJD"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2001,
+   "Michael Peca",
+   "NYI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2002,
+   "Jere Lehtinen",
+   "DAL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2003,
+   "Kris Draper",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2005,
+   "Rod Brind'Amour",
+   "CAR"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2006,
+   "Rod Brind'Amour",
+   "CAR"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2007,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2008,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2009,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2010,
+   "Ryan Kesler",
+   "VAN"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2011,
+   "Patrice Bergeron",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2012,
+   "Jonathan Toews",
+   "CHI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2013,
+   "Patrice Bergeron",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2014,
+   "Patrice Bergeron",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2015,
+   "Anže Kopitar",
+   "LAK"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2016,
+   "Patrice Bergeron",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2017,
+   "Anže Kopitar",
+   "LAK"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2018,
+   "Ryan O'Reilly",
+   "STL"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2019,
+   "Sean Couturier",
+   "PHI"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2020,
+   "Aleksander Barkov",
+   "FLA"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2021,
+   "Patrice Bergeron",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2022,
+   "Patrice Bergeron",
+   "BOS"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2023,
+   "Aleksander Barkov",
+   "FLA"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2024,
+   "Aleksander Barkov",
+   "FLA"
+  ],
+  [
+   "Frank J. Selke Trophy",
+   2025,
+   "Nick Suzuki",
+   "MTL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1980,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1981,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1982,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1983,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1984,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1985,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1986,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1987,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1988,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1989,
+   "Mark Messier",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1990,
+   "Brett Hull",
+   "STL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1991,
+   "Mark Messier",
+   "NYR"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1992,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1993,
+   "Sergei Fedorov",
+   "DET"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1994,
+   "Eric Lindros",
+   "PHI"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1995,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1996,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1997,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1998,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   1999,
+   "Chris Pronger",
+   "STL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2000,
+   "Joe Sakic",
+   "COL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2001,
+   "Jose Theodore",
+   "MTL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2002,
+   "Peter Forsberg",
+   "COL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2003,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2005,
+   "Joe Thornton",
+   "BOS"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2006,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2007,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2008,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2009,
+   "Henrik Sedin",
+   "VAN"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2010,
+   "Corey Perry",
+   "ANA"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2011,
+   "Evgeni Malkin",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2012,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2013,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2014,
+   "Carey Price",
+   "MTL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2015,
+   "Patrick Kane",
+   "CHI"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2016,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2017,
+   "Taylor Hall",
+   "NJD"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2018,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2019,
+   "Leon Draisaitl",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2020,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2021,
+   "Auston Matthews",
+   "TOR"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2022,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2023,
+   "Nathan MacKinnon",
+   "COL"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2024,
+   "Connor Hellebuyck",
+   "WPG"
+  ],
+  [
+   "Hart Memorial Trophy",
+   2025,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1980,
+   "Randy Carlyle",
+   "PIT"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1981,
+   "Doug Wilson",
+   "CHI"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1982,
+   "Rod Langway",
+   "WSH"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1983,
+   "Rod Langway",
+   "WSH"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1984,
+   "Paul Coffey",
+   "EDM"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1985,
+   "Paul Coffey",
+   "EDM"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1986,
+   "Ray Bourque",
+   "BOS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1987,
+   "Ray Bourque",
+   "BOS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1988,
+   "Chris Chelios",
+   "MTL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1989,
+   "Ray Bourque",
+   "BOS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1990,
+   "Ray Bourque",
+   "BOS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1991,
+   "Brian Leetch",
+   "NYR"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1992,
+   "Chris Chelios",
+   "CHI"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1993,
+   "Ray Bourque",
+   "BOS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1994,
+   "Paul Coffey",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1995,
+   "Chris Chelios",
+   "CHI"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1996,
+   "Brian Leetch",
+   "NYR"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1997,
+   "Rob Blake",
+   "LAK"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1998,
+   "Al MacInnis",
+   "STL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   1999,
+   "Chris Pronger",
+   "STL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2000,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2001,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2002,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2003,
+   "Scott Niedermayer",
+   "NJD"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2005,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2006,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2007,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2008,
+   "Zdeno Chára",
+   "BOS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2009,
+   "Duncan Keith",
+   "CHI"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2010,
+   "Nicklas Lidström",
+   "DET"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2011,
+   "Erik Karlsson",
+   "OTT"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2012,
+   "P. K. Subban",
+   "MTL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2013,
+   "Duncan Keith",
+   "CHI"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2014,
+   "Erik Karlsson",
+   "OTT"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2015,
+   "Drew Doughty",
+   "LAK"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2016,
+   "Brent Burns",
+   "SJS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2017,
+   "Victor Hedman",
+   "TBL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2018,
+   "Mark Giordano",
+   "CGY"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2019,
+   "Roman Josi",
+   "NSH"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2020,
+   "Adam Fox",
+   "NYR"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2021,
+   "Cale Makar",
+   "COL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2022,
+   "Erik Karlsson",
+   "SJS"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2023,
+   "Quinn Hughes",
+   "VAN"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2024,
+   "Cale Makar",
+   "COL"
+  ],
+  [
+   "James Norris Memorial Trophy",
+   2025,
+   "Zach Werenski",
+   "CBJ"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1980,
+   "Rick Kehoe",
+   "PIT"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1981,
+   "Rick Middleton",
+   "BOS"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1982,
+   "Mike Bossy",
+   "NYI"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1983,
+   "Mike Bossy",
+   "NYI"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1984,
+   "Jari Kurri",
+   "EDM"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1985,
+   "Mike Bossy",
+   "NYI"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1986,
+   "Joe Mullen",
+   "CGY"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1987,
+   "Mats Näslund",
+   "MTL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1988,
+   "Joe Mullen",
+   "CGY"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1989,
+   "Brett Hull",
+   "STL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1990,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1991,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1992,
+   "Pierre Turgeon",
+   "NYI"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1993,
+   "Wayne Gretzky",
+   "LAK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1994,
+   "Ron Francis",
+   "PIT"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1995,
+   "Paul Kariya",
+   "ANA"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1996,
+   "Paul Kariya",
+   "ANA"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1997,
+   "Ron Francis",
+   "PIT"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1998,
+   "Wayne Gretzky",
+   "NYR"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   1999,
+   "Pavol Demitra",
+   "STL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2000,
+   "Joe Sakic",
+   "COL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2001,
+   "Ron Francis",
+   "CAR"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2002,
+   "Alexander Mogilny",
+   "TOR"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2003,
+   "Brad Richards",
+   "TBL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2005,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2006,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2007,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2008,
+   "Pavel Datsyuk",
+   "DET"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2009,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2010,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2011,
+   "Brian Campbell",
+   "FLA"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2012,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2013,
+   "Ryan O'Reilly",
+   "COL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2014,
+   "Jiří Hudler",
+   "CGY"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2015,
+   "Anže Kopitar",
+   "LAK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2016,
+   "Johnny Gaudreau",
+   "CGY"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2017,
+   "William Karlsson",
+   "VGK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2018,
+   "Aleksander Barkov",
+   "FLA"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2019,
+   "Nathan MacKinnon",
+   "COL"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2020,
+   "Jaccob Slavin",
+   "CAR"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2021,
+   "Kyle Connor",
+   "WPG"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2022,
+   "Anže Kopitar",
+   "LAK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2023,
+   "Jaccob Slavin",
+   "CAR"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2024,
+   "Anže Kopitar",
+   "LAK"
+  ],
+  [
+   "Lady Byng Memorial Trophy",
+   2025,
+   "Cole Caufield",
+   "MTL"
+  ],
+  [
+   "Maurice Richard Trophy",
+   1998,
+   "Teemu Selänne",
+   "ANA"
+  ],
+  [
+   "Maurice Richard Trophy",
+   1999,
+   "Pavel Bure",
+   "FLA"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2000,
+   "Pavel Bure",
+   "FLA"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2001,
+   "Jarome Iginla",
+   "CGY"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2002,
+   "Milan Hejduk",
+   "COL"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2003,
+   "Rick Nash",
+   "CBJ"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2005,
+   "Jonathan Cheechoo",
+   "SJS"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2006,
+   "Vincent Lecavalier",
+   "TBL"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2007,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2008,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2009,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2010,
+   "Corey Perry",
+   "ANA"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2011,
+   "Steven Stamkos",
+   "TBL"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2012,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2013,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2014,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2015,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2016,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2017,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2018,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2019,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2020,
+   "Auston Matthews",
+   "TOR"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2021,
+   "Auston Matthews",
+   "TOR"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2022,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2023,
+   "Auston Matthews",
+   "TOR"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2024,
+   "Leon Draisaitl",
+   "EDM"
+  ],
+  [
+   "Maurice Richard Trophy",
+   2025,
+   "Nathan MacKinnon",
+   "COL"
+  ],
+  [
+   "Ted Lindsay Award",
+   1980,
+   "Mike Liut",
+   "STL"
+  ],
+  [
+   "Ted Lindsay Award",
+   1981,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   1982,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   1983,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   1984,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   1985,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   1986,
+   "Wayne Gretzky",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   1987,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   1988,
+   "Steve Yzerman",
+   "DET"
+  ],
+  [
+   "Ted Lindsay Award",
+   1989,
+   "Mark Messier",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   1990,
+   "Brett Hull",
+   "STL"
+  ],
+  [
+   "Ted Lindsay Award",
+   1991,
+   "Mark Messier",
+   "NYR"
+  ],
+  [
+   "Ted Lindsay Award",
+   1992,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   1993,
+   "Sergei Fedorov",
+   "DET"
+  ],
+  [
+   "Ted Lindsay Award",
+   1994,
+   "Eric Lindros",
+   "PHI"
+  ],
+  [
+   "Ted Lindsay Award",
+   1995,
+   "Mario Lemieux",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   1996,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Ted Lindsay Award",
+   1997,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Ted Lindsay Award",
+   1998,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   1999,
+   "Jaromír Jágr",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   2000,
+   "Joe Sakic",
+   "COL"
+  ],
+  [
+   "Ted Lindsay Award",
+   2001,
+   "Jarome Iginla",
+   "CGY"
+  ],
+  [
+   "Ted Lindsay Award",
+   2002,
+   "Markus Näslund",
+   "VAN"
+  ],
+  [
+   "Ted Lindsay Award",
+   2003,
+   "Martin St. Louis",
+   "TBL"
+  ],
+  [
+   "Ted Lindsay Award",
+   2005,
+   "Jaromír Jágr",
+   "NYR"
+  ],
+  [
+   "Ted Lindsay Award",
+   2006,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   2007,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Ted Lindsay Award",
+   2008,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Ted Lindsay Award",
+   2009,
+   "Alexander Ovechkin",
+   "WSH"
+  ],
+  [
+   "Ted Lindsay Award",
+   2010,
+   "Daniel Sedin",
+   "VAN"
+  ],
+  [
+   "Ted Lindsay Award",
+   2011,
+   "Evgeni Malkin",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   2012,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   2013,
+   "Sidney Crosby",
+   "PIT"
+  ],
+  [
+   "Ted Lindsay Award",
+   2014,
+   "Carey Price",
+   "MTL"
+  ],
+  [
+   "Ted Lindsay Award",
+   2015,
+   "Patrick Kane",
+   "CHI"
+  ],
+  [
+   "Ted Lindsay Award",
+   2016,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   2017,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   2018,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "Ted Lindsay Award",
+   2019,
+   "Leon Draisaitl",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   2020,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   2021,
+   "Auston Matthews",
+   "TOR"
+  ],
+  [
+   "Ted Lindsay Award",
+   2022,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Ted Lindsay Award",
+   2023,
+   "Nathan MacKinnon",
+   "COL"
+  ],
+  [
+   "Ted Lindsay Award",
+   2024,
+   "Nikita Kucherov",
+   "TBL"
+  ],
+  [
+   "Ted Lindsay Award",
+   2025,
+   "Connor McDavid",
+   "EDM"
+  ],
+  [
+   "Vezina Trophy",
+   1980,
+   "Denis Herron",
+   "MTL"
+  ],
+  [
+   "Vezina Trophy",
+   1981,
+   "Billy Smith",
+   "NYI"
+  ],
+  [
+   "Vezina Trophy",
+   1982,
+   "Pete Peeters",
+   "BOS"
+  ],
+  [
+   "Vezina Trophy",
+   1983,
+   "Tom Barrasso",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   1984,
+   "Pelle Lindbergh",
+   "PHI"
+  ],
+  [
+   "Vezina Trophy",
+   1985,
+   "John Vanbiesbrouck",
+   "NYR"
+  ],
+  [
+   "Vezina Trophy",
+   1986,
+   "Ron Hextall",
+   "PHI"
+  ],
+  [
+   "Vezina Trophy",
+   1987,
+   "Grant Fuhr",
+   "EDM"
+  ],
+  [
+   "Vezina Trophy",
+   1988,
+   "Patrick Roy",
+   "MTL"
+  ],
+  [
+   "Vezina Trophy",
+   1989,
+   "Patrick Roy",
+   "MTL"
+  ],
+  [
+   "Vezina Trophy",
+   1990,
+   "Ed Belfour",
+   "CHI"
+  ],
+  [
+   "Vezina Trophy",
+   1991,
+   "Patrick Roy",
+   "MTL"
+  ],
+  [
+   "Vezina Trophy",
+   1992,
+   "Ed Belfour",
+   "CHI"
+  ],
+  [
+   "Vezina Trophy",
+   1993,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   1994,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   1995,
+   "Jim Carey",
+   "WSH"
+  ],
+  [
+   "Vezina Trophy",
+   1996,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   1997,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   1998,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   1999,
+   "Olaf Kölzig",
+   "WSH"
+  ],
+  [
+   "Vezina Trophy",
+   2000,
+   "Dominik Hašek",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   2001,
+   "José Théodore",
+   "MTL"
+  ],
+  [
+   "Vezina Trophy",
+   2002,
+   "Martin Brodeur",
+   "NJD"
+  ],
+  [
+   "Vezina Trophy",
+   2003,
+   "Martin Brodeur",
+   "NJD"
+  ],
+  [
+   "Vezina Trophy",
+   2005,
+   "Miikka Kiprusoff",
+   "CGY"
+  ],
+  [
+   "Vezina Trophy",
+   2006,
+   "Martin Brodeur",
+   "NJD"
+  ],
+  [
+   "Vezina Trophy",
+   2007,
+   "Martin Brodeur",
+   "NJD"
+  ],
+  [
+   "Vezina Trophy",
+   2008,
+   "Tim Thomas",
+   "BOS"
+  ],
+  [
+   "Vezina Trophy",
+   2009,
+   "Ryan Miller",
+   "BUF"
+  ],
+  [
+   "Vezina Trophy",
+   2010,
+   "Tim Thomas",
+   "BOS"
+  ],
+  [
+   "Vezina Trophy",
+   2011,
+   "Henrik Lundqvist",
+   "NYR"
+  ],
+  [
+   "Vezina Trophy",
+   2012,
+   "Sergei Bobrovsky",
+   "CBJ"
+  ],
+  [
+   "Vezina Trophy",
+   2013,
+   "Tuukka Rask",
+   "BOS"
+  ],
+  [
+   "Vezina Trophy",
+   2014,
+   "Carey Price",
+   "MTL"
+  ],
+  [
+   "Vezina Trophy",
+   2015,
+   "Braden Holtby",
+   "WSH"
+  ],
+  [
+   "Vezina Trophy",
+   2016,
+   "Sergei Bobrovsky",
+   "CBJ"
+  ],
+  [
+   "Vezina Trophy",
+   2017,
+   "Pekka Rinne",
+   "NSH"
+  ],
+  [
+   "Vezina Trophy",
+   2018,
+   "Andrei Vasilevskiy",
+   "TBL"
+  ],
+  [
+   "Vezina Trophy",
+   2019,
+   "Connor Hellebuyck",
+   "WPG"
+  ],
+  [
+   "Vezina Trophy",
+   2020,
+   "Marc-André Fleury",
+   "VGK"
+  ],
+  [
+   "Vezina Trophy",
+   2021,
+   "Igor Shesterkin",
+   "NYR"
+  ],
+  [
+   "Vezina Trophy",
+   2022,
+   "Linus Ullmark",
+   "BOS"
+  ],
+  [
+   "Vezina Trophy",
+   2023,
+   "Connor Hellebuyck",
+   "WPG"
+  ],
+  [
+   "Vezina Trophy",
+   2024,
+   "Connor Hellebuyck",
+   "WPG"
+  ],
+  [
+   "Vezina Trophy",
+   2025,
+   "Andrei Vasilevskiy",
+   "TBL"
+  ]
+ ]
+}
