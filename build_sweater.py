@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "98 · Build a Player Number Reveal"
+VERSION = "99 · Full NHL EDGE Player Pool"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -9074,23 +9074,12 @@ def edge_player_data(player, season):
 
 
 def fetch_edge_data(players, today):
-    """Embed a representative cross-team NHL EDGE pool using the last completed regular season."""
+    """Embed every active NHL skater with valid EDGE data from the last completed regular season."""
     season = _edge_completed_season(today)
-    by_team = defaultdict(list)
-    for p in players:
-        if p.get("pos") != "G":
-            by_team[p.get("team")].append(p)
-
-    def career_points(p):
-        try:
-            return sum(int(row[5] or 0) for row in p.get("car", []) if len(row) > 5)
-        except Exception:
-            return 0
-
-    candidates = []
-    for team in TEAMS:
-        group = sorted(by_team.get(team, []), key=lambda p: (career_points(p), p.get("id", 0)), reverse=True)
-        candidates.extend(group[:4])
+    candidates = sorted(
+        {int(p["id"]): p for p in players if p.get("pos") != "G" and p.get("id")}.values(),
+        key=lambda p: (p.get("team") or "", p.get("name") or "", int(p.get("id") or 0)),
+    )
 
     try:
         cache_doc = json.loads(EDGE_CACHE.read_text(encoding="utf-8")) if EDGE_CACHE.exists() else {}
@@ -10988,7 +10977,7 @@ def main():
 
     team_history = load_team_history()
     today = eastern_today()
-    edge_data = fetch_edge_data(players, today)
+    edge_data = fetch_edge_data(roster_players, today)
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
     games, extras, roster_extras = update_schedule(players, today, roster_players)
