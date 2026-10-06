@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "80 · Playoff Run"
+VERSION = "81 · Frosted Blur"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -210,27 +210,30 @@ TEMPLATE = r'''<!DOCTYPE html>
   .blphoto[data-stage="4"] > img, .blphoto.revealed > img { filter: none; transform: scale(1); }
   .blfrost {
     position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr);
-    gap: 1px; pointer-events: none;
+    gap: 3px; pointer-events: none;
   }
   .blfrost span {
-    position: relative; overflow: hidden;
+    position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.42); border-radius: 10px;
     background:
-      radial-gradient(circle at 24% 18%, rgba(255,255,255,.78), transparent 27%),
-      radial-gradient(circle at 78% 72%, rgba(181,222,235,.42), transparent 34%),
-      linear-gradient(145deg, rgba(225,244,249,.80), rgba(185,216,228,.68));
-    -webkit-backdrop-filter: blur(16px) saturate(.58);
-    backdrop-filter: blur(16px) saturate(.58);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.24);
-    opacity: 1; transform: scale(1.015);
-    transition: opacity .36s ease, transform .44s cubic-bezier(.2,.85,.2,1);
+      radial-gradient(circle at 28% 18%, rgba(255,255,255,.42), transparent 34%),
+      linear-gradient(145deg, rgba(242,250,253,.88), rgba(196,221,232,.80));
+    -webkit-backdrop-filter: blur(18px) saturate(.72);
+    backdrop-filter: blur(18px) saturate(.72);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.72),
+      inset 0 -1px 0 rgba(111,155,174,.10),
+      0 2px 7px rgba(23,59,75,.10);
+    opacity: 1; transform: scale(1); filter: blur(0);
+    transition:
+      opacity .26s ease,
+      transform .34s cubic-bezier(.2,.8,.2,1),
+      filter .26s ease;
   }
   .blfrost span::after {
-    content: ""; position: absolute; inset: 0; opacity: .42;
-    background:
-      linear-gradient(28deg, transparent 45%, rgba(255,255,255,.75) 46%, transparent 48%),
-      linear-gradient(152deg, transparent 57%, rgba(255,255,255,.55) 58%, transparent 60%);
+    content: ""; position: absolute; inset: 0; opacity: .62; pointer-events: none;
+    background: linear-gradient(118deg, transparent 18%, rgba(255,255,255,.20) 42%, rgba(255,255,255,.08) 54%, transparent 72%);
   }
-  .blfrost span.clear { opacity: 0; transform: scale(.94); }
+  .blfrost span.clear { opacity: 0; transform: scale(.965); filter: blur(2px); }
   .blmeter { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 9px 12px 11px; }
   .blmeter i {
     height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--line) 78%, transparent);
@@ -3963,7 +3966,15 @@ function blFrostStages(seed) {
     x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
     return (x >>> 0) / 4294967296;
   };
-  return shuffled(BL_FROST_STAGES, rnd);
+  const stages = shuffled(BL_FROST_STAGES, rnd);
+  // The portrait head is centered, so never waste the opening reveal on the top corners.
+  const opening = stages.indexOf(0);
+  if (opening === 0 || opening === 2) {
+    const validOpenings = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const swap = validOpenings[Math.floor(rnd() * validOpenings.length)];
+    [stages[opening], stages[swap]] = [stages[swap], stages[opening]];
+  }
+  return stages;
 }
 const BL_POOL = PLAYERS.filter(p => p.headshot);
 function blGuessMatch(t, p) {
