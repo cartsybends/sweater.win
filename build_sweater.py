@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "94 · Larger EDGE Watermarks"
+VERSION = "95 · Aligned EDGE Reveal Panels"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -765,8 +765,19 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-duel-card.right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 11%, var(--panel)); }
   .edge-duel-card.wrong { border-color: #c0392b; }
 
-  /* Speed Trap gets a broadcast-style player card without making the rest of EDGE noisy. */
+  /* Speed Trap / Hardest Shot use fixed content rows so both reveal panels stay perfectly aligned. */
+  .edge-duel-card.speedtrap-card {
+    display: grid; grid-template-rows: 155px 46px 18px 58px; align-content: start;
+    min-height: 291px; padding-bottom: 12px;
+  }
   .speedtrap-card .edge-speed-media { position: relative; display: block; height: 155px; overflow: hidden; background: var(--cream); }
+  .edge-duel-card.speedtrap-card > b {
+    display: grid; place-items: center; min-width: 0; height: 46px; margin: 0; padding: 7px 10px 2px;
+    line-height: 1.12; overflow-wrap: anywhere;
+  }
+  .edge-duel-card.speedtrap-card > small {
+    display: block; height: 18px; line-height: 18px;
+  }
   .edge-duel-card.speedtrap-card .edge-team-watermark {
     position: absolute; z-index: 0; left: 50%; top: 50%; width: 82%; height: 82%;
     object-fit: contain; object-position: center; background: transparent;
@@ -778,7 +789,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     background: transparent;
   }
   .speedtrap-card .edge-speed-reveal {
-    position: relative; isolation: isolate; overflow: hidden; width: calc(100% - 24px); margin: 9px auto 0;
+    position: relative; isolation: isolate; align-self: end; overflow: hidden; width: calc(100% - 24px); height: 49px; margin: 5px auto 0;
     padding: 7px 10px 8px; border: 1px solid color-mix(in srgb, var(--link) 25%, var(--line)); border-radius: 10px;
     background: color-mix(in srgb, var(--link) 7%, var(--panel)); line-height: 1;
   }
@@ -844,6 +855,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edge-duel { gap: 7px; }
     .edge-duel-card { min-height: 205px; }
     .edge-duel-card img { height: 132px; }
+    .edge-duel-card.speedtrap-card { grid-template-rows: 132px 46px 18px 58px; min-height: 268px; }
     .speedtrap-card .edge-speed-media { height: 132px; }
     .edge-duel-card.speedtrap-card .edge-team-watermark { height: 66%; }
     .edge-map-card { grid-template-columns: 1fr; }
