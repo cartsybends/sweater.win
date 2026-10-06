@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "117 · QA Reliability Fixes"
+VERSION = "118 · Fix Playoff Header"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1333,7 +1333,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-cups { max-width: 1440px; }
   .cups-controls { position: sticky; top: 0; z-index: 3; padding: 6px 0 10px; background: var(--bg); border-bottom: 1px solid var(--sep); }
   .cups-controls .intro { margin-top: 0; }
-  #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: auto; }
+  #view-cups .cuboard { width: 100%; max-width: 100%; margin: 10px auto 0; overflow-x: visible; }
+  /* Override the generic .board table min-width without turning this wrapper
+     into a scroll container; the sticky Playoff History header must stay
+     relative to the page viewport on tablet/desktop. */
   #view-cups .cutable { min-width: 0; }
   .cutable { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0 5px; }
   .cutable th { font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; padding: 8px 10px; }
