@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "81 · Frosted Blur"
+VERSION = "82 · Roster Boost + Map Polish"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -414,7 +414,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .mapsvg .pin { fill: var(--accent); stroke: #fff; }
   .mapsvg .draftpin { fill: var(--fg); opacity: .8; }
   .mapsvg .answer { fill: var(--hit); stroke: #fff; }
-  .mapsvg .pinline { stroke: color-mix(in srgb, var(--fg) 45%, transparent); stroke-dasharray: 3 3; opacity: .55; }
+  .mapsvg .pinline { fill: none; stroke: color-mix(in srgb, var(--fg) 45%, transparent); stroke-linecap: round; opacity: .55; }
   .mapsvg .maptrailbed, .mapsvg .maptrail { fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .mapsvg .maptrailbed { stroke: color-mix(in srgb, var(--fg) 16%, transparent); opacity: .7; }
   .mapsvg .maptrail { opacity: .96; }
@@ -4280,9 +4280,15 @@ function roEnter() {
   if (!p) { roSay("Not on this roster", true); return; }
   if (st.guesses.includes(p.id)) { roSay(`Already named ${p.name}`, true); $("roInput").value = ""; return; }
   $("roInput").value = "";
-  roSay(`✓ ${p.name}`);
+  st.endsAt += 5000;
+  const rec = { key: G.roster.clockKey(t), endsAt: st.endsAt };
+  if (mode === "unlimited") roMemory = rec; else store.set("sweater-roster-clock", rec);
+  roSay(`✓ ${p.name} · +5s`);
   doGuess(p.id);
-  if (!S.roster.over) $("roInput").focus();
+  if (!S.roster.over) {
+    $("roTime").textContent = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
+    $("roInput").focus();
+  }
 }
 function roSay(text, bad = false) {
   $("roMsg").textContent = text;
@@ -4633,7 +4639,9 @@ function mapFitReveal(t, st) {
   document.querySelectorAll("[data-region]").forEach(b => b.setAttribute("aria-selected", false));
 }
 function drawPins(t, st) {
-  const r = mapView.w / 110, sw = mapView.w / 700;
+  // Size map UI in screen pixels, then convert to SVG units so zoom never changes its visual scale.
+  const { cw } = mapSize(), px = mapView.w / Math.max(cw, 1);
+  const r = px * 5.2, sw = px * 0.9;
   const animatedIndex = st.guesses.length > mapAnimatedGuessCount ? st.guesses.length - 1 : -1;
   const pin = ([lat, lon], cls, label = "") => {
     const [x, y] = toMap(lat, lon);
@@ -4671,7 +4679,7 @@ function drawPins(t, st) {
     const curve = directionCurve(g, t.bp);
     const tx = curve.x2 - curve.cx, ty = curve.y2 - curve.cy, tlen = Math.hypot(tx, ty) || 1;
     const ux = tx / tlen, uy = ty / tlen, nx = -uy, ny = ux;
-    const ah = r * .92, back = r * 1.28;
+    const ah = px * 5.0, back = px * 7.0;
     const ax1 = curve.x2 - ux * back + nx * ah, ay1 = curve.y2 - uy * back + ny * ah;
     const ax2 = curve.x2 - ux * back - nx * ah, ay2 = curve.y2 - uy * back - ny * ah;
     const trailId = `maptrail-label-${i}`;
@@ -4688,12 +4696,16 @@ function drawPins(t, st) {
   if (mapDraftPin && !st.over) html += pin(mapDraftPin, "pin draftpin");
 
   if (st.over) {
-    const [ax, ay] = toMap(...t.bp);
+    const [ax, ay] = toMap(...t.bp), wrap = 360 * MAP_K;
+    const dash = px * 4.5;
     html += st.guesses.map(g => {
       const [x, y] = toMap(...g);
-      return `<line x1="${x}" y1="${y}" x2="${ax}" y2="${ay}" stroke-width="${sw * 1.7}" class="pinline"/>`;
+      let targetX = ax, dx = targetX - x;
+      if (dx > wrap / 2) targetX -= wrap;
+      if (dx < -wrap / 2) targetX += wrap;
+      return `<line x1="${x}" y1="${y}" x2="${targetX}" y2="${ay}" stroke-width="${px * 1.5}" stroke-dasharray="${dash} ${dash}" class="pinline"/>`;
     }).join("");
-    html += `<circle class="answer finalanswer" cx="${ax}" cy="${ay}" r="${r * 1.25}" stroke-width="${sw * 2.2}"/>${badge([t.bp[0], t.bp[1]], 0, t.bp[2] || "Birthplace")}`;
+    html += `<circle class="answer finalanswer" cx="${ax}" cy="${ay}" r="${r * 1.25}" stroke-width="${px * 2}"/>${badge([t.bp[0], t.bp[1]], 0, t.bp[2] || "Birthplace")}`;
   }
   $("mapPins").innerHTML = html;
   if (animatedIndex >= 0) mapAnimatedGuessCount = st.guesses.length;
