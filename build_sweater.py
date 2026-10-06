@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "102 · Shot Map Construction Pause"
+VERSION = "103 · Native Share Preview"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -71,6 +71,9 @@ TEMPLATE = r'''<!DOCTYPE html>
 <meta property="og:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
 <meta property="og:url" content="/*__SITE__*/">
 <meta property="og:image" content="/*__SITE__*/sweater-trivia-preview.png">
+<meta property="og:image:secure_url" content="/*__SITE__*/sweater-trivia-preview.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Sweater · Daily NHL Trivia">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sweater · Daily NHL Trivia">
 <meta name="twitter:description" content="Test your hockey knowledge with daily player guessing, Trophy Case, Playoff History, and more.">
@@ -7876,24 +7879,24 @@ function renderStats() {
   renderStatsLb(game);
 }
 
-function shareText() {
+function shareUrl(game = statsGame || currentGame()) {
+  if (!SITE || /__SITE__/.test(SITE)) return location.href;
+  return `${SITE}#${game}`;
+}
+function shareText(includeLink = true) {
   const game = statsGame || currentGame();
   const g = G[game], saved = store.get(KEYS[game].daily);
   const t = g.daily(saved.date);
-  if (g.shareText) {
-    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}#${game}`;
-    return g.shareText(t, saved, dailyNumber(game, saved.date), link);
-  }
+  const link = includeLink ? `\n\n${shareUrl(game)}` : "";
+  if (g.shareText) return g.shareText(t, saved, dailyNumber(game, saved.date), link);
   if (g.kind === "streak") {
     const n = g.score(t, saved.guesses), won = g.wonGame(t, saved.guesses);
     const marks = saved.guesses.map((x, i) => g.squares(t, x, i)).join("");
     const rows = (marks.match(/(?:🟩|🟥){1,10}/gu) || []).join("\n");
-    const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}#${game}`;
     return `${g.share} #${dailyNumber(game, saved.date)} · ${HL_STATS[g.stat].name}\nStreak: ${n}${won ? " (perfect!)" : ""}\n\n${rows}${link}`;
   }
   const won = saved.guesses.some(x => g.isWin(t, x));
   const body = saved.guesses.map(x => g.squares(t, x)).join("").trim();
-  const link = !SITE || /__SITE__/.test(SITE) ? "" : `\n\n${SITE}#${game}`;
   const note = saved.opts && saved.opts.hard ? " · Hard mode" : saved.opts && saved.opts.order === "newest" ? " · Newest first" : "";
   return `${g.share} #${dailyNumber(game, saved.date)} ${won ? saved.guesses.length : "X"}/${g.max}${note}\n\n${body}${link}`;
 }
@@ -7910,11 +7913,22 @@ async function copyToClipboard(text, message = "Result copied to clipboard") {
     ta.remove();
   }
 }
-$("shareBtn").onclick = async () => {
+async function shareResult() {
+  const game = statsGame || currentGame();
+  const text = shareText(false), url = shareUrl(game);
+  if (navigator.share && /^https?:\/\//.test(url)) {
+    try {
+      await navigator.share({ title: `Sweater · ${cardTitle(game)}`, text, url });
+      return;
+    } catch (err) {
+      if (err && err.name === "AbortError") return;
+    }
+  }
   await copyToClipboard(shareText());
-};
+}
+$("shareBtn").onclick = shareResult;
 $("resultRecap").addEventListener("click", async e => {
-  if (e.target.closest("[data-result-share]")) await copyToClipboard(shareText());
+  if (e.target.closest("[data-result-share]")) await shareResult();
   const next = e.target.closest("[data-result-next]");
   if (next) openGame(next.dataset.resultNext);
   if (e.target.closest("[data-result-challenge]")) {
