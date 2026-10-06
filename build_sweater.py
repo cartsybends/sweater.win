@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "103 · Native Share Preview"
+VERSION = "104 · Full Message Link Preview"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -7914,17 +7914,19 @@ async function copyToClipboard(text, message = "Result copied to clipboard") {
   }
 }
 async function shareResult() {
-  const game = statsGame || currentGame();
-  const text = shareText(false), url = shareUrl(game);
-  if (navigator.share && /^https?:\/\//.test(url)) {
+  const text = shareText();
+  // Keep the Sweater URL inside the plain-text payload instead of attaching it
+  // as a separate Web Share URL. Messages/iMessage then treats it like a pasted
+  // link and can build the full Open Graph card (image + title + sweater.win).
+  if (navigator.share) {
     try {
-      await navigator.share({ title: `Sweater · ${cardTitle(game)}`, text, url });
+      await navigator.share({ text });
       return;
     } catch (err) {
       if (err && err.name === "AbortError") return;
     }
   }
-  await copyToClipboard(shareText());
+  await copyToClipboard(text);
 }
 $("shareBtn").onclick = shareResult;
 $("resultRecap").addEventListener("click", async e => {
