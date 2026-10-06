@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "90 · NHL EDGE Shot Zones"
+VERSION = "91 · Speed Trap Broadcast Reveal"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -764,6 +764,49 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-duel-card .edge-value { margin-top: 9px; font-size: 23px; font-weight: 850; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
   .edge-duel-card.right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 11%, var(--panel)); }
   .edge-duel-card.wrong { border-color: #c0392b; }
+
+  /* Speed Trap gets a broadcast-style player card without making the rest of EDGE noisy. */
+  .speedtrap-card .edge-speed-media { position: relative; display: block; height: 155px; overflow: hidden; background: var(--cream); }
+  .edge-duel-card.speedtrap-card .edge-team-watermark {
+    position: absolute; z-index: 0; left: 50%; top: 50%; width: 66%; height: 66%;
+    object-fit: contain; object-position: center; background: transparent;
+    opacity: .11; filter: grayscale(1) saturate(.2); transform: translate(-50%, -48%) scale(1.04);
+    pointer-events: none;
+  }
+  .edge-duel-card.speedtrap-card .edge-player-shot {
+    position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
+    background: transparent;
+  }
+  .speedtrap-card .edge-speed-reveal {
+    position: relative; isolation: isolate; overflow: hidden; width: calc(100% - 24px); margin: 9px auto 0;
+    padding: 7px 10px 8px; border: 1px solid color-mix(in srgb, var(--link) 25%, var(--line)); border-radius: 10px;
+    background: color-mix(in srgb, var(--link) 7%, var(--panel)); line-height: 1;
+  }
+  .speedtrap-card .edge-speed-reveal::before {
+    content: ""; position: absolute; z-index: -1; inset: -15% auto -15% -34%; width: 30%;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--link) 30%, white), transparent);
+    transform: skewX(-18deg) translateX(-220%); opacity: 0;
+  }
+  .speedtrap-card.speed-anim .edge-speed-reveal::before { animation: edgeSpeedSweep .72s cubic-bezier(.2,.75,.2,1) .08s both; }
+  .edge-speed-label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 8px; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+  .edge-speed-number { display: inline-block; min-width: 62px; font-size: 25px; font-weight: 900; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+  .edge-speed-unit { margin-left: 4px; color: var(--muted); font-size: 9px; font-style: normal; font-weight: 850; letter-spacing: .08em; }
+  .speedtrap-card.speed-anim .edge-speed-number { animation: edgeSpeedPop .48s cubic-bezier(.18,.9,.28,1.22) both; }
+  .speedtrap-card.right.speed-anim { animation: edgeWinnerPulse .62s ease both; }
+  @keyframes edgeSpeedSweep {
+    0% { transform: skewX(-18deg) translateX(-220%); opacity: 0; }
+    24% { opacity: .75; }
+    100% { transform: skewX(-18deg) translateX(520%); opacity: 0; }
+  }
+  @keyframes edgeSpeedPop {
+    0% { transform: translateY(5px) scale(.92); opacity: .3; }
+    65% { transform: translateY(-1px) scale(1.035); opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  @keyframes edgeWinnerPulse {
+    0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--hit) 0%, transparent); }
+    45% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--hit) 18%, transparent), 0 12px 26px color-mix(in srgb, var(--hit) 13%, transparent); }
+  }
   .edge-feedback { min-height: 22px; margin: 5px 0 10px; color: var(--muted); font-size: 12px; font-weight: 700; text-align: center; }
   .edge-map-card { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(180px, .75fr); gap: 14px; max-width: 720px;
                    margin: 0 auto 12px; padding: 14px; border: 1px solid var(--line); border-radius: 17px; background: var(--panel); }
@@ -801,6 +844,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edge-duel { gap: 7px; }
     .edge-duel-card { min-height: 205px; }
     .edge-duel-card img { height: 132px; }
+    .speedtrap-card .edge-speed-media { height: 132px; }
+    .edge-duel-card.speedtrap-card .edge-team-watermark { height: 66%; }
     .edge-map-card { grid-template-columns: 1fr; }
     .edge-rink { min-height: 210px; }
     .edge-build-board { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -6721,12 +6766,44 @@ function edgePairRandom(rnd, metric, count = 10) {
 }
 function edgeDuelCard(p, metric, reveal, cls, side) {
   if (!p) return "";
-  const value = EDGE_METRICS[metric].show(edgeValue(p.id, metric));
+  const raw = edgeValue(p.id, metric), value = EDGE_METRICS[metric].show(raw);
+  if (metric === "speed") {
+    return `<button type="button" class="edge-duel-card speedtrap-card ${cls || ""}" data-edge-side="${side}"${reveal ? " disabled" : ""}>
+      <span class="edge-speed-media">
+        <img class="edge-team-watermark" src="${logo(p.team)}" alt="" aria-hidden="true" onerror="this.style.display='none'">
+        <img class="edge-player-shot" src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
+      </span>
+      <b>${esc(p.name)}</b><small>${esc(posName(p))}</small>
+      ${reveal ? `<div class="edge-speed-reveal" data-edge-speed="${raw.toFixed(2)}"><span class="edge-speed-label">Max speed</span><strong class="edge-speed-number">0.00</strong><em class="edge-speed-unit">MPH</em></div>` : ""}
+    </button>`;
+  }
   return `<button type="button" class="edge-duel-card ${cls || ""}" data-edge-side="${side}"${reveal ? " disabled" : ""}>
     <img src="${esc(p.headshot || FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK">
     <b>${esc(p.name)}</b><small>${esc(posName(p))}</small>
     ${reveal ? `<div class="edge-value">${esc(value)}</div>` : ""}
   </button>`;
+}
+function animateEdgeSpeedReveal(root) {
+  const cards = [...root.querySelectorAll(".speedtrap-card")];
+  if (!cards.length) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  cards.forEach(card => {
+    const box = card.querySelector("[data-edge-speed]"), number = card.querySelector(".edge-speed-number");
+    if (!box || !number) return;
+    const target = Number(box.dataset.edgeSpeed);
+    if (!Number.isFinite(target)) return;
+    card.classList.add("speed-anim");
+    if (reduced) { number.textContent = target.toFixed(2); return; }
+    const started = performance.now(), duration = 760;
+    const frame = now => {
+      const t = Math.min(1, (now - started) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      number.textContent = (target * eased).toFixed(2);
+      if (t < 1 && card.isConnected) requestAnimationFrame(frame);
+      else number.textContent = target.toFixed(2);
+    };
+    requestAnimationFrame(frame);
+  });
 }
 function edgeBest(id, st) {
   const n = G[id].score(st.target, st.guesses), k = `sweater-${id}-best`;
@@ -6773,6 +6850,7 @@ function makeEdgeDuel(id, title, view, metric, prefix) {
       $(prefix+"Score").textContent=this.score(t,st.guesses);
       $(prefix+"Duel").innerHTML=edgeDuelCard(a,metric,showing||st.over,showing?(correct==="a"?"right":picked==="a"?"wrong":""):"","a")
         +edgeDuelCard(b,metric,showing||st.over,showing?(correct==="b"?"right":picked==="b"?"wrong":""):"","b");
+      if (metric === "speed" && showing) animateEdgeSpeedReveal($(prefix+"Duel"));
       $(prefix+"Feedback").textContent=showing ? (this.lastCorrect ? "Right." : "Not quite.") : st.over ? "" : `Choose the higher ${EDGE_METRICS[metric].label.toLowerCase()}.`;
     },
   };
