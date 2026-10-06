@@ -51,7 +51,7 @@ BOXSCORE_API = "https://api-web.nhle.com/v1/gamecenter/{game}/boxscore"
 SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={game}"
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
-VERSION = "83 · Seamless Blur Frost"
+VERSION = "84 · Roster Autocomplete"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2724,8 +2724,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     </div>
     <div class="hlscore"><span>Time<b id="roTime">60</b></span><span>Named<b id="roCount">0</b>/<span id="roTotal">0</span></span></div>
     <p class="optnote center" id="roSource"></p>
-    <div class="numrow wide">
-      <input id="roInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send" placeholder="Press Start to begin" aria-label="Player name">
+    <div class="numrow wide rostersearchrow">
+      <div class="search rostersearch">
+        <input id="roInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send"
+               role="combobox" aria-expanded="false" aria-controls="roOpts" placeholder="Press Start to begin" aria-label="Player name">
+        <ul class="list" id="roOpts" role="listbox" hidden></ul>
+      </div>
       <button class="btn" id="roStart" type="button">Start</button>
     </div>
     <p class="hint romsg" id="roMsg" aria-live="polite"></p>
@@ -4264,6 +4268,22 @@ function roStart() {
   G.roster.render(st.target, st);
   $("roInput").focus();
 }
+function roAccept(p) {
+  const st = S.roster, t = st.target;
+  if (!p || !t || st.over || !st.endsAt) return;
+  if (!t.ids.includes(p.id)) { roSay("Not on this roster", true); return; }
+  if (st.guesses.includes(p.id)) { roSay(`Already named ${p.name}`, true); $("roInput").value = ""; return; }
+  $("roInput").value = "";
+  st.endsAt += 5000;
+  const rec = { key: G.roster.clockKey(t), endsAt: st.endsAt };
+  if (mode === "unlimited") roMemory = rec; else store.set("sweater-roster-clock", rec);
+  roSay(`✓ ${p.name} · +5s`);
+  doGuess(p.id);
+  if (!S.roster.over) {
+    $("roTime").textContent = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
+    $("roInput").focus();
+  }
+}
 function roEnter() {
   const st = S.roster, t = st.target;
   if (!t || st.over || !st.endsAt) return;
@@ -4278,17 +4298,7 @@ function roEnter() {
     p = byLast[0];
   }
   if (!p) { roSay("Not on this roster", true); return; }
-  if (st.guesses.includes(p.id)) { roSay(`Already named ${p.name}`, true); $("roInput").value = ""; return; }
-  $("roInput").value = "";
-  st.endsAt += 5000;
-  const rec = { key: G.roster.clockKey(t), endsAt: st.endsAt };
-  if (mode === "unlimited") roMemory = rec; else store.set("sweater-roster-clock", rec);
-  roSay(`✓ ${p.name} · +5s`);
-  doGuess(p.id);
-  if (!S.roster.over) {
-    $("roTime").textContent = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
-    $("roInput").focus();
-  }
+  roAccept(p);
 }
 function roSay(text, bad = false) {
   $("roMsg").textContent = text;
@@ -4296,7 +4306,9 @@ function roSay(text, bad = false) {
   if (bad) { $("roInput").classList.remove("shake"); void $("roInput").offsetWidth; $("roInput").classList.add("shake"); }
 }
 $("roStart").onclick = roStart;
-$("roInput").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); roEnter(); } });
+$("roInput").addEventListener("keydown", e => {
+  if (e.key === "Enter" && $("roOpts").hidden) { e.preventDefault(); roEnter(); }
+});
 
 // ======================= draft day, birthplace, connections =======================
 const COUNTRY_NAMES = {
@@ -7040,16 +7052,16 @@ function addClassicRow(p, t) {
 }
 
 // ======================= player search (autocomplete) =======================
-function makeSearch(inputId, listId, toGuess = id => id) {
+function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS, onChoose = null) {
   const input = $(inputId), ul = $(listId);
   let idx = -1, found = [];
   function close() { ul.hidden = true; idx = -1; input.setAttribute("aria-expanded", false); }
-  function choose(p) { if (!p) return; close(); input.value = ""; doGuess(toGuess(p.id)); }
+  function choose(p) { if (!p) return; close(); input.value = ""; if (onChoose) onChoose(p); else doGuess(toGuess(p.id)); }
   function render() {
     const q = norm(input.value.trim());
     if (!q) return close();
     const used = S[game].guesses.map(x => typeof x === "string" && x.includes("@") ? Number(x.split("@")[0]) : x);
-    found = PLAYERS.filter(p => !used.includes(p.id) && norm(p.name).includes(q)).slice(0, 30);
+    found = poolFn().filter(p => p && !used.includes(p.id) && norm(p.name).includes(q)).slice(0, 30);
     ul.innerHTML = "";
     found.forEach((p, i) => {
       const li = document.createElement("li");
@@ -7077,7 +7089,10 @@ function makeSearch(inputId, listId, toGuess = id => id) {
 }
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
-                  makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`), makeSearch("phGuess", "phOpts")];
+                  makeSearch("zmGuess", "zmOpts", id => `${id}@${zamPct()}`), makeSearch("phGuess", "phOpts"),
+                  makeSearch("roInput", "roOpts", id => id,
+                    () => (S.roster.target ? S.roster.target.ids.map(id => BYID.get(id)).filter(Boolean) : []),
+                    p => roAccept(p))];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
 
