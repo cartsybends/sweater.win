@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "110 · Stable Blur Frost Layout"
+VERSION = "111 · Blur Construction Pause"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -2353,6 +2353,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   .librarygame { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 40px; }
   .librarygame + .librarygame::before { content: ""; position: absolute; top: 0; left: 66px; right: 0; border-top: 1px solid var(--sep); }
   .librarygame .grow { grid-column: 1; min-width: 0; }
+  .librarygame.construction .grow:disabled { opacity: .62; }
+  .librarygame.construction .gstat { color: var(--near); font-weight: 700; }
+  .librarygame.construction .chev { opacity: .18; }
   .favtoggle { grid-column: 2; z-index: 1; align-self: stretch; width: 40px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 18px; cursor: pointer; }
   .favtoggle:hover, .favtoggle[aria-pressed="true"] { color: var(--accent); }
   .favtoggle[aria-pressed="true"] { text-shadow: 0 2px 9px color-mix(in srgb, var(--accent) 30%, transparent); }
@@ -8366,7 +8369,7 @@ const HUB = [
     ["statline", "📈", "Name him from his season-by-season stats."],
     ["playoff", "🏒", "Name him from one postseason run as clues build."],
     ["journey", "🧭", "Name him from the teams he's played for."],
-    ["blur", "🔍", "Piece together a frosted portrait as every miss opens another window."],
+    ["blur", "🔍", "Under construction · We’re rebuilding this mode. Check back soon."],
   ]},
   { title: "Know the details", tone: "blue", games: [
     ["team", "🛡️", "Which team was he on that season?"],
@@ -8399,6 +8402,7 @@ const EDGE_GAMES = [
   { id:"edgemap", title:"Shot Map", tag:"Under construction", blurb:"We’re rebuilding this mode. Check back soon.", maintenance:true },
   { id:"edgebuild", title:"Build a Player", tag:"Draft room", blurb:"Draft Speed, Shot, Engine and Danger into one tracking-data super-player." },
 ];
+const MAINTENANCE_GAMES = new Set(["blur", "edgemap"]);
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
 const CARD = {};
 HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: sec.tone }; }));
@@ -8483,7 +8487,7 @@ function hubStatus(id) {
 }
 
 const FEATURE_SEQUENCE = ["trophy", "cups", "classic", "shoot", "map", "conn", "journey"];
-const gameIsReady = id => id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0;
+const gameIsReady = id => !MAINTENANCE_GAMES.has(id) && (id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0);
 const LIBRARY_FILTERS = [
   ["all", "All games"], ["favourites", "Favourites"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
 ];
@@ -8545,12 +8549,13 @@ function renderHub() {
       <h2>${sec.title}</h2>
       <div class="glist">${sec.games.map(([id, icon, blurb]) => {
         const [cls, text] = hubStatus(id);
+        const maintenance = MAINTENANCE_GAMES.has(id);
         const ready = gameIsReady(id);
         const meta = modeMeta(id), favourited = favourites.includes(id);
-        return `<div class="librarygame ${cls}"><button type="button" class="grow ${cls}" data-open="${id}"${ready ? "" : " disabled"}>
+        return `<div class="librarygame ${cls}${maintenance ? " construction" : ""}"><button type="button" class="grow ${cls}" data-open="${id}"${ready ? "" : " disabled"} aria-disabled="${!ready}">
           <span class="gicon" aria-hidden="true">${modeIcon(id)}</span>
           <span class="gtext"><b>${esc(cardTitle(id))}</b><small>${esc(blurb)}</small></span>
-          <span class="gstat">${ready ? esc(text) : "Not available"}</span>
+          <span class="gstat">${maintenance ? "Under construction" : ready ? esc(text) : "Not available"}</span>
           <span class="chev" aria-hidden="true">›</span>
         </button><button type="button" class="favtoggle" data-favorite="${id}" aria-label="${favourited ? "Remove" : "Add"} ${esc(cardTitle(id))} ${favourited ? "from" : "to"} favourites" aria-pressed="${favourited}" title="${favourited ? "Remove from" : "Add to"} favourites">${uiIcon("star")}</button></div>`;
       }).join("")}</div>
@@ -8853,10 +8858,10 @@ function showHub(push = true) {
 }
 
 function openGame(id, push = true) {
-  if (id === "edgemap") {
+  if (MAINTENANCE_GAMES.has(id)) {
     if (location.hash) history.replaceState(null, "", location.pathname + location.search);
     showHub(false);
-    toast("Shot Map is under construction. Check back soon.");
+    toast(`${id === "blur" ? "Blur" : "Shot Map"} is under construction. Check back soon.`);
     return;
   }
   if (push) rememberHubScroll();
