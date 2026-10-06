@@ -89,19 +89,28 @@ a{{color:#fff}}
 </style>
 </head>
 <body>
-<p id="status">Opening Sweater…<br><small><a href="app.html">Continue to Sweater</a></small></p>
+<p id="status" hidden>Opening Sweater…<br><small><a href="app.html">Continue to Sweater</a></small></p>
 <script>
 (async () => {{
+  const status = document.getElementById("status");
+  const revealTimer = setTimeout(() => {{
+    if (status) status.hidden = false;
+  }}, 1200);
+
   try {{
     const response = await fetch("./app.html", {{cache: "no-cache"}});
     if (!response.ok) throw new Error("HTTP " + response.status);
     const html = await response.text();
+    clearTimeout(revealTimer);
     document.open();
     document.write(html);
     document.close();
   }} catch (error) {{
-    const status = document.getElementById("status");
-    if (status) status.innerHTML = 'Could not load Sweater.<br><small><a href="app.html">Open the game directly</a></small>';
+    clearTimeout(revealTimer);
+    if (status) {{
+      status.hidden = false;
+      status.innerHTML = 'Could not load Sweater.<br><small><a href="app.html">Open the game directly</a></small>';
+    }}
     console.error("Sweater bootstrap failed:", error);
   }}
 }})();
