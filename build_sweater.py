@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "96 · Pro Shot Map Rink"
+VERSION = "97 · Shot Map Contours"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -839,12 +839,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-rink .ice-net { fill: color-mix(in srgb, var(--panel) 72%, transparent); stroke: #c84b4b; stroke-width: 2.2; }
   .edge-rink .ice-netmesh { fill: none; stroke: color-mix(in srgb, var(--fg) 22%, transparent); stroke-width: 1; }
   .edge-rink .edge-heat { opacity: 0; transform-box: fill-box; transform-origin: center; }
-  .edge-rink .heat-long { fill: color-mix(in srgb, var(--link) 44%, transparent); }
-  .edge-rink .heat-mid { fill: color-mix(in srgb, var(--near) 58%, transparent); }
-  .edge-rink .heat-high { fill: color-mix(in srgb, var(--hit) 64%, transparent); }
-  .edge-rink .zone-tag rect { fill: color-mix(in srgb, var(--panel) 86%, transparent); stroke: color-mix(in srgb, var(--fg) 14%, transparent); }
+  .edge-rink .edge-contour { fill: none; opacity: 0; stroke-width: 1.7; stroke-dasharray: 5 5; vector-effect: non-scaling-stroke; }
+  .edge-rink .contour-long { stroke: color-mix(in srgb, var(--link) 58%, transparent); }
+  .edge-rink .contour-mid { stroke: color-mix(in srgb, var(--near) 68%, transparent); }
+  .edge-rink .contour-high { stroke: color-mix(in srgb, var(--hit) 72%, transparent); }
+  .edge-rink .zone-tag rect { fill: color-mix(in srgb, var(--panel) 89%, transparent); stroke: color-mix(in srgb, var(--fg) 14%, transparent); }
   .edge-rink .zone-tag text { fill: var(--fg); font-size: 10px; font-weight: 850; letter-spacing: .07em; }
-  .edge-map-card.map-enter .edge-heat { animation: edgeHeatIn .62s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--delay); }
+  .edge-map-card.map-enter .edge-heat { animation: edgeHeatIn .7s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--delay); }
+  .edge-map-card.map-enter .edge-contour { animation: edgeContourIn .7s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--delay) + .06s); }
   .edge-map-card.map-enter .edge-rink-stage { animation: edgeRinkIn .38s cubic-bezier(.2,.75,.2,1) both; }
   .edge-map-card.map-answer .edge-rink-stage { animation: edgeRinkAnswer .46s ease both; }
   .edge-zone-list { display: grid; align-content: center; gap: 8px; min-width: 0; }
@@ -869,8 +871,12 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-choice.right { animation: edgeMapRight .46s cubic-bezier(.2,.8,.2,1) both; }
   .edge-choice.wrong { animation: edgeMapWrong .36s ease both; }
   @keyframes edgeHeatIn {
-    from { opacity: 0; transform: scale(.82); }
+    from { opacity: 0; transform: scale(.9); }
     to { opacity: var(--zone-opacity); transform: scale(1); }
+  }
+  @keyframes edgeContourIn {
+    from { opacity: 0; stroke-dashoffset: 24; }
+    to { opacity: var(--contour-opacity); stroke-dashoffset: 0; }
   }
   @keyframes edgeRinkIn {
     from { opacity: .35; transform: translateY(5px) scale(.992); }
@@ -884,8 +890,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes edgeMapRight { 0% { transform: scale(.985); } 65% { transform: scale(1.025); } 100% { transform: scale(1); } }
   @keyframes edgeMapWrong { 0%,100% { transform: translateX(0); } 35% { transform: translateX(-3px); } 70% { transform: translateX(3px); } }
   .edge-choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; max-width: 660px; margin: 0 auto; }
-  .edge-choice { min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--cell);
-                 color: var(--cell-fg); font: inherit; font-weight: 750; cursor: pointer; }
+  .edge-choice { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--cell);
+                 color: var(--cell-fg); font: inherit; font-weight: 750; cursor: pointer; text-align: left; }
+  .edge-choice-logo { flex: 0 0 32px; width: 32px; height: 32px; object-fit: contain; }
+  .edge-choice-name { min-width: 0; line-height: 1.2; }
   .edge-choice.right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 16%, var(--cell)); }
   .edge-choice.wrong { border-color: #c0392b; }
   .edge-build-board { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 7px; max-width: 720px; margin: 0 auto 12px; }
@@ -6957,12 +6965,42 @@ function edgeShotMapMarkup(p, answer = false) {
       <svg class="edge-rink" viewBox="0 0 510 450" role="img" aria-label="Top-down offensive-zone NHL rink showing EDGE shot-location distribution">
         <defs>
           <clipPath id="edgeZoneClip"><path d="M62 12H448Q498 12 498 62V430H12V62Q12 12 62 12Z"/></clipPath>
+          <radialGradient id="edgeHeatHigh" cx="50%" cy="10%" r="85%">
+            <stop offset="0%" stop-color="var(--hit)" stop-opacity=".78"/>
+            <stop offset="42%" stop-color="var(--hit)" stop-opacity=".42"/>
+            <stop offset="100%" stop-color="var(--hit)" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="edgeHeatMid" cx="50%" cy="25%" r="82%">
+            <stop offset="0%" stop-color="var(--near)" stop-opacity=".58"/>
+            <stop offset="55%" stop-color="var(--near)" stop-opacity=".28"/>
+            <stop offset="100%" stop-color="var(--near)" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="edgeHeatLong" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--link)" stop-opacity=".08"/>
+            <stop offset="55%" stop-color="var(--link)" stop-opacity=".26"/>
+            <stop offset="100%" stop-color="var(--link)" stop-opacity=".48"/>
+          </linearGradient>
         </defs>
         <path class="ice-sheet" d="M62 12H448Q498 12 498 62V430H12V62Q12 12 62 12Z"/>
         <g clip-path="url(#edgeZoneClip)">
-          <path class="edge-heat heat-long" style="--zone-opacity:${opacity(e.long)};--delay:.28s" d="M25 265C95 278 157 309 255 324C353 309 415 278 485 265V427H25Z"/>
-          <path class="edge-heat heat-mid" style="--zone-opacity:${opacity(e.mid)};--delay:.20s" d="M85 140C126 118 176 123 255 145C334 123 384 118 425 140L390 300C342 286 304 270 255 258C206 270 168 286 120 300Z"/>
-          <path class="edge-heat heat-high" style="--zone-opacity:${opacity(e.hd)};--delay:.12s" d="M194 93H316L301 242C285 252 271 258 255 263C239 258 225 252 209 242Z"/>
+          <path class="edge-heat" style="--zone-opacity:${opacity(e.long)};--delay:.28s" fill="url(#edgeHeatLong)"
+                d="M20 272C95 280 162 306 255 324C348 306 415 280 490 272V430H20Z"/>
+          <path class="edge-contour contour-long" style="--contour-opacity:${(0.22 + 0.34*(Number(e.long)/max)).toFixed(2)};--delay:.28s"
+                d="M34 289C109 296 169 319 255 336C341 319 401 296 476 289"/>
+          <path class="edge-contour contour-long" style="--contour-opacity:${(0.16 + 0.24*(Number(e.long)/max)).toFixed(2)};--delay:.34s"
+                d="M58 337C126 343 184 360 255 374C326 360 384 343 452 337"/>
+
+          <path class="edge-heat" style="--zone-opacity:${opacity(e.mid)};--delay:.20s" fill="url(#edgeHeatMid)"
+                d="M91 137C135 116 187 120 255 143C323 120 375 116 419 137L390 295C343 282 302 267 255 257C208 267 167 282 120 295Z"/>
+          <path class="edge-contour contour-mid" style="--contour-opacity:${(0.28 + 0.38*(Number(e.mid)/max)).toFixed(2)};--delay:.20s"
+                d="M112 157C150 139 194 142 255 161C316 142 360 139 398 157L376 274C332 264 294 251 255 242C216 251 178 264 134 274Z"/>
+
+          <path class="edge-heat" style="--zone-opacity:${opacity(e.hd)};--delay:.12s" fill="url(#edgeHeatHigh)"
+                d="M190 88H320L304 238C288 251 271 258 255 264C239 258 222 251 206 238Z"/>
+          <path class="edge-contour contour-high" style="--contour-opacity:${(0.34 + 0.42*(Number(e.hd)/max)).toFixed(2)};--delay:.12s"
+                d="M208 105H302L290 220C278 230 266 236 255 240C244 236 232 230 220 220Z"/>
+          <path class="edge-contour contour-high" style="--contour-opacity:${(0.22 + 0.32*(Number(e.hd)/max)).toFixed(2)};--delay:.18s"
+                d="M226 121H284L277 202C269 209 262 213 255 216C248 213 241 209 233 202Z"/>
         </g>
 
         <path class="ice-board" d="M62 12H448Q498 12 498 62V430H12V62Q12 12 62 12Z"/>
@@ -7033,7 +7071,7 @@ G.edgemap = {
     $("emMap").innerHTML=p?edgeShotMapMarkup(p,showing):"";
     animateEdgeMapStats($("emMap"));
     const picked=showing?Number(st.guesses[done-1]):-1;
-    $("emChoices").innerHTML=r.ids.map((id,n)=>{const q=BYID.get(id);const cls=showing?(n===r.a?" right":n===picked?" wrong":""):"";return`<button type="button" class="edge-choice ${cls}" data-em="${n}"${showing||st.over?" disabled":""}>${esc(q?.name||"Unknown")}</button>`;}).join("");
+    $("emChoices").innerHTML=r.ids.map((id,n)=>{const q=BYID.get(id);const cls=showing?(n===r.a?" right":n===picked?" wrong":""):"";return`<button type="button" class="edge-choice ${cls}" data-em="${n}"${showing||st.over?" disabled":""}><img class="edge-choice-logo" src="${logo(q?.team)}" alt="" aria-hidden="true" onerror="this.style.visibility='hidden'"><span class="edge-choice-name">${esc(q?.name||"Unknown")}</span></button>`;}).join("");
     $("emFeedback").textContent=showing?(this.lastCorrect?`Right — ${p.name}.`:`It was ${p.name}.`):st.over?"":"Who owns this shot-location profile?";
   }
 };
