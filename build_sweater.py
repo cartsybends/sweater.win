@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "118 · Fix Playoff Header"
+VERSION = "119 · The Rush"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1037,12 +1037,150 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-build-slot em { margin-top: 4px; color: var(--link); font-size: 11px; font-style: normal; font-weight: 800; }
   .edge-draft { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .edge-draft .edge-duel-card { min-height: 220px; }
+
+  /* The Rush — broadcast-style NHL EDGE arcade presentation */
+  .edgecard.featured-rush {
+    grid-column: 1 / -1; min-height: 112px;
+    background:
+      radial-gradient(circle at 86% 22%, color-mix(in srgb, var(--link) 18%, transparent), transparent 31%),
+      linear-gradient(135deg, color-mix(in srgb, var(--link) 7%, var(--cell)), var(--cell));
+  }
+  .edgecard.featured-rush b { font-size: 18px; }
+  .edgecard.featured-rush .edgecardtag { color: var(--link); }
+  .edge-rush-shell { max-width: 900px; }
+  .rush-stage {
+    position: relative; isolation: isolate; overflow: hidden; width: 100%; aspect-ratio: 16 / 9;
+    margin: 0 auto 14px; border: 1px solid color-mix(in srgb, var(--link) 26%, var(--line)); border-radius: 20px;
+    background: #eef6fb; box-shadow: 0 18px 42px rgba(0,0,0,.13);
+  }
+  .rush-stage::before {
+    content: ""; position: absolute; z-index: 2; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.16), transparent 14%, transparent 86%, rgba(255,255,255,.16)),
+      repeating-linear-gradient(0deg, rgba(19,69,103,.018) 0 1px, transparent 1px 5px);
+    mix-blend-mode: multiply;
+  }
+  .rush-stage::after {
+    content: ""; position: absolute; z-index: 20; inset: 0; opacity: 0; pointer-events: none;
+    background: radial-gradient(circle at 91% 50%, rgba(239,68,68,.48), transparent 18%);
+  }
+  .rush-stage.goal::after { animation: rushGoalFlash .78s ease both; }
+  .rush-rink { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .rush-board { fill: #eef6fb; stroke: rgba(28,73,105,.30); stroke-width: 5; }
+  .rush-center { stroke: rgba(213,51,61,.54); stroke-width: 3; }
+  .rush-blue { stroke: rgba(46,111,182,.62); stroke-width: 5; }
+  .rush-goalline { stroke: rgba(213,51,61,.46); stroke-width: 3; }
+  .rush-circle { fill: none; stroke: rgba(213,51,61,.32); stroke-width: 2; }
+  .rush-dot { fill: rgba(213,51,61,.44); }
+  .rush-net { fill: rgba(255,255,255,.6); stroke: rgba(42,49,56,.52); stroke-width: 2; }
+  .rush-crease { fill: rgba(68,146,215,.14); stroke: rgba(68,146,215,.48); stroke-width: 2; }
+  .rush-broadcast {
+    position: absolute; z-index: 16; left: 12px; top: 11px; display: flex; align-items: center; gap: 7px;
+    color: #17334a; font-size: 9px; font-weight: 900; letter-spacing: .11em; text-transform: uppercase;
+  }
+  .rush-live { display: inline-flex; align-items: center; gap: 5px; padding: 5px 7px; border-radius: 7px; background: rgba(15,31,45,.86); color: white; }
+  .rush-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.15); }
+  .rush-phase { padding: 5px 7px; border-radius: 7px; background: rgba(255,255,255,.76); backdrop-filter: blur(6px); }
+  .rush-radar {
+    position: absolute; z-index: 16; right: 12px; top: 11px; min-width: 98px; padding: 7px 10px 6px;
+    border-radius: 9px; background: rgba(15,31,45,.88); color: white; text-align: right;
+    box-shadow: 0 5px 16px rgba(0,0,0,.16); opacity: 0; transform: translateY(-7px);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .rush-radar.on { opacity: 1; transform: none; }
+  .rush-radar small, .rush-radar b { display: block; }
+  .rush-radar small { font-size: 7px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .72; }
+  .rush-radar b { margin-top: 2px; font-size: 23px; font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+  .rush-radar em { margin-left: 3px; font-size: 8px; font-style: normal; font-weight: 850; opacity: .72; }
+  .rush-callout {
+    position: absolute; z-index: 18; left: 50%; top: 50%; min-width: 210px; padding: 12px 18px;
+    border: 1px solid rgba(255,255,255,.32); border-radius: 12px; background: rgba(13,25,36,.90); color: white;
+    text-align: center; opacity: 0; transform: translate(-50%,-42%) scale(.92); pointer-events: none;
+    box-shadow: 0 14px 40px rgba(0,0,0,.28); backdrop-filter: blur(8px);
+  }
+  .rush-callout.on { animation: rushCallout .62s cubic-bezier(.18,.86,.22,1.1) both; }
+  .rush-callout strong { display: block; font-size: clamp(24px,5vw,42px); line-height: .95; letter-spacing: -.055em; }
+  .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
+  .rush-actor {
+    position: absolute; z-index: 8; left: 0; top: 0; width: clamp(38px,6.7vw,54px); height: clamp(38px,6.7vw,54px);
+    pointer-events: none; will-change: transform; filter: drop-shadow(0 5px 5px rgba(12,35,50,.23));
+  }
+  .rush-actor::before {
+    content: ""; position: absolute; z-index: -1; left: -29px; top: 50%; width: 34px; height: 10px; border-radius: 50%;
+    background: linear-gradient(90deg, transparent, rgba(57,151,218,.24)); filter: blur(2px); transform: translateY(-50%); opacity: .8;
+  }
+  .rush-actor .rush-body {
+    position: absolute; inset: 3px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.94); border-radius: 50%;
+    background: rgba(18,37,52,.92); box-shadow: inset 0 0 0 2px rgba(17,41,58,.22);
+  }
+  .rush-actor img { width: 72%; height: 72%; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(0,0,0,.2)); }
+  .rush-actor .rush-stick { position: absolute; width: 34px; height: 2px; right: -21px; bottom: 4px; border-radius: 2px; background: #5a4635; transform: rotate(23deg); transform-origin: left center; }
+  .rush-actor .rush-stick::after { content: ""; position: absolute; right: -2px; top: -3px; width: 10px; height: 3px; border-radius: 2px; background: #31363a; transform: rotate(20deg); }
+  .rush-actor .rush-role {
+    position: absolute; left: 50%; top: calc(100% + 3px); padding: 2px 5px; border-radius: 5px; transform: translateX(-50%);
+    background: rgba(15,31,45,.82); color: #fff; font-size: 6px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
+  }
+  .rush-defender, .rush-goalie {
+    position: absolute; z-index: 5; left: 0; top: 0; display: grid; place-items: center; width: clamp(34px,5.8vw,47px); height: clamp(34px,5.8vw,47px);
+    border: 2px solid rgba(74,91,103,.46); border-radius: 50%; background: rgba(100,116,127,.22); color: rgba(39,57,68,.72);
+    font-size: 12px; font-weight: 950; will-change: transform;
+  }
+  .rush-goalie { width: clamp(39px,6.5vw,52px); height: clamp(39px,6.5vw,52px); background: rgba(100,116,127,.31); }
+  .rush-puck {
+    position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
+    box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
+  }
+  .rush-puck.shooting { box-shadow: -18px 0 12px rgba(18,38,52,.22), 0 2px 4px rgba(0,0,0,.35); }
+  .rush-goal-light {
+    position: absolute; z-index: 7; right: 2.8%; top: 45%; width: 11px; height: 11px; border-radius: 50%; background: #801f25;
+    box-shadow: 0 0 0 rgba(239,68,68,0); transition: .16s ease;
+  }
+  .rush-stage.goal .rush-goal-light { background: #ef4444; box-shadow: 0 0 12px 5px rgba(239,68,68,.55); }
+  .rush-lines { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 9px; }
+  .rush-line {
+    position: relative; overflow: hidden; min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 14px;
+    background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer;
+    transition: transform .17s ease,border-color .17s ease,background-color .17s ease;
+  }
+  .rush-line:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--link); }
+  .rush-line:disabled { cursor: default; }
+  .rush-line.best { border-color: var(--hit); background: color-mix(in srgb,var(--hit) 8%,var(--panel)); }
+  .rush-line.picked:not(.best) { border-color: #c0392b; background: color-mix(in srgb,#c0392b 7%,var(--panel)); }
+  .rush-line-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .rush-line-head small { color: var(--muted); font-size: 8px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+  .rush-line-rating { font-size: 10px; font-weight: 900; color: var(--link); }
+  .rush-line-player { display: grid; grid-template-columns: 31px minmax(0,1fr); align-items: center; gap: 7px; min-height: 39px; padding: 4px 0; border-top: 1px solid color-mix(in srgb,var(--line) 70%,transparent); }
+  .rush-line-player:first-of-type { border-top: 0; }
+  .rush-line-player img { width: 31px; height: 31px; object-fit: contain; border-radius: 50%; background: var(--cream); }
+  .rush-line-player b { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+  .rush-line-player em { display: block; margin-top: 2px; color: var(--muted); font-size: 8px; font-style: normal; }
+  .rush-role-results { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 10px; }
+  .rush-role-results span { min-width: 0; padding: 7px; border-radius: 8px; background: color-mix(in srgb,var(--link) 6%,var(--cell)); text-align: center; }
+  .rush-role-results small,.rush-role-results b { display:block; }
+  .rush-role-results small { color:var(--muted);font-size:7px;font-weight:850;letter-spacing:.06em;text-transform:uppercase; }
+  .rush-role-results b { margin-top:3px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  @keyframes rushGoalFlash { 0%{opacity:0} 20%{opacity:1} 100%{opacity:0} }
+  @keyframes rushCallout { 0%{opacity:0;transform:translate(-50%,-42%) scale(.92)} 100%{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+
   @media (max-width: 900px) { .edgegrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
   @media (max-width: 620px) {
     .edgehome { padding: 14px; }
     .edgehomehead { align-items: flex-start; flex-direction: column; }
     .edgegrid { grid-template-columns: 1fr; }
     .edgecard { min-height: 108px; }
+    .edgecard.featured-rush { grid-column: auto; min-height: 122px; }
+    .rush-stage { border-radius: 14px; }
+    .rush-lines { grid-template-columns: 1fr; }
+    .rush-line { display: grid; grid-template-columns: 66px minmax(0,1fr); gap: 7px 9px; align-items: center; }
+    .rush-line-head { grid-row: 1 / span 3; display: block; margin: 0; text-align: center; }
+    .rush-line-head small { display: block; }
+    .rush-line-rating { display: block; margin-top: 5px; font-size: 14px; }
+    .rush-line-player { min-height: 34px; padding: 2px 0; }
+    .rush-role-results { grid-column: 1 / -1; }
+    .rush-broadcast { left: 7px; top: 7px; }
+    .rush-radar { right: 7px; top: 7px; min-width: 78px; padding: 5px 7px; }
+    .rush-radar b { font-size: 18px; }
+    .rush-callout { min-width: 170px; padding: 10px 13px; }
     .edge-duel { gap: 7px; }
     .edge-duel-card { min-height: 205px; }
     .edge-duel-card img { height: 132px; }
@@ -3336,6 +3474,36 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
 
+  <section class="view" id="view-edgerush" hidden>
+    <div class="edge-shell edge-rush-shell">
+      <p class="edge-kicker">NHL EDGE · Live tracking arcade</p>
+      <p class="edge-intro">Send one three-man unit over the boards. Sweater assigns the roles from real EDGE profiles, then runs the rush.</p>
+      <div class="edge-hud"><span><small>Rush</small><b id="erRound">1 / 5</b></span><span><small>Best reads</small><b id="erScore">0</b></span></div>
+      <div class="rush-stage" id="erStage" aria-label="Animated hockey rush">
+        <svg class="rush-rink" viewBox="0 0 720 405" preserveAspectRatio="none" aria-hidden="true">
+          <rect class="rush-board" x="7" y="7" width="706" height="391" rx="82"/>
+          <line class="rush-blue" x1="220" y1="8" x2="220" y2="397"/>
+          <line class="rush-center" x1="360" y1="8" x2="360" y2="397"/>
+          <circle class="rush-circle" cx="360" cy="202.5" r="48"/><circle class="rush-dot" cx="360" cy="202.5" r="4"/>
+          <line class="rush-blue" x1="500" y1="8" x2="500" y2="397"/>
+          <line class="rush-goalline" x1="660" y1="55" x2="660" y2="350"/>
+          <circle class="rush-circle" cx="568" cy="116" r="42"/><circle class="rush-circle" cx="568" cy="289" r="42"/>
+          <circle class="rush-dot" cx="568" cy="116" r="4"/><circle class="rush-dot" cx="568" cy="289" r="4"/>
+          <path class="rush-crease" d="M660 174a29 29 0 0 0 0 57h-20v-57Z"/>
+          <path class="rush-net" d="M662 177h31q12 0 12 12v27q0 12-12 12h-31Z"/>
+        </svg>
+        <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
+        <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em>MPH</em></b></div>
+        <div id="erActors"></div>
+        <span class="rush-goal-light" aria-hidden="true"></span>
+        <div class="rush-callout" id="erCallout"><strong id="erCalloutMain"></strong><span id="erCalloutSub"></span></div>
+      </div>
+      <div class="rush-lines" id="erChoices"></div>
+      <p class="edge-feedback" id="erFeedback">Choose the unit you think has the strongest combined rush profile.</p>
+      <div class="slot"></div><p class="nodata" hidden>NHL EDGE data is unavailable in this build.</p>
+    </div>
+  </section>
+
   <section class="view" id="view-edgespeed" hidden>
     <div class="edge-shell">
       <p class="edge-kicker">NHL EDGE · Skating</p>
@@ -3775,7 +3943,7 @@ const UI_ICONS = {
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
 const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
-  edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
+  edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.overtime = "clock";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
 Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
@@ -3822,8 +3990,8 @@ const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
  "shoot", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups",
- "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
-["edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { START[g] = START[g] || "2026-10-05"; });
+ "edgerush", "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
+["edgerush", "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { START[g] = START[g] || "2026-10-05"; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
 
 // ---- career stats: rows are [season start year, team, GP, G|W, A|GAA, PTS|SV%] ----
@@ -5990,6 +6158,7 @@ window.addEventListener("pagehide",()=>{if(overtimeRun)endArcade("overtime",true
 
 // finish a running arcade game if the player leaves it
 function leaveGame(g) {
+  if (g === "edgerush") edgeRushCancelAnimation();
   if (g === "overtime" && overtimeRun) endArcade("overtime",true);
   if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
   if (g === "shoot" && shootUI.phase === "aim") shootUI = { phase: "ask" };
@@ -7213,6 +7382,209 @@ $("emMap").addEventListener("keydown",e=>{
   if((e.key==="Enter"||e.key===" ")&&e.target.closest("[data-edge-drop]")&&edgeMapPick!=null&&edgeMapRoundState()){e.preventDefault();edgeMapCommit(edgeMapPick,null);}
 });
 
+// ---- The Rush: choose a three-man unit, then animate the EDGE profile ----
+const EDGE_RUSH_ROLES = ["Carrier","Support","Finisher"];
+const edgeRushEligible = () => EDGE_POOL.filter(p =>
+  p.pos !== "G" && edgeValue(p.id,"speed") > 0 && edgeValue(p.id,"shot") > 0 &&
+  edgeValue(p.id,"miles") > 0 && Number(p.edge?.total) >= 20);
+
+function edgeRushRoleScores(id) {
+  const speed=edgePercentile("speed",edgeValue(id,"speed"));
+  const shot=edgePercentile("shot",edgeValue(id,"shot"));
+  const miles=edgePercentile("miles",edgeValue(id,"miles"));
+  const hd=edgePercentile("hd",edgeValue(id,"hd"));
+  const mid=edgePercentile("mid",edgeValue(id,"mid"));
+  const long=edgePercentile("long",edgeValue(id,"long"));
+  return {
+    carrier:.72*speed+.28*miles,
+    support:.40*miles+.32*speed+.18*hd+.10*mid,
+    finisher:.48*shot+.30*hd+.14*mid+.08*long,
+  };
+}
+function edgeRushLine(ids) {
+  const perms=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+  let best=null;
+  for(const q of perms){
+    const c=edgeRushRoleScores(ids[q[0]]),s=edgeRushRoleScores(ids[q[1]]),f=edgeRushRoleScores(ids[q[2]]);
+    const rating=.32*c.carrier+.25*s.support+.43*f.finisher;
+    if(!best||rating>best.rating)best={rating,roles:[ids[q[0]],ids[q[1]],ids[q[2]]]};
+  }
+  return {...best,rating:Math.round(best.rating)};
+}
+function edgeRushRandom(rnd) {
+  const pool=edgeRushEligible();
+  if(pool.length<24)return null;
+  const rounds=[];
+  for(let round=0;round<5;round++){
+    let made=null;
+    for(let attempt=0;attempt<160&&!made;attempt++){
+      const nine=shuffled(pool,rnd).slice(0,9);
+      const lines=[0,1,2].map(i=>{
+        const ids=nine.slice(i*3,i*3+3).map(p=>p.id),calc=edgeRushLine(ids);
+        return {ids,roles:calc.roles,rating:calc.rating};
+      });
+      const ranked=lines.map((x,i)=>[x.rating,i]).sort((a,b)=>b[0]-a[0]);
+      if(ranked[0][0]-ranked[1][0] >= 3) made={lines,a:ranked[0][1]};
+    }
+    if(!made)return null;
+    rounds.push(made);
+  }
+  return {rounds};
+}
+function edgeRushZone(id) {
+  const e=EDGE_BYID.get(Number(id))||{},vals=[["high",Number(e.hd)||0],["mid",Number(e.mid)||0],["long",Number(e.long)||0]];
+  return vals.sort((a,b)=>b[1]-a[1])[0][0];
+}
+function edgeRushChoiceMarkup(r,showing,picked,over) {
+  return r.lines.map((line,i)=>{
+    const best=i===r.a,pick=i===picked,calc=edgeRushLine(line.ids);
+    const roleById=new Map(calc.roles.map((id,n)=>[id,EDGE_RUSH_ROLES[n]]));
+    return `<button type="button" class="rush-line${showing&&best?" best":""}${showing&&pick?" picked":""}" data-er="${i}"${showing||over?" disabled":""}>
+      <span class="rush-line-head"><small>Unit ${String.fromCharCode(65+i)}</small>${showing?`<b class="rush-line-rating">${line.rating} EDGE</b>`:""}</span>
+      ${line.ids.map(id=>{const p=BYID.get(id);return `<span class="rush-line-player"><img src="${esc(p?.headshot||FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><span><b>${esc(p?.name||"Unknown")}</b><em>${showing?roleById.get(id):esc(teamName(p?.team)||"NHL")}</em></span></span>`;}).join("")}
+      ${showing?`<span class="rush-role-results">${calc.roles.map((id,n)=>{const p=BYID.get(id);return `<span><small>${EDGE_RUSH_ROLES[n]}</small><b>${esc((p?.name||"").split(" ").slice(-1)[0])}</b></span>`;}).join("")}</span>`:""}
+    </button>`;
+  }).join("");
+}
+let rushAnimToken=0;
+function edgeRushCancelAnimation(){
+  rushAnimToken++;
+  clearTimeout(G.edgerush?.timer);
+  document.querySelectorAll("#erStage *").forEach(el=>{try{el.getAnimations?.().forEach(a=>a.cancel());}catch{}});
+}
+function edgeRushActor(id,role) {
+  const p=BYID.get(Number(id));
+  return `<div class="rush-actor" data-rush-id="${id}"><span class="rush-body"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><span class="rush-stick"></span><span class="rush-role">${role}</span></div>`;
+}
+function edgeRushSet(el,x,y){
+  if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;
+}
+function edgeRushMove(el,from,to,duration,delay=0,easing="cubic-bezier(.22,.76,.24,1)") {
+  if(!el)return Promise.resolve();
+  const a=`translate3d(${from[0]}px,${from[1]}px,0) translate(-50%,-50%)`,b=`translate3d(${to[0]}px,${to[1]}px,0) translate(-50%,-50%)`;
+  const anim=el.animate([{transform:a},{transform:b}],{duration,delay,easing,fill:"forwards"});
+  return anim.finished.catch(()=>{}).then(()=>{el.style.transform=b;});
+}
+function edgeRushRadar(value,token) {
+  const box=$("erRadar"),num=$("erRadarValue"); if(!box||!num)return;
+  box.classList.add("on");
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduced){num.textContent=Number(value).toFixed(2);return;}
+  const start=performance.now(),dur=540;
+  const step=now=>{
+    if(token!==rushAnimToken||!num.isConnected)return;
+    const t=Math.min(1,(now-start)/dur),e=1-Math.pow(1-t,3);
+    num.textContent=(Number(value)*e).toFixed(2);
+    if(t<1)requestAnimationFrame(step);else num.textContent=Number(value).toFixed(2);
+  };
+  requestAnimationFrame(step);
+}
+async function edgeRushAnimate(r,picked,correct) {
+  const token=++rushAnimToken,stage=$("erStage"),actors=$("erActors");
+  if(!stage||!actors)return;
+  stage.classList.remove("goal");$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");$("erPhase").textContent="LIVE RUSH";
+  const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,finisherId]=calc.roles;
+  actors.innerHTML=edgeRushActor(carrierId,"Carrier")+edgeRushActor(supportId,"Support")+edgeRushActor(finisherId,"Finisher")
+    +'<div class="rush-defender" data-def="1">D</div><div class="rush-defender" data-def="2">D</div><div class="rush-goalie" data-goalie>G</div><span class="rush-puck" data-rush-puck></span>';
+  const carrier=actors.querySelector(`[data-rush-id="${carrierId}"]`),support=actors.querySelector(`[data-rush-id="${supportId}"]`),finisher=actors.querySelector(`[data-rush-id="${finisherId}"]`);
+  const d1=actors.querySelector('[data-def="1"]'),d2=actors.querySelector('[data-def="2"]'),goalie=actors.querySelector("[data-goalie]"),puck=actors.querySelector("[data-rush-puck]");
+  await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));
+  if(token!==rushAnimToken)return;
+  const w=stage.clientWidth,h=stage.clientHeight,P=(x,y)=>[w*x,h*y];
+  const startC=P(.10,.50),startS=P(.08,.31),startF=P(.08,.69),entryC=P(.43,.50),entryS=P(.47,.30),entryF=P(.49,.70);
+  const zone=edgeRushZone(finisherId),finish=zone==="high"?P(.79,.50):zone==="mid"?P(.73,.64):P(.66,.39);
+  const supportLane=P(.58,.31),carrierLane=P(.60,.51),net=P(.925,.50),goal=P(.865,.50);
+  edgeRushSet(carrier,...startC);edgeRushSet(support,...startS);edgeRushSet(finisher,...startF);edgeRushSet(d1,...P(.67,.39));edgeRushSet(d2,...P(.69,.63));edgeRushSet(goalie,...goal);edgeRushSet(puck,...P(.135,.52));
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduced){
+    edgeRushSet(carrier,...carrierLane);edgeRushSet(support,...supportLane);edgeRushSet(finisher,...finish);edgeRushSet(puck,...net);
+    $("erPhase").textContent="SHOT";
+    edgeRushRadar(edgeValue(finisherId,"shot"),token);
+  } else {
+    const speedPct=edgePercentile("speed",edgeValue(carrierId,"speed")),entryDur=Math.round(900-speedPct*2.8);
+    $("erPhase").textContent="ZONE ENTRY";
+    await Promise.all([
+      edgeRushMove(carrier,startC,entryC,entryDur),
+      edgeRushMove(support,startS,entryS,entryDur+90),
+      edgeRushMove(finisher,startF,entryF,entryDur+130),
+      edgeRushMove(d1,P(.67,.39),P(.75,.40),entryDur+100),
+      edgeRushMove(d2,P(.69,.63),P(.77,.62),entryDur+100),
+      edgeRushMove(puck,P(.135,.52),P(.445,.515),entryDur),
+    ]);
+    if(token!==rushAnimToken)return;
+    $("erPhase").textContent="MOVE THE PUCK";
+    await Promise.all([
+      edgeRushMove(carrier,entryC,carrierLane,420),
+      edgeRushMove(support,entryS,supportLane,390),
+      edgeRushMove(finisher,entryF,P(.64,.68),470),
+      edgeRushMove(puck,P(.445,.515),P(.575,.33),270,70,"cubic-bezier(.18,.8,.3,1)"),
+    ]);
+    if(token!==rushAnimToken)return;
+    $("erPhase").textContent="CROSS-SEAM";
+    await Promise.all([
+      edgeRushMove(finisher,P(.64,.68),finish,390),
+      edgeRushMove(d1,P(.75,.40),P(.82,.43),390),
+      edgeRushMove(d2,P(.77,.62),P(.82,.58),390),
+      edgeRushMove(puck,P(.575,.33),[finish[0]-6,finish[1]+5],280,70,"cubic-bezier(.18,.8,.3,1)"),
+    ]);
+    if(token!==rushAnimToken)return;
+    $("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";
+    puck.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
+    const shotMs=Math.max(170,310-edgePercentile("shot",edgeValue(finisherId,"shot"))*1.15);
+    await edgeRushMove(puck,[finish[0]-6,finish[1]+5],correct?net:goal,shotMs,180,"cubic-bezier(.3,.05,.7,.2)");
+    if(token!==rushAnimToken)return;
+  }
+  $("erPhase").textContent=correct?"BEST PROFILE":"TRACKING VERDICT";
+  if(correct)stage.classList.add("goal");
+  $("erCalloutMain").textContent=correct?"GOAL":"SAVED";
+  $("erCalloutSub").textContent=`${line.rating} EDGE RUSH · ${edgeValue(finisherId,"shot").toFixed(2)} MPH`;
+  $("erCallout").classList.remove("on");void $("erCallout").offsetWidth;$("erCallout").classList.add("on");
+  await new Promise(res=>setTimeout(res,reduced?450:1050));
+  if(token!==rushAnimToken)return;
+  if(S.edgerush?.over){
+    $("banner").style.display="block";
+    $("banner").classList.remove("pop");void $("banner").offsetWidth;$("banner").classList.add("pop");
+  }
+}
+G.edgerush={
+  localOnly:true,quietFinish:true,kind:"score",repeat:true,title:"The Rush",share:"Sweater The Rush",view:"view-edgerush",max:5,next:"Run it back",hideReveal:true,
+  pool:()=>edgeRushEligible().length>=24?EDGE_POOL:[],
+  daily(k){return edgeRushRandom(seeded(hash(`sweater-edgerush-${k}`)));},
+  random(){const t=edgeRushRandom(Math.random);if(t)t.rid=Math.floor(Math.random()*0xffffffff)+1;return t;},
+  tid:t=>`edgerush:${t.rid||hash(JSON.stringify(t.rounds))}`,player:()=>null,meta:()=>"",
+  right:(t,x,i)=>Number(x)===t.rounds[i].a,
+  score(t,g){return g.filter((x,i)=>this.right(t,x,i)).length*20;},
+  isWin:()=>false,isDone:(t,g)=>g.length>=t.rounds.length,wonGame(t,g){return this.score(t,g)>=60;},archiveStatus:h=>`${h.s}/100`,onFinish(st){edgeBest("edgerush",st);},
+  endText(t,g){const n=this.score(t,g);return{result:`Rush grade: ${n}/100`,cheer:n>=100?"Perfect reads. Tracking-room masterpiece. 🚨":n>=80?"Elite rush decisions. 🏒":n>=60?"You can build an attack.":"Back to the video room."};},
+  shareText(t,st,n,link){return`Sweater The Rush #${n}\nEDGE rush grade: ${this.score(t,st.guesses)}/100 · ${edgeSeasonLabel()}${link}`;},
+  reset(){this.pending=false;clearTimeout(this.timer);edgeRushCancelAnimation();if($("erActors"))$("erActors").innerHTML="";},
+  guess(t,x,fresh){
+    if(!/^[0-2]$/.test(String(x)))return null;
+    const i=S.edgerush.guesses.length;if(i>=t.rounds.length)return null;
+    if(fresh){
+      const r=t.rounds[i],picked=Number(x);this.pending=true;this.lastCorrect=this.right(t,x,i);
+      clearTimeout(this.timer);
+      this.timer=setTimeout(()=>{this.pending=false;if(game==="edgerush"&&!S.edgerush.over)this.render(t,S.edgerush);},4300);
+      setTimeout(()=>{if(game==="edgerush")edgeRushAnimate(r,picked,this.lastCorrect);},30);
+    }
+    return false;
+  },
+  render(t,st){
+    const done=st.guesses.length,showing=this.pending&&done>0,i=showing?done-1:Math.min(done,t.rounds.length-1),r=t.rounds[i],picked=showing?Number(st.guesses[done-1]):-1;
+    $("erRound").textContent=`${Math.min(done+1,5)} / 5`;$("erScore").textContent=`${this.score(t,st.guesses)/20}`;
+    $("erChoices").innerHTML=edgeRushChoiceMarkup(r,showing,picked,st.over&&!showing);
+    if(!showing){
+      $("erActors").innerHTML="";
+      $("erStage").classList.remove("goal");$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");$("erPhase").textContent=st.over?"FINAL":"SELECT A UNIT";
+    }else if(st.over){
+      // Keep the results banner out of the animation until the final shot lands.
+      $("banner").style.display="none";
+    }
+    $("erFeedback").textContent=showing?(this.lastCorrect?"Best unit on the board — watch the profile unfold.":"Not the top combined profile. Watch where the difference shows up."):st.over?"":"Choose the unit you think has the strongest combined rush profile.";
+  }
+};
+$("erChoices").addEventListener("click",e=>{const b=e.target.closest("[data-er]");if(b&&!G.edgerush.pending)doGuess(b.dataset.er);});
+
 const EDGE_BUILD_CATS=[
   {metric:"speed",label:"Speed",copy:"Max skating speed"},
   {metric:"shot",label:"Shot",copy:"Hardest recorded shot"},
@@ -8263,6 +8635,7 @@ const HUB = [
   ]},
 ];
 const EDGE_GAMES = [
+  { id:"edgerush", title:"The Rush", tag:"New · Animated arcade", blurb:"Choose a three-man unit, then watch its real EDGE profile come alive on the ice.", feature:true },
   { id:"edgespeed", title:"Speed Trap", tag:"Skating speed", blurb:"Pick the faster skater from their recorded max speed." },
   { id:"edgeshot", title:"Hardest Shot", tag:"Shot velocity", blurb:"Two players. One radar gun. Who fired the harder shot?" },
   { id:"edgemap", title:"Shot Map", tag:"Under construction", blurb:"We’re rebuilding this mode. Check back soon.", maintenance:true },
@@ -8281,6 +8654,7 @@ const MODE_META = Object.freeze({
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
   blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "classic" },
+  edgerush: { type: "NHL EDGE Arcade", time: "2–3 min", difficulty: "Medium", fact: "The Rush assigns carrier, support and finisher roles from real NHL EDGE speed, distance, shot velocity and shot-location data.", next: "edgespeed" },
   edgespeed:{ type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Max skating speed comes directly from NHL EDGE player tracking.", next: "edgeshot" },
   edgeshot: { type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Hardest Shot uses tracked in-game shot velocity from NHL EDGE.", next: "edgebuild" },
   edgemap:  { type: "NHL EDGE", time: "2 min", difficulty: "Hard", fact: "Drag the player onto a rink built from real NHL EDGE high-danger, mid-range and long-range shot-on-goal totals.", next: "edgebuild" },
@@ -8399,7 +8773,7 @@ function renderHub() {
   $("edgeHomeGrid").innerHTML = EDGE_GAMES.map(x => {
     const ready = gameIsReady(x.id) && !x.maintenance;
     const copy = x.maintenance ? x.blurb : (ready ? x.blurb : "Tracking data will appear after the next successful build.");
-    return `<button type="button" class="edgecard${x.maintenance ? " construction" : ""}" data-open="${x.id}"${ready ? "" : " disabled"} aria-disabled="${!ready}">
+    return `<button type="button" class="edgecard${x.maintenance ? " construction" : ""}${x.feature ? " featured-rush" : ""}" data-open="${x.id}"${ready ? "" : " disabled"} aria-disabled="${!ready}">
       <span class="edgecardtop"><span class="edgecardicon" aria-hidden="true">${modeIcon(x.id)}</span><span class="edgecardtag">${esc(x.tag)}</span></span>
       <b>${esc(x.title)}</b><small>${esc(copy)}</small>
     </button>`;
