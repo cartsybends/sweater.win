@@ -54,7 +54,7 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "120 · Rush Broadcast Motion"
+VERSION = "121 · Rush Bot Brain"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -1107,7 +1107,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .rush-actor::before {
     content: ""; position: absolute; z-index: -1; left: -29px; top: 50%; width: 34px; height: 10px; border-radius: 50%;
-    background: linear-gradient(90deg, transparent, rgba(57,151,218,.24)); filter: blur(2px); transform: translateY(-50%); opacity: .8;
+    background: linear-gradient(90deg, transparent, rgba(57,151,218,.24)); filter: blur(2px); transform: translateY(-50%); opacity: var(--rush-trail-opacity,.25); transition: opacity .1s linear;
   }
   .rush-actor .rush-body {
     position: absolute; inset: 3px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.94); border-radius: 50%;
@@ -1160,11 +1160,6 @@ TEMPLATE = r'''<!DOCTYPE html>
     transform:rotate(52deg); transform-origin:left center;
   }
   .rush-g-stick::after { content:""; position:absolute; right:-2px; top:-4px; width:13px; height:5px; border-radius:3px; background:#27333a; transform:rotate(12deg); }
-  .rush-goalie.tracking .rush-g-body { animation:rushGoalieSet .68s ease-in-out infinite alternate; }
-  .rush-goalie.save .rush-g-pad.left { animation:rushPadLeft .42s cubic-bezier(.18,.82,.22,1) both; }
-  .rush-goalie.save .rush-g-pad.right { animation:rushPadRight .42s cubic-bezier(.18,.82,.22,1) both; }
-  .rush-goalie.save .rush-g-chest { animation:rushChestDrop .42s cubic-bezier(.18,.82,.22,1) both; }
-  .rush-goalie.beaten .rush-g-body { animation:rushGoalieReach .48s cubic-bezier(.2,.8,.25,1) both; }
   .rush-puck {
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
     box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
@@ -7516,22 +7511,112 @@ function edgeRushActor(id,role) {
 function edgeRushSet(el,x,y,rot=0,scale=1){
   if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
 }
-function edgeRushTransform(p){
-  return `translate3d(${p.x}px,${p.y}px,0) translate(-50%,-50%) rotate(${p.r||0}deg) scale(${p.s||1})`;
+const rushClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const rushLerp=(a,b,t)=>a+(b-a)*t;
+const rushLen=(x,y)=>Math.hypot(x,y);
+const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
+
+function edgeRushBrain(id,role){
+  const speed=edgePercentile("speed",edgeValue(id,"speed"))/100;
+  const engine=edgePercentile("miles",edgeValue(id,"miles"))/100;
+  const shot=edgePercentile("shot",edgeValue(id,"shot"))/100;
+  const danger=edgePercentile("hd",edgeValue(id,"hd"))/100;
+  const mid=edgePercentile("mid",edgeValue(id,"mid"))/100;
+  const long=edgePercentile("long",edgeValue(id,"long"))/100;
+  return {
+    id,role,speed,engine,shot,danger,mid,long,
+    maxSpeed:.155+.105*speed+.018*engine,
+    accel:.22+.22*speed+.10*engine,
+    handling:.52+.25*speed+.23*engine,
+    release:.34-.13*shot,
+    attack:role==="Finisher"?.55*shot+.30*danger+.10*mid+.05*long:.55*speed+.45*engine,
+  };
 }
-function edgeRushPath(el,points,duration,easing="linear"){
-  if(!el)return Promise.resolve();
-  const frames=points.map(p=>({transform:edgeRushTransform(p),offset:p.o,easing:p.e||"linear"}));
-  const anim=el.animate(frames,{duration,easing,fill:"forwards"});
-  return anim.finished.catch(()=>{}).then(()=>{
-    const p=points[points.length-1]; if(el.isConnected)el.style.transform=edgeRushTransform(p);
-  });
+function edgeRushAgent(id,role,x,y){
+  return {id,role,brain:edgeRushBrain(id,role),x,y,vx:0,vy:0,tx:x,ty:y,rot:0,el:null};
 }
-function edgeRushLater(ms,token,fn){
-  setTimeout(()=>{if(token===rushAnimToken&&game==="edgerush")fn();},ms);
+function edgeRushSteer(a,dt){
+  const dx=a.tx-a.x,dy=a.ty-a.y,dist=rushLen(dx,dy);
+  const max=a.brain.maxSpeed;
+  const desired=dist<.055?max*(dist/.055):max;
+  const ux=dist>.0001?dx/dist:0,uy=dist>.0001?dy/dist:0;
+  const dv=a.brain.accel*dt;
+  a.vx=rushMoveToward(a.vx,ux*desired,dv);
+  a.vy=rushMoveToward(a.vy,uy*desired,dv);
+  if(dist<.008){a.vx*=Math.max(0,1-6*dt);a.vy*=Math.max(0,1-6*dt);}
+  a.x+=a.vx*dt;a.y+=a.vy*dt;
+  a.x=rushClamp(a.x,.035,.955);a.y=rushClamp(a.y,.08,.92);
+  const speed=rushLen(a.vx,a.vy);
+  if(speed>.008)a.rot=rushClamp(Math.atan2(a.vy,a.vx)*180/Math.PI,-14,14);
+}
+function edgeRushStick(a){
+  const speed=rushLen(a.vx,a.vy);
+  const ux=speed>.006?a.vx/speed:1,uy=speed>.006?a.vy/speed:0;
+  // Right-handed-looking presentation offset: puck stays at the blade and
+  // moves with the carrier every frame instead of following an independent path.
+  return {x:a.x+ux*.025-uy*.010,y:a.y+uy*.025+ux*.010};
+}
+function edgeRushPass(puck,to,duration=.28){
+  puck.mode="pass";puck.owner=null;puck.target=to;puck.elapsed=0;puck.duration=duration;
+  puck.fromX=puck.x;puck.fromY=puck.y;
+}
+function edgeRushShot(puck,x,y,duration=.24){
+  puck.mode="shot";puck.owner=null;puck.target=null;puck.elapsed=0;puck.duration=duration;
+  puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=x;puck.toY=y;
+}
+function edgeRushUpdatePuck(puck,dt){
+  if(puck.mode==="carry"&&puck.owner){
+    const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return false;
+  }
+  if(puck.mode==="pass"&&puck.target){
+    puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=t*t*(3-2*t),to=edgeRushStick(puck.target);
+    puck.x=rushLerp(puck.fromX,to.x,e);
+    puck.y=rushLerp(puck.fromY,to.y,e)-Math.sin(Math.PI*t)*.018;
+    if(t>=1){puck.mode="carry";puck.owner=puck.target;puck.target=null;const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return true;}
+    return false;
+  }
+  if(puck.mode==="shot"||puck.mode==="rebound"){
+    puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=1-Math.pow(1-t,2);
+    puck.x=rushLerp(puck.fromX,puck.toX,e);puck.y=rushLerp(puck.fromY,puck.toY,e);
+    return t>=1;
+  }
+  return false;
+}
+function edgeRushRenderAgent(a,w,h){
+  if(!a.el)return;
+  edgeRushSet(a.el,a.x*w,a.y*h,a.rot,1);
+  const pct=rushClamp(rushLen(a.vx,a.vy)/Math.max(.01,a.brain.maxSpeed),0,1);
+  a.el.style.setProperty("--rush-trail-opacity",String(.18+.62*pct));
+}
+function edgeRushRenderPuck(puck,el,w,h){
+  if(!el)return;
+  edgeRushSet(el,puck.x*w,puck.y*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
-  return '<div class="rush-goalie tracking" data-goalie><span class="rush-g-shadow"></span><span class="rush-g-stick"></span><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-glove"></i><i class="rush-g-blocker"></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i></span></div>';
+  return '<div class="rush-goalie" data-goalie><span class="rush-g-shadow"></span><span class="rush-g-stick"></span><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-glove"></i><i class="rush-g-blocker"></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i></span></div>';
+}
+function edgeRushRenderGoalie(g,el,w,h){
+  if(!el)return;
+  const lean=rushClamp((g.y-.5)*34,-8,8),drop=g.saveT||0,reach=g.beatenT||0;
+  edgeRushSet(el,(g.x-reach*.009)*w,g.y*h,lean-reach*8,1-drop*.025);
+  const left=el.querySelector(".rush-g-pad.left"),right=el.querySelector(".rush-g-pad.right"),chest=el.querySelector(".rush-g-chest");
+  const glove=el.querySelector(".rush-g-glove"),blocker=el.querySelector(".rush-g-blocker"),body=el.querySelector(".rush-g-body");
+  if(left)left.style.transform=`translate(${-9*drop}px,${5*drop}px) rotate(${4+21*drop}deg)`;
+  if(right)right.style.transform=`translate(${9*drop}px,${5*drop}px) rotate(${-4-21*drop}deg)`;
+  if(chest)chest.style.transform=`translate(-50%,${5*drop}px) scaleY(${1-.10*drop})`;
+  if(glove)glove.style.transform=`translate(${-7*reach}px,${-4*reach}px) rotate(${-12-20*reach}deg)`;
+  if(blocker)blocker.style.transform=`translate(${5*drop}px,${2*drop}px) rotate(${11+10*drop}deg)`;
+  if(body)body.style.transform=`translate(${-5*reach}px,${2*drop}px) rotate(${-3*reach}deg)`;
+}
+function edgeRushUpdateGoalie(g,puck,dt,shotResult){
+  let target=rushClamp(puck.y,.405,.595);
+  if(puck.mode==="shot"&&shotResult==="goal") target=rushClamp(puck.toY+(puck.toY<.5?.055:-.055),.41,.59);
+  const max=.34*dt;
+  g.y=rushMoveToward(g.y,target,max);
+  if(puck.mode==="shot"){
+    if(shotResult==="save")g.saveT=rushMoveToward(g.saveT,1,dt*5.2);
+    else g.beatenT=rushMoveToward(g.beatenT,1,dt*4.3);
+  }
 }
 function edgeRushRadar(value,token) {
   const box=$("erRadar"),num=$("erRadarValue"); if(!box||!num)return;
@@ -7547,117 +7632,142 @@ function edgeRushRadar(value,token) {
   };
   requestAnimationFrame(step);
 }
+function edgeRushWait(ms,token){
+  return new Promise(resolve=>setTimeout(()=>resolve(token===rushAnimToken),ms));
+}
 async function edgeRushAnimate(r,picked,correct) {
   const token=++rushAnimToken,stage=$("erStage"),actors=$("erActors");
   if(!stage||!actors)return;
-  stage.classList.remove("goal");
-  $("erRadar").classList.remove("on");
-  $("erCallout").classList.remove("on");
-  $("erPhase").textContent="LIVE RUSH";
+  stage.classList.remove("goal");$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");
+  $("erPhase").textContent="SET THE BREAKOUT";
 
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,finisherId]=calc.roles;
   actors.innerHTML=edgeRushActor(carrierId,"Carrier")+edgeRushActor(supportId,"Support")+edgeRushActor(finisherId,"Finisher")
     +'<div class="rush-defender" data-def="1">D</div><div class="rush-defender" data-def="2">D</div>'+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
 
-  const carrier=actors.querySelector(`[data-rush-id="${carrierId}"]`),
-        support=actors.querySelector(`[data-rush-id="${supportId}"]`),
-        finisher=actors.querySelector(`[data-rush-id="${finisherId}"]`),
-        d1=actors.querySelector('[data-def="1"]'),
-        d2=actors.querySelector('[data-def="2"]'),
-        goalie=actors.querySelector("[data-goalie]"),
-        puck=actors.querySelector("[data-rush-puck]");
-
   await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));
   if(token!==rushAnimToken)return;
 
-  const w=stage.clientWidth,h=stage.clientHeight,P=(x,y)=>[w*x,h*y],pt=(xy,o,r=0,s=1,e)=>({x:xy[0],y:xy[1],o,r,s,e});
-  const startC=P(.10,.50),startS=P(.075,.30),startF=P(.075,.70);
-  const entryC=P(.42,.50),entryS=P(.45,.30),entryF=P(.47,.70);
-  const carrierLane=P(.62,.51),supportLane=P(.61,.29);
+  const w=stage.clientWidth,h=stage.clientHeight;
+  const carrier=edgeRushAgent(carrierId,"Carrier",.075,.53),support=edgeRushAgent(supportId,"Support",.055,.31),finisher=edgeRushAgent(finisherId,"Finisher",.05,.72);
+  const d1={x:.70,y:.38,vx:0,vy:0,tx:.70,ty:.38,maxSpeed:.19,accel:.34,el:actors.querySelector('[data-def="1"]')};
+  const d2={x:.71,y:.63,vx:0,vy:0,tx:.71,ty:.63,maxSpeed:.19,accel:.34,el:actors.querySelector('[data-def="2"]')};
+  carrier.el=actors.querySelector(`[data-rush-id="${carrierId}"]`);support.el=actors.querySelector(`[data-rush-id="${supportId}"]`);finisher.el=actors.querySelector(`[data-rush-id="${finisherId}"]`);
+  const goalie={x:.886,y:.50,saveT:0,beatenT:0},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
+  const puck={mode:"carry",owner:carrier,target:null,x:carrier.x,y:carrier.y,elapsed:0,duration:0};
   const zone=edgeRushZone(finisherId);
-  const finish=zone==="high"?P(.795,.50):zone==="mid"?P(.745,.64):P(.685,.39);
-  const finishPrep=zone==="high"?P(.70,.57):zone==="mid"?P(.67,.67):P(.64,.41);
-  const d1Start=P(.67,.38),d2Start=P(.69,.63),d1End=P(.80,.42),d2End=P(.81,.59);
-  const goalieHome=P(.885,.50),goalieRead=P(.875,.44),goalieShot=P(.872,Math.max(.40,Math.min(.60,finish[1]/h)));
-  const net=P(.945,.50),save=P(.878,Math.max(.44,Math.min(.57,finish[1]/h))),rebound=P(.78,.58);
-  const puckStart=P(.135,.515),passOne=P(.60,.305),shotStart=[finish[0]-5,finish[1]+4];
-  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finish=zone==="high"?{x:.79,y:.50}:zone==="mid"?{x:.745,y:.64}:{x:.685,y:.39};
+  const shotEnd=correct?{x:.949,y:.50}:{x:.881,y:rushClamp(finish.y,.445,.555)};
+  const agents=[carrier,support,finisher];
 
-  edgeRushSet(carrier,...startC,-3);edgeRushSet(support,...startS,-4);edgeRushSet(finisher,...startF,5);
-  edgeRushSet(d1,...d1Start,8);edgeRushSet(d2,...d2Start,-8);edgeRushSet(goalie,...goalieHome);
-  edgeRushSet(puck,...puckStart);
+  // Give the viewer a beat to read the setup before anybody launches.
+  agents.forEach(a=>edgeRushRenderAgent(a,w,h));
+  edgeRushRenderGoalie(goalie,goalieEl,w,h);
+  edgeRushUpdatePuck(puck,0);edgeRushRenderPuck(puck,puckEl,w,h);
+  if(!(await edgeRushWait(520,token)))return;
 
-  if(reduced){
-    edgeRushSet(carrier,...carrierLane);edgeRushSet(support,...supportLane);edgeRushSet(finisher,...finish);
-    edgeRushSet(goalie,...goalieShot);edgeRushSet(puck,...(correct?net:save));
-    goalie.classList.remove("tracking");goalie.classList.add(correct?"beaten":"save");
-    $("erPhase").textContent="SHOT";edgeRushRadar(edgeValue(finisherId,"shot"),token);
-  } else {
-    const speedPct=edgePercentile("speed",edgeValue(carrierId,"speed"));
-    const total=Math.round(3150-speedPct*3.0);
-    const shotAt=Math.round(total*.82),shotDur=total-shotAt;
-    const entryEnd=.42,passEnd=.64,setEnd=.82;
+  let phase="breakout",phaseAt=performance.now(),last=performance.now(),finished=false,shotResult=correct?"goal":"save",shotDoneAt=0;
+  $("erPhase").textContent="BREAKOUT";
+  $("erSpeedLines").classList.remove("on");
 
-    $("erSpeedLines").classList.remove("on");void $("erSpeedLines").offsetWidth;$("erSpeedLines").classList.add("on");
-    $("erPhase").textContent="ZONE ENTRY";
-    edgeRushLater(Math.round(total*.42),token,()=>{$("erPhase").textContent="MOVE THE PUCK";});
-    edgeRushLater(Math.round(total*.64),token,()=>{$("erPhase").textContent="CROSS-SEAM";});
-    edgeRushLater(shotAt-80,token,()=>{
-      $("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";
-      puck.classList.add("shooting");finisher.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
-    });
-    edgeRushLater(shotAt+Math.round(shotDur*.50),token,()=>{
-      goalie.classList.remove("tracking");
-      goalie.classList.add(correct?"beaten":"save");
-    });
+  const steerDef=(d,dt)=>{
+    const dx=d.tx-d.x,dy=d.ty-d.y,dist=Math.hypot(dx,dy),ux=dist>.001?dx/dist:0,uy=dist>.001?dy/dist:0,desired=Math.min(d.maxSpeed,dist*1.6),dv=d.accel*dt;
+    d.vx=rushMoveToward(d.vx,ux*desired,dv);d.vy=rushMoveToward(d.vy,uy*desired,dv);d.x+=d.vx*dt;d.y+=d.vy*dt;
+  };
+  const renderDef=(d)=>{if(d.el)edgeRushSet(d.el,d.x*w,d.y*h,rushClamp(Math.atan2(d.vy,d.vx)*180/Math.PI,-12,12));};
 
-    const smooth="cubic-bezier(.2,.72,.22,1)";
-    const skaterJobs=[
-      edgeRushPath(carrier,[
-        pt(startC,0,-3),pt(P(.25,.48),.20,-1,1.01),pt(entryC,entryEnd,2,1.01),pt(P(.53,.49),.55,4),pt(carrierLane,.76,-2),pt(P(.70,.52),1,1)
-      ],total,smooth),
-      edgeRushPath(support,[
-        pt(startS,0,-5),pt(P(.24,.27),.20,-2),pt(entryS,entryEnd,3),pt(supportLane,.64,7),pt(P(.72,.32),.84,2),pt(P(.78,.35),1,-1)
-      ],total,smooth),
-      edgeRushPath(finisher,[
-        pt(startF,0,6),pt(P(.24,.73),.20,3),pt(entryF,entryEnd,-4),pt(P(.58,.71),.58,-6),pt(finishPrep,.72,-4),pt(finish,setEnd,0,1.04),pt(finish,1,0,1.04)
-      ],total,smooth),
-      edgeRushPath(d1,[
-        pt(d1Start,0,8),pt(P(.70,.39),.30,5),pt(P(.74,.40),.54,1),pt(d1End,.78,-6),pt(P(.835,.45),1,-9)
-      ],total,smooth),
-      edgeRushPath(d2,[
-        pt(d2Start,0,-8),pt(P(.72,.62),.30,-5),pt(P(.76,.62),.56,-2),pt(d2End,.80,7),pt(P(.835,.56),1,10)
-      ],total,smooth),
-      edgeRushPath(goalie,[
-        pt(goalieHome,0,0),pt(goalieHome,.45,0),pt(goalieRead,.64,-2),pt(goalieShot,.82,0),pt(correct?P(.867,.44):save,1,correct?-7:0,correct?.97:1)
-      ],total,smooth),
-    ];
+  return await new Promise(resolve=>{
+    const frame=now=>{
+      if(token!==rushAnimToken||game!=="edgerush"||!stage.isConnected){resolve();return;}
+      const dt=Math.min(.033,Math.max(.001,(now-last)/1000));last=now;
 
-    const puckPoints=[
-      pt(puckStart,0,0),pt(P(.26,.50),.20,0),pt([entryC[0]+7,entryC[1]+4],entryEnd,0),
-      pt(passOne,.59,0),pt(passOne,.64,0),pt(shotStart,.78,0),pt(shotStart,.82,0),
-    ];
-    if(correct){
-      puckPoints.push(pt(net,.97,0,1.05),pt(P(.965,.50),1,0,.72));
-    }else{
-      puckPoints.push(pt(save,.94,0,1),pt(rebound,1,-8,.9));
-    }
-    const puckJob=edgeRushPath(puck,puckPoints,total,"linear");
-    await Promise.all([...skaterJobs,puckJob]);
-    if(token!==rushAnimToken)return;
-  }
+      // Each role gets a lane target from the team state. The agents decide how
+      // quickly they can reach it using their EDGE-derived speed/acceleration.
+      if(phase==="breakout"){
+        carrier.tx=.285;carrier.ty=.52;support.tx=.255;support.ty=.31;finisher.tx=.26;finisher.ty=.72;
+        if(carrier.x>.235){
+          phase="neutral";phaseAt=now;$("erPhase").textContent="THROUGH NEUTRAL ICE";
+          $("erSpeedLines").classList.remove("on");void $("erSpeedLines").offsetWidth;$("erSpeedLines").classList.add("on");
+        }
+      }else if(phase==="neutral"){
+        carrier.tx=.49;carrier.ty=.50;support.tx=.46;support.ty=.285;finisher.tx=.48;finisher.ty=.715;
+        if(carrier.x>.43){phase="entry";phaseAt=now;$("erPhase").textContent="ZONE ENTRY";}
+      }else if(phase==="entry"){
+        carrier.tx=.59;carrier.ty=.50;support.tx=.57;support.ty=.30;finisher.tx=.585;finisher.ty=.70;
+        if(carrier.x>.515&&support.x>.47&&puck.mode==="carry"&&puck.owner===carrier){
+          edgeRushPass(puck,support,.31-.07*carrier.brain.handling);phase="pass1";phaseAt=now;$("erPhase").textContent="FIRST PASS";
+        }
+      }else if(phase==="pass1"){
+        carrier.tx=.64;carrier.ty=.51;support.tx=.615;support.ty=.30;finisher.tx=.64;finisher.ty=.69;
+        if(puck.mode==="carry"&&puck.owner===support&&now-phaseAt>240){
+          phase="supportCarry";phaseAt=now;$("erPhase").textContent="ATTACK WITH SPEED";
+        }
+      }else if(phase==="supportCarry"){
+        carrier.tx=.69;carrier.ty=.53;support.tx=.665;support.ty=.31;finisher.tx=finish.x-.085;finisher.ty=finish.y+.035;
+        if((support.x>.595||now-phaseAt>620)&&puck.mode==="carry"&&puck.owner===support){
+          edgeRushPass(puck,finisher,.29-.06*support.brain.handling);phase="pass2";phaseAt=now;$("erPhase").textContent="CROSS-SEAM";
+        }
+      }else if(phase==="pass2"){
+        carrier.tx=.73;carrier.ty=.54;support.tx=.72;support.ty=.32;finisher.tx=finish.x;finisher.ty=finish.y;
+        if(puck.mode==="carry"&&puck.owner===finisher){phase="settle";phaseAt=now;$("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";}
+      }else if(phase==="settle"){
+        carrier.tx=.75;carrier.ty=.55;support.tx=.74;support.ty=.33;finisher.tx=finish.x;finisher.ty=finish.y;
+        if(now-phaseAt>finisher.brain.release*1000){
+          const blade=edgeRushStick(finisher);puck.x=blade.x;puck.y=blade.y;
+          edgeRushShot(puck,shotEnd.x,shotEnd.y,.31-.105*finisher.brain.shot);
+          puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
+          phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
+        }
+      }else if(phase==="shot"){
+        carrier.tx=.76;carrier.ty=.55;support.tx=.75;support.ty=.34;finisher.tx=finish.x;finisher.ty=finish.y;
+      }
 
-  $("erPhase").textContent=correct?"BEST PROFILE":"TRACKING VERDICT";
-  if(correct)stage.classList.add("goal");
-  $("erCalloutMain").textContent=correct?"GOAL":"SAVED";
-  $("erCalloutSub").textContent=`${line.rating} EDGE RUSH · ${edgeValue(finisherId,"shot").toFixed(2)} MPH`;
-  $("erCallout").classList.remove("on");void $("erCallout").offsetWidth;$("erCallout").classList.add("on");
-  await new Promise(res=>setTimeout(res,reduced?450:950));
-  if(token!==rushAnimToken)return;
-  if(S.edgerush?.over){
-    $("banner").style.display="block";
-    $("banner").classList.remove("pop");void $("banner").offsetWidth;$("banner").classList.add("pop");
-  }
+      agents.forEach(a=>edgeRushSteer(a,dt));
+
+      // Defenders read the puck and collapse into passing/shooting lanes.
+      const px=puck.x,py=puck.y;
+      d1.tx=rushClamp(px+.105,.69,.84);d1.ty=rushClamp(py-.085,.36,.49);
+      d2.tx=rushClamp(px+.115,.70,.845);d2.ty=rushClamp(py+.09,.51,.65);
+      steerDef(d1,dt);steerDef(d2,dt);
+
+      const puckComplete=edgeRushUpdatePuck(puck,dt);
+      edgeRushUpdateGoalie(goalie,puck,dt,shotResult);
+
+      if(phase==="shot"&&puckComplete&&!shotDoneAt){
+        shotDoneAt=now;
+        if(correct){stage.classList.add("goal");puck.mode="dead";}
+        else{
+          puck.mode="rebound";puck.elapsed=0;puck.duration=.34;puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=.765;puck.toY=rushClamp(puck.y+(puck.y<.5?.105:-.105),.34,.68);
+        }
+      }else if(phase==="shot"&&shotDoneAt&&!correct&&puck.mode==="rebound"&&puckComplete){
+        puck.mode="dead";
+      }
+
+      agents.forEach(a=>edgeRushRenderAgent(a,w,h));renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
+
+      if(shotDoneAt&&now-shotDoneAt>820){
+        finished=true;
+        $("erPhase").textContent=correct?"BEST PROFILE":"TRACKING VERDICT";
+        $("erCalloutMain").textContent=correct?"GOAL":"SAVED";
+        $("erCalloutSub").textContent=`${line.rating} EDGE RUSH · ${edgeValue(finisherId,"shot").toFixed(2)} MPH`;
+        $("erCallout").classList.remove("on");void $("erCallout").offsetWidth;$("erCallout").classList.add("on");
+        setTimeout(()=>{
+          if(token!==rushAnimToken)return resolve();
+          G.edgerush.pending=false;
+          if(S.edgerush?.over){
+            $("banner").style.display="block";
+            $("banner").classList.remove("pop");void $("banner").offsetWidth;$("banner").classList.add("pop");
+          }else if(game==="edgerush"){
+            G.edgerush.render(S.edgerush.target,S.edgerush);
+          }
+          resolve();
+        },780);
+        return;
+      }
+      if(!finished)requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  });
 }
 G.edgerush={
   localOnly:true,quietFinish:true,kind:"score",repeat:true,title:"The Rush",share:"Sweater The Rush",view:"view-edgerush",max:5,next:"Run it back",hideReveal:true,
@@ -7677,8 +7787,7 @@ G.edgerush={
     if(fresh){
       const r=t.rounds[i],picked=Number(x);this.pending=true;this.lastCorrect=this.right(t,x,i);
       clearTimeout(this.timer);
-      this.timer=setTimeout(()=>{this.pending=false;if(game==="edgerush"&&!S.edgerush.over)this.render(t,S.edgerush);},4550);
-      setTimeout(()=>{if(game==="edgerush")edgeRushAnimate(r,picked,this.lastCorrect);},30);
+      setTimeout(()=>{if(game==="edgerush")void edgeRushAnimate(r,picked,this.lastCorrect);},30);
     }
     return false;
   },
