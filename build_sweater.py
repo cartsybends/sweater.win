@@ -7590,6 +7590,58 @@ const rushClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const rushLerp=(a,b,t)=>a+(b-a)*t;
 const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
+const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:662/720,backX:696/720,topY:177/405,bottomY:228/405});
+
+function edgeRushSegmentCircle(x0,y0,x1,y1,cx,cy,r){
+  const dx=x1-x0,dy=y1-y0,fx=x0-cx,fy=y0-cy,a=dx*dx+dy*dy;
+  if(a<.000001)return null;
+  const b=2*(fx*dx+fy*dy),c=fx*fx+fy*fy-r*r,disc=b*b-4*a*c;
+  if(disc<0)return null;
+  const t=(-b-Math.sqrt(disc))/(2*a);
+  if(t<0||t>1)return null;
+  const x=x0+dx*t,y=y0+dy*t,nx=(x-cx)/r,ny=(y-cy)/r;
+  return {t,x,y,nx,ny};
+}
+function edgeRushReflect(vx,vy,nx,ny,restitution=.82,tangent=.965){
+  const dot=vx*nx+vy*ny,vnx=dot*nx,vny=dot*ny,vtx=vx-vnx,vty=vy-vny;
+  return {vx:-restitution*vnx+tangent*vtx,vy:-restitution*vny+tangent*vty};
+}
+function edgeRushPostRadius(w,h){
+  const scale=((w/720)+(h/405))*.5;
+  return 5+3.1*scale;
+}
+function edgeRushPostPrediction(fromX,fromY,targetY,top,w,h){
+  const N=EDGE_RUSH_NET,cx=N.postX*w,cy=(top?N.topY:N.bottomY)*h,x0=fromX*w,y0=fromY*h,x1=.986*w,y1=targetY;
+  const hit=edgeRushSegmentCircle(x0,y0,x1,y1,cx,cy,edgeRushPostRadius(w,h));
+  if(!hit)return null;
+  const mag=Math.hypot(x1-x0,y1-y0)||1,ivx=(x1-x0)/mag,ivy=(y1-y0)/mag,rv=edgeRushReflect(ivx,ivy,hit.nx,hit.ny);
+  const goalX=(N.lineX+.010)*w;
+  if(rv.vx<=.0001)return {in:false,hit,rv};
+  const travel=(goalX-hit.x)/rv.vx,crossY=hit.y+rv.vy*travel;
+  const margin=5;
+  return {in:travel>=0&&crossY>N.topY*h+margin&&crossY<N.bottomY*h-margin,hit,rv,crossY};
+}
+function edgeRushPostAim(fromX,fromY,w,h,wantIn,preferTop){
+  let best=null;
+  for(const top of [preferTop,!preferTop]){
+    const cy=(top?EDGE_RUSH_NET.topY:EDGE_RUSH_NET.bottomY)*h;
+    for(let off=-40;off<=40;off+=.5){
+      const pred=edgeRushPostPrediction(fromX,fromY,cy+off,top,w,h);
+      if(!pred||pred.in!==wantIn)continue;
+      const preferred=top===preferTop?0:13;
+      const glancing=Math.max(0,.18-Math.abs(pred.rv.vx))*42;
+      const score=Math.abs(off)+preferred+glancing;
+      if(!best||score<best.score)best={score,top,x:.986,y:(cy+off)/h,pred};
+    }
+  }
+  if(best)return best;
+  return {top:preferTop,x:.986,y:(preferTop?EDGE_RUSH_NET.topY:EDGE_RUSH_NET.bottomY),pred:null};
+}
+function edgeRushPostImpact(stage,top){
+  const post=stage?.querySelector(top?".rush-net-post.top":".rush-net-post.bottom"),frame=stage?.querySelector(".rush-net-frame");
+  post?.animate([{transform:"scale(1)"},{transform:"scale(1.55)"},{transform:"scale(1)"}],{duration:230,easing:"cubic-bezier(.2,.8,.2,1)"});
+  frame?.animate([{opacity:1},{opacity:.72},{opacity:1}],{duration:180,easing:"ease-out"});
+}
 
 // Per-player simulation traits are normalized from NHL EDGE percentiles. The
 // values below are simulation tendencies, not claims that NHL EDGE publishes
@@ -7735,11 +7787,14 @@ function edgeRushPass(puck,to,duration=.28){
   puck.mode="pass";puck.owner=null;puck.target=to;puck.elapsed=0;puck.duration=duration;
   puck.fromX=puck.x;puck.fromY=puck.y;
 }
-function edgeRushShot(puck,x,y,duration=.24){
+function edgeRushShot(puck,x,y,duration=.24,opts={}){
   puck.mode="shot";puck.owner=null;puck.target=null;puck.elapsed=0;puck.duration=duration;
   puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=x;puck.toY=y;
+  puck.vx=(x-puck.x)/Math.max(.08,duration);puck.vy=(y-puck.y)/Math.max(.08,duration);
+  puck.postTop=opts.postTop??null;puck.postHit=false;puck.postResult=null;puck.justPost=false;puck.postElapsed=0;
 }
-function edgeRushUpdatePuck(puck,dt){
+function edgeRushUpdatePuck(puck,dt,w=720,h=405){
+  puck.justPost=false;
   if(puck.mode==="carry"&&puck.owner){
     const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return false;
   }
@@ -7750,7 +7805,35 @@ function edgeRushUpdatePuck(puck,dt){
     if(t>=1){puck.mode="carry";puck.owner=puck.target;puck.target=null;const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return true;}
     return false;
   }
-  if(puck.mode==="shot"||puck.mode==="rebound"||puck.mode==="postin"||puck.mode==="netcatch"){
+  if(puck.mode==="shot"){
+    const ox=puck.x,oy=puck.y,nx=ox+puck.vx*dt,ny=oy+puck.vy*dt;
+    if(puck.postTop!==null&&!puck.postHit){
+      const N=EDGE_RUSH_NET,cx=N.postX*w,cy=(puck.postTop?N.topY:N.bottomY)*h;
+      const hit=edgeRushSegmentCircle(ox*w,oy*h,nx*w,ny*h,cx,cy,edgeRushPostRadius(w,h));
+      if(hit){
+        puck.x=hit.x/w;puck.y=hit.y/h;
+        const rv=edgeRushReflect(puck.vx*w,puck.vy*h,hit.nx,hit.ny);
+        puck.vx=rv.vx/w;puck.vy=rv.vy/h;puck.postHit=true;puck.justPost=true;puck.mode="postflight";puck.postElapsed=0;
+        const remain=dt*(1-hit.t);puck.x+=puck.vx*remain;puck.y+=puck.vy*remain;
+        return false;
+      }
+    }
+    puck.x=nx;puck.y=ny;puck.elapsed+=dt;
+    return puck.elapsed>=puck.duration;
+  }
+  if(puck.mode==="postflight"){
+    const ox=puck.x,oy=puck.y;
+    puck.x+=puck.vx*dt;puck.y+=puck.vy*dt;puck.postElapsed+=dt;
+    const drag=Math.pow(.992,dt*60);puck.vx*=drag;puck.vy*=drag;
+    const N=EDGE_RUSH_NET,goalX=N.lineX+.010;
+    if(ox<goalX&&puck.x>=goalX&&puck.vx>0){
+      const t=(goalX-ox)/Math.max(.00001,puck.x-ox),crossY=rushLerp(oy,puck.y,rushClamp(t,0,1));
+      if(crossY>N.topY+.012&&crossY<N.bottomY-.012){puck.x=goalX;puck.y=crossY;puck.postResult="in";return true;}
+    }
+    if(puck.x<.79||puck.y<.24||puck.y>.76||puck.postElapsed>.48){puck.postResult="out";return true;}
+    return false;
+  }
+  if(puck.mode==="rebound"||puck.mode==="netcatch"){
     puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=1-Math.pow(1-t,2);
     puck.x=rushLerp(puck.fromX,puck.toX,e);puck.y=rushLerp(puck.fromY,puck.toY,e);
     return t>=1;
