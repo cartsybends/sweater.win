@@ -1166,7 +1166,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius:50%; background:#aab8c1;
   }
   .rush-defender .rush-stick-svg { left:27px; top:16px; width:46px; height:28px; }
-  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:82px; height:76px; will-change:transform; }
+  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:82px; height:96px; will-change:transform; }
   .rush-goalie svg { display:block; width:100%; height:100%; overflow:visible; }
   .rush-g-rig { stroke-linecap:round; stroke-linejoin:round; }
   .rush-g-detail { fill:none; stroke:#96aab6; stroke-width:.7; }
@@ -7820,25 +7820,22 @@ function edgeRushRenderAgent(a,w,h){
 }
 function edgeRushRenderPuck(puck,el,w,h){
   if(!el)return;
+  el.style.opacity=puck.mode==="secured"?"0":"1";
   edgeRushSet(el,puck.x*w,puck.y*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
-  // Articulated top-down equipment: the knee, shoulder and wrist pivots stay connected.
-  const pad=(side,y)=>`<g class="rush-g-pad ${side}" transform="translate(49 ${y})"><path d="M19 -4L29 -3Q34 -1 32 3L25 5L18 4Z" fill="#253844"/><path d="M0 -7Q7 -9 16 -7L27 -5Q30 -3 28 3L23 7L2 7Q-2 3 0 -7Z" fill="url(#rush-pad)" stroke="#677f8e" stroke-width="1"/><path d="M4 -6L4 6M10 -6L10 6M20 -4L20 5" class="rush-g-detail"/><path d="M1 -5L1 4" stroke="#fff" stroke-width="1.6"/><path d="M8 -7L18 -6" stroke="#244e69" stroke-width="2.2"/></g>`;
-  return `<div class="rush-goalie" data-goalie aria-hidden="true"><svg viewBox="0 0 82 76"><defs>
-    <linearGradient id="rush-jersey" x2=".8" y2="1"><stop stop-color="#7698b0"/><stop offset=".48" stop-color="#355d78"/><stop offset="1" stop-color="#18394f"/></linearGradient>
-    <linearGradient id="rush-pad" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".6" stop-color="#f1f5f8"/><stop offset="1" stop-color="#bfced8"/></linearGradient>
-  </defs><ellipse class="rush-g-shadow" cx="44" cy="40" rx="29" ry="23" fill="#193b50" opacity=".13"/>
+  const pad=side=>`<g class="rush-g-pad ${side}"><path d="M-7 22L8 22L10 28Q0 32 -9 28Z" fill="#243847"/><path d="M-7 0Q0 -3 7 0L8 22Q6 27 0 27Q-6 27 -8 22Z" fill="url(#rush-pad)" stroke="#647c8c" stroke-width="1"/><path d="M-4 2L-4 21M-3 8L6 8M-3 15L6 15M-3 22L6 22" class="rush-g-detail"/><path d="M1 1L6 2L6 5L1 4Z" fill="#234b67"/><circle data-goalie-contact="${side}" cx="0" cy="20" r=".2" fill="transparent"/></g>`;
+  return `<div class="rush-goalie" data-goalie aria-hidden="true"><svg viewBox="0 0 82 96"><defs><linearGradient id="rush-jersey" x2="1" y2=".4"><stop stop-color="#62839d"/><stop offset=".5" stop-color="#315773"/><stop offset="1" stop-color="#18374d"/></linearGradient><linearGradient id="rush-pad" x2="1" y2=".25"><stop stop-color="#fff"/><stop offset=".65" stop-color="#edf3f7"/><stop offset="1" stop-color="#b8cbd7"/></linearGradient></defs>
+  <ellipse class="rush-g-shadow" cx="41" cy="83" rx="26" ry="6" fill="#193b50" opacity=".16"/>
   <g class="rush-g-body rush-g-rig">
-    <path d="M43 24Q55 22 61 31L61 46Q55 55 43 52L38 45L38 31Z" fill="#233e51" stroke="#193548" stroke-width="1"/>
-    ${pad('left',25)}${pad('right',51)}
-    <g class="rush-g-torso"><path d="M25 25Q33 17 45 21Q53 25 54 38Q53 51 45 55Q33 59 25 51L23 43L23 32Z" fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/><path d="M42 23Q48 38 42 53M29 26Q25 38 29 50" class="rush-g-seam"/><path d="M44 23Q49 38 44 53" fill="none" stroke="#123247" stroke-width="2" opacity=".45"/></g>
-    <g class="rush-g-arm glove"><path d="M38 25Q29 17 21 21L14 25" fill="none" stroke="#25465e" stroke-width="10"/><path d="M37 23Q28 17 21 22L15 25" fill="none" stroke="#6689a1" stroke-width="6"/><path d="M23 20L21 25" class="rush-g-seam"/><g class="rush-g-glove"><path d="M16 20Q12 12 5 14Q-2 17 1 25Q3 31 10 29L17 26L19 23Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M12 18Q3 16 4 23Q6 27 13 24Z" fill="#718b9b"/><path d="M5 18L11 24M3 21L12 21M8 17L7 25" fill="none" stroke="#dce6ec" stroke-width=".65"/></g></g>
-    <g class="rush-g-arm blocker"><path d="M38 51Q29 58 21 54L14 50" fill="none" stroke="#25465e" stroke-width="10"/><path d="M37 53Q29 58 21 53L15 50" fill="none" stroke="#6689a1" stroke-width="6"/><path d="M23 51L21 56" class="rush-g-seam"/>
-      <g class="rush-g-stick"><path d="M15 50L54 64" stroke="#324b5c" stroke-width="2.5"/><path d="M15 50L8 48L7 39L2 37L-1 49Q5 53 14 54Z" fill="#edf3f7" stroke="#627d8e" stroke-width=".9"/><path d="M2 41L0 48L6 50" fill="none" stroke="#273f4f" stroke-width="2"/></g>
-      <path d="M6 44Q4 44 4 47L5 56Q5 59 9 59L18 57L18 45Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M8 46L8 56M12 46L12 55" class="rush-g-detail"/>
-    </g>
-    <g class="rush-g-mask"><path d="M26 29Q32 32 32 38Q32 44 26 47L17 46Q10 43 9 38Q10 33 17 30Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M15 31Q22 32 24 38Q22 44 15 45L10 41L10 35Z" fill="#294658"/><path d="M11 34L21 34M10 38L24 38M11 42L21 42M14 32L14 44M18 33L18 43" stroke="#d0dfe8" stroke-width=".75" fill="none"/><path d="M27 32Q30 38 27 43" stroke="#fff" stroke-width="1.5" fill="none"/></g>
+    <g class="rush-g-hips"><path d="M29 48Q41 44 53 48L57 60L47 65L41 57L35 65L25 60Z" fill="#233e51" stroke="#183447" stroke-width="1"/></g>
+    ${pad('left')}${pad('right')}
+    <g class="rush-g-torso"><path d="M28 28Q40 24 52 29L55 40L51 52Q41 56 29 51L24 40Z" fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/><path d="M29 46Q40 50 51 47" stroke="#e1ebf1" stroke-width="2.6" fill="none"/><path d="M32 30L30 42M49 32L50 42" class="rush-g-seam"/><path d="M37 34L44 34L46 40L40 44L35 39Z" fill="#dde8ef" opacity=".85"/></g>
+    <g class="rush-g-arm glove"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-glove"><path d="M-7 -6Q-1 -10 6 -5L8 1Q6 8 0 8Q-8 7 -9 1Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path class="rush-g-pocket" d="M-5 -3Q1 -7 4 -2Q5 4 0 5Q-6 4 -5 -3Z" fill="#557385"/><path d="M-4 -2L3 3M-4 2L3 -2M0 -4L0 4" class="rush-g-seam"/><circle data-goalie-contact="glove" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
+    <g class="rush-g-arm blocker"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-blocker"><path d="M-6 -9Q0 -11 6 -8L7 7Q0 10 -6 7Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M-3 -6L-3 5M2 -6L2 5" class="rush-g-detail"/><circle data-goalie-contact="blocker" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
+    <g class="rush-g-stick"><path d="M58 49L34 78" stroke="#344c5c" stroke-width="2.4"/><path d="M34 78L29 82L12 82L10 86L33 86L39 80Z" fill="#eef4f8" stroke="#647e8f" stroke-width=".8"/><path d="M12 84L27 84" stroke="#273e4e" stroke-width="2.5"/></g>
+    <g class="rush-g-mask"><path d="M31 11Q39 6 46 12L48 21Q43 29 36 27L29 22L28 16Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M29 15L40 14L43 19L38 25L30 22Z" fill="#2a485c"/><path d="M30 17L41 17M30 20L40 20M33 15L33 23M37 15L37 24" stroke="#d0dfe8" stroke-width=".7" fill="none"/><path d="M42 11L45 15L45 20" stroke="#fff" stroke-width="1.4" fill="none"/></g>
+    <circle data-goalie-contact="cover" cx="27" cy="82" r=".2" fill="transparent"/>
   </g></svg></div>`;
 }
 function edgeRushShotProfile(finisher,line,finish,correct){
@@ -7857,43 +7854,57 @@ function edgeRushSaveLabel(type){
 }
 function edgeRushRenderGoalie(g,el,w,h){
   if(!el)return;
-  // Cache the rig once; animate SVG pivots directly, without queued CSS transitions.
-  const rig=g.rig||(g.rig=Object.fromEntries(['body','torso','mask','shadow','pad.left','pad.right','arm.glove','arm.blocker','stick'].map(k=>[k,el.querySelector('.rush-g-'+k.replace('.', '.'))])));
-  const raw=rushClamp(g.actionT||0,0,1),t=raw*raw*(3-2*raw),stance=g.stance||0;
-  const save=g.saveType||'',low=['butterfly','leftpad','rightpad','beaten'].includes(save)?t:0;
-  const side=(g.shotY??.5)<.5?-1:1;
-  const lean=save==='glove'?-2.8*t:save==='blocker'?2.8*t:save==='beaten'?side*2*t:0;
-  const turn=-rushClamp(g.face||0,-26,26)*.8;
-  edgeRushSet(el,g.x*w,g.y*h,0,1);
-  rig.body.setAttribute('transform',`translate(${-stance*1.5-low*2} ${lean}) rotate(${turn} 41 38)`);
-  rig.torso.setAttribute('transform',`translate(${-low*1.7} 0) translate(38 38) scale(${1-low*.06} ${1-low*.08}) translate(-38 -38)`);
-  rig.mask.setAttribute('transform',`translate(${-stance-low*1.5} ${lean*.35})`);
-  const spread=stance*1.2+low*4;
-  const lp=-(3+stance*3+low*29+(save==='leftpad'?t*16:0));
-  const rp=3+stance*3+low*29+(save==='rightpad'?t*16:0);
-  rig['pad.left'].setAttribute('transform',`translate(${49-low*2} ${25-spread}) rotate(${lp})`);
-  rig['pad.right'].setAttribute('transform',`translate(${49-low*2} ${51+spread}) rotate(${rp})`);
-  const glove=save==='glove'?t:save==='beaten'&&side<0?t*.65:0;
-  const blocker=save==='blocker'?t:save==='beaten'&&side>0?t*.65:0;
-  rig['arm.glove'].setAttribute('transform',`rotate(${8*stance+glove*30-low*4} 38 25)`);
-  rig['arm.blocker'].setAttribute('transform',`rotate(${-8*stance-blocker*27+low*4} 38 51)`);
-  rig.stick.setAttribute('transform',`rotate(${blocker*17-low*6} 15 50)`);
-  rig.shadow.setAttribute('rx',29+low*5);rig.shadow.setAttribute('opacity',.13+low*.025);
+  const names=['body','torso','hips','mask','shadow','pad.left','pad.right','arm.glove','arm.blocker','glove','blocker','pocket','stick'];
+  const rig=g.rig||(g.rig=Object.fromEntries(names.map(k=>[k,el.querySelector('.rush-g-'+k)])));
+  const ease=v=>{v=rushClamp(v||0,0,1);return v*v*(3-2*v);};
+  const t=ease(g.actionT),c=ease(g.coverT),save=g.saveType||'';
+  const catchSave=save==='glove',low=(['butterfly','leftpad','rightpad','beaten'].includes(save)?t:0);
+  const drop=Math.max(low,c*(catchSave?.12:1)),yaw=rushClamp(g.face||0,-26,26)/26;
+  // Ice position is the feet. Head stays above shoulders, pads below hips.
+  el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) translate(-41px,-83px)`;
+  rig.body.setAttribute('transform',`translate(${yaw*2} 0)`);
+  rig.torso.setAttribute('transform',`translate(${yaw*1.5-1} ${3+drop*9}) rotate(${yaw*4} 41 50)`);
+  rig.hips.setAttribute('transform',`translate(0 ${drop*13})`);
+  rig.mask.setAttribute('transform',`translate(${yaw*3-4-2*c} ${6+drop*8+2*c})`);
+  const l=drop*55+(save==='leftpad'?t*15:0),r=-drop*55-(save==='rightpad'?t*15:0);
+  rig['pad.left'].setAttribute('transform',`translate(${31-drop*1.5} ${54+drop*16}) rotate(${14+l})`);
+  rig['pad.right'].setAttribute('transform',`translate(${51+drop*1.5} ${54+drop*16}) rotate(${-14+r})`);
+  let gx=19-yaw*2,gy=44-(catchSave?18*t:0),bx=61-yaw,by=46-(save==='blocker'?16*t:0);
+  gx=rushLerp(gx,catchSave?34:27,c);gy=rushLerp(gy,catchSave?41:82,c);
+  bx=rushLerp(bx,52,c);by=rushLerp(by,catchSave?48:67,c);
+  const arm=(key,sx,sy,hx,hy)=>{const group=rig[key],d=`M${sx} ${sy}Q${(sx+hx)/2+3} ${(sy+hy)/2+5} ${hx} ${hy}`;group.querySelector('.rush-g-sleeve').setAttribute('d',d);group.querySelector('.rush-g-sleeve-light').setAttribute('d',d);};
+  arm('arm.glove',29+yaw,33+drop*12,gx,gy);arm('arm.blocker',52+yaw,34+drop*12,bx,by);
+  rig.glove.setAttribute('transform',`translate(${gx} ${gy}) rotate(${-12+18*c}) scale(${1-.12*c} ${1-.22*c})`);
+  rig.blocker.setAttribute('transform',`translate(${bx} ${by}) rotate(12)`);
+  rig.pocket.setAttribute('opacity',1-.85*c);
+  rig.stick.setAttribute('transform',`rotate(${-drop*8} 29 83)`);
+  rig.shadow.setAttribute('rx',26+drop*8);
+}
+function edgeRushGoaliePoint(el,type,w,h){
+  const marker=el.querySelector(`[data-goalie-contact="${type}"]`),stage=$('erStage');
+  const a=marker.getBoundingClientRect(),b=stage.getBoundingClientRect();
+  return {x:(a.left+a.width/2-b.left)/w,y:(a.top+a.height/2-b.top)/h};
 }
 function edgeRushUpdateGoalie(g,puck,dt){
+  if(g.state==='saving'){
+    g.actionT=rushMoveToward(g.actionT||0,1,dt*5);return;
+  }
+  if(g.state==='covering'){
+    g.actionT=1;g.coverT=rushMoveToward(g.coverT||0,1,dt*2.5);return;
+  }
+  if(g.state==='secured')return;
+  if(g.state==='post'){g.actionT=rushMoveToward(g.actionT||0,0,dt*2);return;}
   const threat=puck.owner||puck.target||null,brain=threat?.brain||{};
   const angle=Math.atan2(puck.y-g.y,Math.max(.04,g.x-puck.x))*180/Math.PI;
   const approach=rushClamp((puck.x-.42)/.46,0,1);
   const shotThreat=rushClamp(.38*(brain.shot||.5)+.30*(brain.aggression||.5)+.20*(brain.inside||.4)+.12*(brain.speed||.5),0,1);
-  // Frame-rate-independent settling gives shuffles acceleration and deceleration.
   const settle=(value,target,rate)=>rushLerp(value,target,1-Math.exp(-rate*dt));
   g.face=settle(g.face||0,rushClamp(angle,-26,26),10);
   const challenge=(.010+.021*shotThreat)*approach*(puck.mode==='pass'?.62:1);
   g.x=settle(g.x,.895-challenge,5);
   const targetY=rushClamp(.5+(puck.y-.5)*(.80+.12*approach),.392,.608);
   g.y=settle(g.y,targetY,puck.mode==='shot'?9:6);
-  const setTarget=puck.mode==='shot'?1:rushClamp(.34+.62*approach+.12*shotThreat,.34,1);
-  g.stance=settle(g.stance||0,setTarget,8);
+  g.stance=settle(g.stance||0,rushClamp(.34+.62*approach+.12*shotThreat,.34,1),8);
   if(puck.mode==='shot')g.actionT=rushMoveToward(g.actionT||0,1,dt*5);
 }
 function edgeRushRadar(value,token) {
@@ -8116,9 +8127,15 @@ async function edgeRushAnimate(r,picked,correct) {
             const blade=edgeRushStick(finisher);puck.x=blade.x;puck.y=blade.y;
             const postShot=shotOutcome==="postin"||shotOutcome==="post";
             postPlan=postShot?edgeRushPostAim(blade.x,blade.y,w,h,shotOutcome==="postin",preferredPostTop):null;
-            const releaseEnd=postPlan?{x:postPlan.x,y:postPlan.y}:shotEnd;
+            let releaseEnd=postPlan?{x:postPlan.x,y:postPlan.y}:shotEnd;
             goalie.saveType=shotOutcome==="save"?shotProfile.save:"beaten";
             goalie.shotY=postPlan?(postPlan.top?NET.topY:NET.bottomY):releaseEnd.y;goalie.actionT=0;
+            if(shotOutcome==='save'){
+              goalie.state='saving';goalie.actionT=1;edgeRushRenderGoalie(goalie,goalieEl,w,h);
+              const contact=shotProfile.save==='glove'?'glove':shotProfile.save==='blocker'?'blocker':shotProfile.save==='rightpad'?'right':'left';
+              releaseEnd=edgeRushGoaliePoint(goalieEl,contact,w,h);
+              goalie.actionT=0;edgeRushRenderGoalie(goalie,goalieEl,w,h);
+            }
             edgeRushShot(puck,releaseEnd.x,releaseEnd.y,.32-.115*finisher.brain.shot,postPlan?{postTop:postPlan.top}:{});
             puckEl.classList.remove("in-net","posted");puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
             phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
@@ -8159,7 +8176,7 @@ async function edgeRushAnimate(r,picked,correct) {
             puck.toX=NET.backX;puck.toY=rushClamp(.5+(puck.y-.5)*.30,.478,.522);
             phase="netcatch";$("erPhase").textContent="POST AND IN";
           }else{
-            shotDoneAt=now;puck.mode="dead";
+            shotDoneAt=now;puck.mode="dead";goalie.state="post";
             puckEl.classList.remove("shooting","posted","in-net");
           }
         }else if(shotOutcome==="goal"){
@@ -8168,17 +8185,30 @@ async function edgeRushAnimate(r,picked,correct) {
           puck.toX=NET.backX;puck.toY=rushClamp(.5+(netY-.5)*.32,.475,.525);
           phase="netcatch";$("erPhase").textContent="IN THE NET";
         }else{
-          shotDoneAt=now;
+          goalie.state='covering';goalie.coverT=0;goalie.actionT=1;
+          phase='savecover';$("erPhase").textContent=shotProfile.save==='glove'?'CAUGHT IN THE GLOVE':'SAVE · COVERING THE PUCK';
           puckEl.classList.remove("shooting","posted","in-net");
-          puck.mode="rebound";puck.elapsed=0;puck.duration=.34;puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=.765;puck.toY=rushClamp(puck.y+(puck.y<.5?.105:-.105),.34,.68);
+          if(shotProfile.save==='glove')puck.mode='glovehold';
+          else{
+            puck.mode='rebound';puck.elapsed=0;puck.duration=.16;puck.fromX=puck.x;puck.fromY=puck.y;
+            const cover=edgeRushGoaliePoint(goalieEl,'cover',w,h);puck.toX=cover.x;puck.toY=cover.y;
+          }
         }
       }else if(phase==="netcatch"&&puckComplete&&!shotDoneAt){
         shotDoneAt=now;stage.classList.add("goal","net-hit");puck.mode="dead";
-      }else if(shotDoneAt&&shotOutcome==="save"&&puck.mode==="rebound"&&puckComplete){
-        puck.mode="dead";
       }
 
-      renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
+      renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);
+      if(phase==='savecover'){
+        if(puck.mode==='glovehold'){
+          const held=edgeRushGoaliePoint(goalieEl,'glove',w,h);puck.x=held.x;puck.y=held.y;
+        }else if(puck.mode==='rebound'&&puckComplete)puck.mode='coverhold';
+        if(goalie.coverT>=1){
+          goalie.state='secured';puck.mode='secured';shotDoneAt=now;phase='saved';
+          $("erPhase").textContent=shotProfile.save==='glove'?'GLOVE CLOSED · PUCK SECURED':'PUCK COVERED · WHISTLE';
+        }
+      }
+      edgeRushRenderPuck(puck,puckEl,w,h);
 
       if(shotDoneAt&&now-shotDoneAt>820){
         finished=true;
