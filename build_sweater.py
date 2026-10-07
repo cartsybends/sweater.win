@@ -7516,6 +7516,8 @@ const rushLerp=(a,b,t)=>a+(b-a)*t;
 const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
 
+// Per-player simulation traits are normalized from NHL EDGE percentiles so
+// the same agent system can power future tracking-data arcade modes.
 function edgeRushBrain(id,role){
   const speed=edgePercentile("speed",edgeValue(id,"speed"))/100;
   const engine=edgePercentile("miles",edgeValue(id,"miles"))/100;
