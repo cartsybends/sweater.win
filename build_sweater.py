@@ -56,6 +56,7 @@ HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
 VERSION = "123 · Rush Intelligence"
+# Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
 TEMPLATE = r'''<!DOCTYPE html>
