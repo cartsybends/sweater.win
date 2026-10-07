@@ -1102,80 +1102,113 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-callout strong { display: block; font-size: clamp(24px,5vw,42px); line-height: .95; letter-spacing: -.055em; }
   .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
   .rush-actor {
-    position: absolute; z-index: 8; left: 0; top: 0; width: clamp(38px,6.7vw,54px); height: clamp(38px,6.7vw,54px);
-    pointer-events: none; will-change: transform; filter: drop-shadow(0 5px 5px rgba(12,35,50,.23));
+    position: absolute; z-index: 8; left: 0; top: 0; width: clamp(48px,7.8vw,64px); height: clamp(48px,7.8vw,64px);
+    pointer-events: none; will-change: transform; filter: drop-shadow(0 6px 6px rgba(12,35,50,.24));
   }
   .rush-actor::before {
-    content: ""; position: absolute; z-index: -1; left: -29px; top: 50%; width: 34px; height: 10px; border-radius: 50%;
+    content: ""; position: absolute; z-index: -1; left: -31px; top: 50%; width: 38px; height: 11px; border-radius: 50%;
     background: linear-gradient(90deg, transparent, rgba(57,151,218,.24)); filter: blur(2px); transform: translateY(-50%); opacity: var(--rush-trail-opacity,.25); transition: opacity .1s linear;
   }
   .rush-actor .rush-body {
-    position: absolute; inset: 3px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.94); border-radius: 50%;
-    background: rgba(18,37,52,.92); box-shadow: inset 0 0 0 2px rgba(17,41,58,.22);
+    position: absolute; inset: 5px 4px 7px; display: grid; place-items: center; overflow: hidden;
+    border: 2px solid rgba(255,255,255,.96); border-radius: 42% 42% 34% 34%;
+    background: linear-gradient(145deg,#243b4b 0%,#102838 55%,#0c2130 100%);
+    box-shadow: inset 0 -6px 10px rgba(0,0,0,.22), inset 0 0 0 2px rgba(255,255,255,.06);
   }
-  .rush-actor img { width: 72%; height: 72%; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(0,0,0,.2)); }
-  .rush-actor .rush-stick { position: absolute; width: 34px; height: 2px; right: -21px; bottom: 4px; border-radius: 2px; background: #5a4635; transform: rotate(23deg); transform-origin: left center; }
-  .rush-actor .rush-stick::after { content: ""; position: absolute; right: -2px; top: -3px; width: 10px; height: 3px; border-radius: 2px; background: #31363a; transform: rotate(20deg); }
+  .rush-actor .rush-body::before {
+    content:""; position:absolute; left:7%; right:7%; top:58%; height:15%;
+    border-top:2px solid rgba(255,255,255,.34); border-bottom:2px solid rgba(255,255,255,.18);
+  }
+  .rush-actor img { position:relative; z-index:1; width:58%; height:58%; object-fit:contain; filter:drop-shadow(0 1px 1px rgba(0,0,0,.22)); }
+  .rush-number {
+    position:absolute; z-index:2; right:1px; bottom:1px; display:grid; place-items:center; min-width:17px; height:15px; padding:0 3px;
+    border:1px solid rgba(255,255,255,.82); border-radius:5px; background:rgba(8,22,32,.88); color:#fff;
+    font-size:8px; line-height:1; font-weight:950; font-variant-numeric:tabular-nums; box-shadow:0 2px 4px rgba(0,0,0,.22);
+  }
+  .rush-actor .rush-stick {
+    position:absolute; z-index:3; left:57%; top:68%; width:42px; height:3px; border-radius:3px;
+    background:linear-gradient(90deg,#7a5838 0 74%,#eceff1 74% 100%); transform:rotate(17deg); transform-origin:left center;
+    box-shadow:0 1px 1px rgba(0,0,0,.24);
+  }
+  .rush-actor .rush-stick::before {
+    content:""; position:absolute; right:-13px; top:-1px; width:19px; height:8px; border-radius:0 0 13px 5px;
+    border-bottom:4px solid #1f272d; background:repeating-linear-gradient(90deg,#f6f7f8 0 4px,#cbd2d6 4px 5px);
+    transform:rotate(9deg); transform-origin:left center;
+  }
+  .rush-actor .rush-stick::after {
+    content:""; position:absolute; left:-2px; top:-1px; width:12px; height:5px; border-radius:3px;
+    background:repeating-linear-gradient(90deg,#f6f7f8 0 3px,#c9d0d4 3px 4px);
+  }
+  .rush-actor.hand-l .rush-stick { top:32%; transform:rotate(-17deg) scaleY(-1); }
   .rush-actor .rush-role {
-    position: absolute; left: 50%; top: calc(100% + 3px); padding: 2px 5px; border-radius: 5px; transform: translateX(-50%);
-    background: rgba(15,31,45,.82); color: #fff; font-size: 6px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
+    position:absolute; left:50%; top:calc(100% + 4px); padding:3px 6px; border-radius:6px; transform:translateX(-50%);
+    background:rgba(15,31,45,.88); color:#fff; font-size:7px; font-weight:950; letter-spacing:.075em; text-transform:uppercase; white-space:nowrap;
+    box-shadow:0 2px 5px rgba(0,0,0,.16);
   }
   .rush-defender {
-    position: absolute; z-index: 5; left: 0; top: 0; display: grid; place-items: center; width: clamp(34px,5.8vw,47px); height: clamp(34px,5.8vw,47px);
-    border: 2px solid rgba(74,91,103,.38); border-radius: 50%; background: rgba(89,107,119,.20); color: rgba(39,57,68,.72);
-    font-size: 11px; font-weight: 950; will-change: transform; box-shadow: 0 5px 10px rgba(18,38,52,.10);
+    position:absolute; z-index:5; left:0; top:0; display:grid; place-items:center; width:clamp(38px,6.2vw,50px); height:clamp(38px,6.2vw,50px);
+    border:2px solid rgba(74,91,103,.42); border-radius:42% 42% 34% 34%; background:rgba(89,107,119,.24); color:rgba(39,57,68,.78);
+    font-size:11px; font-weight:950; will-change:transform; box-shadow:0 5px 10px rgba(18,38,52,.10);
+  }
+  .rush-defender::before {
+    content:""; position:absolute; z-index:-1; left:58%; top:68%; width:37px; height:3px; border-radius:3px;
+    background:linear-gradient(90deg,#6d5138 0 76%,#e8ecee 76% 100%); transform:rotate(17deg); transform-origin:left center; opacity:.84;
   }
   .rush-defender::after {
-    content: ""; position: absolute; right: -19px; bottom: 2px; width: 29px; height: 2px; border-radius: 2px;
-    background: #68523e; transform: rotate(20deg); transform-origin: left center; opacity: .72;
+    content:""; position:absolute; left:calc(58% + 31px); top:calc(68% + 9px); width:17px; height:7px; border-radius:0 0 11px 4px;
+    border-bottom:4px solid #30383d; background:repeating-linear-gradient(90deg,#f4f6f7 0 4px,#c9d0d4 4px 5px); transform:rotate(27deg); opacity:.88;
   }
   .rush-goalie {
-    position:absolute; z-index:8; left:0; top:0; width:clamp(54px,8.8vw,72px); height:clamp(64px,10vw,84px);
-    will-change:transform; transform-style:preserve-3d; perspective:180px; filter:drop-shadow(0 8px 7px rgba(12,35,50,.20));
+    position:absolute; z-index:8; left:0; top:0; width:clamp(66px,10vw,84px); height:clamp(58px,8.4vw,72px);
+    will-change:transform; filter:drop-shadow(0 8px 7px rgba(12,35,50,.22));
   }
   .rush-g-shadow {
-    position:absolute; left:50%; bottom:0; width:74%; height:11%; border-radius:50%; background:rgba(15,35,49,.18);
+    position:absolute; left:52%; bottom:5%; width:78%; height:18%; border-radius:50%; background:rgba(15,35,49,.17);
     filter:blur(2px); transform:translateX(-50%);
   }
-  .rush-g-body { position:absolute; inset:0; transform-origin:50% 68%; transform-style:preserve-3d; will-change:transform; }
+  .rush-g-body { position:absolute; inset:0; transform-origin:48% 50%; will-change:transform; }
   .rush-g-chest {
-    position:absolute; z-index:4; left:50%; top:24%; width:48%; height:36%; border-radius:42% 42% 27% 27%;
-    background:linear-gradient(90deg,#405563 0%,#748b9a 34%,#879aa6 50%,#657c8b 68%,#3b505e 100%);
-    border:2px solid rgba(255,255,255,.88); transform:translateX(-50%) translateZ(6px);
-    box-shadow:inset 0 -7px 10px rgba(21,41,53,.18),0 2px 3px rgba(24,43,55,.12);
+    position:absolute; z-index:4; left:31%; top:22%; width:42%; height:56%; border-radius:29% 34% 34% 29%;
+    background:linear-gradient(180deg,#7b909d 0%,#536b79 54%,#334b5a 100%); border:2px solid rgba(255,255,255,.90);
+    box-shadow:inset -8px 0 10px rgba(21,41,53,.20),0 2px 3px rgba(24,43,55,.12);
   }
-  .rush-g-chest::after {
-    content:""; position:absolute; left:50%; top:12%; width:2px; height:72%; background:rgba(255,255,255,.20); transform:translateX(-50%);
-  }
+  .rush-g-chest::before { content:""; position:absolute; left:10%; right:10%; top:46%; border-top:3px solid rgba(255,255,255,.50); box-shadow:0 6px 0 rgba(255,255,255,.18); }
+  .rush-g-chest::after { content:""; position:absolute; right:8%; top:12%; width:7px; height:7px; border:2px solid rgba(255,255,255,.68); border-radius:50%; }
   .rush-g-mask {
-    position:absolute; z-index:8; left:50%; top:1%; width:28%; aspect-ratio:.86; border:2px solid rgba(255,255,255,.98);
-    border-radius:44% 44% 48% 48%; background:linear-gradient(90deg,#324755,#6d8290 50%,#334957);
-    transform:translateX(-50%) translateZ(11px); box-shadow:inset 0 -4px 0 rgba(14,29,39,.20);
+    position:absolute; z-index:8; left:8%; top:34%; width:25%; height:32%; border:2px solid rgba(255,255,255,.98);
+    border-radius:48% 40% 44% 52%; background:linear-gradient(90deg,#253b49,#718793 62%,#405866);
+    box-shadow:inset -4px 0 0 rgba(14,29,39,.22),0 1px 2px rgba(0,0,0,.16);
   }
-  .rush-g-mask::before,.rush-g-mask::after { content:""; position:absolute; left:14%; right:14%; border-top:1px solid rgba(255,255,255,.70); }
-  .rush-g-mask::before { top:35%; } .rush-g-mask::after { top:56%; }
+  .rush-g-mask::before { content:""; position:absolute; left:20%; right:12%; top:33%; height:1px; background:rgba(255,255,255,.72); box-shadow:0 4px 0 rgba(255,255,255,.58),0 8px 0 rgba(255,255,255,.44); }
+  .rush-g-mask::after { content:""; position:absolute; top:18%; bottom:16%; left:46%; width:1px; background:rgba(255,255,255,.58); box-shadow:4px 0 0 rgba(255,255,255,.44); }
   .rush-g-arm {
-    position:absolute; z-index:5; top:34%; width:30%; height:12%; border-radius:999px;
-    background:linear-gradient(180deg,#6f8594,#415967); border:2px solid rgba(255,255,255,.82); transform-origin:12% 50%; will-change:transform;
+    position:absolute; z-index:5; left:23%; width:36%; height:12%; border-radius:999px;
+    background:linear-gradient(180deg,#718796,#405866); border:2px solid rgba(255,255,255,.84); transform-origin:88% 50%; will-change:transform;
   }
-  .rush-g-arm.glove { left:11%; transform:rotate(-17deg) translateZ(4px); }
-  .rush-g-arm.blocker { right:11%; transform-origin:88% 50%; transform:rotate(17deg) translateZ(4px); }
-  .rush-g-glove,.rush-g-blocker { position:absolute; top:50%; width:39%; aspect-ratio:1; transform:translateY(-50%); background:#e7eef2; border:2px solid #607582; box-shadow:0 2px 2px rgba(22,42,54,.15); }
-  .rush-g-glove { left:-18%; border-radius:52% 42% 55% 39%; }
-  .rush-g-blocker { right:-18%; border-radius:5px; }
+  .rush-g-arm.glove { top:12%; transform:rotate(-18deg); }
+  .rush-g-arm.blocker { top:76%; transform:rotate(18deg); }
+  .rush-g-glove,.rush-g-blocker { position:absolute; top:50%; width:35%; aspect-ratio:1; transform:translateY(-50%); background:#edf2f5; border:2px solid #607582; box-shadow:0 2px 2px rgba(22,42,54,.15); }
+  .rush-g-glove { left:-20%; border-radius:58% 44% 60% 42%; }
+  .rush-g-glove::after { content:""; position:absolute; inset:22%; border:1px solid #83939c; border-radius:50%; }
+  .rush-g-blocker { left:-18%; border-radius:4px; box-shadow:inset 0 -3px 0 rgba(58,77,88,.14),0 2px 2px rgba(22,42,54,.15); }
   .rush-g-pad {
-    position:absolute; z-index:3; top:57%; width:21%; height:38%; border:2px solid rgba(91,111,123,.66); border-radius:6px 6px 11px 11px;
-    background:linear-gradient(90deg,#c8d4db 0%,#f8fbfc 37%,#fff 52%,#d3dee4 100%); transform-origin:50% 8%; will-change:transform;
-    box-shadow:inset 0 -5px 8px rgba(67,89,101,.12);
+    position:absolute; z-index:3; left:58%; width:37%; height:20%; border:2px solid rgba(91,111,123,.68); border-radius:7px 12px 12px 7px;
+    background:linear-gradient(180deg,#fff 0%,#eef3f5 48%,#c8d4db 100%); transform-origin:8% 50%; will-change:transform;
+    box-shadow:inset -5px 0 8px rgba(67,89,101,.12);
   }
-  .rush-g-pad::after { content:""; position:absolute; left:14%; right:14%; top:48%; border-top:1px solid rgba(91,111,123,.32); box-shadow:0 7px 0 rgba(91,111,123,.22); }
-  .rush-g-pad.left { left:27%; transform:rotate(3deg); }
-  .rush-g-pad.right { right:27%; transform:rotate(-3deg); }
+  .rush-g-pad::before { content:""; position:absolute; left:18%; right:9%; top:29%; border-top:1px solid rgba(91,111,123,.34); box-shadow:0 6px 0 rgba(91,111,123,.25); }
+  .rush-g-pad::after { content:""; position:absolute; right:-8%; top:28%; width:11%; height:44%; border-radius:0 5px 5px 0; background:#303941; }
+  .rush-g-pad.left { top:24%; transform:rotate(-4deg); }
+  .rush-g-pad.right { top:57%; transform:rotate(4deg); }
   .rush-g-stick {
-    position:absolute; z-index:2; left:53%; top:55%; width:48%; height:3px; border-radius:3px; background:#6d523c;
-    transform:rotate(52deg) translateZ(1px); transform-origin:left center; will-change:transform;
+    position:absolute; z-index:6; right:40%; top:67%; width:49%; height:3px; border-radius:3px;
+    background:linear-gradient(90deg,#f3f5f6 0 26%,#76583e 26% 100%); transform:rotate(5deg); transform-origin:right center; will-change:transform;
   }
-  .rush-g-stick::after { content:""; position:absolute; right:-2px; top:-4px; width:14px; height:5px; border-radius:3px; background:#27333a; transform:rotate(12deg); }
+  .rush-g-stick::before {
+    content:""; position:absolute; left:-13px; top:-2px; width:20px; height:9px; border-radius:0 0 5px 13px;
+    border-bottom:5px solid #20292f; background:repeating-linear-gradient(90deg,#f7f8f9 0 4px,#cbd2d6 4px 5px); transform:rotate(-10deg); transform-origin:right center;
+  }
+  .rush-g-stick::after { content:""; position:absolute; right:7%; top:-3px; width:19%; height:9px; border-radius:2px; background:#eef2f4; border:1px solid #7e8d96; }
   .rush-puck {
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
     box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
@@ -1203,9 +1236,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes rushChestDrop { to{transform:translate(-50%,5px) scaleY(.90)} }
   @keyframes rushGoalieReach { 55%{transform:translate(-5px,-1px) rotate(-7deg)} 100%{transform:translate(-8px,2px) rotate(-10deg)} }
   @keyframes rushSpeedWash { 0%{opacity:0;transform:translateX(-3%)} 18%{opacity:.8} 100%{opacity:0;transform:translateX(6%)} }
-  .rush-lines { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 9px; }
+  .rush-lines { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:18px; }
   .rush-line {
-    position: relative; overflow: hidden; min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 14px;
+    position:relative; overflow:hidden; min-width:0; min-height:176px; padding:15px; border:1px solid var(--line); border-radius:16px;
     background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer;
     transition: transform .17s ease,border-color .17s ease,background-color .17s ease;
   }
@@ -1213,14 +1246,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-line:disabled { cursor: default; }
   .rush-line.best { border-color: var(--hit); background: color-mix(in srgb,var(--hit) 8%,var(--panel)); }
   .rush-line.picked:not(.best) { border-color: #c0392b; background: color-mix(in srgb,#c0392b 7%,var(--panel)); }
-  .rush-line-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-  .rush-line-head small { color: var(--muted); font-size: 8px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
-  .rush-line-rating { font-size: 10px; font-weight: 900; color: var(--link); }
-  .rush-line-player { display: grid; grid-template-columns: 31px minmax(0,1fr); align-items: center; gap: 7px; min-height: 39px; padding: 4px 0; border-top: 1px solid color-mix(in srgb,var(--line) 70%,transparent); }
+  .rush-line-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+  .rush-line-head small { color:var(--muted); font-size:10px; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+  .rush-line-rating { font-size:12px; font-weight:950; color:var(--link); }
+  .rush-line-player { display:grid; grid-template-columns:40px minmax(0,1fr); align-items:center; gap:10px; min-height:49px; padding:5px 0; border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent); }
   .rush-line-player:first-of-type { border-top: 0; }
-  .rush-line-player img { width: 31px; height: 31px; object-fit: contain; border-radius: 50%; background: var(--cream); }
-  .rush-line-player b { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
-  .rush-line-player em { display: block; margin-top: 2px; color: var(--muted); font-size: 8px; font-style: normal; }
+  .rush-line-player img { width:40px; height:40px; object-fit:contain; border-radius:50%; background:var(--cream); }
+  .rush-line-player b { display:block; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; line-height:1.15; }
+  .rush-line-player em { display:block; margin-top:3px; color:var(--muted); font-size:10px; font-style:normal; }
   .rush-role-results { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 10px; }
   .rush-role-results span { min-width: 0; padding: 7px; border-radius: 8px; background: color-mix(in srgb,var(--link) 6%,var(--cell)); text-align: center; }
   .rush-role-results small,.rush-role-results b { display:block; }
@@ -1238,11 +1271,11 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edgecard.featured-rush { grid-column: auto; min-height: 122px; }
     .rush-stage { border-radius: 14px; }
     .rush-lines { grid-template-columns: 1fr; }
-    .rush-line { display: grid; grid-template-columns: 66px minmax(0,1fr); gap: 7px 9px; align-items: center; }
+    .rush-line { display:grid; grid-template-columns:82px minmax(0,1fr); gap:9px 12px; align-items:center; min-height:0; padding:14px; }
     .rush-line-head { grid-row: 1 / span 3; display: block; margin: 0; text-align: center; }
     .rush-line-head small { display: block; }
     .rush-line-rating { display: block; margin-top: 5px; font-size: 14px; }
-    .rush-line-player { min-height: 34px; padding: 2px 0; }
+    .rush-line-player { min-height:43px; padding:3px 0; }
     .rush-role-results { grid-column: 1 / -1; }
     .rush-broadcast { left: 7px; top: 7px; }
     .rush-radar { right: 7px; top: 7px; min-width: 78px; padding: 5px 7px; }
@@ -3552,9 +3585,9 @@ TEMPLATE = r'''<!DOCTYPE html>
           <!-- Rush camera: compress the exit/neutral ice and give the attacking zone the visual real estate. -->
           <line class="rush-blue" x1="145" y1="8" x2="145" y2="397"/>
           <line class="rush-center" x1="225" y1="8" x2="225" y2="397"/>
-          <circle class="rush-circle" cx="225" cy="202.5" r="42"/><circle class="rush-dot" cx="225" cy="202.5" r="4"/>
-          <line class="rush-blue" x1="315" y1="8" x2="315" y2="397"/>
-          <line class="rush-goalline" x1="660" y1="55" x2="660" y2="350"/>
+          <circle class="rush-circle" cx="225" cy="202.5" r="54"/><circle class="rush-dot" cx="225" cy="202.5" r="5"/>
+          <line class="rush-blue" x1="292" y1="8" x2="292" y2="397"/>
+          <line class="rush-goalline" x1="660" y1="14" x2="660" y2="391"/>
           <circle class="rush-circle" cx="535" cy="116" r="47"/><circle class="rush-circle" cx="535" cy="289" r="47"/>
           <circle class="rush-dot" cx="535" cy="116" r="4"/><circle class="rush-dot" cx="535" cy="289" r="4"/>
           <path class="rush-crease" d="M660 174A29 29 0 0 0 660 231Z"/>
@@ -7523,7 +7556,8 @@ function edgeRushCancelAnimation(){
 }
 function edgeRushActor(id,role) {
   const p=BYID.get(Number(id));
-  return `<div class="rush-actor" data-rush-id="${id}"><span class="rush-body"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><span class="rush-stick"></span><span class="rush-role">${role}</span></div>`;
+  const hand=p?.shoots==="L"?"hand-l":"hand-r",number=p?.number!=null?String(p.number):"—";
+  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-body"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"><b class="rush-number">${esc(number)}</b></span><span class="rush-stick"></span><span class="rush-role">${role}</span></div>`;
 }
 function edgeRushSet(el,x,y,rot=0,scale=1){
   if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
@@ -7557,7 +7591,7 @@ function edgeRushBrain(id,role){
   };
 }
 function edgeRushAgent(id,role,x,y){
-  return {id,role,brain:edgeRushBrain(id,role),x,y,vx:0,vy:0,tx:x,ty:y,rot:0,el:null};
+  return {id,role,brain:edgeRushBrain(id,role),hand:BYID.get(Number(id))?.shoots==="L"?-1:1,x,y,vx:0,vy:0,tx:x,ty:y,rot:0,el:null};
 }
 function edgeRushPointSegDist(px,py,ax,ay,bx,by){
   const dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy;
@@ -7593,12 +7627,16 @@ function edgeRushSteer(a,dt){
 }
 function edgeRushStick(a){
   const speed=rushLen(a.vx,a.vy);
-  const ux=speed>.006?a.vx/speed:1,uy=speed>.006?a.vy/speed:0;
-  // Right-handed-looking presentation offset: puck stays at the blade and
-  // moves with the carrier every frame instead of following an independent path.
-  return {x:a.x+ux*.025-uy*.010,y:a.y+uy*.025+ux*.010};
+  const ux=speed>.006?a.vx/speed:1,uy=speed>.006?a.vy/speed:0,side=a.hand||1;
+  // Blade coordinates mirror the rendered handed stick. Carrying and receiving
+  // both resolve to this exact point so every completed pass finishes tape-to-tape.
+  return {
+    x:rushClamp(a.x+ux*.071-uy*.015*side,.02,.98),
+    y:rushClamp(a.y+uy*.126+ux*.024*side,.05,.95)
+  };
 }
 function edgeRushPass(puck,to,duration=.28){
+  if(puck.owner){const blade=edgeRushStick(puck.owner);puck.x=blade.x;puck.y=blade.y;}
   puck.mode="pass";puck.owner=null;puck.target=to;puck.elapsed=0;puck.duration=duration;
   puck.fromX=puck.x;puck.fromY=puck.y;
 }
@@ -7613,7 +7651,7 @@ function edgeRushUpdatePuck(puck,dt){
   if(puck.mode==="pass"&&puck.target){
     puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=t*t*(3-2*t),to=edgeRushStick(puck.target);
     puck.x=rushLerp(puck.fromX,to.x,e);
-    puck.y=rushLerp(puck.fromY,to.y,e)-Math.sin(Math.PI*t)*.018;
+    puck.y=rushLerp(puck.fromY,to.y,e);
     if(t>=1){puck.mode="carry";puck.owner=puck.target;puck.target=null;const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return true;}
     return false;
   }
@@ -7655,30 +7693,30 @@ function edgeRushRenderGoalie(g,el,w,h){
   if(!el)return;
   const t=g.actionT||0,body=el.querySelector(".rush-g-body"),left=el.querySelector(".rush-g-pad.left"),right=el.querySelector(".rush-g-pad.right");
   const ga=el.querySelector(".rush-g-arm.glove"),ba=el.querySelector(".rush-g-arm.blocker"),stick=el.querySelector(".rush-g-stick");
-  const crouch=(g.stance||0)*2.8,face=rushClamp(g.face||0,-18,18),save=g.saveType||"";
+  const set=(g.stance||0)*2.7,face=rushClamp(g.face||0,-18,18),save=g.saveType||"";
   edgeRushSet(el,g.x*w,g.y*h,0,1);
-  if(body)body.style.transform=`translateY(${crouch+((save&&save!=="beaten")?4*t:0)}px) perspective(150px) rotateY(${face}deg) rotateZ(${(save==="beaten"?-5:0)*t}deg)`;
-  let lp=3,rp=-3,ltx=0,lty=0,rtx=0,rty=0,gar=-17,gax=0,gay=0,bar=17,bax=0,bay=0,stickR=52;
+  if(body)body.style.transform=`translateX(${-set}px) rotate(${face*.55}deg)`;
+  let lp=-4,rp=4,ltx=0,lty=0,rtx=0,rty=0,gar=-18,gax=0,gay=0,bar=18,bax=0,bay=0,stickR=5,stickX=0,stickY=0;
   if(save==="butterfly"){
-    lp=3+28*t;rp=-3-28*t;ltx=-9*t;lty=5*t;rtx=9*t;rty=5*t;gar=-8;bar=8;stickR=39;
+    lp=-4-28*t;rp=4+28*t;ltx=-7*t;lty=-8*t;rtx=-7*t;rty=8*t;gar=-18-9*t;bar=18+9*t;stickR=-1;stickX=-4*t;
   }else if(save==="glove"){
-    gar=-17-62*t;gax=-8*t;gay=-12*t;lp=3+8*t;rp=-3-6*t;
+    gar=-18-38*t;gax=-10*t;gay=-10*t;lp=-4-7*t;rp=4+4*t;stickR=3;
   }else if(save==="blocker"){
-    bar=17+54*t;bax=9*t;bay=-8*t;lp=3+5*t;rp=-3-8*t;stickR=44;
+    bar=18+36*t;bax=-9*t;bay=9*t;lp=-4-4*t;rp=4+7*t;stickR=10;stickY=4*t;
   }else if(save==="leftpad"){
-    lp=3+48*t;ltx=-17*t;lty=5*t;rp=-3-12*t;stickR=40;
+    lp=-4-38*t;ltx=-8*t;lty=-11*t;rp=4+10*t;stickR=0;stickX=-3*t;
   }else if(save==="rightpad"){
-    rp=-3-48*t;rtx=17*t;rty=5*t;lp=3+12*t;stickR=40;
+    rp=4+38*t;rtx=-8*t;rty=11*t;lp=-4-10*t;stickR=0;stickX=-3*t;
   }else if(save==="beaten"){
     const dir=(g.shotY||.5)<.5?-1:1;
-    gar=-17-25*t*(dir<0?1:.25);bar=17+25*t*(dir>0?1:.25);gax=-8*t*(dir<0?1:0);bax=8*t*(dir>0?1:0);
-    lp=3+16*t;rp=-3-16*t;
+    gar=-18-22*t*(dir<0?1:.30);bar=18+22*t*(dir>0?1:.30);gax=-6*t*(dir<0?1:0);bax=-6*t*(dir>0?1:0);
+    lp=-4-12*t;rp=4+12*t;stickR=5+5*t*dir;
   }
   if(left)left.style.transform=`translate(${ltx}px,${lty}px) rotate(${lp}deg)`;
   if(right)right.style.transform=`translate(${rtx}px,${rty}px) rotate(${rp}deg)`;
-  if(ga)ga.style.transform=`translate(${gax}px,${gay}px) rotate(${gar}deg) translateZ(4px)`;
-  if(ba)ba.style.transform=`translate(${bax}px,${bay}px) rotate(${bar}deg) translateZ(4px)`;
-  if(stick)stick.style.transform=`rotate(${stickR}deg) translateZ(1px)`;
+  if(ga)ga.style.transform=`translate(${gax}px,${gay}px) rotate(${gar}deg)`;
+  if(ba)ba.style.transform=`translate(${bax}px,${bay}px) rotate(${bar}deg)`;
+  if(stick)stick.style.transform=`translate(${stickX}px,${stickY}px) rotate(${stickR}deg)`;
 }
 function edgeRushUpdateGoalie(g,puck,dt){
   const dx=Math.max(.04,g.x-puck.x),angle=Math.atan2(puck.y-g.y,dx)*180/Math.PI;
