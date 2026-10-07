@@ -54,7 +54,8 @@ SHIFT_API = "https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={g
 TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ":29,"DAL":25,"DET":17,"EDM":22,"FLA":13,"LAK":26,"MIN":30,"MTL":8,"NSH":18,"NJD":1,"NYI":2,"NYR":3,"OTT":9,"PHI":4,"PIT":5,"SJS":28,"SEA":55,"STL":19,"TBL":14,"TOR":10,"UTA":59,"VAN":23,"VGK":54,"WSH":15,"WPG":52}
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
-VERSION = "122 · Crease AI"
+EDGE_CACHE_SCHEMA = 2
+VERSION = "123 · Rush Intelligence"
 
 
 TEMPLATE = r'''<!DOCTYPE html>
@@ -9868,6 +9869,28 @@ def _edge_measure(obj):
         return None
 
 
+def _edge_count(obj):
+    """Read NHL EDGE count/percentile objects while tolerating small payload-shape changes."""
+    if isinstance(obj, (int, float)):
+        return int(obj)
+    if not isinstance(obj, dict):
+        return None
+    for key in ("value", "count", "total"):
+        try:
+            if obj.get(key) is not None:
+                return int(obj.get(key))
+        except (TypeError, ValueError):
+            pass
+    return None
+
+
+def _edge_float(value):
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
 def _edge_location_key(value):
     return re.sub(r"[^a-z]", "", str(value or "").lower())
 
@@ -9882,9 +9905,16 @@ def edge_player_data(player, season):
     shot = _edge_measure(data.get("topShotSpeed"))
     skating = data.get("skatingSpeed") if isinstance(data.get("skatingSpeed"), dict) else {}
     speed = _edge_measure(skating.get("speedMax"))
+    bursts20 = _edge_count(skating.get("burstsOver20"))
     miles = _edge_measure(data.get("distanceMaxGame"))
+    distance = _edge_measure(data.get("totalDistanceSkated"))
+    zone_time = data.get("zoneTimeDetails") if isinstance(data.get("zoneTimeDetails"), dict) else {}
+    oz = _edge_float(zone_time.get("offensiveZonePctg"))
+    nz = _edge_float(zone_time.get("neutralZonePctg"))
+    dz = _edge_float(zone_time.get("defensiveZonePctg"))
 
     zones = {}
+    zone_eff = {}
     for row in data.get("sogSummary") or []:
         if not isinstance(row, dict):
             continue
@@ -9893,6 +9923,7 @@ def edge_player_data(player, season):
             zones[key] = int(row.get("shots")) if row.get("shots") is not None else None
         except (TypeError, ValueError):
             zones[key] = None
+        zone_eff[key] = _edge_float(row.get("shootingPctg"))
 
     # NHL EDGE currently uses compact danger-bucket location codes:
     # all / high / mid / long. Keep the longer aliases for compatibility.
@@ -9908,15 +9939,39 @@ def edge_player_data(player, season):
     if hd is not None and hd < 0: hd = None
     if mid is not None and mid < 0: mid = None
     if long is not None and long < 0: long = None
-    if not any(v is not None for v in (shot, speed, miles, total, hd, mid, long)):
+    areas = []
+    for row in data.get("sogDetails") or []:
+        if not isinstance(row, dict):
+            continue
+        area = str(row.get("area") or "").strip()
+        try:
+            area_shots = int(row.get("shots")) if row.get("shots") is not None else 0
+        except (TypeError, ValueError):
+            area_shots = 0
+        pct = _edge_float(row.get("shootingPctg"))
+        if area and area_shots > 0:
+            areas.append({"area": area, "shots": area_shots, "pct": round(pct, 4) if pct is not None else None})
+    areas.sort(key=lambda row: (-row["shots"], row["area"]))
+    areas = areas[:8]
+
+    if not any(v is not None for v in (shot, speed, miles, total, hd, mid, long, bursts20, distance)):
         raise ValueError("no EDGE metrics found")
 
     return {
         "id": player["id"], "season": season,
         "shot": round(shot, 2) if shot is not None else None,
         "speed": round(speed, 2) if speed is not None else None,
+        "bursts20": bursts20,
         "miles": round(miles, 2) if miles is not None else None,
+        "distance": round(distance, 2) if distance is not None else None,
         "total": total, "hd": hd, "mid": mid, "long": long,
+        "hdPct": round(zone_eff.get("high"), 4) if zone_eff.get("high") is not None else None,
+        "midPct": round(zone_eff.get("mid"), 4) if zone_eff.get("mid") is not None else None,
+        "longPct": round(zone_eff.get("long"), 4) if zone_eff.get("long") is not None else None,
+        "oz": round(oz, 4) if oz is not None else None,
+        "nz": round(nz, 4) if nz is not None else None,
+        "dz": round(dz, 4) if dz is not None else None,
+        "areas": areas,
     }
 
 
@@ -9932,8 +9987,9 @@ def fetch_edge_data(players, today):
         cache_doc = json.loads(EDGE_CACHE.read_text(encoding="utf-8")) if EDGE_CACHE.exists() else {}
     except Exception:
         cache_doc = {}
-    cached = cache_doc.get("players", {}) if cache_doc.get("season") == season else {}
-    unavailable = set(cache_doc.get("unavailable", [])) if cache_doc.get("season") == season else set()
+    cache_current = cache_doc.get("season") == season and cache_doc.get("schema") == EDGE_CACHE_SCHEMA
+    cached = cache_doc.get("players", {}) if cache_current else {}
+    unavailable = set(cache_doc.get("unavailable", [])) if cache_current else set()
     rows = {str(p["id"]): cached[str(p["id"])] for p in candidates if str(p["id"]) in cached}
     missing = [p for p in candidates if str(p["id"]) not in rows and str(p["id"]) not in unavailable]
 
@@ -9953,6 +10009,7 @@ def fetch_edge_data(players, today):
         try:
             EDGE_CACHE.write_text(json.dumps({
                 "season": season,
+                "schema": EDGE_CACHE_SCHEMA,
                 "players": rows,
                 "unavailable": sorted(unavailable, key=int),
             }, ensure_ascii=False, indent=1), encoding="utf-8")
