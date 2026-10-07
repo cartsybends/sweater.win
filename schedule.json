@@ -216056,7 +216056,7 @@
    "shoots": "L",
    "birth": "2000-06-29",
    "nation": "SWE",
-   "number": 11,
+   "number": 19,
    "headshot": "https://assets.nhle.com/mugs/nhl/20262027/EDM/8480842.png",
    "ht": 74,
    "bc": "Sundsvall",
@@ -216067,7 +216067,9 @@
     17.31,
     "Sundsvall, Sweden"
    ],
-   "past": [],
+   "past": [
+    "PIT"
+   ],
    "car": [
     [
      2021,
@@ -262098,7 +262100,7 @@
    "shoots": "L",
    "birth": "2000-06-29",
    "nation": "SWE",
-   "number": 0,
+   "number": 19,
    "headshot": "https://assets.nhle.com/mugs/nhl/20262027/EDM/8480842.png",
    "ht": 74,
    "bc": "Sundsvall",
