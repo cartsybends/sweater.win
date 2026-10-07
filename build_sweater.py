@@ -7558,7 +7558,7 @@ function edgeRushStickMarkup(extra=""){
 function edgeRushActor(id,role) {
   const p=BYID.get(Number(id));
   const hand=p?.shoots==="L"?"hand-l":"hand-r",number=p?.number!=null?String(p.number):"—";
-  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-skater"><span class="rush-jersey"><span class="rush-crest"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><b class="rush-number">${esc(number)}</b></span><span class="rush-helmet"></span></span>${edgeRushStickMarkup()}<span class="rush-role">${role}</span></div>`;
+  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-skater"><span class="rush-jersey"><span class="rush-crest"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><b class="rush-number">${esc(number)}</b></span><span class="rush-helmet"></span></span>${edgeRushStickMarkup()}</div>`;
 }
 function edgeRushSet(el,x,y,rot=0,scale=1){
   if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
@@ -7718,8 +7718,21 @@ function edgeRushPassScore(from,to,defs,goalie){
   return (.30*lane+.28*shot+.17*room+.10*to.brain.attack+.08*forehand+.07*rushClamp((to.x-from.x+.04)/.20,0,1))
     *rushClamp((separation-.045)/.10,0,1)*(.25+.75*lane);
 }
+// A backdoor feed is available only to a receiver beyond the defensive pair,
+// on the far side of the crease, with an open blade-to-blade passing corridor.
+function edgeRushBackdoor(from,to,defs,goalie){
+  const start=edgeRushStick(from),end=edgeRushStick(to);
+  if(from.x<.64||Math.abs(start.y-.5)<.105||to.x<.79||Math.abs(end.y-.5)>.10||(start.y-.5)*(end.y-.5)>=0)return null;
+  if(defs.some(d=>to.x<d.x+.008))return null;
+  const clearance=defs.length?Math.min(...defs.map(d=>edgeRushPointSegDist(d.x+(d.vx||0)*.12,d.y+(d.vy||0)*.12,start.x,start.y,end.x,end.y))):1;
+  const room=edgeRushPressure(to,defs),quality=edgeRushShotQuality(to,defs,goalie);
+  if(clearance<.055||room<.052||quality.lane<.55)return null;
+  const goalieCommit=goalie?Math.abs(goalie.y-end.y)*405:0;
+  if(quality.value<edgeRushShotQuality(from,defs,goalie).value+.035&&goalieCommit<18)return null;
+  return {clearance,quality,score:.78+.12*rushClamp(goalieCommit/35,0,1)};
+}
 function edgeRushChoosePass(from,candidates,defs,goalie){
-  return candidates.map(a=>({a,score:edgeRushPassScore(from,a,defs,goalie)})).sort((a,b)=>b.score-a.score)[0]||{a:null,score:0};
+  return candidates.map(a=>{const backdoor=edgeRushBackdoor(from,a,defs,goalie);return {a,score:backdoor?.score??edgeRushPassScore(from,a,defs,goalie),play:backdoor?'backdoor':'pass'};}).sort((a,b)=>b.score-a.score)[0]||{a:null,score:0};
 }
 function edgeRushOpenY(base,a,defs,amount=.075){
   let y=base;for(const d of defs)if(Math.abs(d.x-a.x)<.16&&Math.abs(d.y-y)<.13)y+=y<=d.y?-amount:amount;
@@ -7751,34 +7764,39 @@ function edgeRushUpdateMove(a,now){
   a.fakeYaw=-m.direction*fake*7;
   if(t>=1){a.move=null;a.state='route';a.lastMove=m.type;a.stickAngle=m.type==='forehand-backhand'?-a.hand*30:0;a.fakeYaw=0;}
 }
-function edgeRushSupportTargets(owner,agents,defs,goalie){
+function edgeRushSupportTargets(owner,agents,defs,goalie,now=0){
   const mates=agents.filter(a=>a!==owner),candidates=[];
+  const runner=mates.slice().sort((a,b)=>edgeRushDistance(a,{x:.865,y:owner.y<.5?.60:.40})-edgeRushDistance(b,{x:.865,y:owner.y<.5?.60:.40}))[0];
   for(const a of mates){
+    if(now<(a.backdoorUntil||0)){a.tx=a.backdoorX;a.ty=a.backdoorY;continue;}
     const preferred=a.brain.scoring.preferred,side=preferred.y===.5?(a.hand>0?-.13:.13):preferred.y-.5;
     const options=[preferred,{x:rushClamp(owner.x+.10,.57,.82),y:.5+side},
       {x:rushClamp(owner.x+.04,.55,.79),y:owner.y<.5?.72:.28},
       {x:rushClamp(owner.x-.035,.53,.76),y:.5-side},
-      {x:.81,y:owner.y<.5?.61:.39},{x:.72,y:.5}];
+      {x:.865,y:(owner.y<.5?.580:.420)-.019*a.hand},{x:.72,y:.5}];
     for(const point of options){
       const q={...a,...point},spacing=edgeRushDistance(q,owner);
       const other=mates.find(b=>b!==a),otherTarget=other?{x:other.tx,y:other.ty}:null;
       const crowd=spacing<.095?(.095-spacing)*8:0;
       const overlap=otherTarget?Math.max(0,.105-edgeRushDistance(q,otherTarget))*7:0;
-      const passing=edgeRushPassScore(owner,q,defs,goalie),shot=edgeRushShotQuality(q,defs,goalie).value;
+      const backdoor=edgeRushBackdoor(owner,q,defs,goalie),passing=backdoor?.score??edgeRushPassScore(owner,q,defs,goalie),shot=edgeRushShotQuality(q,defs,goalie).value;
       const room=rushClamp(edgeRushPressure(q,defs)/.13,0,1),travel=edgeRushDistance(a,q);
       const comfort=1-rushClamp(edgeRushDistance(q,preferred)/.28,0,1);
-      candidates.push({a,point,score:.40*passing+.22*shot+.17*room+.12*comfort-.16*travel-crowd-overlap+.07*(1-rushClamp(edgeRushDistance(point,{x:a.tx,y:a.ty})/.12,0,1))});
+      candidates.push({a,point,score:(backdoor?.18:a===runner&&owner.x>.58&&Math.abs(owner.y-.5)>.12&&point.x>.83?.22:0)+.40*passing+.22*shot+.17*room+.12*comfort-.16*travel-crowd-overlap+.07*(1-rushClamp(edgeRushDistance(point,{x:a.tx,y:a.ty})/.12,0,1))});
     }
     const best=candidates.filter(c=>c.a===a).sort((x,y)=>y.score-x.score)[0];
     // Smooth targets and commit for a short window to avoid lane jitter.
     a.tx=rushLerp(a.tx,best.point.x,.45);a.ty=rushLerp(a.ty,best.point.y,.45);
-    a.intent=best.point.x>owner.x+.06?'drive':'outlet';
+    a.intent=best.point.x>.83?'backdoor':best.point.x>owner.x+.06?'drive':'outlet';
   }
 }
 function edgeRushChooseAction(owner,mates,defs,now,phaseAt,goalie){
   const choice=edgeRushChoosePass(owner,mates,defs,goalie),quality=edgeRushShotQuality(owner,defs,goalie),pressure=edgeRushPressure(owner,defs);
   const elapsed=now-phaseAt,ready=owner.x>.60,quick=owner.receiveAt&&now-owner.receiveAt<420;
   const threshold=.63-.06*owner.brain.aggression-(quick?.04:0)-rushClamp((elapsed-4500)/10000,0,.10);
+  if(ready&&quick&&now<(owner.backdoorUntil||0)&&quality.lane>.50&&quality.value>.43)return {action:'shoot',choice,pressure,quality};
+  if(choice.play==='backdoor')return {action:'pass',choice,pressure,quality,play:'backdoor'};
+  if(owner.creatingBackdoor&&pressure>.060)return {action:'drive',choice,pressure,quality};
   const oneTimer=quick&&owner.brain.scoring.signature.release==='one-timer'&&owner.receiveFromY!=null&&(owner.receiveFromY-owner.y)*owner.hand>0;
   if(ready&&oneTimer&&!owner.move&&quality.lane>.50&&quality.value>.53)return {action:'shoot',choice,pressure,quality};
   if(ready&&!owner.move&&quality.lane>.50&&quality.value>threshold)return {action:'shoot',choice,pressure,quality};
@@ -7789,37 +7807,41 @@ function edgeRushChooseAction(owner,mates,defs,now,phaseAt,goalie){
 function edgeRushPlanAttack(puck,agents,defs,goalie,plan,now){
   const owner=puck.owner||puck.target;if(!owner)return {action:'read'};
   if(puck.mode==='carry'&&plan.ownerId!==owner.id){plan.ownerId=owner.id;owner.receiveAt=now;plan.lastPassAt=now;}
-  owner.intent='carrier';edgeRushSupportTargets(owner,agents,defs,goalie);
+  owner.intent='carrier';edgeRushSupportTargets(owner,agents,defs,goalie,now);
   const preferred=owner.brain.scoring.preferred;
   if(!owner.move){
     const quality=edgeRushShotQuality(owner,defs,goalie);
-    const candidates=[preferred,{x:rushClamp(owner.x+.075,.57,.83),y:rushLerp(owner.y,.5,.55)},
+    const candidates=[preferred,{x:.845,y:owner.y<.5?.27:.73},{x:rushClamp(owner.x+.075,.57,.83),y:rushLerp(owner.y,.5,.55)},
       {x:rushClamp(owner.x+.06,.57,.83),y:rushClamp(owner.y-.13,.22,.78)},
       {x:rushClamp(owner.x+.06,.57,.83),y:rushClamp(owner.y+.13,.22,.78)},
-      {x:rushClamp(owner.x-.035,.55,.79),y:rushLerp(owner.y,.5,.45)}];
+      {x:rushClamp(owner.x-.10,.55,.79),y:owner.y}];
     const best=candidates.map(point=>{
       const future={...owner,...point},room=rushClamp(edgeRushPressure(future,defs)/.13,0,1);
       const path=defs.length?Math.min(...defs.map(d=>edgeRushPointSegDist(d.x,d.y,owner.x,owner.y,point.x,point.y))):1;
-      return {point,score:.60*edgeRushShotQuality(future,defs,goalie).value+.18*room-.15*edgeRushDistance(owner,point)
+      const drawWide=point.x>.83&&Math.abs(owner.y-.5)>.12&&agents.some(a=>a!==owner&&a.intent==='backdoor'&&a.x>.70);
+      return {point,drawWide,score:(drawWide?.24:0)+.60*edgeRushShotQuality(future,defs,goalie).value+.18*room-.15*edgeRushDistance(owner,point)
         -.20*rushClamp((.037-path)/.037,0,1)+.06*(1-rushClamp(edgeRushDistance(point,preferred)/.25,0,1))};
     }).sort((a,b)=>b.score-a.score)[0];
+    if(best.drawWide&&!owner.backdoorBuildAt)owner.backdoorBuildAt=now;
+    owner.creatingBackdoor=best.drawWide&&now-(owner.backdoorBuildAt||0)<1600;
     owner.tx=rushLerp(owner.tx,best.point.x,.60);owner.ty=rushLerp(owner.ty,best.point.y,.60);
-    if(quality.value>.64){owner.tx=owner.x+.012;owner.ty=owner.y;}
+    if(quality.value>.64&&!owner.creatingBackdoor){owner.tx=owner.x+.012;owner.ty=owner.y;}
   }
   if(puck.mode!=='carry')return {action:'read'};
   const read=edgeRushChooseAction(owner,agents.filter(a=>a!==owner),defs,now,plan.start,goalie);
   if(owner.move||now<plan.decisionAt)return {action:'read'};
   plan.decisionAt=now+160;
-  if(read.action==='pass'&&(now-plan.lastPassAt<650||plan.passes>=4))read.action='drive';
+  if(read.action==='pass'&&(now-plan.lastPassAt<(read.play==='backdoor'?420:650)||plan.passes>=(read.play==='backdoor'?7:4)))read.action='drive';
   if(read.action==='pass'){
+    if(read.play==='backdoor'){const receiver=read.choice.a;receiver.backdoorUntil=now+1000;receiver.backdoorX=receiver.x;receiver.backdoorY=receiver.y;receiver.move=null;}
     plan.lastPassAt=now;plan.passes++;owner.intent='give-go';owner.tx=rushClamp(owner.x+.11,.55,.82);owner.ty=owner.y<.5?.40:.60;
     return {...read,owner};
   }
-  if(read.action==='deke'&&!edgeRushBeginDeke(owner,defs,now))read.action='drive';
+  if(read.action==='deke'&&(now-plan.start>8500||!edgeRushBeginDeke(owner,defs,now)))read.action='drive';
   // A bounded presentation length: seek the best current carrier chance once
   // the rush has developed, rather than stalling or forcing a designated shooter.
   if(now-plan.start>8500&&!owner.move&&owner.x>.61&&read.quality.lane>.5&&read.quality.value>.43){read.action='shoot';}
-  else if(now-plan.start>8500&&read.choice.a&&read.choice.score>.30&&now-plan.lastPassAt>700&&plan.passes<7){read.action='pass';plan.lastPassAt=now;plan.passes++;}
+  else if(now-plan.start>8500&&read.choice.a&&read.choice.score>.30&&now-plan.lastPassAt>700&&plan.passes<12){read.action='pass';plan.lastPassAt=now;plan.passes++;}
   return {...read,owner};
 }
 // Two defenders contain the rush as a pair. Hold the inside shoulder and
@@ -7837,11 +7859,11 @@ function edgeRushReadDefenders(defs,puck,agents,now){
     const gap=.085+rushClamp((owner.vx||0)*.18,0,.045),side=owner.y<.5?1:-1;
     if(d===pressure){
       const fake=owner.move&&now-owner.move.start<owner.move.duration*.35?-owner.move.direction*.025:0;
-      d.tx=rushClamp(owner.x+gap,.61,.85);
+      d.tx=rushClamp(owner.x+gap,.61,.83);
       d.ty=rushClamp(owner.y+side*.045+(owner.vy||0)*.14+fake,.23,.77);
     }else{
       const threat=threats[0]||owner;
-      d.tx=rushClamp(Math.max(owner.x+gap+.045,threat.x+.045),.65,.85);
+      d.tx=rushClamp(Math.max(owner.x+gap+.045,threat.x+.045),.65,.82);
       d.ty=rushClamp(rushLerp(.5,threat.y,.48),.34,.66);
       // Keep a staggered pair instead of both collapsing on the carrier.
       if(edgeRushDistance({x:d.tx,y:d.ty},{x:pressure.tx,y:pressure.ty})<.085)
@@ -7903,7 +7925,7 @@ function edgeRushSteer(a,dt,obstacles=[]){
   const targetX=ux*desired*turnCarry,targetY=uy*desired*turnCarry,dv=(desired>current?a.brain.accel:a.brain.decel)*(burstOn?1.34:1)*dt;
   a.vx=rushMoveToward(a.vx,targetX,dv);a.vy=rushMoveToward(a.vy,targetY,dv);
   if(dist<.008){a.vx*=Math.max(0,1-(5.2+2*a.brain.edgework)*dt);a.vy*=Math.max(0,1-(5.2+2*a.brain.edgework)*dt);}
-  a.x=rushClamp(a.x+a.vx*dt,.035,.85);a.y=rushClamp(a.y+a.vy*dt,.15,.85);
+  a.x=rushClamp(a.x+a.vx*dt,.035,(a.intent==='backdoor'||a.backdoorUntil)? .87 : .85);a.y=rushClamp(a.y+a.vy*dt,.15,.85);
   const effort=rushClamp(rushLen(a.vx,a.vy)/Math.max(.01,a.brain.maxSpeed),0,1.5);
   a.energy=rushClamp(a.energy-dt*(.026+.045*effort+(burstOn?.085:0))*(1.18-.34*a.brain.stamina)+(!burstOn&&effort<.55?dt*.05:0),.28,1);
   if(a.state!=='shooting'&&rushLen(a.vx,a.vy)>.008)a.rot=rushClamp(Math.atan2(a.vy,a.vx)*180/Math.PI,-24,24);
@@ -8046,7 +8068,7 @@ function edgeRushGoalieMarkup(){
   const pad=side=>`<g class="rush-g-pad ${side}"><path d="M-7 22L8 22L10 28Q0 32 -9 28Z" fill="#243847"/><path d="M-7 0Q0 -3 7 0L8 22Q6 27 0 27Q-6 27 -8 22Z" fill="url(#rush-pad)" stroke="#647c8c" stroke-width="1"/><path d="M-4 2L-4 21M-3 8L6 8M-3 15L6 15M-3 22L6 22" class="rush-g-detail"/><path d="M1 1L6 2L6 5L1 4Z" fill="#234b67"/><circle data-goalie-contact="${side}" cx="0" cy="20" r=".2" fill="transparent"/></g>`;
   return `<div class="rush-goalie" data-goalie aria-hidden="true"><svg viewBox="0 0 82 96"><defs><linearGradient id="rush-jersey" x2="1" y2=".4"><stop stop-color="#62839d"/><stop offset=".5" stop-color="#315773"/><stop offset="1" stop-color="#18374d"/></linearGradient><linearGradient id="rush-pad" x2="1" y2=".25"><stop stop-color="#fff"/><stop offset=".65" stop-color="#edf3f7"/><stop offset="1" stop-color="#b8cbd7"/></linearGradient></defs>
   <ellipse class="rush-g-shadow" cx="41" cy="83" rx="26" ry="6" fill="#193b50" opacity=".16"/>
-  <g class="rush-g-body rush-g-rig">
+  <g class="rush-g-body rush-g-rig" stroke-linecap="round" stroke-linejoin="round">
     <g class="rush-g-hips"><path d="M29 48Q41 44 53 48L57 60L47 65L41 57L35 65L25 60Z" fill="#233e51" stroke="#183447" stroke-width="1"/></g>
     ${pad('left')}${pad('right')}
     <g class="rush-g-torso"><circle data-goalie-contact="chest" cx="40" cy="43" r=".2" fill="transparent"/><path d="M28 28Q40 24 52 29L55 40L51 52Q41 56 29 51L24 40Z" fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/><path d="M29 46Q40 50 51 47" stroke="#e1ebf1" stroke-width="2.6" fill="none"/><path d="M32 30L30 42M49 32L50 42" class="rush-g-seam"/><path d="M37 34L44 34L46 40L40 44L35 39Z" fill="#dde8ef" opacity=".85"/></g>
@@ -8063,9 +8085,10 @@ function edgeRushShotProfile(finisher,line,finish,correct){
   const seed=hash(`rush-shot-${finisher.id}-${line.rating}-${Math.round(finish.y*1000)}`);
   const r1=(seed&1023)/1023,r2=((seed>>>10)&1023)/1023;
   const backhand=finisher.releaseType==='backhand';
-  const height=rushClamp(.18+.64*r1+.12*finisher.brain.finishing-(backhand?.10:0),.16,.94);
+  const tap=finisher.releaseType==='tap-in';
+  const height=tap?.12:rushClamp(.18+.64*r1+.12*finisher.brain.finishing-(backhand?.10:0),.16,.94);
   const factor=backhand?.46:finisher.releaseType==='slap'?.88:finisher.releaseType==='one-timer'?.82:.68;
-  const speed=Math.max(25,edgeValue(finisher.id,'shot')*(factor+.08*r2));
+  const speed=tap?22+8*r2:Math.max(25,edgeValue(finisher.id,'shot')*(factor+.08*r2));
   const targetY=rushClamp((finisher.shotAimY??(.5+(finish.y-.5)*.38))+(r2-.5)*.014,.44,.56);
   let save,variant;
   if(height>.60){
@@ -8087,15 +8110,17 @@ function edgeRushRenderGoalie(g,el,w,h){
   const catchSave=save==='glove',chestSave=save==='chest',variant=g.saveVariant||'',read=g.read||{};
   const highGlove=variant==='glove-high',highBlocker=variant==='blocker-high';
   const low=save==='chest'?t*.35:['butterfly','leftpad','rightpad','beaten'].includes(save)?t:0;
-  const drop=Math.max(low,c*(catchSave?.12:chestSave?.35:1)),yaw=rushClamp(g.face||0,-26,26)/26;
+  const post=ease(g.postBlend||0)*(1-t)*(1-c),postSide=g.postSide||1;
+  const drop=Math.max(low,c*(catchSave?.12:chestSave?.35:1),post*.72),yaw=rushClamp(g.face||0,-26,26)/26;
   // Ice position is the feet. Head stays above shoulders, pads below hips.
   el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) scale(${w/720}) translate(-41px,-83px)`;
-  rig.body.setAttribute('transform','translate(0 0)');
-  rig.torso.setAttribute('transform',`translate(${yaw*1.5-1} ${5+set*5+drop*6}) rotate(${yaw*4} 41 50)`);
+  rig.body.setAttribute('transform',`rotate(${postSide*post*8} 41 83)`);
+  const torsoX=yaw*1.5-1+postSide*post*2,torsoY=5+set*5+drop*6,torsoAngle=(yaw*4+postSide*post*3)*Math.PI/180;
+  rig.torso.setAttribute('transform',`translate(${torsoX} ${torsoY}) rotate(${torsoAngle*180/Math.PI} 41 50)`);
   rig.hips.setAttribute('transform',`translate(0 ${3+drop*10})`);
   rig.mask.setAttribute('transform',`translate(${yaw*3-4-2*c} ${8+set*5+drop*4+2*c})`);
   const shuffle=Math.sin(g.skatePhase||0)*(g.motion||0)*(1-t)*(1-c);
-  const l=drop*55+(save==='leftpad'?t*15:0)+shuffle*3,r=-drop*55-(save==='rightpad'?t*15:0)+shuffle*3;
+  const l=drop*55*(1-(postSide>0?post*.70:0))+(postSide<0?post*25:0)+(save==='leftpad'?t*15:0)+shuffle*3,r=-drop*55*(1-(postSide<0?post*.70:0))-(postSide>0?post*25:0)-(save==='rightpad'?t*15:0)+shuffle*3;
   rig['pad.left'].setAttribute('transform',`translate(${31-drop*1.5-shuffle*1.2} ${57+drop*13}) rotate(${12+set*5+l})`);
   rig['pad.right'].setAttribute('transform',`translate(${51+drop*1.5-shuffle*1.2} ${57+drop*13}) rotate(${-12-set*5+r})`);
   const anticipation=(read.expectedHeight||.4)*(read.confidence||0);
@@ -8105,8 +8130,21 @@ function edgeRushRenderGoalie(g,el,w,h){
   gx=rushLerp(gx,catchSave?(highGlove?23:22):chestSave?39:27,c);
   gy=rushLerp(gy,catchSave?(highGlove?25:46):chestSave?47:82,c);
   bx=rushLerp(bx,chestSave?48:52,c);by=rushLerp(by,catchSave?48:chestSave?50:67,c);
-  const arm=(key,sx,sy,hx,hy)=>{const group=rig[key],d=`M${sx} ${sy}Q${(sx+hx)/2+3} ${(sy+hy)/2+5} ${hx} ${hy}`;group.querySelector('.rush-g-sleeve').setAttribute('d',d);group.querySelector('.rush-g-sleeve-light').setAttribute('d',d);};
-  arm('arm.glove',29+yaw,33+drop*12,gx,gy);arm('arm.blocker',52+yaw,34+drop*12,bx,by);
+  gx=rushLerp(gx,postSide<0?22:25,post);gy=rushLerp(gy,43,post);
+  bx=rushLerp(bx,postSide>0?56:50,post);by=rushLerp(by,58,post);
+  const shoulder=(x,y)=>({x:torsoX+41+(x-41)*Math.cos(torsoAngle)-(y-50)*Math.sin(torsoAngle),y:torsoY+50+(x-41)*Math.sin(torsoAngle)+(y-50)*Math.cos(torsoAngle)});
+  const arm=(key,origin,hx,hy,bend)=>{
+    const dx=hx-origin.x,dy=hy-origin.y,distance=Math.hypot(dx,dy)||1,reach=Math.min(distance,28.5);
+    hx=origin.x+dx/distance*reach;hy=origin.y+dy/distance*reach;
+    const ux=dx/distance,uy=dy/distance,L1=14,L2=15;
+    const along=(L1*L1-L2*L2+reach*reach)/(2*Math.max(1,reach)),height=Math.sqrt(Math.max(0,L1*L1-along*along));
+    const ex=origin.x+ux*along-uy*height*bend,ey=origin.y+uy*along+ux*height*bend;
+    const path=`M${origin.x} ${origin.y}L${ex} ${ey}L${hx} ${hy}`,group=rig[key];
+    group.querySelector('.rush-g-sleeve').setAttribute('d',path);group.querySelector('.rush-g-sleeve-light').setAttribute('d',path);
+    return {x:hx,y:hy};
+  };
+  const gloveHand=arm('arm.glove',shoulder(29,33),gx,gy,-1),blockerHand=arm('arm.blocker',shoulder(52,34),bx,by,1);
+  gx=gloveHand.x;gy=gloveHand.y;bx=blockerHand.x;by=blockerHand.y;
   rig.glove.setAttribute('transform',`translate(${gx} ${gy}) rotate(${-12-(highGlove?28:catchSave?12:0)*t+18*c}) scale(${1-.08*c} ${1-.14*c})`);
   rig.blocker.setAttribute('transform',`translate(${bx} ${by}) rotate(${12+(highBlocker?12:0)*t})`);
   rig.pocket.setAttribute('opacity',1-(catchSave?.3:.85)*c);
@@ -8170,14 +8208,21 @@ function edgeRushUpdateGoalie(g,puck,dt){
   const depth=rushClamp(20+18*entry-14*closing-5*lateral,19,ai.radius);
   const netX=660,netY=202.5;
   const bearing=rushClamp(Math.atan2(puck.y*405-netY,Math.max(24,netX-puck.x*720)),-Math.PI/3,Math.PI/3);
-  const tx=netX-Math.cos(bearing)*depth,ty=netY+Math.sin(bearing)*depth;
+  let tx=netX-Math.cos(bearing)*depth,ty=netY+Math.sin(bearing)*depth;
+  // Primary coaching references: Elite Goalies RVH guide and Nedeljkovic's
+  // inside-edge anchor. Stay upright on the half wall; seal only tight angles.
+  const sharp=Math.abs(puck.y-.5)>.14&&puck.x>.76;
+  const tight=sharp&&puck.x>.83;
+  if(sharp){g.postSide=puck.y<.5?-1:1;tx=654;ty=netY+g.postSide*28.5;}
+  g.postBlend=settle(g.postBlend||0,tight?1:0,tight?9:12);
+  g.postMode=tight?'rvh':sharp?'standing':'ready';
   if(puck.mode!=='shot'){
     const dx=tx-g.x*720,dy=ty-g.y*405,distance=Math.hypot(dx,dy);
     const travel=Math.min(distance*(1-Math.exp(-(passing?9:6)*dt)),72*dt);
     if(distance>.001){g.x+=dx/distance*travel/720;g.y+=dy/distance*travel/405;}
     g.motion=dt>0?rushClamp(travel/dt/48,0,1):0;
     g.skatePhase=(g.skatePhase||0)+travel*.28;
-    read.phase=passing?'push':g.motion>.12?'shuffle':'set';
+    read.phase=passing?'push':sharp?'post':g.motion>.12?'shuffle':'set';
   }
   const angle=Math.atan2((puck.y-g.y)*405,Math.max(24,(g.x-puck.x)*720))*180/Math.PI;
   g.face=settle(g.face||0,rushClamp(angle,-26,26),7+4*ai.tracking);
@@ -8203,6 +8248,7 @@ function edgeRushWait(ms,token){
   return new Promise(resolve=>setTimeout(()=>resolve(token===rushAnimToken),ms));
 }
 function edgeRushReleaseType(a,now){
+  if(now<(a.backdoorUntil||0)&&a.receiveAt&&now-a.receiveAt<450)return 'tap-in';
   const oneTimer=a.receiveAt&&now-a.receiveAt<450&&a.receiveFromY!=null&&(a.receiveFromY-a.y)*a.hand>0;
   const close=edgeRushDistance(a,{x:EDGE_RUSH_NET.lineX,y:.5})<.17;
   if(oneTimer&&a.brain.scoring.signature.release==='one-timer')return 'one-timer';
@@ -8251,10 +8297,10 @@ async function edgeRushAnimate(r,picked,correct) {
   const prepareShot=(a,now)=>{
     finisher=a;finisherId=a.id;windupAt=now;a.shotAimY=edgeRushShotQuality(a,defs,goalie).targetY;
     a.releaseType=edgeRushReleaseType(a,now);
-    a.windupDuration=a.releaseType==='one-timer'?.10:a.releaseType==='drag-release'?.27:a.brain.release;
+    a.windupDuration=a.releaseType==='tap-in'?.09:a.releaseType==='one-timer'?.10:a.releaseType==='drag-release'?.27:a.brain.release;
     a.state='shooting';a.tx=a.x;a.ty=a.y;phase='windup';
     agents.forEach(b=>{if(b!==a)b.intent=b.y<.5?'support':'net-drive';});
-    $('erPhase').textContent=({'one-timer':'ONE-TIMER','backhand':'BACKHAND','drag-release':'DRAG & RELEASE','slap':'LOAD THE SHOT'})[a.releaseType]||'OPEN LOOK';
+    $('erPhase').textContent=({'tap-in':'BACKDOOR TAP-IN','one-timer':'ONE-TIMER','backhand':'BACKHAND','drag-release':'DRAG & RELEASE','slap':'LOAD THE SHOT'})[a.releaseType]||'OPEN LOOK';
   };
   const releaseShot=()=>{
     // Render the actual loaded blade before taking the release coordinate.
@@ -8300,7 +8346,7 @@ async function edgeRushAnimate(r,picked,correct) {
           plan.readAt=now+100;const read=edgeRushPlanAttack(puck,agents,defs,goalie,plan,now);
           if(read.action==='pass'&&read.choice.a){
             const from=puck.owner;read.choice.a.receiveFromY=from.y;
-            edgeRushPass(puck,read.choice.a,.32-.07*from.brain.playmaking);$('erPhase').textContent='DRAW & DISH';
+            edgeRushPass(puck,read.choice.a,.32-.07*from.brain.playmaking);$('erPhase').textContent=read.play==='backdoor'?'BACKDOOR FEED':'DRAW & DISH';
           }else if(read.action==='shoot'){prepareShot(read.owner,now);}
           else if(read.action==='deke')$('erPhase').textContent=({'toe-drag':'TOE DRAG','forehand-backhand':'FOREHAND → BACKHAND','speed-cut':'CHANGE OF PACE','shoulder-fake':'SELL THE FAKE'})[read.owner.move?.type]||'BEAT THE CHECK';
         }
@@ -8429,7 +8475,7 @@ async function edgeRushAnimate(r,picked,correct) {
   });
 }
 G.edgerush={
-  localOnly:true,quietFinish:true,kind:"score",repeat:true,title:"The Rush",share:"Sweater The Rush",view:"view-edgerush",max:5,next:"Run it back",hideReveal:true,
+  localOnly:true,quietFinish:true,celebrate:()=>false,kind:"score",repeat:true,title:"The Rush",share:"Sweater The Rush",view:"view-edgerush",max:5,next:"Run it back",hideReveal:true,
   pool:()=>edgeRushEligible().length>=24?EDGE_POOL:[],
   daily(k){return edgeRushRandom(seeded(hash(`sweater-edgerush-${k}`)));},
   random(){const t=edgeRushRandom(Math.random);if(t)t.rid=Math.floor(Math.random()*0xffffffff)+1;return t;},
