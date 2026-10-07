@@ -1165,43 +1165,36 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius:50%; background:#aab8c1;
   }
   .rush-defender .rush-stick-svg { left:27px; top:16px; width:46px; height:28px; }
-  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:74px; height:74px; will-change:transform; }
-  .rush-g-body { position:absolute; inset:0; transform-origin:50% 50%; will-change:transform; }
+  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:82px; height:76px; will-change:transform; }
+  .rush-g-body { position:absolute; inset:0; transform-origin:43% 50%; will-change:transform; }
   .rush-g-chest {
-    position:absolute; z-index:4; left:27px; top:20px; width:29px; height:34px; border:2px solid #334a58; border-radius:9px;
-    background:#5f7685;
+    position:absolute; z-index:5; left:25px; top:20px; width:31px; height:36px;
+    border:2px solid #334a58; border-radius:10px 12px 12px 10px; background:#5f7685;
   }
-  .rush-g-chest::before { content:""; position:absolute; left:5px; right:5px; top:16px; border-top:2px solid rgba(255,255,255,.55); }
-  .rush-g-mask {
-    position:absolute; z-index:8; left:9px; top:28px; width:19px; height:18px; border:2px solid #334a58; border-radius:50%; background:#eef2f4;
-  }
-  .rush-g-mask::before { content:""; position:absolute; left:3px; right:3px; top:5px; border-top:1px solid #647983; box-shadow:0 4px 0 #647983; }
-  .rush-g-mask::after { content:""; position:absolute; top:3px; bottom:3px; left:8px; border-left:1px solid #647983; }
-  .rush-g-arm {
-    position:absolute; z-index:6; left:20px; width:27px; height:9px; border:2px solid #334a58; border-radius:999px; background:#5f7685;
-    transform-origin:92% 50%; will-change:transform;
-  }
-  .rush-g-arm.glove { top:11px; transform:rotate(-24deg); }
-  .rush-g-arm.blocker { top:49px; transform:rotate(12deg); }
-  .rush-g-glove,.rush-g-blocker {
-    position:absolute; z-index:8; left:-10px; top:50%; transform:translateY(-50%); border:2px solid #607582; background:#f6f8f9;
-  }
-  .rush-g-glove { width:15px; height:15px; border-radius:60% 42% 58% 44%; }
-  .rush-g-glove::after { content:""; position:absolute; inset:3px; border:1px solid #8c9ba3; border-radius:50%; }
-  .rush-g-blocker { width:15px; height:13px; border-radius:3px; }
-  .rush-g-pad {
-    position:absolute; z-index:3; left:50px; width:20px; height:17px; border:2px solid #7b8d97; border-radius:4px 8px 8px 4px;
-    background:#f8fafb; transform-origin:8% 50%; will-change:transform;
-  }
-  .rush-g-pad::before { content:""; position:absolute; left:4px; right:3px; top:7px; border-top:1px solid #a7b4bb; }
-  .rush-g-pad.left { top:17px; transform:rotate(-4deg); }
-  .rush-g-pad.right { top:40px; transform:rotate(4deg); }
-  .rush-g-stick {
-    position:absolute; z-index:5; left:-17px; top:-15px; width:60px; height:42px; overflow:visible;
-    transform-origin:15px 20px; will-change:transform; pointer-events:none;
-  }
-  .rush-g-stick .rush-stick-shaft { stroke-width:3.1; }
-  .rush-g-stick .rush-goalie-paddle { fill:#eef2f4; stroke:#607582; stroke-width:1; }
+  .rush-g-chest::before { content:""; position:absolute; left:5px; right:5px; top:17px; border-top:2px solid rgba(255,255,255,.50); }
+  .rush-g-chest::after { content:""; position:absolute; right:-7px; top:7px; width:8px; height:20px; border-radius:0 6px 6px 0; background:#455d6c; }
+  .rush-g-pants { position:absolute; z-index:4; left:50px; top:25px; width:14px; height:27px; border:2px solid #334a58; border-left:0; border-radius:0 8px 8px 0; background:#344d5d; }
+  .rush-g-mask { position:absolute; z-index:9; left:7px; top:28px; width:20px; height:20px; border:2px solid #334a58; border-radius:50%; background:#f1f4f5; }
+  .rush-g-mask::before { content:""; position:absolute; left:4px; right:4px; top:6px; border-top:1px solid #71848e; box-shadow:0 4px 0 #71848e; }
+  .rush-g-mask::after { content:""; position:absolute; top:4px; bottom:4px; left:9px; border-left:1px solid #71848e; }
+  .rush-g-arm { position:absolute; z-index:7; left:20px; width:29px; height:9px; border:2px solid #334a58; border-radius:999px; background:#5f7685; transform-origin:94% 50%; will-change:transform; }
+  .rush-g-arm.glove { top:12px; transform:rotate(-18deg); }
+  .rush-g-arm.blocker { top:50px; transform:rotate(11deg); }
+  .rush-g-glove,.rush-g-blocker { position:absolute; z-index:9; left:-11px; top:50%; transform:translateY(-50%); border:2px solid #607582; background:#f8fafb; }
+  .rush-g-glove { width:16px; height:16px; border-radius:62% 40% 58% 44%; }
+  .rush-g-glove::after { content:""; position:absolute; inset:3px; border:1px solid #96a4ab; border-radius:50%; }
+  .rush-g-blocker { width:16px; height:13px; border-radius:3px; }
+  .rush-g-pad { position:absolute; z-index:5; left:57px; width:23px; height:16px; border:2px solid #71858f; border-radius:5px 9px 9px 5px; background:#fbfcfd; transform-origin:7% 50%; will-change:transform; }
+  .rush-g-pad::before { content:""; position:absolute; left:5px; right:3px; top:6px; border-top:1px solid #a5b2b8; box-shadow:0 4px 0 rgba(165,178,184,.58); }
+  .rush-g-pad::after { content:""; position:absolute; left:2px; top:2px; bottom:2px; width:4px; border-right:1px solid rgba(119,137,147,.45); }
+  .rush-g-pad.left { top:17px; transform:rotate(-2deg); }
+  .rush-g-pad.right { top:43px; transform:rotate(2deg); }
+  .rush-g-skate { position:absolute; z-index:3; left:73px; width:8px; height:8px; border-radius:2px 5px 5px 2px; background:#273943; }
+  .rush-g-skate.left { top:21px; }
+  .rush-g-skate.right { top:47px; }
+  .rush-g-stick { position:absolute; z-index:6; left:-17px; top:-15px; width:59px; height:42px; overflow:visible; transform-origin:15px 20px; will-change:transform; pointer-events:none; }
+  .rush-g-stick .rush-stick-shaft { stroke-width:3; }
+  .rush-g-stick .rush-goalie-paddle { fill:#f3f5f6; stroke:#607582; stroke-width:1; }
   .rush-g-stick .rush-stick-grip { stroke-width:4; }
   .rush-puck {
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
@@ -7772,7 +7765,7 @@ function edgeRushRenderPuck(puck,el,w,h){
   edgeRushSet(el,puck.x*w,puck.y*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
-  return '<div class="rush-goalie" data-goalie><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-arm glove"><b class="rush-g-glove"></b></i><i class="rush-g-arm blocker"><b class="rush-g-blocker"></b><svg class="rush-g-stick" viewBox="0 0 60 42" aria-hidden="true"><path class="rush-stick-shaft" d="M15 20L45 9"/><path class="rush-stick-grip" d="M15 20L23 17"/><path class="rush-goalie-paddle" d="M15 20L10 24L20 31L27 27L22 17Z"/><path class="rush-stick-blade" d="M11 23Q6 25 2 25L3 31Q11 32 21 28L20 24Z"/><path class="rush-stick-tape" d="M4 28Q10 29 18 26"/></svg></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i></span></div>';
+  return '<div class="rush-goalie" data-goalie><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-pants"></i><i class="rush-g-skate left"></i><i class="rush-g-skate right"></i><i class="rush-g-arm glove"><b class="rush-g-glove"></b></i><i class="rush-g-arm blocker"><b class="rush-g-blocker"></b><svg class="rush-g-stick" viewBox="0 0 60 42" aria-hidden="true"><path class="rush-stick-shaft" d="M15 20L45 9"/><path class="rush-stick-grip" d="M15 20L23 17"/><path class="rush-goalie-paddle" d="M15 20L10 24L20 31L27 27L22 17Z"/><path class="rush-stick-blade" d="M11 23Q6 25 2 25L3 31Q11 32 21 28L20 24Z"/><path class="rush-stick-tape" d="M4 28Q10 29 18 26"/></svg></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i></span></div>';
 }
 function edgeRushShotProfile(finisher,line,finish,correct){
   const seed=hash(`rush-shot-${finisher.id}-${line.rating}-${Math.round(finish.y*1000)}`);
