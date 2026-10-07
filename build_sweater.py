@@ -8363,7 +8363,11 @@ function edgeRushUpdateGoalie(g,puck,dt){
   g.postPhase=seal?'seal':g.postExit>.18?'push-off':g.postExit>0?'recover':sharp?'approach':'track';
   if(puck.mode!=='shot'){
     const dx=tx-g.x*720,dy=ty-g.y*405,distance=Math.hypot(dx,dy);
-    const downTarget=seal||g.postExit>.16?1:passing&&puck.x>.68&&Math.abs(puck.y-.5)<.22&&Math.abs(dy)>7?1:0;
+    const dangerPass=passing&&puck.x>.78&&Math.abs(puck.y-.5)<.22&&Math.abs(dy)>7;
+    g.padCommit=dangerPass?.35:Math.max(0,(g.padCommit||0)-dt);
+    // Stay on the pads through a close lateral feed instead of popping upright
+    // as soon as the destination is within a few pixels. High-zone passes stay up.
+    const downTarget=seal||g.postExit>.16||g.padCommit>0?1:0;
     const wasDown=g.downBlend||0;
     if(!downTarget&&wasDown>.55&&!g.recovering){g.recovering=true;g.recoverSide=g.pushSide||1;}
     if(downTarget||wasDown<.025)g.recovering=false;
