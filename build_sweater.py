@@ -7916,9 +7916,10 @@ function edgeRushRenderGoalie(g,el,w,h){
   rig.torso.setAttribute('transform',`translate(${yaw*1.5-1} ${5+set*5+drop*6}) rotate(${yaw*4} 41 50)`);
   rig.hips.setAttribute('transform',`translate(0 ${3+drop*10})`);
   rig.mask.setAttribute('transform',`translate(${yaw*3-4-2*c} ${8+set*5+drop*4+2*c})`);
-  const l=drop*55+(save==='leftpad'?t*15:0),r=-drop*55-(save==='rightpad'?t*15:0);
-  rig['pad.left'].setAttribute('transform',`translate(${31-drop*1.5} ${57+drop*13}) rotate(${12+set*5+l})`);
-  rig['pad.right'].setAttribute('transform',`translate(${51+drop*1.5} ${57+drop*13}) rotate(${-12-set*5+r})`);
+  const shuffle=Math.sin(g.skatePhase||0)*(g.motion||0)*(1-t)*(1-c);
+  const l=drop*55+(save==='leftpad'?t*15:0)+shuffle*3,r=-drop*55-(save==='rightpad'?t*15:0)+shuffle*3;
+  rig['pad.left'].setAttribute('transform',`translate(${31-drop*1.5-shuffle*1.2} ${57+drop*13}) rotate(${12+set*5+l})`);
+  rig['pad.right'].setAttribute('transform',`translate(${51+drop*1.5-shuffle*1.2} ${57+drop*13}) rotate(${-12-set*5+r})`);
   const anticipation=(read.expectedHeight||.4)*(read.confidence||0);
   let gx=19-yaw*2,gy=47-anticipation*10,bx=52-yaw,by=55-anticipation*7;
   if(catchSave){gx=rushLerp(gx,highGlove?13:15,t);gy=rushLerp(gy,highGlove?12:29,t);}
@@ -7960,12 +7961,12 @@ function edgeRushSaveDeflect(puck,g,el,w,h,type){
   g.state='rebound';g.coverT=0;
 }
 function edgeRushGoalieBrain(){
-  return {tracking:.88,anticipation:.76,patience:.84,discipline:1,homeX:640/720,radius:35};
+  return {tracking:.88,anticipation:.76,patience:.84,discipline:1,homeX:640/720,radius:38};
 }
 function edgeRushUpdateGoalie(g,puck,dt){
   const ai=g.brain||(g.brain=edgeRushGoalieBrain());
-  // Track with the mask, shoulders and hands, keeping the feet at the middle of the crease.
-  g.x=ai.homeX;g.y=.5;
+  // Set the feet at release so the animated equipment and shot contact stay aligned.
+  g.motion=0;
   if(g.state==='saving'){g.actionT=rushMoveToward(g.actionT||0,1,dt*5);return;}
   if(g.state==='covering'){g.actionT=1;g.coverT=rushMoveToward(g.coverT||0,1,dt*2.5);return;}
   if(g.state==='secured')return;
@@ -7982,7 +7983,25 @@ function edgeRushUpdateGoalie(g,puck,dt){
   read.confidence=settle(read.confidence,confidence,passing?4:7);
   read.bias=settle(read.bias,rushClamp((threat?.hand||1)*.10+(puck.y-.5)*.8,-.3,.3),5);
   read.shooterId=threat?.id??null;read.phase=passing?'push':confidence>.5?'set':'track';
-  const angle=Math.atan2(puck.y-g.y,Math.max(.04,g.x-puck.x))*180/Math.PI;
+  // USA Hockey depth principles: challenge zone entry, retreat with the rush,
+  // and stay shallower for east-west play. Position on the actual puck-to-net ray,
+  // rather than following the carrier's lane or jumping ahead to a pass recipient.
+  const entry=rushClamp((puck.x-.25)/.22,0,1);
+  const closing=rushClamp((puck.x-.58)/.28,0,1);
+  const lateral=passing?1:rushClamp((brain.vision??.5)*Math.abs(puck.y-.5)*2,0,.6);
+  const depth=rushClamp(20+18*entry-14*closing-5*lateral,19,ai.radius);
+  const netX=660,netY=202.5;
+  const bearing=rushClamp(Math.atan2(puck.y*405-netY,Math.max(24,netX-puck.x*720)),-Math.PI/3,Math.PI/3);
+  const tx=netX-Math.cos(bearing)*depth,ty=netY+Math.sin(bearing)*depth;
+  if(puck.mode!=='shot'){
+    const dx=tx-g.x*720,dy=ty-g.y*405,distance=Math.hypot(dx,dy);
+    const travel=Math.min(distance*(1-Math.exp(-(passing?9:6)*dt)),72*dt);
+    if(distance>.001){g.x+=dx/distance*travel/720;g.y+=dy/distance*travel/405;}
+    g.motion=dt>0?rushClamp(travel/dt/48,0,1):0;
+    g.skatePhase=(g.skatePhase||0)+travel*.28;
+    read.phase=passing?'push':g.motion>.12?'shuffle':'set';
+  }
+  const angle=Math.atan2((puck.y-g.y)*405,Math.max(24,(g.x-puck.x)*720))*180/Math.PI;
   g.face=settle(g.face||0,rushClamp(angle,-26,26),7+4*ai.tracking);
   const crouch=rushClamp(.38+.35*approach+.22*inside-.20*forecast,.28,.92);
   g.stance=settle(g.stance||.35,crouch,7);
