@@ -7544,31 +7544,45 @@ const rushLerp=(a,b,t)=>a+(b-a)*t;
 const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
 
-// Per-player simulation traits are normalized from NHL EDGE percentiles so
-// the same agent system can power future tracking-data arcade modes.
+// Per-player simulation traits are normalized from NHL EDGE percentiles. The
+// values below are simulation tendencies, not claims that NHL EDGE publishes
+// concepts such as "deke rating" directly.
 function edgeRushBrain(id,role){
+  const e=EDGE_BYID.get(Number(id))||{};
   const speed=edgePercentile("speed",edgeValue(id,"speed"))/100;
   const engine=edgePercentile("miles",edgeValue(id,"miles"))/100;
   const shot=edgePercentile("shot",edgeValue(id,"shot"))/100;
   const danger=edgePercentile("hd",edgeValue(id,"hd"))/100;
   const mid=edgePercentile("mid",edgeValue(id,"mid"))/100;
   const long=edgePercentile("long",edgeValue(id,"long"))/100;
-  const handling=.52+.25*speed+.23*engine;
-  const vision=.38*handling+.27*engine+.20*speed+.15*mid;
-  const aggression=.42*shot+.30*danger+.18*speed+.10*long;
+  const burstRaw=edgeValue(id,"bursts20"),distanceRaw=edgeValue(id,"distance");
+  const bursts=burstRaw>0?edgePercentile("bursts20",burstRaw)/100:speed;
+  const distance=distanceRaw>0?edgePercentile("distance",distanceRaw)/100:engine;
+  const total=Math.max(1,Number(e.total)||1),inside=rushClamp((Number(e.hd)||0)/total,0,1);
+  const oz=Number.isFinite(Number(e.oz))&&Number(e.oz)>0?rushClamp(Number(e.oz),0,1):.43;
+  const hdPct=Number.isFinite(Number(e.hdPct))?rushClamp(Number(e.hdPct),0,.6):.12;
+  const handling=rushClamp(.40+.22*speed+.18*bursts+.12*engine+.08*inside,.34,.98);
+  const vision=rushClamp(.30+.24*handling+.18*engine+.12*mid+.10*oz+.06*distance,.28,.96);
+  const aggression=rushClamp(.26+.28*shot+.20*danger+.12*inside+.08*speed+.06*hdPct,.24,.97);
+  const edgework=rushClamp(.30+.28*handling+.22*speed+.12*bursts+.08*engine,.30,.98);
+  const deke=rushClamp(.18+.30*edgework+.23*inside+.17*speed+.12*vision,.18,.96);
+  const stamina=rushClamp(.30+.36*distance+.22*engine+.12*bursts,.32,.98);
+  const burst=rushClamp(.28+.42*bursts+.22*speed+.08*engine,.28,.98);
+  const drive=rushClamp(.24+.30*speed+.25*danger+.19*inside+.14*aggression-.12*long,.20,.96);
+  const patience=rushClamp(.62*vision+.22*engine+.10*oz-.18*aggression,.18,.88);
+  const cycle=rushClamp(.34*vision+.28*stamina+.20*oz+.18*engine,.24,.94);
   return {
-    id,role,speed,engine,shot,danger,mid,long,handling,vision,aggression,
-    maxSpeed:.155+.105*speed+.018*engine,
-    accel:.22+.22*speed+.10*engine,
-    release:.34-.13*shot,
-    attack:role==="Finisher"?.55*shot+.30*danger+.10*mid+.05*long:.55*speed+.45*engine,
-    patience:rushClamp(.66*vision+.20*engine-.18*aggression,.20,.86),
-    width:rushClamp(.36+.32*long+.18*speed-.16*danger,.24,.78),
-    drive:rushClamp(.46*speed+.30*danger+.24*aggression,.22,.92),
+    id,role,speed,engine,shot,danger,mid,long,inside,oz,hdPct,handling,vision,aggression,edgework,deke,stamina,burst,drive,patience,cycle,
+    maxSpeed:.148+.096*speed+.022*bursts+.014*engine,
+    accel:.20+.20*speed+.12*bursts+.08*edgework,
+    decel:.30+.20*edgework+.10*handling,
+    release:.35-.13*shot-.035*aggression,
+    attack:role==="Finisher"?.46*shot+.26*danger+.14*inside+.08*mid+.06*hdPct:.36*speed+.24*engine+.22*vision+.18*inside,
+    width:rushClamp(.38+.27*long+.17*speed-.18*inside,.22,.80),
   };
 }
 function edgeRushAgent(id,role,x,y){
-  return {id,role,brain:edgeRushBrain(id,role),hand:BYID.get(Number(id))?.shoots==="L"?-1:1,x,y,vx:0,vy:0,tx:x,ty:y,rot:0,el:null};
+  return {id,role,brain:edgeRushBrain(id,role),hand:BYID.get(Number(id))?.shoots==="L"?-1:1,x,y,vx:0,vy:0,tx:x,ty:y,rot:0,el:null,energy:1,burstT:0,dekeUntil:0,state:"route"};
 }
 function edgeRushPointSegDist(px,py,ax,ay,bx,by){
   const dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy;
@@ -7583,24 +7597,72 @@ function edgeRushPassScore(from,to,defs){
   const lane=rushClamp((clearance-.025)/.15,0,1);
   const advance=rushClamp((to.x-from.x+.03)/.25,0,1);
   const separation=rushClamp(Math.hypot(to.x-from.x,to.y-from.y)/.32,0,1);
-  return .40*lane+.24*to.brain.attack+.16*to.brain.speed+.12*advance+.08*separation;
+  const receiver=rushClamp(.44*to.brain.attack+.24*to.brain.speed+.18*to.brain.inside+.14*to.brain.vision,0,1);
+  return .40*lane+.24*receiver+.14*advance+.10*separation+.12*from.brain.vision;
 }
 function edgeRushChoosePass(from,candidates,defs){
   return candidates.map(a=>({a,score:edgeRushPassScore(from,a,defs)})).sort((x,y)=>y.score-x.score)[0];
 }
+function edgeRushOpenY(base,a,defs,amount=.075){
+  let y=base;
+  for(const d of defs){
+    if(Math.abs(d.x-a.x)<.20&&Math.abs(d.y-y)<.105)y+=y<=d.y?-amount:amount;
+  }
+  return rushClamp(y,.14,.86);
+}
+function edgeRushBurst(a,seconds=.30){
+  if(a.energy<.16)return false;
+  a.burstT=Math.max(a.burstT,seconds*(.82+.38*a.brain.burst));
+  return true;
+}
+function edgeRushBeginDeke(a,defs,now){
+  const d=defs.slice().sort((x,y)=>Math.hypot(a.x-x.x,a.y-x.y)-Math.hypot(a.x-y.x,a.y-y.y))[0];
+  const away=d?(a.y<=d.y?-1:1):(a.hand||1);
+  a.state="deke";a.dekeUntil=now+260+220*a.brain.deke;
+  a.tx=rushClamp(a.x+.12+.045*a.brain.drive,.10,.82);
+  a.ty=rushClamp(a.y+away*(.085+.045*a.brain.edgework),.16,.84);
+  edgeRushBurst(a,.34);
+}
+function edgeRushChooseAction(owner,mates,defs,now,phaseAt){
+  const choice=edgeRushChoosePass(owner,mates,defs),pressure=edgeRushPressure(owner,defs);
+  const close=rushClamp((.18-pressure)/.12,0,1);
+  const middleBlocked=defs.some(d=>d.x>owner.x&&d.x-owner.x<.19&&Math.abs(d.y-.5)<.13)?1:0;
+  const pass=choice.score+.10*owner.brain.vision+.08*close;
+  const deke=.34*owner.brain.deke+.24*close+.18*owner.brain.burst+.14*owner.brain.drive+.10*(1-middleBlocked);
+  const drive=.36*owner.brain.drive+.20*owner.brain.speed+.16*owner.brain.inside+.14*(1-close)+.14*(1-middleBlocked);
+  const hold=.38*owner.brain.patience+.30*owner.brain.cycle+.18*middleBlocked+.14*(1-choice.score);
+  const elapsed=now-phaseAt;
+  const ranked=[["pass",pass],["deke",deke],["drive",drive],["hold",hold]].sort((a,b)=>b[1]-a[1]);
+  if(elapsed>980-300*owner.brain.vision)return {action:ranked[0][0],choice,pressure};
+  if(close>.62&&deke>pass-.04)return {action:"deke",choice,pressure};
+  if(choice.score>.72)return {action:"pass",choice,pressure};
+  return {action:"read",choice,pressure};
+}
 function edgeRushSteer(a,dt){
   const dx=a.tx-a.x,dy=a.ty-a.y,dist=rushLen(dx,dy);
-  const max=a.brain.maxSpeed;
-  const desired=dist<.055?max*(dist/.055):max;
+  const burstOn=a.burstT>0;
+  if(burstOn)a.burstT=Math.max(0,a.burstT-dt);
+  const energyFactor=.84+.16*a.energy;
+  const burstFactor=burstOn?1.10+.16*a.brain.burst:1;
+  const max=a.brain.maxSpeed*energyFactor*burstFactor;
+  const desired=dist<.052?max*(dist/.052):max;
   const ux=dist>.0001?dx/dist:0,uy=dist>.0001?dy/dist:0;
-  const dv=a.brain.accel*dt;
-  a.vx=rushMoveToward(a.vx,ux*desired,dv);
-  a.vy=rushMoveToward(a.vy,uy*desired,dv);
-  if(dist<.008){a.vx*=Math.max(0,1-6*dt);a.vy*=Math.max(0,1-6*dt);}
+  const current=rushLen(a.vx,a.vy),dot=current>.001?(a.vx*ux+a.vy*uy)/current:1;
+  const turning=rushClamp((1-dot)/1.6,0,1);
+  const turnCarry=1-turning*(.20-.14*a.brain.edgework);
+  const targetX=ux*desired*turnCarry,targetY=uy*desired*turnCarry;
+  const accelerating=rushLen(targetX,targetY)>current;
+  const dv=(accelerating?a.brain.accel:a.brain.decel)*(burstOn?1.34:1)*dt;
+  a.vx=rushMoveToward(a.vx,targetX,dv);
+  a.vy=rushMoveToward(a.vy,targetY,dv);
+  if(dist<.008){a.vx*=Math.max(0,1-(5.2+2*a.brain.edgework)*dt);a.vy*=Math.max(0,1-(5.2+2*a.brain.edgework)*dt);}
   a.x+=a.vx*dt;a.y+=a.vy*dt;
   a.x=rushClamp(a.x,.035,.955);a.y=rushClamp(a.y,.08,.92);
-  const speed=rushLen(a.vx,a.vy);
-  if(speed>.008)a.rot=rushClamp(Math.atan2(a.vy,a.vx)*180/Math.PI,-14,14);
+  const speedNow=rushLen(a.vx,a.vy),effort=rushClamp(speedNow/Math.max(.01,a.brain.maxSpeed),0,1.5);
+  const drain=dt*(.026+.045*effort+(burstOn?.085:0))*(1.18-.34*a.brain.stamina);
+  const recover=!burstOn&&effort<.55?dt*(.035+.035*a.brain.stamina):0;
+  a.energy=rushClamp(a.energy-drain+recover,.28,1);
+  if(speedNow>.008)a.rot=rushClamp(Math.atan2(a.vy,a.vx)*180/Math.PI,-16-5*a.brain.edgework,16+5*a.brain.edgework);
 }
 function edgeRushStick(a){
   const anchor=a.el?.querySelector("[data-stick-blade-anchor]"),stage=$("erStage");
@@ -7703,15 +7765,22 @@ function edgeRushRenderGoalie(g,el,w,h){
   if(stick)stick.style.transform=`translate(${stickX}px,${stickY}px) rotate(${stickR}deg)`;
 }
 function edgeRushUpdateGoalie(g,puck,dt){
+  const threat=puck.owner||puck.target||null;
+  const threatBrain=threat?.brain||{};
   const dx=Math.max(.04,g.x-puck.x),angle=Math.atan2(puck.y-g.y,dx)*180/Math.PI;
-  g.face=rushMoveToward(g.face||0,rushClamp(angle,-18,18),dt*72);
-  const approach=rushClamp((puck.x-.40)/.48,0,1);
-  const targetX=.895-.026*approach;
-  g.x=rushMoveToward(g.x,targetX,dt*.095);
-  const targetY=rushClamp(puck.y,.405,.595);
-  const lateral=.23+.12*(1-(g.stance||0));
+  g.face=rushMoveToward(g.face||0,rushClamp(angle,-20,20),dt*(66+18*(threatBrain.speed||0)));
+  const approach=rushClamp((puck.x-.42)/.46,0,1);
+  const shotThreat=rushClamp(.38*(threatBrain.shot||.5)+.30*(threatBrain.aggression||.5)+.20*(threatBrain.inside||.4)+.12*(threatBrain.speed||.5),0,1);
+  const passPenalty=puck.mode==="pass"?.62:1;
+  const challenge=(.020+.040*shotThreat)*approach*passPenalty;
+  const targetX=.902-challenge;
+  g.x=rushMoveToward(g.x,targetX,dt*(.085+.045*approach));
+  const angleTrack=.80+.12*approach;
+  const targetY=rushClamp(.5+(puck.y-.5)*angleTrack,.392,.608);
+  const lateral=.22+.13*(1-(g.stance||0))+.05*approach;
   g.y=rushMoveToward(g.y,targetY,lateral*dt);
-  g.stance=rushMoveToward(g.stance||0,puck.x>.62?1:.42,dt*2.5);
+  const setTarget=puck.mode==="shot"?1:rushClamp(.34+.62*approach+.12*shotThreat,.34,1);
+  g.stance=rushMoveToward(g.stance||0,setTarget,dt*2.8);
   if(puck.mode==="shot")g.actionT=rushMoveToward(g.actionT||0,1,dt*5.0);
 }
 function edgeRushRadar(value,token) {
