@@ -3578,18 +3578,19 @@ TEMPLATE = r'''<!DOCTYPE html>
           <circle class="rush-dot" cx="535" cy="116" r="4"/><circle class="rush-dot" cx="535" cy="289" r="4"/>
           <path class="rush-crease" d="M660 161A41 41 0 0 0 660 244Z"/>
           <defs><pattern id="rushNetWeave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0H5V5" fill="none" stroke="#647a8a" stroke-opacity=".32" stroke-width=".65"/></pattern></defs>
-          <path d="M626 212H698L710 202H638Z" fill="#21445a" opacity=".10"/>
-          <path class="rush-net-bed" d="M626 212H698L710 202H638Z"/>
+          <!-- Left-facing opening on the original goal line. Depth extends behind it to the right. -->
+          <path d="M662 166H693Q706 170 708 184V222Q706 239 693 239H662Z" fill="#21445a" opacity=".08"/>
+          <path class="rush-net-bed" d="M662 166H693Q706 170 708 184V222Q706 239 693 239H662Z"/>
           <g class="rush-net-mesh-wrap">
-            <path d="M638 144H710V202H638Z" fill="url(#rushNetWeave)" stroke="#8b9ca7" stroke-width=".9"/>
-            <path d="M626 154L638 144V202L626 212ZM698 154L710 144V202L698 212ZM626 154H698L710 144H638Z" fill="url(#rushNetWeave)" stroke="#8b9ca7" stroke-width=".9"/>
+            <path d="M655 159H686Q699 163 701 177V215Q699 232 686 232H655Z" fill="url(#rushNetWeave)" stroke="#8b9ca7" stroke-width=".9"/>
+            <path d="M655 159L662 166H693L686 159ZM655 232L662 239H693L686 232ZM701 177L708 184V222L701 215Z" fill="url(#rushNetWeave)" stroke="#8b9ca7" stroke-width=".9"/>
           </g>
-          <path class="rush-net-side" d="M638 144H710V202H638M626 212H698L710 202"/>
-          <path class="rush-net-frame" d="M626 212V154H698V212"/>
-          <path class="rush-net-crossbar" d="M626 154H698" fill="none" stroke="#d32934" stroke-width="3.2" stroke-linecap="round"/>
-          <path class="rush-net-post top" d="M626 154V212" fill="none" stroke="#d32934" stroke-width="3.2"/>
-          <path class="rush-net-post bottom" d="M698 154V212" fill="none" stroke="#d32934" stroke-width="3.2"/>
-          <path d="M627 157V208M629 153H695M699 157V208" fill="none" stroke="#ffb6b8" stroke-width=".65" stroke-linecap="round"/>
+          <path class="rush-net-side" d="M662 166H693Q706 170 708 184V222Q706 239 693 239H662M686 159L693 166M686 232L693 239"/>
+          <path class="rush-net-frame" d="M662 166L655 159V232L662 239"/>
+          <path class="rush-net-crossbar" d="M655 159V232" fill="none" stroke="#d32934" stroke-width="3.2" stroke-linecap="round"/>
+          <path class="rush-net-post top" d="M655 159L662 166" fill="none" stroke="#d32934" stroke-width="3.2"/>
+          <path class="rush-net-post bottom" d="M655 232L662 239" fill="none" stroke="#d32934" stroke-width="3.2"/>
+          <path d="M654 162V229M656 160L661 165M656 233L661 238" fill="none" stroke="#ffb6b8" stroke-width=".65" stroke-linecap="round"/>
         </svg>
         <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
         <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em>MPH</em></b></div>
@@ -7566,9 +7567,9 @@ const rushClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const rushLerp=(a,b,t)=>a+(b-a)*t;
 const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
-// Screen projection of a 6-by-4 opening, with visible roof and 3-foot depth.
+// Overhead projection: opening faces left at the original goal line, cage extends right.
 // Both actors and the frame scale from the same 720-by-405 rink coordinates.
-const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:626/720,leftX:626/720,rightX:698/720,backX:682/720,topY:154/405,bottomY:212/405,lift:0,lean:0});
+const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:662/720,leftX:662/720,rightX:708/720,backX:696/720,topY:166/405,bottomY:239/405,lift:0,lean:0});
 function edgeRushSegmentCircle(x0,y0,x1,y1,cx,cy,r){
   const dx=x1-x0,dy=y1-y0,fx=x0-cx,fy=y0-cy,a=dx*dx+dy*dy;
   if(a<.000001)return null;
@@ -7600,7 +7601,8 @@ function edgeRushPostAim(fromX,fromY,w,h,wantIn,preferTop,height=.5){
   const N=EDGE_RUSH_NET,r=edgeRushPostRadius(w,h),fy=fromY*h,fx=fromX*w;
   let best=null;
   for(const top of [preferTop,!preferTop]){
-    const cx=(top?N.leftX:N.rightX)*w,cy=rushLerp(N.bottomY,N.topY,rushClamp(height,.14,.87))*h;
+    const elevation=rushClamp(height,.14,.87);
+    const cx=(N.postX-7/720*elevation)*w,cy=((top?N.topY:N.bottomY)-7/405*elevation)*h;
     for(let a=0;a<Math.PI*2;a+=.012){
       const nx=Math.cos(a),ny=Math.sin(a),x=cx+nx*r,y=cy+ny*r;
       const len=Math.hypot(x-fx,y-fy)||1,ivx=(x-fx)/len,ivy=(y-fy)/len;
@@ -7943,7 +7945,7 @@ function edgeRushUpdateGoalie(g,puck,dt){
   const settle=(value,target,rate)=>rushLerp(value,target,1-Math.exp(-rate*dt));
   g.face=settle(g.face||0,rushClamp(angle,-26,26),10);
   const challenge=(.010+.021*shotThreat)*approach*(puck.mode==='pass'?.62:1);
-  g.x=settle(g.x,.924-challenge,5);
+  g.x=settle(g.x,.895-challenge,5);
   const targetY=rushClamp(.5+(puck.y-.5)*(.80+.12*approach),.392,.608);
   g.y=settle(g.y,targetY,puck.mode==='shot'?9:6);
   g.stance=settle(g.stance||0,rushClamp(.34+.62*approach+.12*shotThreat,.34,1),8);
@@ -7984,7 +7986,7 @@ async function edgeRushAnimate(r,picked,correct) {
   const d1={x:.61,y:.38,vx:0,vy:0,tx:.61,ty:.38,maxSpeed:.188,accel:.34,decel:.46,mode:"gap",el:actors.querySelector('[data-def="1"]')};
   const d2={x:.63,y:.63,vx:0,vy:0,tx:.63,ty:.63,maxSpeed:.188,accel:.34,decel:.46,mode:"middle",el:actors.querySelector('[data-def="2"]')};
   carrier.el=actors.querySelector(`[data-rush-id="${carrierId}"]`);support.el=actors.querySelector(`[data-rush-id="${supportId}"]`);finisher.el=actors.querySelector(`[data-rush-id="${finisherId}"]`);
-  const goalie={x:.924,y:.50,face:0,stance:.35,actionT:0,saveType:"",shotY:.5},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
+  const goalie={x:.895,y:.50,face:0,stance:.35,actionT:0,saveType:"",shotY:.5},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
   const puck={mode:"carry",owner:carrier,target:null,x:carrier.x,y:carrier.y,elapsed:0,duration:0};
   const zone=edgeRushZone(finisherId);
   const finish=zone==="high"?{x:.80,y:.50}:zone==="mid"?{x:.745,y:.65}:{x:.665,y:.38};
@@ -7993,8 +7995,9 @@ async function edgeRushAnimate(r,picked,correct) {
   const outcomeRoll=(outcomeSeed&1023)/1023;
   const shotOutcome=correct?(outcomeRoll<.16?"postin":"goal"):(outcomeRoll<.14?"post":outcomeRoll<.24?"crossbar":"save");
   const NET=EDGE_RUSH_NET,preferredPostTop=shotProfile.targetY<.5;
-  const netY=rushLerp(NET.bottomY-.018,NET.topY+.018,shotProfile.height);
-  const shotEnd=shotOutcome==='goal'?{x:.932,y:netY}:shotOutcome==='crossbar'?{x:.932,y:NET.topY}:{x:.872,y:shotProfile.targetY};
+  const netY=rushClamp(shotProfile.targetY-7/405*shotProfile.height,NET.topY+.018,NET.bottomY-.018);
+  const barY=rushClamp(shotProfile.targetY-7/405,NET.topY-7/405+.02,NET.bottomY-7/405-.02);
+  const shotEnd=shotOutcome==='goal'?{x:NET.lineX+.018,y:netY}:shotOutcome==='crossbar'?{x:655/720,y:barY}:{x:.872,y:shotProfile.targetY};
   const agents=[carrier,support,finisher];
   let firstReceiver=null,holdUntil=0,finisherDekeUsed=false,postPlan=null;
 
@@ -8182,7 +8185,7 @@ async function edgeRushAnimate(r,picked,correct) {
               const dx=releaseEnd.x*w-blade.x*w,dy=releaseEnd.y*h-blade.y*h,len=Math.hypot(dx,dy)||1;
               releaseEnd={x:releaseEnd.x+dx/len*15*w/720/w,y:releaseEnd.y+dy/len*15*w/720/h};
             }
-            edgeRushShot(puck,releaseEnd.x,releaseEnd.y,.32-.115*finisher.brain.shot,{postTop:postPlan?postPlan.top:null,crossbar:shotOutcome==='crossbar',frameCX:postPlan?postPlan.cx:shotEnd.x,frameCY:postPlan?postPlan.cy:NET.topY});
+            edgeRushShot(puck,releaseEnd.x,releaseEnd.y,.32-.115*finisher.brain.shot,{postTop:postPlan?postPlan.top:null,crossbar:shotOutcome==='crossbar',frameCX:postPlan?postPlan.cx:shotEnd.x,frameCY:postPlan?postPlan.cy:barY});
             puckEl.classList.remove("in-net","posted");puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
             phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
           }
@@ -8227,7 +8230,7 @@ async function edgeRushAnimate(r,picked,correct) {
           if(puck.postResult==="in"){
             puckEl.classList.remove("shooting","posted");puckEl.classList.add("in-net");
             puck.mode="netcatch";puck.elapsed=0;puck.duration=.17;puck.fromX=puck.x;puck.fromY=puck.y;
-            puck.toX=rushClamp(puck.x+12/720,NET.leftX+12/720+.008,NET.rightX+12/720-.008);puck.toY=rushClamp(puck.y-10/405,NET.topY-10/405+.008,NET.bottomY-10/405-.008);
+            puck.toX=NET.backX;puck.toY=rushClamp(puck.y,NET.topY+.018,NET.bottomY-.018);
             phase="netcatch";$("erPhase").textContent="POST AND IN";
           }else{
             shotDoneAt=now;puck.mode="dead";goalie.state="post";
@@ -8236,7 +8239,7 @@ async function edgeRushAnimate(r,picked,correct) {
         }else if(shotOutcome==="goal"){
           puckEl.classList.remove("shooting");puckEl.classList.add("in-net");
           puck.mode="netcatch";puck.elapsed=0;puck.duration=.18;puck.fromX=puck.x;puck.fromY=puck.y;
-          puck.toX=rushClamp(puck.x+12/720,NET.leftX+12/720+.008,NET.rightX+12/720-.008);puck.toY=rushClamp(netY-10/405,NET.topY-10/405+.008,NET.bottomY-10/405-.008);
+          puck.toX=NET.backX;puck.toY=rushClamp(netY,NET.topY+.018,NET.bottomY-.018);
           phase="netcatch";$("erPhase").textContent="IN THE NET";
         }else{
           goalie.actionT=1;edgeRushRenderGoalie(goalie,goalieEl,w,h);
