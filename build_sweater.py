@@ -8160,7 +8160,7 @@ function edgeRushRenderGoalie(g,el,w,h){
   const hipYaw=rushClamp(g.hipYaw??g.face??0,-80,80)/80,headYaw=rushClamp(g.headYaw??g.face??0,-80,80)/80;
   // Ice position is the feet. Head stays above shoulders, pads below hips.
   el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) scale(${w/720}) translate(-41px,-83px)`;
-  const frameWidth=.58-.06*Math.abs(yaw);
+  const frameWidth=.575-.06*Math.abs(yaw);
   // Facing changes the depth projection, not the body's vertical axis.
   rig.body.setAttribute('transform',`translate(41 83) matrix(${frameWidth} 0 0 1 0 0) translate(-41 -83)`);
   const torsoX=yaw*1.5-1+postSide*post*2,torsoY=5+set*5+drop*6,torsoAngle=(yaw*4+postSide*post*3)*Math.PI/180;
@@ -8170,12 +8170,16 @@ function edgeRushRenderGoalie(g,el,w,h){
   const shuffle=Math.sin(g.skatePhase||0)*(g.motion||0)*(1-t)*(1-c);
   const push=(g.pushBlend||0)*(1-post)*(1-c)*(g.pushSide||1);
   const load=(g.loadBlend||0)*(g.pushSide||1);
+  const recovery=(g.recoveryBlend||0)*(1-low)*(1-post)*(1-c),recoverSide=g.recoverSide||g.pushSide||1;
   const l=push*4-(load>0?load*18:0)+drop*48*(1-(postSide>0?post*.70:0))+(postSide<0?post*25:0)+(save==='leftpad'?t*15:0)+shuffle*3,r=push*4-(load<0?load*18:0)-drop*48*(1-(postSide<0?post*.70:0))-(postSide>0?post*25:0)-(save==='rightpad'?t*15:0)+shuffle*3;
   const padPose=(left)=>{
     const near=postSide<0?left:!left;
-    const baseX=left?31-drop*1.5-shuffle*1.2:51+drop*1.5-shuffle*1.2;
-    const baseY=57+drop*13+((left?load>0:load<0)?-Math.abs(load)*5:0);
-    const baseAngle=(left?12+set*5+l:-12-set*5+r)+(hipYaw-yaw)*8;
+    const baseX=left?31-drop*1.2-shuffle*1.2:51+drop*1.2-shuffle*1.2;
+    const recovering=left?recoverSide>0:recoverSide<0;
+    const baseY=57+drop*13+((left?load>0:load<0)?-Math.abs(load)*5:0)-(recovering?recovery*5:0);
+    // The pushing skate loads under the hip. On recovery that leg comes up
+    // first while the opposite knee remains on the ice, as in the uploaded drills.
+    const baseAngle=rushLerp((left?12+set*5+l:-12-set*5+r)+(hipYaw-yaw)*8,left?20:-20,recovering?recovery*.68:0);
     // RVH: post pad lies on the ice, toe/boot meets the iron; inside leg stays loaded.
     // The camera projection keeps the torso upright throughout the hinge.
     return {x:rushLerp(baseX,near?60:left?31:51,post),
@@ -8307,18 +8311,33 @@ function edgeRushUpdateGoalie(g,puck,dt){
   const seal=tight&&atPost;
   if(g.postWasSealed&&!seal){g.postExit=.40;g.exitSide=g.postSide;}
   g.postWasSealed=seal;g.postExit=Math.max(0,(g.postExit||0)-dt);
-  g.postBlend=settle(g.postBlend||0,seal?1:0,seal?7:9);
+  // Keep the post pad anchored during the first skate-loading beat, then release it.
+  g.postBlend=settle(g.postBlend||0,seal||g.postExit>.30?1:0,7);
   g.postMode=g.postBlend>.6?'rvh':sharp?'standing':'ready';
   g.postPhase=seal?'seal':g.postExit>.18?'push-off':g.postExit>0?'recover':sharp?'approach':'track';
   if(puck.mode!=='shot'){
     const dx=tx-g.x*720,dy=ty-g.y*405,distance=Math.hypot(dx,dy);
     const downTarget=seal||g.postExit>.16?1:passing&&puck.x>.68&&Math.abs(puck.y-.5)<.22&&Math.abs(dy)>7?1:0;
-    g.downBlend=settle(g.downBlend||0,downTarget,downTarget?9:3.5);
+    const wasDown=g.downBlend||0;
+    if(!downTarget&&wasDown>.55&&!g.recovering){g.recovering=true;g.recoverSide=g.pushSide||1;}
+    if(downTarget||wasDown<.025)g.recovering=false;
+    g.recoveryBlend=settle(g.recoveryBlend||0,g.recovering?Math.sin(wasDown*Math.PI):0,12);
+    g.downBlend=settle(wasDown,downTarget,downTarget?9:6);
     const sliding=g.downBlend>.28&&(passing||tight||distance>5);
     g.moveType=sliding?'butterfly-slide':distance>18?'t-push':distance>2?'shuffle':'set';
-    if(Math.abs(dy)>1)g.pushSide=dy>=0?1:-1;
+    const direction=dy>=0?1:-1;
+    let stroke=g.edgePush;
+    if(sliding&&distance>9&&(!stroke||stroke.elapsed>=.50||direction!==stroke.side)){
+      stroke=g.edgePush={elapsed:0,side:direction};
+    }
+    if(stroke)stroke.elapsed=Math.min(.50,stroke.elapsed+dt);
+    if(Math.abs(dy)>1)g.pushSide=stroke&&stroke.elapsed<.28?stroke.side:direction;
+    const strokeT=stroke?.elapsed??.50;
+    g.pushPhase=!sliding?'recover':strokeT<.12?'load':strokeT<.28?'drive':strokeT<.44?'glide':'set';
+    // A brief edge load precedes acceleration; pads stop pumping once gliding.
+    const drive=sliding&&strokeT<.12?.20+.80*strokeT/.12:1;
     const max=sliding?100:passing?85:64;
-    const wantedX=dx*rushClamp(distance/10,0,1)*(passing&&Math.abs(dy)>6?1.5:5),wantedY=dy*rushClamp(distance/10,0,1)*5;
+    const wantedX=dx*rushClamp(distance/10,0,1)*(passing&&Math.abs(dy)>6?1.5:5)*drive,wantedY=dy*rushClamp(distance/10,0,1)*5*drive;
     const speed=Math.hypot(wantedX,wantedY),factor=Math.min(1,max/Math.max(1,speed));
     g.vx=settle(g.vx||0,wantedX*factor,sliding?10:8);g.vy=settle(g.vy||0,wantedY*factor,sliding?10:8);
     g.x+=g.vx*dt/720;g.y+=g.vy*dt/405;edgeRushGoalieConstrain(g);
@@ -8326,7 +8345,8 @@ function edgeRushUpdateGoalie(g,puck,dt){
     g.motion=rushClamp(travel/Math.max(.001,dt)/64,0,1);
     g.slideBlend=settle(g.slideBlend||0,sliding?1:0,9);
     g.pushBlend=settle(g.pushBlend||0,distance>5?1:0,10);
-    g.loadBlend=settle(g.loadBlend||0,g.postExit>.22?.85:sliding&&distance>9?.7:0,12);
+    const edgeLoad=sliding&&strokeT<.28?Math.sin(Math.min(1,strokeT/.28)*Math.PI)*.85:0;
+    g.loadBlend=settle(g.loadBlend||0,edgeLoad,20);
     g.skatePhase=(g.skatePhase||0)+travel*.12;
     read.phase=g.postExit>0?g.postPhase:sliding?'butterfly-slide':sharp?g.postPhase:g.motion>.12?g.moveType:'set';
   }
