@@ -7785,24 +7785,24 @@ function edgeRushRenderGoalie(g,el,w,h){
   if(!el)return;
   const t=g.actionT||0,body=el.querySelector(".rush-g-body"),left=el.querySelector(".rush-g-pad.left"),right=el.querySelector(".rush-g-pad.right");
   const ga=el.querySelector(".rush-g-arm.glove"),ba=el.querySelector(".rush-g-arm.blocker"),stick=el.querySelector(".rush-g-stick");
-  const set=(g.stance||0)*2.7,face=rushClamp(g.face||0,-18,18),save=g.saveType||"";
+  const set=(g.stance||0)*1.8,face=rushClamp(g.face||0,-18,18),save=g.saveType||"";
   edgeRushSet(el,g.x*w,g.y*h,0,1);
-  if(body)body.style.transform=`translateX(${-set}px) rotate(${face*.55}deg)`;
-  let lp=-4,rp=4,ltx=0,lty=0,rtx=0,rty=0,gar=-24,gax=0,gay=0,bar=12,bax=0,bay=0,stickR=0,stickX=0,stickY=0;
+  if(body)body.style.transform=`translateX(${-set}px) rotate(${face*.38}deg)`;
+  let lp=-2,rp=2,ltx=0,lty=0,rtx=0,rty=0,gar=-18,gax=0,gay=0,bar=11,bax=0,bay=0,stickR=0,stickX=0,stickY=0;
   if(save==="butterfly"){
-    lp=-4-28*t;rp=4+28*t;ltx=-7*t;lty=-8*t;rtx=-7*t;rty=8*t;gar=-24-5*t;bar=12+4*t;stickR=-2*t;stickX=-2*t;
+    lp=-2-23*t;rp=2+23*t;ltx=-5*t;lty=-7*t;rtx=-5*t;rty=7*t;gar=-18-4*t;bar=11+3*t;stickR=-2*t;stickX=-1.5*t;
   }else if(save==="glove"){
-    gar=-24-34*t;gax=-11*t;gay=-9*t;lp=-4-7*t;rp=4+4*t;bar=12+2*t;stickR=-1*t;
+    gar=-18-31*t;gax=-10*t;gay=-8*t;lp=-2-5*t;rp=2+3*t;bar=11+1*t;stickR=-1*t;
   }else if(save==="blocker"){
-    bar=12+28*t;bax=-9*t;bay=7*t;lp=-4-4*t;rp=4+7*t;stickR=-5*t;stickX=-2*t;stickY=1*t;
+    bar=11+25*t;bax=-8*t;bay=6*t;lp=-2-3*t;rp=2+5*t;stickR=-4*t;stickX=-1.5*t;stickY=1*t;
   }else if(save==="leftpad"){
-    lp=-4-38*t;ltx=-8*t;lty=-11*t;rp=4+10*t;gar=-24-3*t;bar=12+2*t;stickR=-2*t;
+    lp=-2-31*t;ltx=-7*t;lty=-9*t;rp=2+8*t;gar=-18-2*t;bar=11+1*t;stickR=-1*t;
   }else if(save==="rightpad"){
-    rp=4+38*t;rtx=-8*t;rty=11*t;lp=-4-10*t;gar=-24-2*t;bar=12+5*t;stickR=-3*t;stickX=-2*t;
+    rp=2+31*t;rtx=-7*t;rty=9*t;lp=-2-8*t;gar=-18-1*t;bar=11+4*t;stickR=-2*t;stickX=-1*t;
   }else if(save==="beaten"){
     const dir=(g.shotY||.5)<.5?-1:1;
-    gar=-24-20*t*(dir<0?1:.30);bar=12+20*t*(dir>0?1:.30);gax=-6*t*(dir<0?1:0);bax=-6*t*(dir>0?1:0);
-    lp=-4-12*t;rp=4+12*t;stickR=-3*t*dir;
+    gar=-18-17*t*(dir<0?1:.28);bar=11+17*t*(dir>0?1:.28);gax=-5*t*(dir<0?1:0);bax=-5*t*(dir>0?1:0);
+    lp=-2-9*t;rp=2+9*t;stickR=-2*t*dir;
   }
   if(left)left.style.transform=`translate(${ltx}px,${lty}px) rotate(${lp}deg)`;
   if(right)right.style.transform=`translate(${rtx}px,${rty}px) rotate(${rp}deg)`;
@@ -7818,9 +7818,10 @@ function edgeRushUpdateGoalie(g,puck,dt){
   const approach=rushClamp((puck.x-.42)/.46,0,1);
   const shotThreat=rushClamp(.38*(threatBrain.shot||.5)+.30*(threatBrain.aggression||.5)+.20*(threatBrain.inside||.4)+.12*(threatBrain.speed||.5),0,1);
   const passPenalty=puck.mode==="pass"?.62:1;
-  const challenge=(.020+.040*shotThreat)*approach*passPenalty;
-  const targetX=.902-challenge;
-  g.x=rushMoveToward(g.x,targetX,dt*(.085+.045*approach));
+  // Keep the goalie rooted in the painted crease while still challenging dangerous shooters.
+  const challenge=(.010+.021*shotThreat)*approach*passPenalty;
+  const targetX=.895-challenge;
+  g.x=rushMoveToward(g.x,targetX,dt*(.075+.035*approach));
   const angleTrack=.80+.12*approach;
   const targetY=rushClamp(.5+(puck.y-.5)*angleTrack,.392,.608);
   const lateral=.22+.13*(1-(g.stance||0))+.05*approach;
