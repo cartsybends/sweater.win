@@ -7761,10 +7761,28 @@ function edgeRushStick(a){
     y:rushClamp(a.y+lx*sr+ly*cr,.05,.95)
   };
 }
+// Far edge of the 5px attacking blue line; the puck must fully clear it first.
+const EDGE_RUSH_BLUE=294.5/720;
+function edgeRushEntry(puck,agents,w){
+  const entry=puck.entry||(puck.entry={entered:false,waitX:EDGE_RUSH_BLUE-28/w,insideX:EDGE_RUSH_BLUE+34/w});
+  if(!entry.entered&&puck.x-5/w>EDGE_RUSH_BLUE)entry.entered=true;
+  if(!entry.entered){
+    for(const a of agents){
+      if(a===puck.owner)continue;
+      a.tx=Math.min(a.tx,entry.waitX);
+      if(a.x>entry.waitX){a.x=entry.waitX;a.vx=Math.min(a.vx,0);}
+    }
+  }
+  return entry;
+}
+function edgeRushEntryReady(puck,agents){
+  return !!puck.entry?.entered&&agents.every(a=>a.x>=puck.entry.insideX);
+}
 function edgeRushPass(puck,to,duration=.28){
+  if(puck.entry&&(!puck.entry.entered||to.x<puck.entry.insideX))return false;
   if(puck.owner){const blade=edgeRushStick(puck.owner);puck.x=blade.x;puck.y=blade.y;}
   puck.mode="pass";puck.owner=null;puck.target=to;puck.elapsed=0;puck.duration=duration;
-  puck.fromX=puck.x;puck.fromY=puck.y;
+  puck.fromX=puck.x;puck.fromY=puck.y;return true;
 }
 function edgeRushShot(puck,x,y,duration=.24,opts={}){
   puck.mode="shot";puck.owner=null;puck.target=null;puck.elapsed=0;puck.duration=duration;
@@ -7857,9 +7875,11 @@ function edgeRushGoalieMarkup(){
     <g class="rush-g-hips"><path d="M29 48Q41 44 53 48L57 60L47 65L41 57L35 65L25 60Z" fill="#233e51" stroke="#183447" stroke-width="1"/></g>
     ${pad('left')}${pad('right')}
     <g class="rush-g-torso"><circle data-goalie-contact="chest" cx="40" cy="43" r=".2" fill="transparent"/><path d="M28 28Q40 24 52 29L55 40L51 52Q41 56 29 51L24 40Z" fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/><path d="M29 46Q40 50 51 47" stroke="#e1ebf1" stroke-width="2.6" fill="none"/><path d="M32 30L30 42M49 32L50 42" class="rush-g-seam"/><path d="M37 34L44 34L46 40L40 44L35 39Z" fill="#dde8ef" opacity=".85"/></g>
+    <g class="rush-g-stick"><path class="rush-g-shaft" d="M0 -13V31" fill="none" stroke="#3a4e5d" stroke-width="2.4"/><path d="M0 -10V-3" stroke="#edf3f7" stroke-width="3.2"/><path class="rush-g-paddle" d="M-3 10H3L4 32H-4Z" fill="#edf3f7" stroke="#687f8f" stroke-width=".8"/><path class="rush-g-blade" d="M-4 31H5L6 35L3 37H-14Q-18 34 -14 32Z" fill="#edf3f7" stroke="#687f8f" stroke-width=".8"/><path d="M-13 34H0" stroke="#263c4b" stroke-width="2.8"/></g>
     <g class="rush-g-arm glove"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-glove"><path d="M5 -5L9 0L6 7L1 8L-2 5L-8 6L-12 2L-12 -4L-8 -10L-1 -12L3 -9L1 -3Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path class="rush-g-pocket" d="M-8 -7L0 -7L2 1L-6 3Z" fill="#557385"/><path d="M-8 -6L1 0M-8 -2L0 -6M-5 -7L-4 2M-10 -4L-1 1" class="rush-g-seam"/><ellipse class="rush-g-held-puck" cx="-4" cy="-3" rx="2.8" ry="2.1" fill="#101923" stroke="#e9f1f6" stroke-width=".5" opacity="0"/><circle data-goalie-contact="glove" cx="-4" cy="-3" r=".2" fill="transparent"/></g></g>
+
     <g class="rush-g-arm blocker"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-blocker"><path d="M-6 -9Q0 -11 6 -8L7 7Q0 10 -6 7Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M-3 -6L-3 5M2 -6L2 5" class="rush-g-detail"/><circle data-goalie-contact="blocker-a" cx="0" cy="-8" r=".2" fill="transparent"/><circle data-goalie-contact="blocker-b" cx="0" cy="7" r=".2" fill="transparent"/><circle data-goalie-contact="blocker" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
-    <g class="rush-g-stick"><path class="rush-g-shaft" fill="none" stroke="#3a4e5d" stroke-width="2.4"/><path class="rush-g-paddle" fill="#edf3f7" stroke="#687f8f" stroke-width=".8"/><path class="rush-g-blade" d="M24 81H43L46 84L44 87H23Q20 84 24 81Z" fill="#edf3f7" stroke="#687f8f" stroke-width=".8"/><path d="M24 84H37" stroke="#263c4b" stroke-width="2.8"/></g>
+
     <g class="rush-g-mask"><path d="M31 11Q39 6 46 12L48 21Q43 29 36 27L29 22L28 16Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M29 15L40 14L43 19L38 25L30 22Z" fill="#2a485c"/><path d="M30 17L41 17M30 20L40 20M33 15L33 23M37 15L37 24" stroke="#d0dfe8" stroke-width=".7" fill="none"/><path d="M42 11L45 15L45 20" stroke="#fff" stroke-width="1.4" fill="none"/></g>
     <circle data-goalie-contact="cover" cx="27" cy="82" r=".2" fill="transparent"/>
   </g></svg></div>`;
@@ -7892,7 +7912,7 @@ function edgeRushRenderGoalie(g,el,w,h){
   const drop=Math.max(low,c*(catchSave?.12:chestSave?.35:1)),yaw=rushClamp(g.face||0,-26,26)/26;
   // Ice position is the feet. Head stays above shoulders, pads below hips.
   el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) scale(${w/720}) translate(-41px,-83px)`;
-  rig.body.setAttribute('transform',`translate(${yaw*2} 0)`);
+  rig.body.setAttribute('transform','translate(0 0)');
   rig.torso.setAttribute('transform',`translate(${yaw*1.5-1} ${5+set*5+drop*6}) rotate(${yaw*4} 41 50)`);
   rig.hips.setAttribute('transform',`translate(0 ${3+drop*10})`);
   rig.mask.setAttribute('transform',`translate(${yaw*3-4-2*c} ${8+set*5+drop*4+2*c})`);
@@ -7912,10 +7932,11 @@ function edgeRushRenderGoalie(g,el,w,h){
   rig.blocker.setAttribute('transform',`translate(${bx} ${by}) rotate(${12+(highBlocker?12:0)*t})`);
   rig.pocket.setAttribute('opacity',1-(catchSave?.3:.85)*c);
   rig['held-puck'].setAttribute('opacity',catchSave&&g.state==='secured'?1:0);
-  const dx=35-bx,dy=83-by,len=Math.hypot(dx,dy)||1,px=-dy/len*3,py=dx/len*3;
-  const sx=bx+dx*.45,sy=by+dy*.45;
-  rig.stick.querySelector('.rush-g-shaft').setAttribute('d',`M${bx-dx*.3} ${by-dy*.3}L35 83`);
-  rig.stick.querySelector('.rush-g-paddle').setAttribute('d',`M${sx+px} ${sy+py}L${35+px} ${83+py}L${35-px} ${83-py}L${sx-px} ${sy-py}Z`);
+  // The entire shaft, paddle and blade share one rigid transform and fixed dimensions.
+  // The wrist is the pivot; on a high blocker save the blade naturally lifts off the ice.
+  const iceDrop=83-by;
+  const stickAngle=iceDrop>=0&&iceDrop<=34?Math.acos(iceDrop/34)*180/Math.PI:Math.atan2(iceDrop,35-bx)*180/Math.PI-90;
+  rig.stick.setAttribute('transform',`translate(${bx} ${by}) rotate(${stickAngle})`);
   rig.shadow.setAttribute('rx',26+drop*8);
 }
 function edgeRushGoaliePoint(el,type,w,h){
@@ -7939,17 +7960,12 @@ function edgeRushSaveDeflect(puck,g,el,w,h,type){
   g.state='rebound';g.coverT=0;
 }
 function edgeRushGoalieBrain(){
-  return {tracking:.88,anticipation:.76,patience:.84,discipline:1,homeX:.895,radius:35};
+  return {tracking:.88,anticipation:.76,patience:.84,discipline:1,homeX:640/720,radius:35};
 }
 function edgeRushUpdateGoalie(g,puck,dt){
   const ai=g.brain||(g.brain=edgeRushGoalieBrain());
-  // All tracking is constrained to the actual crease, including extreme passing lanes.
-  const constrain=()=>{
-    const depth=rushClamp((660/720-g.x)*720,13,32);
-    const maxY=Math.sqrt(Math.max(0,ai.radius*ai.radius-depth*depth));
-    g.x=(660-depth)/720;g.y=rushClamp(g.y,.5-maxY/405,.5+maxY/405);
-  };
-  constrain();
+  // Track with the mask, shoulders and hands, keeping the feet at the middle of the crease.
+  g.x=ai.homeX;g.y=.5;
   if(g.state==='saving'){g.actionT=rushMoveToward(g.actionT||0,1,dt*5);return;}
   if(g.state==='covering'){g.actionT=1;g.coverT=rushMoveToward(g.coverT||0,1,dt*2.5);return;}
   if(g.state==='secured')return;
@@ -7968,16 +7984,8 @@ function edgeRushUpdateGoalie(g,puck,dt){
   read.shooterId=threat?.id??null;read.phase=passing?'push':confidence>.5?'set':'track';
   const angle=Math.atan2(puck.y-g.y,Math.max(.04,g.x-puck.x))*180/Math.PI;
   g.face=settle(g.face||0,rushClamp(angle,-26,26),7+4*ai.tracking);
-  const danger=rushClamp(.45*shot+.30*inside+.25*(brain.aggression??.5),0,1);
-  const depth=18+(9*danger+4*inside)*approach*(passing?.45:1);
-  g.x=settle(g.x,(660-depth)/720,4.8);
-  const maxY=Math.sqrt(Math.max(0,ai.radius*ai.radius-depth*depth));
-  const receiverLead=passing&&threat?rushClamp(threat.y-puck.y,-.12,.12)*.18:0;
-  const aimY=.5+(puck.y-.5)*(.52+.12*approach)+receiverLead+read.bias*.018;
-  g.y=settle(g.y,rushClamp(aimY,.5-maxY/405,.5+maxY/405),passing?5:6.5);
   const crouch=rushClamp(.38+.35*approach+.22*inside-.20*forecast,.28,.92);
   g.stance=settle(g.stance||.35,crouch,7);
-  constrain();
   if(puck.mode==='shot')g.actionT=rushMoveToward(g.actionT||0,1,dt*5);
 }
 function edgeRushRadar(value,token) {
@@ -8015,7 +8023,7 @@ async function edgeRushAnimate(r,picked,correct) {
   const d1={x:.61,y:.38,vx:0,vy:0,tx:.61,ty:.38,maxSpeed:.188,accel:.34,decel:.46,mode:"gap",el:actors.querySelector('[data-def="1"]')};
   const d2={x:.63,y:.63,vx:0,vy:0,tx:.63,ty:.63,maxSpeed:.188,accel:.34,decel:.46,mode:"middle",el:actors.querySelector('[data-def="2"]')};
   carrier.el=actors.querySelector(`[data-rush-id="${carrierId}"]`);support.el=actors.querySelector(`[data-rush-id="${supportId}"]`);finisher.el=actors.querySelector(`[data-rush-id="${finisherId}"]`);
-  const goalie={x:.895,y:.50,face:0,stance:.35,actionT:0,coverT:0,saveType:"",saveVariant:"",shotY:.5,brain:edgeRushGoalieBrain()},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
+  const goalie={x:640/720,y:.50,face:0,stance:.35,actionT:0,coverT:0,saveType:"",saveVariant:"",shotY:.5,brain:edgeRushGoalieBrain()},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
   const puck={mode:"carry",owner:carrier,target:null,x:carrier.x,y:carrier.y,elapsed:0,duration:0};
   const zone=edgeRushZone(finisherId);
   const finish=zone==="high"?{x:.80,y:.50}:zone==="mid"?{x:.745,y:.65}:{x:.665,y:.38};
@@ -8028,6 +8036,7 @@ async function edgeRushAnimate(r,picked,correct) {
   const barY=rushClamp(shotProfile.targetY-7/405,NET.topY-7/405+.02,NET.bottomY-7/405-.02);
   const shotEnd=shotOutcome==='goal'?{x:NET.lineX+.018,y:netY}:shotOutcome==='crossbar'?{x:655/720,y:barY}:{x:.872,y:shotProfile.targetY};
   const agents=[carrier,support,finisher];
+  edgeRushEntry(puck,agents,w);
   let firstReceiver=null,holdUntil=0,finisherDekeUsed=false,postPlan=null;
 
   // Give the viewer a beat to read the setup before anybody launches.
@@ -8098,9 +8107,9 @@ async function edgeRushAnimate(r,picked,correct) {
         support.tx=.37;support.ty=supportLane;finisher.tx=.39;finisher.ty=edgeRushOpenY(.715,finisher,defs,.055);
         if(carrier.x>.345){phase="entry";phaseAt=now;$("erPhase").textContent="READ THE ENTRY";}
       }else if(phase==="entry"){
-        carrier.tx=.525+.035*carrier.brain.drive;carrier.ty=edgeRushOpenY(.50,carrier,defs,.065);
-        support.tx=.505;support.ty=supportLane;finisher.tx=.515;finisher.ty=edgeRushOpenY(.69,finisher,defs,.065);
-        if(puck.mode==="carry"&&puck.owner===carrier&&carrier.x>.405){
+        carrier.tx=Math.max(.525+.035*carrier.brain.drive,puck.entry.insideX+.055);carrier.ty=edgeRushOpenY(.50,carrier,defs,.065);
+        support.tx=Math.max(.505,puck.entry.insideX+.025);support.ty=supportLane;finisher.tx=Math.max(.515,puck.entry.insideX+.025);finisher.ty=edgeRushOpenY(.69,finisher,defs,.065);
+        if(puck.mode==="carry"&&puck.owner===carrier&&edgeRushEntryReady(puck,agents)){
           const read=edgeRushChooseAction(carrier,[support,finisher],defs,now,phaseAt);
           if(read.action==="pass"){
             firstReceiver=read.choice.a;edgeRushPass(puck,firstReceiver,.35-.10*carrier.brain.handling);
@@ -8229,7 +8238,9 @@ async function edgeRushAnimate(r,picked,correct) {
         carrier.tx=.77;carrier.ty=.56;support.tx=.75;support.ty=supportLane+.03;finisher.tx=finisher.x;finisher.ty=finisher.y;
       }
 
+      edgeRushEntry(puck,agents,w);
       agents.forEach(a=>edgeRushSteer(a,dt));
+      edgeRushEntry(puck,agents,w);
       // Paint skaters first so the puck reads the blade position from this exact frame.
       agents.forEach(a=>edgeRushRenderAgent(a,w,h));
 
@@ -8238,6 +8249,7 @@ async function edgeRushAnimate(r,picked,correct) {
       setDefenderReads();steerDef(d1,dt);steerDef(d2,dt);
 
       const puckComplete=edgeRushUpdatePuck(puck,dt,w,h);
+      edgeRushEntry(puck,agents,w);
       edgeRushUpdateGoalie(goalie,puck,dt);
 
       if(puck.justBar){
