@@ -1102,27 +1102,32 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-callout strong { display: block; font-size: clamp(24px,5vw,42px); line-height: .95; letter-spacing: -.055em; }
   .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
   .rush-actor {
-    position:absolute; z-index:8; left:0; top:0; width:66px; height:58px; pointer-events:none; will-change:transform;
+    position:absolute; z-index:8; left:0; top:0; width:78px; height:66px; pointer-events:none; will-change:transform;
   }
-  .rush-skater { position:absolute; left:4px; top:5px; width:50px; height:48px; }
+  .rush-skater { position:absolute; left:4px; top:5px; width:58px; height:54px; }
   .rush-jersey {
-    position:absolute; left:2px; top:8px; width:38px; height:32px; display:grid; place-items:center; overflow:hidden;
-    border:2px solid rgba(255,255,255,.96); border-radius:44% 38% 38% 44%; background:#173247;
+    position:absolute; left:2px; top:8px; width:46px; height:38px; display:grid; place-items:center; overflow:visible;
+    border:2px solid rgba(255,255,255,.98); border-radius:44% 38% 38% 44%; background:#173247;
   }
   .rush-jersey::before {
-    content:""; position:absolute; left:5px; right:5px; top:19px; border-top:2px solid rgba(255,255,255,.34);
+    content:""; position:absolute; left:6px; right:6px; top:24px; border-top:2px solid rgba(255,255,255,.30);
+  }
+  .rush-crest {
+    position:relative; z-index:1; width:32px; height:32px; display:grid; place-items:center; border-radius:50%;
+    background:#fff; border:1px solid rgba(20,38,50,.18);
   }
   .rush-helmet {
-    position:absolute; z-index:2; left:35px; top:16px; width:14px; height:14px; border:2px solid rgba(255,255,255,.96);
+    position:absolute; z-index:2; left:43px; top:17px; width:15px; height:15px; border:2px solid rgba(255,255,255,.98);
     border-radius:50%; background:#263f52;
   }
-  .rush-actor img { position:relative; z-index:1; width:22px; height:22px; object-fit:contain; }
+  .rush-actor img { width:27px; height:27px; object-fit:contain; }
   .rush-number {
-    position:absolute; z-index:3; right:0; bottom:0; min-width:15px; height:14px; padding:0 3px; display:grid; place-items:center;
-    border:1px solid rgba(255,255,255,.86); border-radius:4px; background:#0d2332; color:#fff; font-size:8px; line-height:1; font-weight:950;
+    position:absolute; z-index:4; right:-7px; bottom:-7px; min-width:22px; height:19px; padding:0 4px; display:grid; place-items:center;
+    border:2px solid #0d2332; border-radius:5px; background:#fff; color:#0d2332; font-size:11px; line-height:1; font-weight:950;
+    font-variant-numeric:tabular-nums;
   }
   .rush-stick-svg {
-    position:absolute; z-index:1; left:28px; top:17px; width:48px; height:30px; overflow:visible; transform-origin:50% 50%;
+    position:absolute; z-index:1; left:34px; top:20px; width:48px; height:30px; overflow:visible; transform-origin:50% 50%;
   }
   .rush-actor.hand-l .rush-stick-svg { transform:scaleY(-1); }
   .rush-stick-shaft { fill:none; stroke:#60462f; stroke-width:3.3; stroke-linecap:round; }
@@ -1131,8 +1136,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-stick-tape { fill:none; stroke:#f2f4f5; stroke-width:2.4; stroke-dasharray:3 2; }
   .rush-stick-anchor { fill:transparent; stroke:none; pointer-events:none; }
   .rush-actor .rush-role {
-    position:absolute; left:47%; top:calc(100% + 1px); padding:2px 5px; border-radius:5px; transform:translateX(-50%);
-    background:rgba(15,31,45,.88); color:#fff; font-size:7px; font-weight:950; letter-spacing:.075em; text-transform:uppercase; white-space:nowrap;
+    position:absolute; left:43%; top:calc(100% + 1px); padding:3px 6px; border-radius:5px; transform:translateX(-50%);
+    background:rgba(15,31,45,.90); color:#fff; font-size:8px; font-weight:950; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap;
   }
   .rush-defender {
     position:absolute; z-index:5; left:0; top:0; width:58px; height:52px; will-change:transform; pointer-events:none;
@@ -7523,7 +7528,7 @@ function edgeRushStickMarkup(extra=""){
 function edgeRushActor(id,role) {
   const p=BYID.get(Number(id));
   const hand=p?.shoots==="L"?"hand-l":"hand-r",number=p?.number!=null?String(p.number):"—";
-  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-skater"><span class="rush-jersey"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"><b class="rush-number">${esc(number)}</b></span><span class="rush-helmet"></span></span>${edgeRushStickMarkup()}<span class="rush-role">${role}</span></div>`;
+  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-skater"><span class="rush-jersey"><span class="rush-crest"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><b class="rush-number">${esc(number)}</b></span><span class="rush-helmet"></span></span>${edgeRushStickMarkup()}<span class="rush-role">${role}</span></div>`;
 }
 function edgeRushSet(el,x,y,rot=0,scale=1){
   if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
