@@ -1073,12 +1073,20 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-goalline { stroke: rgba(213,51,61,.46); stroke-width: 3; }
   .rush-circle { fill: none; stroke: rgba(213,51,61,.32); stroke-width: 2; }
   .rush-dot { fill: rgba(213,51,61,.44); }
-  .rush-net-back { fill:rgba(255,255,255,.46); stroke:rgba(42,49,56,.34); stroke-width:1.5; }
-  .rush-net-mesh { fill:none; stroke:rgba(81,94,104,.27); stroke-width:1.05; pointer-events:none; }
-  .rush-net-frame { fill:none; stroke:rgba(205,42,49,.82); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
-  .rush-net-impact { transform-box:fill-box; transform-origin:left center; }
-  .rush-stage.net-hit .rush-net-impact { animation:rushNetRipple .48s cubic-bezier(.2,.8,.2,1) both; }
-  .rush-stage.post-hit .rush-net-frame { animation:rushPostRing .34s ease-out both; }
+  .rush-net-bed { fill:rgba(255,255,255,.36); stroke:rgba(92,108,119,.30); stroke-width:1.15; }
+  .rush-net-mesh-wrap { transform-box:fill-box; transform-origin:left center; }
+  .rush-net-mesh {
+    fill:none; stroke:rgba(92,108,119,.34); stroke-width:.9; stroke-linecap:round; pointer-events:none;
+  }
+  .rush-net-side { fill:none; stroke:rgba(92,108,119,.42); stroke-width:1.15; }
+  .rush-net-frame {
+    fill:none; stroke:#d32934; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round;
+  }
+  .rush-net-post { fill:#d32934; stroke:#fff; stroke-width:.65; }
+  .rush-stage.net-hit .rush-net-mesh-wrap { animation:rushNetCatch .46s cubic-bezier(.18,.82,.2,1) both; }
+  .rush-stage.net-hit .rush-net-bed { animation:rushNetDepth .46s ease-out both; }
+  .rush-stage.post-hit .rush-net-post.hit { animation:rushPostFlash .38s ease-out both; }
+  .rush-stage.post-hit .rush-net-frame { animation:rushFramePing .38s ease-out both; }
   .rush-crease { fill: rgba(68,146,215,.14); stroke: rgba(68,146,215,.48); stroke-width: 2; }
   .rush-broadcast {
     position: absolute; z-index: 16; left: 12px; top: 11px; display: flex; align-items: center; gap: 7px;
@@ -1199,6 +1207,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
     box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
   }
+  .rush-puck::before {
+    content:""; position:absolute; inset:-5px; border:2px solid rgba(211,41,52,.72); border-radius:50%;
+    opacity:0; pointer-events:none;
+  }
   .rush-puck::after {
     content:""; position:absolute; right:6px; top:50%; width:0; height:3px; border-radius:50%;
     background:linear-gradient(90deg,rgba(20,42,58,.34),transparent); transform:translateY(-50%); opacity:0;
@@ -1206,7 +1218,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .rush-puck.shooting::after { width:34px; opacity:1; }
   .rush-puck.in-net::after,.rush-puck.posted::after { width:0 !important; opacity:0 !important; transition:none; }
-  .rush-puck.posted { animation:rushPuckPost .24s ease-out; }
+  .rush-puck.posted::before { animation:rushPuckImpactRing .30s ease-out both; }
   .rush-speed-lines { display:none !important; }
   .rush-goal-light {
     position: absolute; z-index: 6; right: .7%; top: 50%; width: 9px; height: 9px; border-radius: 50%; background: #ef4444;
@@ -1218,9 +1230,30 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes rushPadRight { to{transform:translate(9px,5px) rotate(-24deg)} }
   @keyframes rushChestDrop { to{transform:translate(-50%,5px) scaleY(.90)} }
   @keyframes rushGoalieReach { 55%{transform:translate(-5px,-1px) rotate(-7deg)} 100%{transform:translate(-8px,2px) rotate(-10deg)} }
-  @keyframes rushNetRipple { 0%{transform:scaleX(1)} 32%{transform:scaleX(1.11)} 68%{transform:scaleX(.97)} 100%{transform:scaleX(1)} }
-  @keyframes rushPostRing { 0%{stroke-width:3} 28%{stroke-width:5.5;stroke:rgba(239,68,68,1)} 100%{stroke-width:3} }
-  @keyframes rushPuckPost { 0%{transform:scale(1)} 45%{transform:scale(1.22)} 100%{transform:scale(1)} }
+  @keyframes rushNetCatch {
+    0%{transform:scaleX(1)}
+    28%{transform:scaleX(1.095)}
+    58%{transform:scaleX(.982)}
+    100%{transform:scaleX(1)}
+  }
+  @keyframes rushNetDepth {
+    0%{fill:rgba(255,255,255,.36)}
+    30%{fill:rgba(255,255,255,.62)}
+    100%{fill:rgba(255,255,255,.36)}
+  }
+  @keyframes rushFramePing {
+    0%,100%{stroke-width:3.2}
+    22%{stroke-width:4.5}
+  }
+  @keyframes rushPostFlash {
+    0%{r:3.1;opacity:1}
+    35%{r:5;opacity:1}
+    100%{r:3.1;opacity:1}
+  }
+  @keyframes rushPuckImpactRing {
+    0%{opacity:.95;transform:scale(.65)}
+    100%{opacity:0;transform:scale(1.8)}
+  }
   .rush-lines { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:18px; }
   .rush-line {
     position:relative; overflow:hidden; min-width:0; min-height:176px; padding:15px; border:1px solid var(--line); border-radius:16px;
@@ -3576,11 +3609,17 @@ TEMPLATE = r'''<!DOCTYPE html>
           <circle class="rush-circle" cx="535" cy="116" r="47"/><circle class="rush-circle" cx="535" cy="289" r="47"/>
           <circle class="rush-dot" cx="535" cy="116" r="4"/><circle class="rush-dot" cx="535" cy="289" r="4"/>
           <path class="rush-crease" d="M660 174A29 29 0 0 0 660 231Z"/>
-          <g class="rush-net-impact">
-            <path class="rush-net-back" d="M662 177h31q12 0 12 12v27q0 12-12 12h-31Z"/>
-            <path class="rush-net-mesh" d="M668 178v49M676 178v49M684 178v49M692 178v49M700 183v39M663 185h39M663 193h42M663 201h42M663 209h42M663 217h40M663 225h34"/>
+          <defs>
+            <clipPath id="rushNetClip"><path d="M662 177H690Q704 177 706 190V215Q704 228 690 228H662Z"/></clipPath>
+          </defs>
+          <path class="rush-net-bed" d="M662 177H690Q704 177 706 190V215Q704 228 690 228H662Z"/>
+          <g class="rush-net-mesh-wrap" clip-path="url(#rushNetClip)">
+            <path class="rush-net-mesh" d="M654 181L700 227M654 191L690 227M654 201L680 227M654 211L670 227M664 177L706 219M674 177L706 209M684 177L706 199M694 178L706 189M654 224L700 178M654 214L690 178M654 204L680 178M654 194L670 178M664 228L706 186M674 228L706 196M684 228L706 206M694 227L706 216"/>
           </g>
-          <path class="rush-net-frame" d="M662 177h31q12 0 12 12v27q0 12-12 12h-31M662 177v51"/>
+          <path class="rush-net-side" d="M662 177L690 177Q704 177 706 190M662 228L690 228Q704 228 706 215"/>
+          <path class="rush-net-frame" d="M662 177V228M662 177H690Q704 177 706 190V215Q704 228 690 228H662"/>
+          <circle class="rush-net-post top" cx="662" cy="177" r="3.1"/>
+          <circle class="rush-net-post bottom" cx="662" cy="228" r="3.1"/>
         </svg>
         <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
         <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em>MPH</em></b></div>
@@ -7717,7 +7756,7 @@ function edgeRushUpdatePuck(puck,dt){
     if(t>=1){puck.mode="carry";puck.owner=puck.target;puck.target=null;const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return true;}
     return false;
   }
-  if(puck.mode==="shot"||puck.mode==="rebound"||puck.mode==="postin"){
+  if(puck.mode==="shot"||puck.mode==="rebound"||puck.mode==="postin"||puck.mode==="netcatch"){
     puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=1-Math.pow(1-t,2);
     puck.x=rushLerp(puck.fromX,puck.toX,e);puck.y=rushLerp(puck.fromY,puck.toY,e);
     return t>=1;
@@ -7817,7 +7856,7 @@ function edgeRushWait(ms,token){
 async function edgeRushAnimate(r,picked,correct) {
   const token=++rushAnimToken,stage=$("erStage"),actors=$("erActors");
   if(!stage||!actors)return;
-  stage.classList.remove("goal","net-hit","post-hit");$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");
+  stage.classList.remove("goal","net-hit","post-hit");stage.querySelectorAll(".rush-net-post").forEach(p=>p.classList.remove("hit"));$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");
   $("erPhase").textContent="SET THE BREAKOUT";
 
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,finisherId]=calc.roles;
@@ -7840,9 +7879,12 @@ async function edgeRushAnimate(r,picked,correct) {
   const outcomeSeed=hash(`rush-outcome-${finisherId}-${line.rating}-${Math.round(finish.y*1000)}`);
   const outcomeRoll=(outcomeSeed&1023)/1023,postTop=((outcomeSeed>>>10)&1)===0;
   const shotOutcome=correct?(outcomeRoll<.16?"postin":"goal"):(outcomeRoll<.24?"post":"save");
-  // Goal mouth is y≈.437-.563. Keep goals visibly inside it; posts hit the actual top/bottom corner.
-  const netY=rushClamp(shotProfile.targetY,.455,.545),postY=postTop?.438:.562;
-  const shotEnd=shotOutcome==="goal"?{x:.958,y:netY}:shotOutcome==="postin"||shotOutcome==="post"?{x:.918,y:postY}:{x:.872,y:shotProfile.targetY};
+  // Geometry is derived from the SVG net: goal line x=660/720; posts at y=177/405 and 228/405.
+  const NET={lineX:660/720,postX:662/720,backX:696/720,topY:177/405,bottomY:228/405};
+  const netY=rushClamp(shotProfile.targetY,NET.topY+.018,NET.bottomY-.018);
+  const postY=postTop?NET.topY:NET.bottomY;
+  // Goals first cross the mouth. A second, deterministic net-catch motion carries the puck into the back mesh.
+  const shotEnd=shotOutcome==="goal"?{x:NET.lineX+.014,y:netY}:shotOutcome==="postin"||shotOutcome==="post"?{x:NET.postX,y:postY}:{x:.872,y:shotProfile.targetY};
   const agents=[carrier,support,finisher];
   let firstReceiver=null,holdUntil=0,finisherDekeUsed=false;
 
@@ -8044,31 +8086,39 @@ async function edgeRushAnimate(r,picked,correct) {
 
       if(phase==="shot"&&puckComplete&&!shotDoneAt){
         if(shotOutcome==="postin"){
-          stage.classList.remove("post-hit");void stage.offsetWidth;stage.classList.add("post-hit");
+          const postEl=stage.querySelector(postTop?".rush-net-post.top":".rush-net-post.bottom");
+          postEl?.classList.add("hit");stage.classList.remove("post-hit");void stage.offsetWidth;stage.classList.add("post-hit");
           puckEl.classList.remove("shooting");puckEl.classList.add("posted");
-          puck.mode="postin";puck.elapsed=0;puck.duration=.15;puck.fromX=puck.x;puck.fromY=puck.y;
-          puck.toX=.967;puck.toY=rushClamp(.50+(postY-.5)*.34,.472,.528);
+          puck.mode="postin";puck.elapsed=0;puck.duration=.12;puck.fromX=puck.x;puck.fromY=puck.y;
+          puck.toX=NET.lineX+.018;puck.toY=rushClamp(.5+(postY-.5)*.44,NET.topY+.025,NET.bottomY-.025);
           phase="postin";$("erPhase").textContent="OFF THE POST";
         }else if(shotOutcome==="post"){
-          shotDoneAt=now;
+          const postEl=stage.querySelector(postTop?".rush-net-post.top":".rush-net-post.bottom");
+          postEl?.classList.add("hit");shotDoneAt=now;
           stage.classList.remove("post-hit");void stage.offsetWidth;stage.classList.add("post-hit");
           puckEl.classList.remove("shooting");puckEl.classList.add("posted");
-          puck.mode="rebound";puck.elapsed=0;puck.duration=.30;puck.fromX=puck.x;puck.fromY=puck.y;
-          puck.toX=.765;puck.toY=rushClamp(postY+(postTop?.115:-.115),.31,.69);
+          puck.mode="rebound";puck.elapsed=0;puck.duration=.28;puck.fromX=puck.x;puck.fromY=puck.y;
+          puck.toX=.775;puck.toY=rushClamp(postY+(postTop?.11:-.11),.31,.69);
         }else if(shotOutcome==="goal"){
-          shotDoneAt=now;stage.classList.add("goal","net-hit");
-          puckEl.classList.remove("shooting");puckEl.classList.add("in-net");puck.mode="dead";
+          // Crossing the line is separate from settling in the cage so the goal reads clearly.
+          puckEl.classList.remove("shooting");puckEl.classList.add("in-net");
+          puck.mode="netcatch";puck.elapsed=0;puck.duration=.18;puck.fromX=puck.x;puck.fromY=puck.y;
+          puck.toX=NET.backX;puck.toY=rushClamp(.5+(netY-.5)*.32,.475,.525);
+          phase="netcatch";$("erPhase").textContent="IN THE NET";
         }else{
           shotDoneAt=now;
-          puckEl.classList.remove("shooting");
+          puckEl.classList.remove("shooting","posted","in-net");
           puck.mode="rebound";puck.elapsed=0;puck.duration=.34;puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=.765;puck.toY=rushClamp(puck.y+(puck.y<.5?.105:-.105),.34,.68);
         }
       }else if(phase==="postin"&&puckComplete&&!shotDoneAt){
-        shotDoneAt=now;stage.classList.add("goal","net-hit");
-        puckEl.classList.remove("shooting","posted");puckEl.classList.add("in-net");puck.mode="dead";
-        phase="shot";$("erPhase").textContent="POST AND IN";
+        puckEl.classList.remove("posted");puckEl.classList.add("in-net");
+        puck.mode="netcatch";puck.elapsed=0;puck.duration=.17;puck.fromX=puck.x;puck.fromY=puck.y;
+        puck.toX=NET.backX;puck.toY=rushClamp(.5+(puck.y-.5)*.26,.478,.522);
+        phase="netcatch";$("erPhase").textContent="POST AND IN";
+      }else if(phase==="netcatch"&&puckComplete&&!shotDoneAt){
+        shotDoneAt=now;stage.classList.add("goal","net-hit");puck.mode="dead";
       }else if(shotDoneAt&&(shotOutcome==="save"||shotOutcome==="post")&&puck.mode==="rebound"&&puckComplete){
-        puck.mode="dead";
+        puck.mode="dead";puckEl.classList.remove("posted");
       }
 
       renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
