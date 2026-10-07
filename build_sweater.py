@@ -7861,7 +7861,7 @@ function edgeRushSteer(a,dt,obstacles=[]){
 function edgeRushSeparate(agents,defs){
   const bodies=[...agents,...defs];
   for(let i=0;i<bodies.length;i++)for(let j=i+1;j<bodies.length;j++){
-    const a=bodies[i],b=bodies[j],dx=(b.x-a.x)*720,dy=(b.y-a.y)*405,len=Math.hypot(dx,dy),min=29;
+    const a=bodies[i],b=bodies[j],dx=(b.x-a.x)*720,dy=(b.y-a.y)*405,len=Math.hypot(dx,dy),min=40;
     if(len>=min)continue;const nx=len>.001?dx/len:0,ny=len>.001?dy/len:1,shift=Math.min(4,(min-len)/2);
     a.x=rushClamp(a.x-nx*shift/720,.035,.87);a.y=rushClamp(a.y-ny*shift/405,.12,.88);
     b.x=rushClamp(b.x+nx*shift/720,.035,.87);b.y=rushClamp(b.y+ny*shift/405,.12,.88);
