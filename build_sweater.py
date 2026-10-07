@@ -7815,8 +7815,8 @@ async function edgeRushAnimate(r,picked,correct) {
 
   const w=stage.clientWidth,h=stage.clientHeight;
   const carrier=edgeRushAgent(carrierId,"Carrier",.065,.53),support=edgeRushAgent(supportId,"Support",.045,.31),finisher=edgeRushAgent(finisherId,"Finisher",.04,.72);
-  const d1={x:.61,y:.38,vx:0,vy:0,tx:.61,ty:.38,maxSpeed:.19,accel:.34,el:actors.querySelector('[data-def="1"]')};
-  const d2={x:.63,y:.63,vx:0,vy:0,tx:.63,ty:.63,maxSpeed:.19,accel:.34,el:actors.querySelector('[data-def="2"]')};
+  const d1={x:.61,y:.38,vx:0,vy:0,tx:.61,ty:.38,maxSpeed:.188,accel:.34,decel:.46,mode:"gap",el:actors.querySelector('[data-def="1"]')};
+  const d2={x:.63,y:.63,vx:0,vy:0,tx:.63,ty:.63,maxSpeed:.188,accel:.34,decel:.46,mode:"middle",el:actors.querySelector('[data-def="2"]')};
   carrier.el=actors.querySelector(`[data-rush-id="${carrierId}"]`);support.el=actors.querySelector(`[data-rush-id="${supportId}"]`);finisher.el=actors.querySelector(`[data-rush-id="${finisherId}"]`);
   const goalie={x:.895,y:.50,face:0,stance:.35,actionT:0,saveType:"",shotY:.5},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
   const puck={mode:"carry",owner:carrier,target:null,x:carrier.x,y:carrier.y,elapsed:0,duration:0};
@@ -7825,7 +7825,7 @@ async function edgeRushAnimate(r,picked,correct) {
   const shotProfile=edgeRushShotProfile(finisher,line,finish,correct);
   const shotEnd=correct?{x:.951,y:shotProfile.targetY}:{x:.872,y:shotProfile.targetY};
   const agents=[carrier,support,finisher];
-  let firstReceiver=null;
+  let firstReceiver=null,holdUntil=0,finisherDekeUsed=false;
 
   // Give the viewer a beat to read the setup before anybody launches.
   agents.forEach(a=>edgeRushRenderAgent(a,w,h));
@@ -7837,85 +7837,188 @@ async function edgeRushAnimate(r,picked,correct) {
   $("erPhase").textContent="BREAKOUT";
 
   const steerDef=(d,dt)=>{
-    const dx=d.tx-d.x,dy=d.ty-d.y,dist=Math.hypot(dx,dy),ux=dist>.001?dx/dist:0,uy=dist>.001?dy/dist:0,desired=Math.min(d.maxSpeed,dist*1.6),dv=d.accel*dt;
-    d.vx=rushMoveToward(d.vx,ux*desired,dv);d.vy=rushMoveToward(d.vy,uy*desired,dv);d.x+=d.vx*dt;d.y+=d.vy*dt;
+    const dx=d.tx-d.x,dy=d.ty-d.y,dist=Math.hypot(dx,dy),ux=dist>.001?dx/dist:0,uy=dist>.001?dy/dist:0;
+    const max=d.maxSpeed*(d.mode==="pressure"?1.08:.96),desired=Math.min(max,dist*(d.mode==="pressure"?1.95:1.55));
+    const current=Math.hypot(d.vx,d.vy),dv=(desired>current?d.accel:d.decel)*dt;
+    d.vx=rushMoveToward(d.vx,ux*desired,dv);d.vy=rushMoveToward(d.vy,uy*desired,dv);
+    d.x=rushClamp(d.x+d.vx*dt,.48,.87);d.y=rushClamp(d.y+d.vy*dt,.23,.77);
   };
-  const renderDef=(d)=>{if(d.el)edgeRushSet(d.el,d.x*w,d.y*h,rushClamp(Math.atan2(d.vy,d.vx)*180/Math.PI,-12,12));};
+  const setDefenderReads=()=>{
+    const defs=[d1,d2],owner=puck.owner||puck.target||carrier;
+    const ranked=defs.slice().sort((a,b)=>Math.hypot(a.x-owner.x,a.y-owner.y)-Math.hypot(b.x-owner.x,b.y-owner.y));
+    const pressureD=ranked[0],middleD=ranked[1];
+    const gap=Math.hypot(pressureD.x-owner.x,pressureD.y-owner.y);
+    const attackSpeed=owner?.brain?.speed||.5,drive=owner?.brain?.drive||.5;
+    const shouldPressure=owner.x>.36&&(gap<.22||attackSpeed>.68||drive>.70||puck.mode==="pass");
+    pressureD.mode=shouldPressure?"pressure":"gap";
+    if(shouldPressure){
+      const lead=.050+.030*attackSpeed;
+      pressureD.tx=rushClamp(owner.x+lead,.56,.84);
+      pressureD.ty=rushClamp(owner.y,.29,.71);
+    }else{
+      pressureD.tx=rushClamp(owner.x+.12,.64,.82);
+      pressureD.ty=rushClamp(.5+(owner.y-.5)*.32,.39,.61);
+    }
+    const threats=agents.filter(a=>a!==owner).sort((a,b)=>(b.brain.attack+.35*b.x)-(a.brain.attack+.35*a.x));
+    const threat=threats[0]||finisher;
+    middleD.mode="middle";
+    middleD.tx=rushClamp(Math.max(owner.x+.13,threat.x+.055),.66,.845);
+    middleD.ty=rushClamp(.5+(threat.y-.5)*.52,.38,.62);
+    if(puck.mode==="pass"&&puck.target){
+      pressureD.tx=rushClamp(puck.target.x+.045,.58,.84);
+      pressureD.ty=rushClamp(puck.target.y,.29,.71);
+    }
+  };
+  const renderDef=(d)=>{if(d.el)edgeRushSet(d.el,d.x*w,d.y*h,rushClamp(Math.atan2(d.vy,d.vx)*180/Math.PI,-14,14));};
 
   return await new Promise(resolve=>{
     const frame=now=>{
       if(token!==rushAnimToken||game!=="edgerush"||!stage.isConnected){resolve();return;}
       const dt=Math.min(.033,Math.max(.001,(now-last)/1000));last=now;
 
-      // Each role gets a lane target from the team state. The agents decide how
-      // quickly they can reach it using their EDGE-derived speed/acceleration.
+      // Routes are suggestions, not rails: players re-read pressure and open ice every frame.
       const defs=[d1,d2];
-      const supportLane=.26+.08*(1-support.brain.width);
-      const finishLane=zone==="high"?.51:zone==="mid"?.67:.37;
+      const supportBase=.26+.08*(1-support.brain.width);
+      const supportLane=edgeRushOpenY(supportBase,support,defs,.065);
+      const finishBase=zone==="high"?.51:zone==="mid"?.67:.37;
+      const finishLane=edgeRushOpenY(finishBase,finisher,defs,.070);
       if(phase==="breakout"){
-        carrier.tx=.205;carrier.ty=.52;support.tx=.19;support.ty=supportLane;finisher.tx=.185;finisher.ty=.72;
+        carrier.tx=.205;carrier.ty=edgeRushOpenY(.52,carrier,defs,.045);
+        support.tx=.19;support.ty=supportLane;finisher.tx=.185;finisher.ty=edgeRushOpenY(.72,finisher,defs,.05);
         if(carrier.x>.175){
-          phase="neutral";phaseAt=now;$("erPhase").textContent="THROUGH NEUTRAL ICE";
+          phase="neutral";phaseAt=now;
+          if(carrier.brain.burst>.62)edgeRushBurst(carrier,.26);
+          $("erPhase").textContent="THROUGH NEUTRAL ICE";
         }
       }else if(phase==="neutral"){
-        carrier.tx=.405;carrier.ty=.50;support.tx=.37;support.ty=supportLane;finisher.tx=.39;finisher.ty=.715;
+        carrier.tx=.405;carrier.ty=edgeRushOpenY(.50,carrier,defs,.055);
+        support.tx=.37;support.ty=supportLane;finisher.tx=.39;finisher.ty=edgeRushOpenY(.715,finisher,defs,.055);
         if(carrier.x>.345){phase="entry";phaseAt=now;$("erPhase").textContent="READ THE ENTRY";}
       }else if(phase==="entry"){
-        carrier.tx=.525+.035*carrier.brain.drive;carrier.ty=.50;support.tx=.505;support.ty=supportLane;finisher.tx=.515;finisher.ty=.69;
+        carrier.tx=.525+.035*carrier.brain.drive;carrier.ty=edgeRushOpenY(.50,carrier,defs,.065);
+        support.tx=.505;support.ty=supportLane;finisher.tx=.515;finisher.ty=edgeRushOpenY(.69,finisher,defs,.065);
         if(puck.mode==="carry"&&puck.owner===carrier&&carrier.x>.405){
-          const choice=edgeRushChoosePass(carrier,[support,finisher],defs),pressure=edgeRushPressure(carrier,defs);
-          const readDelay=700-260*carrier.brain.vision+180*carrier.brain.patience;
-          if(pressure<.14||choice.score>.67||now-phaseAt>readDelay){
-            firstReceiver=choice.a;
-            edgeRushPass(puck,firstReceiver,.34-.09*carrier.brain.handling);
+          const read=edgeRushChooseAction(carrier,[support,finisher],defs,now,phaseAt);
+          if(read.action==="pass"){
+            firstReceiver=read.choice.a;edgeRushPass(puck,firstReceiver,.35-.10*carrier.brain.handling);
             phase="pass1";phaseAt=now;$("erPhase").textContent=firstReceiver===finisher?"HIT THE LANE":"FIRST PASS";
+          }else if(read.action==="deke"){
+            edgeRushBeginDeke(carrier,defs,now);phase="deke";phaseAt=now;$("erPhase").textContent="ATTACK THE GAP";
+          }else if(read.action==="drive"){
+            edgeRushBurst(carrier,.30);phase="drive";phaseAt=now;$("erPhase").textContent="DRIVE THE MIDDLE";
+          }else if(read.action==="hold"){
+            holdUntil=now+300+360*carrier.brain.cycle;phase="hold";phaseAt=now;$("erPhase").textContent="HOLD FOR A LANE";
           }
         }
+      }else if(phase==="deke"){
+        support.tx=.56;support.ty=edgeRushOpenY(supportBase+.015,support,defs,.075);
+        finisher.tx=.57;finisher.ty=finishLane;
+        if(now>=carrier.dekeUntil||carrier.x>.61){
+          carrier.state="route";
+          const choice=edgeRushChoosePass(carrier,[support,finisher],defs);
+          if(choice.score>.56){
+            firstReceiver=choice.a;edgeRushPass(puck,firstReceiver,.34-.09*carrier.brain.handling);
+            phase="pass1";phaseAt=now;$("erPhase").textContent=firstReceiver===finisher?"DEKE → SLOT":"DEKE → SUPPORT";
+          }else{
+            edgeRushBurst(carrier,.22);phase="drive";phaseAt=now;$("erPhase").textContent="KEEP THE PUCK";
+          }
+        }
+      }else if(phase==="hold"){
+        carrier.tx=rushClamp(carrier.x+.045,.48,.61);
+        carrier.ty=edgeRushOpenY(carrier.y+(carrier.hand>0?.055:-.055),carrier,defs,.085);
+        support.tx=.57;support.ty=edgeRushOpenY(.34,support,defs,.075);
+        finisher.tx=.59;finisher.ty=edgeRushOpenY(finishBase,finisher,defs,.075);
+        if(now>=holdUntil){
+          const choice=edgeRushChoosePass(carrier,[support,finisher],defs);
+          if(choice.score>.54){
+            firstReceiver=choice.a;edgeRushPass(puck,firstReceiver,.36-.10*carrier.brain.handling);
+            phase="pass1";phaseAt=now;$("erPhase").textContent="LANE OPENS";
+          }else{
+            edgeRushBurst(carrier,.28);phase="drive";phaseAt=now;$("erPhase").textContent="TURN THE CORNER";
+          }
+        }
+      }else if(phase==="drive"){
+        carrier.tx=.64+.055*carrier.brain.drive;carrier.ty=edgeRushOpenY(.50,carrier,defs,.085);
+        support.tx=.61;support.ty=edgeRushOpenY(supportBase+.02,support,defs,.075);
+        finisher.tx=.62;finisher.ty=finishLane;
+        if(puck.mode==="carry"&&puck.owner===carrier&&(carrier.x>.585||now-phaseAt>620)){
+          const choice=edgeRushChoosePass(carrier,[support,finisher],defs);
+          firstReceiver=choice.score>.50?choice.a:finisher;
+          edgeRushPass(puck,firstReceiver,.33-.085*carrier.brain.handling);
+          phase="pass1";phaseAt=now;$("erPhase").textContent=firstReceiver===finisher?"DRAW & DISH":"KICK IT WIDE";
+        }
       }else if(phase==="pass1"){
-        carrier.tx=.63;carrier.ty=.52;support.tx=.59;support.ty=supportLane;finisher.tx=.61;finisher.ty=finishLane;
+        carrier.tx=.63;carrier.ty=edgeRushOpenY(.52,carrier,defs,.06);
+        support.tx=.59;support.ty=supportLane;finisher.tx=.61;finisher.ty=finishLane;
         if(puck.mode==="carry"&&puck.owner===firstReceiver){
           if(firstReceiver===finisher){
             phase="settle";phaseAt=now;$("erPhase").textContent=zone==="high"?"DRIVE THE SLOT":zone==="mid"?"MID-RANGE LOOK":"LOAD THE SHOT";
           }else{
-            phase="supportCarry";phaseAt=now;$("erPhase").textContent="ATTACK WITH SPEED";
+            phase="supportCarry";phaseAt=now;
+            if(support.brain.burst>.62)edgeRushBurst(support,.22);
+            $("erPhase").textContent="ATTACK WITH SPEED";
           }
         }
       }else if(phase==="supportCarry"){
-        carrier.tx=.69;carrier.ty=.54;support.tx=.66;support.ty=supportLane;finisher.tx=finish.x-.09;finisher.ty=finishLane;
+        carrier.tx=.69;carrier.ty=edgeRushOpenY(.54,carrier,defs,.06);
+        support.tx=.66;support.ty=edgeRushOpenY(supportLane,support,defs,.08);
+        finisher.tx=finish.x-.09;finisher.ty=finishLane;
         if(puck.mode==="carry"&&puck.owner===support){
-          const pressure=edgeRushPressure(support,defs),lane=edgeRushPassScore(support,finisher,defs);
-          const hold=760-270*support.brain.vision+150*support.brain.patience;
-          if(pressure<.13||lane>.66||now-phaseAt>hold){
-            edgeRushPass(puck,finisher,.32-.08*support.brain.handling);phase="pass2";phaseAt=now;$("erPhase").textContent="CROSS-SEAM";
+          const read=edgeRushChooseAction(support,[finisher],defs,now,phaseAt);
+          if(read.action==="deke"){
+            edgeRushBeginDeke(support,defs,now);phase="supportDeke";phaseAt=now;$("erPhase").textContent="BEAT THE SECOND LAYER";
+          }else if(read.action!=="read"||now-phaseAt>820){
+            edgeRushPass(puck,finisher,.33-.09*support.brain.handling);phase="pass2";phaseAt=now;$("erPhase").textContent=read.pressure<.12?"SLIP THE CHECK":"CROSS-SEAM";
           }
         }
+      }else if(phase==="supportDeke"){
+        carrier.tx=.70;carrier.ty=edgeRushOpenY(.55,carrier,defs,.06);
+        finisher.tx=finish.x-.075;finisher.ty=finishLane;
+        if(now>=support.dekeUntil||support.x>.69){
+          support.state="route";edgeRushPass(puck,finisher,.32-.085*support.brain.handling);
+          phase="pass2";phaseAt=now;$("erPhase").textContent="DEKE → BACKDOOR";
+        }
       }else if(phase==="pass2"){
-        carrier.tx=.73;carrier.ty=.55;support.tx=.71;support.ty=supportLane+.02;finisher.tx=finish.x;finisher.ty=finish.y;
-        if(puck.mode==="carry"&&puck.owner===finisher){phase="settle";phaseAt=now;$("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";}
+        carrier.tx=.73;carrier.ty=edgeRushOpenY(.55,carrier,defs,.055);
+        support.tx=.71;support.ty=edgeRushOpenY(supportBase+.02,support,defs,.055);
+        finisher.tx=finish.x;finisher.ty=edgeRushOpenY(finish.y,finisher,defs,.055);
+        if(puck.mode==="carry"&&puck.owner===finisher){
+          phase="settle";phaseAt=now;$("erPhase").textContent=zone==="high"?"HIGH-DANGER LOOK":zone==="mid"?"MID-RANGE LOOK":"POINT BLAST";
+        }
       }else if(phase==="settle"){
-        carrier.tx=.75;carrier.ty=.56;support.tx=.73;support.ty=supportLane+.03;finisher.tx=finish.x;finisher.ty=finish.y;
+        carrier.tx=.75;carrier.ty=edgeRushOpenY(.56,carrier,defs,.05);
+        support.tx=.73;support.ty=edgeRushOpenY(supportBase+.03,support,defs,.05);
+        finisher.tx=finish.x;finisher.ty=edgeRushOpenY(finish.y,finisher,defs,.045);
         const pressure=edgeRushPressure(finisher,defs);
-        const releaseDelay=finisher.brain.release*1000+120*finisher.brain.patience-95*finisher.brain.aggression;
-        if(now-phaseAt>Math.max(135,releaseDelay)||pressure<.095){
-          const blade=edgeRushStick(finisher);puck.x=blade.x;puck.y=blade.y;
-          goalie.saveType=correct?"beaten":shotProfile.save;goalie.shotY=shotProfile.targetY;goalie.actionT=0;
-          edgeRushShot(puck,shotEnd.x,shotEnd.y,.31-.105*finisher.brain.shot);
-          puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
-          phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
+        if(!finisherDekeUsed&&pressure<.115&&finisher.brain.deke>.66&&now-phaseAt>105){
+          finisherDekeUsed=true;edgeRushBeginDeke(finisher,defs,now);phase="finishDeke";phaseAt=now;$("erPhase").textContent="ONE MORE MOVE";
+        }else{
+          const releaseDelay=finisher.brain.release*1000+125*finisher.brain.patience-100*finisher.brain.aggression;
+          if(now-phaseAt>Math.max(135,releaseDelay)||pressure<.088){
+            const blade=edgeRushStick(finisher);puck.x=blade.x;puck.y=blade.y;
+            goalie.saveType=correct?"beaten":shotProfile.save;goalie.shotY=shotProfile.targetY;goalie.actionT=0;
+            edgeRushShot(puck,shotEnd.x,shotEnd.y,.32-.115*finisher.brain.shot);
+            puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
+            phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
+          }
+        }
+      }else if(phase==="finishDeke"){
+        carrier.tx=.76;carrier.ty=edgeRushOpenY(.57,carrier,defs,.05);
+        support.tx=.74;support.ty=edgeRushOpenY(supportBase+.02,support,defs,.05);
+        if(now>=finisher.dekeUntil){
+          finisher.state="route";phase="settle";phaseAt=now-150;$("erPhase").textContent="GOALIE HAS TO MOVE";
         }
       }else if(phase==="shot"){
-        carrier.tx=.77;carrier.ty=.56;support.tx=.75;support.ty=supportLane+.03;finisher.tx=finish.x;finisher.ty=finish.y;
+        carrier.tx=.77;carrier.ty=.56;support.tx=.75;support.ty=supportLane+.03;finisher.tx=finisher.x;finisher.ty=finisher.y;
       }
 
       agents.forEach(a=>edgeRushSteer(a,dt));
       // Paint skaters first so the puck reads the blade position from this exact frame.
       agents.forEach(a=>edgeRushRenderAgent(a,w,h));
 
-      // Defenders read the puck and collapse into passing/shooting lanes.
-      const px=puck.x,py=puck.y;
-      d1.tx=rushClamp(px+.105,.69,.84);d1.ty=rushClamp(py-.085,.36,.49);
-      d2.tx=rushClamp(px+.115,.70,.845);d2.ty=rushClamp(py+.09,.51,.65);
-      steerDef(d1,dt);steerDef(d2,dt);
+      // One defender can pressure while the other protects the middle; they can switch
+      // responsibilities as the puck changes hands or a pass is in flight.
+      setDefenderReads();steerDef(d1,dt);steerDef(d2,dt);
 
       const puckComplete=edgeRushUpdatePuck(puck,dt);
       edgeRushUpdateGoalie(goalie,puck,dt);
