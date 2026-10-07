@@ -1129,6 +1129,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-stick-grip { fill:none; stroke:#f3f4f5; stroke-width:4.5; stroke-linecap:butt; stroke-dasharray:3 2; }
   .rush-stick-blade { fill:#22292e; stroke:#171d21; stroke-width:1; }
   .rush-stick-tape { fill:none; stroke:#f2f4f5; stroke-width:2.4; stroke-dasharray:3 2; }
+  .rush-stick-anchor { fill:transparent; stroke:none; pointer-events:none; }
   .rush-actor .rush-role {
     position:absolute; left:47%; top:calc(100% + 1px); padding:2px 5px; border-radius:5px; transform:translateX(-50%);
     background:rgba(15,31,45,.88); color:#fff; font-size:7px; font-weight:950; letter-spacing:.075em; text-transform:uppercase; white-space:nowrap;
@@ -7517,7 +7518,7 @@ function edgeRushCancelAnimation(){
   document.querySelectorAll("#erStage *").forEach(el=>{try{el.getAnimations?.().forEach(a=>a.cancel());}catch{}});
 }
 function edgeRushStickMarkup(extra=""){
-  return `<svg class="rush-stick-svg ${extra}" viewBox="0 0 78 30" aria-hidden="true"><path class="rush-stick-shaft" d="M6 5L55 21"/><path class="rush-stick-grip" d="M6 5L16 8"/><path class="rush-stick-blade" d="M53 20Q62 23 73 21L74 26Q63 30 51 24Z"/><path class="rush-stick-tape" d="M56 22Q64 25 72 23"/></svg>`;
+  return `<svg class="rush-stick-svg ${extra}" viewBox="0 0 78 30" aria-hidden="true"><path class="rush-stick-shaft" d="M6 5L55 21"/><path class="rush-stick-grip" d="M6 5L16 8"/><path class="rush-stick-blade" d="M53 20Q62 23 73 21L74 26Q63 30 51 24Z"/><path class="rush-stick-tape" d="M56 22Q64 25 72 23"/><circle class="rush-stick-anchor" data-stick-blade-anchor cx="64" cy="22.5" r="2.5"/></svg>`;
 }
 function edgeRushActor(id,role) {
   const p=BYID.get(Number(id));
@@ -7591,12 +7592,22 @@ function edgeRushSteer(a,dt){
   if(speed>.008)a.rot=rushClamp(Math.atan2(a.vy,a.vx)*180/Math.PI,-14,14);
 }
 function edgeRushStick(a){
-  const speed=rushLen(a.vx,a.vy);
-  const ux=speed>.006?a.vx/speed:1,uy=speed>.006?a.vy/speed:0,side=a.hand||1;
-  // Match the rendered blade: slightly ahead of the skater and just off the forehand side.
+  const anchor=a.el?.querySelector("[data-stick-blade-anchor]"),stage=$("erStage");
+  if(anchor&&stage){
+    const ar=anchor.getBoundingClientRect(),sr=stage.getBoundingClientRect();
+    if(sr.width>0&&sr.height>0){
+      return {
+        x:rushClamp((ar.left+ar.width/2-sr.left)/sr.width,.02,.98),
+        y:rushClamp((ar.top+ar.height/2-sr.top)/sr.height,.05,.95)
+      };
+    }
+  }
+  // Fallback only before the SVG has painted; normal play reads the blade anchor above.
+  const rot=(a.rot||0)*Math.PI/180,side=a.hand||1;
+  const lx=.049,ly=.018*side,cr=Math.cos(rot),sr=Math.sin(rot);
   return {
-    x:rushClamp(a.x+ux*.064-uy*.030*side,.02,.98),
-    y:rushClamp(a.y+uy*.064+ux*.030*side,.05,.95)
+    x:rushClamp(a.x+lx*cr-ly*sr,.02,.98),
+    y:rushClamp(a.y+lx*sr+ly*cr,.05,.95)
   };
 }
 function edgeRushPass(puck,to,duration=.28){
@@ -7817,6 +7828,8 @@ async function edgeRushAnimate(r,picked,correct) {
       }
 
       agents.forEach(a=>edgeRushSteer(a,dt));
+      // Paint skaters first so the puck reads the blade position from this exact frame.
+      agents.forEach(a=>edgeRushRenderAgent(a,w,h));
 
       // Defenders read the puck and collapse into passing/shooting lanes.
       const px=puck.x,py=puck.y;
@@ -7837,7 +7850,7 @@ async function edgeRushAnimate(r,picked,correct) {
         puck.mode="dead";
       }
 
-      agents.forEach(a=>edgeRushRenderAgent(a,w,h));renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
+      renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
 
       if(shotDoneAt&&now-shotDoneAt>820){
         finished=true;
