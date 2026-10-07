@@ -7955,21 +7955,18 @@ async function edgeRushAnimate(r,picked,correct) {
   const finish=zone==="high"?{x:.80,y:.50}:zone==="mid"?{x:.745,y:.65}:{x:.665,y:.38};
   const shotProfile=edgeRushShotProfile(finisher,line,finish,correct);
   const outcomeSeed=hash(`rush-outcome-${finisherId}-${line.rating}-${Math.round(finish.y*1000)}`);
-  const outcomeRoll=(outcomeSeed&1023)/1023,postTop=((outcomeSeed>>>10)&1)===0;
+  const outcomeRoll=(outcomeSeed&1023)/1023;
   const shotOutcome=correct?(outcomeRoll<.16?"postin":"goal"):(outcomeRoll<.24?"post":"save");
-  // Geometry is derived from the SVG net: goal line x=660/720; posts at y=177/405 and 228/405.
-  const NET={lineX:660/720,postX:662/720,backX:696/720,topY:177/405,bottomY:228/405};
+  const NET=EDGE_RUSH_NET,preferredPostTop=shotProfile.targetY<.5;
   const netY=rushClamp(shotProfile.targetY,NET.topY+.018,NET.bottomY-.018);
-  const postY=postTop?NET.topY:NET.bottomY;
-  // Goals first cross the mouth. A second, deterministic net-catch motion carries the puck into the back mesh.
-  const shotEnd=shotOutcome==="goal"?{x:NET.lineX+.014,y:netY}:shotOutcome==="postin"||shotOutcome==="post"?{x:NET.postX,y:postY}:{x:.872,y:shotProfile.targetY};
+  const shotEnd=shotOutcome==="goal"?{x:NET.lineX+.014,y:netY}:{x:.872,y:shotProfile.targetY};
   const agents=[carrier,support,finisher];
-  let firstReceiver=null,holdUntil=0,finisherDekeUsed=false;
+  let firstReceiver=null,holdUntil=0,finisherDekeUsed=false,postPlan=null;
 
   // Give the viewer a beat to read the setup before anybody launches.
   agents.forEach(a=>edgeRushRenderAgent(a,w,h));
   edgeRushRenderGoalie(goalie,goalieEl,w,h);
-  edgeRushUpdatePuck(puck,0);edgeRushRenderPuck(puck,puckEl,w,h);
+  edgeRushUpdatePuck(puck,0,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
   if(!(await edgeRushWait(520,token)))return;
 
   let phase="breakout",phaseAt=performance.now(),last=performance.now(),finished=false,shotResult=correct?"goal":"save",shotDoneAt=0;
@@ -8135,8 +8132,12 @@ async function edgeRushAnimate(r,picked,correct) {
           const releaseDelay=finisher.brain.release*1000+125*finisher.brain.patience-100*finisher.brain.aggression;
           if(now-phaseAt>Math.max(135,releaseDelay)||pressure<.088){
             const blade=edgeRushStick(finisher);puck.x=blade.x;puck.y=blade.y;
-            goalie.saveType=shotOutcome==="save"?shotProfile.save:"beaten";goalie.shotY=shotEnd.y;goalie.actionT=0;
-            edgeRushShot(puck,shotEnd.x,shotEnd.y,.32-.115*finisher.brain.shot);
+            const postShot=shotOutcome==="postin"||shotOutcome==="post";
+            postPlan=postShot?edgeRushPostAim(blade.x,blade.y,w,h,shotOutcome==="postin",preferredPostTop):null;
+            const releaseEnd=postPlan?{x:postPlan.x,y:postPlan.y}:shotEnd;
+            goalie.saveType=shotOutcome==="save"?shotProfile.save:"beaten";
+            goalie.shotY=postPlan?(postPlan.top?NET.topY:NET.bottomY):releaseEnd.y;goalie.actionT=0;
+            edgeRushShot(puck,releaseEnd.x,releaseEnd.y,.32-.115*finisher.brain.shot,postPlan?{postTop:postPlan.top}:{});
             puckEl.classList.remove("in-net","posted");puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
             phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
           }
@@ -8159,26 +8160,27 @@ async function edgeRushAnimate(r,picked,correct) {
       // responsibilities as the puck changes hands or a pass is in flight.
       setDefenderReads();steerDef(d1,dt);steerDef(d2,dt);
 
-      const puckComplete=edgeRushUpdatePuck(puck,dt);
+      const puckComplete=edgeRushUpdatePuck(puck,dt,w,h);
       edgeRushUpdateGoalie(goalie,puck,dt);
 
+      if(puck.justPost){
+        edgeRushPostImpact(stage,puck.postTop);
+        puckEl.classList.remove("shooting");puckEl.classList.add("posted");
+        $("erPhase").textContent="OFF THE POST";
+      }
+
       if(phase==="shot"&&puckComplete&&!shotDoneAt){
-        if(shotOutcome==="postin"){
-          const postEl=stage.querySelector(postTop?".rush-net-post.top":".rush-net-post.bottom");
-          postEl?.classList.add("hit");stage.classList.remove("post-hit");void stage.offsetWidth;stage.classList.add("post-hit");
-          puckEl.classList.remove("shooting");puckEl.classList.add("posted");
-          puck.mode="postin";puck.elapsed=0;puck.duration=.12;puck.fromX=puck.x;puck.fromY=puck.y;
-          puck.toX=NET.lineX+.018;puck.toY=rushClamp(.5+(postY-.5)*.44,NET.topY+.025,NET.bottomY-.025);
-          phase="postin";$("erPhase").textContent="OFF THE POST";
-        }else if(shotOutcome==="post"){
-          const postEl=stage.querySelector(postTop?".rush-net-post.top":".rush-net-post.bottom");
-          postEl?.classList.add("hit");shotDoneAt=now;
-          stage.classList.remove("post-hit");void stage.offsetWidth;stage.classList.add("post-hit");
-          puckEl.classList.remove("shooting");puckEl.classList.add("posted");
-          puck.mode="rebound";puck.elapsed=0;puck.duration=.28;puck.fromX=puck.x;puck.fromY=puck.y;
-          puck.toX=.775;puck.toY=rushClamp(postY+(postTop?.11:-.11),.31,.69);
+        if(shotOutcome==="postin"||shotOutcome==="post"){
+          if(puck.postResult==="in"){
+            puckEl.classList.remove("shooting","posted");puckEl.classList.add("in-net");
+            puck.mode="netcatch";puck.elapsed=0;puck.duration=.17;puck.fromX=puck.x;puck.fromY=puck.y;
+            puck.toX=NET.backX;puck.toY=rushClamp(.5+(puck.y-.5)*.30,.478,.522);
+            phase="netcatch";$("erPhase").textContent="POST AND IN";
+          }else{
+            shotDoneAt=now;puck.mode="dead";
+            puckEl.classList.remove("shooting","posted","in-net");
+          }
         }else if(shotOutcome==="goal"){
-          // Crossing the line is separate from settling in the cage so the goal reads clearly.
           puckEl.classList.remove("shooting");puckEl.classList.add("in-net");
           puck.mode="netcatch";puck.elapsed=0;puck.duration=.18;puck.fromX=puck.x;puck.fromY=puck.y;
           puck.toX=NET.backX;puck.toY=rushClamp(.5+(netY-.5)*.32,.475,.525);
@@ -8188,15 +8190,10 @@ async function edgeRushAnimate(r,picked,correct) {
           puckEl.classList.remove("shooting","posted","in-net");
           puck.mode="rebound";puck.elapsed=0;puck.duration=.34;puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=.765;puck.toY=rushClamp(puck.y+(puck.y<.5?.105:-.105),.34,.68);
         }
-      }else if(phase==="postin"&&puckComplete&&!shotDoneAt){
-        puckEl.classList.remove("posted");puckEl.classList.add("in-net");
-        puck.mode="netcatch";puck.elapsed=0;puck.duration=.17;puck.fromX=puck.x;puck.fromY=puck.y;
-        puck.toX=NET.backX;puck.toY=rushClamp(.5+(puck.y-.5)*.26,.478,.522);
-        phase="netcatch";$("erPhase").textContent="POST AND IN";
       }else if(phase==="netcatch"&&puckComplete&&!shotDoneAt){
         shotDoneAt=now;stage.classList.add("goal","net-hit");puck.mode="dead";
-      }else if(shotDoneAt&&(shotOutcome==="save"||shotOutcome==="post")&&puck.mode==="rebound"&&puckComplete){
-        puck.mode="dead";puckEl.classList.remove("posted");
+      }else if(shotDoneAt&&shotOutcome==="save"&&puck.mode==="rebound"&&puckComplete){
+        puck.mode="dead";
       }
 
       renderDef(d1);renderDef(d2);edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
