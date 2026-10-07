@@ -1166,7 +1166,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius:50%; background:#aab8c1;
   }
   .rush-defender .rush-stick-svg { left:27px; top:16px; width:46px; height:28px; }
-  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:82px; height:96px; will-change:transform; }
+  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:82px; height:96px; transform-origin:0 0; will-change:transform; }
   .rush-goalie svg { display:block; width:100%; height:100%; overflow:visible; }
   .rush-g-rig { stroke-linecap:round; stroke-linejoin:round; }
   .rush-g-detail { fill:none; stroke:#96aab6; stroke-width:.7; }
