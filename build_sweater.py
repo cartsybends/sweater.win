@@ -1102,113 +1102,82 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-callout strong { display: block; font-size: clamp(24px,5vw,42px); line-height: .95; letter-spacing: -.055em; }
   .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
   .rush-actor {
-    position: absolute; z-index: 8; left: 0; top: 0; width: clamp(48px,7.8vw,64px); height: clamp(48px,7.8vw,64px);
-    pointer-events: none; will-change: transform; filter: drop-shadow(0 6px 6px rgba(12,35,50,.24));
+    position:absolute; z-index:8; left:0; top:0; width:66px; height:58px; pointer-events:none; will-change:transform;
   }
-  .rush-actor::before {
-    content: ""; position: absolute; z-index: -1; left: -31px; top: 50%; width: 38px; height: 11px; border-radius: 50%;
-    background: linear-gradient(90deg, transparent, rgba(57,151,218,.24)); filter: blur(2px); transform: translateY(-50%); opacity: var(--rush-trail-opacity,.25); transition: opacity .1s linear;
+  .rush-skater { position:absolute; left:4px; top:5px; width:50px; height:48px; }
+  .rush-jersey {
+    position:absolute; left:2px; top:8px; width:38px; height:32px; display:grid; place-items:center; overflow:hidden;
+    border:2px solid rgba(255,255,255,.96); border-radius:44% 38% 38% 44%; background:#173247;
   }
-  .rush-actor .rush-body {
-    position: absolute; inset: 5px 4px 7px; display: grid; place-items: center; overflow: hidden;
-    border: 2px solid rgba(255,255,255,.96); border-radius: 42% 42% 34% 34%;
-    background: linear-gradient(145deg,#243b4b 0%,#102838 55%,#0c2130 100%);
-    box-shadow: inset 0 -6px 10px rgba(0,0,0,.22), inset 0 0 0 2px rgba(255,255,255,.06);
+  .rush-jersey::before {
+    content:""; position:absolute; left:5px; right:5px; top:19px; border-top:2px solid rgba(255,255,255,.34);
   }
-  .rush-actor .rush-body::before {
-    content:""; position:absolute; left:7%; right:7%; top:58%; height:15%;
-    border-top:2px solid rgba(255,255,255,.34); border-bottom:2px solid rgba(255,255,255,.18);
+  .rush-helmet {
+    position:absolute; z-index:2; left:35px; top:16px; width:14px; height:14px; border:2px solid rgba(255,255,255,.96);
+    border-radius:50%; background:#263f52;
   }
-  .rush-actor img { position:relative; z-index:1; width:58%; height:58%; object-fit:contain; filter:drop-shadow(0 1px 1px rgba(0,0,0,.22)); }
+  .rush-actor img { position:relative; z-index:1; width:22px; height:22px; object-fit:contain; }
   .rush-number {
-    position:absolute; z-index:2; right:1px; bottom:1px; display:grid; place-items:center; min-width:17px; height:15px; padding:0 3px;
-    border:1px solid rgba(255,255,255,.82); border-radius:5px; background:rgba(8,22,32,.88); color:#fff;
-    font-size:8px; line-height:1; font-weight:950; font-variant-numeric:tabular-nums; box-shadow:0 2px 4px rgba(0,0,0,.22);
+    position:absolute; z-index:3; right:0; bottom:0; min-width:15px; height:14px; padding:0 3px; display:grid; place-items:center;
+    border:1px solid rgba(255,255,255,.86); border-radius:4px; background:#0d2332; color:#fff; font-size:8px; line-height:1; font-weight:950;
   }
-  .rush-actor .rush-stick {
-    position:absolute; z-index:3; left:57%; top:68%; width:42px; height:3px; border-radius:3px;
-    background:linear-gradient(90deg,#7a5838 0 74%,#eceff1 74% 100%); transform:rotate(17deg); transform-origin:left center;
-    box-shadow:0 1px 1px rgba(0,0,0,.24);
+  .rush-stick-svg {
+    position:absolute; z-index:1; left:28px; top:17px; width:48px; height:30px; overflow:visible; transform-origin:50% 50%;
   }
-  .rush-actor .rush-stick::before {
-    content:""; position:absolute; right:-13px; top:-1px; width:19px; height:8px; border-radius:0 0 13px 5px;
-    border-bottom:4px solid #1f272d; background:repeating-linear-gradient(90deg,#f6f7f8 0 4px,#cbd2d6 4px 5px);
-    transform:rotate(9deg); transform-origin:left center;
-  }
-  .rush-actor .rush-stick::after {
-    content:""; position:absolute; left:-2px; top:-1px; width:12px; height:5px; border-radius:3px;
-    background:repeating-linear-gradient(90deg,#f6f7f8 0 3px,#c9d0d4 3px 4px);
-  }
-  .rush-actor.hand-l .rush-stick { top:32%; transform:rotate(-17deg) scaleY(-1); }
+  .rush-actor.hand-l .rush-stick-svg { transform:scaleY(-1); }
+  .rush-stick-shaft { fill:none; stroke:#60462f; stroke-width:3.3; stroke-linecap:round; }
+  .rush-stick-grip { fill:none; stroke:#f3f4f5; stroke-width:4.5; stroke-linecap:butt; stroke-dasharray:3 2; }
+  .rush-stick-blade { fill:#22292e; stroke:#171d21; stroke-width:1; }
+  .rush-stick-tape { fill:none; stroke:#f2f4f5; stroke-width:2.4; stroke-dasharray:3 2; }
   .rush-actor .rush-role {
-    position:absolute; left:50%; top:calc(100% + 4px); padding:3px 6px; border-radius:6px; transform:translateX(-50%);
+    position:absolute; left:47%; top:calc(100% + 1px); padding:2px 5px; border-radius:5px; transform:translateX(-50%);
     background:rgba(15,31,45,.88); color:#fff; font-size:7px; font-weight:950; letter-spacing:.075em; text-transform:uppercase; white-space:nowrap;
-    box-shadow:0 2px 5px rgba(0,0,0,.16);
   }
   .rush-defender {
-    position:absolute; z-index:5; left:0; top:0; display:grid; place-items:center; width:clamp(38px,6.2vw,50px); height:clamp(38px,6.2vw,50px);
-    border:2px solid rgba(74,91,103,.42); border-radius:42% 42% 34% 34%; background:rgba(89,107,119,.24); color:rgba(39,57,68,.78);
-    font-size:11px; font-weight:950; will-change:transform; box-shadow:0 5px 10px rgba(18,38,52,.10);
+    position:absolute; z-index:5; left:0; top:0; width:58px; height:52px; will-change:transform; pointer-events:none;
+  }
+  .rush-defender > span {
+    position:absolute; left:5px; top:9px; width:36px; height:30px; display:grid; place-items:center;
+    border:2px solid rgba(61,77,88,.54); border-radius:44% 38% 38% 44%; background:#cbd5db; color:#314652; font-size:10px; font-weight:950;
   }
   .rush-defender::before {
-    content:""; position:absolute; z-index:-1; left:58%; top:68%; width:37px; height:3px; border-radius:3px;
-    background:linear-gradient(90deg,#6d5138 0 76%,#e8ecee 76% 100%); transform:rotate(17deg); transform-origin:left center; opacity:.84;
+    content:""; position:absolute; z-index:2; left:38px; top:18px; width:13px; height:13px; border:2px solid rgba(61,77,88,.54);
+    border-radius:50%; background:#aab8c1;
   }
-  .rush-defender::after {
-    content:""; position:absolute; left:calc(58% + 31px); top:calc(68% + 9px); width:17px; height:7px; border-radius:0 0 11px 4px;
-    border-bottom:4px solid #30383d; background:repeating-linear-gradient(90deg,#f4f6f7 0 4px,#c9d0d4 4px 5px); transform:rotate(27deg); opacity:.88;
-  }
-  .rush-goalie {
-    position:absolute; z-index:8; left:0; top:0; width:clamp(66px,10vw,84px); height:clamp(58px,8.4vw,72px);
-    will-change:transform; filter:drop-shadow(0 8px 7px rgba(12,35,50,.22));
-  }
-  .rush-g-shadow {
-    position:absolute; left:52%; bottom:5%; width:78%; height:18%; border-radius:50%; background:rgba(15,35,49,.17);
-    filter:blur(2px); transform:translateX(-50%);
-  }
-  .rush-g-body { position:absolute; inset:0; transform-origin:48% 50%; will-change:transform; }
+  .rush-defender .rush-stick-svg { left:27px; top:16px; width:46px; height:28px; }
+  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:72px; height:74px; will-change:transform; }
+  .rush-g-body { position:absolute; inset:0; transform-origin:50% 50%; will-change:transform; }
   .rush-g-chest {
-    position:absolute; z-index:4; left:31%; top:22%; width:42%; height:56%; border-radius:29% 34% 34% 29%;
-    background:linear-gradient(180deg,#7b909d 0%,#536b79 54%,#334b5a 100%); border:2px solid rgba(255,255,255,.90);
-    box-shadow:inset -8px 0 10px rgba(21,41,53,.20),0 2px 3px rgba(24,43,55,.12);
+    position:absolute; z-index:4; left:25px; top:20px; width:28px; height:34px; border:2px solid #334a58; border-radius:9px;
+    background:#5f7685;
   }
-  .rush-g-chest::before { content:""; position:absolute; left:10%; right:10%; top:46%; border-top:3px solid rgba(255,255,255,.50); box-shadow:0 6px 0 rgba(255,255,255,.18); }
-  .rush-g-chest::after { content:""; position:absolute; right:8%; top:12%; width:7px; height:7px; border:2px solid rgba(255,255,255,.68); border-radius:50%; }
+  .rush-g-chest::before { content:""; position:absolute; left:5px; right:5px; top:16px; border-top:2px solid rgba(255,255,255,.55); }
   .rush-g-mask {
-    position:absolute; z-index:8; left:8%; top:34%; width:25%; height:32%; border:2px solid rgba(255,255,255,.98);
-    border-radius:48% 40% 44% 52%; background:linear-gradient(90deg,#253b49,#718793 62%,#405866);
-    box-shadow:inset -4px 0 0 rgba(14,29,39,.22),0 1px 2px rgba(0,0,0,.16);
+    position:absolute; z-index:8; left:8px; top:28px; width:18px; height:18px; border:2px solid #334a58; border-radius:50%; background:#eef2f4;
   }
-  .rush-g-mask::before { content:""; position:absolute; left:20%; right:12%; top:33%; height:1px; background:rgba(255,255,255,.72); box-shadow:0 4px 0 rgba(255,255,255,.58),0 8px 0 rgba(255,255,255,.44); }
-  .rush-g-mask::after { content:""; position:absolute; top:18%; bottom:16%; left:46%; width:1px; background:rgba(255,255,255,.58); box-shadow:4px 0 0 rgba(255,255,255,.44); }
+  .rush-g-mask::before { content:""; position:absolute; left:3px; right:3px; top:5px; border-top:1px solid #647983; box-shadow:0 4px 0 #647983; }
+  .rush-g-mask::after { content:""; position:absolute; top:3px; bottom:3px; left:8px; border-left:1px solid #647983; }
   .rush-g-arm {
-    position:absolute; z-index:5; left:23%; width:36%; height:12%; border-radius:999px;
-    background:linear-gradient(180deg,#718796,#405866); border:2px solid rgba(255,255,255,.84); transform-origin:88% 50%; will-change:transform;
+    position:absolute; z-index:5; left:19px; width:27px; height:9px; border:2px solid #334a58; border-radius:999px; background:#5f7685;
+    transform-origin:90% 50%; will-change:transform;
   }
-  .rush-g-arm.glove { top:12%; transform:rotate(-18deg); }
-  .rush-g-arm.blocker { top:76%; transform:rotate(18deg); }
-  .rush-g-glove,.rush-g-blocker { position:absolute; top:50%; width:35%; aspect-ratio:1; transform:translateY(-50%); background:#edf2f5; border:2px solid #607582; box-shadow:0 2px 2px rgba(22,42,54,.15); }
-  .rush-g-glove { left:-20%; border-radius:58% 44% 60% 42%; }
-  .rush-g-glove::after { content:""; position:absolute; inset:22%; border:1px solid #83939c; border-radius:50%; }
-  .rush-g-blocker { left:-18%; border-radius:4px; box-shadow:inset 0 -3px 0 rgba(58,77,88,.14),0 2px 2px rgba(22,42,54,.15); }
+  .rush-g-arm.glove { top:10px; transform:rotate(-18deg); }
+  .rush-g-arm.blocker { top:55px; transform:rotate(18deg); }
+  .rush-g-glove,.rush-g-blocker { position:absolute; left:-9px; top:50%; width:12px; height:12px; transform:translateY(-50%); border:2px solid #607582; background:#f6f8f9; }
+  .rush-g-glove { border-radius:58% 42% 58% 42%; }
+  .rush-g-blocker { border-radius:3px; }
   .rush-g-pad {
-    position:absolute; z-index:3; left:58%; width:37%; height:20%; border:2px solid rgba(91,111,123,.68); border-radius:7px 12px 12px 7px;
-    background:linear-gradient(180deg,#fff 0%,#eef3f5 48%,#c8d4db 100%); transform-origin:8% 50%; will-change:transform;
-    box-shadow:inset -5px 0 8px rgba(67,89,101,.12);
+    position:absolute; z-index:3; left:49px; width:20px; height:17px; border:2px solid #7b8d97; border-radius:4px 8px 8px 4px;
+    background:#f8fafb; transform-origin:8% 50%; will-change:transform;
   }
-  .rush-g-pad::before { content:""; position:absolute; left:18%; right:9%; top:29%; border-top:1px solid rgba(91,111,123,.34); box-shadow:0 6px 0 rgba(91,111,123,.25); }
-  .rush-g-pad::after { content:""; position:absolute; right:-8%; top:28%; width:11%; height:44%; border-radius:0 5px 5px 0; background:#303941; }
-  .rush-g-pad.left { top:24%; transform:rotate(-4deg); }
-  .rush-g-pad.right { top:57%; transform:rotate(4deg); }
+  .rush-g-pad::before { content:""; position:absolute; left:4px; right:3px; top:7px; border-top:1px solid #a7b4bb; }
+  .rush-g-pad.left { top:17px; transform:rotate(-4deg); }
+  .rush-g-pad.right { top:40px; transform:rotate(4deg); }
   .rush-g-stick {
-    position:absolute; z-index:6; right:40%; top:67%; width:49%; height:3px; border-radius:3px;
-    background:linear-gradient(90deg,#f3f5f6 0 26%,#76583e 26% 100%); transform:rotate(5deg); transform-origin:right center; will-change:transform;
+    position:absolute; z-index:6; left:2px; top:48px; width:62px; height:28px; overflow:visible; transform-origin:48px 8px; will-change:transform;
   }
-  .rush-g-stick::before {
-    content:""; position:absolute; left:-13px; top:-2px; width:20px; height:9px; border-radius:0 0 5px 13px;
-    border-bottom:5px solid #20292f; background:repeating-linear-gradient(90deg,#f7f8f9 0 4px,#cbd2d6 4px 5px); transform:rotate(-10deg); transform-origin:right center;
-  }
-  .rush-g-stick::after { content:""; position:absolute; right:7%; top:-3px; width:19%; height:9px; border-radius:2px; background:#eef2f4; border:1px solid #7e8d96; }
+  .rush-g-stick .rush-stick-shaft { stroke-width:3.4; }
+  .rush-g-stick .rush-goalie-paddle { fill:#eef2f4; stroke:#607582; stroke-width:1; }
   .rush-puck {
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
     box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
@@ -1219,12 +1188,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     transition:width .14s ease,opacity .14s ease;
   }
   .rush-puck.shooting::after { width:34px; opacity:1; }
-  .rush-speed-lines {
-    position:absolute; z-index:3; inset:8% 8% 8% 3%; opacity:0; pointer-events:none;
-    background:repeating-linear-gradient(90deg,transparent 0 39px,rgba(59,135,187,.13) 40px 41px,transparent 42px 83px);
-    mask-image:linear-gradient(90deg,transparent,black 24%,black 76%,transparent);
-  }
-  .rush-speed-lines.on { animation:rushSpeedWash 1.15s ease both; }
+  .rush-speed-lines { display:none !important; }
   .rush-goal-light {
     position: absolute; z-index: 6; right: .7%; top: 50%; width: 9px; height: 9px; border-radius: 50%; background: #ef4444;
     opacity: 0; transform: translateY(-50%) scale(.65); box-shadow: 0 0 0 rgba(239,68,68,0); transition: .16s ease;
@@ -1235,7 +1199,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes rushPadRight { to{transform:translate(9px,5px) rotate(-24deg)} }
   @keyframes rushChestDrop { to{transform:translate(-50%,5px) scaleY(.90)} }
   @keyframes rushGoalieReach { 55%{transform:translate(-5px,-1px) rotate(-7deg)} 100%{transform:translate(-8px,2px) rotate(-10deg)} }
-  @keyframes rushSpeedWash { 0%{opacity:0;transform:translateX(-3%)} 18%{opacity:.8} 100%{opacity:0;transform:translateX(6%)} }
   .rush-lines { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:18px; }
   .rush-line {
     position:relative; overflow:hidden; min-width:0; min-height:176px; padding:15px; border:1px solid var(--line); border-radius:16px;
@@ -3596,7 +3559,6 @@ TEMPLATE = r'''<!DOCTYPE html>
         <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
         <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em>MPH</em></b></div>
         <div id="erActors"></div>
-        <div class="rush-speed-lines" id="erSpeedLines" aria-hidden="true"></div>
         <span class="rush-goal-light" aria-hidden="true"></span>
         <div class="rush-callout" id="erCallout"><strong id="erCalloutMain"></strong><span id="erCalloutSub"></span></div>
       </div>
@@ -7554,10 +7516,13 @@ function edgeRushCancelAnimation(){
   clearTimeout(G.edgerush?.timer);
   document.querySelectorAll("#erStage *").forEach(el=>{try{el.getAnimations?.().forEach(a=>a.cancel());}catch{}});
 }
+function edgeRushStickMarkup(extra=""){
+  return `<svg class="rush-stick-svg ${extra}" viewBox="0 0 78 30" aria-hidden="true"><path class="rush-stick-shaft" d="M6 5L55 21"/><path class="rush-stick-grip" d="M6 5L16 8"/><path class="rush-stick-blade" d="M53 20Q62 23 73 21L74 26Q63 30 51 24Z"/><path class="rush-stick-tape" d="M56 22Q64 25 72 23"/></svg>`;
+}
 function edgeRushActor(id,role) {
   const p=BYID.get(Number(id));
   const hand=p?.shoots==="L"?"hand-l":"hand-r",number=p?.number!=null?String(p.number):"—";
-  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-body"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"><b class="rush-number">${esc(number)}</b></span><span class="rush-stick"></span><span class="rush-role">${role}</span></div>`;
+  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-skater"><span class="rush-jersey"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"><b class="rush-number">${esc(number)}</b></span><span class="rush-helmet"></span></span>${edgeRushStickMarkup()}<span class="rush-role">${role}</span></div>`;
 }
 function edgeRushSet(el,x,y,rot=0,scale=1){
   if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
@@ -7628,11 +7593,10 @@ function edgeRushSteer(a,dt){
 function edgeRushStick(a){
   const speed=rushLen(a.vx,a.vy);
   const ux=speed>.006?a.vx/speed:1,uy=speed>.006?a.vy/speed:0,side=a.hand||1;
-  // Blade coordinates mirror the rendered handed stick. Carrying and receiving
-  // both resolve to this exact point so every completed pass finishes tape-to-tape.
+  // Match the rendered blade: slightly ahead of the skater and just off the forehand side.
   return {
-    x:rushClamp(a.x+ux*.071-uy*.015*side,.02,.98),
-    y:rushClamp(a.y+uy*.126+ux*.024*side,.05,.95)
+    x:rushClamp(a.x+ux*.064-uy*.030*side,.02,.98),
+    y:rushClamp(a.y+uy*.064+ux*.030*side,.05,.95)
   };
 }
 function edgeRushPass(puck,to,duration=.28){
@@ -7665,15 +7629,13 @@ function edgeRushUpdatePuck(puck,dt){
 function edgeRushRenderAgent(a,w,h){
   if(!a.el)return;
   edgeRushSet(a.el,a.x*w,a.y*h,a.rot,1);
-  const pct=rushClamp(rushLen(a.vx,a.vy)/Math.max(.01,a.brain.maxSpeed),0,1);
-  a.el.style.setProperty("--rush-trail-opacity",String(.18+.62*pct));
 }
 function edgeRushRenderPuck(puck,el,w,h){
   if(!el)return;
   edgeRushSet(el,puck.x*w,puck.y*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
-  return '<div class="rush-goalie" data-goalie><span class="rush-g-shadow"></span><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-arm glove"><b class="rush-g-glove"></b></i><i class="rush-g-arm blocker"><b class="rush-g-blocker"></b></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i><i class="rush-g-stick"></i></span></div>';
+  return '<div class="rush-goalie" data-goalie><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-arm glove"><b class="rush-g-glove"></b></i><i class="rush-g-arm blocker"><b class="rush-g-blocker"></b></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i><svg class="rush-g-stick" viewBox="0 0 78 30" aria-hidden="true"><path class="rush-stick-shaft" d="M70 5L25 18"/><path class="rush-goalie-paddle" d="M43 12L25 18L31 23L48 17Z"/><path class="rush-stick-blade" d="M27 18Q17 23 5 22L4 27Q17 30 31 23Z"/><path class="rush-stick-tape" d="M25 21Q16 25 6 24"/></svg></span></div>';
 }
 function edgeRushShotProfile(finisher,line,finish,correct){
   const seed=hash(`rush-shot-${finisher.id}-${line.rating}-${Math.round(finish.y*1000)}`);
@@ -7755,7 +7717,7 @@ async function edgeRushAnimate(r,picked,correct) {
 
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,finisherId]=calc.roles;
   actors.innerHTML=edgeRushActor(carrierId,"Carrier")+edgeRushActor(supportId,"Support")+edgeRushActor(finisherId,"Finisher")
-    +'<div class="rush-defender" data-def="1">D</div><div class="rush-defender" data-def="2">D</div>'+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
+    +'<div class="rush-defender" data-def="1"><span>D</span>'+edgeRushStickMarkup('defender-stick')+'</div><div class="rush-defender" data-def="2"><span>D</span>'+edgeRushStickMarkup('defender-stick')+'</div>'+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
 
   await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));
   if(token!==rushAnimToken)return;
@@ -7782,7 +7744,6 @@ async function edgeRushAnimate(r,picked,correct) {
 
   let phase="breakout",phaseAt=performance.now(),last=performance.now(),finished=false,shotResult=correct?"goal":"save",shotDoneAt=0;
   $("erPhase").textContent="BREAKOUT";
-  $("erSpeedLines").classList.remove("on");
 
   const steerDef=(d,dt)=>{
     const dx=d.tx-d.x,dy=d.ty-d.y,dist=Math.hypot(dx,dy),ux=dist>.001?dx/dist:0,uy=dist>.001?dy/dist:0,desired=Math.min(d.maxSpeed,dist*1.6),dv=d.accel*dt;
@@ -7804,7 +7765,6 @@ async function edgeRushAnimate(r,picked,correct) {
         carrier.tx=.205;carrier.ty=.52;support.tx=.19;support.ty=supportLane;finisher.tx=.185;finisher.ty=.72;
         if(carrier.x>.175){
           phase="neutral";phaseAt=now;$("erPhase").textContent="THROUGH NEUTRAL ICE";
-          $("erSpeedLines").classList.remove("on");void $("erSpeedLines").offsetWidth;$("erSpeedLines").classList.add("on");
         }
       }else if(phase==="neutral"){
         carrier.tx=.405;carrier.ty=.50;support.tx=.37;support.ty=supportLane;finisher.tx=.39;finisher.ty=.715;
