@@ -3576,18 +3576,20 @@ TEMPLATE = r'''<!DOCTYPE html>
           <line class="rush-goalline" x1="660" y1="14" x2="660" y2="391"/>
           <circle class="rush-circle" cx="535" cy="116" r="47"/><circle class="rush-circle" cx="535" cy="289" r="47"/>
           <circle class="rush-dot" cx="535" cy="116" r="4"/><circle class="rush-dot" cx="535" cy="289" r="4"/>
-          <path class="rush-crease" d="M660 174A29 29 0 0 0 660 231Z"/>
-          <defs>
-            <clipPath id="rushNetClip"><path d="M662 177H690Q704 177 706 190V215Q704 228 690 228H662Z"/></clipPath>
-          </defs>
-          <path class="rush-net-bed" d="M662 177H690Q704 177 706 190V215Q704 228 690 228H662Z"/>
-          <g class="rush-net-mesh-wrap" clip-path="url(#rushNetClip)">
-            <path class="rush-net-mesh" d="M654 181L700 227M654 191L690 227M654 201L680 227M654 211L670 227M664 177L706 219M674 177L706 209M684 177L706 199M694 178L706 189M654 224L700 178M654 214L690 178M654 204L680 178M654 194L670 178M664 228L706 186M674 228L706 196M684 228L706 206M694 227L706 216"/>
+          <path class="rush-crease" d="M660 161A41 41 0 0 0 660 244Z"/>
+          <defs><pattern id="rushNetWeave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0H5V5" fill="none" stroke="#647a8a" stroke-opacity=".32" stroke-width=".65"/></pattern></defs>
+          <path d="M626 212H698L710 202H638Z" fill="#21445a" opacity=".10"/>
+          <path class="rush-net-bed" d="M626 212H698L710 202H638Z"/>
+          <g class="rush-net-mesh-wrap">
+            <path d="M638 144H710V202H638Z" fill="url(#rushNetWeave)" stroke="#8b9ca7" stroke-width=".9"/>
+            <path d="M626 154L638 144V202L626 212ZM698 154L710 144V202L698 212ZM626 154H698L710 144H638Z" fill="url(#rushNetWeave)" stroke="#8b9ca7" stroke-width=".9"/>
           </g>
-          <path class="rush-net-side" d="M662 177L690 177Q704 177 706 190M662 228L690 228Q704 228 706 215"/>
-          <path class="rush-net-frame" d="M662 177V228M662 177H690Q704 177 706 190V215Q704 228 690 228H662"/>
-          <circle class="rush-net-post top" cx="662" cy="177" r="3.1"/>
-          <circle class="rush-net-post bottom" cx="662" cy="228" r="3.1"/>
+          <path class="rush-net-side" d="M638 144H710V202H638M626 212H698L710 202"/>
+          <path class="rush-net-frame" d="M626 212V154H698V212"/>
+          <path class="rush-net-crossbar" d="M626 154H698" fill="none" stroke="#d32934" stroke-width="3.2" stroke-linecap="round"/>
+          <path class="rush-net-post top" d="M626 154V212" fill="none" stroke="#d32934" stroke-width="3.2"/>
+          <path class="rush-net-post bottom" d="M698 154V212" fill="none" stroke="#d32934" stroke-width="3.2"/>
+          <path d="M627 157V208M629 153H695M699 157V208" fill="none" stroke="#ffb6b8" stroke-width=".65" stroke-linecap="round"/>
         </svg>
         <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
         <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em>MPH</em></b></div>
@@ -7564,8 +7566,9 @@ const rushClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const rushLerp=(a,b,t)=>a+(b-a)*t;
 const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
-const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:662/720,backX:696/720,topY:177/405,bottomY:228/405});
-
+// Screen projection of a 6-by-4 opening, with visible roof and 3-foot depth.
+// Both actors and the frame scale from the same 720-by-405 rink coordinates.
+const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:626/720,leftX:626/720,rightX:698/720,backX:682/720,topY:154/405,bottomY:212/405,lift:0,lean:0});
 function edgeRushSegmentCircle(x0,y0,x1,y1,cx,cy,r){
   const dx=x1-x0,dy=y1-y0,fx=x0-cx,fy=y0-cy,a=dx*dx+dy*dy;
   if(a<.000001)return null;
@@ -7580,40 +7583,40 @@ function edgeRushReflect(vx,vy,nx,ny,restitution=.82,tangent=.965){
   const dot=vx*nx+vy*ny,vnx=dot*nx,vny=dot*ny,vtx=vx-vnx,vty=vy-vny;
   return {vx:-restitution*vnx+tangent*vtx,vy:-restitution*vny+tangent*vty};
 }
-function edgeRushPostRadius(w,h){
-  const scale=((w/720)+(h/405))*.5;
-  return 5+3.1*scale;
+function edgeRushPostRadius(w,h){return (5+1.6)*w/720;}
+function edgeRushInsideMouth(x,y,w,h,margin=3){
+  const N=EDGE_RUSH_NET;return x>N.leftX*w+margin&&x<N.rightX*w-margin&&y>N.topY*h+margin&&y<N.bottomY*h-margin;
 }
-function edgeRushPostPrediction(fromX,fromY,targetY,top,w,h){
-  const N=EDGE_RUSH_NET,cx=N.postX*w,cy=(top?N.topY:N.bottomY)*h,x0=fromX*w,y0=fromY*h,x1=.986*w,y1=targetY;
-  const hit=edgeRushSegmentCircle(x0,y0,x1,y1,cx,cy,edgeRushPostRadius(w,h));
-  if(!hit)return null;
-  const mag=Math.hypot(x1-x0,y1-y0)||1,ivx=(x1-x0)/mag,ivy=(y1-y0)/mag,rv=edgeRushReflect(ivx,ivy,hit.nx,hit.ny);
-  const goalX=(N.lineX+.010)*w;
-  if(rv.vx<=.0001)return {in:false,hit,rv};
-  const travel=(goalX-hit.x)/rv.vx,crossY=hit.y+rv.vy*travel;
-  const margin=5;
-  return {in:travel>=0&&crossY>N.topY*h+margin&&crossY<N.bottomY*h-margin,hit,rv,crossY};
+function edgeRushMouthEntry(x0,y0,x1,y1,w,h){
+  const N=EDGE_RUSH_NET,m=3*w/720;let lo=0,hi=1;
+  for(const [a,b,min,max] of [[x0,x1,N.leftX*w+m,N.rightX*w-m],[y0,y1,N.topY*h+m,N.bottomY*h-m]]){
+    const d=b-a;if(Math.abs(d)<1e-9){if(a<min||a>max)return null;continue;}
+    let t0=(min-a)/d,t1=(max-a)/d;if(t0>t1)[t0,t1]=[t1,t0];lo=Math.max(lo,t0);hi=Math.min(hi,t1);
+    if(lo>hi)return null;
+  }
+  return {x:rushLerp(x0,x1,lo),y:rushLerp(y0,y1,lo)};
 }
-function edgeRushPostAim(fromX,fromY,w,h,wantIn,preferTop){
+function edgeRushPostAim(fromX,fromY,w,h,wantIn,preferTop,height=.5){
+  const N=EDGE_RUSH_NET,r=edgeRushPostRadius(w,h),fy=fromY*h,fx=fromX*w;
   let best=null;
   for(const top of [preferTop,!preferTop]){
-    const cy=(top?EDGE_RUSH_NET.topY:EDGE_RUSH_NET.bottomY)*h;
-    for(let off=-40;off<=40;off+=.5){
-      const pred=edgeRushPostPrediction(fromX,fromY,cy+off,top,w,h);
-      if(!pred||pred.in!==wantIn)continue;
-      const preferred=top===preferTop?0:13;
-      const glancing=Math.max(0,.18-Math.abs(pred.rv.vx))*42;
-      const score=Math.abs(off)+preferred+glancing;
-      if(!best||score<best.score)best={score,top,x:.986,y:(cy+off)/h,pred};
+    const cx=(top?N.leftX:N.rightX)*w,cy=rushLerp(N.bottomY,N.topY,rushClamp(height,.14,.87))*h;
+    for(let a=0;a<Math.PI*2;a+=.012){
+      const nx=Math.cos(a),ny=Math.sin(a),x=cx+nx*r,y=cy+ny*r;
+      const len=Math.hypot(x-fx,y-fy)||1,ivx=(x-fx)/len,ivy=(y-fy)/len;
+      if(ivx*nx+ivy*ny>=-.02)continue;
+      const rv=edgeRushReflect(ivx,ivy,nx,ny),speed=Math.hypot(rv.vx,rv.vy)||1;
+      const inside=!!edgeRushMouthEntry(x,y,x+rv.vx/speed*240*w/720,y+rv.vy/speed*240*w/720,w,h);
+      if(inside!==wantIn)continue;
+      const score=(top===preferTop?0:2)+(wantIn?Math.abs(ny):1+ivx*nx+ivy*ny);
+      if(!best||score<best.score)best={score,top,x:(x+ivx*20*w/720)/w,y:(y+ivy*20*w/720)/h,cx:cx/w,cy:cy/h,pred:{in:inside,rv}};
     }
   }
-  if(best)return best;
-  return {top:preferTop,x:.986,y:(preferTop?EDGE_RUSH_NET.topY:EDGE_RUSH_NET.bottomY),pred:null};
+  return best;
 }
 function edgeRushPostImpact(stage,top){
   const post=stage?.querySelector(top?".rush-net-post.top":".rush-net-post.bottom"),frame=stage?.querySelector(".rush-net-frame");
-  post?.animate([{transform:"scale(1)"},{transform:"scale(1.55)"},{transform:"scale(1)"}],{duration:230,easing:"cubic-bezier(.2,.8,.2,1)"});
+  post?.animate([{stroke:'#fff',strokeWidth:5},{stroke:'#d32934',strokeWidth:3.2}],{duration:280,easing:'ease-out'});
   frame?.animate([{opacity:1},{opacity:.72},{opacity:1}],{duration:180,easing:"ease-out"});
 }
 
@@ -7765,6 +7768,7 @@ function edgeRushShot(puck,x,y,duration=.24,opts={}){
   puck.mode="shot";puck.owner=null;puck.target=null;puck.elapsed=0;puck.duration=duration;
   puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=x;puck.toY=y;
   puck.vx=(x-puck.x)/Math.max(.08,duration);puck.vy=(y-puck.y)/Math.max(.08,duration);
+  puck.z=0;puck.targetZ=0;puck.crossbar=!!opts.crossbar;puck.vz=0;puck.frameCX=opts.frameCX;puck.frameCY=opts.frameCY;
   puck.postTop=opts.postTop??null;puck.postHit=false;puck.postResult=null;puck.justPost=false;puck.postElapsed=0;
 }
 function edgeRushUpdatePuck(puck,dt,w=720,h=405){
@@ -7780,31 +7784,50 @@ function edgeRushUpdatePuck(puck,dt,w=720,h=405){
     return false;
   }
   if(puck.mode==="shot"){
-    const ox=puck.x,oy=puck.y,nx=ox+puck.vx*dt,ny=oy+puck.vy*dt;
+    const step=Math.min(dt,Math.max(0,puck.duration-puck.elapsed));
+    const ox=puck.x,oy=puck.y,nx=ox+puck.vx*step,ny=oy+puck.vy*step;
+    const endT=rushClamp((puck.elapsed+step)/puck.duration,0,1);puck.z=0;
+    if(puck.crossbar){
+      const hit=edgeRushSegmentCircle(ox*w,oy*h,nx*w,ny*h,puck.frameCX*w,puck.frameCY*h,edgeRushPostRadius(w,h));
+      if(hit){
+        puck.x=hit.x/w;puck.y=hit.y/h;
+        const v=edgeRushReflect(puck.vx*w,puck.vy*h,hit.nx,hit.ny,.64,.88);puck.vx=v.vx/w;puck.vy=v.vy/h;
+        puck.mode='frameflight';puck.flightT=0;puck.justBar=true;
+        const remain=dt-step*hit.t;puck.x+=puck.vx*remain;puck.y+=puck.vy*remain;return false;
+      }
+    }
     if(puck.postTop!==null&&!puck.postHit){
-      const N=EDGE_RUSH_NET,cx=N.postX*w,cy=(puck.postTop?N.topY:N.bottomY)*h;
+      const N=EDGE_RUSH_NET,cx=puck.frameCX*w,cy=puck.frameCY*h;
       const hit=edgeRushSegmentCircle(ox*w,oy*h,nx*w,ny*h,cx,cy,edgeRushPostRadius(w,h));
       if(hit){
         puck.x=hit.x/w;puck.y=hit.y/h;
         const rv=edgeRushReflect(puck.vx*w,puck.vy*h,hit.nx,hit.ny);
-        puck.vx=rv.vx/w;puck.vy=rv.vy/h;puck.postHit=true;puck.justPost=true;puck.mode="postflight";puck.postElapsed=0;
-        const remain=dt*(1-hit.t);puck.x+=puck.vx*remain;puck.y+=puck.vy*remain;
+        puck.vx=rv.vx/w;puck.vy=rv.vy/h;puck.vz=-.7;puck.postHit=true;puck.justPost=true;puck.mode="postflight";puck.postElapsed=0;
+        const remain=dt-step*hit.t;puck.x+=puck.vx*remain;puck.y+=puck.vy*remain;
         return false;
       }
     }
-    puck.x=nx;puck.y=ny;puck.elapsed+=dt;
+    puck.x=nx;puck.y=ny;puck.elapsed+=step;
     return puck.elapsed>=puck.duration;
   }
   if(puck.mode==="postflight"){
     const ox=puck.x,oy=puck.y;
     puck.x+=puck.vx*dt;puck.y+=puck.vy*dt;puck.postElapsed+=dt;
+    puck.vz=(puck.vz||0)-dt*3.2;puck.z=Math.max(0,(puck.z||0)+puck.vz*dt);
     const drag=Math.pow(.992,dt*60);puck.vx*=drag;puck.vy*=drag;
-    const N=EDGE_RUSH_NET,goalX=N.lineX+.010;
-    if(ox<goalX&&puck.x>=goalX&&puck.vx>0){
-      const t=(goalX-ox)/Math.max(.00001,puck.x-ox),crossY=rushLerp(oy,puck.y,rushClamp(t,0,1));
-      if(crossY>N.topY+.012&&crossY<N.bottomY-.012){puck.x=goalX;puck.y=crossY;puck.postResult="in";return true;}
+    const entry=edgeRushMouthEntry(ox*w,oy*h,puck.x*w,puck.y*h,w,h);
+    if(entry){puck.x=entry.x/w;puck.y=entry.y/h;puck.postResult="in";return true;}
+    if(puck.postElapsed>.72||puck.x<.05||puck.x>.98||puck.y<.06||puck.y>.94){puck.postResult="out";return true;}
+    return false;
+  }
+  if(puck.mode==='saveflight'||puck.mode==='frameflight'){
+    const lambda=4.8,decay=Math.exp(-lambda*dt),travel=(1-decay)/lambda;
+    puck.x+=puck.vx*travel;puck.y+=puck.vy*travel;puck.vx*=decay;puck.vy*=decay;
+    puck.flightT=(puck.flightT||0)+dt;puck.vz=(puck.vz||0)-3.2*dt;puck.z=Math.max(0,(puck.z||0)+puck.vz*dt);
+    const speed=Math.hypot(puck.vx*w,puck.vy*h);
+    if(puck.flightT>=.72||speed<16||puck.x<.03||puck.x>.97||puck.y<.05||puck.y>.95){
+      puck.x=rushClamp(puck.x,.03,.97);puck.y=rushClamp(puck.y,.05,.95);puck.z=0;puck.vx=0;puck.vy=0;return true;
     }
-    if(puck.x<.79||puck.y<.24||puck.y>.76||puck.postElapsed>.48){puck.postResult="out";return true;}
     return false;
   }
   if(puck.mode==="rebound"||puck.mode==="netcatch"){
@@ -7821,7 +7844,8 @@ function edgeRushRenderAgent(a,w,h){
 function edgeRushRenderPuck(puck,el,w,h){
   if(!el)return;
   el.style.opacity=puck.mode==="secured"?"0":"1";
-  edgeRushSet(el,puck.x*w,puck.y*h,0,puck.mode==="shot"?1.08:1);
+  const z=puck.z||0,N=EDGE_RUSH_NET;
+  edgeRushSet(el,(puck.x-z*N.lean)*w,(puck.y-z*N.lift)*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
   const pad=side=>`<g class="rush-g-pad ${side}"><path d="M-7 22L8 22L10 28Q0 32 -9 28Z" fill="#243847"/><path d="M-7 0Q0 -3 7 0L8 22Q6 27 0 27Q-6 27 -8 22Z" fill="url(#rush-pad)" stroke="#647c8c" stroke-width="1"/><path d="M-4 2L-4 21M-3 8L6 8M-3 15L6 15M-3 22L6 22" class="rush-g-detail"/><path d="M1 1L6 2L6 5L1 4Z" fill="#234b67"/><circle data-goalie-contact="${side}" cx="0" cy="20" r=".2" fill="transparent"/></g>`;
@@ -7831,9 +7855,9 @@ function edgeRushGoalieMarkup(){
     <g class="rush-g-hips"><path d="M29 48Q41 44 53 48L57 60L47 65L41 57L35 65L25 60Z" fill="#233e51" stroke="#183447" stroke-width="1"/></g>
     ${pad('left')}${pad('right')}
     <g class="rush-g-torso"><path d="M28 28Q40 24 52 29L55 40L51 52Q41 56 29 51L24 40Z" fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/><path d="M29 46Q40 50 51 47" stroke="#e1ebf1" stroke-width="2.6" fill="none"/><path d="M32 30L30 42M49 32L50 42" class="rush-g-seam"/><path d="M37 34L44 34L46 40L40 44L35 39Z" fill="#dde8ef" opacity=".85"/></g>
-    <g class="rush-g-arm glove"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-glove"><path d="M-7 -6Q-1 -10 6 -5L8 1Q6 8 0 8Q-8 7 -9 1Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path class="rush-g-pocket" d="M-5 -3Q1 -7 4 -2Q5 4 0 5Q-6 4 -5 -3Z" fill="#557385"/><path d="M-4 -2L3 3M-4 2L3 -2M0 -4L0 4" class="rush-g-seam"/><circle data-goalie-contact="glove" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
-    <g class="rush-g-arm blocker"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-blocker"><path d="M-6 -9Q0 -11 6 -8L7 7Q0 10 -6 7Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M-3 -6L-3 5M2 -6L2 5" class="rush-g-detail"/><circle data-goalie-contact="blocker" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
-    <g class="rush-g-stick"><path d="M58 49L34 78" stroke="#344c5c" stroke-width="2.4"/><path d="M34 78L29 82L12 82L10 86L33 86L39 80Z" fill="#eef4f8" stroke="#647e8f" stroke-width=".8"/><path d="M12 84L27 84" stroke="#273e4e" stroke-width="2.5"/></g>
+    <g class="rush-g-arm glove"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-glove"><path d="M5 -5L9 0L6 7L1 8L-2 5L-8 6L-12 2L-12 -4L-8 -10L-1 -12L3 -9L1 -3Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path class="rush-g-pocket" d="M-8 -7L0 -7L2 1L-6 3Z" fill="#557385"/><path d="M-8 -6L1 0M-8 -2L0 -6M-5 -7L-4 2M-10 -4L-1 1" class="rush-g-seam"/><circle data-goalie-contact="glove" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
+    <g class="rush-g-arm blocker"><path class="rush-g-sleeve" fill="none" stroke="#345a76" stroke-width="10"/><path class="rush-g-sleeve-light" fill="none" stroke="#7191a7" stroke-width="2"/><g class="rush-g-blocker"><path d="M-6 -9Q0 -11 6 -8L7 7Q0 10 -6 7Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M-3 -6L-3 5M2 -6L2 5" class="rush-g-detail"/><circle data-goalie-contact="blocker-a" cx="0" cy="-8" r=".2" fill="transparent"/><circle data-goalie-contact="blocker-b" cx="0" cy="7" r=".2" fill="transparent"/><circle data-goalie-contact="blocker" cx="0" cy="0" r=".2" fill="transparent"/></g></g>
+    <g class="rush-g-stick"><path class="rush-g-shaft" fill="none" stroke="#3a4e5d" stroke-width="2.4"/><path class="rush-g-paddle" fill="#edf3f7" stroke="#687f8f" stroke-width=".8"/><path class="rush-g-blade" d="M24 81H43L46 84L44 87H23Q20 84 24 81Z" fill="#edf3f7" stroke="#687f8f" stroke-width=".8"/><path d="M24 84H37" stroke="#263c4b" stroke-width="2.8"/></g>
     <g class="rush-g-mask"><path d="M31 11Q39 6 46 12L48 21Q43 29 36 27L29 22L28 16Z" fill="url(#rush-pad)" stroke="#647e8f" stroke-width="1"/><path d="M29 15L40 14L43 19L38 25L30 22Z" fill="#2a485c"/><path d="M30 17L41 17M30 20L40 20M33 15L33 23M37 15L37 24" stroke="#d0dfe8" stroke-width=".7" fill="none"/><path d="M42 11L45 15L45 20" stroke="#fff" stroke-width="1.4" fill="none"/></g>
     <circle data-goalie-contact="cover" cx="27" cy="82" r=".2" fill="transparent"/>
   </g></svg></div>`;
@@ -7842,7 +7866,7 @@ function edgeRushShotProfile(finisher,line,finish,correct){
   const seed=hash(`rush-shot-${finisher.id}-${line.rating}-${Math.round(finish.y*1000)}`);
   const r1=(seed&1023)/1023,r2=((seed>>>10)&1023)/1023;
   const height=rushClamp(.18+.64*r1+.12*finisher.brain.shot,.16,.94);
-  const targetY=rushClamp(.5+(finish.y-.5)*.78+(r2-.5)*.035,.425,.575);
+  const targetY=rushClamp(.5+(finish.y-.5)*.78+(r2-.5)*.035,.44,.56);
   let save;
   if(height>.64) save=targetY<.5?"glove":"blocker";
   else if(height<.36) save=Math.abs(targetY-.5)<.035?"butterfly":targetY<.5?"leftpad":"rightpad";
@@ -7857,19 +7881,19 @@ function edgeRushRenderGoalie(g,el,w,h){
   const names=['body','torso','hips','mask','shadow','pad.left','pad.right','arm.glove','arm.blocker','glove','blocker','pocket','stick'];
   const rig=g.rig||(g.rig=Object.fromEntries(names.map(k=>[k,el.querySelector('.rush-g-'+k)])));
   const ease=v=>{v=rushClamp(v||0,0,1);return v*v*(3-2*v);};
-  const t=ease(g.actionT),c=ease(g.coverT),save=g.saveType||'';
+  const t=ease(g.actionT),c=ease(g.coverT),save=g.saveType||'',set=g.stance||.35;
   const catchSave=save==='glove',low=(['butterfly','leftpad','rightpad','beaten'].includes(save)?t:0);
   const drop=Math.max(low,c*(catchSave?.12:1)),yaw=rushClamp(g.face||0,-26,26)/26;
   // Ice position is the feet. Head stays above shoulders, pads below hips.
-  el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) translate(-41px,-83px)`;
+  el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) scale(${w/720}) translate(-41px,-83px)`;
   rig.body.setAttribute('transform',`translate(${yaw*2} 0)`);
-  rig.torso.setAttribute('transform',`translate(${yaw*1.5-1} ${3+drop*9}) rotate(${yaw*4} 41 50)`);
-  rig.hips.setAttribute('transform',`translate(0 ${drop*13})`);
-  rig.mask.setAttribute('transform',`translate(${yaw*3-4-2*c} ${6+drop*8+2*c})`);
+  rig.torso.setAttribute('transform',`translate(${yaw*1.5-1} ${6+set*2+drop*6}) rotate(${yaw*4} 41 50)`);
+  rig.hips.setAttribute('transform',`translate(0 ${3+drop*10})`);
+  rig.mask.setAttribute('transform',`translate(${yaw*3-4-2*c} ${10+set*2+drop*4+2*c})`);
   const l=drop*55+(save==='leftpad'?t*15:0),r=-drop*55-(save==='rightpad'?t*15:0);
-  rig['pad.left'].setAttribute('transform',`translate(${31-drop*1.5} ${54+drop*16}) rotate(${14+l})`);
-  rig['pad.right'].setAttribute('transform',`translate(${51+drop*1.5} ${54+drop*16}) rotate(${-14+r})`);
-  let gx=19-yaw*2,gy=44-(catchSave?18*t:0),bx=61-yaw,by=46-(save==='blocker'?16*t:0);
+  rig['pad.left'].setAttribute('transform',`translate(${31-drop*1.5} ${57+drop*13}) rotate(${14+l})`);
+  rig['pad.right'].setAttribute('transform',`translate(${51+drop*1.5} ${57+drop*13}) rotate(${-14+r})`);
+  let gx=19-yaw*2,gy=47-(catchSave?19*t:0),bx=52-yaw+9*(save==='blocker'?t:0),by=55-(save==='blocker'?23*t:0);
   gx=rushLerp(gx,catchSave?34:27,c);gy=rushLerp(gy,catchSave?41:82,c);
   bx=rushLerp(bx,52,c);by=rushLerp(by,catchSave?48:67,c);
   const arm=(key,sx,sy,hx,hy)=>{const group=rig[key],d=`M${sx} ${sy}Q${(sx+hx)/2+3} ${(sy+hy)/2+5} ${hx} ${hy}`;group.querySelector('.rush-g-sleeve').setAttribute('d',d);group.querySelector('.rush-g-sleeve-light').setAttribute('d',d);};
@@ -7877,13 +7901,31 @@ function edgeRushRenderGoalie(g,el,w,h){
   rig.glove.setAttribute('transform',`translate(${gx} ${gy}) rotate(${-12+18*c}) scale(${1-.12*c} ${1-.22*c})`);
   rig.blocker.setAttribute('transform',`translate(${bx} ${by}) rotate(12)`);
   rig.pocket.setAttribute('opacity',1-.85*c);
-  rig.stick.setAttribute('transform',`rotate(${-drop*8} 29 83)`);
+  const dx=35-bx,dy=83-by,len=Math.hypot(dx,dy)||1,px=-dy/len*3,py=dx/len*3;
+  const sx=bx+dx*.45,sy=by+dy*.45;
+  rig.stick.querySelector('.rush-g-shaft').setAttribute('d',`M${bx-dx*.3} ${by-dy*.3}L35 83`);
+  rig.stick.querySelector('.rush-g-paddle').setAttribute('d',`M${sx+px} ${sy+py}L${35+px} ${83+py}L${35-px} ${83-py}L${sx-px} ${sy-py}Z`);
   rig.shadow.setAttribute('rx',26+drop*8);
 }
 function edgeRushGoaliePoint(el,type,w,h){
   const marker=el.querySelector(`[data-goalie-contact="${type}"]`),stage=$('erStage');
   const a=marker.getBoundingClientRect(),b=stage.getBoundingClientRect();
   return {x:(a.left+a.width/2-b.left)/w,y:(a.top+a.height/2-b.top)/h};
+}
+function edgeRushSaveDeflect(puck,g,el,w,h,type){
+  let nx=-1,ny=0;
+  if(type==='blocker'){
+    const a=edgeRushGoaliePoint(el,'blocker-a',w,h),b=edgeRushGoaliePoint(el,'blocker-b',w,h);
+    const tx=(b.x-a.x)*w,ty=(b.y-a.y)*h,len=Math.hypot(tx,ty)||1;
+    nx=-ty/len;ny=tx/len;
+  }else{
+    const angle=(type==='leftpad'?-28:28)*Math.PI/180;nx=-Math.cos(angle);ny=Math.sin(angle);
+  }
+  const incoming=puck.vx*w*nx+puck.vy*h*ny;
+  if(incoming>0){nx=-nx;ny=-ny;}
+  const v=edgeRushReflect(puck.vx*w,puck.vy*h,nx,ny,type==='blocker'?.55:.43,.84);
+  puck.vx=v.vx/w;puck.vy=v.vy/h;puck.vz=0;puck.z=0;puck.mode='saveflight';puck.flightT=0;
+  g.state='rebound';g.coverT=0;
 }
 function edgeRushUpdateGoalie(g,puck,dt){
   if(g.state==='saving'){
@@ -7893,7 +7935,7 @@ function edgeRushUpdateGoalie(g,puck,dt){
     g.actionT=1;g.coverT=rushMoveToward(g.coverT||0,1,dt*2.5);return;
   }
   if(g.state==='secured')return;
-  if(g.state==='post'){g.actionT=rushMoveToward(g.actionT||0,0,dt*2);return;}
+  if(g.state==='rebound'||g.state==='post'){g.actionT=rushMoveToward(g.actionT||0,0,dt*2);return;}
   const threat=puck.owner||puck.target||null,brain=threat?.brain||{};
   const angle=Math.atan2(puck.y-g.y,Math.max(.04,g.x-puck.x))*180/Math.PI;
   const approach=rushClamp((puck.x-.42)/.46,0,1);
@@ -7901,7 +7943,7 @@ function edgeRushUpdateGoalie(g,puck,dt){
   const settle=(value,target,rate)=>rushLerp(value,target,1-Math.exp(-rate*dt));
   g.face=settle(g.face||0,rushClamp(angle,-26,26),10);
   const challenge=(.010+.021*shotThreat)*approach*(puck.mode==='pass'?.62:1);
-  g.x=settle(g.x,.895-challenge,5);
+  g.x=settle(g.x,.924-challenge,5);
   const targetY=rushClamp(.5+(puck.y-.5)*(.80+.12*approach),.392,.608);
   g.y=settle(g.y,targetY,puck.mode==='shot'?9:6);
   g.stance=settle(g.stance||0,rushClamp(.34+.62*approach+.12*shotThreat,.34,1),8);
@@ -7927,7 +7969,7 @@ function edgeRushWait(ms,token){
 async function edgeRushAnimate(r,picked,correct) {
   const token=++rushAnimToken,stage=$("erStage"),actors=$("erActors");
   if(!stage||!actors)return;
-  stage.classList.remove("goal","net-hit","post-hit");stage.querySelectorAll(".rush-net-post").forEach(p=>p.classList.remove("hit"));$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");
+  stage.classList.remove("goal","net-hit","post-hit");stage.querySelectorAll(".rush-net-post,.rush-net-crossbar").forEach(p=>p.classList.remove("hit"));$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");
   $("erPhase").textContent="SET THE BREAKOUT";
 
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,finisherId]=calc.roles;
@@ -7942,17 +7984,17 @@ async function edgeRushAnimate(r,picked,correct) {
   const d1={x:.61,y:.38,vx:0,vy:0,tx:.61,ty:.38,maxSpeed:.188,accel:.34,decel:.46,mode:"gap",el:actors.querySelector('[data-def="1"]')};
   const d2={x:.63,y:.63,vx:0,vy:0,tx:.63,ty:.63,maxSpeed:.188,accel:.34,decel:.46,mode:"middle",el:actors.querySelector('[data-def="2"]')};
   carrier.el=actors.querySelector(`[data-rush-id="${carrierId}"]`);support.el=actors.querySelector(`[data-rush-id="${supportId}"]`);finisher.el=actors.querySelector(`[data-rush-id="${finisherId}"]`);
-  const goalie={x:.895,y:.50,face:0,stance:.35,actionT:0,saveType:"",shotY:.5},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
+  const goalie={x:.924,y:.50,face:0,stance:.35,actionT:0,saveType:"",shotY:.5},goalieEl=actors.querySelector("[data-goalie]"),puckEl=actors.querySelector("[data-rush-puck]");
   const puck={mode:"carry",owner:carrier,target:null,x:carrier.x,y:carrier.y,elapsed:0,duration:0};
   const zone=edgeRushZone(finisherId);
   const finish=zone==="high"?{x:.80,y:.50}:zone==="mid"?{x:.745,y:.65}:{x:.665,y:.38};
   const shotProfile=edgeRushShotProfile(finisher,line,finish,correct);
   const outcomeSeed=hash(`rush-outcome-${finisherId}-${line.rating}-${Math.round(finish.y*1000)}`);
   const outcomeRoll=(outcomeSeed&1023)/1023;
-  const shotOutcome=correct?(outcomeRoll<.16?"postin":"goal"):(outcomeRoll<.24?"post":"save");
+  const shotOutcome=correct?(outcomeRoll<.16?"postin":"goal"):(outcomeRoll<.14?"post":outcomeRoll<.24?"crossbar":"save");
   const NET=EDGE_RUSH_NET,preferredPostTop=shotProfile.targetY<.5;
-  const netY=rushClamp(shotProfile.targetY,NET.topY+.018,NET.bottomY-.018);
-  const shotEnd=shotOutcome==="goal"?{x:NET.lineX+.014,y:netY}:{x:.872,y:shotProfile.targetY};
+  const netY=rushLerp(NET.bottomY-.018,NET.topY+.018,shotProfile.height);
+  const shotEnd=shotOutcome==='goal'?{x:.932,y:netY}:shotOutcome==='crossbar'?{x:.932,y:NET.topY}:{x:.872,y:shotProfile.targetY};
   const agents=[carrier,support,finisher];
   let firstReceiver=null,holdUntil=0,finisherDekeUsed=false,postPlan=null;
 
@@ -8126,7 +8168,7 @@ async function edgeRushAnimate(r,picked,correct) {
           if(now-phaseAt>Math.max(135,releaseDelay)||pressure<.088){
             const blade=edgeRushStick(finisher);puck.x=blade.x;puck.y=blade.y;
             const postShot=shotOutcome==="postin"||shotOutcome==="post";
-            postPlan=postShot?edgeRushPostAim(blade.x,blade.y,w,h,shotOutcome==="postin",preferredPostTop):null;
+            postPlan=postShot?edgeRushPostAim(blade.x,blade.y,w,h,shotOutcome==="postin",preferredPostTop,shotProfile.height):null;
             let releaseEnd=postPlan?{x:postPlan.x,y:postPlan.y}:shotEnd;
             goalie.saveType=shotOutcome==="save"?shotProfile.save:"beaten";
             goalie.shotY=postPlan?(postPlan.top?NET.topY:NET.bottomY):releaseEnd.y;goalie.actionT=0;
@@ -8136,7 +8178,11 @@ async function edgeRushAnimate(r,picked,correct) {
               releaseEnd=edgeRushGoaliePoint(goalieEl,contact,w,h);
               goalie.actionT=0;edgeRushRenderGoalie(goalie,goalieEl,w,h);
             }
-            edgeRushShot(puck,releaseEnd.x,releaseEnd.y,.32-.115*finisher.brain.shot,postPlan?{postTop:postPlan.top}:{});
+            if(shotOutcome==='crossbar'){
+              const dx=releaseEnd.x*w-blade.x*w,dy=releaseEnd.y*h-blade.y*h,len=Math.hypot(dx,dy)||1;
+              releaseEnd={x:releaseEnd.x+dx/len*15*w/720/w,y:releaseEnd.y+dy/len*15*w/720/h};
+            }
+            edgeRushShot(puck,releaseEnd.x,releaseEnd.y,.32-.115*finisher.brain.shot,{postTop:postPlan?postPlan.top:null,crossbar:shotOutcome==='crossbar',frameCX:postPlan?postPlan.cx:shotEnd.x,frameCY:postPlan?postPlan.cy:NET.topY});
             puckEl.classList.remove("in-net","posted");puckEl.classList.add("shooting");edgeRushRadar(edgeValue(finisherId,"shot"),token);
             phase="shot";phaseAt=now;$("erPhase").textContent="RELEASE";
           }
@@ -8162,6 +8208,11 @@ async function edgeRushAnimate(r,picked,correct) {
       const puckComplete=edgeRushUpdatePuck(puck,dt,w,h);
       edgeRushUpdateGoalie(goalie,puck,dt);
 
+      if(puck.justBar){
+        puck.justBar=false;const bar=stage.querySelector('.rush-net-crossbar');
+        bar?.animate([{stroke:'#fff'},{stroke:'#d32934'}],{duration:320});
+        puckEl.classList.remove('shooting');$("erPhase").textContent='OFF THE CROSSBAR';
+      }
       if(puck.justPost){
         edgeRushPostImpact(stage,puck.postTop);
         puckEl.classList.remove("shooting");puckEl.classList.add("posted");
@@ -8169,11 +8220,14 @@ async function edgeRushAnimate(r,picked,correct) {
       }
 
       if(phase==="shot"&&puckComplete&&!shotDoneAt){
-        if(shotOutcome==="postin"||shotOutcome==="post"){
+        if(shotOutcome==='crossbar'){
+          shotDoneAt=now;puck.mode='dead';goalie.state='post';
+          puckEl.classList.remove('shooting','posted','in-net');
+        }else if(shotOutcome==="postin"||shotOutcome==="post"){
           if(puck.postResult==="in"){
             puckEl.classList.remove("shooting","posted");puckEl.classList.add("in-net");
             puck.mode="netcatch";puck.elapsed=0;puck.duration=.17;puck.fromX=puck.x;puck.fromY=puck.y;
-            puck.toX=NET.backX;puck.toY=rushClamp(.5+(puck.y-.5)*.30,.478,.522);
+            puck.toX=rushClamp(puck.x+12/720,NET.leftX+12/720+.008,NET.rightX+12/720-.008);puck.toY=rushClamp(puck.y-10/405,NET.topY-10/405+.008,NET.bottomY-10/405-.008);
             phase="netcatch";$("erPhase").textContent="POST AND IN";
           }else{
             shotDoneAt=now;puck.mode="dead";goalie.state="post";
@@ -8182,10 +8236,15 @@ async function edgeRushAnimate(r,picked,correct) {
         }else if(shotOutcome==="goal"){
           puckEl.classList.remove("shooting");puckEl.classList.add("in-net");
           puck.mode="netcatch";puck.elapsed=0;puck.duration=.18;puck.fromX=puck.x;puck.fromY=puck.y;
-          puck.toX=NET.backX;puck.toY=rushClamp(.5+(netY-.5)*.32,.475,.525);
+          puck.toX=rushClamp(puck.x+12/720,NET.leftX+12/720+.008,NET.rightX+12/720-.008);puck.toY=rushClamp(netY-10/405,NET.topY-10/405+.008,NET.bottomY-10/405-.008);
           phase="netcatch";$("erPhase").textContent="IN THE NET";
         }else{
-          goalie.state='covering';goalie.coverT=0;goalie.actionT=1;
+          goalie.actionT=1;edgeRushRenderGoalie(goalie,goalieEl,w,h);
+          if(['blocker','leftpad','rightpad'].includes(shotProfile.save)){
+            edgeRushSaveDeflect(puck,goalie,goalieEl,w,h,shotProfile.save);
+            phase='saverebound';$("erPhase").textContent=shotProfile.save==='blocker'?'BLOCKER DEFLECTION':'PAD REBOUND';
+          }else{
+          goalie.state='covering';goalie.coverT=0;
           phase='savecover';$("erPhase").textContent=shotProfile.save==='glove'?'CAUGHT IN THE GLOVE':'SAVE · COVERING THE PUCK';
           puckEl.classList.remove("shooting","posted","in-net");
           if(shotProfile.save==='glove')puck.mode='glovehold';
@@ -8193,7 +8252,11 @@ async function edgeRushAnimate(r,picked,correct) {
             puck.mode='rebound';puck.elapsed=0;puck.duration=.16;puck.fromX=puck.x;puck.fromY=puck.y;
             const cover=edgeRushGoaliePoint(goalieEl,'cover',w,h);puck.toX=cover.x;puck.toY=cover.y;
           }
+          }
+          puckEl.classList.remove('shooting','posted','in-net');
         }
+      }else if(phase==='saverebound'&&puckComplete&&!shotDoneAt){
+        puck.mode='dead';shotDoneAt=now;$("erPhase").textContent='REBOUND · PLAY DEAD';
       }else if(phase==="netcatch"&&puckComplete&&!shotDoneAt){
         shotDoneAt=now;stage.classList.add("goal","net-hit");puck.mode="dead";
       }
@@ -8213,7 +8276,7 @@ async function edgeRushAnimate(r,picked,correct) {
       if(shotDoneAt&&now-shotDoneAt>820){
         finished=true;
         $("erPhase").textContent=correct?"BEST PROFILE":"TRACKING VERDICT";
-        $("erCalloutMain").textContent=shotOutcome==="post"?"POST":correct?"GOAL":edgeRushSaveLabel(shotProfile.save);
+        $("erCalloutMain").textContent=shotOutcome==="post"?"POST":shotOutcome==="crossbar"?"CROSSBAR":correct?"GOAL":edgeRushSaveLabel(shotProfile.save);
         $("erCalloutSub").textContent=`${line.rating} EDGE RUSH · ${edgeValue(finisherId,"shot").toFixed(2)} MPH`;
         $("erCallout").classList.remove("on");void $("erCallout").offsetWidth;$("erCallout").classList.add("on");
         setTimeout(()=>{
