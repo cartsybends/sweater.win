@@ -1151,39 +1151,44 @@ TEMPLATE = r'''<!DOCTYPE html>
     border-radius:50%; background:#aab8c1;
   }
   .rush-defender .rush-stick-svg { left:27px; top:16px; width:46px; height:28px; }
-  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:72px; height:74px; will-change:transform; }
+  .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:74px; height:74px; will-change:transform; }
   .rush-g-body { position:absolute; inset:0; transform-origin:50% 50%; will-change:transform; }
   .rush-g-chest {
-    position:absolute; z-index:4; left:25px; top:20px; width:28px; height:34px; border:2px solid #334a58; border-radius:9px;
+    position:absolute; z-index:4; left:27px; top:20px; width:29px; height:34px; border:2px solid #334a58; border-radius:9px;
     background:#5f7685;
   }
   .rush-g-chest::before { content:""; position:absolute; left:5px; right:5px; top:16px; border-top:2px solid rgba(255,255,255,.55); }
   .rush-g-mask {
-    position:absolute; z-index:8; left:8px; top:28px; width:18px; height:18px; border:2px solid #334a58; border-radius:50%; background:#eef2f4;
+    position:absolute; z-index:8; left:9px; top:28px; width:19px; height:18px; border:2px solid #334a58; border-radius:50%; background:#eef2f4;
   }
   .rush-g-mask::before { content:""; position:absolute; left:3px; right:3px; top:5px; border-top:1px solid #647983; box-shadow:0 4px 0 #647983; }
   .rush-g-mask::after { content:""; position:absolute; top:3px; bottom:3px; left:8px; border-left:1px solid #647983; }
   .rush-g-arm {
-    position:absolute; z-index:5; left:19px; width:27px; height:9px; border:2px solid #334a58; border-radius:999px; background:#5f7685;
-    transform-origin:90% 50%; will-change:transform;
+    position:absolute; z-index:6; left:20px; width:27px; height:9px; border:2px solid #334a58; border-radius:999px; background:#5f7685;
+    transform-origin:92% 50%; will-change:transform;
   }
-  .rush-g-arm.glove { top:10px; transform:rotate(-18deg); }
-  .rush-g-arm.blocker { top:55px; transform:rotate(18deg); }
-  .rush-g-glove,.rush-g-blocker { position:absolute; left:-9px; top:50%; width:12px; height:12px; transform:translateY(-50%); border:2px solid #607582; background:#f6f8f9; }
-  .rush-g-glove { border-radius:58% 42% 58% 42%; }
-  .rush-g-blocker { border-radius:3px; }
+  .rush-g-arm.glove { top:11px; transform:rotate(-24deg); }
+  .rush-g-arm.blocker { top:49px; transform:rotate(12deg); }
+  .rush-g-glove,.rush-g-blocker {
+    position:absolute; z-index:8; left:-10px; top:50%; transform:translateY(-50%); border:2px solid #607582; background:#f6f8f9;
+  }
+  .rush-g-glove { width:15px; height:15px; border-radius:60% 42% 58% 44%; }
+  .rush-g-glove::after { content:""; position:absolute; inset:3px; border:1px solid #8c9ba3; border-radius:50%; }
+  .rush-g-blocker { width:15px; height:13px; border-radius:3px; }
   .rush-g-pad {
-    position:absolute; z-index:3; left:49px; width:20px; height:17px; border:2px solid #7b8d97; border-radius:4px 8px 8px 4px;
+    position:absolute; z-index:3; left:50px; width:20px; height:17px; border:2px solid #7b8d97; border-radius:4px 8px 8px 4px;
     background:#f8fafb; transform-origin:8% 50%; will-change:transform;
   }
   .rush-g-pad::before { content:""; position:absolute; left:4px; right:3px; top:7px; border-top:1px solid #a7b4bb; }
   .rush-g-pad.left { top:17px; transform:rotate(-4deg); }
   .rush-g-pad.right { top:40px; transform:rotate(4deg); }
   .rush-g-stick {
-    position:absolute; z-index:6; left:2px; top:48px; width:62px; height:28px; overflow:visible; transform-origin:48px 8px; will-change:transform;
+    position:absolute; z-index:5; left:-17px; top:-15px; width:60px; height:42px; overflow:visible;
+    transform-origin:15px 20px; will-change:transform; pointer-events:none;
   }
-  .rush-g-stick .rush-stick-shaft { stroke-width:3.4; }
+  .rush-g-stick .rush-stick-shaft { stroke-width:3.1; }
   .rush-g-stick .rush-goalie-paddle { fill:#eef2f4; stroke:#607582; stroke-width:1; }
+  .rush-g-stick .rush-stick-grip { stroke-width:4; }
   .rush-puck {
     position: absolute; z-index: 12; left: 0; top: 0; width: 10px; height: 7px; border-radius: 50%; background: #111820;
     box-shadow: 0 2px 4px rgba(0,0,0,.35); will-change: transform;
@@ -7651,7 +7656,7 @@ function edgeRushRenderPuck(puck,el,w,h){
   edgeRushSet(el,puck.x*w,puck.y*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
-  return '<div class="rush-goalie" data-goalie><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-arm glove"><b class="rush-g-glove"></b></i><i class="rush-g-arm blocker"><b class="rush-g-blocker"></b></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i><svg class="rush-g-stick" viewBox="0 0 78 30" aria-hidden="true"><path class="rush-stick-shaft" d="M70 5L25 18"/><path class="rush-goalie-paddle" d="M43 12L25 18L31 23L48 17Z"/><path class="rush-stick-blade" d="M27 18Q17 23 5 22L4 27Q17 30 31 23Z"/><path class="rush-stick-tape" d="M25 21Q16 25 6 24"/></svg></span></div>';
+  return '<div class="rush-goalie" data-goalie><span class="rush-g-body"><i class="rush-g-mask"></i><i class="rush-g-chest"></i><i class="rush-g-arm glove"><b class="rush-g-glove"></b></i><i class="rush-g-arm blocker"><b class="rush-g-blocker"></b><svg class="rush-g-stick" viewBox="0 0 60 42" aria-hidden="true"><path class="rush-stick-shaft" d="M15 20L45 9"/><path class="rush-stick-grip" d="M15 20L23 17"/><path class="rush-goalie-paddle" d="M15 20L10 24L20 31L27 27L22 17Z"/><path class="rush-stick-blade" d="M11 23Q6 25 2 25L3 31Q11 32 21 28L20 24Z"/><path class="rush-stick-tape" d="M4 28Q10 29 18 26"/></svg></i><i class="rush-g-pad left"></i><i class="rush-g-pad right"></i></span></div>';
 }
 function edgeRushShotProfile(finisher,line,finish,correct){
   const seed=hash(`rush-shot-${finisher.id}-${line.rating}-${Math.round(finish.y*1000)}`);
@@ -7674,21 +7679,21 @@ function edgeRushRenderGoalie(g,el,w,h){
   const set=(g.stance||0)*2.7,face=rushClamp(g.face||0,-18,18),save=g.saveType||"";
   edgeRushSet(el,g.x*w,g.y*h,0,1);
   if(body)body.style.transform=`translateX(${-set}px) rotate(${face*.55}deg)`;
-  let lp=-4,rp=4,ltx=0,lty=0,rtx=0,rty=0,gar=-18,gax=0,gay=0,bar=18,bax=0,bay=0,stickR=5,stickX=0,stickY=0;
+  let lp=-4,rp=4,ltx=0,lty=0,rtx=0,rty=0,gar=-24,gax=0,gay=0,bar=12,bax=0,bay=0,stickR=0,stickX=0,stickY=0;
   if(save==="butterfly"){
-    lp=-4-28*t;rp=4+28*t;ltx=-7*t;lty=-8*t;rtx=-7*t;rty=8*t;gar=-18-9*t;bar=18+9*t;stickR=-1;stickX=-4*t;
+    lp=-4-28*t;rp=4+28*t;ltx=-7*t;lty=-8*t;rtx=-7*t;rty=8*t;gar=-24-5*t;bar=12+4*t;stickR=-2*t;stickX=-2*t;
   }else if(save==="glove"){
-    gar=-18-38*t;gax=-10*t;gay=-10*t;lp=-4-7*t;rp=4+4*t;stickR=3;
+    gar=-24-34*t;gax=-11*t;gay=-9*t;lp=-4-7*t;rp=4+4*t;bar=12+2*t;stickR=-1*t;
   }else if(save==="blocker"){
-    bar=18+36*t;bax=-9*t;bay=9*t;lp=-4-4*t;rp=4+7*t;stickR=10;stickY=4*t;
+    bar=12+28*t;bax=-9*t;bay=7*t;lp=-4-4*t;rp=4+7*t;stickR=-5*t;stickX=-2*t;stickY=1*t;
   }else if(save==="leftpad"){
-    lp=-4-38*t;ltx=-8*t;lty=-11*t;rp=4+10*t;stickR=0;stickX=-3*t;
+    lp=-4-38*t;ltx=-8*t;lty=-11*t;rp=4+10*t;gar=-24-3*t;bar=12+2*t;stickR=-2*t;
   }else if(save==="rightpad"){
-    rp=4+38*t;rtx=-8*t;rty=11*t;lp=-4-10*t;stickR=0;stickX=-3*t;
+    rp=4+38*t;rtx=-8*t;rty=11*t;lp=-4-10*t;gar=-24-2*t;bar=12+5*t;stickR=-3*t;stickX=-2*t;
   }else if(save==="beaten"){
     const dir=(g.shotY||.5)<.5?-1:1;
-    gar=-18-22*t*(dir<0?1:.30);bar=18+22*t*(dir>0?1:.30);gax=-6*t*(dir<0?1:0);bax=-6*t*(dir>0?1:0);
-    lp=-4-12*t;rp=4+12*t;stickR=5+5*t*dir;
+    gar=-24-20*t*(dir<0?1:.30);bar=12+20*t*(dir>0?1:.30);gax=-6*t*(dir<0?1:0);bax=-6*t*(dir>0?1:0);
+    lp=-4-12*t;rp=4+12*t;stickR=-3*t*dir;
   }
   if(left)left.style.transform=`translate(${ltx}px,${lty}px) rotate(${lp}deg)`;
   if(right)right.style.transform=`translate(${rtx}px,${rty}px) rotate(${rp}deg)`;
