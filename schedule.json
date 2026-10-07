@@ -1380,7 +1380,9 @@
     8482747,
     8483495,
     8483609,
+    8484154,
     8484180,
+    8484234,
     8484768,
     8484860,
     8484958
@@ -267076,6 +267078,21 @@
    "bs": "",
    "wt": 215
   },
+  "8484154": {
+   "id": 8484154,
+   "name": "Jonathan Castagna",
+   "team": "CGY",
+   "pos": "C",
+   "shoots": "L",
+   "birth": "2005-04-20",
+   "nation": "CAN",
+   "number": 38,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CGY/8484154.png",
+   "ht": 73,
+   "bc": "Toronto",
+   "bs": "ON",
+   "wt": 183
+  },
   "8484158": {
    "id": 8484158,
    "name": "Easton Cowan",
@@ -267348,6 +267365,21 @@
    "bc": "Boston",
    "bs": "MA",
    "wt": 180
+  },
+  "8484234": {
+   "id": 8484234,
+   "name": "Aydar Suniev",
+   "team": "CGY",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2004-11-16",
+   "nation": "RUS",
+   "number": 61,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/CGY/8484234.png",
+   "ht": 74,
+   "bc": "Kazan",
+   "bs": "",
+   "wt": 198
   },
   "8484240": {
    "id": 8484240,
