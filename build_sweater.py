@@ -8010,10 +8010,13 @@ function edgeRushUpdateMove(a,now){
     if(t<.18){a.tx=Math.min(a.tx,m.fromX+.015);a.ty=rushClamp(m.fromY-m.direction*.024*fake,.21,.79);}
     const load=Math.sin(Math.PI*rushClamp((t-.08)/.80,0,1));
     const sweep=m.type==='forehand-backhand'?-a.hand*52*Math.sin(Math.PI*t):m.type==='toe-drag'?a.hand*42*load:m.direction*28*load;
-    a.stickAngle=sweep;a.stickX=m.type==='toe-drag'?-8*load:-2*load;
-    a.stickY=m.direction*6*load;a.fakeYaw=-m.direction*fake*9+m.direction*load*3;
+    // Pull the exposed puck outside the reaching blade during the opening fake,
+    // then release that protection into the selected move as the gap opens.
+    const protect=Math.sin(Math.min(1,t/.10)*Math.PI/2)*(1-rushClamp((t-.35)/.25,0,1));
+    a.stickAngle=rushLerp(sweep,m.direction*32,protect);a.stickX=-Math.max(m.type==='toe-drag'?8*load:2*load,8*protect);
+    a.stickY=m.direction*6*Math.max(load,protect);a.fakeYaw=-m.direction*fake*9+m.direction*load*3;
     a.dekeLoad=load*.7;a.dekeEdge=m.direction*load*.16;
-    const beaten=m.cutCleared&&a.x>d.x+.028&&edgeRushDistance(a,d)>.060;
+    const beaten=m.cutCleared&&a.x>d.x+.015&&edgeRushDistance(a,d)>.060;
     if(beaten||t>=1){
       if(beaten){a.soloRush.beaten.push(d);a.soloRush.lastMove=m.type;}
       else{a.soloRush=null;a.soloFailedAt=now;}
