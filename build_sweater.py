@@ -1116,56 +1116,17 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-callout.on { animation: rushCallout .62s cubic-bezier(.18,.86,.22,1.1) both; }
   .rush-callout strong { display: block; font-size: clamp(24px,5vw,42px); line-height: .95; letter-spacing: -.055em; }
   .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
-  .rush-actor {
-    position:absolute; z-index:8; left:0; top:0; width:78px; height:66px; pointer-events:none; will-change:transform;
-  }
-  .rush-skater { position:absolute; left:4px; top:5px; width:58px; height:54px; }
-  .rush-jersey {
-    position:absolute; left:2px; top:8px; width:46px; height:38px; display:grid; place-items:center; overflow:visible;
-    border:2px solid rgba(255,255,255,.98); border-radius:44% 38% 38% 44%; background:#173247;
-  }
-  .rush-jersey::before {
-    content:""; position:absolute; left:6px; right:6px; top:24px; border-top:2px solid rgba(255,255,255,.30);
-  }
-  .rush-crest {
-    position:relative; z-index:1; width:32px; height:32px; display:grid; place-items:center; border-radius:50%;
-    background:#fff; border:1px solid rgba(20,38,50,.18);
-  }
-  .rush-helmet {
-    position:absolute; z-index:2; left:43px; top:17px; width:15px; height:15px; border:2px solid rgba(255,255,255,.98);
-    border-radius:50%; background:#263f52;
-  }
-  .rush-actor img { width:27px; height:27px; object-fit:contain; }
-  .rush-number {
-    position:absolute; z-index:4; right:-7px; bottom:-7px; min-width:22px; height:19px; padding:0 4px; display:grid; place-items:center;
-    border:2px solid #0d2332; border-radius:5px; background:#fff; color:#0d2332; font-size:11px; line-height:1; font-weight:950;
-    font-variant-numeric:tabular-nums;
-  }
-  .rush-stick-svg {
-    position:absolute; z-index:1; left:34px; top:20px; width:48px; height:30px; overflow:visible; transform-origin:50% 50%;
-  }
+  .rush-actor,.rush-defender { position:absolute; left:0; top:0; width:78px; height:66px; pointer-events:none; will-change:transform; }
+  .rush-actor { z-index:8; } .rush-defender { z-index:5; }
+  .rush-skater-model { position:absolute; inset:0; width:78px; height:66px; z-index:2; overflow:visible; }
+  .rush-stick-svg { position:absolute; z-index:1; left:34px; top:20px; width:48px; height:30px; overflow:visible; transform-origin:50% 50%; }
   .rush-actor.hand-l .rush-stick-svg { transform:scaleY(-1); }
   .rush-stick-shaft { fill:none; stroke:#60462f; stroke-width:3.3; stroke-linecap:round; }
   .rush-stick-grip { fill:none; stroke:#f3f4f5; stroke-width:4.5; stroke-linecap:butt; stroke-dasharray:3 2; }
   .rush-stick-blade { fill:#22292e; stroke:#171d21; stroke-width:1; }
   .rush-stick-tape { fill:none; stroke:#f2f4f5; stroke-width:2.4; stroke-dasharray:3 2; }
   .rush-stick-anchor { fill:transparent; stroke:none; pointer-events:none; }
-  .rush-actor .rush-role {
-    position:absolute; left:43%; top:calc(100% + 1px); padding:3px 6px; border-radius:5px; transform:translateX(-50%);
-    background:rgba(15,31,45,.90); color:#fff; font-size:8px; font-weight:950; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap;
-  }
-  .rush-defender {
-    position:absolute; z-index:5; left:0; top:0; width:58px; height:52px; will-change:transform; pointer-events:none;
-  }
-  .rush-defender > span {
-    position:absolute; left:5px; top:9px; width:36px; height:30px; display:grid; place-items:center;
-    border:2px solid rgba(61,77,88,.54); border-radius:44% 38% 38% 44%; background:#cbd5db; color:#314652; font-size:10px; font-weight:950;
-  }
-  .rush-defender::before {
-    content:""; position:absolute; z-index:2; left:4px; top:18px; width:13px; height:13px; border:2px solid rgba(61,77,88,.54);
-    border-radius:50%; background:#aab8c1;
-  }
-  .rush-defender .rush-stick-svg { left:25.4615px; top:23.0513px; width:46px; height:17.6923px; transform-origin:3.5385px 2.9487px; }
+  .rush-defender .rush-stick-svg { left:35.4615px; top:30.0513px; width:46px; height:17.6923px; transform-origin:3.5385px 2.9487px; }
   .rush-goalie { position:absolute; z-index:8; left:0; top:0; width:82px; height:96px; transform-origin:0 0; will-change:transform; }
   .rush-goal-front { position:absolute; inset:0; width:100%; height:100%; z-index:10; pointer-events:none; }
   .rush-goalie svg { display:block; width:100%; height:100%; overflow:visible; }
@@ -7559,9 +7520,102 @@ function edgeRushStickMarkup(extra=""){
   return `<svg class="rush-stick-svg ${extra}" viewBox="0 0 78 30" aria-hidden="true"><path class="rush-stick-shaft" d="M6 5L55 21"/><path class="rush-stick-grip" d="M6 5L16 8"/><path class="rush-stick-blade" d="M53 20Q62 23 73 21L74 26Q63 30 51 24Z"/><path class="rush-stick-tape" d="M56 22Q64 25 72 23"/><circle class="rush-stick-anchor" data-stick-blade-anchor cx="64" cy="22.5" r="2.5"/></svg>`;
 }
 function edgeRushActor(id,role) {
-  const p=BYID.get(Number(id));
-  const hand=p?.shoots==="L"?"hand-l":"hand-r",number=p?.number!=null?String(p.number):"—";
-  return `<div class="rush-actor ${hand}" data-rush-id="${id}"><span class="rush-skater"><span class="rush-jersey"><span class="rush-crest"><img src="${logo(p?.team)}" alt="" onerror="this.style.visibility='hidden'"></span><b class="rush-number">${esc(number)}</b></span><span class="rush-helmet"></span></span>${edgeRushStickMarkup()}</div>`;
+  const p=BYID.get(Number(id)),hand=p?.shoots==='L'?'hand-l':'hand-r';
+  return `<div class="rush-actor ${hand}" data-rush-id="${id}">${edgeRushSkaterMarkup(p?.number!=null?String(p.number):'—')}${edgeRushStickMarkup()}</div>`;
+}
+function edgeRushSkaterMarkup(number,defender=false){
+  const jersey=defender?'#eef3f6':'#24485f',light=defender?'#d1dce4':'#3b6a84',dark=defender?'#722c43':'#17374c',ink=defender?'#722c43':'#f2f6f9',stripe=defender?'#722c43':'#d4e7ef';
+  return `<svg class="rush-skater-model" data-skater-model="" viewBox="0 0 78 66" aria-hidden="true">
+    <g stroke-linecap="round" stroke-linejoin="round">
+      <path class="rush-s-thigh left" fill="none" stroke="${dark}" stroke-width="8"/><path class="rush-s-thigh right" fill="none" stroke="${dark}" stroke-width="8"/>
+      <path class="rush-s-shin left" fill="none" stroke="#e4edf2" stroke-width="6"/><path class="rush-s-shin right" fill="none" stroke="#e4edf2" stroke-width="6"/>
+      <path class="rush-s-sock left" fill="none" stroke="${stripe}" stroke-width="4"/><path class="rush-s-sock right" fill="none" stroke="${stripe}" stroke-width="4"/>
+      <g class="rush-s-skate left"><path d="M-5 -1L1 -3L6 0L6 2L-5 2Z" fill="#182d3b" stroke="#122633" stroke-width=".7"/><path d="M-6 4H7M-3 2V4M4 2V4" fill="none" stroke="#7e9aaa" stroke-width=".9"/></g>
+      <g class="rush-s-skate right"><path d="M-5 -1L1 -3L6 0L6 2L-5 2Z" fill="#182d3b" stroke="#122633" stroke-width=".7"/><path d="M-6 4H7M-3 2V4M4 2V4" fill="none" stroke="#7e9aaa" stroke-width=".9"/></g>
+      <path class="rush-s-hips" fill="${dark}" stroke="#18384b" stroke-width=".7"/>
+      <path class="rush-s-torso" fill="${jersey}" stroke="${dark}" stroke-width="1"/>
+      <path class="rush-s-front" fill="${light}"/><path class="rush-s-hem" fill="none" stroke="${stripe}" stroke-width="2"/>
+      <text class="rush-s-number" text-anchor="middle" dominant-baseline="central" font-family="Arial,sans-serif" font-size="9" font-weight="900" fill="${ink}">${esc(number)}</text>
+      <path class="rush-s-neck" fill="${dark}" stroke="${stripe}" stroke-width="1"/>
+      <path class="rush-s-arm top" fill="none" stroke="${jersey}" stroke-width="6"/><path class="rush-s-arm bottom" fill="none" stroke="${jersey}" stroke-width="6"/>
+      <path class="rush-s-cuff top" fill="none" stroke="${stripe}" stroke-width="3"/><path class="rush-s-cuff bottom" fill="none" stroke="${stripe}" stroke-width="3"/>
+      <g class="rush-s-glove top"><path d="M-3 -3Q0 -4 3 -2L4 2Q0 4 -3 2Z" fill="${dark}" stroke="#f0f5f8" stroke-width=".6"/><path d="M-2 -1H2" stroke="${stripe}" stroke-width="1"/></g>
+      <g class="rush-s-glove bottom"><path d="M-3 -3Q0 -4 3 -2L4 2Q0 4 -3 2Z" fill="${dark}" stroke="#f0f5f8" stroke-width=".6"/><path d="M-2 -1H2" stroke="${stripe}" stroke-width="1"/></g>
+      <g class="rush-s-helmet"><path d="M2 -2L8 -2L8 3L5 6L1 4Z" fill="#d6ae92" stroke="#a8806b" stroke-width=".6"/><path d="M-8 -3Q-8 -10 0 -10Q8 -10 9 -4L8 0L2 2L-7 1Z" fill="${dark}" stroke="#e9f2f7" stroke-width="1"/><path d="M-4 -7Q0 -9 4 -7M-6 -3H-2" fill="none" stroke="${light}" stroke-width="1.1"/><path d="M3 -4L10 -3L10 0L6 2" fill="#bcd8e6" fill-opacity=".65" stroke="#eff7fa" stroke-width=".6"/><path d="M-2 1L1 5L5 6" fill="none" stroke="#1d3546" stroke-width=".8"/></g>
+    </g></svg>`;
+}
+function edgeRushDefenderActor(n){
+  return `<div class="rush-defender" data-def="${n}">${edgeRushSkaterMarkup('D'+n,true)}${edgeRushStickMarkup('defender-stick')}</div>`;
+}
+function edgeRushSkaterGrip(a,x,y,defender=false,now=0){
+  if(defender){
+    const tip=edgeRushDefenderStick(a,now),angle=tip.angle-16.79*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle),px=(x-6)*46/78,py=(y-5)*46/78;
+    return {x:px*c-py*s+Math.cos(tip.angle)*tip.poke,y:px*s+py*c+Math.sin(tip.angle)*tip.poke,angle:angle*180/Math.PI};
+  }
+  const angle=(a.stickAngle||0)*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle),px=(x-39)*48/78,py=(y-15)*48/78*(a.hand||1);
+  return {x:19+(a.stickX||0)+px*c-py*s,y:2+(a.stickY||0)+px*s+py*c,angle:a.stickAngle||0};
+}
+function edgeRushSkaterStride(a,dt){
+  const speed=Math.hypot((a.vx||0)*720,(a.vy||0)*405);
+  a.skatePhase=(a.skatePhase??((Number(a.id)||1)%11)*.57)+speed*dt*.085;
+}
+function edgeRushRenderSkater(a,defender=false,now=0){
+  if(!a.el)return;
+  const names=['torso','front','hips','hem','number','neck','helmet',...['left','right'].flatMap(s=>['thigh.'+s,'shin.'+s,'sock.'+s,'skate.'+s]),...['top','bottom'].flatMap(s=>['arm.'+s,'cuff.'+s,'glove.'+s])];
+  const rig=a.skaterRig||(a.skaterRig=Object.fromEntries(names.map(k=>[k,a.el.querySelector('.rush-s-'+k)])));
+  const motion=rushClamp(Math.hypot((a.vx||0)*720,(a.vy||0)*405)/150,0,1),phase=a.skatePhase||0;
+  const heading=defender?(a.stickAim??Math.PI):rushClamp((a.fakeYaw||0)*.35,-8,8)*Math.PI/180;
+  const F={x:Math.cos(heading),y:Math.sin(heading)},R={x:-Math.sin(heading),y:Math.cos(heading)};
+  const P=p=>({x:39+F.x*p.d+R.x*p.l-.16*p.z,y:33+F.y*p.d+R.y*p.l-.42*p.z+8});
+  const line=ps=>ps.map((p,i)=>`${i?'L':'M'}${p.x} ${p.y}`).join(''),polygon=ps=>line(ps)+'Z';
+  const rounded=(ps,r=2)=>{
+    const corners=ps.map((p,i)=>{const prev=ps[(i+ps.length-1)%ps.length],next=ps[(i+1)%ps.length],a=Math.min(.3,r/(Math.hypot(p.x-prev.x,p.y-prev.y)||1)),b=Math.min(.3,r/(Math.hypot(p.x-next.x,p.y-next.y)||1));return {p,before:{x:rushLerp(p.x,prev.x,a),y:rushLerp(p.y,prev.y,a)},after:{x:rushLerp(p.x,next.x,b),y:rushLerp(p.y,next.y,b)}};});
+    return corners.map((c,i)=>`${i?'L':'M'}${c.before.x} ${c.before.y}Q${c.p.x} ${c.p.y} ${c.after.x} ${c.after.y}`).join('')+'Z';
+  };
+  const mix=(a,b,t)=>({d:rushLerp(a.d,b.d,t),l:rushLerp(a.l,b.l,t),z:rushLerp(a.z,b.z,t)});
+  const sub=(a,b)=>({d:a.d-b.d,l:a.l-b.l,z:a.z-b.z}),dot=(a,b)=>a.d*b.d+a.l*b.l+a.z*b.z,add=(a,b)=>({d:a.d+b.d,l:a.l+b.l,z:a.z+b.z}),mul=(a,k)=>({d:a.d*k,l:a.l*k,z:a.z*k}),length=a=>Math.sqrt(dot(a,a));
+  const joint=(origin,target,hint,bone)=>{
+    const delta=sub(target,origin),dist=length(delta)||1,axis=mul(delta,1/dist),reach=Math.min(dist,2*bone-.001);
+    let bend=sub(sub(hint,origin),mul(axis,dot(sub(hint,origin),axis))),bl=length(bend);
+    if(bl<.001){bend=sub({d:1,l:0,z:0},mul(axis,axis.d));bl=length(bend);}
+    bend=mul(bend,1/Math.max(.001,bl));
+    const middle=add(add(origin,mul(axis,reach/2)),mul(bend,Math.sqrt(Math.max(0,bone*bone-reach*reach/4))));
+    return {origin,middle,end:target,reach:dist};
+  };
+  const topGrip=edgeRushSkaterGrip(a,10,6,defender,now);
+  const lateralLean=defender?0:rushClamp((topGrip.y-(2-9*48/78*(a.hand||1)))*.4,-9,9);
+  const hipZ=33-3*motion,shoulderZ=hipZ+21,lean=(defender?5:8)+motion*2;
+  const joints={};
+  const backwards=((a.vx||0)*F.x*720+(a.vy||0)*F.y*405)<-2?-1:1;
+  for(const [key,side] of [['left',-1],['right',1]]){
+    const cycle=phase+(side>0?Math.PI:0),stride=Math.sin(cycle)*motion;
+    const hip={d:-4,l:side*5,z:hipZ-2},foot={d:-9+stride*9*backwards,l:side*(9+Math.max(0,-Math.cos(cycle))*motion*5),z:1+Math.max(0,stride)*3};
+    const j=joint(hip,foot,{d:13,l:side*7,z:15},20),hp=P(hip),kp=P(j.middle),fp=P(foot);
+    rig['thigh.'+key].setAttribute('d',line([hp,kp]));rig['shin.'+key].setAttribute('d',line([kp,fp]));rig['sock.'+key].setAttribute('d',line([P(mix(j.middle,foot,.53)),P(mix(j.middle,foot,.67))]));
+    rig['skate.'+key].setAttribute('transform',`translate(${fp.x} ${fp.y}) rotate(${heading*180/Math.PI+stride*side*8})`);joints['leg.'+key]=j;
+  }
+  const hips=[{d:-8,l:-7,z:hipZ+2},{d:2,l:-7,z:hipZ+2},{d:2,l:7,z:hipZ-5},{d:-8,l:7,z:hipZ-5}].map(P);rig.hips.setAttribute('d',polygon(hips));
+  // Project a padded jersey volume, including its front and shoulder surfaces.
+  const points=[...[-5,lean].flatMap(d=>[-9,9].map(l=>P({d,l:l+lateralLean,z:shoulderZ}))),...[-8,2].flatMap(d=>[-7,7].map(l=>P({d,l,z:hipZ+1})))].sort((a,b)=>a.x-b.x||a.y-b.y);
+  const cross=(a,b,c)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x),hull=[];
+  for(const p of points){while(hull.length>1&&cross(hull.at(-2),hull.at(-1),p)<=0)hull.pop();hull.push(p);}const lower=hull.length;
+  for(let i=points.length-2;i>=0;i--){const p=points[i];while(hull.length>lower&&cross(hull.at(-2),hull.at(-1),p)<=0)hull.pop();hull.push(p);}hull.pop();rig.torso.setAttribute('d',rounded(hull));
+  rig.front.setAttribute('d',polygon([{d:lean,l:-9+lateralLean,z:shoulderZ},{d:lean,l:9+lateralLean,z:shoulderZ},{d:2,l:7,z:hipZ+1},{d:2,l:-7,z:hipZ+1}].map(P)));
+  rig.hem.setAttribute('d',line([{d:2,l:-7,z:hipZ+5},{d:2,l:7,z:hipZ+5}].map(P)));
+  const number=P({d:-1,l:lateralLean*.6,z:shoulderZ-12});rig.number.setAttribute('x',number.x);rig.number.setAttribute('y',number.y+1.5);
+  rig.neck.setAttribute('d',polygon([{d:lean,l:-4+lateralLean,z:shoulderZ-3},{d:lean,l:4+lateralLean,z:shoulderZ-3},{d:lean+1,l:3+lateralLean,z:shoulderZ+8},{d:lean+1,l:-3+lateralLean,z:shoulderZ+8}].map(P)));
+  const head=P({d:lean+2,l:lateralLean,z:shoulderZ+12});rig.helmet.setAttribute('transform',`translate(${head.x} ${head.y}) scale(${F.x>=0?.78:-.78} .78)`);
+  for(const [key,svgX,svgY,side] of [['top',10,6,-(a.hand||1)],['bottom',38,15.45,a.hand||1]]){
+    const grip=edgeRushSkaterGrip(a,svgX,svgY,defender,now);
+    const origin={d:lean,l:side*9+lateralLean,z:shoulderZ-3};
+    const sx=grip.x,sy=grip.y-8,base={d:F.x*sx+F.y*sy,l:R.x*sx+R.y*sy,z:0},ray={d:F.x*.16+F.y*.42,l:R.x*.16+R.y*.42,z:1};
+    const z=rushClamp(dot(sub(origin,base),ray)/dot(ray,ray),12,shoulderZ-4),wrist=add(base,mul(ray,z));
+    const j=joint(origin,wrist,{d:lean-5,l:side*15+lateralLean,z:shoulderZ-13},17),o=P(origin),e=P(j.middle),hand=P(wrist);
+    rig['arm.'+key].setAttribute('d',line([o,e,hand]));rig['cuff.'+key].setAttribute('d',line([P(mix(j.middle,wrist,.65)),P(mix(j.middle,wrist,.80))]));
+    rig['glove.'+key].setAttribute('transform',`translate(${hand.x} ${hand.y}) rotate(${grip.angle})`);joints['arm.'+key]=j;
+    joints['grip.'+key]={x:hand.x-39,y:hand.y-33,shaftX:grip.x,shaftY:grip.y};
+  }
+  a.skaterJoints=joints;
 }
 function edgeRushSet(el,x,y,rot=0,scale=1){
   if(el)el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${rot}deg) scale(${scale})`;
@@ -8036,6 +8090,7 @@ function edgeRushSteer(a,dt,obstacles=[]){
   if(dist<.008){a.vx*=Math.max(0,1-(5.2+2*a.brain.edgework)*dt);a.vy*=Math.max(0,1-(5.2+2*a.brain.edgework)*dt);}
   a.x=rushClamp(a.x+a.vx*dt,.035,(a.intent==='backdoor'||a.backdoorUntil)? .87 : .85);a.y=rushClamp(a.y+a.vy*dt,.15,.85);
   const effort=rushClamp(rushLen(a.vx,a.vy)/Math.max(.01,a.brain.maxSpeed),0,1.5);
+  edgeRushSkaterStride(a,dt);
   a.energy=rushClamp(a.energy-dt*(.026+.045*effort+(burstOn?.085:0))*(1.18-.34*a.brain.stamina)+(!burstOn&&effort<.55?dt*.05:0),.28,1);
   if(a.state!=='shooting'&&rushLen(a.vx,a.vy)>.008)a.rot=rushClamp(Math.atan2(a.vy,a.vx)*180/Math.PI,-24,24);
 }
@@ -8167,8 +8222,7 @@ function edgeRushRenderAgent(a,w,h){
   if(!a.el)return;
   const stick=a.el.querySelector('.rush-stick-svg');
   if(stick)stick.style.transform=`translate(${a.stickX||0}px,${a.stickY||0}px) rotate(${a.stickAngle||0}deg) scaleY(${a.hand||1})`;
-  const skater=a.el.querySelector('.rush-skater');if(skater)skater.style.transform=`rotate(${a.fakeYaw||0}deg)`;
-  const role=a.el.querySelector('.rush-role');if(role)role.textContent=a.state==='shooting'?'Shooter':a.intent==='carrier'?'Carrier':a.intent==='drive'?'Net drive':a.intent==='give-go'?'Give & go':a.intent==='outlet'?'Outlet':a.role;
+  edgeRushRenderSkater(a);
   edgeRushSet(a.el,a.x*w,a.y*h,a.rot,w/720);
 }
 function edgeRushRenderPuck(puck,el,w,h){
@@ -8465,7 +8519,7 @@ async function edgeRushAnimate(r,picked,correct) {
   $('erRadar').classList.remove('on');$('erCallout').classList.remove('on');$('erPhase').textContent='SET THE BREAKOUT';
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,initialFinisherId]=calc.roles;
   actors.innerHTML=edgeRushActor(carrierId,'Carrier')+edgeRushActor(supportId,'Support')+edgeRushActor(initialFinisherId,'Finisher')
-    +'<div class="rush-defender" data-def="1"><span>D</span>'+edgeRushStickMarkup('defender-stick')+'</div><div class="rush-defender" data-def="2"><span>D</span>'+edgeRushStickMarkup('defender-stick')+'</div>'+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
+    +edgeRushDefenderActor(1)+edgeRushDefenderActor(2)+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
   await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));if(token!==rushAnimToken)return;
   const w=stage.clientWidth,h=stage.clientHeight;
   const carrier=edgeRushAgent(carrierId,'Carrier',.065,.53),support=edgeRushAgent(supportId,'Support',.045,.31);
@@ -8489,11 +8543,12 @@ async function edgeRushAnimate(r,picked,correct) {
     const dx=d.tx-d.x,dy=d.ty-d.y,dist=Math.hypot(dx,dy),ux=dist>.001?dx/dist:0,uy=dist>.001?dy/dist:0;
     const desired=Math.min(d.maxSpeed,dist*2.4),dv=(desired>Math.hypot(d.vx,d.vy)?d.accel:d.decel)*dt;
     d.vx=rushMoveToward(d.vx,ux*desired,dv);d.vy=rushMoveToward(d.vy,uy*desired,dv);
-    d.x=rushClamp(d.x+d.vx*dt,.48,.87);d.y=rushClamp(d.y+d.vy*dt,.16,.84);
+    d.x=rushClamp(d.x+d.vx*dt,.48,.87);d.y=rushClamp(d.y+d.vy*dt,.16,.84);edgeRushSkaterStride(d,dt);
   };
   const renderDef=d=>{
-    const tip=edgeRushDefenderStick(d,performance.now()),stick=d.el?.querySelector('.rush-stick-svg');
+    const frameNow=performance.now(),tip=edgeRushDefenderStick(d,frameNow),stick=d.el?.querySelector('.rush-stick-svg');
     if(stick)stick.style.transform=`translate(${Math.cos(tip.angle)*tip.poke}px,${Math.sin(tip.angle)*tip.poke}px) rotate(${tip.angle*180/Math.PI-16.79}deg)`;
+    edgeRushRenderSkater(d,true,frameNow);
     edgeRushSet(d.el,d.x*w,d.y*h,0,w/720);
   };
   const prepareShot=(a,now)=>{
