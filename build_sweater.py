@@ -8228,7 +8228,7 @@ function edgeRushRenderGoalie(g,el,w,h){
   const F={x:-Math.cos(heading),y:Math.sin(heading)},R={x:Math.sin(heading),y:Math.cos(heading)};
   // All joints live in the same three-dimensional body frame. Height projects
   // toward the camera; rink motion remains on the ice rather than in sprite space.
-  const project=p=>({x:F.x*p.d+R.x*p.l-.16*p.z,y:F.y*p.d+R.y*p.l-.42*p.z+10.5});
+  const project=p=>({x:F.x*p.d+R.x*p.l-.16*p.z,y:F.y*p.d+R.y*p.l-.42*p.z+10.5*(1-down)});
   const global=p=>({x:g.x*720+p.x,y:g.y*405+p.y});
   const screen=p=>({x:41+p.x,y:58+p.y});
   const P=p=>screen(project(p)),path=(points,close=false)=>points.map((p,i)=>`${i?'L':'M'}${p.x} ${p.y}`).join('')+(close?'Z':'');
