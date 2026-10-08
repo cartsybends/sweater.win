@@ -7605,13 +7605,18 @@ function edgeRushDefenderActor(n){
 function edgeRushStickMatrix(a){
   const hand=a.hand||1,angle=(a.stickAngle||0)*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle);
   const pitch=(a.stickPitch||0)*Math.PI/180,cp=Math.cos(pitch)-1,sp=Math.sin(pitch),len=Math.hypot(49,16),ex=49/len,ey=16*hand/len;
-  const ux=c*ex-s*ey,uy=s*ex+c*ey;
-  const A=c+cp*ux*ex-.16*sp*ex,B=s+cp*uy*ex-.42*sp*ex;
+  // Mirroring changes the blade's lateral side, never the direction from
+  // elevated hands down to the ice. Keep that downward shaft slope common.
+  const groundSlope=(16/49*(1-hand)+.35)*c*c;
+  const sx=ex,sy=ey+groundSlope*ex,ux=c*sx-s*sy,uy=s*sx+c*sy;
+  const A=c-s*groundSlope+cp*ux*ex-.16*sp*ex,B=s+c*groundSlope+cp*uy*ex-.42*sp*ex;
   const C=-s+cp*ux*ey-.16*sp*ey,D=c+cp*uy*ey-.42*sp*ey;
   // Pitch one rigid stick about the top hand, preserving shaft, blade and both grips.
   const top={x:(10-39)*48/78,y:(5+(10-6)*16/49-15)*48/78*hand};
   const anchor=(a.state==='shooting'&&['slap','one-timer'].includes(a.releaseType)?(a.shotAnchorAngle??a.stickAngle??0):(a.stickAngle||0))*Math.PI/180,ac=Math.cos(anchor),as=Math.sin(anchor);
-  return {a:A,b:B,c:C,d:D,e:19+(a.stickX||0)+ac*top.x-as*top.y-A*top.x-C*top.y,f:2+(a.stickY||0)+as*top.x+ac*top.y-B*top.x-D*top.y};
+  // Both hands work in front of the chest, rather than pinning the top hand
+  // to the hip. This offset is shared by carrying, receiving and shooting.
+  return {a:A,b:B,c:C,d:D,e:23+(a.stickX||0)+ac*top.x-as*top.y-A*top.x-C*top.y,f:-6-top.y+(a.stickY||0)+as*top.x+ac*top.y-B*top.x-D*top.y};
 }
 function edgeRushShootingPose(a,t,follow=false){
   t=rushClamp(t,0,1);const smooth=v=>{v=rushClamp(v,0,1);return v*v*(3-2*v);},hand=a.hand||1,type=a.releaseType||'wrist',start=a.windupStart||{angle:0,x:0,y:0};
@@ -7621,7 +7626,7 @@ function edgeRushShootingPose(a,t,follow=false){
     const push=Math.sin(Math.min(1,t/.45)*Math.PI/2)*(1-smooth((t-.45)/.55));
     a.stickAngle=back?rushLerp(-hand*58,hand*12,smooth(t)):hand*(12+(slap?8:snap?8:12)*push);a.stickPitch=(slap?32:snap?12:20)*push;
     a.stickX=(a.releaseGrip?.x||0)+2*push;a.stickY=(a.releaseGrip?.y||0)-hand*2*push;
-    a.shotLift=0;a.shotLoad=.25*(1-t);a.shotWeight=1-t;a.shotTwist=hand*(slap?7:4)*push;a.wristRoll=-push;
+    a.shotLift=0;a.shotLoad=.18*Math.sin(Math.PI*t)*(1-t);a.shotWeight=1-t;a.shotTwist=hand*(slap?7:4)*push;a.wristRoll=rushLerp(-.7,0,smooth(t));
     return;
   }
   if(slap&&a.shotPuckIce){
@@ -7630,15 +7635,20 @@ function edgeRushShootingPose(a,t,follow=false){
     a.releaseGrip={x:dx*Math.cos(rot)+dy*Math.sin(rot)-neutral.x,y:-dx*Math.sin(rot)+dy*Math.cos(rot)-neutral.y};
   }
   a.shotAnchorAngle=rushLerp(start.angle,hand*12,smooth(t));
-  const peak=slap?.48:snap?.28:.38,loadAngle=hand*(slap?-165:snap?-10:back?-35:tap?2:-28),end=back?-hand*58:hand*12;
+  // Slapshot height comes from the backswing pitch, not a 165-degree sweep
+  // across the player's body. Snap and wrist releases keep a compact lever.
+  const peak=slap?.48:snap?.28:.38,loadAngle=hand*(slap?-15:snap?-10:back?-35:tap?2:-28),end=back?-hand*58:hand*12;
   const draw=t<peak?smooth(t/peak):1,release=smooth((t-peak)/(1-peak));
   a.stickAngle=t<peak?rushLerp(start.angle,loadAngle,draw):rushLerp(loadAngle,end,release);
-  a.stickPitch=slap?65*Math.sin(Math.PI*smooth(t)):snap?5*Math.sin(Math.PI*t):0;
+  a.stickPitch=slap?58*Math.sin(Math.PI*smooth(t)):snap?5*Math.sin(Math.PI*t):0;
   a.stickX=rushLerp(start.x,a.releaseGrip?.x||0,smooth(t))-(type==='drag-release'?Math.sin(Math.PI*t)*9:0);
   a.stickY=rushLerp(start.y,a.releaseGrip?.y||(back?-hand*6:0),smooth(t));
-  const raise=slap?32*Math.sin(Math.PI*smooth(t)):0;a.shotLift=raise;a.stickX-=.16*raise;a.stickY-=.42*raise;
-  a.shotLoad=Math.sin(Math.PI*t)*(slap?1:snap?.45:.75);a.shotWeight=rushLerp(-.7,1,release);
-  a.shotTwist=hand*(slap?-10:snap?-3:-6)*Math.sin(Math.PI*t);a.wristRoll=rushLerp(.6,-.7,release);
+  const raise=slap?18*Math.sin(Math.PI*smooth(t)):0;a.shotLift=raise;a.stickX-=.16*raise;a.stickY-=.42*raise;
+  // Extend the top hand to load, then pull it back as the lower hand drives
+  // through. The same continuous curve is mirrored for either shooting side.
+  const lever=Math.sin(Math.PI*t)*(slap?3:snap?2:4);a.stickX+=lever;
+  a.shotLoad=Math.sin(Math.PI*t)*(slap?1:snap?.45:.75);a.shotWeight=rushLerp(-.7*draw,1,release);
+  a.shotTwist=hand*(slap?-10:snap?-3:-6)*Math.sin(Math.PI*t);a.wristRoll=rushLerp(rushLerp(start.roll??0,.6,draw),-.7,release);
 }
 function edgeRushSkaterGrip(a,x,y,defender=false,now=0){
   if(defender){
@@ -7675,7 +7685,7 @@ function edgeRushSkaterStride(a,dt){
   const heading=edgeRushSkaterHeading(a,!!a.mode),motion=rushClamp(speed/150,0,1);
   const forward=(a.vx||0)*720*Math.cos(heading)+(a.vy||0)*405*Math.sin(heading);
   a.strideDirection=rushLerp(a.strideDirection??Math.tanh(forward/28),Math.tanh(forward/28),1-Math.exp(-8*dt));
-  a.oneHandBlend=rushMoveToward(a.oneHandBlend||0,a.state==='shooting'||a.move||a.passFollow?0:(a.gripIntent||0),dt*5);
+  a.oneHandBlend=rushMoveToward(a.oneHandBlend||0,a.state==='shooting'||a.move||a.passFollow||a.mustGrip?0:(a.gripIntent||0),dt*5);
   for(const [side,key] of [[-1,'left'],[1,'right']]){
     const stride=a.state==='shooting'?0:Math.sin(a.skatePhase+(side>0?Math.PI:0))*motion;
     const stop=rushClamp(Math.atan2(Math.sin((a.stopAngle??heading)-heading),Math.cos((a.stopAngle??heading)-heading)),-.38,.38);
@@ -7706,7 +7716,7 @@ function edgeRushHandle(a,carry,dt){
 }
 function edgeRushLowerGrip(a,defender=false){
   if(defender)return 30;
-  if(a.state==='shooting')return a.releaseType==='slap'||a.releaseType==='one-timer'?40-10*(a.shotLoad||0):a.releaseType==='backhand'?35:40;
+  if(a.state==='shooting')return a.releaseType==='slap'||a.releaseType==='one-timer'?34-4*(a.shotLoad||0):34;
   const drag=a.move?.type==='toe-drag'?Math.abs(a.stickX||0)/9:0;
   // The lower hand guides the shaft and slides closer to the top hand on a pull-in.
   return rushClamp(36+2*Math.cos(a.handlePhase||0)*(a.handleBlend||0)-5*drag,30,43);
@@ -7737,7 +7747,8 @@ function edgeRushRenderSkater(a,defender=false,now=0){
   const topGrip=edgeRushSkaterGrip(a,10,6,defender,now);
   // Remove projected vertical lift before interpreting a hand's lateral reach.
   // Height always stays up; only the shooting side mirrors for left/right shots.
-  const lateralLean=defender?0:rushClamp((topGrip.y+.42*(a.shotLift||0)-(2-9*48/78*(a.hand||1)))*.32,-6,6);
+  const neutralTop=defender?topGrip:edgeRushSkaterGrip({hand:a.hand||1},10,6);
+  const lateralLean=defender?0:rushClamp((topGrip.y+.42*(a.shotLift||0)-neutralTop.y)*.32,-6,6);
   const load=!defender&&a.state==='shooting'?rushClamp(a.shotLoad||0,0,1):0;
   const hipZ=33-3*motion-load*2-(a.dekeLoad||0)*2,shoulderZ=hipZ+21,lean=(defender?5:8)+motion*2+load*2;
   const joints={};
@@ -7977,7 +7988,9 @@ function edgeRushPointSegDist(px,py,ax,ay,bx,by){
 }
 function edgeRushPressure(a,defs){return defs.length?Math.min(...defs.map(d=>edgeRushDistance(a,d))):1;}
 function edgeRushShotQuality(a,defs,goalie){
-  const blade={x:a.x+.040,y:a.y+.019*(a.hand||1)},net={x:660/720,y:.5};
+  // Evaluate the same grounded blade used by carrying and passing, including
+  // prospective route positions. A DOM anchor belongs to the current frame.
+  const blade=edgeRushStick({...a,el:null}),net={x:660/720,y:.5};
   const distance=edgeRushDistance(blade,net),angle=Math.atan2(Math.abs(blade.y-.5)*405,Math.max(12,(net.x-blade.x)*720));
   const aim=[.44,.50,.56].map(targetY=>({targetY,clearance:defs.length?Math.min(...defs.map(d=>edgeRushPointSegDist(d.x,d.y,blade.x,blade.y,net.x,targetY))):1})).sort((a,b)=>b.clearance-a.clearance)[0];
   const lane=rushClamp((aim.clearance-.022)/.042,0,1),pressure=rushClamp((edgeRushPressure(a,defs)-.032)/.075,0,1);
@@ -8110,12 +8123,20 @@ function edgeRushSupportTargets(owner,agents,defs,goalie,now=0){
   const high=mates.slice().sort((a,b)=>edgeRushDistance(a,{x:.64,y:.5})-edgeRushDistance(b,{x:.64,y:.5})-.08*(a.brain.shot-b.brain.shot))[0];
   const held=mates.some(a=>now<(a.backdoorUntil||0));
   const forehand=a=>rushClamp(owner.y-a.hand*.24,.25,.75);
+  const backdoorY=a=>{
+    const blade=edgeRushStick({...a,el:null,x:.865,y:.5,rot:0,stickAngle:0,stickX:0,stickY:0});
+    return (owner.y<.5?.58:.42)-(blade.y-.5);
+  };
+  const trailerX=rushClamp(owner.x-.085,.50,.64);
+  const strong=defs.slice().sort((a,b)=>edgeRushDistance(a,owner)-edgeRushDistance(b,owner))[0];
+  const driveY=rushClamp((strong?.y??owner.y)+(owner.y<.5?-.15:.15),.24,.76);
   const options=a=>now<(a.backdoorUntil||0)?[{x:a.backdoorX,y:a.backdoorY,intent:'backdoor'}]:[
-    {x:.64,y:.30,intent:'high-outlet'},{x:.64,y:.70,intent:'high-outlet'},
-    {x:.62,y:.50,intent:'high-outlet'},{x:.66,y:forehand(a),intent:'high-outlet'},
+    {x:trailerX,y:.30,intent:'high-outlet'},{x:trailerX,y:.70,intent:'high-outlet'},
+    {x:trailerX,y:owner.y<.5?.58:.42,intent:'high-outlet'},{x:trailerX+.02,y:forehand(a),intent:'high-outlet'},
+    {x:rushClamp((strong?.x??.67)+.12,.74,.81),y:driveY,intent:'middle-drive'},
     {x:.75,y:.25,intent:'weak-side'},{x:.75,y:.75,intent:'weak-side'},
     {x:.81,y:owner.y<.5?.72:.28,intent:'weak-side'},
-    {x:.865,y:(owner.y<.5?.58:.42)-.019*a.hand,intent:'backdoor'}];
+    {x:.865,y:backdoorY(a),intent:'backdoor'}];
   const score=(a,point)=>{
     const q={...a,...point},backdoor=edgeRushBackdoor(owner,q,defs,goalie);
     const space=edgeRushDistance(q,owner),quality=edgeRushShotQuality(q,defs,goalie);
@@ -8124,15 +8145,18 @@ function edgeRushSupportTargets(owner,agents,defs,goalie,now=0){
     return .35*lane+.22*quality.value+.15*room-.10*edgeRushDistance(a,q)
       -.75*rushClamp((.15-space)/.15,0,1)-.25*rushClamp((.045-route)/.045,0,1)
       +(backdoor?.28:point.intent==='backdoor'&&wide&&a!==high?.10:0)
-      +(deep&&a===high&&point.intent==='high-outlet'?.24:0)
+      +(a===high&&point.intent==='high-outlet'?.20:0)
+      +(!deep&&point.intent==='middle-drive'?.16:0)
       +(point.intent==='weak-side'&&(point.y-.5)*(owner.y-.5)<0?.12:0)
       +((owner.y-point.y)*a.hand>0?.07:0);
   };
   let best=null;
   for(const p of options(mates[0]))for(const q of options(mates[1])){
     if(edgeRushDistance(p,q)<.17)continue;
-    // Never send both support players into the same depth band when the puck is low.
-    if(deep&&!held&&(p.intent==='high-outlet')===(q.intent==='high-outlet'))continue;
+    // Maintain an attacking triangle from the entry onward: a depth threat
+    // plays off D1's heels while F3 stays above the puck in a separate lane.
+    if(!held&&(p.intent==='high-outlet')===(q.intent==='high-outlet'))continue;
+    if(Math.abs(p.x-q.x)<.095)continue;
     const crossing=edgeRushPointSegDist(mates[1].x,mates[1].y,mates[0].x,mates[0].y,p.x,p.y);
     const value=score(mates[0],p)+score(mates[1],q)-.14*rushClamp((.08-crossing)/.08,0,1);
     if(!best||value>best.value)best={points:[p,q],value};
@@ -8149,9 +8173,11 @@ function edgeRushSupportTargets(owner,agents,defs,goalie,now=0){
         if(deep&&a.x>.74&&point.intent==='high-outlet')a.routeWaypoints.push({x:.70,y:a.y<.5?.22:.78});
         else if(point.intent==='weak-side'&&(a.y-.5)*(point.y-.5)<0&&a.x>.72)
           a.routeWaypoints.push({x:.68,y:a.y<.5?.22:.78},{x:.68,y:point.y});
+        else if(point.intent==='middle-drive'&&strong&&a.x<strong.x+.025)
+          a.routeWaypoints.push({x:strong.x+.045,y:driveY});
         else if(point.intent==='backdoor'&&a.x<.84)a.routeWaypoints.push({x:.85,y:owner.y<.5?.18:.82});
       }
-      a.route=point;a.routeOwner=owner.id;a.routeUntil=now+1800+400*(1-a.brain.vision);
+      a.route=point;a.routeOwner=owner.id;a.routeUntil=now+950+350*(1-a.brain.vision);
     });
   }
   mates.forEach(a=>{
@@ -8168,6 +8194,16 @@ function edgeRushChooseAction(owner,mates,defs,now,phaseAt,goalie){
   if(ready&&quick&&now<(owner.backdoorUntil||0)&&quality.lane>.50&&quality.value>.43)return {action:'shoot',choice,pressure,quality};
   if(choice.play==='backdoor')return {action:'pass',choice,pressure,quality,play:'backdoor'};
   if(choice.a?.intent==='escape-outlet'&&choice.score>.22&&edgeRushPassingClearance(edgeRushStick(owner),edgeRushStick(choice.a),defs)>.045)return {action:'pass',choice,pressure,quality,play:'escape'};
+  // Read the second defender: if he follows the depth threat, F3 is the
+  // outlet; if he holds high, play to the driver off the first defender.
+  const cover=defs.find(d=>d.mode==='cover'),driver=mates.find(a=>['middle-drive','backdoor','weak-side'].includes(a.intent));
+  const trailer=mates.find(a=>a.intent==='high-outlet');
+  const follows=cover&&driver&&cover.x>.70&&edgeRushDistance(cover,driver)<.145;
+  const outlet=follows?trailer:driver;
+  if(outlet&&owner.x>.55&&edgeRushPassingClearance(edgeRushStick(owner),edgeRushStick(outlet),defs)>.065
+    &&edgeRushPressure(outlet,defs)>.065&&edgeRushPassScore(owner,outlet,defs,goalie)>.40
+    &&edgeRushShotQuality(outlet,defs,goalie).value>quality.value+.025)
+    return {action:'pass',choice:{a:outlet,score:edgeRushPassScore(owner,outlet,defs,goalie),play:'pass'},pressure,quality,play:follows?'high-slot':'middle-drive'};
   if(owner.creatingBackdoor&&pressure>.060)return {action:'drive',choice,pressure,quality};
   const oneTimer=quick&&(owner.brain.scoring.signature.release==='one-timer'||owner.brain.shot>.55)&&owner.receiveFromY!=null&&(owner.receiveFromY-owner.y)*owner.hand>0;
   if(ready&&oneTimer&&!owner.move&&quality.lane>.50&&quality.value>.53)return {action:'shoot',choice,pressure,quality};
@@ -8208,6 +8244,18 @@ function edgeRushPlanAttack(puck,agents,defs,goalie,plan,now){
     owner.creatingBackdoor=best.drawWide&&now-(owner.backdoorBuildAt||0)<1600;
     owner.tx=rushLerp(owner.tx,best.point.x,.60);owner.ty=rushLerp(owner.ty,best.point.y,.60);
     if(quality.value>.64&&!owner.creatingBackdoor){owner.tx=owner.x+.012;owner.ty=owner.y;}
+    // Delay on the outside when D1 closes and the driver has not yet cleared
+    // his heels. Keep the puck away from the check while F3 finds the next
+    // layer; do not continue straight into the pair. The delay is bounded.
+    const driver=agents.find(a=>a!==owner&&a.intent==='middle-drive');
+    const strong=defs.slice().sort((a,b)=>edgeRushDistance(a,owner)-edgeRushDistance(b,owner))[0];
+    if(driver&&strong&&owner.x>.57&&owner.x<.74&&Math.abs(owner.y-.5)>.13&&quality.lane<.55
+      &&edgeRushPressure(owner,defs)<.15&&driver.x<strong.x+.025&&now>(owner.delayAgainAt||0)){
+      owner.delayUntil=now+450+300*owner.brain.vision;owner.delayAgainAt=now+2400;owner.delayX=owner.x;owner.delayY=owner.y;
+    }
+    if(now<(owner.delayUntil||0)){
+      owner.tx=rushClamp(owner.delayX-.035,.52,.76);owner.ty=rushClamp(owner.delayY+(owner.delayY<.5?-.035:.035),.18,.82);owner.intent='delay';
+    }
   }
   if(puck.mode!=='carry')return {action:'read'};
   if(edgeRushSoloMove(owner,defs,plan,now))return {action:owner.move?.start===now?'deke':'read',owner,play:'solo-rush'};
@@ -8266,13 +8314,23 @@ function edgeRushDefenderStick(d,now=0){
   const reach=35.727+poke;
   return {x:d.x+Math.cos(angle)*reach/720,y:d.y+Math.sin(angle)*reach/405,angle,poke};
 }
+function edgeRushReadGrips(puck,agents,now=0){
+  for(const a of agents){
+    const carrier=puck.owner===a&&['carry','loadshot'].includes(puck.mode),receiving=puck.target===a;
+    // Reattach during the approach, with enough distance to finish before the
+    // blue line. Everyone already in the zone presents a two-handed target.
+    const inZone=a.x>=EDGE_RUSH_BLUE-.065;
+    a.hasPuck=carrier;a.passReady=inZone||receiving;
+    a.mustGrip=carrier||receiving||inZone||!!a.move||!!a.passFollow||a.state==='shooting'||now<(a.passGripUntil||0);
+    a.gripIntent=!a.mustGrip&&Math.hypot(a.vx||0,a.vy||0)>.07?1:0;
+  }
+}
 function edgeRushReadStickChecks(puck,defs,now,dt,agents=[]){
   const a=puck.mode==='carry'?puck.owner:null;
   const danger=a?defs.filter(d=>d.x>a.x-.055&&edgeRushDistance(a,d)<.135).sort((x,y)=>edgeRushDistance(a,x)-edgeRushDistance(a,y))[0]:null;
+  edgeRushReadGrips(puck,agents,now);
   for(const b of agents){
     b.protecting=b===a&&(!!danger||now<(b.protectUntil||0));
-    const speed=Math.hypot(b.vx||0,b.vy||0),receiving=puck.target===b;
-    b.gripIntent=now>=(b.passGripUntil||0)&&!b.move&&!b.passFollow&&!receiving&&b.state!=='shooting'&&(b===a?!danger&&speed>.15:speed>.07)?1:0;
     edgeRushHandle(b,b===a,dt);
   }
   if(!a||a.state==='shooting')return;
@@ -8374,6 +8432,10 @@ function edgeRushEntryReady(puck,agents){
 }
 function edgeRushPass(puck,to,duration=.28){
   if(puck.entry&&(!puck.entry.entered||to.x<puck.entry.insideX))return false;
+  // Prepare the receiver before sending the puck. A pass never arrives at a
+  // dangling one-handed grip, and its owner always retains both hands.
+  to.mustGrip=true;to.gripIntent=0;
+  if((to.oneHandBlend||0)>.02)return false;
   if(puck.owner){const blade=edgeRushStick(puck.owner);puck.x=blade.x;puck.y=blade.y;puck.owner.passFollow={elapsed:0,direction:Math.sign(to.y-puck.owner.y)||puck.owner.hand||1};}
   puck.mode="pass";puck.owner=null;puck.target=to;puck.elapsed=0;puck.duration=duration;
   puck.fromX=puck.x;puck.fromY=puck.y;return true;
@@ -8388,6 +8450,7 @@ function edgeRushShot(puck,x,y,duration=.24,opts={}){
 function edgeRushUpdatePuck(puck,dt,w=720,h=405){
   puck.justPost=false;puck.justRoof=false;
   if(puck.mode==="carry"&&puck.owner){
+    puck.owner.hasPuck=true;puck.owner.mustGrip=true;puck.owner.gripIntent=0;puck.owner.oneHandBlend=0;
     const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return false;
   }
   if(puck.mode==="pass"&&puck.target){
@@ -8796,7 +8859,9 @@ function edgeRushReleaseType(a,now){
   if(oneTimer&&(a.brain.scoring.signature.release==='one-timer'||a.brain.shot>.55))return 'one-timer';
   if(close&&(a.lastMove==='forehand-backhand'||a.brain.scoring.signature.release==='backhand'))return 'backhand';
   if(a.brain.scoring.signature.release==='drag-release')return 'drag-release';
-  if(a.brain.shot>.78&&!close)return 'slap';
+  // A big windup needs time and a clear lane. Under pressure use the compact
+  // release, even for a player with an elite measured shot speed.
+  if(a.brain.shot>.78&&!close&&(!a.shotRead||a.shotRead.pressure>.85&&a.shotRead.distance>.25))return 'slap';
   return close||a.brain.release<.23?'snap':'wrist';
 }
 async function edgeRushAnimate(r,picked,correct) {
@@ -8839,10 +8904,10 @@ async function edgeRushAnimate(r,picked,correct) {
     edgeRushSet(d.el,d.x*w,d.y*h,0,w/720);
   };
   const prepareShot=(a,now)=>{
-    finisher=a;finisherId=a.id;windupAt=now;a.shotAimY=edgeRushShotQuality(a,defs,goalie).targetY;
+    finisher=a;finisherId=a.id;windupAt=now;a.shotRead=edgeRushShotQuality(a,defs,goalie);a.shotAimY=a.shotRead.targetY;
     a.releaseType=edgeRushReleaseType(a,now);
     a.windupDuration=a.releaseType==='tap-in'?.09:a.releaseType==='one-timer'?.18:a.releaseType==='drag-release'?.32:a.releaseType==='slap'?.52:a.releaseType==='snap'?.20:.34;
-    a.windupStart={angle:a.stickAngle||0,x:a.stickX||0,y:a.stickY||0};
+    a.windupStart={angle:a.stickAngle||0,x:a.stickX||0,y:a.stickY||0,roll:a.wristRoll||0};
     a.shotStartRot=a.rot||0;a.shotTargetRot=rushClamp(Math.atan2((.5-a.y)*405,(NET.lineX-a.x)*720)*180/Math.PI,-32,32);
     a.releaseGrip={x:0,y:a.releaseType==='backhand'?-a.hand*6:0};
     if(['slap','one-timer'].includes(a.releaseType)){
