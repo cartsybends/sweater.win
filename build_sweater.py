@@ -1085,6 +1085,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .rush-net-post { fill:#d32934; stroke:#fff; stroke-width:.65; }
   .rush-stage.net-hit .rush-net-mesh-wrap { animation:rushNetCatch .46s cubic-bezier(.18,.82,.2,1) both; }
+  .rush-stage.roof-hit .rush-net-mesh-wrap { animation:rushRoofCatch .3s ease-out; }
+  @keyframes rushRoofCatch { 40% { transform:translateY(1.2px); } }
+  .rush-puck.on-roof { box-shadow:1px 2px 0 rgba(27,48,60,.32); outline:1px solid rgba(255,255,255,.8); }
   .rush-stage.net-hit .rush-net-bed { animation:rushNetDepth .46s ease-out both; }
   .rush-stage.post-hit .rush-net-post.hit { animation:rushPostFlash .38s ease-out both; }
   .rush-stage.post-hit .rush-net-frame { animation:rushFramePing .38s ease-out both; }
@@ -7552,16 +7555,18 @@ function edgeRushSkaterMarkup(number,defender=false,team=''){
   const {jersey,light,dark,ink,stripe,accent}=edgeRushUniform(team,defender);
   return `<svg class="rush-skater-model" data-skater-model="" viewBox="0 0 78 66" aria-hidden="true">
     <g stroke-linecap="round" stroke-linejoin="round">
+      <g class="rush-s-snow" fill="#fff" stroke="#b6d2e1" stroke-width=".25"></g>
       <path class="rush-s-thigh left" fill="none" stroke="${dark}" stroke-width="8"/><path class="rush-s-thigh right" fill="none" stroke="${dark}" stroke-width="8"/>
       <path class="rush-s-shin left" fill="none" stroke="${jersey}" stroke-width="6"/><path class="rush-s-shin right" fill="none" stroke="${jersey}" stroke-width="6"/>
       <path class="rush-s-sock left" fill="none" stroke="${stripe}" stroke-width="4"/><path class="rush-s-sock right" fill="none" stroke="${stripe}" stroke-width="4"/>
-      <g class="rush-s-skate left"><path d="M-5 -1L1 -3L6 0L6 2L-5 2Z" fill="#182d3b" stroke="#122633" stroke-width=".7"/><path d="M-6 4H7M-3 2V4M4 2V4" fill="none" stroke="#7e9aaa" stroke-width=".9"/></g>
-      <g class="rush-s-skate right"><path d="M-5 -1L1 -3L6 0L6 2L-5 2Z" fill="#182d3b" stroke="#122633" stroke-width=".7"/><path d="M-6 4H7M-3 2V4M4 2V4" fill="none" stroke="#7e9aaa" stroke-width=".9"/></g>
+      <g class="rush-s-skate left"><path d="M-5 -6L-1 -6L1 -2L5 -1Q8 0 7 2L-6 2L-6 -4Z" fill="#172735" stroke="#101f2b" stroke-width=".65"/><path d="M-4 -5L-2 -1L3 0M-3 -3H0M-2 -1H2" fill="none" stroke="#b8c7d2" stroke-width=".65"/><path d="M-5 2V4H5V2" fill="none" stroke="#eef4f7" stroke-width="1.35"/><path d="M-7 4Q-6 5 0 5H5Q7 5 8 3.7" fill="none" stroke="#73909f" stroke-width=".9"/></g>
+      <g class="rush-s-skate right"><path d="M-5 -6L-1 -6L1 -2L5 -1Q8 0 7 2L-6 2L-6 -4Z" fill="#172735" stroke="#101f2b" stroke-width=".65"/><path d="M-4 -5L-2 -1L3 0M-3 -3H0M-2 -1H2" fill="none" stroke="#b8c7d2" stroke-width=".65"/><path d="M-5 2V4H5V2" fill="none" stroke="#eef4f7" stroke-width="1.35"/><path d="M-7 4Q-6 5 0 5H5Q7 5 8 3.7" fill="none" stroke="#73909f" stroke-width=".9"/></g>
       <path class="rush-s-hips" fill="${dark}" stroke="#18384b" stroke-width=".7"/>
       <path class="rush-s-torso" fill="${jersey}" stroke="${dark}" stroke-width="1"/>
       <path class="rush-s-front" fill="${light}"/><path class="rush-s-trim" fill="none" stroke="${accent}" stroke-width="4"/><path class="rush-s-hem" fill="none" stroke="${stripe}" stroke-width="2"/>
       <text class="rush-s-number" text-anchor="middle" dominant-baseline="central" font-family="Arial,sans-serif" font-size="9" font-weight="900" fill="${ink}">${esc(number)}</text>
       <path class="rush-s-neck" fill="${dark}" stroke="${stripe}" stroke-width="1"/>
+      <g class="rush-s-shot-stick"></g>
       <path class="rush-s-arm top" fill="none" stroke="${jersey}" stroke-width="6"/><path class="rush-s-arm bottom" fill="none" stroke="${jersey}" stroke-width="6"/>
       <path class="rush-s-cuff top" fill="none" stroke="${stripe}" stroke-width="3"/><path class="rush-s-cuff bottom" fill="none" stroke="${stripe}" stroke-width="3"/>
       <g class="rush-s-glove top"><path d="M-3 -3Q0 -4 3 -2L4 2Q0 4 -3 2Z" fill="${dark}" stroke="#f0f5f8" stroke-width=".6"/><path d="M-2 -1H2" stroke="${stripe}" stroke-width="1"/></g>
@@ -7580,30 +7585,33 @@ function edgeRushStickMatrix(a){
   const C=-s+cp*ux*ey-.16*sp*ey,D=c+cp*uy*ey-.42*sp*ey;
   // Pitch one rigid stick about the top hand, preserving shaft, blade and both grips.
   const top={x:(10-39)*48/78,y:(5+(10-6)*16/49-15)*48/78*hand};
-  return {a:A,b:B,c:C,d:D,e:19+(a.stickX||0)+c*top.x-s*top.y-A*top.x-C*top.y,f:2+(a.stickY||0)+s*top.x+c*top.y-B*top.x-D*top.y};
+  const anchor=(a.state==='shooting'&&['slap','one-timer'].includes(a.releaseType)?(a.shotAnchorAngle??a.stickAngle??0):(a.stickAngle||0))*Math.PI/180,ac=Math.cos(anchor),as=Math.sin(anchor);
+  return {a:A,b:B,c:C,d:D,e:19+(a.stickX||0)+ac*top.x-as*top.y-A*top.x-C*top.y,f:2+(a.stickY||0)+as*top.x+ac*top.y-B*top.x-D*top.y};
 }
 function edgeRushShootingPose(a,t,follow=false){
   t=rushClamp(t,0,1);const smooth=v=>{v=rushClamp(v,0,1);return v*v*(3-2*v);},hand=a.hand||1,type=a.releaseType||'wrist',start=a.windupStart||{angle:0,x:0,y:0};
   const slap=type==='slap'||type==='one-timer',snap=type==='snap',back=type==='backhand',tap=type==='tap-in';
   if(follow){
+    a.shotAnchorAngle=hand*12;
     const push=Math.sin(Math.min(1,t/.45)*Math.PI/2)*(1-smooth((t-.45)/.55));
-    a.stickAngle=back?rushLerp(-hand*58,hand*12,smooth(t)):hand*(12+(slap?30:snap?12:20)*push);a.stickPitch=(slap?48:snap?15:24)*push;
+    a.stickAngle=back?rushLerp(-hand*58,hand*12,smooth(t)):hand*(12+(slap?8:snap?8:12)*push);a.stickPitch=(slap?32:snap?12:20)*push;
     a.stickX=(a.releaseGrip?.x||0)+2*push;a.stickY=(a.releaseGrip?.y||0)-hand*2*push;
-    a.shotLoad=.25*(1-t);a.shotWeight=1-t;a.shotTwist=hand*(slap?7:4)*push;a.wristRoll=-push;
+    a.shotLift=0;a.shotLoad=.25*(1-t);a.shotWeight=1-t;a.shotTwist=hand*(slap?7:4)*push;a.wristRoll=-push;
     return;
   }
   if(slap&&a.shotPuckIce){
     const rot=(a.shotTargetRot||0)*Math.PI/180,dx=(a.shotPuckIce.x-a.x)*720,dy=(a.shotPuckIce.y-a.y)*405;
-    const neutral=edgeRushSkaterGrip({...a,stickAngle:hand*12,stickX:0,stickY:0,stickPitch:0},64,22.5);
+    const neutral=edgeRushSkaterGrip({...a,stickAngle:hand*12,shotAnchorAngle:hand*12,stickX:0,stickY:0,stickPitch:0},64,22.5);
     a.releaseGrip={x:dx*Math.cos(rot)+dy*Math.sin(rot)-neutral.x,y:-dx*Math.sin(rot)+dy*Math.cos(rot)-neutral.y};
   }
-  const peak=slap?.48:snap?.28:.38,loadAngle=hand*(slap?-46:snap?-10:back?-35:tap?2:-28),end=back?-hand*58:hand*12;
+  a.shotAnchorAngle=rushLerp(start.angle,hand*12,smooth(t));
+  const peak=slap?.48:snap?.28:.38,loadAngle=hand*(slap?-165:snap?-10:back?-35:tap?2:-28),end=back?-hand*58:hand*12;
   const draw=t<peak?smooth(t/peak):1,release=smooth((t-peak)/(1-peak));
   a.stickAngle=t<peak?rushLerp(start.angle,loadAngle,draw):rushLerp(loadAngle,end,release);
-  a.stickPitch=slap?76*Math.sin(Math.PI*smooth(t)):snap?5*Math.sin(Math.PI*t):0;
+  a.stickPitch=slap?65*Math.sin(Math.PI*smooth(t)):snap?5*Math.sin(Math.PI*t):0;
   a.stickX=rushLerp(start.x,a.releaseGrip?.x||0,smooth(t))-(type==='drag-release'?Math.sin(Math.PI*t)*9:0);
   a.stickY=rushLerp(start.y,a.releaseGrip?.y||(back?-hand*6:0),smooth(t));
-  const raise=slap?40*Math.sin(Math.PI*smooth(t)):0;a.stickX-=.16*raise;a.stickY-=.42*raise;
+  const raise=slap?32*Math.sin(Math.PI*smooth(t)):0;a.shotLift=raise;a.stickX-=.16*raise;a.stickY-=.42*raise;
   a.shotLoad=Math.sin(Math.PI*t)*(slap?1:snap?.45:.75);a.shotWeight=rushLerp(-.7,1,release);
   a.shotTwist=hand*(slap?-10:snap?-3:-6)*Math.sin(Math.PI*t);a.wristRoll=rushLerp(.6,-.7,release);
 }
@@ -7617,6 +7625,14 @@ function edgeRushSkaterGrip(a,x,y,defender=false,now=0){
 }
 function edgeRushSkaterStride(a,dt){
   const speed=Math.hypot((a.vx||0)*720,(a.vy||0)*405);
+  // Braking effects advance once per simulation step, never once per render.
+  const previous=a.skateSpeed??speed,ax=(a.vx||0)*720,ay=(a.vy||0)*405;
+  a.snowT=Math.max(0,(a.snowT||0)-dt);a.stopBlend=Math.max(0,(a.stopBlend||0)-dt*3);
+  if(previous>70&&(previous-speed)/Math.max(dt,.001)>185&&!(a.snowT>0)){
+    a.snowT=.38;a.stopBlend=1;a.stopAngle=Math.atan2(ay,ax)+Math.PI/2;
+  }
+  a.skateSpeed=speed;
+  if(a.mode){const target=a.stickAim??Math.PI,old=a.skaterHeading??target,diff=Math.atan2(Math.sin(target-old),Math.cos(target-old));a.skaterHeading=old+diff*(1-Math.exp(-7*dt));}
   a.skatePhase=(a.skatePhase??((Number(a.id)||1)%11)*.57)+speed*dt*.085;
   a.gripX=rushMoveToward(a.gripX??36,edgeRushLowerGrip(a,!!a.mode),dt*32);
 }
@@ -7642,17 +7658,17 @@ function edgeRushHandle(a,carry,dt){
 }
 function edgeRushLowerGrip(a,defender=false){
   if(defender)return 38;
-  if(a.state==='shooting')return a.releaseType==='slap'||a.releaseType==='one-timer'?43:a.releaseType==='backhand'?35:40;
+  if(a.state==='shooting')return a.releaseType==='slap'||a.releaseType==='one-timer'?40-10*(a.shotLoad||0):a.releaseType==='backhand'?35:40;
   const drag=a.move?.type==='toe-drag'?Math.abs(a.stickX||0)/9:0;
   // The lower hand guides the shaft and slides closer to the top hand on a pull-in.
   return rushClamp(36+2*Math.cos(a.handlePhase||0)*(a.handleBlend||0)-5*drag,30,43);
 }
 function edgeRushRenderSkater(a,defender=false,now=0){
   if(!a.el)return;
-  const names=['torso','front','hips','trim','hem','number','neck','helmet',...['left','right'].flatMap(s=>['thigh.'+s,'shin.'+s,'sock.'+s,'skate.'+s]),...['top','bottom'].flatMap(s=>['arm.'+s,'cuff.'+s,'glove.'+s])];
+  const names=['shot-stick','snow','torso','front','hips','trim','hem','number','neck','helmet',...['left','right'].flatMap(s=>['thigh.'+s,'shin.'+s,'sock.'+s,'skate.'+s]),...['top','bottom'].flatMap(s=>['arm.'+s,'cuff.'+s,'glove.'+s])];
   const rig=a.skaterRig||(a.skaterRig=Object.fromEntries(names.map(k=>[k,a.el.querySelector('.rush-s-'+k)])));
   const motion=rushClamp(Math.hypot((a.vx||0)*720,(a.vy||0)*405)/150,0,1),phase=a.skatePhase||0;
-  const heading=defender?(a.stickAim??Math.PI):rushClamp((a.fakeYaw||0)*.35+(a.shotTwist||0),-12,12)*Math.PI/180;
+  const heading=defender?(a.skaterHeading??a.stickAim??Math.PI):rushClamp((a.fakeYaw||0)*.35+(a.shotTwist||0),-12,12)*Math.PI/180;
   const F={x:Math.cos(heading),y:Math.sin(heading)},R={x:-Math.sin(heading),y:Math.cos(heading)};
   const P=p=>({x:39+F.x*p.d+R.x*p.l-.16*p.z,y:33+F.y*p.d+R.y*p.l-.42*p.z+8});
   const line=ps=>ps.map((p,i)=>`${i?'L':'M'}${p.x} ${p.y}`).join(''),polygon=ps=>line(ps)+'Z';
@@ -7671,19 +7687,29 @@ function edgeRushRenderSkater(a,defender=false,now=0){
     return {origin,middle,end:target,reach:dist};
   };
   const topGrip=edgeRushSkaterGrip(a,10,6,defender,now);
-  const lateralLean=defender?0:rushClamp((topGrip.y-(2-9*48/78*(a.hand||1)))*.4,-9,9);
+  // Remove projected vertical lift before interpreting a hand's lateral reach.
+  // Height always stays up; only the shooting side mirrors for left/right shots.
+  const lateralLean=defender?0:rushClamp((topGrip.y+.42*(a.shotLift||0)-(2-9*48/78*(a.hand||1)))*.32,-6,6);
   const load=!defender&&a.state==='shooting'?rushClamp(a.shotLoad||0,0,1):0;
   const hipZ=33-3*motion-load*2,shoulderZ=hipZ+21,lean=(defender?5:8)+motion*2+load*2;
   const joints={};
   const backwards=((a.vx||0)*F.x*720+(a.vy||0)*F.y*405)<-2?-1:1,shooting=a.state==='shooting',weight=shooting?(a.shotWeight||0):0;
   for(const [key,side] of [['left',-1],['right',1]]){
     const cycle=phase+(side>0?Math.PI:0),stride=shooting?0:Math.sin(cycle)*motion;
-    const hip={d:-4+weight*2,l:side*5,z:hipZ-2},foot={d:-9+stride*9*backwards+(shooting?side*(a.hand||1)*5:0),l:side*(9+load*4+Math.max(0,-Math.cos(cycle))*motion*5),z:1+Math.max(0,stride)*3};
-    const j=joint(hip,foot,{d:13,l:side*7,z:15},20),hp=P(hip),kp=P(j.middle),fp=P(foot);
+    const hip={d:-4+weight*2,l:side*5,z:hipZ-2};
+    // A planted shooting base: weight shifts over the skates, feet do not splay
+    // or keep running through the windup. Knees flex in the toe direction.
+    const foot={d:-9+stride*9*backwards,l:side*(shooting?11:9+Math.max(0,-Math.cos(cycle))*motion*5),z:1+Math.max(0,stride)*3};
+    const j=joint(hip,foot,{d:13,l:foot.l,z:16},20),hp=P(hip),kp=P(j.middle),fp=P(foot);
     rig['thigh.'+key].setAttribute('d',line([hp,kp]));rig['shin.'+key].setAttribute('d',line([kp,fp]));rig['sock.'+key].setAttribute('d',line([P(mix(j.middle,foot,.53)),P(mix(j.middle,foot,.67))]));
-    rig['skate.'+key].setAttribute('transform',`translate(${fp.x} ${fp.y}) rotate(${heading*180/Math.PI+stride*side*8})`);joints['leg.'+key]=j;
+    const skateHeading=heading+stride*side*.14+(a.stopBlend||0)*Math.atan2(Math.sin((a.stopAngle||heading)-heading),Math.cos((a.stopAngle||heading)-heading));
+    // Rotate the runner on the ice, not the boot's vertical axis. A defender
+    // facing backward must never have an upside-down holder or a toe pick.
+    rig['skate.'+key].setAttribute('transform',`matrix(${Math.cos(skateHeading)} ${Math.sin(skateHeading)*.65} .16 .75 ${fp.x} ${fp.y})`);joints['leg.'+key]=j;
+    joints['skate.'+key]={heading:skateHeading,foot:fp};
   }
-  const hips=[{d:-8,l:-7,z:hipZ+2},{d:2,l:-7,z:hipZ+2},{d:2,l:7,z:hipZ-5},{d:-8,l:7,z:hipZ-5}].map(P);rig.hips.setAttribute('d',polygon(hips));
+  const hipShift=weight*2;
+  const hips=[{d:-8,l:-7,z:hipZ+2},{d:2,l:-7,z:hipZ+2},{d:2,l:7,z:hipZ-5},{d:-8,l:7,z:hipZ-5}].map(p=>P({...p,d:p.d+hipShift}));rig.hips.setAttribute('d',polygon(hips));
   // Project a padded jersey volume, including its front and shoulder surfaces.
   const points=[...[-5,lean].flatMap(d=>[-9,9].map(l=>P({d,l:l+lateralLean,z:shoulderZ}))),...[-8,2].flatMap(d=>[-7,7].map(l=>P({d,l,z:hipZ+1})))].sort((a,b)=>a.x-b.x||a.y-b.y);
   const cross=(a,b,c)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x),hull=[];
@@ -7700,12 +7726,30 @@ function edgeRushRenderSkater(a,defender=false,now=0){
     const grip=edgeRushSkaterGrip(a,svgX,svgY,defender,now);
     const origin={d:lean,l:side*9+lateralLean,z:shoulderZ-3};
     const sx=grip.x,sy=grip.y-8,base={d:F.x*sx+F.y*sy,l:R.x*sx+R.y*sy,z:0},ray={d:F.x*.16+F.y*.42,l:R.x*.16+R.y*.42,z:1};
-    const z=rushClamp(dot(sub(origin,base),ray)/dot(ray,ray),12,shoulderZ-4),wrist=add(base,mul(ray,z));
+    const z=rushClamp(dot(sub(origin,base),ray)/dot(ray,ray),12,shoulderZ+12),wrist=add(base,mul(ray,z));
     const j=joint(origin,wrist,{d:lean-5,l:side*15+lateralLean,z:shoulderZ-13},17),o=P(origin),e=P(j.middle),hand=P(wrist);
     rig['arm.'+key].setAttribute('d',line([o,e,hand]));rig['cuff.'+key].setAttribute('d',line([P(mix(j.middle,wrist,.65)),P(mix(j.middle,wrist,.80))]));
     const roll=defender?0:(a.wristRoll||0)*(key==='top'?12:5);
     rig['glove.'+key].setAttribute('transform',`translate(${hand.x} ${hand.y}) rotate(${grip.angle+roll}) scale(1 ${1-Math.abs(roll)*.012})`);joints['arm.'+key]=j;
     joints['grip.'+key]={x:hand.x-39,y:hand.y-33,shaftX:grip.x,shaftY:grip.y};
+  }
+  if(rig.snow){
+    const t=rushClamp(1-(a.snowT||0)/.38,0,1),strength=(a.snowT||0)>0?Math.sin(Math.PI*t):0;
+    rig.snow.setAttribute('opacity',strength*.85);
+    rig.snow.innerHTML=strength?['left','right'].flatMap((side,j)=>Array.from({length:5},(_,i)=>{
+      const f=joints['skate.'+side].foot,spread=(i-2)*2.2,drift=5+18*t;
+      const x=f.x-Math.cos(a.stopAngle||0)*drift+spread,y=f.y-Math.sin(a.stopAngle||0)*drift*.5+3-Math.sin(Math.PI*t)*(2+i%3);
+      return `<path d="M${x} ${y}l${1.2+i%2} -.6 .8 1.3 -1.8 .3Z"/>`;
+    })).join(''):'';
+  }
+  if(rig['shot-stick']){
+    const show=!defender&&shooting;rig['shot-stick'].setAttribute('display',show?'':'none');
+    if(show){
+      if(!rig['shot-stick'].innerHTML){rig['shot-stick'].innerHTML=edgeRushStickMarkup().replace(/^<svg[^>]*>|<\/svg>$/g,'');}
+      const m=edgeRushStickMatrix(a),r=48/78,h=a.hand||1;
+      const A=m.a*r,B=m.b*r,C=m.c*r*h,D=m.d*r*h;
+      rig['shot-stick'].setAttribute('transform',`matrix(${A} ${B} ${C} ${D} ${39+m.e-39*A-15*C} ${33+m.f-39*B-15*D})`);
+    }
   }
   a.skaterJoints=joints;
 }
@@ -7718,7 +7762,7 @@ const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
 // Overhead projection: opening faces left at the original goal line, cage extends right.
 // Both actors and the frame scale from the same 720-by-405 rink coordinates.
-const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:662/720,leftX:662/720,rightX:708/720,backX:696/720,topY:166/405,bottomY:239/405,lift:0,lean:0});
+const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:662/720,leftX:662/720,rightX:708/720,backX:696/720,topY:166/405,bottomY:239/405,lift:0,lean:0,roofLift:7/405,roofLean:7/720});
 function edgeRushSegmentCircle(x0,y0,x1,y1,cx,cy,r){
   const dx=x1-x0,dy=y1-y0,fx=x0-cx,fy=y0-cy,a=dx*dx+dy*dy;
   if(a<.000001)return null;
@@ -8236,10 +8280,10 @@ function edgeRushShot(puck,x,y,duration=.24,opts={}){
   puck.fromX=puck.x;puck.fromY=puck.y;puck.toX=x;puck.toY=y;
   puck.vx=(x-puck.x)/Math.max(.08,duration);puck.vy=(y-puck.y)/Math.max(.08,duration);
   puck.z=0;puck.targetZ=0;puck.crossbar=!!opts.crossbar;puck.vz=0;puck.frameCX=opts.frameCX;puck.frameCY=opts.frameCY;
-  puck.postTop=opts.postTop??null;puck.postHit=false;puck.postResult=null;puck.justPost=false;puck.postElapsed=0;
+  puck.postTop=opts.postTop??null;puck.postHit=false;puck.postResult=null;puck.justPost=false;puck.justRoof=false;puck.postElapsed=0;
 }
 function edgeRushUpdatePuck(puck,dt,w=720,h=405){
-  puck.justPost=false;
+  puck.justPost=false;puck.justRoof=false;
   if(puck.mode==="carry"&&puck.owner){
     const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return false;
   }
@@ -8291,13 +8335,34 @@ function edgeRushUpdatePuck(puck,dt,w=720,h=405){
     if(puck.postElapsed>.72||puck.x<.05||puck.x>.98||puck.y<.06||puck.y>.94){puck.postResult="out";return true;}
     return false;
   }
+  if(puck.mode==='netrest')return true;
   if(puck.mode==='saveflight'||puck.mode==='frameflight'){
     const lambda=4.8,decay=Math.exp(-lambda*dt),travel=(1-decay)/lambda;
+    const ox=puck.x,oy=puck.y,oz=puck.z||0,ovz=puck.vz||0;
     puck.x+=puck.vx*travel;puck.y+=puck.vy*travel;puck.vx*=decay;puck.vy*=decay;
-    puck.flightT=(puck.flightT||0)+dt;puck.vz=(puck.vz||0)-3.2*dt;puck.z=Math.max(0,(puck.z||0)+puck.vz*dt);
+    puck.flightT=(puck.flightT||0)+dt;
+    let nz=oz+ovz*dt-1.6*dt*dt;puck.vz=ovz-3.2*dt;
+    const N=EDGE_RUSH_NET;
+    const onRoof=(x,y)=>x>N.leftX+3/720&&x<N.rightX-4/720&&y>N.topY+3/405&&y<N.bottomY-3/405&&(!(x>693/720)||(y>177/405&&y<228/405));
+    if(puck.airborne&&oz>=1&&nz<=1&&puck.vz<0){
+      const u=rushClamp((oz-1)/(oz-nz),0,1),x=rushLerp(ox,puck.x,u),y=rushLerp(oy,puck.y,u);
+      if(onRoof(x,y)){
+        puck.x=x;puck.y=y;puck.z=1;puck.justRoof=true;puck.roofBounces=(puck.roofBounces||0)+1;
+        puck.vx*=.12;puck.vy*=.12;puck.vz=Math.min(.38,Math.abs(puck.vz)*.15);
+        if(puck.roofBounces>=2||puck.vz<.12){puck.mode='netrest';puck.vx=puck.vy=puck.vz=0;return true;}
+        return false;
+      }
+    }
+    puck.z=Math.max(0,nz);
+    // Low saved rebounds strike the outside cage; they cannot settle inside it.
+    if(puck.z<1&&puck.x>N.leftX&&puck.x<N.rightX&&puck.y>N.topY&&puck.y<N.bottomY&&!puck.roofBounces){
+      if(ox<N.leftX){puck.x=N.leftX-3/720;puck.vx=-Math.abs(puck.vx)*.3;}
+      else if(oy<N.topY||oy>N.bottomY){puck.y=oy<N.topY?N.topY-3/405:N.bottomY+3/405;puck.vy*=-.3;}
+      else{puck.x=N.rightX+3/720;puck.vx=Math.abs(puck.vx)*.3;}
+    }
     const speed=Math.hypot(puck.vx*w,puck.vy*h);
-    if(puck.flightT>=.72||speed<16||puck.x<.03||puck.x>.97||puck.y<.05||puck.y>.95){
-      puck.x=rushClamp(puck.x,.03,.97);puck.y=rushClamp(puck.y,.05,.95);puck.z=0;puck.vx=0;puck.vy=0;return true;
+    if(puck.z<=0&&(puck.flightT>=.72||speed<16||puck.x<.03||puck.x>.98||puck.y<.05||puck.y>.95)){
+      puck.x=rushClamp(puck.x,.03,.98);puck.y=rushClamp(puck.y,.05,.95);puck.vx=0;puck.vy=0;return true;
     }
     return false;
   }
@@ -8311,20 +8376,23 @@ function edgeRushUpdatePuck(puck,dt,w=720,h=405){
 function edgeRushRenderAgent(a,w,h){
   if(!a.el)return;
   const stick=a.el.querySelector('.rush-stick-svg');
-  if(stick){const m=edgeRushStickMatrix(a);stick.style.transform=`matrix(${m.a},${m.b},${m.c*(a.hand||1)},${m.d*(a.hand||1)},${m.e-19},${m.f-2})`;}
+  if(stick){stick.style.opacity=a.state==='shooting'?'0':'1';const m=edgeRushStickMatrix(a);stick.style.transform=`matrix(${m.a},${m.b},${m.c*(a.hand||1)},${m.d*(a.hand||1)},${m.e-19},${m.f-2})`;}
   edgeRushRenderSkater(a);
   edgeRushSet(a.el,a.x*w,a.y*h,a.rot,w/720);
 }
 function edgeRushRenderPuck(puck,el,w,h){
   if(!el)return;
   el.style.opacity=puck.mode==="secured"||puck.gloveOccluded?"0":"1";
-  const z=puck.z||0,N=EDGE_RUSH_NET;
-  edgeRushSet(el,(puck.x-z*N.lean)*w,(puck.y-z*N.lift)*h,0,puck.mode==="shot"?1.08:1);
+  const z=puck.z||0,N=EDGE_RUSH_NET,roof=puck.mode==='netrest',air=puck.airborne;
+  el.classList.toggle('on-roof',roof);el.classList.toggle('roof-bounce',!!puck.roofBounces&&!roof);
+  edgeRushSet(el,(puck.x-z*(air?N.roofLean:N.lean))*w,(puck.y-z*(air?N.roofLift:N.lift))*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
   const pad=side=>`<g class="rush-g-pad ${side}"><path d="M-7 22L8 22L10 28Q0 29 -9 28Z" fill="#243847"/><path d="M-7 0Q0 -3 7 0L8 22Q6 27 0 27Q-6 27 -8 22Z" fill="url(#rush-pad)" stroke="#647c8c" stroke-width="1"/><path d="M-4 2L-4 21M-3 8L6 8M-3 15L6 15M-3 22L6 22" class="rush-g-detail"/><path d="M1 1L6 2L6 5L1 4Z" fill="#234b67"/><circle data-goalie-contact="${side}" cx="0" cy="20" r=".2" fill="transparent"/><circle data-goalie-contact="${side}-post-toe" cx="0" cy="28" r=".2" fill="transparent"/></g>`;
   return `<div class="rush-goalie" data-goalie aria-hidden="true"><svg viewBox="0 0 82 96"><defs><linearGradient id="rush-jersey" x2="1" y2=".4"><stop stop-color="#62839d"/><stop offset=".5" stop-color="#315773"/><stop offset="1" stop-color="#18374d"/></linearGradient><linearGradient id="rush-pad" x2="1" y2=".25"><stop stop-color="#fff"/><stop offset=".65" stop-color="#edf3f7"/><stop offset="1" stop-color="#b8cbd7"/></linearGradient></defs>
   <g class="rush-g-body rush-g-rig" stroke-linecap="round" stroke-linejoin="round">
+    <g class="rush-g-back"><path fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/></g>
+    <g class="rush-g-seat"><path fill="#29485d" stroke="#183447" stroke-width="1"/></g>
     <g class="rush-g-hips"><path d="M29 48Q41 44 53 48L57 60L47 65L41 57L35 65L25 60Z" fill="#233e51" stroke="#183447" stroke-width="1"/></g>
     <path class="rush-g-thigh left" fill="none" stroke="#233e51" stroke-width="12"/><path class="rush-g-thigh right" fill="none" stroke="#233e51" stroke-width="12"/>
     ${pad('left')}${pad('right')}
@@ -8368,7 +8436,7 @@ function edgeRushSaveLabel(type,variant){
 }
 function edgeRushRenderGoalie(g,el,w,h){
   if(!el)return;
-  const names=['body','torso','hips','neck','mask','pad.left','pad.right','thigh.left','thigh.right','arm.glove','arm.blocker','glove','blocker','pocket','catcher-shell','web','catcher-fold','stick','held-puck','cover-contact'];
+  const names=['body','back','seat','torso','hips','neck','mask','pad.left','pad.right','thigh.left','thigh.right','arm.glove','arm.blocker','glove','blocker','pocket','catcher-shell','web','catcher-fold','stick','held-puck','cover-contact'];
   const rig=g.rig||(g.rig=Object.fromEntries(names.map(k=>[k,el.querySelector('.rush-g-'+k)])));
   const ease=v=>{v=rushClamp(v||0,0,1);return v*v*(3-2*v);},mix=(a,b,t)=>({d:rushLerp(a.d,b.d,t),l:rushLerp(a.l,b.l,t),z:rushLerp(a.z,b.z,t)});
   const t=ease(g.contactPose?.actionT??(g.reacting?g.actionT:0)),c=ease(g.coverT),save=g.contactPose?.save||(g.saveType==='beaten'?g.attemptType:g.saveType);
@@ -8390,6 +8458,10 @@ function edgeRushRenderGoalie(g,el,w,h){
   const lean=rushLerp(6,4,down)+c*coverLean*12,hip={d:-2,l:0,z:hipZ};
   el.style.transform=`translate3d(${g.x*w}px,${g.y*h}px,0) scale(${w/720}) translate(-41px,-58px)`;
   rig.body.setAttribute('transform','');
+  const backPoints=[{d:-4,l:-11,z:shoulderZ-1},{d:-4,l:11,z:shoulderZ-1},{d:-9,l:12,z:hipZ-2},{d:-9,l:-12,z:hipZ-2}].map(P);
+  setPath('back',path(backPoints,true));
+  const seatPoints=[{d:-9,l:-12,z:hipZ+2},{d:-9,l:12,z:hipZ+2},{d:-7,l:14,z:hipZ-9},{d:2,l:12,z:hipZ-9},{d:2,l:-12,z:hipZ-9},{d:-7,l:-14,z:hipZ-9}].map(P);
+  setPath('seat',path(seatPoints,true));
   const torsoPoints=[{d:lean,l:-13,z:shoulderZ},{d:lean,l:13,z:shoulderZ},{d:0,l:10,z:hipZ+1},{d:0,l:-10,z:hipZ+1}].map(P);
   setPath('torso',path(torsoPoints,true));
   // Artwork seams are part of the same projected chest, never separate drifting pieces.
@@ -8507,7 +8579,12 @@ function edgeRushSaveDeflect(puck,g,el,w,h,type){
   const incoming=puck.vx*w*nx+puck.vy*h*ny;
   if(incoming>0){nx=-nx;ny=-ny;}
   const v=edgeRushReflect(puck.vx*w,puck.vy*h,nx,ny,type==='blocker'?.55:.43,.84);
-  puck.vx=v.vx/w;puck.vy=v.vy/h;puck.vz=0;puck.z=0;puck.mode='saveflight';puck.flightT=0;
+  puck.vx=v.vx/w;puck.vy=v.vy/h;
+  puck.airborne=type==='blocker'&&(g.shotHeight||0)>.6;
+  puck.z=puck.airborne?(g.shotHeight||.7):0;
+  if(puck.airborne){puck.x+=puck.z*EDGE_RUSH_NET.roofLean;puck.y+=puck.z*EDGE_RUSH_NET.roofLift;}
+  puck.vz=puck.airborne?1.9+Math.max(0,v.vx)/240:0;
+  puck.mode='saveflight';puck.flightT=0;puck.roofBounces=0;
   g.state='rebound';g.coverT=0;
 }
 function edgeRushGoalieBrain(){
@@ -8613,7 +8690,7 @@ function edgeRushReleaseType(a,now){
 async function edgeRushAnimate(r,picked,correct) {
   const token=++rushAnimToken,stage=$('erStage'),actors=$('erActors');
   if(!stage||!actors)return;
-  stage.classList.remove('goal','net-hit','post-hit');stage.querySelectorAll('.rush-net-post,.rush-net-crossbar').forEach(p=>p.classList.remove('hit'));
+  stage.classList.remove('goal','net-hit','post-hit','roof-hit');stage.querySelectorAll('.rush-net-post,.rush-net-crossbar').forEach(p=>p.classList.remove('hit'));
   $('erRadar').classList.remove('on');$('erCallout').classList.remove('on');$('erPhase').textContent='SET THE BREAKOUT';
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,initialFinisherId]=calc.roles;
   actors.innerHTML=edgeRushActor(carrierId,'Carrier')+edgeRushActor(supportId,'Support')+edgeRushActor(initialFinisherId,'Finisher')
@@ -8805,7 +8882,7 @@ async function edgeRushAnimate(r,picked,correct) {
           puckEl.classList.remove('shooting','posted','in-net');
         }
       }else if(phase==='saverebound'&&puckComplete&&!shotDoneAt){
-        puck.mode='dead';shotDoneAt=now;$("erPhase").textContent='REBOUND · PLAY DEAD';
+        if(puck.mode!=='netrest')puck.mode='dead';shotDoneAt=now;$("erPhase").textContent=puck.mode==='netrest'?'ON TOP OF NET · PLAY DEAD':'REBOUND · PLAY DEAD';
       }else if(phase==="netcatch"&&puckComplete&&!shotDoneAt){
         shotDoneAt=now;stage.classList.add("goal","net-hit");puck.mode="dead";
       }
@@ -8824,6 +8901,7 @@ async function edgeRushAnimate(r,picked,correct) {
           $("erPhase").textContent=shotProfile.save==='glove'?'IN THE GLOVE · WHISTLE':shotProfile.save==='chest'?'SMOTHERED · WHISTLE':'PUCK COVERED · WHISTLE';
         }
       }
+      if(puck.justRoof){stage.classList.remove('roof-hit');void stage.offsetWidth;stage.classList.add('roof-hit');}
       edgeRushRenderPuck(puck,puckEl,w,h);
 
       if(shotDoneAt&&now-shotDoneAt>820){
