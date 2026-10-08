@@ -529,6 +529,11 @@
   "team": "MTL",
   "number": 75
  },
+ "8484170": {
+  "name": "Jacob Fowler",
+  "team": "MTL",
+  "number": 32
+ },
  "8478470": {
   "name": "Samuel Montembeault",
   "team": "MTL",
@@ -634,11 +639,6 @@
   "team": "OTT",
   "number": 30
  },
- "8477992": {
-  "name": "Jonas Johansson",
-  "team": "OTT",
-  "number": 31
- },
  "8476999": {
   "name": "Linus Ullmark",
   "team": "OTT",
@@ -678,11 +678,6 @@
   "name": "Brandon Hagel",
   "team": "TBL",
   "number": 38
- },
- "8478424": {
-  "name": "Jansen Harkins",
-  "team": "TBL",
-  "number": 10
  },
  "8480995": {
   "name": "Pontus Holmberg",
