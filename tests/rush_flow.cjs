@@ -2,6 +2,7 @@
 // Run from repository root: node tests/rush_flow.cjs
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const source=fs.readFileSync(process.env.RUSH_SOURCE||'build_sweater.py','utf8');global.$=()=>null;
+const usesSimulationClock=source.includes('rushClock+=dt*1000');
 const edges=Object.values(JSON.parse(fs.readFileSync('edge_cache.json')).players),careers=JSON.parse(fs.readFileSync('career_cache.json'));
 const players=JSON.parse(fs.readFileSync('tests/fixtures/rush_players.json'));
 global.EDGE_BYID=new Map(edges.map(e=>[Number(e.id),e]));global.BYID=new Map(players.map(p=>[p.id,{...p,car:careers[p.id]?.car||[]}]));global.EDGE_POOL=edges.filter(e=>BYID.has(Number(e.id))).map(e=>({...BYID.get(Number(e.id)),edge:e}));
@@ -27,7 +28,7 @@ function steerDef(d,dt){
  d.x=rushClamp(d.x+d.vx*dt,.48,.87);d.y=rushClamp(d.y+d.vy*dt,.16,.84);edgeRushSkaterStride(d,dt);
 }
 const stats={cases:0,passes:0,passingRushes:0,multiPassRushes:0,backdoors:0,rejectedPasses:0,maxAttackSeconds:0,byFps:{},roundSets:{}};
-for(const width of [360,720])for(const fps of [15,30,60,144])for(let i=0;i<units.length;i++){
+for(const width of [360,720])for(const fps of [15,30,60,120,144])for(let i=0;i<units.length;i++){
  stage.clientWidth=width;stage.clientHeight=width*405/720;
  const ids=units[i];
  const agents=ids.map((id,j)=>edgeRushAgent(id,['Carrier','Support','Finisher'][j],[.065,.045,.04][j],[.53,.31,.72][j]));
@@ -38,9 +39,13 @@ for(const width of [360,720])for(const fps of [15,30,60,144])for(let i=0;i<units
  const plan={start:0,decisionAt:0,lastPassAt:0,passes:0,ownerId:carrier.id};
  edgeRushEntry(puck,agents,width);agents.forEach(paint);edgeRushUpdatePuck(puck,0,width,stage.clientHeight);
  let phase='breakout',shot=false,passes=0,clock=10000;
- const step=Math.min(source.includes('rushClock+=dt*1000')?.05:.033,1/fps);
- for(let f=0;f<Math.ceil(35/step);f++){
-  const dt=step,now=source.includes('rushClock+=dt*1000')?(clock+=dt*1000):10000+f/fps*1000;
+ const step=typeof EDGE_RUSH_TICK==='number'?EDGE_RUSH_TICK:Math.min(usesSimulationClock?.05:.033,1/fps);
+ let accumulator=0;
+ for(let f=0;f<Math.ceil(35*fps)&&!shot;f++){
+  accumulator=Math.min(.10,accumulator+1/fps);
+  while(accumulator+1e-9>=step&&!shot){
+  accumulator=Math.max(0,accumulator-step);
+  const dt=step,now=usesSimulationClock?(clock+=dt*1000):10000+f/fps*1000;
   if(phase!=='attack'){
    const tx=phase==='breakout'?.205:phase==='neutral'?.415:Math.max(.56,puck.entry.insideX+.055);
    carrier.tx=tx;carrier.ty=.52;support.tx=tx-.025;support.ty=.29;finisher.tx=tx-.02;finisher.ty=.72;
@@ -71,6 +76,7 @@ for(const width of [360,720])for(const fps of [15,30,60,144])for(let i=0;i<units
   const previousOwner=puck.owner;edgeRushUpdatePuck(puck,dt,width,stage.clientHeight);
   if(puck.mode==='carry'&&puck.owner!==previousOwner){puck.owner.receiveAt=now;plan.ownerId=puck.owner.id;plan.lastPassAt=now;}
   edgeRushUpdateGoalie(goalie,puck,dt);
+  }
  }
  assert(shot,`Full rush stalled at ${width}px/${fps}fps, unit ${ids}`);
 }

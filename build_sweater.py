@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "123 · Rush Intelligence"
+VERSION = "124 · Rush Presentation"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -1048,7 +1048,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-draft { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .edge-draft .edge-duel-card { min-height: 220px; }
 
-  /* The Rush — broadcast-style NHL EDGE arcade presentation */
+  /* The Rush — a restrained rink presentation with readable, continuous motion. */
   .edgecard.featured-rush {
     grid-column: 1 / -1; min-height: 112px;
     background:
@@ -1058,29 +1058,35 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edgecard.featured-rush b { font-size: 18px; }
   .edgecard.featured-rush .edgecardtag { color: var(--link); }
   .edge-rush-shell { max-width: 900px; }
+  .rush-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:8px 0 18px; text-align:left; }
+  .rush-heading .edge-kicker { margin:0 0 5px; font-size:10px; letter-spacing:.13em; text-align:left; }
+  .rush-heading .edge-intro { max-width:510px; margin:0; font-size:14px; line-height:1.55; text-align:left; }
+  .rush-heading .edge-hud { flex-shrink:0; gap:8px; margin:0; }
+  .rush-heading .edge-hud span { min-width:74px; padding:9px 12px; border-radius:12px; }
+  .rush-heading .edge-hud b { font-size:17px; font-variant-numeric:tabular-nums; }
   .rush-stage {
     position: relative; isolation: isolate; overflow: hidden; width: 100%; aspect-ratio: 16 / 9;
-    margin: 0 auto 14px; border: 1px solid color-mix(in srgb, var(--link) 26%, var(--line)); border-radius: 20px;
-    background: #eef6fb; box-shadow: 0 18px 42px rgba(0,0,0,.13);
+    margin: 0 auto 14px; border: 1px solid rgba(150,174,193,.42); border-radius: 20px;
+    background: #edf3f9; box-shadow: 0 20px 48px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);
   }
   .rush-stage::before {
     content: ""; position: absolute; z-index: 2; inset: 0; pointer-events: none;
-    background:
-      linear-gradient(90deg, rgba(255,255,255,.16), transparent 14%, transparent 86%, rgba(255,255,255,.16)),
-      repeating-linear-gradient(0deg, rgba(19,69,103,.018) 0 1px, transparent 1px 5px);
-    mix-blend-mode: multiply;
+    border-radius:inherit; box-shadow:inset 0 1px 0 rgba(255,255,255,.82),inset 0 0 34px rgba(103,137,163,.06);
   }
   .rush-stage::after {
     content: ""; position: absolute; z-index: 20; inset: 0; opacity: 0; pointer-events: none;
-    background: radial-gradient(circle at 91% 50%, rgba(239,68,68,.48), transparent 18%);
+    background: radial-gradient(circle at 93% 50%, rgba(239,68,68,.24), transparent 20%);
   }
   .rush-stage.goal::after { animation: rushGoalFlash .78s ease both; }
   .rush-rink { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .rush-board { fill: #eef6fb; stroke: rgba(28,73,105,.30); stroke-width: 5; }
+  .rush-board { fill: url(#rushIce); stroke: #b5c6d3; stroke-width: 5; }
+  .rush-board-inner { fill:none; stroke:rgba(255,255,255,.9); stroke-width:1.5; }
+  .rush-ice-grain { fill:none; stroke:#7c9ab0; stroke-width:.55; opacity:.075; }
   .rush-center { stroke: rgba(213,51,61,.54); stroke-width: 3; }
   .rush-blue { stroke: rgba(46,111,182,.62); stroke-width: 5; }
   .rush-goalline { stroke: rgba(213,51,61,.46); stroke-width: 3; }
-  .rush-circle { fill: none; stroke: rgba(213,51,61,.32); stroke-width: 2; }
+  .rush-circle { fill: none; stroke: rgba(201,53,65,.40); stroke-width: 1.65; }
+  .rush-hash { fill:none; stroke:rgba(201,53,65,.40); stroke-width:1.65; stroke-linecap:round; }
   .rush-dot { fill: rgba(213,51,61,.44); }
   .rush-net-bed { fill:rgba(255,255,255,.36); stroke:rgba(92,108,119,.30); stroke-width:1.15; }
   .rush-net-mesh-wrap { transform-box:fill-box; transform-origin:left center; }
@@ -1102,16 +1108,27 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-crease { fill: rgba(68,146,215,.14); stroke: rgba(68,146,215,.48); stroke-width: 2; }
   .rush-broadcast {
     position: absolute; z-index: 16; left: 12px; top: 11px; display: flex; align-items: center; gap: 7px;
-    color: #17334a; font-size: 9px; font-weight: 900; letter-spacing: .11em; text-transform: uppercase;
+    color: #17334a; font-size: 9px; font-weight: 750; letter-spacing: .07em; text-transform: uppercase;
   }
-  .rush-live { display: inline-flex; align-items: center; gap: 5px; padding: 5px 7px; border-radius: 7px; background: rgba(15,31,45,.86); color: white; }
-  .rush-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.15); }
-  .rush-phase { padding: 5px 7px; border-radius: 7px; background: rgba(255,255,255,.76); backdrop-filter: blur(6px); }
+  .rush-live { display: inline-flex; align-items: center; gap: 5px; padding: 6px 8px; border-radius: 7px; background: rgba(23,43,60,.90); color: #f6f9fc; }
+  .rush-live::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #87d4bb; }
+  .rush-phase { padding: 6px 8px; border:1px solid rgba(107,137,160,.12); border-radius: 7px; background: rgba(255,255,255,.88); backdrop-filter: blur(12px); }
+  #erActors { position:absolute; inset:0; z-index:3; opacity:1; transition:opacity .32s ease; pointer-events:none; }
+  .rush-stage.staging #erActors { opacity:0; }
+  .rush-ice-shadow { position:absolute; left:19px; top:33px; width:40px; height:17px; border-radius:50%; background:radial-gradient(ellipse,rgba(26,49,68,.18),rgba(26,49,68,.065) 45%,transparent 72%); }
+  .rush-goalie-shadow { position:absolute; left:15px; top:48px; width:52px; height:25px; border-radius:50%; background:radial-gradient(ellipse,rgba(26,49,68,.17),rgba(26,49,68,.06) 46%,transparent 72%); }
+  .rush-player-label { position:absolute; top:63px; left:39px; transform:translateX(-50%) scale(var(--rush-label-scale,1)); transform-origin:center top; max-width:112px; padding:3px 6px; border:1px solid rgba(126,153,174,.17); border-radius:5px; background:rgba(248,251,254,.9); color:#334c5e; font-size:9px; font-weight:650; letter-spacing:.01em; line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; opacity:.82; transition:opacity .22s ease; }
+  .rush-actor.has-puck .rush-player-label { opacity:1; color:#142d40; border-color:rgba(70,102,126,.3); }
+  .rush-stage.running .rush-player-label { opacity:0; }
+  .rush-stage.running .rush-actor.has-puck .rush-player-label { opacity:1; }
+  .rush-stage.idle .rush-player-label { opacity:.85; }
+  .rush-idle-note { position:absolute; left:16px; bottom:14px; z-index:16; padding:7px 10px; border:1px solid rgba(110,140,161,.16); border-radius:8px; background:rgba(249,252,255,.88); color:#4b6274; font-size:11px; line-height:1.35; pointer-events:none; transition:opacity .2s ease; }
+  .rush-stage.running .rush-idle-note,.rush-stage.staging .rush-idle-note,.rush-stage.review .rush-idle-note { opacity:0; }
   .rush-radar {
     position: absolute; z-index: 16; right: 12px; top: 11px; min-width: 98px; padding: 7px 10px 6px;
     border-radius: 9px; background: rgba(15,31,45,.88); color: white; text-align: right;
     box-shadow: 0 5px 16px rgba(0,0,0,.16); opacity: 0; transform: translateY(-7px);
-    transition: opacity .18s ease, transform .18s ease;
+    transition: opacity .28s ease, transform .38s cubic-bezier(.22,.8,.24,1);
   }
   .rush-radar.on { opacity: 1; transform: none; }
   .rush-radar small, .rush-radar b { display: block; }
@@ -1119,14 +1136,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-radar b { margin-top: 2px; font-size: 23px; font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
   .rush-radar em { margin-left: 3px; font-size: 8px; font-style: normal; font-weight: 850; opacity: .72; }
   .rush-callout {
-    position: absolute; z-index: 18; left: 50%; top: 50%; min-width: 210px; padding: 12px 18px;
-    border: 1px solid rgba(255,255,255,.32); border-radius: 12px; background: rgba(13,25,36,.90); color: white;
-    text-align: center; opacity: 0; transform: translate(-50%,-42%) scale(.92); pointer-events: none;
-    box-shadow: 0 14px 40px rgba(0,0,0,.28); backdrop-filter: blur(8px);
+    position: absolute; z-index: 18; left: 16px; bottom: 15px; min-width: 194px; padding: 13px 16px;
+    border: 1px solid rgba(255,255,255,.20); border-radius: 12px; background: rgba(23,43,60,.94); color: #f8fbff;
+    text-align: left; opacity: 0; transform: translateY(8px); pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,.16); backdrop-filter: blur(12px);
   }
-  .rush-callout.on { animation: rushCallout .62s cubic-bezier(.18,.86,.22,1.1) both; }
-  .rush-callout strong { display: block; font-size: clamp(24px,5vw,42px); line-height: .95; letter-spacing: -.055em; }
-  .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
+  .rush-callout.on { animation: rushCallout .42s cubic-bezier(.22,.8,.24,1) both; }
+  .rush-callout strong { display: block; font-size: clamp(21px,3vw,30px); font-weight:800; line-height: 1.05; letter-spacing: -.035em; }
+  .rush-callout span { display: block; margin-top: 6px; font-size: 9px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; opacity: .78; }
   .rush-actor,.rush-defender { position:absolute; left:0; top:0; width:78px; height:66px; pointer-events:none; will-change:transform; }
   .rush-actor { z-index:8; } .rush-defender { z-index:5; }
   .rush-skater-model { position:absolute; inset:0; width:78px; height:66px; z-index:2; overflow:visible; }
@@ -1155,10 +1172,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   .rush-puck::after {
     content:""; position:absolute; right:6px; top:50%; width:0; height:3px; border-radius:50%;
-    background:linear-gradient(90deg,rgba(20,42,58,.34),transparent); transform:translateY(-50%); opacity:0;
+    background:linear-gradient(90deg,transparent,rgba(20,42,58,.28)); transform:translateY(-50%) rotate(var(--rush-puck-angle,0deg)); transform-origin:100% 50%; opacity:0;
     transition:width .14s ease,opacity .14s ease;
   }
-  .rush-puck.shooting::after { width:34px; opacity:1; }
+  .rush-puck.shooting::after { width:24px; opacity:.8; }
   .rush-puck.in-net::after,.rush-puck.posted::after { width:0 !important; opacity:0 !important; transition:none; }
   .rush-puck.posted::before { animation:rushPuckImpactRing .30s ease-out both; }
   .rush-speed-lines { display:none !important; }
@@ -1174,8 +1191,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   @keyframes rushGoalieReach { 55%{transform:translate(-5px,-1px) rotate(-7deg)} 100%{transform:translate(-8px,2px) rotate(-10deg)} }
   @keyframes rushNetCatch {
     0%{transform:scaleX(1)}
-    28%{transform:scaleX(1.095)}
-    58%{transform:scaleX(.982)}
+    28%{transform:scaleX(1.048)}
+    58%{transform:scaleX(.989)}
     100%{transform:scaleX(1)}
   }
   @keyframes rushNetDepth {
@@ -1185,12 +1202,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   @keyframes rushFramePing {
     0%,100%{stroke-width:3.2}
-    22%{stroke-width:4.5}
+    22%{stroke-width:3.5}
   }
   @keyframes rushPostFlash {
-    0%{r:3.1;opacity:1}
-    35%{r:5;opacity:1}
-    100%{r:3.1;opacity:1}
+    0%,100%{stroke:#d32934}
+    35%{stroke:#ffe0e1}
   }
   @keyframes rushPuckImpactRing {
     0%{opacity:.95;transform:scale(.65)}
@@ -1200,14 +1216,16 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-line {
     position:relative; overflow:hidden; min-width:0; min-height:176px; padding:15px; border:1px solid var(--line); border-radius:16px;
     background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer;
-    transition: transform .17s ease,border-color .17s ease,background-color .17s ease;
+    transition: transform .24s cubic-bezier(.22,.8,.24,1),border-color .22s ease,background-color .22s ease,box-shadow .22s ease;
   }
-  .rush-line:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--link); }
+  .rush-line:hover:not(:disabled),.rush-line:focus-visible { transform: translateY(-2px); border-color: var(--link); box-shadow:0 6px 18px rgba(0,0,0,.08); }
+  .rush-line:active:not(:disabled) { transform:translateY(0) scale(.99); }
+  .rush-line.queued { border-color:var(--link); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--link) 25%,transparent); }
   .rush-line:disabled { cursor: default; }
   .rush-line.best { border-color: var(--hit); background: color-mix(in srgb,var(--hit) 8%,var(--panel)); }
   .rush-line.picked:not(.best) { border-color: #c0392b; background: color-mix(in srgb,#c0392b 7%,var(--panel)); }
   .rush-line-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
-  .rush-line-head small { color:var(--muted); font-size:10px; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+  .rush-line-head small { color:var(--muted); font-size:10px; font-weight:750; letter-spacing:.09em; text-transform:uppercase; }
   .rush-line-rating { font-size:12px; font-weight:950; color:var(--link); }
   .rush-line-player { display:grid; grid-template-columns:40px minmax(0,1fr); align-items:center; gap:10px; min-height:49px; padding:5px 0; border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent); }
   .rush-line-player:first-of-type { border-top: 0; }
@@ -1220,7 +1238,20 @@ TEMPLATE = r'''<!DOCTYPE html>
   .rush-role-results small { color:var(--muted);font-size:7px;font-weight:850;letter-spacing:.06em;text-transform:uppercase; }
   .rush-role-results b { margin-top:3px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
   @keyframes rushGoalFlash { 0%{opacity:0} 20%{opacity:1} 100%{opacity:0} }
-  @keyframes rushCallout { 0%{opacity:0;transform:translate(-50%,-42%) scale(.92)} 100%{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+  @keyframes rushCallout { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .rush-review-actions { display:flex; justify-content:center; align-items:center; gap:10px; margin:14px 0 8px; }
+  .rush-review-actions[hidden],.rush-review-actions button[hidden] { display:none; }
+  .rush-review-actions button { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:42px; padding:10px 16px; border:1px solid var(--line); border-radius:11px; background:var(--panel); color:var(--fg); font:inherit; font-size:13px; font-weight:650; cursor:pointer; transition:background .2s ease,transform .2s ease; }
+  .rush-review-actions button:hover { background:var(--cell); }
+  .rush-review-actions button:active { transform:scale(.98); }
+  .rush-review-actions #erNext { border-color:transparent; background:var(--accent); color:var(--accent-ink); }
+  .rush-review-actions svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+  @media (prefers-reduced-motion:reduce) {
+    #erActors,.rush-radar,.rush-player-label,.rush-idle-note,.rush-line,.rush-review-actions button { transition:none; }
+    .rush-callout.on { animation:none; opacity:1; transform:none; }
+    .rush-stage.goal::after,.rush-stage.net-hit .rush-net-mesh-wrap,.rush-stage.net-hit .rush-net-bed,.rush-stage.post-hit .rush-net-post.hit,.rush-stage.post-hit .rush-net-frame,.rush-stage.roof-hit .rush-net-mesh-wrap,.rush-puck.posted::before { animation:none; }
+    .rush-puck::after,.rush-s-snow { display:none; }
+  }
 
   @media (max-width: 900px) { .edgegrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
   @media (max-width: 620px) {
@@ -1230,6 +1261,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edgegrid { grid-template-columns: 1fr; }
     .edgecard { min-height: 108px; }
     .edgecard.featured-rush { grid-column: auto; min-height: 122px; }
+    .rush-heading { align-items:flex-start; gap:12px; margin:5px 0 13px; }
+    .rush-heading .edge-intro { font-size:12px; }
+    .rush-heading .edge-hud { gap:5px; }
+    .rush-heading .edge-hud span { min-width:51px; padding:7px 8px; }
+    .rush-heading .edge-hud small { font-size:7px; }
+    .rush-heading .edge-hud b { font-size:14px; }
     .rush-stage { border-radius: 14px; }
     .rush-lines { grid-template-columns: 1fr; }
     .rush-line { display:grid; grid-template-columns:82px minmax(0,1fr); gap:9px 12px; align-items:center; min-height:0; padding:14px; }
@@ -1241,7 +1278,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     .rush-broadcast { left: 7px; top: 7px; }
     .rush-radar { right: 7px; top: 7px; min-width: 78px; padding: 5px 7px; }
     .rush-radar b { font-size: 18px; }
-    .rush-callout { min-width: 170px; padding: 10px 13px; }
+    .rush-callout { left:10px; bottom:10px; min-width:150px; padding:9px 12px; }
+    .rush-callout strong { font-size:21px; }
+    .rush-callout span { font-size:8px; }
+    .rush-idle-note { left:10px; bottom:10px; font-size:10px; }
     .edge-duel { gap: 7px; }
     .edge-duel-card { min-height: 205px; }
     .edge-duel-card img { height: 132px; }
@@ -3543,12 +3583,19 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="view" id="view-edgerush" hidden>
     <div class="edge-shell edge-rush-shell">
-      <p class="edge-kicker">NHL EDGE · Live tracking arcade</p>
-      <p class="edge-intro">Send one three-man unit over the boards. Sweater assigns the roles from real EDGE profiles, then runs the rush.</p>
-      <div class="edge-hud"><span><small>Rush</small><b id="erRound">1 / 5</b></span><span><small>Best reads</small><b id="erScore">0</b></span></div>
-      <div class="rush-stage" id="erStage" aria-label="Animated hockey rush">
+      <div class="rush-heading">
+        <div><p class="edge-kicker">NHL EDGE · Three-man rush</p><p class="edge-intro">Choose your unit. Watch the rush unfold.</p></div>
+        <div class="edge-hud"><span><small>Rush</small><b id="erRound">1 / 5</b></span><span><small>Best reads</small><b id="erScore">0</b></span></div>
+      </div>
+      <div class="rush-stage idle" id="erStage" aria-label="Animated hockey rush">
         <svg class="rush-rink" viewBox="0 0 720 405" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <radialGradient id="rushIce" cx=".46" cy=".38" r=".76"><stop stop-color="#fbfdff"/><stop offset=".68" stop-color="#f0f5fa"/><stop offset="1" stop-color="#e6eef6"/></radialGradient>
+            <clipPath id="rushIceClip"><rect x="10" y="10" width="700" height="385" rx="79"/></clipPath>
+          </defs>
           <rect class="rush-board" x="7" y="7" width="706" height="391" rx="82"/>
+          <rect class="rush-board-inner" x="11" y="11" width="698" height="383" rx="78"/>
+          <g class="rush-ice-grain" clip-path="url(#rushIceClip)"><path d="M66 83Q272 128 434 73M73 317Q230 273 429 334M381 36Q424 184 370 366M496 31Q466 219 610 356M95 195Q308 149 474 208M578 46Q608 221 697 269M40 143Q186 189 266 331M303 52Q327 139 282 223"/></g>
           <!-- Rush camera: compress the exit/neutral ice and give the attacking zone the visual real estate. -->
           <line class="rush-blue" x1="145" y1="8" x2="145" y2="397"/>
           <line class="rush-center" x1="225" y1="8" x2="225" y2="397"/>
@@ -3557,6 +3604,8 @@ TEMPLATE = r'''<!DOCTYPE html>
           <line class="rush-goalline" x1="660" y1="14" x2="660" y2="391"/>
           <circle class="rush-circle" cx="535" cy="116" r="47"/><circle class="rush-circle" cx="535" cy="289" r="47"/>
           <circle class="rush-dot" cx="535" cy="116" r="4"/><circle class="rush-dot" cx="535" cy="289" r="4"/>
+          <path class="rush-hash" d="M486 103H480M486 129H480M584 103H590M584 129H590M521 68V62M549 68V62M521 164V170M549 164V170M486 276H480M486 302H480M584 276H590M584 302H590M521 241V235M549 241V235M521 337V343M549 337V343M526 111H520V121H526M544 111H550V121H544M526 284H520V294H526M544 284H550V294H544"/>
+          <circle class="rush-dot" cx="269" cy="130" r="3"/><circle class="rush-dot" cx="269" cy="275" r="3"/>
           <path class="rush-crease" d="M660 161A41 41 0 0 0 660 244Z"/>
           <defs><pattern id="rushNetWeave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0H5V5" fill="none" stroke="#647a8a" stroke-opacity=".32" stroke-width=".65"/></pattern></defs>
           <!-- Left-facing opening on the original goal line. Depth extends behind it to the right. -->
@@ -3575,14 +3624,19 @@ TEMPLATE = r'''<!DOCTYPE html>
           <path class="rush-net-post bottom" d="M655 232L662 239" fill="none" stroke="#d32934" stroke-width="3.2"/>
           <path d="M654 162V229M656 160L661 165M656 233L661 238" fill="none" stroke="#ffb6b8" stroke-width=".65" stroke-linecap="round"/>
         </svg>
-        <div class="rush-broadcast"><span class="rush-live">EDGE LIVE</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
-        <div class="rush-radar" id="erRadar"><small>Radar gun</small><b><span id="erRadarValue">0.00</span><em data-edge-speed-unit>MPH</em></b></div>
+        <div class="rush-broadcast"><span class="rush-live">3 ON 2</span><span class="rush-phase" id="erPhase">SELECT A UNIT</span></div>
+        <div class="rush-radar" id="erRadar" aria-hidden="true"><small>Shot speed</small><b><span id="erRadarValue">0.00</span><em data-edge-speed-unit>MPH</em></b></div>
         <div id="erActors"></div>
+        <div class="rush-idle-note" aria-hidden="true">Preview a unit. Make your read.</div>
         <span class="rush-goal-light" aria-hidden="true"></span>
-        <div class="rush-callout" id="erCallout"><strong id="erCalloutMain"></strong><span id="erCalloutSub"></span></div>
+        <div class="rush-callout" id="erCallout" role="status" aria-live="polite" aria-hidden="true"><strong id="erCalloutMain"></strong><span id="erCalloutSub"></span></div>
       </div>
       <div class="rush-lines" id="erChoices"></div>
-      <p class="edge-feedback" id="erFeedback">Choose the unit you think has the strongest combined rush profile.</p>
+      <p class="edge-feedback" id="erFeedback" role="status" aria-live="polite">Choose the unit you think has the strongest combined rush profile.</p>
+      <div class="rush-review-actions" id="erReview" hidden>
+        <button type="button" id="erReplay"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 7a6 6 0 1 1 .7 6M3 2v5h5"/></svg>Replay rush</button>
+        <button type="button" id="erNext">Next rush<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 9h10M10 5l4 4-4 4"/></svg></button>
+      </div>
       <div class="slot"></div><p class="nodata" hidden>NHL EDGE data is unavailable in this build.</p>
     </div>
   </section>
@@ -7531,11 +7585,11 @@ function edgeRushZone(id) {
   const e=EDGE_BYID.get(Number(id))||{},vals=[["high",Number(e.hd)||0],["mid",Number(e.mid)||0],["long",Number(e.long)||0]];
   return vals.sort((a,b)=>b[1]-a[1])[0][0];
 }
-function edgeRushChoiceMarkup(r,showing,picked,over) {
+function edgeRushChoiceMarkup(r,showing,picked,over,playing=false) {
   return r.lines.map((line,i)=>{
     const best=i===r.a,pick=i===picked,calc=edgeRushLine(line.ids);
     const roleById=new Map(calc.roles.map((id,n)=>[id,EDGE_RUSH_ROLES[n]]));
-    return `<button type="button" class="rush-line${showing&&best?" best":""}${showing&&pick?" picked":""}" data-er="${i}"${showing||over?" disabled":""}>
+    return `<button type="button" class="rush-line${showing&&best?" best":""}${showing&&pick?" picked":""}${playing&&pick?" queued":""}" data-er="${i}"${showing||over||playing?" disabled":""}>
       <span class="rush-line-head"><small>Unit ${String.fromCharCode(65+i)}</small>${showing?`<b class="rush-line-rating">${line.rating} EDGE</b>`:""}</span>
       ${line.ids.map(id=>{const p=BYID.get(id);return `<span class="rush-line-player"><img src="${esc(p?.headshot||FALLBACK)}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><span><b>${esc(p?.name||"Unknown")}</b><em>${showing?roleById.get(id):esc(teamName(p?.team)||"NHL")}</em></span></span>`;}).join("")}
       ${showing?`<span class="rush-role-results">${calc.roles.map((id,n)=>{const p=BYID.get(id);return `<span><small>${EDGE_RUSH_ROLES[n]}</small><b>${esc((p?.name||"").split(" ").slice(-1)[0])}</b></span>`;}).join("")}</span>`:""}
@@ -7546,6 +7600,7 @@ let rushAnimToken=0;
 function edgeRushCancelAnimation(){
   rushAnimToken++;
   clearTimeout(G.edgerush?.timer);
+  if(G.edgerush){G.edgerush.pending=false;G.edgerush.review=null;G.edgerush.replaying=false;G.edgerush.repaint=null;}
   document.querySelectorAll("#erStage *").forEach(el=>{try{el.getAnimations?.().forEach(a=>a.cancel());}catch{}});
 }
 function edgeRushStickMarkup(extra=""){
@@ -7553,7 +7608,8 @@ function edgeRushStickMarkup(extra=""){
 }
 function edgeRushActor(id,role) {
   const p=BYID.get(Number(id)),hand=p?.shoots==='L'?'hand-l':'hand-r';
-  return `<div class="rush-actor ${hand}" data-rush-id="${id}" data-rush-team="${esc(p?.team||'')}">${edgeRushSkaterMarkup(p?.number!=null?String(p.number):'—',false,p?.team)}${edgeRushStickMarkup()}</div>`;
+  const name=(p?.name||'').split(' ').slice(-1)[0];
+  return `<div class="rush-actor ${hand}" data-rush-id="${id}" data-rush-team="${esc(p?.team||'')}"><span class="rush-ice-shadow" aria-hidden="true"></span>${edgeRushSkaterMarkup(p?.number!=null?String(p.number):'—',false,p?.team)}${edgeRushStickMarkup()}<span class="rush-player-label" aria-hidden="true">${esc(name)}</span></div>`;
 }
 function edgeRushUniform(team,defender=false){
   // Home colour identities; each player uses the same current-team field as his choice card.
@@ -7592,7 +7648,7 @@ function edgeRushSkaterMarkup(number,defender=false,team=''){
       <path class="rush-s-hips" fill="${dark}" stroke="#18384b" stroke-width=".7"/>
       <g class="rush-s-surface">
       <path class="rush-s-torso" fill="${jersey}" stroke="${helmet}" stroke-width="1"/>
-      <path class="rush-s-front" fill="${light}"/><path class="rush-s-trim" fill="none" stroke="${accent}" stroke-width="4"/><path class="rush-s-hem" fill="none" stroke="${stripe}" stroke-width="2"/>
+      <path class="rush-s-front" fill="${light}"/><path class="rush-s-shade" fill="#142536" fill-opacity=".17"/><path class="rush-s-highlight" fill="#fff" fill-opacity=".13"/><path class="rush-s-trim" fill="none" stroke="${accent}" stroke-width="4"/><path class="rush-s-hem" fill="none" stroke="${stripe}" stroke-width="2"/>
       <path class="rush-s-neck" fill="${helmet}" stroke="${stripe}" stroke-width="1"/>
       </g>
       <g class="rush-s-shot-stick"></g>
@@ -7605,7 +7661,7 @@ function edgeRushSkaterMarkup(number,defender=false,team=''){
     </g></svg>`;
 }
 function edgeRushDefenderActor(n){
-  return `<div class="rush-defender" data-def="${n}">${edgeRushSkaterMarkup(String(n),true)}${edgeRushStickMarkup('defender-stick')}</div>`;
+  return `<div class="rush-defender" data-def="${n}"><span class="rush-ice-shadow" aria-hidden="true"></span>${edgeRushSkaterMarkup(String(n),true)}${edgeRushStickMarkup('defender-stick')}</div>`;
 }
 function edgeRushStickMatrix(a){
   const hand=a.hand||1,angle=(a.stickAngle||0)*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle);
@@ -7736,7 +7792,7 @@ function edgeRushLowerGrip(a,defender=false){
 }
 function edgeRushRenderSkater(a,defender=false,now=0){
   if(!a.el)return;
-  const names=['surface','leg.left','leg.right','armgroup.top','armgroup.bottom','shot-stick','snow','torso','front','hips','trim','hem','number','neck','helmet',...['left','right'].flatMap(s=>['thigh.'+s,'shin.'+s,'sock.'+s,'skate.'+s]),...['top','bottom'].flatMap(s=>['arm.'+s,'cuff.'+s,'glove.'+s])];
+  const names=['surface','leg.left','leg.right','armgroup.top','armgroup.bottom','shot-stick','snow','torso','front','shade','highlight','hips','trim','hem','number','neck','helmet',...['left','right'].flatMap(s=>['thigh.'+s,'shin.'+s,'sock.'+s,'skate.'+s]),...['top','bottom'].flatMap(s=>['arm.'+s,'cuff.'+s,'glove.'+s])];
   const rig=a.skaterRig||(a.skaterRig=Object.fromEntries(names.map(k=>[k,a.el.querySelector('.rush-s-'+k)])));
   const motion=rushClamp(Math.hypot((a.vx||0)*720,(a.vy||0)*405)/150,0,1),phase=a.skatePhase||0;
   const heading=edgeRushSkaterHeading(a,defender);
@@ -7795,6 +7851,8 @@ function edgeRushRenderSkater(a,defender=false,now=0){
   for(const p of points){while(hull.length>1&&cross(hull.at(-2),hull.at(-1),p)<=0)hull.pop();hull.push(p);}const lower=hull.length;
   for(let i=points.length-2;i>=0;i--){const p=points[i];while(hull.length>lower&&cross(hull.at(-2),hull.at(-1),p)<=0)hull.pop();hull.push(p);}hull.pop();rig.torso.setAttribute('d',rounded(hull));
   rig.front.setAttribute('d',polygon([{d:lean,l:-9+lateralLean,z:shoulderZ},{d:lean,l:9+lateralLean,z:shoulderZ},{d:2,l:7,z:hipZ+1},{d:2,l:-7,z:hipZ+1}].map(P)));
+  rig.shade.setAttribute('d',polygon([{d:-5,l:9+lateralLean,z:shoulderZ},{d:lean,l:9+lateralLean,z:shoulderZ},{d:2,l:7,z:hipZ+1},{d:-8,l:7,z:hipZ+1}].map(P)));
+  rig.highlight.setAttribute('d',polygon([{d:-5,l:-9+lateralLean,z:shoulderZ},{d:lean,l:-9+lateralLean,z:shoulderZ},{d:lean,l:9+lateralLean,z:shoulderZ},{d:-5,l:9+lateralLean,z:shoulderZ}].map(P)));
   rig.hem.setAttribute('d',line([{d:2,l:-7,z:hipZ+5},{d:2,l:7,z:hipZ+5}].map(P)));
   rig.trim.setAttribute('d',line([{d:2,l:-7,z:hipZ+8},{d:2,l:7,z:hipZ+8}].map(P)));
   // An upright, opaque number sits on the jersey; limbs cannot fragment its digits.
@@ -7856,6 +7914,7 @@ const rushClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const rushLerp=(a,b,t)=>a+(b-a)*t;
 const rushLen=(x,y)=>Math.hypot(x,y);
 const rushMoveToward=(v,target,maxDelta)=>Math.abs(target-v)<=maxDelta?target:v+Math.sign(target-v)*maxDelta;
+const EDGE_RUSH_TICK=1/60;
 // Overhead projection: opening faces left at the original goal line, cage extends right.
 // Both actors and the frame scale from the same 720-by-405 rink coordinates.
 const EDGE_RUSH_NET=Object.freeze({lineX:660/720,postX:662/720,leftX:662/720,rightX:708/720,backX:696/720,topY:166/405,bottomY:239/405,lift:0,lean:0,roofLift:7/405,roofLean:7/720});
@@ -8451,18 +8510,13 @@ function edgeRushSeparate(agents,defs){
   }
 }
 function edgeRushStick(a){
-  const anchor=a.el?.querySelector('[data-stick-blade-anchor]'),stage=$('erStage');
-  if(anchor&&stage){
-    const ar=anchor.getBoundingClientRect(),sr=stage.getBoundingClientRect();
-    const width=stage.clientWidth||sr.width,height=stage.clientHeight||sr.height;
-    if(width>0&&height>0)return {x:rushClamp((ar.left+ar.width/2-sr.left-(stage.clientLeft||0))/width,.02,.98),y:rushClamp((ar.top+ar.height/2-sr.top-(stage.clientTop||0))/height,.05,.95)};
-  }
-  // Same rigid stick transform as rendering, including handedness and deke pivot.
+  // Project the same rigid blade as the SVG. Reading painted DOM bounds here
+  // forced repeated layouts after every pose update and used stale anchors in AI reads.
   const m=edgeRushStickMatrix(a),hand=a.hand||1;
   const sx=(64-39)*48/78,sy=(22.5-15)*48/78*hand;
   const lx=m.e+sx*m.a+sy*m.c,ly=m.f+sx*m.b+sy*m.d;
   const rot=(a.rot||0)*Math.PI/180,cr=Math.cos(rot),sr=Math.sin(rot);
-  return {x:rushClamp(a.x+(lx*cr-ly*sr)/720,.02,.98),y:rushClamp(a.y+(lx*sr+ly*cr)/405,.05,.95)};
+  return {x:rushClamp(a.x+(lx*cr-ly*sr)/720,.02,.98),y:rushClamp(a.y+(lx*sr+ly*cr)/(a.rinkAspect||405),.05,.95)};
 }
 
 // Far edge of the 5px attacking blue line; the puck must fully clear it first.
@@ -8506,7 +8560,8 @@ function edgeRushUpdatePuck(puck,dt,w=720,h=405){
     const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return false;
   }
   if(puck.mode==="pass"&&puck.target){
-    puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=t*t*(3-2*t),to=edgeRushStick(puck.target);
+    // Ice passes retain their speed through the lane, with a restrained soft catch.
+    puck.elapsed+=dt;const t=rushClamp(puck.elapsed/puck.duration,0,1),e=t+.12*t*(1-t)*(2*t-1),to=edgeRushStick(puck.target);
     puck.x=rushLerp(puck.fromX,to.x,e);
     puck.y=rushLerp(puck.fromY,to.y,e);
     if(t>=1){puck.mode="carry";puck.owner=puck.target;puck.target=null;const p=edgeRushStick(puck.owner);puck.x=p.x;puck.y=p.y;return true;}
@@ -8593,7 +8648,9 @@ function edgeRushUpdatePuck(puck,dt,w=720,h=405){
 }
 function edgeRushRenderAgent(a,w,h){
   if(!a.el)return;
-  const stick=a.el.querySelector('.rush-stick-svg');
+  a.rinkAspect=720*h/w;
+  if(a.labelScale!==720/w){a.labelScale=720/w;a.el.style.setProperty('--rush-label-scale',a.labelScale);}
+  const stick=a.stickEl||(a.stickEl=a.el.querySelector('.rush-stick-svg'));
   if(stick){stick.style.opacity=a.state==='shooting'?'0':'1';const m=edgeRushStickMatrix(a);stick.style.transform=`matrix(${m.a},${m.b},${m.c*(a.hand||1)},${m.d*(a.hand||1)},${m.e-19},${m.f-2})`;}
   edgeRushRenderSkater(a);
   edgeRushSet(a.el,a.x*w,a.y*h,a.rot,w/720);
@@ -8603,11 +8660,12 @@ function edgeRushRenderPuck(puck,el,w,h){
   el.style.opacity=puck.mode==="secured"||puck.gloveOccluded?"0":"1";
   const z=puck.z||0,N=EDGE_RUSH_NET,roof=puck.mode==='netrest',air=puck.airborne;
   el.classList.toggle('on-roof',roof);el.classList.toggle('roof-bounce',!!puck.roofBounces&&!roof);
+  if(puck.mode==='shot')el.style.setProperty('--rush-puck-angle',`${Math.atan2((puck.vy||0)*h,(puck.vx||0)*w)*180/Math.PI}deg`);
   edgeRushSet(el,(puck.x-z*(air?N.roofLean:N.lean))*w,(puck.y-z*(air?N.roofLift:N.lift))*h,0,puck.mode==="shot"?1.08:1);
 }
 function edgeRushGoalieMarkup(){
   const pad=side=>`<g class="rush-g-pad ${side}"><path d="M-7 22L8 22L10 28Q0 29 -9 28Z" fill="#243847"/><path d="M-7 0Q0 -3 7 0L8 22Q6 27 0 27Q-6 27 -8 22Z" fill="url(#rush-pad)" stroke="#647c8c" stroke-width="1"/><path d="M-4 2L-4 21M-3 8L6 8M-3 15L6 15M-3 22L6 22" class="rush-g-detail"/><path d="M1 1L6 2L6 5L1 4Z" fill="#234b67"/><circle data-goalie-contact="${side}" cx="0" cy="20" r=".2" fill="transparent"/><circle data-goalie-contact="${side}-post-toe" cx="0" cy="28" r=".2" fill="transparent"/></g>`;
-  return `<div class="rush-goalie" data-goalie aria-hidden="true"><svg viewBox="0 0 82 96"><defs><linearGradient id="rush-jersey" x2="1" y2=".4"><stop stop-color="#62839d"/><stop offset=".5" stop-color="#315773"/><stop offset="1" stop-color="#18374d"/></linearGradient><linearGradient id="rush-pad" x2="1" y2=".25"><stop stop-color="#fff"/><stop offset=".65" stop-color="#edf3f7"/><stop offset="1" stop-color="#b8cbd7"/></linearGradient></defs>
+  return `<div class="rush-goalie" data-goalie aria-hidden="true"><span class="rush-goalie-shadow"></span><svg viewBox="0 0 82 96"><defs><linearGradient id="rush-jersey" x2="1" y2=".4"><stop stop-color="#62839d"/><stop offset=".5" stop-color="#315773"/><stop offset="1" stop-color="#18374d"/></linearGradient><linearGradient id="rush-pad" x2="1" y2=".25"><stop stop-color="#fff"/><stop offset=".65" stop-color="#edf3f7"/><stop offset="1" stop-color="#b8cbd7"/></linearGradient></defs>
   <g class="rush-g-body rush-g-rig" stroke-linecap="round" stroke-linejoin="round">
     <g class="rush-g-back"><path fill="url(#rush-jersey)" stroke="#29485d" stroke-width="1"/></g>
     <g class="rush-g-seat"><path fill="#29485d" stroke="#183447" stroke-width="1"/></g>
@@ -8889,6 +8947,7 @@ function edgeRushUpdateGoalie(g,puck,dt){
 }
 function edgeRushRadar(value,token) {
   const box=$("erRadar"),num=$("erRadarValue"); if(!box||!num)return;
+  num.textContent='0.00';box.setAttribute('aria-hidden','false');
   box.classList.add("on");box.querySelector("em").textContent=edgeSpeedLabel();
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(reduced){num.textContent=edgeSpeedValue(value).toFixed(2);return;}
@@ -8930,16 +8989,29 @@ function edgeRushBeginWindup(a){
   a.releaseGrip={x:0,y:a.releaseType==='backhand'?-(a.hand||1)*6:0};
   if(['slap','one-timer'].includes(a.releaseType))a.shotPuckIce=edgeRushStick(a);
 }
+function edgeRushPreview(r,unit=0){
+  const stage=$('erStage'),actors=$('erActors');if(!stage||!actors||G.edgerush.pending||G.edgerush.review)return;
+  G.edgerush.previewUnit=unit;
+  const ids=edgeRushLine(r.lines[unit].ids).roles;
+  actors.innerHTML=ids.map((id,i)=>edgeRushActor(id,EDGE_RUSH_ROLES[i])).join('')+edgeRushDefenderActor(1)+edgeRushDefenderActor(2)+edgeRushGoalieMarkup();
+  const w=stage.clientWidth||720,h=stage.clientHeight||405;
+  ids.forEach((id,i)=>{const a=edgeRushAgent(id,EDGE_RUSH_ROLES[i],[.085,.065,.065][i],[.53,.28,.74][i]);a.el=actors.querySelector(`[data-rush-id="${id}"]`);edgeRushRenderAgent(a,w,h);});
+  [1,2].forEach((n,i)=>{const d={x:.61+i*.02,y:i?.63:.38,vx:0,vy:0,mode:'gap',stickAim:Math.PI,el:actors.querySelector(`[data-def="${n}"]`)};const stick=d.el.querySelector('.rush-stick-svg');stick.style.transform=`rotate(${180-16.79}deg)`;edgeRushRenderSkater(d,true);edgeRushSet(d.el,d.x*w,d.y*h,0,w/720);});
+  edgeRushRenderGoalie({x:628/720,y:.5,stance:.55},actors.querySelector('[data-goalie]'),w,h);
+  stage.classList.remove('running','review','staging','goal','net-hit','post-hit','roof-hit');stage.classList.add('idle');
+  $('erPhase').textContent=`UNIT ${String.fromCharCode(65+unit)} · PREVIEW`;
+}
 async function edgeRushAnimate(r,picked,correct) {
   const token=++rushAnimToken,stage=$('erStage'),actors=$('erActors');
   if(!stage||!actors)return;
   stage.classList.remove('goal','net-hit','post-hit','roof-hit');stage.querySelectorAll('.rush-net-post,.rush-net-crossbar').forEach(p=>p.classList.remove('hit'));
-  $('erRadar').classList.remove('on');$('erCallout').classList.remove('on');$('erPhase').textContent='SET THE BREAKOUT';
+  stage.classList.remove('idle','review','running');stage.classList.add('staging');$('erReview').hidden=true;
+  $('erRadar').classList.remove('on');$('erRadar').setAttribute('aria-hidden','true');$('erCallout').classList.remove('on');$('erCallout').setAttribute('aria-hidden','true');$('erCalloutMain').textContent='';$('erCalloutSub').textContent='';$('erPhase').textContent='SET THE BREAKOUT';
   const line=r.lines[picked],calc=edgeRushLine(line.ids),[carrierId,supportId,initialFinisherId]=calc.roles;
   actors.innerHTML=edgeRushActor(carrierId,'Carrier')+edgeRushActor(supportId,'Support')+edgeRushActor(initialFinisherId,'Finisher')
     +edgeRushDefenderActor(1)+edgeRushDefenderActor(2)+edgeRushGoalieMarkup()+'<span class="rush-puck" data-rush-puck></span>';
   await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));if(token!==rushAnimToken)return;
-  const w=stage.clientWidth,h=stage.clientHeight;
+  let w=stage.clientWidth,h=stage.clientHeight;
   const carrier=edgeRushAgent(carrierId,'Carrier',.065,.53),support=edgeRushAgent(supportId,'Support',.045,.31);
   let finisher=edgeRushAgent(initialFinisherId,'Finisher',.04,.72),finisherId=initialFinisherId;
   const agents=[carrier,support,finisher];agents.forEach(a=>a.el=actors.querySelector(`[data-rush-id="${a.id}"]`));
@@ -8954,8 +9026,11 @@ async function edgeRushAnimate(r,picked,correct) {
   const plan={start:0,decisionAt:0,lastPassAt:0,passes:0,ownerId:carrier.id};
   agents.forEach(a=>edgeRushRenderAgent(a,w,h));edgeRushRenderGoalie(goalie,goalieEl,w,h);
   edgeRushUpdatePuck(puck,0,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
+  stage.classList.remove('staging');stage.classList.add('running');
   if(!(await edgeRushWait(520,token)))return;
-  let phase='breakout',phaseAt=performance.now(),last=performance.now(),rushClock=last,finished=false,shotDoneAt=0;
+  // A scene owns its simulation clock. Replays do not reroll tactical variation
+  // from the wall clock at the moment the button was pressed.
+  let phase='breakout',rushClock=10000+(seed%100000),phaseAt=rushClock,last=performance.now(),finished=false,shotDoneAt=0;
   $('erPhase').textContent='BREAKOUT';
   const steerDef=(d,dt)=>{
     const dx=d.tx-d.x,dy=d.ty-d.y,dist=Math.hypot(dx,dy),ux=dist>.001?dx/dist:0,uy=dist>.001?dy/dist:0;
@@ -8964,7 +9039,7 @@ async function edgeRushAnimate(r,picked,correct) {
     d.x=rushClamp(d.x+d.vx*dt,.48,.87);d.y=rushClamp(d.y+d.vy*dt,.16,.84);edgeRushSkaterStride(d,dt);
   };
   const renderDef=(d,now)=>{
-    const tip=edgeRushDefenderStick(d,now),stick=d.el?.querySelector('.rush-stick-svg');
+    const tip=edgeRushDefenderStick(d,now),stick=d.stickEl||(d.stickEl=d.el?.querySelector('.rush-stick-svg'));
     if(stick)stick.style.transform=`translate(${Math.cos(tip.angle)*tip.poke}px,${Math.sin(tip.angle)*tip.poke}px) rotate(${tip.angle*180/Math.PI-16.79}deg)`;
     edgeRushRenderSkater(d,true,now);
     edgeRushSet(d.el,d.x*w,d.y*h,0,w/720);
@@ -9016,10 +9091,21 @@ async function edgeRushAnimate(r,picked,correct) {
     puckEl.classList.remove('in-net','posted');puckEl.classList.add('shooting');edgeRushRadar(shotProfile.speed,token);
     phase='shot';$('erPhase').textContent='RELEASE';
   };
-  return await new Promise(resolve=>{
+  // Resizing preserves the play in rink coordinates; no frame polls layout bounds.
+  const observer=typeof ResizeObserver==='function'?new ResizeObserver(()=>{
+    if(stage.clientWidth>0&&stage.clientHeight>0){w=stage.clientWidth;h=stage.clientHeight;agents.forEach(a=>a.rinkAspect=720*h/w);}
+  }):null;
+  observer?.observe(stage);
+  const tick=EDGE_RUSH_TICK;let accumulator=0;
+  try{return await new Promise(resolve=>{
     const frame=frameNow=>{
       if(token!==rushAnimToken||game!=='edgerush'||!stage.isConnected){resolve();return;}
-      const dt=Math.min(.05,Math.max(.001,(frameNow-last)/1000));last=frameNow;
+      if(document.hidden){last=frameNow;requestAnimationFrame(frame);return;}
+      accumulator=Math.min(.10,accumulator+Math.max(0,(frameNow-last)/1000));last=frameNow;
+      // Fixed physics steps keep the same play at 30, 60 and 144Hz. Ordinary
+      // skating paints once per display frame; catch-up never forces DOM layout.
+      while(accumulator+1e-9>=tick&&!finished){
+      const dt=tick;accumulator=Math.max(0,accumulator-tick);
       // Tactical reads, dekes and shot phases advance by the movement step,
       // rather than expiring early when a slow frame was capped for physics.
       rushClock+=dt*1000;const now=rushClock;
@@ -9057,13 +9143,10 @@ async function edgeRushAnimate(r,picked,correct) {
       if(liveRush)edgeRushReadStickChecks(puck,defs,now,dt,agents);
       agents.forEach(a=>edgeRushSteer(a,dt,liveRush?[...defs,...agents.filter(b=>b!==a)]:[]));
       edgeRushEntry(puck,agents,w);
-      // Paint skaters first so the puck reads the blade position from this exact frame.
-      agents.forEach(a=>edgeRushRenderAgent(a,w,h));
-
       // One defender can pressure while the other protects the middle; they can switch
       // responsibilities as the puck changes hands or a pass is in flight.
       edgeRushReadDefenders(defs,puck,agents,now);steerDef(d1,dt);steerDef(d2,dt);
-      if(liveRush){edgeRushSeparate(agents,defs);edgeRushEntry(puck,agents,w);agents.forEach(a=>edgeRushRenderAgent(a,w,h));}
+      if(liveRush){edgeRushSeparate(agents,defs);edgeRushEntry(puck,agents,w);}
 
       const shotFrame=phase==='shot';
       if(shotFrame){edgeRushUpdateGoalie(goalie,puck,dt);edgeRushRenderGoalie(goalie,goalieEl,w,h);puck.goalieGeometry=shotOutcome==='save'?null:goalie.geometry;}
@@ -9133,7 +9216,10 @@ async function edgeRushAnimate(r,picked,correct) {
         shotDoneAt=now;stage.classList.add("goal","net-hit");puck.mode="dead";
       }
 
-      renderDef(d1,now);renderDef(d2,now);edgeRushRenderGoalie(goalie,goalieEl,w,h);
+      if(accumulator+1e-9<tick||!liveRush){
+        agents.forEach(a=>{a.el.classList.toggle('has-puck',a===puck.owner&&puck.mode==='carry');edgeRushRenderAgent(a,w,h);});
+        renderDef(d1,now);renderDef(d2,now);edgeRushRenderGoalie(goalie,goalieEl,w,h);
+      }
       if(phase==='savecover'){
         if(puck.mode==='glovehold'){
           puck.gloveOccluded=(goalie.gloveCloseT||0)>=.20;const held=edgeRushGoaliePoint(goalieEl,'glove',w,h);puck.holdT=(puck.holdT||0)+dt;const u=rushClamp(puck.holdT/.09,0,1);puck.x=rushLerp(puck.holdFromX??held.x,held.x,u);puck.y=rushLerp(puck.holdFromY??held.y,held.y,u);
@@ -9148,31 +9234,31 @@ async function edgeRushAnimate(r,picked,correct) {
         }
       }
       if(puck.justRoof){stage.classList.remove('roof-hit');void stage.offsetWidth;stage.classList.add('roof-hit');}
-      edgeRushRenderPuck(puck,puckEl,w,h);
+      if(accumulator+1e-9<tick||!liveRush)edgeRushRenderPuck(puck,puckEl,w,h);
 
-      if(shotDoneAt&&now-shotDoneAt>820){
+      if(shotDoneAt&&now-shotDoneAt>620){
         finished=true;
+        stage.classList.remove('running');stage.classList.add('review');
         $("erPhase").textContent=correct?"BEST PROFILE":"TRACKING VERDICT";
         $("erCalloutMain").textContent=shotOutcome==="post"?"POST":shotOutcome==="crossbar"?"CROSSBAR":shotOutcome==='save'?edgeRushSaveLabel(shotProfile.save,shotProfile.variant):"GOAL";
         $("erCalloutSub").textContent=`${line.rating} EDGE RUSH · ${edgeFormatSpeed(shotProfile.speed)}`;
-        $("erCallout").classList.remove("on");void $("erCallout").offsetWidth;$("erCallout").classList.add("on");
-        setTimeout(()=>{
-          if(token!==rushAnimToken)return resolve();
-          G.edgerush.pending=false;
-          if(S.edgerush?.over){
-            $("banner").style.display="block";
-            $("banner").classList.remove("pop");void $("banner").offsetWidth;$("banner").classList.add("pop");
-          }else if(game==="edgerush"){
-            G.edgerush.render(S.edgerush.target,S.edgerush);
-          }
-          resolve();
-        },780);
+        $("erCallout").setAttribute('aria-hidden','false');$("erCallout").classList.add("on");
+        G.edgerush.pending=false;G.edgerush.replaying=false;G.edgerush.review={r,picked,correct};
+        G.edgerush.repaint=()=>{
+          w=stage.clientWidth;h=stage.clientHeight;if(!w||!h)return;
+          agents.forEach(a=>edgeRushRenderAgent(a,w,h));renderDef(d1,now);renderDef(d2,now);
+          edgeRushRenderGoalie(goalie,goalieEl,w,h);edgeRushRenderPuck(puck,puckEl,w,h);
+        };
+        if(game==='edgerush')G.edgerush.render(S.edgerush.target,S.edgerush);
+        if(S.edgerush?.over)$("banner").style.display="block";
+        resolve();
         return;
+      }
       }
       if(!finished)requestAnimationFrame(frame);
     };
     requestAnimationFrame(frame);
-  });
+  });}finally{observer?.disconnect();}
 }
 G.edgerush={
   localOnly:true,quietFinish:true,celebrate:()=>false,kind:"score",repeat:true,title:"The Rush",share:"Sweater The Rush",view:"view-edgerush",max:5,next:"Run it back",hideReveal:true,
@@ -9185,32 +9271,51 @@ G.edgerush={
   isWin:()=>false,isDone:(t,g)=>g.length>=t.rounds.length,wonGame(t,g){return this.score(t,g)>=60;},archiveStatus:h=>`${h.s}/100`,onFinish(st){edgeBest("edgerush",st);},
   endText(t,g){const n=this.score(t,g);return{result:`Rush grade: ${n}/100`,cheer:n>=100?"Perfect reads. Tracking-room masterpiece. 🚨":n>=80?"Elite rush decisions. 🏒":n>=60?"You can build an attack.":"Back to the video room."};},
   shareText(t,st,n,link){return`Sweater The Rush #${n}\nEDGE rush grade: ${this.score(t,st.guesses)}/100 · ${edgeSeasonLabel()}${link}`;},
-  reset(){this.pending=false;clearTimeout(this.timer);edgeRushCancelAnimation();if($("erActors"))$("erActors").innerHTML="";},
+  reset(){this.pending=false;this.review=null;this.replaying=false;this.previewUnit=0;clearTimeout(this.timer);edgeRushCancelAnimation();if($("erActors"))$("erActors").innerHTML="";if($('erReview'))$('erReview').hidden=true;},
   guess(t,x,fresh){
     if(!/^[0-2]$/.test(String(x)))return null;
     const i=S.edgerush.guesses.length;if(i>=t.rounds.length)return null;
     if(fresh){
-      const r=t.rounds[i],picked=Number(x);this.pending=true;this.lastCorrect=this.right(t,x,i);
+      const r=t.rounds[i],picked=Number(x);this.pending=true;this.review=null;this.repaint=null;this.replaying=false;this.lastCorrect=this.right(t,x,i);
       clearTimeout(this.timer);
       setTimeout(()=>{if(game==="edgerush")void edgeRushAnimate(r,picked,this.lastCorrect);},30);
     }
     return false;
   },
   render(t,st){
-    const done=st.guesses.length,showing=this.pending&&done>0,i=showing?done-1:Math.min(done,t.rounds.length-1),r=t.rounds[i],picked=showing?Number(st.guesses[done-1]):-1;
-    $("erRound").textContent=`${Math.min(done+1,5)} / 5`;$("erScore").textContent=`${this.score(t,st.guesses)/20}`;
-    $("erChoices").innerHTML=edgeRushChoiceMarkup(r,showing,picked,st.over&&!showing);
-    if(!showing){
-      $("erActors").innerHTML="";
+    const done=st.guesses.length,reviewing=!!this.review,playing=this.pending&&done>0,showing=reviewing&&!playing,i=reviewing||playing?done-1:Math.min(done,t.rounds.length-1),r=t.rounds[i],picked=reviewing||playing?Number(st.guesses[done-1]):-1;
+    $("erRound").textContent=`${i+1} / ${t.rounds.length}`;$("erScore").textContent=`${this.score(t,playing&&!this.replaying?st.guesses.slice(0,-1):st.guesses)/20}`;
+    $("erChoices").innerHTML=edgeRushChoiceMarkup(r,showing,picked,st.over,playing);
+    $('erReview').hidden=!showing;$('erNext').hidden=!!st.over;
+    if(!reviewing&&!playing){
       $("erStage").classList.remove("goal");$("erRadar").classList.remove("on");$("erCallout").classList.remove("on");$("erPhase").textContent=st.over?"FINAL":"SELECT A UNIT";
-    }else if(st.over){
+      $('erRadar').setAttribute('aria-hidden','true');$('erCallout').setAttribute('aria-hidden','true');
+      if(!st.over)edgeRushPreview(r,this.previewUnit??0);
+    }else if(st.over&&playing){
       // Keep the results banner out of the animation until the final shot lands.
       $("banner").style.display="none";
     }
-    $("erFeedback").textContent=showing?(this.lastCorrect?"Best unit on the board — watch the profile unfold.":"Not the top combined profile. Watch where the difference shows up."):st.over?"":"Choose the unit you think has the strongest combined rush profile.";
+    $("erFeedback").textContent=playing?'Unit selected. Watch the play develop.':showing?(this.lastCorrect?`Best read. Unit ${String.fromCharCode(65+picked)} has the strongest combined EDGE profile.`:`Unit ${String.fromCharCode(65+r.a)} has the strongest combined profile. Compare the assigned roles.`):st.over?'':'Choose the unit you think has the strongest combined rush profile.';
   }
 };
-$("erChoices").addEventListener("click",e=>{const b=e.target.closest("[data-er]");if(b&&!G.edgerush.pending)doGuess(b.dataset.er);});
+$("erChoices").addEventListener("click",e=>{const b=e.target.closest("[data-er]");if(b&&!G.edgerush.pending&&!G.edgerush.review)doGuess(b.dataset.er);});
+['pointerover','focusin'].forEach(type=>$('erChoices').addEventListener(type,e=>{
+  const b=e.target.closest('[data-er]'),st=S.edgerush;if(!b||!st||st.over||G.edgerush.pending||G.edgerush.review)return;
+  const unit=Number(b.dataset.er);if(unit!==G.edgerush.previewUnit)edgeRushPreview(st.target.rounds[st.guesses.length],unit);
+}));
+$('erReplay').addEventListener('click',()=>{
+  const g=G.edgerush,review=g.review,st=S.edgerush;if(!review||g.pending||!st)return;
+  g.pending=true;g.replaying=true;g.render(st.target,st);void edgeRushAnimate(review.r,review.picked,review.correct);
+});
+$('erNext').addEventListener('click',()=>{
+  const g=G.edgerush,st=S.edgerush;if(!g.review||g.pending||!st||st.over)return;
+  g.review=null;g.repaint=null;g.previewUnit=0;g.render(st.target,st);$('erChoices').querySelector('[data-er]')?.focus({preventScroll:true});
+});
+if(typeof ResizeObserver==='function')new ResizeObserver(()=>{
+  const g=G.edgerush,st=S.edgerush;
+  if(game!=='edgerush'||g.pending||!st||!$('erStage').clientWidth)return;
+  if(g.review)g.repaint?.();else if(!st.over)edgeRushPreview(st.target.rounds[st.guesses.length],g.previewUnit??0);
+}).observe($('erStage'));
 
 const EDGE_BUILD_CATS=[
   {metric:"speed",label:"Speed",copy:"Max skating speed"},
