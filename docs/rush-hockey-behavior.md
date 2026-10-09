@@ -37,6 +37,15 @@ Reviewed the entire visual breakdown at two-second intervals, then the entry and
 
 The uploaded video supplied observed motion frames. Web sources supplied accessible coaching text; embedded web videos were not treated as watched footage.
 
-Run `node tests/rush_behavior.cjs` from the repository root for possession, readiness, mirrored spacing, proposed-route DOM independence and shooting transitions. Run `node tests/rush_scenarios.cjs` for 480 varied attacks at 30/60/144 fps and open/blocked backdoor feeds. Run `node tests/rush_flow.cjs` for 480 complete breakouts and entries from four daily generated units, using real player positions, shooting hands and game-assigned roles at mobile/desktop widths and 15/30/60/144 fps, including painted blade anchors, receiver eligibility, passing frequency and second-pass opportunities.
+Run `node tests/rush_behavior.cjs` from the repository root for possession, readiness, mirrored spacing, proposed-route DOM independence and shooting transitions. Run `node tests/rush_scenarios.cjs` for 480 varied attacks at 30/60/144 fps and open/blocked backdoor feeds. Run `node tests/rush_flow.cjs` for 600 complete breakouts and entries from four daily generated units, using real player positions, shooting hands and game-assigned roles at mobile/desktop widths and 15/30/60/120/144 fps, including painted blade anchors, receiver eligibility, passing frequency and second-pass opportunities.
 
 Run `node tests/rush_shots.cjs` for 144 full setup/load/contact/follow sequences across both hands and wings, slap/wrist/snap shots, incoming angles and frame rates. Each frame verifies fixed arm/leg lengths and gloves attached to the shaft, with stationary slapshot contact and continuous phase transitions.
+
+## Presentation and rendering
+
+- Blade positions use the same affine projection as the rendered stick, including handedness, body rotation, stick pitch and the stage aspect ratio. The animation no longer reads skater bounds after painting or paints each skater twice per frame. Physics keeps the existing heading behavior so cosmetic turning cannot change the available passing lanes.
+- Playback advances physics at 60Hz with bounded catch-up and pauses when the page is hidden. Tactical variation starts from a scene-specific clock, so replay keeps the same play across different display rates. Ordinary skating paints once per display frame.
+- Ice passes retain nearly constant speed through the lane with a restrained soft catch. Ice lighting, contact shadows and jersey surfaces supply depth without obscuring the puck or changing body geometry.
+- The idle scene previews a unit on hover or keyboard focus. The round counter stays on the active play; ratings and the verdict appear when the play finishes. The result remains available until Next rush, and Replay rush repeats the scene without recording a guess. Scene observers are released after playback; resizing repaints the settled scene in rink coordinates.
+
+Run `node tests/rush_presentation.cjs` for independent rendered-blade projection checks, complete mobile/desktop animation playback, delayed verdicts, persistent result review, replay scoring and settled poses at 15/30/60/144Hz, resizing and cancellation cleanup.
