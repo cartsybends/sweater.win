@@ -52,6 +52,22 @@ for(const x of [.57,.67,.82])for(const side of [-1,1]){
  assert(Math.abs(mates[0].tx-mates[1].tx)>=.095,'Support destinations occupy separate depth layers');
  assert(edgeRushDistance({x:mates[0].tx,y:mates[0].ty},{x:mates[1].tx,y:mates[1].ty})>=.17,'Support lanes remain separated');
 }
+// Proposed support routes must be independent of currently painted blade anchors.
+{
+ const targets=painted=>{
+  const agents=make(.61),owner=agents[0];owner.y=.70;agents[1].y=.28;agents[2].y=.52;
+  if(painted)agents.slice(1).forEach(a=>a.el={querySelector:()=>({getBoundingClientRect:()=>({left:650,top:340,width:0,height:0})})});
+  edgeRushSupportTargets(owner,agents,[{x:.69,y:.62},{x:.72,y:.38}],{x:.88,y:.5},10000);
+  return agents.slice(1).map(a=>({x:a.tx,y:a.ty,intent:a.intent}));
+ };
+ const normal=targets(false);global.$=id=>id==='erStage'?{clientWidth:720,clientHeight:405,getBoundingClientRect:()=>({left:0,top:0,width:720,height:405})}:null;
+ assert.deepEqual(targets(true),normal,'Future destinations cannot read a stale on-screen stick position');global.$=()=>null;
+}
+// An uncontested close-range chance still earns an immediate shot.
+{
+ const agents=make(.80),owner=agents[0];owner.y=.45;agents[1].x=.60;agents[1].y=.25;agents[2].x=.65;agents[2].y=.75;
+ assert.equal(edgeRushChooseAction(owner,agents.slice(1),[],10000,10000,{x:.88,y:.5}).action,'shoot');
+}
 // An elite shot does not imply enough time to load a slapshot.
 {
  const a=make(.65)[0];a.brain.shot=.95;a.brain.scoring.signature.release='wrist';a.receiveAt=0;

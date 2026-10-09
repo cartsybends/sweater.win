@@ -14,6 +14,8 @@ Reviewed the entire visual breakdown at two-second intervals, then the entry and
 - Support destinations are chosen together. One attacker provides depth off the strong-side defender's heels; the other stays above the puck in a different lane. Deep attacks rotate an attacker back up instead of sending everyone to the crease.
 - A carrier can delay outside a closing defender while the depth route develops. The delay is bounded, and body/stick avoidance stays active.
 - Passing compares the second defender's coverage: a defender following the depth player exposes the higher layer; a defender staying high can expose the depth player. Open-lane and pressure checks still apply, including the backdoor option.
+- When contained on entry, the carrier stretches the pair toward an outside lane and considers an open outlet before a moderate shooting chance. A pass can develop the attack even when it does not immediately give the receiver a better shot. Open close-range chances still trigger a shot.
+- Proposed support destinations use projected blade positions, never the currently painted DOM anchor. Pass decisions include only receivers who have completed entry and regripped, so rejected passes do not consume the rush's pass budget.
 - Shooting shares one grip anchor and mirrors shooting-side motion without mirroring the apparent height of the top hand. The hand extends during loading and pulls back through release. Slapshot elevation comes from backswing pitch, with a compact lateral sweep. A large slapshot windup requires room; measured shot speed alone does not select it.
 
 ## Coaching sources
@@ -29,4 +31,4 @@ Reviewed the entire visual breakdown at two-second intervals, then the entry and
 
 The uploaded video supplied observed motion frames. Web sources supplied accessible coaching text; embedded web videos were not treated as watched footage.
 
-Run `node tests/rush_behavior.cjs` from the repository root for possession, readiness, mirrored spacing and transition checks. Run `node tests/rush_scenarios.cjs` for 480 varied attacks at 30/60/144 fps and open/blocked backdoor feeds.
+Run `node tests/rush_behavior.cjs` from the repository root for possession, readiness, mirrored spacing, proposed-route DOM independence and shooting transitions. Run `node tests/rush_scenarios.cjs` for 480 varied attacks at 30/60/144 fps and open/blocked backdoor feeds. Run `node tests/rush_flow.cjs` for 120 complete breakouts and entries at mobile/desktop widths, including painted blade anchors, receiver eligibility, passing frequency and second-pass opportunities.

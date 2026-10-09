@@ -8138,7 +8138,9 @@ function edgeRushSupportTargets(owner,agents,defs,goalie,now=0){
     {x:.81,y:owner.y<.5?.72:.28,intent:'weak-side'},
     {x:.865,y:backdoorY(a),intent:'backdoor'}];
   const score=(a,point)=>{
-    const q={...a,...point},backdoor=edgeRushBackdoor(owner,q,defs,goalie);
+    // This is a proposed destination, not the skater's currently painted DOM
+    // blade. Otherwise browser route scoring ignores the destination entirely.
+    const q={...a,...point,el:null},backdoor=edgeRushBackdoor(owner,q,defs,goalie);
     const space=edgeRushDistance(q,owner),quality=edgeRushShotQuality(q,defs,goalie);
     const lane=edgeRushPassScore(owner,q,defs,goalie),room=rushClamp(edgeRushPressure(q,defs)/.15,0,1);
     const route=defs.length?Math.min(...defs.map(d=>edgeRushPointSegDist(d.x,d.y,a.x,a.y,q.x,q.y))):1;
@@ -8190,7 +8192,7 @@ function edgeRushSupportTargets(owner,agents,defs,goalie,now=0){
 function edgeRushChooseAction(owner,mates,defs,now,phaseAt,goalie){
   const choice=edgeRushChoosePass(owner,mates,defs,goalie),quality=edgeRushShotQuality(owner,defs,goalie),pressure=edgeRushPressure(owner,defs);
   const elapsed=now-phaseAt,ready=owner.x>.60,quick=owner.receiveAt&&now-owner.receiveAt<420;
-  const threshold=.63-.06*owner.brain.aggression-(quick?.04:0)-rushClamp((elapsed-4500)/10000,0,.10);
+  const threshold=.73-.05*owner.brain.aggression-(quick?.04:0)-rushClamp((elapsed-4500)/10000,0,.14);
   if(ready&&quick&&now<(owner.backdoorUntil||0)&&quality.lane>.50&&quality.value>.43)return {action:'shoot',choice,pressure,quality};
   if(choice.play==='backdoor')return {action:'pass',choice,pressure,quality,play:'backdoor'};
   if(choice.a?.intent==='escape-outlet'&&choice.score>.22&&edgeRushPassingClearance(edgeRushStick(owner),edgeRushStick(choice.a),defs)>.045)return {action:'pass',choice,pressure,quality,play:'escape'};
@@ -8206,9 +8208,19 @@ function edgeRushChooseAction(owner,mates,defs,now,phaseAt,goalie){
     return {action:'pass',choice:{a:outlet,score:edgeRushPassScore(owner,outlet,defs,goalie),play:'pass'},pressure,quality,play:follows?'high-slot':'middle-drive'};
   if(owner.creatingBackdoor&&pressure>.060)return {action:'drive',choice,pressure,quality};
   const oneTimer=quick&&(owner.brain.scoring.signature.release==='one-timer'||owner.brain.shot>.55)&&owner.receiveFromY!=null&&(owner.receiveFromY-owner.y)*owner.hand>0;
-  if(ready&&oneTimer&&!owner.move&&quality.lane>.50&&quality.value>.53)return {action:'shoot',choice,pressure,quality};
+  // Take a genuine open close-range chance. Else compare the outlet before
+  // settling for a merely shootable lane between two defenders.
+  if(ready&&!owner.move&&quality.distance<.18&&quality.lane>.85&&quality.value>.74)return {action:'shoot',choice,pressure,quality};
+  const receiver=choice.a,receiverQuality=receiver?edgeRushShotQuality(receiver,defs,goalie):null;
+  const clearance=receiver?edgeRushPassingClearance(edgeRushStick(owner),edgeRushStick(receiver),defs):0;
+  const room=receiver?edgeRushPressure(receiver,defs):0;
+  const stretch=receiver&&Math.abs(receiver.y-owner.y)>.15&&edgeRushDistance(owner,receiver)>.13;
+  const contained=pressure<.15&&defs.some(d=>d.x>owner.x-.02&&d.x<owner.x+.20);
+  const develops=stretch&&contained&&receiverQuality.value>quality.value-.20&&room>.085&&quality.distance>.18;
+  if(receiver&&choice.score>.36&&clearance>.055&&room>.055
+    &&(!ready||receiverQuality.value>quality.value+.035||develops))return {action:'pass',choice,pressure,quality,play:develops?'stretch':'pass'};
+  if(ready&&oneTimer&&!owner.move&&quality.lane>.50&&quality.value>.58)return {action:'shoot',choice,pressure,quality};
   if(ready&&!owner.move&&quality.lane>.50&&quality.value>threshold)return {action:'shoot',choice,pressure,quality};
-  if(choice.a&&choice.score>.34&&(!ready||edgeRushShotQuality(choice.a,defs,goalie).value>quality.value+.035||pressure<.105))return {action:'pass',choice,pressure,quality};
   if(pressure<.18&&pressure>.045&&!owner.move&&now>=owner.moveCooldown&&owner.brain.deke>.48)return {action:'deke',choice,pressure,quality};
   return {action:quality.lane<.45?'hold':'drive',choice,pressure,quality};
 }
@@ -8226,17 +8238,20 @@ function edgeRushPlanAttack(puck,agents,defs,goalie,plan,now){
   }
   if(!owner.move){
     const quality=edgeRushShotQuality(owner,defs,goalie);
+    const entryAttack=owner.x<.70&&now-plan.start<4500&&defs.some(d=>d.x>owner.x&&d.x<owner.x+.22);
     const candidates=[preferred,{x:.845,y:owner.y<.5?.27:.73},
+      {x:rushClamp(owner.x+.075,.57,.72),y:owner.y<.5?.24:.76},
       {x:rushClamp(owner.x+.045,.57,.83),y:owner.y<.5?.16:.84},
       {x:rushClamp(owner.x+.075,.57,.83),y:rushLerp(owner.y,.5,.55)},
       {x:rushClamp(owner.x+.06,.57,.83),y:rushClamp(owner.y-.13,.22,.78)},
       {x:rushClamp(owner.x+.06,.57,.83),y:rushClamp(owner.y+.13,.22,.78)},
       {x:rushClamp(owner.x-.10,.55,.79),y:owner.y}];
     const best=candidates.map(point=>{
-      const future={...owner,...point},room=rushClamp(edgeRushPressure(future,defs)/.13,0,1);
+      const future={...owner,...point,el:null},room=rushClamp(edgeRushPressure(future,defs)/.13,0,1);
       const path=defs.length?Math.min(...defs.map(d=>edgeRushPointSegDist(d.x,d.y,owner.x,owner.y,point.x,point.y))):1;
       const drawWide=point.x>.83&&Math.abs(owner.y-.5)>.12&&agents.some(a=>a!==owner&&a.intent==='backdoor'&&a.x>.70);
       return {point,drawWide,score:(drawWide?.24:0)+.60*edgeRushShotQuality(future,defs,goalie).value+.18*room-.15*edgeRushDistance(owner,point)
+        +(entryAttack?.18*rushClamp((Math.abs(point.y-.5)-.10)/.14,0,1):0)
         -.90*rushClamp((.065-path)/.065,0,1)+.06*(1-rushClamp(edgeRushDistance(point,preferred)/.25,0,1))
         -.65*agents.filter(a=>a!==owner).reduce((sum,a)=>sum+rushClamp((.14-edgeRushDistance(point,{x:a.tx,y:a.ty}))/.14,0,1),0)};
     }).sort((a,b)=>b.score-a.score)[0];
@@ -8259,7 +8274,10 @@ function edgeRushPlanAttack(puck,agents,defs,goalie,plan,now){
   }
   if(puck.mode!=='carry')return {action:'read'};
   if(edgeRushSoloMove(owner,defs,plan,now))return {action:owner.move?.start===now?'deke':'read',owner,play:'solo-rush'};
-  const read=edgeRushChooseAction(owner,agents.filter(a=>a!==owner),defs,now,plan.start,goalie);
+  // A high outlet may still be completing entry or regripping. Do not spend
+  // a pass decision/count on a receiver that edgeRushPass would reject.
+  const available=agents.filter(a=>a!==owner&&(!puck.entry||puck.entry.entered&&a.x>=puck.entry.insideX)&&(a.oneHandBlend||0)<=.02);
+  const read=edgeRushChooseAction(owner,available,defs,now,plan.start,goalie);
   if(owner.move||now<plan.decisionAt)return {action:'read'};
   plan.decisionAt=now+160;
   if(read.action==='pass'&&(now-plan.lastPassAt<(read.play==='backdoor'?420:650)||plan.passes>=(read.play==='backdoor'?7:4)))read.action='drive';
