@@ -1842,6 +1842,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   .silbox { background: var(--silbg); transition: background-color .3s ease; border-radius: 4px; overflow: hidden; line-height: 0; }
   .card img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: brightness(0);
               user-select: none; -webkit-user-drag: none; }
+  /* Keep Classic's anonymous outline legible against the dark portrait panel. */
+  :root[data-theme="dark"] #silImg { filter: brightness(0) invert(.9); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) #silImg { filter: brightness(0) invert(.9); }
+  }
   .topbar-unused { position: absolute; top: 14px; right: 18px; display: flex; align-items: center;
             gap: 14px; font-size: 14px; }
   #modeLabel { color: var(--muted); }
