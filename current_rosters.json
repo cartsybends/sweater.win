@@ -339,6 +339,11 @@
   "team": "FLA",
   "number": 21
  },
+ "8478043": {
+  "name": "Sam Lafferty",
+  "team": "FLA",
+  "number": 18
+ },
  "8482113": {
   "name": "Anton Lundell",
   "team": "FLA",
@@ -784,6 +789,11 @@
   "team": "TOR",
   "number": 29
  },
+ "8480893": {
+  "name": "Kirill Marchenko",
+  "team": "TOR",
+  "number": 86
+ },
  "8479318": {
   "name": "Auston Matthews",
   "team": "TOR",
@@ -813,6 +823,11 @@
   "name": "John Tavares",
   "team": "TOR",
   "number": 91
+ },
+ "8477425": {
+  "name": "Miles Wood",
+  "team": "TOR",
+  "number": 18
  },
  "8483565": {
   "name": "Nick Blankenburg",
@@ -2124,11 +2139,6 @@
   "team": "MIN",
   "number": 47
  },
- "8475752": {
-  "name": "Tyler Pitlick",
-  "team": "MIN",
-  "number": 19
- },
  "8485702": {
   "name": "Maxim Shabanov",
   "team": "MIN",
@@ -2183,6 +2193,11 @@
   "name": "Jared Spurgeon",
   "team": "MIN",
   "number": 46
+ },
+ "8479406": {
+  "name": "Filip Gustavsson",
+  "team": "MIN",
+  "number": 32
  },
  "8475717": {
   "name": "Calvin Pickard",
