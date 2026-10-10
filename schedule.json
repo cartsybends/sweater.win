@@ -54,7 +54,8 @@
   "2026-11-05": 8478406,
   "2026-11-06": 8479368,
   "2026-11-07": 8480084,
-  "2026-11-08": 8482655
+  "2026-11-08": 8482655,
+  "2026-11-09": 8482691
  },
  "start": "2026-09-15",
  "statline_days": {
@@ -112,7 +113,8 @@
   "2026-11-05": 8476422,
   "2026-11-06": 8482259,
   "2026-11-07": 8482807,
-  "2026-11-08": 8477149
+  "2026-11-08": 8477149,
+  "2026-11-09": 8482470
  },
  "statline_start": "2026-09-15",
  "team_days": {
@@ -335,6 +337,10 @@
   "2026-11-08": [
    8474013,
    2025
+  ],
+  "2026-11-09": [
+   8479314,
+   2021
   ]
  },
  "team_start": "2026-09-15",
@@ -393,7 +399,8 @@
   "2026-11-05": 8476905,
   "2026-11-06": 8480459,
   "2026-11-07": 8479337,
-  "2026-11-08": 8475170
+  "2026-11-08": 8475170,
+  "2026-11-09": 8476874
  },
  "journey_start": "2026-09-15",
  "blur_days": {
@@ -451,7 +458,8 @@
   "2026-11-05": 8483431,
   "2026-11-06": 8482094,
   "2026-11-07": 8482078,
-  "2026-11-08": 8475842
+  "2026-11-08": 8475842,
+  "2026-11-09": 8476480
  },
  "blur_start": "2026-09-15",
  "number_days": {
@@ -509,7 +517,8 @@
   "2026-11-05": 8478460,
   "2026-11-06": 8475745,
   "2026-11-07": 8478499,
-  "2026-11-08": 8483445
+  "2026-11-08": 8483445,
+  "2026-11-09": 8482751
  },
  "number_start": "2026-09-15",
  "draft_days": {
@@ -566,7 +575,8 @@
   "2026-11-05": 8484984,
   "2026-11-06": 8482178,
   "2026-11-07": 8482116,
-  "2026-11-08": 8482460
+  "2026-11-08": 8482460,
+  "2026-11-09": 8481692
  },
  "draft_start": "2026-09-16",
  "map_days": {
@@ -623,7 +633,8 @@
   "2026-11-05": 8478454,
   "2026-11-06": 8480002,
   "2026-11-07": 8475314,
-  "2026-11-08": 8478463
+  "2026-11-08": 8478463,
+  "2026-11-09": 8477406
  },
  "map_start": "2026-09-16",
  "roster_days": {
@@ -2197,6 +2208,35 @@
     8484258,
     8486171
    ]
+  },
+  "2026-11-09": {
+   "team": "NSH",
+   "ids": [
+    8474564,
+    8474600,
+    8475158,
+    8476539,
+    8476869,
+    8476887,
+    8477021,
+    8477424,
+    8479525,
+    8479980,
+    8480246,
+    8480835,
+    8480950,
+    8481020,
+    8481535,
+    8481726,
+    8482072,
+    8482145,
+    8482482,
+    8482806,
+    8483513,
+    8483575,
+    8484241,
+    8486189
+   ]
   }
  },
  "roster_start": "2026-09-15",
@@ -2729,6 +2769,16 @@
     8478569,
     8481553,
     8478840
+   ]
+  },
+  "2026-11-09": {
+   "stat": "goals",
+   "ids": [
+    8479442,
+    8477845,
+    8477365,
+    8473986,
+    8477488
    ]
   }
  },
@@ -5011,6 +5061,49 @@
     8476869,
     8478859,
     8475883
+   ]
+  },
+  "2026-11-09": {
+   "kind": "team",
+   "key": "MTL",
+   "label": "Plays for Montréal",
+   "ids": [
+    8475171,
+    8476921,
+    8480018,
+    8483515,
+    8477964,
+    8475184,
+    8482964,
+    8477955,
+    8477478,
+    8481528,
+    8478133,
+    8478470,
+    8480074,
+    8476981,
+    8477969,
+    8481593,
+    8479675,
+    8484958,
+    8482487,
+    8480797,
+    8480069,
+    8482874,
+    8481568,
+    8477456,
+    8483570,
+    8476874,
+    8478010,
+    8476341,
+    8483471,
+    8484984,
+    8481618,
+    8484136,
+    8482775,
+    8474141,
+    8484221,
+    8480891
    ]
   }
  },
@@ -9041,6 +9134,85 @@
      ],
      "a": 2,
      "kind": "defence",
+     "keep": [
+      1,
+      3
+     ]
+    }
+   ]
+  },
+  "2026-11-09": {
+   "rounds": [
+    {
+     "q": "How many NHL seasons has Justin Barron played?",
+     "o": [
+      "3",
+      "6",
+      "1",
+      "5"
+     ],
+     "a": 3,
+     "kind": "seasons",
+     "keep": [
+      0,
+      3
+     ]
+    },
+    {
+     "q": "Which of these players was born in Canada?",
+     "o": [
+      "Cole Caufield",
+      "Mikey Anderson",
+      "Ridly Greig",
+      "Fedor Svechkov"
+     ],
+     "a": 2,
+     "kind": "bornIn",
+     "keep": [
+      0,
+      4
+     ]
+    },
+    {
+     "q": "What year was Seth Jones drafted?",
+     "o": [
+      "2014",
+      "2017",
+      "2013",
+      "2010"
+     ],
+     "a": 2,
+     "kind": "draftYear",
+     "keep": [
+      1,
+      3
+     ]
+    },
+    {
+     "q": "Which of these players has the most career goals?",
+     "o": [
+      "Mikael Granlund",
+      "Ryan Poehling",
+      "Adrian Kempe",
+      "Parker Wotherspoon"
+     ],
+     "a": 2,
+     "kind": "mostGoals",
+     "keep": [
+      1,
+      2
+     ]
+    },
+    {
+     "q": "How tall is Noah Hanifin?",
+     "o": [
+      "6′0″",
+      "6′3″",
+      "6′6″",
+      "6′2″"
+     ],
+     "a": 1,
+     "kind": "height",
      "keep": [
       1,
       3
@@ -64250,6 +64422,1110 @@
      "kind": "trophy"
     }
    ]
+  },
+  "2026-11-09": {
+   "rounds": [
+    {
+     "q": "Which of these players is the youngest?",
+     "o": [
+      "Luca Del Bel Belluz",
+      "Jamie Benn",
+      "Jakub Dobes",
+      "Ilya Lyubushkin"
+     ],
+     "a": 0,
+     "kind": "youngest"
+    },
+    {
+     "q": "What position does Sidney Crosby play?",
+     "o": [
+      "Goalie",
+      "Defence",
+      "Centre",
+      "Right wing"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "Which of these players is the oldest?",
+     "o": [
+      "Kyle Capobianco",
+      "Connor Brown",
+      "Adam Sykora",
+      "Brett Pesce"
+     ],
+     "a": 1,
+     "kind": "oldest"
+    },
+    {
+     "q": "Which team drafted Michael Amadio?",
+     "o": [
+      "St. Louis",
+      "Minnesota",
+      "Tampa Bay",
+      "Los Angeles"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 2024–25?",
+     "o": [
+      "Andrei Vasilevskiy",
+      "Linus Ullmark",
+      "Connor Hellebuyck",
+      "Carey Price"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players is a goalie?",
+     "o": [
+      "Easton Cowan",
+      "Alex Nedeljkovic",
+      "Steven Stamkos",
+      "Ben Meyers"
+     ],
+     "a": 1,
+     "kind": "goalie"
+    },
+    {
+     "q": "Which of these players was born in Canada?",
+     "o": [
+      "Noah Cates",
+      "Justin Barron",
+      "Alex DeBrincat",
+      "Matthew Knies"
+     ],
+     "a": 1,
+     "kind": "bornIn"
+    },
+    {
+     "q": "What's the most goals Timothy Liljegren has scored in one NHL season?",
+     "o": [
+      "6",
+      "8",
+      "2",
+      "14"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which of these players has the most career goals?",
+     "o": [
+      "Devon Toews",
+      "Brandon Duhaime",
+      "Adam Lowry",
+      "Mark Kastelic"
+     ],
+     "a": 2,
+     "kind": "mostGoals"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 2010–11?",
+     "o": [
+      "Dominik Hašek",
+      "Tuukka Rask",
+      "Tim Thomas",
+      "Henrik Lundqvist"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was Boone Jenner drafted?",
+     "o": [
+      "Round 7",
+      "Round 4",
+      "Round 6",
+      "Round 2"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which team does Ian Cole play for?",
+     "o": [
+      "Philadelphia",
+      "Boston",
+      "Toronto",
+      "Chicago"
+     ],
+     "a": 3,
+     "kind": "team"
+    },
+    {
+     "q": "How many NHL seasons has Auston Matthews played?",
+     "o": [
+      "12",
+      "14",
+      "8",
+      "11"
+     ],
+     "a": 3,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which country was Declan Carlile born in?",
+     "o": [
+      "USA",
+      "Denmark",
+      "Slovakia",
+      "France"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Ted Lindsay Award in 1986–87?",
+     "o": [
+      "Steve Yzerman",
+      "Mark Messier",
+      "Wayne Gretzky",
+      "Mike Liut"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players has the most career points?",
+     "o": [
+      "Jonas Siegenthaler",
+      "Cole Caufield",
+      "Sean Walker",
+      "Wyatt Kaiser"
+     ],
+     "a": 1,
+     "kind": "mostPoints"
+    },
+    {
+     "q": "What number does William Eklund wear?",
+     "o": [
+      "#98",
+      "#24",
+      "#27",
+      "#42"
+     ],
+     "a": 2,
+     "kind": "number"
+    },
+    {
+     "q": "Which of these players is a defenceman?",
+     "o": [
+      "Aatu Räty",
+      "Artyom Levshunov",
+      "Scott Laughton",
+      "Kevin Fiala"
+     ],
+     "a": 1,
+     "kind": "defence"
+    },
+    {
+     "q": "Which city was Shane Wright born in?",
+     "o": [
+      "Uppsala, Sweden",
+      "Calgary, AB, Canada",
+      "Markham, ON, Canada",
+      "Burlington, ON, Canada"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2000–01?",
+     "o": [
+      "Bryan Berard",
+      "Evgeni Nabokov",
+      "Dany Heatley",
+      "Evgeni Malkin"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is Yegor Sharangovich?",
+     "o": [
+      "6′4″",
+      "6′2″",
+      "5′10″",
+      "6′6″"
+     ],
+     "a": 1,
+     "kind": "height"
+    },
+    {
+     "q": "Which of these players wears #15?",
+     "o": [
+      "Brandon Carlo",
+      "Noah Hanifin",
+      "Evan Rodrigues",
+      "Trent Frederic"
+     ],
+     "a": 1,
+     "kind": "wears"
+    },
+    {
+     "q": "Which of these players is the tallest?",
+     "o": [
+      "Anthony Beauvillier",
+      "Emil Heineman",
+      "Jared McCann",
+      "Noah Dobson"
+     ],
+     "a": 3,
+     "kind": "tallest"
+    },
+    {
+     "q": "Which of these players has the most career NHL games?",
+     "o": [
+      "Neal Pionk",
+      "Frank Nazar",
+      "Ryan O'Reilly",
+      "J.T. Miller"
+     ],
+     "a": 2,
+     "kind": "mostGames"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 1990–91?",
+     "o": [
+      "Peter Forsberg",
+      "Jose Theodore",
+      "Brett Hull",
+      "Chris Pronger"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "What year was Jason Dickinson drafted?",
+     "o": [
+      "2013",
+      "2015",
+      "2016",
+      "2010"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which city was Jackson Blake born in?",
+     "o": [
+      "Fargo, ND, USA",
+      "Dorchester, ON, Canada",
+      "Arlington, TX, USA",
+      "Yakutsk, Russia"
+     ],
+     "a": 0,
+     "kind": "city"
+    },
+    {
+     "q": "Which team does Jared Spurgeon play for?",
+     "o": [
+      "Montréal",
+      "Toronto",
+      "Minnesota",
+      "Seattle"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "What position does Jeffrey Viel play?",
+     "o": [
+      "Centre",
+      "Left wing",
+      "Goalie",
+      "Right wing"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 2013–14?",
+     "o": [
+      "Martin St. Louis",
+      "Ryan O'Reilly",
+      "Brian Campbell",
+      "Brad Richards"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Cole Hutson born in?",
+     "o": [
+      "Sorel-Tracy, QC, Canada",
+      "Ylojarvi, Finland",
+      "St. Louis, MO, USA",
+      "Biloxi, MS, USA"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "Which city was Nick DeSimone born in?",
+     "o": [
+      "Bowmanville, ON, Canada",
+      "Angarsk, Russia",
+      "Baudette, MN, USA",
+      "East Amherst, NY, USA"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "What position does Cole Sillinger play?",
+     "o": [
+      "Right wing",
+      "Defence",
+      "Goalie",
+      "Centre"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "Which of these players wears #94?",
+     "o": [
+      "Nick Robertson",
+      "Sam Malinski",
+      "Max Sasson",
+      "Porter Martone"
+     ],
+     "a": 3,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 2001–02?",
+     "o": [
+      "Jarome Iginla",
+      "Joe Thornton",
+      "Wayne Gretzky",
+      "Jaromír Jágr"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "What year was Dawson Mercer drafted?",
+     "o": [
+      "2021",
+      "2020",
+      "2022",
+      "2018"
+     ],
+     "a": 1,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What position does Carter Hart play?",
+     "o": [
+      "Goalie",
+      "Centre",
+      "Right wing",
+      "Left wing"
+     ],
+     "a": 0,
+     "kind": "position"
+    },
+    {
+     "q": "What number does Daniil But wear?",
+     "o": [
+      "#50",
+      "#53",
+      "#29",
+      "#8"
+     ],
+     "a": 0,
+     "kind": "number"
+    },
+    {
+     "q": "How tall is Alex Ovechkin?",
+     "o": [
+      "6′6″",
+      "6′5″",
+      "6′3″",
+      "6′2″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 2016–17?",
+     "o": [
+      "Drew Doughty",
+      "Duncan Keith",
+      "Nicklas Lidström",
+      "Brent Burns"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is John Marino?",
+     "o": [
+      "6′4″",
+      "6′1″",
+      "5′10″",
+      "5′11″"
+     ],
+     "a": 1,
+     "kind": "height"
+    },
+    {
+     "q": "Which of these players wears #52?",
+     "o": [
+      "Cole Koepke",
+      "Noel Acciari",
+      "Ryan Lomberg",
+      "Josh Anderson"
+     ],
+     "a": 1,
+     "kind": "wears"
+    },
+    {
+     "q": "Which team does Sam Dickinson play for?",
+     "o": [
+      "Pittsburgh",
+      "Buffalo",
+      "San Jose",
+      "NY Rangers"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "What position does Zach Whitecloud play?",
+     "o": [
+      "Left wing",
+      "Defence",
+      "Goalie",
+      "Centre"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2010–11?",
+     "o": [
+      "Corey Perry",
+      "Evgeni Malkin",
+      "Alexander Ovechkin",
+      "Joe Sakic"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team drafted Tomas Hertl?",
+     "o": [
+      "Boston",
+      "San Jose",
+      "Utah",
+      "Carolina"
+     ],
+     "a": 1,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "What position does Tom Wilson play?",
+     "o": [
+      "Goalie",
+      "Right wing",
+      "Defence",
+      "Centre"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "What position does Vince Dunn play?",
+     "o": [
+      "Centre",
+      "Defence",
+      "Right wing",
+      "Goalie"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "What number does Elmer Soderblom wear?",
+     "o": [
+      "#75",
+      "#95",
+      "#77",
+      "#25"
+     ],
+     "a": 3,
+     "kind": "number"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 2000–01?",
+     "o": [
+      "Zdeno Chára",
+      "Nicklas Lidström",
+      "Brian Leetch",
+      "Chris Pronger"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Logan Stanley has scored in one NHL season?",
+     "o": [
+      "9",
+      "1",
+      "13",
+      "3"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "What position does Calum Ritchie play?",
+     "o": [
+      "Left wing",
+      "Centre",
+      "Defence",
+      "Right wing"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "What position does Isak Rosen play?",
+     "o": [
+      "Centre",
+      "Right wing",
+      "Goalie",
+      "Left wing"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "Which city was Joel Hofer born in?",
+     "o": [
+      "Sergiyev Posad, Russia",
+      "Arlington, TX, USA",
+      "Winnipeg, MB, Canada",
+      "Solna, Sweden"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2001–02?",
+     "o": [
+      "Alexander Ovechkin",
+      "Sergei Samsonov",
+      "Gabriel Landeskog",
+      "Dany Heatley"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was Vasily Podkolzin drafted?",
+     "o": [
+      "Round 7",
+      "Round 2",
+      "Round 1",
+      "Round 6"
+     ],
+     "a": 2,
+     "kind": "draftRound"
+    },
+    {
+     "q": "What number does Haydn Fleury wear?",
+     "o": [
+      "#24",
+      "#46",
+      "#12",
+      "#4"
+     ],
+     "a": 0,
+     "kind": "number"
+    },
+    {
+     "q": "What's the most goals Ryan Poehling has scored in one NHL season?",
+     "o": [
+      "18",
+      "12",
+      "10",
+      "14"
+     ],
+     "a": 1,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which team does Sam Carrick play for?",
+     "o": [
+      "Florida",
+      "Philadelphia",
+      "Buffalo",
+      "Anaheim"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 2003–04?",
+     "o": [
+      "Evgeni Malkin",
+      "Martin St. Louis",
+      "Joe Thornton",
+      "Alexander Ovechkin"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "What number does Cutter Gauthier wear?",
+     "o": [
+      "#16",
+      "#61",
+      "#72",
+      "#3"
+     ],
+     "a": 1,
+     "kind": "number"
+    },
+    {
+     "q": "Which team does Adam Engstrom play for?",
+     "o": [
+      "Pittsburgh",
+      "San Jose",
+      "Montréal",
+      "Utah"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "Which team does Leo Carlsson play for?",
+     "o": [
+      "Columbus",
+      "Nashville",
+      "Anaheim",
+      "San Jose"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "Which team drafted Viktor Arvidsson?",
+     "o": [
+      "Winnipeg",
+      "Nashville",
+      "Calgary",
+      "Los Angeles"
+     ],
+     "a": 1,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 1998–99?",
+     "o": [
+      "Chris Pronger",
+      "Nicklas Lidström",
+      "Al MacInnis",
+      "Paul Coffey"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Jaroslav Chmelar played?",
+     "o": [
+      "6",
+      "3",
+      "2",
+      "4"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which of these players was born in Germany?",
+     "o": [
+      "Jonas Brodin",
+      "Moritz Seider",
+      "Alex Laferriere",
+      "Jake Christiansen"
+     ],
+     "a": 1,
+     "kind": "bornIn"
+    },
+    {
+     "q": "What number does Alex Turcotte wear?",
+     "o": [
+      "#5",
+      "#25",
+      "#15",
+      "#39"
+     ],
+     "a": 2,
+     "kind": "number"
+    },
+    {
+     "q": "Which of these players wears #29?",
+     "o": [
+      "Ryan Nugent-Hopkins",
+      "Leon Draisaitl",
+      "Eric Robinson",
+      "Alex Iafallo"
+     ],
+     "a": 1,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2008–09?",
+     "o": [
+      "Auston Matthews",
+      "Alexander Ovechkin",
+      "Chris Drury",
+      "Steve Mason"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Nathan MacKinnon has scored in one NHL season?",
+     "o": [
+      "45",
+      "53",
+      "55",
+      "61"
+     ],
+     "a": 1,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which team drafted Pierre-Luc Dubois?",
+     "o": [
+      "Nashville",
+      "Tampa Bay",
+      "Los Angeles",
+      "Columbus"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which country was Sam Reinhart born in?",
+     "o": [
+      "France",
+      "Canada",
+      "Sweden",
+      "Switzerland"
+     ],
+     "a": 1,
+     "kind": "nation"
+    },
+    {
+     "q": "What number does Jack Roslovic wear?",
+     "o": [
+      "#86",
+      "#74",
+      "#23",
+      "#96"
+     ],
+     "a": 3,
+     "kind": "number"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 1980–81?",
+     "o": [
+      "Rick Kehoe",
+      "Joe Mullen",
+      "Rick Middleton",
+      "Wayne Gretzky"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Dmitri Simashev play?",
+     "o": [
+      "Centre",
+      "Goalie",
+      "Defence",
+      "Left wing"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "Which of these players wears #62?",
+     "o": [
+      "Artturi Lehkonen",
+      "Jake Walman",
+      "Mathieu Joseph",
+      "Jason Robertson"
+     ],
+     "a": 0,
+     "kind": "wears"
+    },
+    {
+     "q": "Which city was Jacob Trouba born in?",
+     "o": [
+      "Hearst, ON, Canada",
+      "Rochester, MI, USA",
+      "Chesterfield, MO, USA",
+      "Nobleton, ON, Canada"
+     ],
+     "a": 1,
+     "kind": "city"
+    },
+    {
+     "q": "How many NHL seasons has Patrick Kane played?",
+     "o": [
+      "19",
+      "24",
+      "20",
+      "16"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 2005–06?",
+     "o": [
+      "José Théodore",
+      "Miikka Kiprusoff",
+      "Ryan Miller",
+      "Henrik Lundqvist"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which country was Dylan Guenther born in?",
+     "o": [
+      "Norway",
+      "Germany",
+      "Czechia",
+      "Canada"
+     ],
+     "a": 3,
+     "kind": "nation"
+    },
+    {
+     "q": "Which country was Logan Thompson born in?",
+     "o": [
+      "France",
+      "Austria",
+      "Norway",
+      "Canada"
+     ],
+     "a": 3,
+     "kind": "nation"
+    },
+    {
+     "q": "Which city was Jacob Fowler born in?",
+     "o": [
+      "Klatovy, Czechia",
+      "Carbonear, NL, Canada",
+      "Pittsburgh, PA, USA",
+      "Melbourne, FL, USA"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "Which country was Dmitri Voronkov born in?",
+     "o": [
+      "Russia",
+      "France",
+      "Latvia",
+      "Czechia"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 2017–18?",
+     "o": [
+      "William Karlsson",
+      "Johnny Gaudreau",
+      "Jiří Hudler",
+      "Martin St. Louis"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Trevor van Riemsdyk played?",
+     "o": [
+      "14",
+      "13",
+      "12",
+      "17"
+     ],
+     "a": 1,
+     "kind": "seasons"
+    },
+    {
+     "q": "What position does Connor McMichael play?",
+     "o": [
+      "Defence",
+      "Centre",
+      "Right wing",
+      "Left wing"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "What year was Brock Faber drafted?",
+     "o": [
+      "2022",
+      "2017",
+      "2020",
+      "2019"
+     ],
+     "a": 2,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What position does Samuel Girard play?",
+     "o": [
+      "Defence",
+      "Right wing",
+      "Centre",
+      "Left wing"
+     ],
+     "a": 0,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Conn Smythe Trophy in 2022–23?",
+     "o": [
+      "Cale Makar",
+      "Tim Thomas",
+      "Connor McDavid",
+      "Jonathan Marchessault"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team drafted Marcus Foligno?",
+     "o": [
+      "Washington",
+      "Vancouver",
+      "Los Angeles",
+      "Buffalo"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which team does Jordan Kyrou play for?",
+     "o": [
+      "Anaheim",
+      "Washington",
+      "NY Rangers",
+      "Pittsburgh"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Which team does Darcy Kuemper play for?",
+     "o": [
+      "Los Angeles",
+      "Montréal",
+      "Colorado",
+      "Dallas"
+     ],
+     "a": 0,
+     "kind": "team"
+    },
+    {
+     "q": "Which team does Anthony Mantha play for?",
+     "o": [
+      "Anaheim",
+      "Minnesota",
+      "New Jersey",
+      "Boston"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 2001–02?",
+     "o": [
+      "Patrick Roy",
+      "Ryan Miller",
+      "José Théodore",
+      "Ed Belfour"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players wears #6?",
+     "o": [
+      "Anders Lee",
+      "Jack St. Ivany",
+      "Cody Ceci",
+      "Anthony Duclair"
+     ],
+     "a": 1,
+     "kind": "wears"
+    },
+    {
+     "q": "Which city was Elias Pettersson born in?",
+     "o": [
+      "Oxford, MI, USA",
+      "Summerside, PE, Canada",
+      "Vasteras, Sweden",
+      "Port Perry, ON, Canada"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "What's the most goals Brennan Othmann has scored in one NHL season?",
+     "o": [
+      "2",
+      "4",
+      "10",
+      "8"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which of these players wears #24?",
+     "o": [
+      "Cam Fowler",
+      "Ty Dellandrea",
+      "Thatcher Demko",
+      "Max Crozier"
+     ],
+     "a": 3,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 1990–91?",
+     "o": [
+      "Ron Francis",
+      "Brett Hull",
+      "Wayne Gretzky",
+      "Rick Kehoe"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    }
+   ]
   }
  },
  "overtime_start": "2026-09-20",
@@ -66819,6 +68095,60 @@
      ],
      "f": 0,
      "c": "Plays for Vegas"
+    }
+   ]
+  },
+  "2026-11-09": {
+   "rounds": [
+    {
+     "p": 8477149,
+     "s": [
+      "Is a defence",
+      "Plays for Tampa Bay",
+      "Was born in Canada"
+     ],
+     "f": 0,
+     "c": "Is a right wing"
+    },
+    {
+     "p": 8482821,
+     "s": [
+      "Wears #40",
+      "Has played 3 NHL seasons",
+      "Has played over 100 NHL games"
+     ],
+     "f": 1,
+     "c": "Has played 6 NHL seasons"
+    },
+    {
+     "p": 8480855,
+     "s": [
+      "Once scored 13 goals in a season",
+      "Is a centre",
+      "Is 6′7″ tall"
+     ],
+     "f": 2,
+     "c": "Is 6′4″ tall"
+    },
+    {
+     "p": 8481122,
+     "s": [
+      "Plays for Philadelphia",
+      "Wears #44",
+      "Has played 10 NHL seasons"
+     ],
+     "f": 2,
+     "c": "Has played 7 NHL seasons"
+    },
+    {
+     "p": 8480801,
+     "s": [
+      "Plays for Winnipeg",
+      "Has played over 500 NHL games",
+      "Once scored 37 goals in a season"
+     ],
+     "f": 0,
+     "c": "Plays for Florida"
     }
    ]
   }
@@ -77912,6 +79242,290 @@
      "goals"
     ]
    ]
+  },
+  "2026-11-09": {
+   "rounds": [
+    [
+     "PIT",
+     73.0,
+     "DAL",
+     74.3,
+     "height"
+    ],
+    [
+     "NJD",
+     2058,
+     "UTA",
+     1902,
+     "goals"
+    ],
+    [
+     "NYR",
+     73.8,
+     "WSH",
+     74.5,
+     "height"
+    ],
+    [
+     "STL",
+     1343,
+     "PHI",
+     1539,
+     "goals"
+    ],
+    [
+     "LAK",
+     7,
+     "COL",
+     4,
+     "abroad"
+    ],
+    [
+     "NYI",
+     2079,
+     "SEA",
+     1592,
+     "goals"
+    ],
+    [
+     "NYR",
+     27.0,
+     "FLA",
+     31.1,
+     "age"
+    ],
+    [
+     "CHI",
+     1546,
+     "VAN",
+     1568,
+     "goals"
+    ],
+    [
+     "WSH",
+     74.5,
+     "COL",
+     73.2,
+     "height"
+    ],
+    [
+     "DET",
+     1908,
+     "ANA",
+     1138,
+     "goals"
+    ],
+    [
+     "PIT",
+     9,
+     "TBL",
+     10,
+     "abroad"
+    ],
+    [
+     "PHI",
+     1539,
+     "LAK",
+     2794,
+     "goals"
+    ],
+    [
+     "CHI",
+     26.4,
+     "CAR",
+     30.5,
+     "age"
+    ],
+    [
+     "MTL",
+     73.2,
+     "CGY",
+     73.8,
+     "height"
+    ],
+    [
+     "WSH",
+     29.0,
+     "TOR",
+     31.3,
+     "age"
+    ],
+    [
+     "CAR",
+     73.5,
+     "OTT",
+     73.6,
+     "height"
+    ],
+    [
+     "DET",
+     27.7,
+     "COL",
+     31.2,
+     "age"
+    ],
+    [
+     "TOR",
+     73.4,
+     "BUF",
+     73.5,
+     "height"
+    ],
+    [
+     "CGY",
+     1229,
+     "PHI",
+     1539,
+     "goals"
+    ],
+    [
+     "NSH",
+     9856,
+     "VAN",
+     7765,
+     "games"
+    ],
+    [
+     "DAL",
+     29.7,
+     "TBL",
+     30.0,
+     "age"
+    ],
+    [
+     "TOR",
+     5,
+     "ANA",
+     6,
+     "abroad"
+    ],
+    [
+     "NYI",
+     2079,
+     "UTA",
+     1902,
+     "goals"
+    ],
+    [
+     "BUF",
+     5,
+     "BOS",
+     7,
+     "abroad"
+    ],
+    [
+     "CHI",
+     73.3,
+     "MTL",
+     73.2,
+     "height"
+    ],
+    [
+     "ANA",
+     27.4,
+     "NJD",
+     29.5,
+     "age"
+    ],
+    [
+     "SEA",
+     3,
+     "PIT",
+     9,
+     "abroad"
+    ],
+    [
+     "OTT",
+     8384,
+     "STL",
+     7590,
+     "games"
+    ],
+    [
+     "LAK",
+     7,
+     "CAR",
+     5,
+     "abroad"
+    ],
+    [
+     "VAN",
+     7765,
+     "CHI",
+     7578,
+     "games"
+    ],
+    [
+     "DAL",
+     74.3,
+     "BOS",
+     74.1,
+     "height"
+    ],
+    [
+     "UTA",
+     29.0,
+     "NSH",
+     29.6,
+     "age"
+    ],
+    [
+     "LAK",
+     13349,
+     "CBJ",
+     9977,
+     "games"
+    ],
+    [
+     "MTL",
+     6,
+     "TBL",
+     10,
+     "abroad"
+    ],
+    [
+     "DAL",
+     2869,
+     "MIN",
+     2073,
+     "goals"
+    ],
+    [
+     "STL",
+     7590,
+     "BUF",
+     5803,
+     "games"
+    ],
+    [
+     "PHI",
+     1539,
+     "TBL",
+     2632,
+     "goals"
+    ],
+    [
+     "DAL",
+     29.7,
+     "SEA",
+     28.4,
+     "age"
+    ],
+    [
+     "SJS",
+     4,
+     "CAR",
+     5,
+     "abroad"
+    ],
+    [
+     "NYI",
+     2079,
+     "EDM",
+     2674,
+     "goals"
+    ]
+   ]
   }
  },
  "hlt_start": "2026-09-18",
@@ -78123,6 +79737,10 @@
   "2026-11-08": {
    "id": 8478055,
    "y": 2017
+  },
+  "2026-11-09": {
+   "id": 8477956,
+   "y": 2026
   }
  },
  "season_start": "2026-09-18",
@@ -78286,6 +79904,10 @@
   "2026-11-08": {
    "id": 8479973,
    "y": 2023
+  },
+  "2026-11-09": {
+   "id": 8480049,
+   "y": 2024
   }
  },
  "playoff_start": "2026-09-18",
@@ -91782,6 +93404,350 @@
      "a": 2
     }
    ]
+  },
+  "2026-11-09": {
+   "rounds": [
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 2014,
+     "names": [
+      "Evgeni Malkin",
+      "Mathew Barzal",
+      "Aaron Ekblad",
+      "Cale Makar"
+     ],
+     "teams": [
+      "PIT",
+      "NYI",
+      "FLA",
+      "COL"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2015,
+     "names": [
+      "Martin St. Louis",
+      "Kyle Connor",
+      "Anže Kopitar",
+      "Jaccob Slavin"
+     ],
+     "teams": [
+      "TBL",
+      "WPG",
+      "LAK",
+      "CAR"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2012,
+     "names": [
+      "Nikita Kucherov",
+      "Sidney Crosby",
+      "Nathan MacKinnon",
+      "Auston Matthews"
+     ],
+     "teams": [
+      "TBL",
+      "PIT",
+      "COL",
+      "TOR"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2022,
+     "names": [
+      "Connor McDavid",
+      "Evgeni Malkin",
+      "Auston Matthews",
+      "Carey Price"
+     ],
+     "teams": [
+      "EDM",
+      "PIT",
+      "TOR",
+      "MTL"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2009,
+     "names": [
+      "Pavol Demitra",
+      "Alexander Mogilny",
+      "Jiří Hudler",
+      "Martin St. Louis"
+     ],
+     "teams": [
+      "STL",
+      "TOR",
+      "CGY",
+      "TBL"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2013,
+     "names": [
+      "Joe Thornton",
+      "Nathan MacKinnon",
+      "Sidney Crosby",
+      "Taylor Hall"
+     ],
+     "teams": [
+      "BOS",
+      "COL",
+      "PIT",
+      "NJD"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2012,
+     "names": [
+      "Alexander Ovechkin",
+      "Joe Thornton",
+      "Taylor Hall",
+      "Connor Hellebuyck"
+     ],
+     "teams": [
+      "WSH",
+      "BOS",
+      "NJD",
+      "WPG"
+     ],
+     "a": 0
+    },
+    {
+     "t": "James Norris Memorial Trophy",
+     "y": 2024,
+     "names": [
+      "Drew Doughty",
+      "Cale Makar",
+      "Duncan Keith",
+      "Quinn Hughes"
+     ],
+     "teams": [
+      "LAK",
+      "COL",
+      "CHI",
+      "VAN"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2012,
+     "names": [
+      "Kyle Connor",
+      "Martin St. Louis",
+      "William Karlsson",
+      "Ron Francis"
+     ],
+     "teams": [
+      "WPG",
+      "TBL",
+      "VGK",
+      "CAR"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 2002,
+     "names": [
+      "Dominik Hašek",
+      "Jim Carey",
+      "Ed Belfour",
+      "Martin Brodeur"
+     ],
+     "teams": [
+      "BUF",
+      "WSH",
+      "CHI",
+      "NJD"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 1996,
+     "names": [
+      "Alexander Ovechkin",
+      "Brett Hull",
+      "Mario Lemieux",
+      "Dominik Hašek"
+     ],
+     "teams": [
+      "WSH",
+      "STL",
+      "PIT",
+      "BUF"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 1991,
+     "names": [
+      "Bryan Berard",
+      "Mario Lemieux",
+      "Pavel Bure",
+      "Peter Šťastný"
+     ],
+     "teams": [
+      "NYI",
+      "PIT",
+      "VAN",
+      "QUE"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2011,
+     "names": [
+      "Rod Brind'Amour",
+      "Patrice Bergeron",
+      "Ryan O'Reilly",
+      "Jere Lehtinen"
+     ],
+     "teams": [
+      "CAR",
+      "BOS",
+      "STL",
+      "DAL"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 2015,
+     "names": [
+      "Sidney Crosby",
+      "Jonathan Toews",
+      "Jordan Staal",
+      "Tim Thomas"
+     ],
+     "teams": [
+      "PIT",
+      "CHI",
+      "CAR",
+      "BOS"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2018,
+     "names": [
+      "Ryan O'Reilly",
+      "Jonathan Toews",
+      "Patrice Bergeron",
+      "Sean Couturier"
+     ],
+     "teams": [
+      "STL",
+      "CHI",
+      "BOS",
+      "PHI"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 1994,
+     "names": [
+      "Jean-Sebastien Giguere",
+      "Mario Lemieux",
+      "Scott Stevens",
+      "Claude Lemieux"
+     ],
+     "teams": [
+      "ANA",
+      "PIT",
+      "NJD",
+      "NJD"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1998,
+     "names": [
+      "Alexander Mogilny",
+      "Martin St. Louis",
+      "Joe Mullen",
+      "Wayne Gretzky"
+     ],
+     "teams": [
+      "TOR",
+      "TBL",
+      "CGY",
+      "NYR"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 2017,
+     "names": [
+      "Ryan O'Reilly",
+      "Pavel Datsyuk",
+      "William Karlsson",
+      "Anže Kopitar"
+     ],
+     "teams": [
+      "COL",
+      "DET",
+      "VGK",
+      "LAK"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2002,
+     "names": [
+      "Milan Hejduk",
+      "Pavel Bure",
+      "Vincent Lecavalier",
+      "Jonathan Cheechoo"
+     ],
+     "teams": [
+      "COL",
+      "FLA",
+      "TBL",
+      "SJS"
+     ],
+     "a": 0
+    },
+    {
+     "t": "James Norris Memorial Trophy",
+     "y": 1992,
+     "names": [
+      "Ray Bourque",
+      "Rod Langway",
+      "Chris Chelios",
+      "Randy Carlyle"
+     ],
+     "teams": [
+      "BOS",
+      "WSH",
+      "CHI",
+      "PIT"
+     ],
+     "a": 2
+    }
+   ]
   }
  },
  "trophy_start": "2026-09-18",
@@ -92356,6 +94322,17 @@
     8484860,
     8484768,
     8482165
+   ]
+  },
+  "2026-11-09": {
+   "team": "PHI",
+   "ids": [
+    8479336,
+    8478435,
+    8478439,
+    8478569,
+    8479361,
+    8476461
    ]
   }
  },
@@ -102910,6 +104887,326 @@
     ]
    ],
    "mvp": true
+  },
+  "2026-11-09": {
+   "rows": [
+    [
+     1980,
+     "New York Islanders",
+     "Minnesota North Stars",
+     "Butch Goring",
+     "NYI"
+    ],
+    [
+     1981,
+     "New York Islanders",
+     "Vancouver Canucks",
+     "Mike Bossy",
+     "NYI"
+    ],
+    [
+     1982,
+     "New York Islanders",
+     "Edmonton Oilers",
+     "Billy Smith",
+     "NYI"
+    ],
+    [
+     1983,
+     "Edmonton Oilers",
+     "New York Islanders",
+     "Mark Messier",
+     "EDM"
+    ],
+    [
+     1984,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1985,
+     "Montreal Canadiens",
+     "Calgary Flames",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1986,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Ron Hextall",
+     "PHI"
+    ],
+    [
+     1987,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1988,
+     "Calgary Flames",
+     "Montreal Canadiens",
+     "Al MacInnis",
+     "CGY"
+    ],
+    [
+     1989,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Bill Ranford",
+     "EDM"
+    ],
+    [
+     1990,
+     "Pittsburgh Penguins",
+     "Minnesota North Stars",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1991,
+     "Pittsburgh Penguins",
+     "Chicago Blackhawks",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1992,
+     "Montreal Canadiens",
+     "Los Angeles Kings",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1993,
+     "New York Rangers",
+     "Vancouver Canucks",
+     "Brian Leetch",
+     "NYR"
+    ],
+    [
+     1994,
+     "New Jersey Devils",
+     "Detroit Red Wings",
+     "Claude Lemieux",
+     "NJD"
+    ],
+    [
+     1995,
+     "Colorado Avalanche",
+     "Florida Panthers",
+     "Joe Sakic",
+     "COL"
+    ],
+    [
+     1996,
+     "Detroit Red Wings",
+     "Philadelphia Flyers",
+     "Mike Vernon",
+     "DET"
+    ],
+    [
+     1997,
+     "Detroit Red Wings",
+     "Washington Capitals",
+     "Steve Yzerman",
+     "DET"
+    ],
+    [
+     1998,
+     "Dallas Stars",
+     "Buffalo Sabres",
+     "Joe Nieuwendyk",
+     "DAL"
+    ],
+    [
+     1999,
+     "New Jersey Devils",
+     "Dallas Stars",
+     "Scott Stevens",
+     "NJD"
+    ],
+    [
+     2000,
+     "Colorado Avalanche",
+     "New Jersey Devils",
+     "Patrick Roy",
+     "COL"
+    ],
+    [
+     2001,
+     "Detroit Red Wings",
+     "Carolina Hurricanes",
+     "Nicklas Lidstrom",
+     "DET"
+    ],
+    [
+     2002,
+     "New Jersey Devils",
+     "Mighty Ducks of Anaheim",
+     "Jean-Sebastien Giguere",
+     "ANA"
+    ],
+    [
+     2003,
+     "Tampa Bay Lightning",
+     "Calgary Flames",
+     "Brad Richards",
+     "TBL"
+    ],
+    [
+     2005,
+     "Carolina Hurricanes",
+     "Edmonton Oilers",
+     "Cam Ward",
+     "CAR"
+    ],
+    [
+     2006,
+     "Anaheim Ducks",
+     "Ottawa Senators",
+     "Scott Niedermayer",
+     "ANA"
+    ],
+    [
+     2007,
+     "Detroit Red Wings",
+     "Pittsburgh Penguins",
+     "Henrik Zetterberg",
+     "DET"
+    ],
+    [
+     2008,
+     "Pittsburgh Penguins",
+     "Detroit Red Wings",
+     "Evgeni Malkin",
+     "PIT"
+    ],
+    [
+     2009,
+     "Chicago Blackhawks",
+     "Philadelphia Flyers",
+     "Jonathan Toews",
+     "CHI"
+    ],
+    [
+     2010,
+     "Boston Bruins",
+     "Vancouver Canucks",
+     "Tim Thomas",
+     "BOS"
+    ],
+    [
+     2011,
+     "Los Angeles Kings",
+     "New Jersey Devils",
+     "Jonathan Quick",
+     "LAK"
+    ],
+    [
+     2012,
+     "Chicago Blackhawks",
+     "Boston Bruins",
+     "Patrick Kane",
+     "CHI"
+    ],
+    [
+     2013,
+     "Los Angeles Kings",
+     "New York Rangers",
+     "Justin Williams",
+     "LAK"
+    ],
+    [
+     2014,
+     "Chicago Blackhawks",
+     "Tampa Bay Lightning",
+     "Duncan Keith",
+     "CHI"
+    ],
+    [
+     2015,
+     "Pittsburgh Penguins",
+     "San Jose Sharks",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2016,
+     "Pittsburgh Penguins",
+     "Nashville Predators",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2017,
+     "Washington Capitals",
+     "Vegas Golden Knights",
+     "Alexander Ovechkin",
+     "WSH"
+    ],
+    [
+     2018,
+     "St. Louis Blues",
+     "Boston Bruins",
+     "Ryan O'Reilly",
+     "STL"
+    ],
+    [
+     2019,
+     "Tampa Bay Lightning",
+     "Dallas Stars",
+     "Victor Hedman",
+     "TBL"
+    ],
+    [
+     2020,
+     "Tampa Bay Lightning",
+     "Montreal Canadiens",
+     "Andrei Vasilevskiy",
+     "TBL"
+    ],
+    [
+     2021,
+     "Colorado Avalanche",
+     "Tampa Bay Lightning",
+     "Cale Makar",
+     "COL"
+    ],
+    [
+     2022,
+     "Vegas Golden Knights",
+     "Florida Panthers",
+     "Jonathan Marchessault",
+     "VGK"
+    ],
+    [
+     2023,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Connor McDavid",
+     "EDM"
+    ],
+    [
+     2024,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Sam Bennett",
+     "FLA"
+    ],
+    [
+     2025,
+     "Carolina Hurricanes",
+     "Vegas Golden Knights",
+     "Jordan Staal",
+     "CAR"
+    ]
+   ],
+   "mvp": true
   }
  },
  "cups_start": "2026-09-18",
@@ -104963,6 +107260,44 @@
      8485391,
      8485402,
      8485414
+    ]
+   }
+  ],
+  "2026-11-09": [
+   {
+    "label": "Plays for Chicago",
+    "ids": [
+     8476882,
+     8478233,
+     8481519,
+     8482176
+    ]
+   },
+   {
+    "label": "Born in Sweden",
+    "ids": [
+     8474578,
+     8480188,
+     8480878,
+     8483686
+    ]
+   },
+   {
+    "label": "Wears #58",
+    "ids": [
+     8471724,
+     8478046,
+     8478047,
+     8484471
+    ]
+   },
+   {
+    "label": "Born in 2004",
+    "ids": [
+     8483455,
+     8483516,
+     8483669,
+     8484180
     ]
    }
   ]
@@ -123997,6 +126332,352 @@
     8477527,
     8482116,
     8477969
+   ]
+  },
+  "2026-11-09": {
+   "goals": [
+    8475462,
+    8475324,
+    8479353,
+    8474568,
+    8478542,
+    8470621,
+    8477425,
+    8481554,
+    8477501,
+    8482768,
+    8473512,
+    8477845,
+    8476432,
+    8482859,
+    8476905,
+    8481028,
+    8479985,
+    8476624,
+    8480064,
+    8479977,
+    8471675,
+    8476331,
+    8482097,
+    8482146,
+    8477938,
+    8476539,
+    8478055,
+    8475790,
+    8476881,
+    8474564,
+    8482803,
+    8477456,
+    8481593,
+    8475235,
+    8482142,
+    8480015,
+    8478042,
+    8480878,
+    8474141,
+    8477365,
+    8477499
+   ],
+   "assists": [
+    8480980,
+    8476292,
+    8476885,
+    8477949,
+    8476448,
+    8482665,
+    8482859,
+    8484258,
+    8476624,
+    8475170,
+    8475842,
+    8477969,
+    8477934,
+    8482177,
+    8475287,
+    8476473,
+    8475768,
+    8478831,
+    8475279,
+    8481656,
+    8474563,
+    8480009,
+    8476887,
+    8475235,
+    8482745,
+    8479661,
+    8477951,
+    8481068,
+    8479407,
+    8482062,
+    8476902,
+    8478449,
+    8478975,
+    8477070,
+    8477409,
+    8482095,
+    8481557,
+    8480003,
+    8476931,
+    8476461,
+    8480018
+   ],
+   "points": [
+    8474141,
+    8476292,
+    8478831,
+    8479542,
+    8478449,
+    8476393,
+    8476392,
+    8471675,
+    8480855,
+    8482110,
+    8476885,
+    8480145,
+    8480990,
+    8476474,
+    8479982,
+    8473422,
+    8477407,
+    8478440,
+    8479525,
+    8480834,
+    8476422,
+    8479520,
+    8477220,
+    8477406,
+    8477416,
+    8477504,
+    8480459,
+    8479353,
+    8476479,
+    8479981,
+    8474716,
+    8477446,
+    8477500,
+    8477498,
+    8479066,
+    8478462,
+    8477940,
+    8481581,
+    8481533,
+    8481563,
+    8482655
+   ],
+   "pim": [
+    8475768,
+    8477015,
+    8480878,
+    8482745,
+    8477948,
+    8478864,
+    8481789,
+    8481596,
+    8481161,
+    8481563,
+    8478042,
+    8474568,
+    8483570,
+    8476312,
+    8477810,
+    8475754,
+    8483485,
+    8482148,
+    8477426,
+    8479378,
+    8480028,
+    8480834,
+    8482176,
+    8478434,
+    8477505,
+    8478519,
+    8482055,
+    8476624,
+    8480023,
+    8477450,
+    8479980,
+    8479398,
+    8479318,
+    8473419,
+    8474586,
+    8479999,
+    8478443,
+    8480246,
+    8482929,
+    8481605,
+    8477402
+   ],
+   "gp": [
+    8482775,
+    8484911,
+    8477939,
+    8479983,
+    8475795,
+    8479372,
+    8478569,
+    8480208,
+    8480803,
+    8480834,
+    8479987,
+    8475764,
+    8478449,
+    8482745,
+    8482105,
+    8478851,
+    8479369,
+    8476891,
+    8479400,
+    8483524,
+    8483565,
+    8474574,
+    8475462,
+    8478975,
+    8477479,
+    8477015,
+    8480459,
+    8476906,
+    8480796,
+    8475235,
+    8482077,
+    8477504,
+    8477492,
+    8481656,
+    8477935,
+    8481618,
+    8474150,
+    8478882,
+    8478472,
+    8479992,
+    8477447
+   ],
+   "height": [
+    8479066,
+    8474564,
+    8480855,
+    8478438,
+    8481601,
+    8476312,
+    8478569,
+    8478859,
+    8478047,
+    8477932,
+    8480220,
+    8481559,
+    8477425,
+    8478449,
+    8478043,
+    8480829,
+    8481522,
+    8482671,
+    8482691,
+    8479980,
+    8482660,
+    8478416,
+    8483570,
+    8476278,
+    8478136,
+    8478483,
+    8477497,
+    8479359,
+    8476892,
+    8477948,
+    8475810,
+    8480281,
+    8476885,
+    8483490,
+    8477220,
+    8476467,
+    8477939,
+    8477500,
+    8479323,
+    8482726,
+    8480817
+   ],
+   "weight": [
+    8482157,
+    8479983,
+    8478882,
+    8481563,
+    8474150,
+    8479369,
+    8482964,
+    8479638,
+    8483489,
+    8478046,
+    8476463,
+    8475151,
+    8478444,
+    8482105,
+    8476372,
+    8476483,
+    8476875,
+    8475842,
+    8480246,
+    8476885,
+    8478460,
+    8480980,
+    8475171,
+    8478440,
+    8478970,
+    8475220,
+    8484153,
+    8482077,
+    8476902,
+    8477810,
+    8484166,
+    8480448,
+    8482665,
+    8482097,
+    8483490,
+    8482730,
+    8480012,
+    8481581,
+    8477951,
+    8470621,
+    8474567
+   ],
+   "age": [
+    8478874,
+    8477950,
+    8482105,
+    8480023,
+    8482095,
+    8480074,
+    8478233,
+    8480797,
+    8476458,
+    8482737,
+    8483490,
+    8477505,
+    8474564,
+    8482740,
+    8475200,
+    8479378,
+    8482660,
+    8475314,
+    8483431,
+    8481553,
+    8475786,
+    8481617,
+    8477933,
+    8477479,
+    8471214,
+    8475166,
+    8483678,
+    8476422,
+    8482858,
+    8478460,
+    8483493,
+    8483495,
+    8476921,
+    8476473,
+    8476826,
+    8482092,
+    8481806,
+    8478402,
+    8475184,
+    8482055,
+    8480813
    ]
   }
  },
