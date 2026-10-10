@@ -4,17 +4,16 @@
 const assert = require('node:assert/strict');
 const {Element, setFrameRate, counters} = require('./helpers/rush_runtime.cjs');
 
-// Independently compose the rendered CSS transform, including SVG letterboxing.
+// Independently compose the rendered blade group and body transforms.
 // Puck contact must survive handedness, body rotation, stick pitch and resizing.
 let projections = 0;
 for (const width of [360, 720, 898]) for (const hand of [-1, 1]) for (const rot of [-24, 0, 24]) for (const pitch of [0, 35, 58]) {
   const height = width * 405 / 720 - 1;
   const a = {x: .5, y: .5, hand, rot, stickPitch: pitch, stickAngle: hand * 22, stickX: -4, stickY: hand * 3, el: new Element()};
   edgeRushRenderAgent(a, width, height);
-  const m = a.stickEl.style.transform.match(/-?[\d.]+/g).map(Number);
-  const local = {x: (64 - 39) * 48 / 78, y: (22.5 - 15) * 48 / 78};
-  const lx = 19 + m[4] + local.x * m[0] + local.y * m[2];
-  const ly = 2 + m[5] + local.x * m[1] + local.y * m[3];
+  const m = a.stickEl.querySelector('.rush-stick-blade-rig').attrs.transform.slice(7, -1).trim().split(/\s+/).map(Number);
+  const lx = m[4] + 64 * m[0] + 22.5 * m[2] - 39;
+  const ly = m[5] + 64 * m[1] + 22.5 * m[3] - 33;
   const angle = rot * Math.PI / 180, scale = width / 720;
   const expected = {x: a.x + scale * (lx * Math.cos(angle) - ly * Math.sin(angle)) / width,
     y: a.y + scale * (lx * Math.sin(angle) + ly * Math.cos(angle)) / height};
