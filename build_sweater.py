@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "126 · Rush Shooting Mechanics"
+VERSION = "127 · Dark Mode Readability"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -2403,8 +2403,8 @@ TEMPLATE = r'''<!DOCTYPE html>
      accent used only for active states—the visual rhythm from the reference. */
   :root { --accent: #7950f2; --accent-ink: #fff; }
   :root[data-theme="dark"] {
-    --bg: #000; --fg: #f4f4f5; --muted: #929299; --cell: #171718; --cell-fg: #f4f4f5;
-    --panel: #0d0d0e; --line: #28282b; --grouped: #000; --row: #0d0d0e; --sep: #27272a; --label2: #a1a1a7;
+    --bg: #000; --fg: #f4f4f5; --muted: #c5c5cd; --cell: #171718; --cell-fg: #f4f4f5;
+    --panel: #0d0d0e; --line: #28282b; --grouped: #000; --row: #0d0d0e; --sep: #27272a; --label2: #c5c5cd;
     --scrim: rgba(0,0,0,.82); --cream: #222225; --silbg: #171718; --link: var(--accent);
     --hit: #16b864; --hit-fg: #061a0d; --near: #dcb539; --near-fg: #231b04;
   }
@@ -2459,7 +2459,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   :root[data-theme="dark"] .shopt { background: #171718; border-color: #2c2c30; box-shadow: none; }
   :root[data-theme="dark"] .shopt:hover:not(:disabled) { background: #202023; border-color: var(--accent); box-shadow: none; }
   :root[data-theme="dark"] .shopt.right { background: var(--hit); border-color: var(--hit); color: var(--hit-fg); }
-  :root[data-theme="dark"] .shopt.wrong { background: #cf4d4d; border-color: #cf4d4d; }
+  :root[data-theme="dark"] .shopt.wrong { background: #b93b3b; border-color: #b93b3b; }
   :root[data-theme="dark"] .cutable td, :root[data-theme="dark"] .seasons td { background: #171718; box-shadow: none; }
   :root[data-theme="dark"] .cutable tr:hover td { background: #202023; }
   :root[data-theme="dark"] .hlcard { background: #171718; border-color: #2c2c30; box-shadow: none; }
@@ -3094,6 +3094,22 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media(max-width:600px) { .arc-hud { gap: 6px; } .goalie-rink { aspect-ratio: 1.12; } .goalie-zone { width: 29%; height: 28%; font-size: 11px; }
     .goalie-zone kbd { display: none; } .ot-answers { gap: 8px; } .ot-answer { padding: 12px; min-height: 86px; font-size: 14px; overflow-wrap: anywhere; } }
   @media(prefers-reduced-motion:reduce) { .ot-question.next-round { animation: none; } .ot-answer,.goalie-glove { transition: none; } }
+
+  /* Readable game details: use explicit text colours instead of fading labels.
+     Keep selected Connections tiles in their contrasting, inverted colour. */
+  :root[data-theme="dark"] .jystop b { color: var(--fg); }
+  :root[data-theme="dark"] .jystop small { color: #e2e2e8; opacity: 1; font-weight: 550; }
+  :root[data-theme="dark"] :is(.cntile:not(.sel) small, .rkname small, .mrrow small, .hlteam, .hlyr) {
+    color: var(--muted); opacity: 1;
+  }
+  :root[data-theme="dark"] :is(.cntile.sel small, .twtag, .twactual small, .roslot.empty, .roslot.missed) { opacity: 1; }
+  :root[data-theme="dark"] #view-truths .shopt:is(.right, .wrong) .twtag { color: inherit; }
+  :root[data-theme="dark"] :is(.sebtn.miss, .teambtn.miss) { color: var(--muted); opacity: 1; }
+  :root[data-theme="dark"] .shopt.dim { opacity: .75; }
+  :root[data-theme="dark"] input::placeholder { color: var(--muted); opacity: 1; }
+  :root[data-theme="dark"] :is(.romsg.bad, .hlscore .urgent b, .team-mode-msg.bad, .hint .bad, .wrong .x, .lberr, .ot-time.urgent) {
+    color: #ff9391;
+  }
 </style>
 </head>
 <body class="hubmode">
