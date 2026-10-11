@@ -3254,6 +3254,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="view" id="view-journey" hidden>
     <p class="intro">Whose NHL career path is this?</p>
     <div class="jypath" id="jyPath"></div>
+    <p class="hint" id="jySeasonNote" hidden>Teams can share a season when a player moves midseason.</p>
     <div class="chips hints" id="jyHints"></div>
     <div class="search narrow">
       <input id="jyGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="jyOpts" aria-label="Player name" placeholder="Guess 1 of 6">
@@ -4620,7 +4621,10 @@ const stintCache = new Map();
 function stintsOf(p) {
   if (stintCache.has(p.id)) return stintCache.get(p.id);
   const out = [];
-  for (const [y, t, gp] of (p.car || [])) {
+  // Sort a copy: cached/archive data must never send the path backwards.
+  // Stable sorting retains the source order for moves within the same season.
+  const rows = [...(p.car || [])].sort((a, b) => a[0] - b[0]);
+  for (const [y, t, gp] of rows) {
     const last = out[out.length - 1];
     if (last && last.team === t) { last.to = y; last.gp += gp; }
     else out.push({ team: t, from: y, to: y, gp });
@@ -4647,11 +4651,13 @@ G.journey = {
   meta: t => `${t.team} · #${t.number} · ${posName(t)}`,
   reset(t) {
     $("jyWrong").innerHTML = "";
-    $("jyPath").innerHTML = stintsOf(t).map((s, i) => `${i ? '<span class="jyarrow" aria-hidden="true">→</span>' : ""}
+    const path = stintsOf(t);
+    $("jySeasonNote").hidden = !path.some((s, i) => i > 0 && path[i - 1].to === s.from);
+    $("jyPath").innerHTML = path.map((s, i) => `${i ? '<span class="jyarrow" aria-hidden="true">→</span>' : ""}
       <div class="jystop" style="animation-delay:${i * 70}ms">
         <img src="${logo(s.team)}" alt="" onerror="this.style.visibility='hidden'">
         <b>${esc(teamName(s.team))}</b>
-        <small>${s.from === s.to ? seasonLabel(s.from) : spanLabel(s.from, s.to)}</small>
+        <small>${s.from === s.to ? seasonLabel(s.from) : `${seasonLabel(s.from)} to ${seasonLabel(s.to)}`}</small>
         <small>${s.gp} GP</small>
       </div>`).join("");
   },
@@ -12226,7 +12232,7 @@ KNOWN_TEAMS = CURRENT_TEAMS | {"ARI", "PHX", "ATL", "MNS", "HFD", "QUE", "AFM", 
 
 def stints(p):
     out = []
-    for r in p.get("car", []):
+    for r in sorted(p.get("car", []), key=lambda row: row[0]):
         if out and out[-1][0] == r[1]:
             continue
         out.append([r[1]])
