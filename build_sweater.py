@@ -1650,23 +1650,30 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* higher or lower */
   .hlscore { display: flex; justify-content: center; gap: 22px; font-size: 15px; color: var(--muted); margin: 0 0 6px; }
   .hlscore b { color: var(--fg); font-size: 22px; font-variant-numeric: tabular-nums; margin-left: 4px; }
-  .hlscore b.hot-streak { position: relative; display: inline-block; isolation: isolate;
-                          text-shadow: 0 0 8px rgba(255,126,38,.12); }
-  .hlscore b.hot-streak::before, .hlscore b.hot-streak::after { content: ""; position: absolute; left: 50%; pointer-events: none;
-                                                                  transform-origin: 50% 82%; }
-  .hlscore b.hot-streak::before { width: 20px; height: 20px; bottom: 12px; margin-left: -10px;
-    border-radius: 68% 32% 64% 36% / 70% 34% 66% 30%;
-    background: linear-gradient(135deg, rgba(255,225,118,.92) 0 28%, rgba(255,137,43,.82) 48% 70%, rgba(229,72,77,.58) 100%);
-    filter: drop-shadow(0 0 5px rgba(255,126,38,.25)); z-index: -2; animation: streakflame 1.05s ease-in-out infinite; }
-  .hlscore b.hot-streak::after { width: 9px; height: 9px; bottom: 14px; margin-left: -4px;
-    border-radius: 68% 32% 64% 36% / 70% 34% 66% 30%; background: rgba(255,241,183,.86);
-    z-index: -1; animation: streakflame .82s ease-in-out -.18s infinite reverse; }
-  @keyframes streakflame {
-    0%, 100% { transform: translateY(1px) rotate(43deg) scale(.72,.78); opacity: .62; }
-    50% { transform: translateY(-3px) rotate(47deg) scale(.82,.94); opacity: .88; }
+  /* One shared streak flame for player, team and team-page higher/lower. */
+  .hlscore b.streak-value { display: inline-flex; align-items: center; vertical-align: middle; line-height: 1.3; }
+  .streak-flame-slot { display: inline-grid; place-items: center; width: 0; height: 28px; margin-inline-end: 0;
+    opacity: 0; transform: scale(.65); transform-origin: 50% 85%; pointer-events: none;
+    transition: width .24s cubic-bezier(.22,.8,.2,1), margin-inline-end .24s ease, opacity .2s ease, transform .3s cubic-bezier(.22,.8,.2,1); }
+  .hot-streak .streak-flame-slot { width: 24px; margin-inline-end: 4px; opacity: 1; transform: scale(1); }
+  .streak-flame-boost { display: block; width: 24px; height: 28px; transform-origin: 50% 85%; }
+  .streak-flame { display: block; width: 24px; height: 28px; overflow: visible; transform-origin: 50% 85%; }
+  .streak-flame-body { fill: #ff8a32; }
+  .streak-flame-core { fill: #ffe19a; transform-box: fill-box; transform-origin: 50% 85%; }
+  .hot-streak .streak-flame { animation: streak-flicker 1.8s ease-in-out infinite; }
+  .hot-streak .streak-flame-core { animation: streak-core 1.4s ease-in-out -.35s infinite; }
+  .hlscore .streak-count { display: inline-block; min-width: 1ch; transform-origin: 50% 75%; }
+  @keyframes streak-flicker {
+    0%, 100% { transform: rotate(-1deg) scale(1,1); }
+    50% { transform: rotate(1.5deg) scale(.97,1.045); }
+  }
+  @keyframes streak-core {
+    0%, 100% { transform: scale(1,1); }
+    50% { transform: scale(.94,1.06); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hlscore b.hot-streak::before, .hlscore b.hot-streak::after, .rkrow.settling { animation: none; }
+    .streak-flame-slot { transition: none; }
+    .hot-streak .streak-flame, .hot-streak .streak-flame-core, .rkrow.settling { animation: none; }
     .rkrow, .rkdragghost { transition: none !important; }
   }
   .hlpair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 14px;
@@ -4371,10 +4378,36 @@ const G = {
   }
 };
 
-function paintHotStreak(id, value) {
-  const el = $(id), n = Number(value) || 0;
-  el.textContent = n;
-  el.classList.toggle("hot-streak", n >= 5);
+function paintHotStreak(id, value, animateGain = false) {
+  const el = $(id);
+  if (!el) return;
+  const n = Math.max(0, Number(value) || 0), hot = n >= 5;
+  const previous = el.dataset.streakValue === undefined ? null : Number(el.dataset.streakValue);
+  if (!el.querySelector(".streak-count")) {
+    el.classList.add("streak-value");
+    el.innerHTML = `<span class="streak-flame-slot" aria-hidden="true"><span class="streak-flame-boost"><svg class="streak-flame" viewBox="0 0 32 36" focusable="false" aria-hidden="true"><path class="streak-flame-body" d="M17 2c1.5 6.2 9 8.1 9 15.2 1.3-1.4 2-3.1 2-5.2 2.5 3.7 3 7.3 3 10.2C31 30 24.3 35 16 35S1 30 1 22.2C1 16.5 4.4 11.9 8.2 9.2c-.6 4 .1 6.4 2 8.1C10 10.4 12.2 5.4 17 2Z"/><path class="streak-flame-core" d="M16.5 17c.6 3.5 6.5 6.2 6.5 10.1 0 3.6-3 6.2-7 6.2s-7-2.6-7-6.2c0-4.2 3.9-7.8 7.5-10.1Z"/></svg></span></span><span class="streak-count"></span>`;
+  }
+  const count = el.querySelector(".streak-count");
+  count.textContent = n;
+  el.classList.toggle("hot-streak", hot);
+  el.setAttribute("aria-label", hot ? `${n}, on fire` : String(n));
+  el.dataset.streakValue = String(n);
+  if (previous === n) return;
+  (el.streakAnimations || []).forEach(animation => animation.cancel());
+  el.streakAnimations = [];
+  if (!animateGain || previous === null || n <= previous || !hot
+      || matchMedia("(prefers-reduced-motion: reduce)").matches || typeof count.animate !== "function") return;
+  const timing = {duration: 420, easing: "cubic-bezier(.22,.8,.2,1)"};
+  el.streakAnimations = [
+    el.querySelector(".streak-flame-boost").animate([
+      {transform: "scale(1)"}, {transform: "scale(.9,1.12)", offset: .22},
+      {transform: "scale(1.12,.95)", offset: .48}, {transform: "scale(1)"}
+    ], timing),
+    count.animate([
+      {transform: "translateY(0) scale(1)"}, {transform: "translateY(-2px) scale(1.1)", offset: .32},
+      {transform: "translateY(0) scale(1)"}
+    ], timing)
+  ];
 }
 
 // ======================= higher or lower =======================
@@ -4526,7 +4559,7 @@ function makeHL(stat) {
       $("hlIntro").innerHTML = info.type === "high" ? `Whose career-high <b>${info.label}</b> in a single season is higher?` : esc(info.q);
       $("hlNote").textContent = info.type === "high" ? "Career high means his best single regular season. Ties count as right." : "Ties count as right.";
       $("hlStat").textContent = info.name;
-      paintHotStreak("hlStreak", this.score(t, st.guesses));
+      paintHotStreak("hlStreak", this.score(t, st.guesses), slide);
       $("hlBest").textContent = Math.max(store.get(`sweater-hl-best-${stat}`) || 0, this.score(t, st.guesses));
       $("hlLeft").textContent = t.fixed ? `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run` : "";
       let i;
@@ -6566,7 +6599,7 @@ G.hlt = {
     const i = st.over ? Math.max(0, Math.min(st.guesses.length - 1, t.rounds.length - 1)) : st.guesses.length;
     const info = HLT_METRICS[t.rounds[i][4]];
     $("htIntro").innerHTML = `Which team has the higher <b>${esc(info.name.toLowerCase())}</b>?`;
-    paintHotStreak("htStreak", this.score(t, st.guesses));
+    paintHotStreak("htStreak", this.score(t, st.guesses), slide);
     $("htBest").textContent = Math.max(store.get("sweater-hlt-best") || 0, this.score(t, st.guesses));
     $("htLeft").textContent = st.over ? "" : `${Math.max(0, this.limit(t) - st.guesses.length)} left in today's run · ties count as right`;
     const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
@@ -11014,13 +11047,13 @@ function startTeamHigher(t){
     if(!options.length)options=pool.filter(p=>!used.has(p.id));
     return pick(options.length?options:pool);
   };
-  const draw=()=>{
-    paintHotStreak("teamHLStreak", streak);$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);
+  const draw=(animateGain=false)=>{
+    paintHotStreak("teamHLStreak", streak, animateGain);$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);
     $("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");
     if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{
       const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;
       $("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");
-      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw();},850);}else{over=true;}
+      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw(true);},850);}else{over=true;}
     });
   };
   draw();
