@@ -18118,6 +18118,67 @@
     }
    ]
   },
+  "8482087": {
+   "id": 8482087,
+   "season": "20252026",
+   "shot": 87.64,
+   "speed": 22.4,
+   "bursts20": 28,
+   "miles": 3.48,
+   "distance": 104.52,
+   "total": 40,
+   "hd": 2,
+   "mid": 9,
+   "long": 24,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0833,
+   "oz": 0.4028,
+   "nz": 0.1754,
+   "dz": 0.4218,
+   "areas": [
+    {
+     "area": "L Point",
+     "shots": 14,
+     "pct": null
+    },
+    {
+     "area": "Center Point",
+     "shots": 8,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 5,
+     "pct": null
+    },
+    {
+     "area": "Outside L",
+     "shots": 4,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 3,
+     "pct": null
+    },
+    {
+     "area": "Low Slot",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "R Point",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "L Net Side",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
   "8481523": {
    "id": 8481523,
    "season": "20252026",
@@ -19385,6 +19446,62 @@
     {
      "area": "Outside L",
      "shots": 7,
+     "pct": null
+    }
+   ]
+  },
+  "8480192": {
+   "id": 8480192,
+   "season": "20252026",
+   "shot": 88.84,
+   "speed": 20.62,
+   "bursts20": 3,
+   "miles": 2.87,
+   "distance": 82.32,
+   "total": 30,
+   "hd": 1,
+   "mid": 7,
+   "long": 21,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4002,
+   "nz": 0.1853,
+   "dz": 0.4144,
+   "areas": [
+    {
+     "area": "R Point",
+     "shots": 11,
+     "pct": null
+    },
+    {
+     "area": "Center Point",
+     "shots": 9,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 4,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 3,
+     "pct": null
+    },
+    {
+     "area": "Beyond Red Line",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "Low Slot",
+     "shots": 1,
      "pct": null
     }
    ]
@@ -39499,123 +39616,6 @@
      "pct": null
     }
    ]
-  },
-  "8482087": {
-   "id": 8482087,
-   "season": "20252026",
-   "shot": 87.64,
-   "speed": 22.4,
-   "bursts20": 28,
-   "miles": 3.48,
-   "distance": 104.52,
-   "total": 40,
-   "hd": 2,
-   "mid": 9,
-   "long": 24,
-   "hdPct": 0.0,
-   "midPct": 0.0,
-   "longPct": 0.0833,
-   "oz": 0.4028,
-   "nz": 0.1754,
-   "dz": 0.4218,
-   "areas": [
-    {
-     "area": "L Point",
-     "shots": 14,
-     "pct": null
-    },
-    {
-     "area": "Center Point",
-     "shots": 8,
-     "pct": null
-    },
-    {
-     "area": "L Circle",
-     "shots": 5,
-     "pct": null
-    },
-    {
-     "area": "Outside L",
-     "shots": 4,
-     "pct": null
-    },
-    {
-     "area": "High Slot",
-     "shots": 3,
-     "pct": null
-    },
-    {
-     "area": "Low Slot",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "R Point",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "L Net Side",
-     "shots": 1,
-     "pct": null
-    }
-   ]
-  },
-  "8480192": {
-   "id": 8480192,
-   "season": "20252026",
-   "shot": 88.84,
-   "speed": 20.62,
-   "bursts20": 3,
-   "miles": 2.87,
-   "distance": 82.32,
-   "total": 30,
-   "hd": 1,
-   "mid": 7,
-   "long": 21,
-   "hdPct": 0.0,
-   "midPct": 0.0,
-   "longPct": 0.0,
-   "oz": 0.4002,
-   "nz": 0.1853,
-   "dz": 0.4144,
-   "areas": [
-    {
-     "area": "R Point",
-     "shots": 11,
-     "pct": null
-    },
-    {
-     "area": "Center Point",
-     "shots": 9,
-     "pct": null
-    },
-    {
-     "area": "High Slot",
-     "shots": 4,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 3,
-     "pct": null
-    },
-    {
-     "area": "Beyond Red Line",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "L Point",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "Low Slot",
-     "shots": 1,
-     "pct": null
-    }
-   ]
   }
  },
  "unavailable": [
@@ -39626,6 +39626,7 @@
   "8479976",
   "8480029",
   "8481538",
+  "8482121",
   "8482169",
   "8482171",
   "8482459",
