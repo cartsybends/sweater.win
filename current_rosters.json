@@ -514,6 +514,11 @@
   "team": "MTL",
   "number": 42
  },
+ "8482087": {
+  "name": "Kaiden Guhle",
+  "team": "MTL",
+  "number": 21
+ },
  "8483457": {
   "name": "Lane Hutson",
   "team": "MTL",
@@ -523,11 +528,6 @@
   "name": "Mike Matheson",
   "team": "MTL",
   "number": 8
- },
- "8481593": {
-  "name": "Jayden Struble",
-  "team": "MTL",
-  "number": 47
  },
  "8482964": {
   "name": "Arber Xhekaj",
@@ -1184,6 +1184,11 @@
   "team": "NJD",
   "number": 43
  },
+ "8480192": {
+  "name": "Johnathan Kovacevic",
+  "team": "NJD",
+  "number": 8
+ },
  "8477488": {
   "name": "Brett Pesce",
   "team": "NJD",
@@ -1633,11 +1638,6 @@
   "name": "Kris Letang",
   "team": "PIT",
   "number": 58
- },
- "8482470": {
-  "name": "Ilya Solovyov",
-  "team": "PIT",
-  "number": 7
  },
  "8481056": {
   "name": "Spencer Stastney",
@@ -2303,6 +2303,11 @@
   "name": "Brady Skjei",
   "team": "NSH",
   "number": 76
+ },
+ "8481593": {
+  "name": "Jayden Struble",
+  "team": "NSH",
+  "number": 38
  },
  "8482482": {
   "name": "Adam Wilsby",
