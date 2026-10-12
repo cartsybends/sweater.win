@@ -1,0 +1,59 @@
+{
+  "clips": [
+    {
+      "id": "goal-11",
+      "pid": 8477956,
+      "masked": "goal-11-masked-v1.mp4",
+      "reveal": "goal-11-original-v1.mp4",
+      "poster": "goal-11-v1.jpg",
+      "motion": "Circle slap shot",
+      "source": "https://www.nhl.com/gamecenter/nyr-vs-bos/2025/02/01/2024020827"
+    }
+  ],
+  "sources": [
+    {
+      "id": "goal-11",
+      "pid": 8477956,
+      "player": "David Pastrnak",
+      "team": "BOS",
+      "jersey": 88,
+      "source": "https://www.nhl.com/gamecenter/nyr-vs-bos/2025/02/01/2024020827",
+      "source_video_id": "6368134275112",
+      "game_id": 2024020827,
+      "date": "2025-02-01",
+      "shot_type": "slap",
+      "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-11.mp4",
+      "sha256": "6fa026b3a4e0fe8d84a1a8bb6a33d204d9ae2470e156574c85522d275df7334b",
+      "duration": 3.9,
+      "status": "original_ready",
+      "start": 19.8,
+      "edit": "goal-11.json",
+      "identity_verification": "Boston #88 visible at frame36 shooting; same player followed backward to left shooter at frame0 and forward to frame93."
+    }
+  ],
+  "checks": [
+    {
+      "id": "goal-11",
+      "frames": 94,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-11-f82f39b3fdbc/review",
+      "notes": "#88 identity confirmed. Paired QA94/94 frames covers helmet, body, gloves and skates. Continuous replay, no scorebug or player-name overlay."
+    }
+  ],
+  "completed": [
+    "goal-11"
+  ],
+  "pending": [
+    "goal-12",
+    "goal-13",
+    "goal-14",
+    "goal-16",
+    "goal-17",
+    "goal-18"
+  ]
+}

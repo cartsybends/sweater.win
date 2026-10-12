@@ -7,7 +7,7 @@ WORK = Path(__file__).resolve().parents[3]
 ROOT = WORK / 'goal-expansion'
 REPO = WORK / 'sweater-live'
 NAMES = ['Jack Hughes','David Pastrnak','Nikita Kucherov','Aleksander Barkov','Mitch Marner','William Nylander','Kirill Kaprizov','Tim Stützle','Matthew Tkachuk','Brady Tkachuk','Nick Suzuki','Cole Caufield','Sebastian Aho','Brayden Point','Patrick Kane','Lucas Raymond','Dylan Larkin','Jason Robertson','Filip Forsberg','Adam Fox','Erik Karlsson','Zach Werenski','Rasmus Dahlin','Jake Sanderson','Brock Boeser','Timo Meier','Nico Hischier','Jesper Bratt','Seth Jarvis','Sam Reinhart']
-PIDS = [8481559,8477956,8476453,8477493,8478483,8477939,8478864,8482116,8479314,8480801,8480018,8481540,8478427,8478010,8474141,8482078,8477946,8480027,8476887,8480145,8474578,8478460,8480839,8482105,8478444,8478414,8480002,8479407,8482093,8477933]
+PIDS = [8481559,8477956,8476453,8477493,8478483,8477939,8478864,8482116,8479314,8480801,8480018,8481540,8478427,8478010,8474141,8482078,8477946,8480027,8476887,8479323,8474578,8478460,8480839,8482105,8478444,8478414,8480002,8479407,8482093,8477933]
 def normalize(s): return ''.join(c for c in unicodedata.normalize('NFKD',s.lower()) if not unicodedata.combining(c))
 def get(url,headers=None): return urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0',**(headers or {})}),timeout=50)
 def jsonget(url):
