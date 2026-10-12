@@ -67,7 +67,7 @@ async function readBody(request, max=8192) {
   return new TextDecoder().decode(result);
 }
 function allowedOrigin(request,env) {
-  const allowed=String(env.ALLOWED_ORIGINS||'https://sweater.win,https://www.sweater.win').split(',').map(x=>x.trim()).filter(Boolean);
+  const allowed=['https://sweater.win','https://www.sweater.win',...String(env.ALLOWED_ORIGINS||'').split(',').map(x=>x.trim()).filter(Boolean)];
   const origin=request.headers.get('Origin');
   if (!origin || !allowed.includes(origin)) throw fail(403,'Origin not allowed');
   return {'Access-Control-Allow-Origin':origin,'Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type','Access-Control-Max-Age':'86400','Vary':'Origin'};
