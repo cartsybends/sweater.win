@@ -1,0 +1,448 @@
+{
+  "clips": [
+    {
+      "id": "goal-10",
+      "pid": 8481559,
+      "masked": "goal-10-masked-v1.mp4",
+      "reveal": "goal-10-original-v1.mp4",
+      "poster": "goal-10-v1.jpg",
+      "motion": "Rush snap shot",
+      "source": "https://nhl.com/video/njd-mtl-hughes-scores-goal-against-jakub-dobes-6367771449112"
+    },
+    {
+      "id": "goal-15",
+      "pid": 8477939,
+      "masked": "goal-15-masked-v1.mp4",
+      "reveal": "goal-15-original-v1.mp4",
+      "poster": "goal-15-v1.jpg",
+      "motion": "Rush snap shot",
+      "source": "https://nhl.com/video/tor-edm-nylander-scores-goal-against-stuart-skinner-6368137903112"
+    },
+    {
+      "id": "goal-20",
+      "pid": 8480018,
+      "masked": "goal-20-masked-v1.mp4",
+      "reveal": "goal-20-original-v1.mp4",
+      "poster": "goal-20-v1.jpg",
+      "motion": "Slot snap shot",
+      "source": "https://nhl.com/video/njd-mtl-suzuki-scores-goal-against-jake-allen-6367766068112"
+    },
+    {
+      "id": "goal-30",
+      "pid": 8474578,
+      "masked": "goal-30-masked-v1.mp4",
+      "reveal": "goal-30-original-v1.mp4",
+      "poster": "goal-30-v1.jpg",
+      "motion": "Circle snap shot",
+      "source": "https://nhl.com/video/pit-phi-karlsson-scores-goal-against-samuel-ersson-6368533717112"
+    }
+  ],
+  "sources": [
+    {
+      "id": "goal-10",
+      "pid": 8481559,
+      "player": "Jack Hughes",
+      "team": "NJD",
+      "jersey": 86,
+      "source": "https://nhl.com/video/njd-mtl-hughes-scores-goal-against-jakub-dobes-6367771449112",
+      "source_video_id": "6367771449112",
+      "game_id": 2024020779,
+      "date": "2025-01-25",
+      "shot_type": "snap",
+      "source_goal_scorer": "Jack Hughes",
+      "source_sha256": "e481035946c606b52d3a7514b3571ba4c58f7bed23f9f29b704608b5519d8330",
+      "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+      "original_processing_source_sha256": null,
+      "edit_start_seconds": 41.3,
+      "edit_start_basis": "Prior processing record supplied by owner, verified against matching reveal",
+      "edit_duration_seconds": 3.083333,
+      "exported_frames": 74,
+      "exported_fps": 24,
+      "exported_dimensions": [
+        960,
+        540
+      ],
+      "exported_sha256": {
+        "masked": "6bb62cd78b900634b4739a4474dfa2d0e8771c24ba8004d2bd99244e2551a0e9",
+        "reveal": "ba5afcc1d836c50daa355577b459f479e68845261a9b2361a34324c91a88e2f7",
+        "poster": "8af98c8d490fd2e375feb321f1cd2b629978a6b1a1e911968549612cee3c4e13"
+      },
+      "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+      "source_frame_matches": [
+        {
+          "export_frame": 0,
+          "export_time": 0.0,
+          "visible_rows": [
+            0,
+            540
+          ],
+          "source_frame": 2476,
+          "source_time": 41.30793333333333,
+          "pixel_mse": 1.255864143371582
+        },
+        {
+          "export_frame": 37,
+          "export_time": 1.5416666666666667,
+          "visible_rows": [
+            0,
+            540
+          ],
+          "source_frame": 2569,
+          "source_time": 42.85948333333334,
+          "pixel_mse": 0.8495884537696838
+        },
+        {
+          "export_frame": 73,
+          "export_time": 3.0416666666666665,
+          "visible_rows": [
+            0,
+            540
+          ],
+          "source_frame": 2659,
+          "source_time": 44.36098333333334,
+          "pixel_mse": 2.852592706680298
+        }
+      ],
+      "processing_crop_scaled_960x540": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "crop_status": "No crop: full-height matching reveal verified",
+      "original_processing_crop_command": null
+    },
+    {
+      "id": "goal-15",
+      "pid": 8477939,
+      "player": "William Nylander",
+      "team": "TOR",
+      "jersey": 88,
+      "source": "https://nhl.com/video/tor-edm-nylander-scores-goal-against-stuart-skinner-6368137903112",
+      "source_video_id": "6368137903112",
+      "game_id": 2024020833,
+      "date": "2025-02-01",
+      "shot_type": "snap",
+      "source_goal_scorer": "William Nylander",
+      "source_sha256": "2239e1d51bccc6c2e240ec08d07d3bdd4aa7b97d1f2b1c860b336b30d0324d00",
+      "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+      "original_processing_source_sha256": null,
+      "edit_start_seconds": null,
+      "edit_start_basis": "Exact original processing start parameter unavailable. Frame matching identifies nominal equivalent timing, recorded separately.",
+      "edit_duration_seconds": 4.0,
+      "exported_frames": 96,
+      "exported_fps": 24,
+      "exported_dimensions": [
+        960,
+        540
+      ],
+      "exported_sha256": {
+        "masked": "47da62c544ace24e48831f93c2d36e54c4c83191184b4e716dacab0d3887468f",
+        "reveal": "4526468220c81057179d5771c9c4ead249ff3e05018682d1f2b1c980d271e8a1",
+        "poster": "b501f3af8495abee2ae8047e0947794bdd880f6a4dc2e4ed89fea71a1d336f21"
+      },
+      "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+      "source_frame_matches": [
+        {
+          "export_frame": 0,
+          "source_frame": 1529,
+          "source_time": 25.508816666666668,
+          "source_crop_y": 54,
+          "source_crop_height": 484,
+          "output_pad_top": 28,
+          "pixel_mse": 7.885481834411621
+        },
+        {
+          "export_frame": 48,
+          "source_frame": 1649,
+          "source_time": 27.510816666666667,
+          "source_crop_y": 54,
+          "source_crop_height": 484,
+          "output_pad_top": 28,
+          "pixel_mse": 13.932019233703613
+        },
+        {
+          "export_frame": 95,
+          "source_frame": 1766,
+          "source_time": 29.462766666666667,
+          "source_crop_y": 54,
+          "source_crop_height": 484,
+          "output_pad_top": 28,
+          "pixel_mse": 14.380627632141113
+        }
+      ],
+      "processing_crop_scaled_960x540": [
+        0,
+        54,
+        960,
+        484
+      ],
+      "crop_status": "Effective crop recovered by matching first/middle/final decoded reveal frames; coordinates use source scaled to960x540.",
+      "nominal_recovered_start_seconds": 25.5,
+      "original_processing_crop_command": null,
+      "prior_allow_empty_frames": [
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "prior_allow_empty_basis": "Prior processing record supplied by site owner: scorer exits frame for the final11frames."
+    },
+    {
+      "id": "goal-20",
+      "pid": 8480018,
+      "player": "Nick Suzuki",
+      "team": "MTL",
+      "jersey": 14,
+      "source": "https://nhl.com/video/njd-mtl-suzuki-scores-goal-against-jake-allen-6367766068112",
+      "source_video_id": "6367766068112",
+      "game_id": 2024020779,
+      "date": "2025-01-25",
+      "shot_type": "snap",
+      "source_goal_scorer": "Nick Suzuki",
+      "source_sha256": "7b5a7b4d3febdc346d3f1ccc9c27f6752853e15ad0cadb388e1bf847f3945ef8",
+      "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+      "original_processing_source_sha256": null,
+      "edit_start_seconds": 13.0,
+      "edit_start_basis": "Prior processing record supplied by owner, verified against matching reveal",
+      "edit_duration_seconds": 2.5,
+      "exported_frames": 60,
+      "exported_fps": 24,
+      "exported_dimensions": [
+        960,
+        540
+      ],
+      "exported_sha256": {
+        "masked": "be3a4385e284916a5826956600a288a4e565c4895d9e1307eca361bf63379d7e",
+        "reveal": "028eb4a93f177d3cf54e51368eed23d404c9b75cf2ef6a5927c2f71754a9ce9b",
+        "poster": "3686c0c27c9a310c2fd166ff6c760462b985af91bdbc72aad13af3bfb3a701be"
+      },
+      "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+      "source_frame_matches": [
+        {
+          "export_frame": 0,
+          "source_frame": 780,
+          "source_time": 13.013,
+          "source_crop_y": 80,
+          "source_crop_height": 460,
+          "output_pad_top": 40,
+          "pixel_mse": 11.138446807861328
+        },
+        {
+          "export_frame": 30,
+          "source_frame": 855,
+          "source_time": 14.26425,
+          "source_crop_y": 80,
+          "source_crop_height": 460,
+          "output_pad_top": 40,
+          "pixel_mse": 14.64867115020752
+        },
+        {
+          "export_frame": 59,
+          "source_frame": 927,
+          "source_time": 15.46545,
+          "source_crop_y": 80,
+          "source_crop_height": 460,
+          "output_pad_top": 40,
+          "pixel_mse": 16.298288345336914
+        }
+      ],
+      "processing_crop_scaled_960x540": [
+        0,
+        80,
+        960,
+        460
+      ],
+      "crop_status": "Effective crop recovered by matching first/middle/final decoded reveal frames; coordinates use source scaled to960x540.",
+      "original_processing_crop_command": null
+    },
+    {
+      "id": "goal-30",
+      "pid": 8474578,
+      "player": "Erik Karlsson",
+      "team": "PIT",
+      "jersey": 65,
+      "source": "https://nhl.com/video/pit-phi-karlsson-scores-goal-against-samuel-ersson-6368533717112",
+      "source_video_id": "6368533717112",
+      "game_id": 2024020881,
+      "date": "2025-02-08",
+      "shot_type": "snap",
+      "source_goal_scorer": "Erik Karlsson",
+      "source_sha256": "84459d9c551595c6f013dbfc443b840f56fbb391f8997061a7a029b12deba84a",
+      "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+      "original_processing_source_sha256": null,
+      "edit_start_seconds": null,
+      "edit_start_basis": "Exact original processing start parameter unavailable. Frame matching identifies nominal equivalent timing, recorded separately.",
+      "edit_duration_seconds": 3.5,
+      "exported_frames": 84,
+      "exported_fps": 24,
+      "exported_dimensions": [
+        960,
+        540
+      ],
+      "exported_sha256": {
+        "masked": "9b97c55750aeb8678468df1ef3f2c87afb49532960706270c523c02411194f41",
+        "reveal": "1c1824c418d47094a7c399f2bbb8a558edb377803e0e7ad7ed004d3e73dbb8f3",
+        "poster": "c7ed861de8b7a777bee1c434505b8a38aca70a3ea6c36048791d2821be0e80bf"
+      },
+      "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+      "source_frame_matches": [
+        {
+          "export_frame": 0,
+          "export_time": 0.0,
+          "visible_rows": [
+            0,
+            540
+          ],
+          "source_frame": 1679,
+          "source_time": 28.011316666666666,
+          "pixel_mse": 1.4908324480056763
+        },
+        {
+          "export_frame": 42,
+          "export_time": 1.75,
+          "visible_rows": [
+            0,
+            540
+          ],
+          "source_frame": 1784,
+          "source_time": 29.763066666666667,
+          "pixel_mse": 1.90934157371521
+        },
+        {
+          "export_frame": 83,
+          "export_time": 3.4583333333333335,
+          "visible_rows": [
+            0,
+            540
+          ],
+          "source_frame": 1886,
+          "source_time": 31.464766666666666,
+          "pixel_mse": 3.1093931198120117
+        }
+      ],
+      "processing_crop_scaled_960x540": [
+        0,
+        0,
+        960,
+        540
+      ],
+      "crop_status": "No crop: full-height matching reveal verified",
+      "nominal_recovered_start_seconds": 28.0,
+      "original_processing_crop_command": null
+    }
+  ],
+  "checks": [
+    {
+      "id": "goal-10",
+      "frames": 74,
+      "fps": 24,
+      "dimensions": [
+        960,
+        540
+      ],
+      "audio": false,
+      "decode_checks_passed": true,
+      "matching_video_pair": true,
+      "poster_exists": true,
+      "fast_start": true,
+      "asset_sha256": {
+        "masked": "6bb62cd78b900634b4739a4474dfa2d0e8771c24ba8004d2bd99244e2551a0e9",
+        "reveal": "ba5afcc1d836c50daa355577b459f479e68845261a9b2361a34324c91a88e2f7",
+        "poster": "8af98c8d490fd2e375feb321f1cd2b629978a6b1a1e911968549612cee3c4e13"
+      },
+      "original_assets_unchanged": true,
+      "prior_full_frame_review": {
+        "status": "Completed exports recovered from previous run by site owner",
+        "per_frame_review_record_available": false
+      },
+      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
+      "source_first_middle_final_matches": true
+    },
+    {
+      "id": "goal-15",
+      "frames": 96,
+      "fps": 24,
+      "dimensions": [
+        960,
+        540
+      ],
+      "audio": false,
+      "decode_checks_passed": true,
+      "matching_video_pair": true,
+      "poster_exists": true,
+      "fast_start": true,
+      "asset_sha256": {
+        "masked": "47da62c544ace24e48831f93c2d36e54c4c83191184b4e716dacab0d3887468f",
+        "reveal": "4526468220c81057179d5771c9c4ead249ff3e05018682d1f2b1c980d271e8a1",
+        "poster": "b501f3af8495abee2ae8047e0947794bdd880f6a4dc2e4ed89fea71a1d336f21"
+      },
+      "original_assets_unchanged": true,
+      "prior_full_frame_review": {
+        "status": "Completed exports recovered from previous run by site owner",
+        "per_frame_review_record_available": false
+      },
+      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
+      "source_first_middle_final_matches": true
+    },
+    {
+      "id": "goal-20",
+      "frames": 60,
+      "fps": 24,
+      "dimensions": [
+        960,
+        540
+      ],
+      "audio": false,
+      "decode_checks_passed": true,
+      "matching_video_pair": true,
+      "poster_exists": true,
+      "fast_start": true,
+      "asset_sha256": {
+        "masked": "be3a4385e284916a5826956600a288a4e565c4895d9e1307eca361bf63379d7e",
+        "reveal": "028eb4a93f177d3cf54e51368eed23d404c9b75cf2ef6a5927c2f71754a9ce9b",
+        "poster": "3686c0c27c9a310c2fd166ff6c760462b985af91bdbc72aad13af3bfb3a701be"
+      },
+      "original_assets_unchanged": true,
+      "prior_full_frame_review": {
+        "status": "Completed exports recovered from previous run by site owner",
+        "per_frame_review_record_available": false
+      },
+      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
+      "source_first_middle_final_matches": true
+    },
+    {
+      "id": "goal-30",
+      "frames": 84,
+      "fps": 24,
+      "dimensions": [
+        960,
+        540
+      ],
+      "audio": false,
+      "decode_checks_passed": true,
+      "matching_video_pair": true,
+      "poster_exists": true,
+      "fast_start": true,
+      "asset_sha256": {
+        "masked": "9b97c55750aeb8678468df1ef3f2c87afb49532960706270c523c02411194f41",
+        "reveal": "1c1824c418d47094a7c399f2bbb8a558edb377803e0e7ad7ed004d3e73dbb8f3",
+        "poster": "c7ed861de8b7a777bee1c434505b8a38aca70a3ea6c36048791d2821be0e80bf"
+      },
+      "original_assets_unchanged": true,
+      "prior_full_frame_review": {
+        "status": "Completed exports recovered from previous run by site owner",
+        "per_frame_review_record_available": false
+      },
+      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
+      "source_first_middle_final_matches": true
+    }
+  ]
+}

@@ -17,6 +17,24 @@
       "poster": "goal-36-v1.jpg",
       "motion": "Backhand around the goal",
       "source": "https://nhl.com/video/njd-mtl-hischier-scores-goal-against-jakub-dobes-6367765815112"
+    },
+    {
+      "id": "goal-35",
+      "pid": 8478414,
+      "masked": "goal-35-masked-v1.mp4",
+      "reveal": "goal-35-original-v1.mp4",
+      "poster": "goal-35-v1.jpg",
+      "motion": "Rebound poke in traffic",
+      "source": "https://nhl.com/video/njd-tbl-meier-scores-goal-against-andrei-vasilevskiy-6382631762112"
+    },
+    {
+      "id": "goal-37",
+      "pid": 8479407,
+      "masked": "goal-37-masked-v1.mp4",
+      "reveal": "goal-37-original-v1.mp4",
+      "poster": "goal-37-v1.jpg",
+      "motion": "Curl behind the net and snap shot",
+      "source": "https://nhl.com/video/njd-mtl-bratt-scores-goal-against-jakub-dobes-6367764774112"
     }
   ],
   "sources": [
@@ -69,6 +87,56 @@
       "start": 30.15,
       "edit": "goal-36.json",
       "identity_verification": "NJD #13 Hischier visible on right circle while #63 Bratt passes from left; tracked same #13 to backhand behind/right of net."
+    },
+    {
+      "id": "goal-35",
+      "pid": 8478414,
+      "player": "Timo Meier",
+      "status": "original_ready",
+      "game_id": 2025020026,
+      "date": "2025-10-11",
+      "team": "NJD",
+      "jersey": 28,
+      "source": "https://nhl.com/video/njd-tbl-meier-scores-goal-against-andrei-vasilevskiy-6382631762112",
+      "source_video_id": "6382631762112",
+      "shot_type": "poke",
+      "event_id": 252,
+      "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-35.mp4",
+      "sha256": "721f5bb03f8efef6b5aa3fc4fb109ae80125275f8fb2ec401509c1d0cc534c57",
+      "duration": 3.1,
+      "original_relative_path": "goal-expansion/originals/goal-35.mp4",
+      "width": 1280,
+      "height": 720,
+      "source_goal_scorer": "Timo Meier",
+      "source_sha256": "721f5bb03f8efef6b5aa3fc4fb109ae80125275f8fb2ec401509c1d0cc534c57",
+      "start": 42.45,
+      "edit": "goal-35.json",
+      "identity_verification": "NJD MEIER #28 trailing on right, then pokes rebound through goalie. Hischier #13 screens left; TB #71 on right occludes Meier after poke. Anchors distinguish all."
+    },
+    {
+      "id": "goal-37",
+      "pid": 8479407,
+      "player": "Jesper Bratt",
+      "status": "original_ready",
+      "game_id": 2024020779,
+      "date": "2025-01-25",
+      "team": "NJD",
+      "jersey": 63,
+      "source": "https://nhl.com/video/njd-mtl-bratt-scores-goal-against-jakub-dobes-6367764774112",
+      "source_video_id": "6367764774112",
+      "shot_type": "snap",
+      "event_id": 406,
+      "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-37.mp4",
+      "sha256": "bfd5ecd229317f2dcc1f125273180cc0d16813a03f4af84e340d0ba476439244",
+      "duration": 3.7,
+      "original_relative_path": "goal-expansion/originals/goal-37.mp4",
+      "width": 1280,
+      "height": 720,
+      "source_goal_scorer": "Jesper Bratt",
+      "source_sha256": "bfd5ecd229317f2dcc1f125273180cc0d16813a03f4af84e340d0ba476439244",
+      "start": 30.05,
+      "edit": "goal-37.json",
+      "identity_verification": "NJD #63 BRATT seen continuously carrying puck behind net from left boards to right corner, shooting snap shot from right circle, then continuing along far boards. #13 Hischier remains screening goalie and is not masked."
     }
   ],
   "checks": [
@@ -95,15 +163,39 @@
       "decode_checks_passed": true,
       "review": "goal-36-551e099d384e/review",
       "notes": "All89 paired frames inspected: NJD #13 in right circle receives from Bratt #63 left, tracks around/right of net through backhand into goal. Helmet/body/gloves/skates hidden; scoreboard removed. No switches to #11 screening or #63 passer."
+    },
+    {
+      "id": "goal-35",
+      "frames": 74,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-35-02a80be251d2/review",
+      "notes": "All74 paired frames inspected after extra SAM anchors plus12 ellipse/16 line corrections; #28 Meier pokes rebound while#13 Hischier screens and#91 trails. Glove/forearm and shin strips manually patched after SAM occlusion gaps. Reproduction: track, patch_goal35.py, render."
+    },
+    {
+      "id": "goal-37",
+      "frames": 89,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-37-384c72b2bbc0/review",
+      "notes": "All89 paired frames inspected. #63 Bratt curls behind goal from left to right corner and shoots, while#13 Hischier screens crease and remains visible. Entire scorer covered through continuous replay."
     }
   ],
   "completed": [
     "goal-34",
-    "goal-36"
+    "goal-36",
+    "goal-35",
+    "goal-37"
   ],
   "pending": [
-    "goal-35",
-    "goal-37",
     "goal-38",
     "goal-39"
   ]

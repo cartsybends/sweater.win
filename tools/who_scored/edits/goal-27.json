@@ -1,0 +1,268 @@
+{
+  "id": "goal-27",
+  "pid": 8480027,
+  "player": "Jason Robertson",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-27.mp4",
+  "start": 31.1,
+  "duration": 3.5,
+  "seed": 65,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        176,
+        190,
+        240,
+        276
+      ],
+      "points": [
+        [
+          198,
+          214
+        ],
+        [
+          198,
+          242
+        ],
+        [
+          220,
+          212
+        ],
+        [
+          165,
+          226
+        ],
+        [
+          330,
+          225
+        ],
+        [
+          226,
+          210
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "frame": 17,
+      "box": [
+        148,
+        184,
+        213,
+        269
+      ],
+      "points": [
+        [
+          177,
+          198
+        ],
+        [
+          172,
+          217
+        ],
+        [
+          169,
+          244
+        ],
+        [
+          183,
+          224
+        ],
+        [
+          199,
+          229
+        ],
+        [
+          134,
+          218
+        ],
+        [
+          259,
+          235
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        133,
+        185,
+        186,
+        268
+      ],
+      "points": [
+        [
+          162,
+          201
+        ],
+        [
+          158,
+          230
+        ],
+        [
+          160,
+          254
+        ],
+        [
+          122,
+          212
+        ],
+        [
+          214,
+          250
+        ],
+        [
+          179,
+          219
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "frame": 40,
+      "box": [
+        140,
+        157,
+        190,
+        257
+      ],
+      "points": [
+        [
+          160,
+          173
+        ],
+        [
+          159,
+          212
+        ],
+        [
+          166,
+          242
+        ],
+        [
+          140,
+          204
+        ],
+        [
+          212,
+          196
+        ],
+        [
+          179,
+          196
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "frame": 65,
+      "box": [
+        237,
+        177,
+        295,
+        276
+      ],
+      "points": [
+        [
+          259,
+          201
+        ],
+        [
+          265,
+          232
+        ],
+        [
+          260,
+          258
+        ],
+        [
+          294,
+          222
+        ],
+        [
+          409,
+          208
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 83,
+      "box": [
+        338,
+        177,
+        407,
+        270
+      ],
+      "points": [
+        [
+          370,
+          194
+        ],
+        [
+          370,
+          219
+        ],
+        [
+          363,
+          250
+        ],
+        [
+          399,
+          215
+        ],
+        [
+          456,
+          219
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_sha256": "c9fc9b70d4997cba062cee45c65ece0687d933b0c46636d158e5d3eee45b8ef6",
+  "identity_check": "Official NHL goal event 355, game2025020034 credits DAL21 Jason Robertson8480027 tip-in; continuous replay tracks the left-goalmouth finisher backward, not screen96 or point shooter.",
+  "qa_revision": "Added right-arm and glove anchors after full-frame review revealed detached glove patch at frames0\u201340.",
+  "poster_frame": 65
+}

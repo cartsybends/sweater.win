@@ -1,0 +1,193 @@
+{
+  "id": "goal-13",
+  "pid": 8477493,
+  "player": "Aleksander Barkov",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-13.mp4",
+  "start": 31.45,
+  "duration": 2.5,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        0,
+        0,
+        259,
+        460
+      ],
+      "points": [
+        [
+          146,
+          27
+        ],
+        [
+          118,
+          126
+        ],
+        [
+          207,
+          142
+        ],
+        [
+          93,
+          267
+        ],
+        [
+          223,
+          322
+        ],
+        [
+          34,
+          402
+        ],
+        [
+          241,
+          421
+        ],
+        [
+          300,
+          139
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        58,
+        107,
+        421,
+        540
+      ],
+      "points": [
+        [
+          184,
+          140
+        ],
+        [
+          199,
+          229
+        ],
+        [
+          280,
+          257
+        ],
+        [
+          233,
+          363
+        ],
+        [
+          102,
+          385
+        ],
+        [
+          115,
+          507
+        ],
+        [
+          379,
+          490
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        0,
+        0,
+        189,
+        540
+      ],
+      "points": [
+        [
+          134,
+          39
+        ],
+        [
+          107,
+          137
+        ],
+        [
+          124,
+          229
+        ],
+        [
+          161,
+          289
+        ],
+        [
+          58,
+          325
+        ],
+        [
+          76,
+          466
+        ],
+        [
+          280,
+          430
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 59,
+      "box": [
+        68,
+        0,
+        321,
+        540
+      ],
+      "points": [
+        [
+          210,
+          103
+        ],
+        [
+          164,
+          191
+        ],
+        [
+          196,
+          249
+        ],
+        [
+          284,
+          296
+        ],
+        [
+          184,
+          373
+        ],
+        [
+          163,
+          455
+        ],
+        [
+          162,
+          527
+        ]
+      ]
+    }
+  ],
+  "seed": 12,
+  "source_sha256": "e5aaa40304726a7a0e3b1a6002cf4d92668bcd227461daf8844c99f0bb2b1618",
+  "version": "v1",
+  "identity_verification": "Florida #16 Barkov close backhand at left post, same scorer throughout; #13 Reinhart passing and #5 Ekblad screen stay visible. Jersey16 and Barkov readable in original."
+}

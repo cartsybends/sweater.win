@@ -90,6 +90,17 @@ def render(path,edit,args):
         original=cv2.imread(str(f));mask=cv2.imread(str(work/'masks'/f'{i:05d}.png'),0)
         assert mask is not None
         if i in edit.get('allow_empty',[]):mask[:]=0
+        for poly in edit.get('manual_clear_polygons',{}).get(str(i),[]):
+            cv2.fillPoly(mask,[np.asarray(poly,dtype=np.int32)],0)
+        for poly in edit.get('manual_fill_polygons',{}).get(str(i),[]):
+            cv2.fillPoly(mask,[np.asarray(poly,dtype=np.int32)],255)
+        for patch in edit.get('mask_patch_ellipses',[]):
+            if patch['frame']==i:
+                x,y,rx,ry=patch['ellipse'];cv2.ellipse(mask,(x,y),(rx,ry),0,0,360,255,-1)
+        for patch in edit.get('mask_patch_lines',[]):
+            if patch['frame']==i:
+                x0,y0,x1,y1,width=patch['line'];cv2.line(mask,(x0,y0),(x1,y1),255,width)
+        cv2.imwrite(str(work/'masks'/f'{i:05d}.png'),mask)
         assert mask.any() or i in edit.get('allow_empty',[]),(edit['id'],i,'empty matte')
         n,labels,stats,_=cv2.connectedComponentsWithStats((mask==0).astype(np.uint8),8)
         for c in range(1,n):

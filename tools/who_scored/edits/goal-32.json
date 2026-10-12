@@ -1,0 +1,225 @@
+{
+  "id": "goal-32",
+  "pid": 8480839,
+  "player": "Rasmus Dahlin",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-32.mp4",
+  "start": 30.45,
+  "duration": 3.2,
+  "seed": 24,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        725,
+        180,
+        836,
+        413
+      ],
+      "points": [
+        [
+          752,
+          200
+        ],
+        [
+          784,
+          247
+        ],
+        [
+          741,
+          284
+        ],
+        [
+          819,
+          225
+        ],
+        [
+          802,
+          354
+        ],
+        [
+          754,
+          388
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        669,
+        225,
+        815,
+        490
+      ],
+      "points": [
+        [
+          709,
+          250
+        ],
+        [
+          746,
+          293
+        ],
+        [
+          683,
+          314
+        ],
+        [
+          779,
+          251
+        ],
+        [
+          779,
+          371
+        ],
+        [
+          793,
+          450
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        660,
+        380,
+        810,
+        540
+      ],
+      "points": [
+        [
+          710,
+          392
+        ],
+        [
+          752,
+          447
+        ],
+        [
+          694,
+          502
+        ],
+        [
+          765,
+          514
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 64,
+      "box": [
+        568,
+        334,
+        705,
+        540
+      ],
+      "points": [
+        [
+          612,
+          352
+        ],
+        [
+          654,
+          416
+        ],
+        [
+          629,
+          426
+        ],
+        [
+          618,
+          449
+        ],
+        [
+          592,
+          466
+        ],
+        [
+          650,
+          506
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        476,
+        251,
+        630,
+        540
+      ],
+      "points": [
+        [
+          541,
+          278
+        ],
+        [
+          573,
+          342
+        ],
+        [
+          495,
+          408
+        ],
+        [
+          577,
+          446
+        ],
+        [
+          579,
+          518
+        ],
+        [
+          524,
+          398
+        ],
+        [
+          539,
+          388
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "source_sha256": "9fd34e43f0576c92f0e9fbc91cc55faf2b2d0ebcf032b9075f8fd3d74c2afa50",
+  "identity_check": "Official NHL source6368536216112 credits BUF26 Rasmus Dahlin8480839 wrist goal vNSH Feb8. DAHLIN26 rear visible before shot and after; continuous replay follows lone leftcircle shooter, leaving netfront teammate81 visible.",
+  "poster_frame": 24,
+  "qa_revision": "Added forearm sleeve anchor points after all-frame inspection showed exposed sleeve between isolated glove and torso at frames62\u201376."
+}

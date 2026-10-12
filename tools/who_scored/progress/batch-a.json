@@ -44,6 +44,15 @@
       "poster": "goal-17-v1.jpg",
       "motion": "Quick slap shot",
       "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112"
+    },
+    {
+      "id": "goal-13",
+      "pid": 8477493,
+      "masked": "goal-13-masked-v1.mp4",
+      "reveal": "goal-13-original-v1.mp4",
+      "poster": "goal-13-v1.jpg",
+      "motion": "Net-front backhand",
+      "source": "https://nhl.com/video/lak-fla-barkov-scores-ppg-against-darcy-kuemper-6367975996112"
     }
   ],
   "sources": [
@@ -133,6 +142,23 @@
       "sha256": "b341fe175c1c6292574ae981045aef53caff169d45ce286e659d078952c912dd",
       "edit": "goal-17.json",
       "identity_verification": "Ottawa #18 Stutzle close continuous slap-shot release, #7 Tkachuk not masked. Jersey18 readable at start and shooting."
+    },
+    {
+      "id": "goal-13",
+      "pid": 8477493,
+      "player": "Aleksander Barkov",
+      "team": "FLA",
+      "jersey": 16,
+      "source": "https://nhl.com/video/lak-fla-barkov-scores-ppg-against-darcy-kuemper-6367975996112",
+      "source_video_id": "6367975996112",
+      "game_id": 2024020808,
+      "date": "2025-01-29",
+      "shot_type": "backhand",
+      "start": 31.45,
+      "duration": 2.5,
+      "sha256": "e5aaa40304726a7a0e3b1a6002cf4d92668bcd227461daf8844c99f0bb2b1618",
+      "edit": "goal-13.json",
+      "identity_verification": "Florida #16 Barkov close backhand at left post, same scorer throughout; #13 Reinhart passing and #5 Ekblad screen stay visible. Jersey16 and Barkov readable in original."
     }
   ],
   "checks": [
@@ -195,6 +221,18 @@
       "decode_checks_passed": true,
       "review": "goal-17-6d94548b1c12/review",
       "notes": "Ottawa18 Stutzle close continuous release. All77pairedframes inspected; gloves, helmet, torso and legs covered throughout. No celebration tail or scorebug."
+    },
+    {
+      "id": "goal-13",
+      "frames": 60,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-13-acf5206d1f89/review",
+      "notes": "Florida #16 Barkov at left post, 60/60 paired frames. Correct scorer throughout net-front backhand; #13 Reinhart passer and #5 Ekblad screen remain visible. Tail shows puck in net; camera pan stays on same replay angle."
     }
   ],
   "completed": [
@@ -202,10 +240,10 @@
     "goal-12",
     "goal-14",
     "goal-16",
-    "goal-17"
+    "goal-17",
+    "goal-13"
   ],
   "pending": [
-    "goal-13",
     "goal-18"
   ]
 }

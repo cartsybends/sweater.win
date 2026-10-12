@@ -1,0 +1,121 @@
+{
+  "id": "goal-38",
+  "pid": 8482093,
+  "player": "Seth Jarvis",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-38.mp4",
+  "start": 40,
+  "duration": 3.2,
+  "seed": 48,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        299,
+        42,
+        352,
+        139
+      ],
+      "points": [
+        [
+          318,
+          53
+        ],
+        [
+          322,
+          81
+        ],
+        [
+          317,
+          111
+        ],
+        [
+          331,
+          130
+        ]
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        427,
+        86,
+        525,
+        177
+      ],
+      "points": [
+        [
+          474,
+          102
+        ],
+        [
+          475,
+          129
+        ],
+        [
+          504,
+          126
+        ],
+        [
+          440,
+          164
+        ],
+        [
+          504,
+          164
+        ],
+        [
+          365,
+          204
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        212,
+        117,
+        290,
+        214
+      ],
+      "points": [
+        [
+          254,
+          131
+        ],
+        [
+          249,
+          160
+        ],
+        [
+          228,
+          142
+        ],
+        [
+          279,
+          195
+        ],
+        [
+          230,
+          205
+        ]
+      ]
+    }
+  ],
+  "source_sha256": "7e1bf1829a4035253688b35e7ae2164b67f108ca34facbd9986b3e7e7f66b682",
+  "crop": [
+    0,
+    20,
+    960,
+    520
+  ],
+  "version": "v1",
+  "identity_verification": "Carolina #24 Jarvis waits in high slot/right circle above #20 Aho, takes return pass for slapshot. #24 visible before windup and on celebration; Aho stays visible."
+}

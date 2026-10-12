@@ -1,0 +1,618 @@
+{
+  "id": "goal-35",
+  "pid": 8478414,
+  "player": "Timo Meier",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-35.mp4",
+  "start": 42.45,
+  "duration": 3.1,
+  "seed": 36,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        810,
+        258,
+        950,
+        500
+      ],
+      "points": [
+        [
+          857,
+          281
+        ],
+        [
+          875,
+          327
+        ],
+        [
+          832,
+          390
+        ],
+        [
+          847,
+          455
+        ],
+        [
+          927,
+          443
+        ],
+        [
+          873,
+          191
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        626,
+        207,
+        789,
+        429
+      ],
+      "points": [
+        [
+          728,
+          223
+        ],
+        [
+          725,
+          279
+        ],
+        [
+          667,
+          325
+        ],
+        [
+          641,
+          405
+        ],
+        [
+          757,
+          379
+        ],
+        [
+          824,
+          256
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 55,
+      "box": [
+        548,
+        130,
+        675,
+        400
+      ],
+      "points": [
+        [
+          596,
+          148
+        ],
+        [
+          608,
+          211
+        ],
+        [
+          568,
+          267
+        ],
+        [
+          591,
+          326
+        ],
+        [
+          580,
+          384
+        ],
+        [
+          712,
+          237
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 64,
+      "box": [
+        504,
+        108,
+        645,
+        380
+      ],
+      "points": [
+        [
+          556,
+          129
+        ],
+        [
+          591,
+          204
+        ],
+        [
+          521,
+          177
+        ],
+        [
+          553,
+          181
+        ],
+        [
+          579,
+          290
+        ],
+        [
+          581,
+          365
+        ],
+        [
+          595,
+          101
+        ],
+        [
+          672,
+          212
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        510,
+        69,
+        623,
+        378
+      ],
+      "points": [
+        [
+          528,
+          135
+        ],
+        [
+          557,
+          198
+        ],
+        [
+          544,
+          241
+        ],
+        [
+          532,
+          82
+        ],
+        [
+          549,
+          114
+        ],
+        [
+          575,
+          295
+        ],
+        [
+          556,
+          356
+        ],
+        [
+          599,
+          97
+        ],
+        [
+          648,
+          231
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 73,
+      "box": [
+        508,
+        69,
+        622,
+        378
+      ],
+      "points": [
+        [
+          528,
+          135
+        ],
+        [
+          558,
+          198
+        ],
+        [
+          544,
+          244
+        ],
+        [
+          532,
+          82
+        ],
+        [
+          549,
+          115
+        ],
+        [
+          575,
+          298
+        ],
+        [
+          556,
+          355
+        ],
+        [
+          598,
+          92
+        ],
+        [
+          648,
+          231
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_sha256": "721f5bb03f8efef6b5aa3fc4fb109ae80125275f8fb2ec401509c1d0cc534c57",
+  "crop": [
+    0,
+    42,
+    960,
+    498
+  ],
+  "version": "v1",
+  "identity_verification": "NJD MEIER #28 trailing on right, then pokes rebound through goalie. Hischier #13 screens left; TB #71 on right occludes Meier after poke. Anchors distinguish all.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 54,
+      "ellipse": [
+        584,
+        291,
+        15,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 55,
+      "ellipse": [
+        567,
+        280,
+        15,
+        20
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 56,
+      "ellipse": [
+        553,
+        281,
+        15,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 57,
+      "ellipse": [
+        543,
+        271,
+        14,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 58,
+      "ellipse": [
+        538,
+        262,
+        14,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 59,
+      "ellipse": [
+        533,
+        248,
+        14,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 60,
+      "ellipse": [
+        526,
+        233,
+        15,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 61,
+      "ellipse": [
+        526,
+        216,
+        15,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 62,
+      "ellipse": [
+        523,
+        203,
+        15,
+        18
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 63,
+      "ellipse": [
+        523,
+        187,
+        15,
+        16
+      ],
+      "reason": "Manually verified Meier glove edge during defender occlusion"
+    },
+    {
+      "frame": 72,
+      "ellipse": [
+        591,
+        330,
+        11,
+        15
+      ],
+      "reason": "Manually verified Meier red shin strip partly visible behind Cirelli"
+    },
+    {
+      "frame": 73,
+      "ellipse": [
+        593,
+        334,
+        11,
+        15
+      ],
+      "reason": "Manually verified Meier red shin strip partly visible behind Cirelli"
+    }
+  ],
+  "mask_patch_lines": [
+    {
+      "frame": 54,
+      "line": [
+        584,
+        291,
+        609,
+        253,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 55,
+      "line": [
+        567,
+        280,
+        594,
+        240,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 56,
+      "line": [
+        553,
+        281,
+        581,
+        239,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 57,
+      "line": [
+        543,
+        271,
+        580,
+        230,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 58,
+      "line": [
+        538,
+        262,
+        578,
+        222,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 59,
+      "line": [
+        533,
+        248,
+        573,
+        216,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 60,
+      "line": [
+        526,
+        233,
+        570,
+        211,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 61,
+      "line": [
+        526,
+        216,
+        568,
+        199,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 62,
+      "line": [
+        523,
+        203,
+        568,
+        191,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 63,
+      "line": [
+        523,
+        187,
+        569,
+        187,
+        32
+      ],
+      "reason": "Verified continuous forearm between occluded glove and body"
+    },
+    {
+      "frame": 48,
+      "line": [
+        597,
+        304,
+        609,
+        274,
+        24
+      ],
+      "reason": "Meier lower glove and forearm during rebound approach"
+    },
+    {
+      "frame": 49,
+      "line": [
+        597,
+        304,
+        609,
+        274,
+        24
+      ],
+      "reason": "Meier lower glove and forearm during rebound approach"
+    },
+    {
+      "frame": 50,
+      "line": [
+        594,
+        304,
+        606,
+        274,
+        24
+      ],
+      "reason": "Meier lower glove and forearm during rebound approach"
+    },
+    {
+      "frame": 51,
+      "line": [
+        590,
+        303,
+        602,
+        273,
+        24
+      ],
+      "reason": "Meier lower glove and forearm during rebound approach"
+    },
+    {
+      "frame": 52,
+      "line": [
+        586,
+        299,
+        598,
+        269,
+        24
+      ],
+      "reason": "Meier lower glove and forearm during rebound approach"
+    },
+    {
+      "frame": 53,
+      "line": [
+        580,
+        294,
+        592,
+        264,
+        24
+      ],
+      "reason": "Meier lower glove and forearm during rebound approach"
+    }
+  ]
+}
