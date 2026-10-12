@@ -26,6 +26,24 @@
       "poster": "goal-14-v1.jpg",
       "motion": "Slot redirection",
       "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112"
+    },
+    {
+      "id": "goal-16",
+      "pid": 8478864,
+      "masked": "goal-16-masked-v1.mp4",
+      "reveal": "goal-16-original-v1.mp4",
+      "poster": "goal-16-v1.jpg",
+      "motion": "Quick circle release",
+      "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382636486112"
+    },
+    {
+      "id": "goal-17",
+      "pid": 8482116,
+      "masked": "goal-17-masked-v1.mp4",
+      "reveal": "goal-17-original-v1.mp4",
+      "poster": "goal-17-v1.jpg",
+      "motion": "Quick slap shot",
+      "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112"
     }
   ],
   "sources": [
@@ -81,6 +99,40 @@
       "sha256": "41cf297efd8c31220df706d420a0ec8cd36eaaf4d85bf776c1ab9f9bd8c77949",
       "edit": "goal-14.json",
       "identity_verification": "Toronto #16 Marner central scorer, readable at tail, followed backward through slot; left-board #23 Knies and near-net #34 Matthews remain unmasked."
+    },
+    {
+      "id": "goal-16",
+      "pid": 8478864,
+      "player": "Kirill Kaprizov",
+      "team": "MIN",
+      "jersey": 97,
+      "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382636486112",
+      "source_video_id": "6382636486112",
+      "game_id": 2025020033,
+      "date": "2025-10-11",
+      "shot_type": "snap",
+      "start": 38.8,
+      "duration": 3.1,
+      "sha256": "e8a07e2af776e02ba565e1b5b5dfca2a2822d4a21bf5afaf1ca0e816ee7a81e6",
+      "edit": "goal-16.json",
+      "identity_verification": "Minnesota #97 Kaprizov close shot angle, readable jersey97 and name across sequence, #12 Boldy passer remains visible."
+    },
+    {
+      "id": "goal-17",
+      "pid": 8482116,
+      "player": "Tim St\u00fctzle",
+      "team": "OTT",
+      "jersey": 18,
+      "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112",
+      "source_video_id": "6367764265112",
+      "game_id": 2024020780,
+      "date": "2025-01-25",
+      "shot_type": "slap",
+      "start": 38.6,
+      "duration": 3.2,
+      "sha256": "b341fe175c1c6292574ae981045aef53caff169d45ce286e659d078952c912dd",
+      "edit": "goal-17.json",
+      "identity_verification": "Ottawa #18 Stutzle close continuous slap-shot release, #7 Tkachuk not masked. Jersey18 readable at start and shooting."
     }
   ],
   "checks": [
@@ -119,17 +171,41 @@
       "decode_checks_passed": true,
       "review": "goal-14-7cc71d56da72/review",
       "notes": "#16 Marner central scorer verified62/62. Tracks slot tip and contact at crease; #34 near-net and #23 passing remain visible. No scorebug, continuous replay."
+    },
+    {
+      "id": "goal-16",
+      "frames": 74,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-16-06d750c956a8/review",
+      "notes": "#97 Kaprizov unmistakable close angle,74/74 paired QA, torso, helmet and gloves covered; feet belowframe early, same scorer remainsmaskedthrough release and goal. #12 passer stays visible."
+    },
+    {
+      "id": "goal-17",
+      "frames": 77,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-17-6d94548b1c12/review",
+      "notes": "Ottawa18 Stutzle close continuous release. All77pairedframes inspected; gloves, helmet, torso and legs covered throughout. No celebration tail or scorebug."
     }
   ],
   "completed": [
     "goal-11",
     "goal-12",
-    "goal-14"
+    "goal-14",
+    "goal-16",
+    "goal-17"
   ],
   "pending": [
     "goal-13",
-    "goal-16",
-    "goal-17",
     "goal-18"
   ]
 }

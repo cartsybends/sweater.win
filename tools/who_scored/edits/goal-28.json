@@ -1,0 +1,173 @@
+{
+  "id": "goal-28",
+  "pid": 8476887,
+  "player": "Filip Forsberg",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-28.mp4",
+  "start": 33.8,
+  "duration": 3.8,
+  "seed": 48,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        211,
+        217,
+        405,
+        468
+      ],
+      "points": [
+        [
+          296,
+          239
+        ],
+        [
+          280,
+          288
+        ],
+        [
+          245,
+          279
+        ],
+        [
+          296,
+          359
+        ],
+        [
+          381,
+          442
+        ],
+        [
+          359,
+          282
+        ],
+        [
+          480,
+          340
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        198,
+        194,
+        320,
+        411
+      ],
+      "points": [
+        [
+          282,
+          207
+        ],
+        [
+          280,
+          252
+        ],
+        [
+          235,
+          263
+        ],
+        [
+          251,
+          322
+        ],
+        [
+          217,
+          390
+        ],
+        [
+          265,
+          375
+        ],
+        [
+          518,
+          297
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        130,
+        118,
+        302,
+        402
+      ],
+      "points": [
+        [
+          219,
+          173
+        ],
+        [
+          206,
+          225
+        ],
+        [
+          173,
+          196
+        ],
+        [
+          275,
+          179
+        ],
+        [
+          149,
+          135
+        ],
+        [
+          283,
+          141
+        ],
+        [
+          201,
+          294
+        ],
+        [
+          183,
+          376
+        ],
+        [
+          235,
+          368
+        ],
+        [
+          321,
+          341
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "source_sha256": "c619d75064f10c3a428ca77d46af03d887f9c8070cca977605f716976df15a8a",
+  "identity_check": "NHL game2025020032 event252 credits NSH9 Filip Forsberg8476887; official video long description says Forsberg scored on rush and Martin first assist. Silhouette tracks gold9 at left, leaving right-side Martin44 visible.",
+  "poster_frame": 0
+}

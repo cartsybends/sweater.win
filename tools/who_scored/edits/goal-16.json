@@ -1,0 +1,119 @@
+{
+  "id": "goal-16",
+  "pid": 8478864,
+  "player": "Kirill Kaprizov",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-16.mp4",
+  "start": 38.8,
+  "duration": 3.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        503,
+        143,
+        896,
+        540
+      ],
+      "points": [
+        [
+          628,
+          182
+        ],
+        [
+          656,
+          295
+        ],
+        [
+          751,
+          368
+        ],
+        [
+          827,
+          356
+        ],
+        [
+          539,
+          468
+        ],
+        [
+          731,
+          499
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        431,
+        147,
+        800,
+        540
+      ],
+      "points": [
+        [
+          543,
+          190
+        ],
+        [
+          576,
+          288
+        ],
+        [
+          728,
+          278
+        ],
+        [
+          759,
+          344
+        ],
+        [
+          552,
+          448
+        ],
+        [
+          667,
+          473
+        ]
+      ]
+    },
+    {
+      "frame": 73,
+      "box": [
+        58,
+        0,
+        341,
+        540
+      ],
+      "points": [
+        [
+          206,
+          44
+        ],
+        [
+          178,
+          177
+        ],
+        [
+          292,
+          235
+        ],
+        [
+          314,
+          298
+        ],
+        [
+          129,
+          406
+        ],
+        [
+          261,
+          454
+        ]
+      ]
+    }
+  ],
+  "seed": 0,
+  "source_sha256": "e8a07e2af776e02ba565e1b5b5dfca2a2822d4a21bf5afaf1ca0e816ee7a81e6",
+  "version": "v1",
+  "identity_verification": "Minnesota #97 Kaprizov close shot angle, readable jersey97 and name across sequence, #12 Boldy passer remains visible."
+}

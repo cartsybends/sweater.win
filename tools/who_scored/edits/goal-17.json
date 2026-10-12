@@ -1,0 +1,119 @@
+{
+  "id": "goal-17",
+  "pid": 8482116,
+  "player": "Tim St\u00fctzle",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-17.mp4",
+  "start": 38.6,
+  "duration": 3.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        427,
+        146,
+        634,
+        490
+      ],
+      "points": [
+        [
+          467,
+          180
+        ],
+        [
+          552,
+          256
+        ],
+        [
+          452,
+          343
+        ],
+        [
+          526,
+          368
+        ],
+        [
+          512,
+          424
+        ],
+        [
+          607,
+          464
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        495,
+        185,
+        742,
+        494
+      ],
+      "points": [
+        [
+          584,
+          223
+        ],
+        [
+          624,
+          282
+        ],
+        [
+          673,
+          217
+        ],
+        [
+          616,
+          365
+        ],
+        [
+          713,
+          447
+        ],
+        [
+          535,
+          464
+        ]
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        581,
+        177,
+        712,
+        426
+      ],
+      "points": [
+        [
+          605,
+          204
+        ],
+        [
+          648,
+          255
+        ],
+        [
+          620,
+          291
+        ],
+        [
+          646,
+          332
+        ],
+        [
+          612,
+          357
+        ],
+        [
+          682,
+          405
+        ]
+      ]
+    }
+  ],
+  "seed": 0,
+  "source_sha256": "b341fe175c1c6292574ae981045aef53caff169d45ce286e659d078952c912dd",
+  "version": "v1",
+  "identity_verification": "Ottawa #18 Stutzle close continuous slap-shot release, #7 Tkachuk not masked. Jersey18 readable at start and shooting."
+}

@@ -8,6 +8,24 @@
       "poster": "goal-31-v1.jpg",
       "motion": "Rush wrist shot",
       "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112"
+    },
+    {
+      "id": "goal-28",
+      "pid": 8476887,
+      "masked": "goal-28-masked-v1.mp4",
+      "reveal": "goal-28-original-v1.mp4",
+      "poster": "goal-28-v1.jpg",
+      "motion": "Rush snap shot",
+      "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112"
+    },
+    {
+      "id": "goal-29",
+      "pid": 8479323,
+      "masked": "goal-29-masked-v1.mp4",
+      "reveal": "goal-29-original-v1.mp4",
+      "poster": "goal-29-v1.jpg",
+      "motion": "Point shot",
+      "source": "https://nhl.com/video/njd-nyr-fox-scores-ppg-against-jacob-markstrom-6366884311112"
     }
   ],
   "sources": [
@@ -55,7 +73,70 @@
       "source_goal_scorer": "Zach Werenski",
       "start": 28.7,
       "edit": "goal-31.json",
-      "identity_verification": "NHL event263 game2024020782 credits CBJ8 Zach Werenski8478460 wrist goal; rear85-like overlap reads8 and WERENSKI clearly, continuous replay follows right trailing rusher through wrist release into goal."
+      "identity_verification": "NHL event263 game2024020782 credits CBJ8 Zach Werenski8478460 wrist goal. Rear8 and WERENSKI are clearly visible; continuous replay follows the right trailing rusher through wrist release into goal."
+    },
+    {
+      "id": "goal-28",
+      "pid": 8476887,
+      "player": "Filip Forsberg",
+      "status": "original_ready",
+      "candidates": [
+        {
+          "game_id": 2025020032,
+          "date": "2025-10-11",
+          "team": "NSH",
+          "jersey": 9,
+          "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112",
+          "source_video_id": "6382633663112",
+          "shot_type": "snap",
+          "event_id": 252
+        }
+      ],
+      "game_id": 2025020032,
+      "date": "2025-10-11",
+      "team": "NSH",
+      "jersey": 9,
+      "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112",
+      "source_video_id": "6382633663112",
+      "shot_type": "snap",
+      "event_id": 252,
+      "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-28.mp4",
+      "sha256": "c619d75064f10c3a428ca77d46af03d887f9c8070cca977605f716976df15a8a",
+      "duration": 3.8,
+      "width": 1280,
+      "height": 720,
+      "media_title": "Martin's first career point",
+      "original_relative_path": "goal-expansion/originals/goal-28.mp4",
+      "source_goal_scorer": "Filip Forsberg",
+      "start": 33.8,
+      "edit": "goal-28.json",
+      "identity_verification": "NHL game2025020032 event252 credits NSH9 Filip Forsberg8476887; official video long description says Forsberg scored on rush and Martin first assist. Silhouette tracks gold9 at left, leaving right-side Martin44 visible."
+    },
+    {
+      "id": "goal-29",
+      "pid": 8479323,
+      "player": "Adam Fox",
+      "status": "original_ready",
+      "candidates": [],
+      "source": "https://nhl.com/video/njd-nyr-fox-scores-ppg-against-jacob-markstrom-6366884311112",
+      "source_video_id": "6366884311112",
+      "game_id": 2024020656,
+      "date": "2025-01-09",
+      "team": "NYR",
+      "jersey": 23,
+      "shot_type": "deflected",
+      "event_id": 332,
+      "source_goal_scorer": "Adam Fox",
+      "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-29.mp4",
+      "sha256": "8f5ca87824f3bc09aa3938a668316de0dc562bd1c489804b66cabc9ffa7ade75",
+      "duration": 3.5,
+      "width": 1280,
+      "height": 720,
+      "media_title": "Fox strikes first with PPG",
+      "original_relative_path": "goal-expansion/originals/goal-29.mp4",
+      "start": 35.0,
+      "edit": "goal-29.json",
+      "identity_verification": "Official NHL source6366884311112 credits NYR23 Adam Fox8479323 goal vNJD Jan9. RearFOX23 visible during shot and after; continuous side replay tracks point shooter leftforeground, leaving netfront Zibanejad93 visible."
     }
   ],
   "checks": [
@@ -70,15 +151,39 @@
       "decode_checks_passed": true,
       "review": "goal-31-8a94a4093f0d/review",
       "notes": "91/91 paired frames inspected. Same CBJ8 shoulder/name, helmet, arms, gloves and skates covered throughout. Stick and puck visible; full scoring finish preserved; no identifying overlays."
+    },
+    {
+      "id": "goal-28",
+      "frames": 91,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-28-eb0010896de4/review",
+      "notes": "91/91 paired frames inspected. Gold9 Forsberg covered through pickup, release and celebration. Martin44 stays visible at right. Stick and puck retained, no cuts or identifying overlays."
+    },
+    {
+      "id": "goal-29",
+      "frames": 84,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-29-919f946c16a9/review",
+      "notes": "84/84 paired frames inspected. Fox23 silhouette stays on actual point shooter; Zibanejad93 remains visible screening the goalie. Full windup, release and goal finish, helmet, jersey, gloves and skates covered; no scorebug or naming overlay."
     }
   ],
   "completed": [
-    "goal-31"
+    "goal-31",
+    "goal-28",
+    "goal-29"
   ],
   "pending": [
     "goal-27",
-    "goal-28",
-    "goal-29",
     "goal-32",
     "goal-33"
   ]
