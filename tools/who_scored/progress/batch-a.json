@@ -17,6 +17,15 @@
       "poster": "goal-12-v1.jpg",
       "motion": "Circle snap shot",
       "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112"
+    },
+    {
+      "id": "goal-14",
+      "pid": 8478483,
+      "masked": "goal-14-masked-v1.mp4",
+      "reveal": "goal-14-original-v1.mp4",
+      "poster": "goal-14-v1.jpg",
+      "motion": "Slot redirection",
+      "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112"
     }
   ],
   "sources": [
@@ -55,6 +64,23 @@
       "sha256": "eaf6ecd3d5fc3c63fc15296a79a37a1ae6e8e96083c7d197eb1be5b067267685",
       "edit": "goal-12.json",
       "identity_verification": "Tampa #86 Kucherov readable across receiving and release, distinct from #21 passer and #59 net front."
+    },
+    {
+      "id": "goal-14",
+      "pid": 8478483,
+      "player": "Mitch Marner",
+      "team": "TOR",
+      "jersey": 16,
+      "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112",
+      "source_video_id": "6368140670112",
+      "game_id": 2024020833,
+      "date": "2025-02-01",
+      "shot_type": "deflected",
+      "start": 31.6,
+      "duration": 2.6,
+      "sha256": "41cf297efd8c31220df706d420a0ec8cd36eaaf4d85bf776c1ab9f9bd8c77949",
+      "edit": "goal-14.json",
+      "identity_verification": "Toronto #16 Marner central scorer, readable at tail, followed backward through slot; left-board #23 Knies and near-net #34 Matthews remain unmasked."
     }
   ],
   "checks": [
@@ -81,15 +107,27 @@
       "decode_checks_passed": true,
       "review": "goal-12-f9f2508cce8c/review",
       "notes": "#86 Kucherov identity confirmed96/96. Helmet, body, gloves and skates covered, late skates partly outside frame. Other Lightning players21,38,59 remain visible."
+    },
+    {
+      "id": "goal-14",
+      "frames": 62,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-14-7cc71d56da72/review",
+      "notes": "#16 Marner central scorer verified62/62. Tracks slot tip and contact at crease; #34 near-net and #23 passing remain visible. No scorebug, continuous replay."
     }
   ],
   "completed": [
     "goal-11",
-    "goal-12"
+    "goal-12",
+    "goal-14"
   ],
   "pending": [
     "goal-13",
-    "goal-14",
     "goal-16",
     "goal-17",
     "goal-18"

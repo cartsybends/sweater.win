@@ -1,0 +1,85 @@
+{
+  "clips": [
+    {
+      "id": "goal-31",
+      "pid": 8478460,
+      "masked": "goal-31-masked-v1.mp4",
+      "reveal": "goal-31-original-v1.mp4",
+      "poster": "goal-31-v1.jpg",
+      "motion": "Rush wrist shot",
+      "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112"
+    }
+  ],
+  "sources": [
+    {
+      "id": "goal-31",
+      "pid": 8478460,
+      "player": "Zach Werenski",
+      "status": "original_ready",
+      "candidates": [
+        {
+          "game_id": 2024020782,
+          "date": "2025-01-25",
+          "team": "CBJ",
+          "jersey": 8,
+          "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112",
+          "source_video_id": "6367763638112",
+          "shot_type": "wrist",
+          "event_id": 263
+        },
+        {
+          "game_id": 2025020033,
+          "date": "2025-10-11",
+          "team": "CBJ",
+          "jersey": 8,
+          "source": "https://nhl.com/video/cbj-min-werenski-scores-goal-against-filip-gustavsson-6382638572112",
+          "source_video_id": "6382638572112",
+          "shot_type": "slap",
+          "event_id": 830
+        }
+      ],
+      "game_id": 2024020782,
+      "date": "2025-01-25",
+      "team": "CBJ",
+      "jersey": 8,
+      "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112",
+      "source_video_id": "6367763638112",
+      "shot_type": "wrist",
+      "event_id": 263,
+      "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-31.mp4",
+      "sha256": "eab2270ebb9bd44aea53dcf1a2af548aeb15fb50084aa86791a470679be4582e",
+      "duration": 3.8,
+      "original_relative_path": "goal-expansion/originals/goal-31.mp4",
+      "width": 1280,
+      "height": 720,
+      "source_goal_scorer": "Zach Werenski",
+      "start": 28.7,
+      "edit": "goal-31.json",
+      "identity_verification": "NHL event263 game2024020782 credits CBJ8 Zach Werenski8478460 wrist goal; rear85-like overlap reads8 and WERENSKI clearly, continuous replay follows right trailing rusher through wrist release into goal."
+    }
+  ],
+  "checks": [
+    {
+      "id": "goal-31",
+      "frames": 91,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-31-8a94a4093f0d/review",
+      "notes": "91/91 paired frames inspected. Same CBJ8 shoulder/name, helmet, arms, gloves and skates covered throughout. Stick and puck visible; full scoring finish preserved; no identifying overlays."
+    }
+  ],
+  "completed": [
+    "goal-31"
+  ],
+  "pending": [
+    "goal-27",
+    "goal-28",
+    "goal-29",
+    "goal-32",
+    "goal-33"
+  ]
+}

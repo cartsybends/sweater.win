@@ -1,0 +1,180 @@
+{
+  "id": "goal-31",
+  "pid": 8478460,
+  "player": "Zach Werenski",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-31.mp4",
+  "start": 28.7,
+  "duration": 3.8,
+  "seed": 36,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        862,
+        366,
+        960,
+        536
+      ],
+      "points": [
+        [
+          897,
+          383
+        ],
+        [
+          929,
+          432
+        ],
+        [
+          921,
+          478
+        ],
+        [
+          935,
+          516
+        ],
+        [
+          847,
+          334
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        475,
+        348,
+        590,
+        525
+      ],
+      "points": [
+        [
+          507,
+          365
+        ],
+        [
+          541,
+          398
+        ],
+        [
+          498,
+          432
+        ],
+        [
+          538,
+          477
+        ],
+        [
+          542,
+          508
+        ],
+        [
+          700,
+          376
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        623,
+        318,
+        768,
+        479
+      ],
+      "points": [
+        [
+          638,
+          334
+        ],
+        [
+          670,
+          376
+        ],
+        [
+          705,
+          405
+        ],
+        [
+          665,
+          448
+        ],
+        [
+          745,
+          424
+        ],
+        [
+          790,
+          350
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        536,
+        339,
+        636,
+        526
+      ],
+      "points": [
+        [
+          584,
+          360
+        ],
+        [
+          591,
+          398
+        ],
+        [
+          554,
+          429
+        ],
+        [
+          581,
+          469
+        ],
+        [
+          578,
+          510
+        ],
+        [
+          786,
+          401
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "source_sha256": "eab2270ebb9bd44aea53dcf1a2af548aeb15fb50084aa86791a470679be4582e",
+  "identity_check": "NHL event263 game2024020782 credits CBJ8 Zach Werenski8478460 wrist goal; rear85-like overlap reads8 and WERENSKI clearly, continuous replay follows right trailing rusher through wrist release into goal."
+}

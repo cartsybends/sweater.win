@@ -1,0 +1,158 @@
+{
+  "id": "goal-14",
+  "pid": 8478483,
+  "player": "Mitch Marner",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-14.mp4",
+  "start": 31.6,
+  "duration": 2.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        437,
+        37,
+        489,
+        106
+      ],
+      "points": [
+        [
+          461,
+          50
+        ],
+        [
+          466,
+          69
+        ],
+        [
+          451,
+          95
+        ],
+        [
+          478,
+          92
+        ],
+        [
+          505,
+          88
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        354,
+        74,
+        446,
+        171
+      ],
+      "points": [
+        [
+          408,
+          89
+        ],
+        [
+          404,
+          119
+        ],
+        [
+          374,
+          145
+        ],
+        [
+          434,
+          151
+        ]
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        234,
+        193,
+        364,
+        340
+      ],
+      "points": [
+        [
+          259,
+          213
+        ],
+        [
+          301,
+          247
+        ],
+        [
+          333,
+          287
+        ],
+        [
+          342,
+          328
+        ],
+        [
+          248,
+          229
+        ],
+        [
+          288,
+          315
+        ],
+        [
+          306,
+          181
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 61,
+      "box": [
+        137,
+        382,
+        378,
+        540
+      ],
+      "points": [
+        [
+          174,
+          440
+        ],
+        [
+          226,
+          422
+        ],
+        [
+          278,
+          458
+        ],
+        [
+          346,
+          433
+        ],
+        [
+          290,
+          519
+        ]
+      ]
+    }
+  ],
+  "seed": 24,
+  "source_sha256": "41cf297efd8c31220df706d420a0ec8cd36eaaf4d85bf776c1ab9f9bd8c77949",
+  "version": "v1",
+  "identity_verification": "Toronto #16 Marner central scorer, readable at tail, followed backward through slot; left-board #23 Knies and near-net #34 Matthews remain unmasked."
+}
