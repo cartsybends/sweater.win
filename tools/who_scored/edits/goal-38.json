@@ -117,5 +117,277 @@
     520
   ],
   "version": "v1",
-  "identity_verification": "Carolina #24 Jarvis waits in high slot/right circle above #20 Aho, takes return pass for slapshot. #24 visible before windup and on celebration; Aho stays visible."
+  "identity_verification": "Carolina #24 Jarvis waits in high slot/right circle above #20 Aho, takes return pass for slapshot. #24 visible before windup and on celebration; Aho stays visible.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 55,
+      "ellipse": [
+        474,
+        104,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 56,
+      "ellipse": [
+        473,
+        103,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 57,
+      "ellipse": [
+        470,
+        104,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 58,
+      "ellipse": [
+        468,
+        105,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 59,
+      "ellipse": [
+        465,
+        105,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 60,
+      "ellipse": [
+        463,
+        106,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 61,
+      "ellipse": [
+        459,
+        106,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 62,
+      "ellipse": [
+        456,
+        107,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 63,
+      "ellipse": [
+        452,
+        107,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 64,
+      "ellipse": [
+        449,
+        108,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 65,
+      "ellipse": [
+        444,
+        108,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 66,
+      "ellipse": [
+        440,
+        109,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 67,
+      "ellipse": [
+        434,
+        109,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 68,
+      "ellipse": [
+        428,
+        110,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 69,
+      "ellipse": [
+        413,
+        111,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 70,
+      "ellipse": [
+        403,
+        112,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 71,
+      "ellipse": [
+        386,
+        113,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 72,
+      "ellipse": [
+        371,
+        114,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 73,
+      "ellipse": [
+        347,
+        115,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 74,
+      "ellipse": [
+        326,
+        116,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 75,
+      "ellipse": [
+        288,
+        118,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 76,
+      "ellipse": [
+        264,
+        120,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 54,
+      "ellipse": [
+        476,
+        103,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 53,
+      "ellipse": [
+        477,
+        102,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 52,
+      "ellipse": [
+        479,
+        102,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 51,
+      "ellipse": [
+        479,
+        101,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    },
+    {
+      "frame": 50,
+      "ellipse": [
+        481,
+        101,
+        8,
+        6
+      ],
+      "reason": "Verified exposed upper glove/equipment on scorer24 during follow-through; optical-flow coordinates from reviewed frame55."
+    }
+  ]
 }

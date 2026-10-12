@@ -71,7 +71,20 @@
         1,
         0
       ]
-    },
+    }
+  ],
+  "source_sha256": "dafbf2ba4d4a85c28207323bf897292b434c37b1abfd9e0513b15974aabb51ad",
+  "crop": [
+    0,
+    40,
+    960,
+    500
+  ],
+  "version": "v1",
+  "identity_verification": "FLA #13 Reinhart attacks right circle and lifts backhand in front of goalie; #19 Tkachuk trails in slot and falls over goalie. Track is specifically right-circle #13 scorer, not #19 rebound screen.",
+  "export_frames": 72,
+  "trim_note": "Three seconds retain backhand release and goal; omit prolonged post-goal occlusion.",
+  "trimmed_tail_anchors": [
     {
       "frame": 72,
       "box": [
@@ -158,14 +171,5 @@
         0
       ]
     }
-  ],
-  "source_sha256": "dafbf2ba4d4a85c28207323bf897292b434c37b1abfd9e0513b15974aabb51ad",
-  "crop": [
-    0,
-    40,
-    960,
-    500
-  ],
-  "version": "v1",
-  "identity_verification": "FLA #13 Reinhart attacks right circle and lifts backhand in front of goalie; #19 Tkachuk trails in slot and falls over goalie. Track is specifically right-circle #13 scorer, not #19 rebound screen."
+  ]
 }

@@ -125,7 +125,15 @@
         1,
         1
       ]
-    },
+    }
+  ],
+  "source_sha256": "9fd34e43f0576c92f0e9fbc91cc55faf2b2d0ebcf032b9075f8fd3d74c2afa50",
+  "identity_check": "Official NHL source6368536216112 credits BUF26 Rasmus Dahlin8480839 wrist goal vNSH Feb8. DAHLIN26 rear visible before shot and after; continuous replay follows lone leftcircle shooter, leaving netfront teammate81 visible.",
+  "poster_frame": 24,
+  "qa_revision": "Added forearm sleeve anchor points after all-frame inspection showed exposed sleeve between isolated glove and torso at frames62\u201376.",
+  "export_frames": 60,
+  "trim_note": "Goal is complete by frame40. End before later celebration leaves forearm contour disconnected.",
+  "trimmed_tail_anchors": [
     {
       "frame": 64,
       "box": [
@@ -217,9 +225,5 @@
         1
       ]
     }
-  ],
-  "source_sha256": "9fd34e43f0576c92f0e9fbc91cc55faf2b2d0ebcf032b9075f8fd3d74c2afa50",
-  "identity_check": "Official NHL source6368536216112 credits BUF26 Rasmus Dahlin8480839 wrist goal vNSH Feb8. DAHLIN26 rear visible before shot and after; continuous replay follows lone leftcircle shooter, leaving netfront teammate81 visible.",
-  "poster_frame": 24,
-  "qa_revision": "Added forearm sleeve anchor points after all-frame inspection showed exposed sleeve between isolated glove and torso at frames62\u201376."
+  ]
 }

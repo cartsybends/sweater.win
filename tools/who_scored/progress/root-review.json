@@ -1,0 +1,139 @@
+{
+  "checks": [
+    {
+      "id": "goal-18",
+      "player": "Matthew Tkachuk",
+      "frames": 67,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "FLA19 Tkachuk tracked through goal; same scorer rather than the Shark defenders."
+    },
+    {
+      "id": "goal-22",
+      "player": "Sebastian Aho",
+      "frames": 84,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "CAR20 Aho tracked from receive through release; glove and trailing shin/waist edge explicitly patched and rechecked."
+    },
+    {
+      "id": "goal-23",
+      "player": "Brayden Point",
+      "frames": 65,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "TBL21 Point tracked through goal; OTT opponents remain visible."
+    },
+    {
+      "id": "goal-24",
+      "player": "Patrick Kane",
+      "frames": 96,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "DET88 Kane tracked from circle carry to wrist release; rear-leg and skate gaps corrected and rechecked. Foreground glass remains visible."
+    },
+    {
+      "id": "goal-26",
+      "player": "Dylan Larkin",
+      "frames": 96,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "DET71 Larkin is the away-white carrier from boards into circle and shot; Calgary defenders remain visible."
+    },
+    {
+      "id": "goal-27",
+      "player": "Jason Robertson",
+      "frames": 84,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "DAL21 Robertson is the left-goalmouth tip-in finisher; earlier glove anchors corrected. Other Dallas screen and Colorado defenders remain visible."
+    },
+    {
+      "id": "goal-32",
+      "player": "Rasmus Dahlin",
+      "frames": 60,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "BUF26 Dahlin wrist shot; goal retained, ending cropped to60frames before later forearm gap."
+    },
+    {
+      "id": "goal-33",
+      "player": "Jake Sanderson",
+      "frames": 60,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "OTT85 Sanderson point shot; shooter exits at36 as camera follows goal. Empty36..59 verified."
+    },
+    {
+      "id": "goal-38",
+      "player": "Seth Jarvis",
+      "frames": 77,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "CAR24 Jarvis one-timer; exposed upper glove50..76 corrected using verified per-frame hand ellipses."
+    },
+    {
+      "id": "goal-39",
+      "player": "Sam Reinhart",
+      "frames": 72,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "FLA13 Reinhart right-circle backhand; FLA19 Tkachuk and Sharks84 remain distinct. Goal retained in72frames; prolonged post-goal pileup trimmed."
+    }
+  ],
+  "completed": [
+    "goal-18",
+    "goal-22",
+    "goal-23",
+    "goal-24",
+    "goal-26",
+    "goal-27",
+    "goal-32",
+    "goal-33",
+    "goal-38",
+    "goal-39"
+  ],
+  "pending": [
+    "goal-25"
+  ]
+}

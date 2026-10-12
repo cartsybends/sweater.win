@@ -8,7 +8,7 @@ import argparse, hashlib, json, subprocess
 from pathlib import Path
 
 def frame_count(edit):
-    return round(edit['duration'] * 24)
+    return edit.get('export_frames', round(edit['duration'] * 24))
 
 def work_dir(path, edit):
     # A changed source, trim or crop gets fresh paths; old tracked frames cannot
