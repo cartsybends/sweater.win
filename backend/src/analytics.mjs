@@ -127,7 +127,9 @@ async function login(request,env) {
 }
 function html(content,status=200) {
   const nonce=crypto.randomUUID().replaceAll('-','');
-  return new Response(content.replaceAll('__NONCE__',nonce),{status,headers:{...security,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':`default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`}});
+  // Native form POSTs use a null Origin with no-referrer, which fails our CSRF check.
+  // Keep the origin for this host's forms while suppressing cross-origin referrers.
+  return new Response(content.replaceAll('__NONCE__',nonce),{status,headers:{...security,'Referrer-Policy':'same-origin','Content-Type':'text/html; charset=utf-8','Content-Security-Policy':`default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`}});
 }
 async function report(url,env) {
   const days=Number(url.searchParams.get('days')||7);if(![1,7,30,90].includes(days))throw fail(400,'Invalid date range');

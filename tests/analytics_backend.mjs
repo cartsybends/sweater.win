@@ -29,7 +29,10 @@ assert.notEqual(env.DB.sql.prepare('SELECT session_hash FROM sweater_analytics_e
 for(const invalid of [event('mode_open',{mode:'not-a-mode'}),event('engagement',{active_ms:60001}),event('mode_open',{id:[crypto.randomUUID()]}),event('mode_open',{name:'private-name'}),event('round_complete',{won:'yes'})])assert.equal((await call('/api/analytics/collect',invalid)).status,400);
 assert.equal((await call('/api/analytics/collect',event('mode_open'),{origin:'https://elsewhere.example'})).status,403);
 assert.equal((await call('/api/analytics/collect','x'.repeat(8200))).status,413);
+r=await call('/analytics/login');assert.equal(r.status,200);
+assert.equal(r.headers.get('Referrer-Policy'),'same-origin','Native login form POSTs must preserve their same-origin Origin header');
 assert.equal((await call('/analytics/login','password='+encodeURIComponent(env.SWEATER_ANALYTICS_PASSWORD),{origin:'https://elsewhere.example'})).status,403);
+assert.equal((await call('/analytics/login','password='+encodeURIComponent(env.SWEATER_ANALYTICS_PASSWORD),{origin:'null'})).status,403,'Opaque origins still cannot sign in');
 const authOrigin='https://api.sweater.win';
 r=await call('/analytics/login','password=wrong',{origin:authOrigin});assert.equal(r.status,401);
 r=await call('/analytics/login','password='+encodeURIComponent(env.SWEATER_ANALYTICS_PASSWORD),{origin:authOrigin});assert.equal(r.status,303);
@@ -40,6 +43,10 @@ r=await call('/api/analytics/report?days=30&variant=unlimited',undefined,{cookie
 assert.equal((await call('/api/analytics/report?days=999',undefined,{cookie:sessionCookie})).status,400);
 assert.equal((await call('/api/analytics/report',undefined,{cookie:sessionCookie.slice(0,-1)+'x'})).status,401);
 r=await call('/analytics',undefined,{cookie:sessionCookie});assert.equal(r.status,200);assert(r.headers.get('Content-Security-Policy').includes("default-src 'none'"));assert(r.headers.get('Cache-Control').includes('no-store'));assert(!(await r.text()).includes(env.SWEATER_ANALYTICS_PASSWORD));
+assert.equal(r.headers.get('Referrer-Policy'),'same-origin','The native sign-out form must also preserve its origin');
+assert.equal((await call('/analytics/logout','',{origin:'https://elsewhere.example',cookie:sessionCookie})).status,403);
+assert.equal((await call('/analytics/logout','',{origin:'null',cookie:sessionCookie})).status,403);
+r=await call('/analytics/logout','',{origin:authOrigin,cookie:sessionCookie});assert.equal(r.status,303);assert(r.headers.get('Set-Cookie').includes('Max-Age=0'));
 for(let i=0;i<10;i++)assert.equal((await call('/analytics/login','password=wrong',{origin:authOrigin,ip:'203.0.113.2'})).status,401);
 assert.equal((await call('/analytics/login','password=wrong',{origin:authOrigin,ip:'203.0.113.2'})).status,429);
 // Completion cohorts don't count a finish whose start was outside the selected window.
