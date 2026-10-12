@@ -1,6 +1,6 @@
 # Who Scored? clip library
 
-Nine manually reviewed scorers launch this mode. Each round uses one camera angle,
+Thirty-nine distinct scorers are available in this mode. Each round uses one camera angle,
 a solid black matte on the scorer, a matching original reveal, a masked poster,
 and no audio. Score graphics and on-ice player-name tickers are removed where present.
 `sources.json` records the original NHL.com highlight, source-file checksum and edit timing.
@@ -21,7 +21,9 @@ To add a scorer:
    `source` URL to `clips.json`. Add its edit provenance to `sources.json`.
    Keep existing IDs so saved rounds and archived dailies continue to work. Use new
    filenames when replacing a clip so browsers load the corrected edit immediately.
-3. Run `node tests/who_scored.cjs`, build the site, and check both videos before publishing.
+3. Run `node tests/who_scored.cjs`, `python tests/who_scored_schedule.py`, and
+   `python tools/who_scored/validate.py --decode`. Build the site and check both videos
+   before publishing.
 
 The builder validates and copies every referenced asset. Daily assignments are persisted
 in `schedule.json`, with a no-repeat window based on the library size. Unlimited uses a

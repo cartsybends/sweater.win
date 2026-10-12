@@ -11,8 +11,8 @@ def frame_count(edit):
     return edit.get('export_frames', round(edit['duration'] * 24))
 
 def work_dir(path, edit):
-    # A changed source, trim or crop gets fresh paths; old tracked frames cannot
-    # reappear in a revised export or be overwritten by an unfinished job.
+    # A changed source, extraction window or crop gets fresh paths. export_frames
+    # can shorten an already reviewed sequence; every output respects that cap.
     key = {k: edit.get(k) for k in ['id','original','start','duration','crop','source_sha256']}
     tag = hashlib.sha256(json.dumps(key,sort_keys=True).encode()).hexdigest()[:12]
     return path.parent / (edit['id']+'-'+tag)

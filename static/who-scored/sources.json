@@ -70,5 +70,1211 @@
     "source_sha256": "cadacc7e29feddf547c99c0860126e7c9c02b6a0e531fa1cead50630c7c4460d",
     "edit_start_seconds": 11.1,
     "edit_duration_seconds": 4.791666666666667
+  },
+  {
+    "id": "goal-10",
+    "pid": 8481559,
+    "player": "Jack Hughes",
+    "team": "NJD",
+    "jersey": 86,
+    "source": "https://nhl.com/video/njd-mtl-hughes-scores-goal-against-jakub-dobes-6367771449112",
+    "source_video_id": "6367771449112",
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "shot_type": "snap",
+    "source_goal_scorer": "Jack Hughes",
+    "source_sha256": "e481035946c606b52d3a7514b3571ba4c58f7bed23f9f29b704608b5519d8330",
+    "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+    "original_processing_source_sha256": null,
+    "edit_start_seconds": 41.3,
+    "edit_start_basis": "Prior processing record from interrupted session, verified against matching reveal",
+    "edit_duration_seconds": 3.083333,
+    "exported_frames": 74,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "exported_sha256": {
+      "masked": "6bb62cd78b900634b4739a4474dfa2d0e8771c24ba8004d2bd99244e2551a0e9",
+      "reveal": "ba5afcc1d836c50daa355577b459f479e68845261a9b2361a34324c91a88e2f7",
+      "poster": "8af98c8d490fd2e375feb321f1cd2b629978a6b1a1e911968549612cee3c4e13"
+    },
+    "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+    "source_frame_matches": [
+      {
+        "export_frame": 0,
+        "export_time": 0.0,
+        "visible_rows": [
+          0,
+          540
+        ],
+        "source_frame": 2476,
+        "source_time": 41.30793333333333,
+        "pixel_mse": 1.255864143371582
+      },
+      {
+        "export_frame": 37,
+        "export_time": 1.5416666666666667,
+        "visible_rows": [
+          0,
+          540
+        ],
+        "source_frame": 2569,
+        "source_time": 42.85948333333334,
+        "pixel_mse": 0.8495884537696838
+      },
+      {
+        "export_frame": 73,
+        "export_time": 3.0416666666666665,
+        "visible_rows": [
+          0,
+          540
+        ],
+        "source_frame": 2659,
+        "source_time": 44.36098333333334,
+        "pixel_mse": 2.852592706680298
+      }
+    ],
+    "processing_crop_scaled_960x540": [
+      0,
+      0,
+      960,
+      540
+    ],
+    "crop_status": "No crop: full-height matching reveal verified",
+    "original_processing_crop_command": null,
+    "event_id": 1111
+  },
+  {
+    "id": "goal-11",
+    "pid": 8477956,
+    "player": "David Pastrnak",
+    "team": "BOS",
+    "jersey": 88,
+    "source": "https://www.nhl.com/gamecenter/nyr-vs-bos/2025/02/01/2024020827",
+    "source_video_id": "6368134275112",
+    "game_id": 2024020827,
+    "date": "2025-02-01",
+    "shot_type": "slap",
+    "event_id": 860,
+    "source_goal_scorer": "David Pastrnak",
+    "source_sha256": "6fa026b3a4e0fe8d84a1a8bb6a33d204d9ae2470e156574c85522d275df7334b",
+    "edit_start_seconds": 19.8,
+    "edit_duration_seconds": 3.9166666666666665,
+    "exported_frames": 94,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-11.json",
+    "identity_verification": "#88 identity confirmed. Paired QA94/94 frames covers helmet, body, gloves and skates. Continuous replay, no scorebug or player-name overlay.",
+    "crop_960x540": [
+      0,
+      54,
+      960,
+      486
+    ],
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "ce41cda4ed2cef7142d852f438a19d2537dc11a7a071742404be075746b19bd7",
+      "reveal": "b4c043fca550ac98cdeaae82a75d397c05572c714c3d09a063d97a7c7d816780",
+      "poster": "4bcc15f7c20609bf485637422feb3dc02ec77c545d4626a810899f31f879e0c5"
+    }
+  },
+  {
+    "id": "goal-12",
+    "pid": 8476453,
+    "player": "Nikita Kucherov",
+    "team": "TBL",
+    "jersey": 86,
+    "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112",
+    "source_video_id": "6368142968112",
+    "game_id": 2024020829,
+    "date": "2025-02-01",
+    "shot_type": "snap",
+    "event_id": 1048,
+    "source_goal_scorer": "Nikita Kucherov",
+    "source_sha256": "eaf6ecd3d5fc3c63fc15296a79a37a1ae6e8e96083c7d197eb1be5b067267685",
+    "edit_start_seconds": 32.0,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-12.json",
+    "identity_verification": "#86 Kucherov identity confirmed96/96. Helmet, body, gloves and skates covered, late skates partly outside frame. Other Lightning players21,38,59 remain visible.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "1744281f8124bda26fc65b9979ce493d41718d4a870a174bea70f0e4c8ca4635",
+      "reveal": "28a50418175b731c4f827f83be638e880b6d5fc31e233c247f7adefb3275efef",
+      "poster": "b6655c60b4a7ae5c85b432bb1cd3690f744a3df614cd1cac8ba373321205c717"
+    }
+  },
+  {
+    "id": "goal-13",
+    "pid": 8477493,
+    "player": "Aleksander Barkov",
+    "team": "FLA",
+    "jersey": 16,
+    "source": "https://nhl.com/video/lak-fla-barkov-scores-ppg-against-darcy-kuemper-6367975996112",
+    "source_video_id": "6367975996112",
+    "game_id": 2024020808,
+    "date": "2025-01-29",
+    "shot_type": "backhand",
+    "event_id": 220,
+    "source_goal_scorer": "Aleksander Barkov",
+    "source_sha256": "e5aaa40304726a7a0e3b1a6002cf4d92668bcd227461daf8844c99f0bb2b1618",
+    "edit_start_seconds": 31.45,
+    "edit_duration_seconds": 2.5,
+    "exported_frames": 60,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-13.json",
+    "identity_verification": "Florida #16 Barkov at left post, 60/60 paired frames. Correct scorer throughout net-front backhand; #13 Reinhart passer and #5 Ekblad screen remain visible. Tail shows puck in net; camera pan stays on same replay angle.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "9496e000ca98a6cacf0a0a4d25d354baeb34522c495c9adf9f1d69b31292b961",
+      "reveal": "8ce1a26306e2c161df2285ab8d5b86afa3aff3e3f6bba10b7e1f94e8696e063e",
+      "poster": "08b6f6ab1c35ad0ad8bc2af90f21b1f23be395dc71a3eea97148d17cadca7714"
+    }
+  },
+  {
+    "id": "goal-14",
+    "pid": 8478483,
+    "player": "Mitch Marner",
+    "team": "TOR",
+    "jersey": 16,
+    "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112",
+    "source_video_id": "6368140670112",
+    "game_id": 2024020833,
+    "date": "2025-02-01",
+    "shot_type": "deflected",
+    "event_id": 257,
+    "source_goal_scorer": "Mitch Marner",
+    "source_sha256": "41cf297efd8c31220df706d420a0ec8cd36eaaf4d85bf776c1ab9f9bd8c77949",
+    "edit_start_seconds": 31.6,
+    "edit_duration_seconds": 2.5833333333333335,
+    "exported_frames": 62,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-14.json",
+    "identity_verification": "#16 Marner central scorer verified62/62. Tracks slot tip and contact at crease; #34 near-net and #23 passing remain visible. No scorebug, continuous replay.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "76cdbc059db11695cd25051d266f22afeaa791a2c8323896f780105278a644aa",
+      "reveal": "a23c8f841fbef1498b43727eaefc3a9aed274615491909ddb2255492081ba835",
+      "poster": "c450d97935e50cf88d641b6fb76227e0ed2aeee850d4754f7cfdcd54edc65819"
+    }
+  },
+  {
+    "id": "goal-15",
+    "pid": 8477939,
+    "player": "William Nylander",
+    "team": "TOR",
+    "jersey": 88,
+    "source": "https://nhl.com/video/tor-edm-nylander-scores-goal-against-stuart-skinner-6368137903112",
+    "source_video_id": "6368137903112",
+    "game_id": 2024020833,
+    "date": "2025-02-01",
+    "shot_type": "snap",
+    "source_goal_scorer": "William Nylander",
+    "source_sha256": "2239e1d51bccc6c2e240ec08d07d3bdd4aa7b97d1f2b1c860b336b30d0324d00",
+    "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+    "original_processing_source_sha256": null,
+    "edit_start_seconds": null,
+    "edit_start_basis": "Exact original processing start parameter unavailable. Frame matching identifies nominal equivalent timing, recorded separately.",
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "exported_sha256": {
+      "masked": "47da62c544ace24e48831f93c2d36e54c4c83191184b4e716dacab0d3887468f",
+      "reveal": "4526468220c81057179d5771c9c4ead249ff3e05018682d1f2b1c980d271e8a1",
+      "poster": "b501f3af8495abee2ae8047e0947794bdd880f6a4dc2e4ed89fea71a1d336f21"
+    },
+    "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+    "source_frame_matches": [
+      {
+        "export_frame": 0,
+        "source_frame": 1529,
+        "source_time": 25.508816666666668,
+        "source_crop_y": 54,
+        "source_crop_height": 484,
+        "output_pad_top": 28,
+        "pixel_mse": 7.885481834411621
+      },
+      {
+        "export_frame": 48,
+        "source_frame": 1649,
+        "source_time": 27.510816666666667,
+        "source_crop_y": 54,
+        "source_crop_height": 484,
+        "output_pad_top": 28,
+        "pixel_mse": 13.932019233703613
+      },
+      {
+        "export_frame": 95,
+        "source_frame": 1766,
+        "source_time": 29.462766666666667,
+        "source_crop_y": 54,
+        "source_crop_height": 484,
+        "output_pad_top": 28,
+        "pixel_mse": 14.380627632141113
+      }
+    ],
+    "processing_crop_scaled_960x540": [
+      0,
+      54,
+      960,
+      484
+    ],
+    "crop_status": "Effective crop recovered by matching first/middle/final decoded reveal frames; coordinates use source scaled to960x540.",
+    "nominal_recovered_start_seconds": 25.5,
+    "original_processing_crop_command": null,
+    "prior_allow_empty_frames": [
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95
+    ],
+    "prior_allow_empty_basis": "Prior processing record supplied by site owner: scorer exits frame for the final11frames.",
+    "event_id": 187
+  },
+  {
+    "id": "goal-16",
+    "pid": 8478864,
+    "player": "Kirill Kaprizov",
+    "team": "MIN",
+    "jersey": 97,
+    "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382636486112",
+    "source_video_id": "6382636486112",
+    "game_id": 2025020033,
+    "date": "2025-10-11",
+    "shot_type": "snap",
+    "event_id": 616,
+    "source_goal_scorer": "Kirill Kaprizov",
+    "source_sha256": "e8a07e2af776e02ba565e1b5b5dfca2a2822d4a21bf5afaf1ca0e816ee7a81e6",
+    "edit_start_seconds": 38.8,
+    "edit_duration_seconds": 3.0833333333333335,
+    "exported_frames": 74,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-16.json",
+    "identity_verification": "#97 Kaprizov unmistakable close angle,74/74 paired QA, torso, helmet and gloves covered; feet belowframe early, same scorer remainsmaskedthrough release and goal. #12 passer stays visible.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "62f4fe35c2cb4278dc6ac97db097c78a98c383bbdbaf4f9e4426cd60b6fbff9c",
+      "reveal": "f50f127e7e2f2e511c058234dd03e91d96c2a1bfd39875bd4967eb0516c9591d",
+      "poster": "f617158ef73810284b99e1e9e6780006eae1f4e16f1381fa85c3a364a2998cca"
+    }
+  },
+  {
+    "id": "goal-17",
+    "pid": 8482116,
+    "player": "Tim Stützle",
+    "team": "OTT",
+    "jersey": 18,
+    "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112",
+    "source_video_id": "6367764265112",
+    "game_id": 2024020780,
+    "date": "2025-01-25",
+    "shot_type": "slap",
+    "event_id": 302,
+    "source_goal_scorer": "Tim Stützle",
+    "source_sha256": "b341fe175c1c6292574ae981045aef53caff169d45ce286e659d078952c912dd",
+    "edit_start_seconds": 38.6,
+    "edit_duration_seconds": 3.2083333333333335,
+    "exported_frames": 77,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-17.json",
+    "identity_verification": "Ottawa18 Stutzle close continuous release. All77pairedframes inspected; gloves, helmet, torso and legs covered throughout. No celebration tail or scorebug.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "e115b53aa65eeffc608d281b1ea7048b19aa93c336289bc8c230c13dd33e7ecb",
+      "reveal": "eb6f7f06e055367288fbb3d5e386abc794a11cac73b4673eb478ddeebd397fd9",
+      "poster": "510a6130f44ef466abfea4523da0b3bf68ba97056cbf28cb55556f28fa06e6c1"
+    }
+  },
+  {
+    "id": "goal-18",
+    "pid": 8479314,
+    "player": "Matthew Tkachuk",
+    "team": "FLA",
+    "jersey": 19,
+    "source": "https://nhl.com/video/fla-sjs-tkachuk-scores-ppg-against-yaroslav-askarov-6367773275112",
+    "source_video_id": "6367773275112",
+    "game_id": 2024020788,
+    "date": "2025-01-25",
+    "shot_type": "tip-in",
+    "event_id": 620,
+    "source_goal_scorer": "Matthew Tkachuk",
+    "source_sha256": "e48426dc224dbca34fcd7cd7da4e709b2f28c23f5c8203437a0e7c376500da9f",
+    "edit_start_seconds": 38.8,
+    "edit_duration_seconds": 2.7916666666666665,
+    "exported_frames": 67,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-18.json",
+    "identity_verification": "FLA19 Tkachuk tracked through goal; same scorer rather than the Shark defenders.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "17f2738557caf63c9c1899b79fcf5108770618a2d9cce66d4ed660049ef3a9b9",
+      "reveal": "2e82490a3852c98d52fdc33b9690101faa16e2777f5a31a1b43f674bd35d704f",
+      "poster": "c730ee147c12aee67ea14a5feb69e3c4d34878e4385ccd5844bd1a4f51192a05"
+    }
+  },
+  {
+    "id": "goal-19",
+    "pid": 8480801,
+    "player": "Brady Tkachuk",
+    "team": "OTT",
+    "jersey": 7,
+    "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112",
+    "source_video_id": "6368141542112",
+    "game_id": 2024020828,
+    "date": "2025-02-01",
+    "shot_type": "wrist",
+    "event_id": 817,
+    "source_goal_scorer": "Brady Tkachuk",
+    "source_sha256": "f1639b0e8899382d7b30f79d20e92fc6cb373eb03c3f5f13be144f57187f9b8c",
+    "edit_start_seconds": 35.2,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-19.json",
+    "identity_verification": "All96 paired frames inspected; helmet, gloves, jersey and skates covered. Crop removes live scorebug; replay SN network watermark remains.",
+    "crop_960x540": [
+      0,
+      44,
+      960,
+      496
+    ],
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "b1b4a6a13e80e3609f0fe41b92f8978d95897ecc95e8e676a673019db7b23a59",
+      "reveal": "f4297cf42f4643cfb2c0a86659f8a6f6215265b2e1d12e003ffee71ace307608",
+      "poster": "2d7786155686de1d00a18810ed8c6458134e209ca666701c4ef64eff3a5d6190"
+    }
+  },
+  {
+    "id": "goal-20",
+    "pid": 8480018,
+    "player": "Nick Suzuki",
+    "team": "MTL",
+    "jersey": 14,
+    "source": "https://nhl.com/video/njd-mtl-suzuki-scores-goal-against-jake-allen-6367766068112",
+    "source_video_id": "6367766068112",
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "shot_type": "snap",
+    "source_goal_scorer": "Nick Suzuki",
+    "source_sha256": "7b5a7b4d3febdc346d3f1ccc9c27f6752853e15ad0cadb388e1bf847f3945ef8",
+    "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+    "original_processing_source_sha256": null,
+    "edit_start_seconds": 13.0,
+    "edit_start_basis": "Prior processing record from interrupted session, verified against matching reveal",
+    "edit_duration_seconds": 2.5,
+    "exported_frames": 60,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "exported_sha256": {
+      "masked": "be3a4385e284916a5826956600a288a4e565c4895d9e1307eca361bf63379d7e",
+      "reveal": "028eb4a93f177d3cf54e51368eed23d404c9b75cf2ef6a5927c2f71754a9ce9b",
+      "poster": "3686c0c27c9a310c2fd166ff6c760462b985af91bdbc72aad13af3bfb3a701be"
+    },
+    "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+    "source_frame_matches": [
+      {
+        "export_frame": 0,
+        "source_frame": 780,
+        "source_time": 13.013,
+        "source_crop_y": 80,
+        "source_crop_height": 460,
+        "output_pad_top": 40,
+        "pixel_mse": 11.138446807861328
+      },
+      {
+        "export_frame": 30,
+        "source_frame": 855,
+        "source_time": 14.26425,
+        "source_crop_y": 80,
+        "source_crop_height": 460,
+        "output_pad_top": 40,
+        "pixel_mse": 14.64867115020752
+      },
+      {
+        "export_frame": 59,
+        "source_frame": 927,
+        "source_time": 15.46545,
+        "source_crop_y": 80,
+        "source_crop_height": 460,
+        "output_pad_top": 40,
+        "pixel_mse": 16.298288345336914
+      }
+    ],
+    "processing_crop_scaled_960x540": [
+      0,
+      80,
+      960,
+      460
+    ],
+    "crop_status": "Effective crop recovered by matching first/middle/final decoded reveal frames; coordinates use source scaled to960x540.",
+    "original_processing_crop_command": null,
+    "event_id": 537
+  },
+  {
+    "id": "goal-21",
+    "pid": 8481540,
+    "player": "Cole Caufield",
+    "team": "MTL",
+    "jersey": 13,
+    "source": "https://nhl.com/video/njd-mtl-caufield-scores-goal-against-jake-allen-6367768445112",
+    "source_video_id": "6367768445112",
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "shot_type": "snap",
+    "event_id": 688,
+    "source_goal_scorer": "Cole Caufield",
+    "source_sha256": "e8ef2c8b8676c1bc36b7aa18fed62c3700e2eb89057e56cd62ba6f5cf41e2ede",
+    "edit_start_seconds": 28.2,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-21.json",
+    "identity_verification": "All84 paired frames inspected: helmet, full jersey, gloves and skates fully black. #14 passer remains visible, as do crossing Devils defenders. Continuous replay.",
+    "crop_960x540": [
+      0,
+      38,
+      960,
+      502
+    ],
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "c9222511f23f0c35ed5bd21218c3b712f1e75f2dfa2c4ac9edec6b04a8242ebc",
+      "reveal": "16739c84cf2e2b2ba0324b1ab4453c6e3c40ee88ab0487ccd9802d9d1dd99a98",
+      "poster": "e9a9ee4a5591dcb03a837853960243a8473efa4c0687109476b76ef12ffc8c25"
+    }
+  },
+  {
+    "id": "goal-22",
+    "pid": 8478427,
+    "player": "Sebastian Aho",
+    "team": "CAR",
+    "jersey": 20,
+    "source": "https://nhl.com/video/car-nyi-aho-scores-goal-against-marcus-hogberg-6367765349112",
+    "source_video_id": "6367765349112",
+    "game_id": 2024020785,
+    "date": "2025-01-25",
+    "shot_type": "wrist",
+    "event_id": 183,
+    "source_goal_scorer": "Sebastian Aho",
+    "source_sha256": "d9b0aba206fb3458a3ceb77906da2cda52b305218e315e7edb24246e2764c83d",
+    "edit_start_seconds": 12.5,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-22.json",
+    "identity_verification": "CAR20 Aho tracked from receive through release; glove and trailing shin/waist edge explicitly patched and rechecked.",
+    "crop_960x540": [
+      0,
+      0,
+      960,
+      492
+    ],
+    "explicit_mask_corrections": true,
+    "exported_sha256": {
+      "masked": "99922ef4d0bc18bc31cbc4e4d7e7762049cc0792ac91de763f90da4dd7ec49f9",
+      "reveal": "6df0aeccc84a4e68367ce9ea7a006a40624b587a1a79870b2820cf20b63c0655",
+      "poster": "4277c3b295fd01299181bcdefcc79124deba2dd86fed5a2ac59423106882e51a"
+    }
+  },
+  {
+    "id": "goal-23",
+    "pid": 8478010,
+    "player": "Brayden Point",
+    "team": "TBL",
+    "jersey": 21,
+    "source": "https://nhl.com/video/ott-tbl-point-scores-goal-against-anton-forsberg-6368406917112",
+    "source_video_id": "6368406917112",
+    "game_id": 2024020862,
+    "date": "2025-02-06",
+    "shot_type": "wrist",
+    "event_id": 1016,
+    "source_goal_scorer": "Brayden Point",
+    "source_sha256": "ce7001e90c32f6045a70a01e63426415d98f952c571db69b2a4e5eaed2df59bf",
+    "edit_start_seconds": 42.7,
+    "edit_duration_seconds": 2.7083333333333335,
+    "exported_frames": 65,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-23.json",
+    "identity_verification": "TBL21 Point tracked through goal; OTT opponents remain visible.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "3e093a08cf08e5253f217a5e12e9bb7e6d5ad10217de64e535877c8af8c55fbc",
+      "reveal": "c76c6a47bceb200ebf9cad290186fee7ee60d4ecbfee130649fb349edc29f415",
+      "poster": "12dab07a8b10847924748cb7cab0bb637c13745856659f4cd93b58083511e45e"
+    }
+  },
+  {
+    "id": "goal-24",
+    "pid": 8474141,
+    "player": "Patrick Kane",
+    "team": "DET",
+    "jersey": 88,
+    "source": "https://nhl.com/video/tor-det-kane-scores-goal-against-anthony-stolarz-6382636626112",
+    "source_video_id": "6382636626112",
+    "game_id": 2025020025,
+    "date": "2025-10-11",
+    "shot_type": "snap",
+    "event_id": 838,
+    "source_goal_scorer": "Patrick Kane",
+    "source_sha256": "b517b4350bfae960539b1075dcd8c6efefba7b348c41d61bdfeb66107d9319c1",
+    "edit_start_seconds": 40.5,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-24.json",
+    "identity_verification": "DET88 Kane tracked from circle carry to wrist release; rear-leg and skate gaps corrected and rechecked. Foreground glass remains visible.",
+    "explicit_mask_corrections": true,
+    "exported_sha256": {
+      "masked": "29f3cf97cf571b50ce801a5c8a5d3a4e23ba648c0f598b6fc0dcd09e5e207bd3",
+      "reveal": "a1234efc6fa92b2313bbb9679438651a60cbf0ce79df8542951f43f6e1f35375",
+      "poster": "a4a38917ba03259bd5fbc6100c34a7eb28d74bc75950c035d2933cf82a86cb5d"
+    }
+  },
+  {
+    "id": "goal-25",
+    "pid": 8482078,
+    "player": "Lucas Raymond",
+    "team": "DET",
+    "jersey": 23,
+    "source": "https://nhl.com/video/tor-det-raymond-scores-goal-against-anthony-stolarz-6382634388112",
+    "source_video_id": "6382634388112",
+    "game_id": 2025020025,
+    "date": "2025-10-11",
+    "shot_type": "wrist",
+    "event_id": 790,
+    "source_goal_scorer": "Lucas Raymond",
+    "source_sha256": "2846e1a430ed1e6015ccbc2fd92a4a1ca964da5bb05e4a841167468772a8b3fe",
+    "edit_start_seconds": 5.8,
+    "edit_duration_seconds": 2.5,
+    "exported_frames": 60,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-25.json",
+    "identity_verification": "DET23 Raymond is the far-circle shooter, not DET71 at crease. All60 frames re-reviewed after glove patches27/29/30 and43..59. Goal retained; skate away trimmed.",
+    "crop_960x540": [
+      0,
+      0,
+      960,
+      486
+    ],
+    "trim_note": "Goal and follow-through retained for2.5sec; post-goal skate away omitted.",
+    "explicit_mask_corrections": true,
+    "exported_sha256": {
+      "masked": "0fbc9163c59bbbaf1cc1d9336d479aca1ead485649b5cedb39f113ed8579522b",
+      "reveal": "746f3a3dfa0c9b5567c5d0f1b040de0084123d86262e22b97931a4248247e11f",
+      "poster": "9b6d58c0c70bea68d518e5db441f0fc0f5d96ec8d3c16a2e93fe739c44d57b0c"
+    }
+  },
+  {
+    "id": "goal-26",
+    "pid": 8477946,
+    "player": "Dylan Larkin",
+    "team": "DET",
+    "jersey": 71,
+    "source": "https://nhl.com/video/det-cgy-larkin-scores-goal-against-dustin-wolf-6368143754112",
+    "source_video_id": "6368143754112",
+    "game_id": 2024020834,
+    "date": "2025-02-01",
+    "shot_type": "snap",
+    "event_id": 280,
+    "source_goal_scorer": "Dylan Larkin",
+    "source_sha256": "04fc9c6200a019efbfe1ba076514291397514f9000c1303d1cd27727e5063aca",
+    "edit_start_seconds": 38.4,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-26.json",
+    "identity_verification": "DET71 Larkin is the away-white carrier from boards into circle and shot; Calgary defenders remain visible.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "06ac897a0cabb5cbe52fbec4b0c9e88fdc4b1b65bceec8f22a28c4f1e533e08d",
+      "reveal": "8bfc24b2c8773f2152dd4acda50ff2d96f19b1a7f189854542815dbf9e962f1d",
+      "poster": "6b45347dfe912df940e38881bdd1617a040ddc597f533b2d33bea25896b67cfb"
+    }
+  },
+  {
+    "id": "goal-27",
+    "pid": 8480027,
+    "player": "Jason Robertson",
+    "team": "DAL",
+    "jersey": 21,
+    "source": "https://nhl.com/video/dal-col-robertson-scores-goal-against-scott-wedgewood-6382639693112",
+    "source_video_id": "6382639693112",
+    "game_id": 2025020034,
+    "date": "2025-10-11",
+    "shot_type": "tip-in",
+    "event_id": 355,
+    "source_goal_scorer": "Jason Robertson",
+    "source_sha256": "c9fc9b70d4997cba062cee45c65ece0687d933b0c46636d158e5d3eee45b8ef6",
+    "edit_start_seconds": 31.1,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-27.json",
+    "identity_verification": "DAL21 Robertson is the left-goalmouth tip-in finisher; earlier glove anchors corrected. Other Dallas screen and Colorado defenders remain visible.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "2c7ee721f0649ef9ea9e4268e55a1e974b2cb6f58abdf643f814d4b36ae74f90",
+      "reveal": "5395175c525fd08ea5c77325886583fc39bc2edd8e06bf38f35a93ae86f89169",
+      "poster": "3b53abc258598c99e2332cb98920ad5a44bb9032f2ca32b60eff7312fb964325"
+    }
+  },
+  {
+    "id": "goal-28",
+    "pid": 8476887,
+    "player": "Filip Forsberg",
+    "team": "NSH",
+    "jersey": 9,
+    "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112",
+    "source_video_id": "6382633663112",
+    "game_id": 2025020032,
+    "date": "2025-10-11",
+    "shot_type": "snap",
+    "event_id": 252,
+    "source_goal_scorer": "Filip Forsberg",
+    "source_sha256": "c619d75064f10c3a428ca77d46af03d887f9c8070cca977605f716976df15a8a",
+    "edit_start_seconds": 33.8,
+    "edit_duration_seconds": 3.7916666666666665,
+    "exported_frames": 91,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-28.json",
+    "identity_verification": "91/91 paired frames inspected. Gold9 Forsberg covered through pickup, release and celebration. Martin44 stays visible at right. Stick and puck retained, no cuts or identifying overlays.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "d4f98d52618f0a4313854dd6251c2bd9b7bd3512f5ddaceac756f239a0a20858",
+      "reveal": "99c232d32fb52d0b25ca7911cf998f30ad6b85ad152f64cd0b1fe3e94bcee0d4",
+      "poster": "7b60f7b2b82d1c060b82b3afdff2462690a1662b55f9c1c104a7c6bc44f5d824"
+    }
+  },
+  {
+    "id": "goal-29",
+    "pid": 8479323,
+    "player": "Adam Fox",
+    "team": "NYR",
+    "jersey": 23,
+    "source": "https://nhl.com/video/njd-nyr-fox-scores-ppg-against-jacob-markstrom-6366884311112",
+    "source_video_id": "6366884311112",
+    "game_id": 2024020656,
+    "date": "2025-01-09",
+    "shot_type": "deflected",
+    "event_id": 332,
+    "source_goal_scorer": "Adam Fox",
+    "source_sha256": "8f5ca87824f3bc09aa3938a668316de0dc562bd1c489804b66cabc9ffa7ade75",
+    "edit_start_seconds": 35.0,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-29.json",
+    "identity_verification": "84/84 paired frames inspected. Fox23 silhouette stays on actual point shooter; Zibanejad93 remains visible screening the goalie. Full windup, release and goal finish, helmet, jersey, gloves and skates covered; no scorebug or naming overlay.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "5bff4e3aad78eba543babcb29a8a3082947a615fab31650dab21a26a557e1c7c",
+      "reveal": "a4ca714a3541841b8c4e59aa6d328d807f2a196129a803399e08131584ce0ca6",
+      "poster": "f1dc36718e902b017165b4a5391f21c17b63d9701f5242e721084f0f2e86199f"
+    }
+  },
+  {
+    "id": "goal-30",
+    "pid": 8474578,
+    "player": "Erik Karlsson",
+    "team": "PIT",
+    "jersey": 65,
+    "source": "https://nhl.com/video/pit-phi-karlsson-scores-goal-against-samuel-ersson-6368533717112",
+    "source_video_id": "6368533717112",
+    "game_id": 2024020881,
+    "date": "2025-02-08",
+    "shot_type": "snap",
+    "source_goal_scorer": "Erik Karlsson",
+    "source_sha256": "84459d9c551595c6f013dbfc443b840f56fbb391f8997061a7a029b12deba84a",
+    "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
+    "original_processing_source_sha256": null,
+    "edit_start_seconds": null,
+    "edit_start_basis": "Exact original processing start parameter unavailable. Frame matching identifies nominal equivalent timing, recorded separately.",
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "exported_sha256": {
+      "masked": "9b97c55750aeb8678468df1ef3f2c87afb49532960706270c523c02411194f41",
+      "reveal": "1c1824c418d47094a7c399f2bbb8a558edb377803e0e7ad7ed004d3e73dbb8f3",
+      "poster": "c7ed861de8b7a777bee1c434505b8a38aca70a3ea6c36048791d2821be0e80bf"
+    },
+    "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
+    "source_frame_matches": [
+      {
+        "export_frame": 0,
+        "export_time": 0.0,
+        "visible_rows": [
+          0,
+          540
+        ],
+        "source_frame": 1679,
+        "source_time": 28.011316666666666,
+        "pixel_mse": 1.4908324480056763
+      },
+      {
+        "export_frame": 42,
+        "export_time": 1.75,
+        "visible_rows": [
+          0,
+          540
+        ],
+        "source_frame": 1784,
+        "source_time": 29.763066666666667,
+        "pixel_mse": 1.90934157371521
+      },
+      {
+        "export_frame": 83,
+        "export_time": 3.4583333333333335,
+        "visible_rows": [
+          0,
+          540
+        ],
+        "source_frame": 1886,
+        "source_time": 31.464766666666666,
+        "pixel_mse": 3.1093931198120117
+      }
+    ],
+    "processing_crop_scaled_960x540": [
+      0,
+      0,
+      960,
+      540
+    ],
+    "crop_status": "No crop: full-height matching reveal verified",
+    "nominal_recovered_start_seconds": 28.0,
+    "original_processing_crop_command": null,
+    "event_id": 471
+  },
+  {
+    "id": "goal-31",
+    "pid": 8478460,
+    "player": "Zach Werenski",
+    "team": "CBJ",
+    "jersey": 8,
+    "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112",
+    "source_video_id": "6367763638112",
+    "game_id": 2024020782,
+    "date": "2025-01-25",
+    "shot_type": "wrist",
+    "event_id": 263,
+    "source_goal_scorer": "Zach Werenski",
+    "source_sha256": "eab2270ebb9bd44aea53dcf1a2af548aeb15fb50084aa86791a470679be4582e",
+    "edit_start_seconds": 28.7,
+    "edit_duration_seconds": 3.7916666666666665,
+    "exported_frames": 91,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-31.json",
+    "identity_verification": "91/91 paired frames inspected. Same CBJ8 shoulder/name, helmet, arms, gloves and skates covered throughout. Stick and puck visible; full scoring finish preserved; no identifying overlays.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "ccb068d07057395cc0ad2dcd527d6ce6e7f0fa1a5d85b750ec6a0e1fd58c57c9",
+      "reveal": "7c56c6d6e129b90738f59d7f69e0f340c7bd490a7552e524dd29fbb370f0be7c",
+      "poster": "ce8df614e02213c234dace018591e9ebfdb94b2173c6c8ca08bb55e7ed5ff925"
+    }
+  },
+  {
+    "id": "goal-32",
+    "pid": 8480839,
+    "player": "Rasmus Dahlin",
+    "team": "BUF",
+    "jersey": 26,
+    "source": "https://nhl.com/video/buf-nsh-dahlin-scores-goal-against-justus-annunen-6368536216112",
+    "source_video_id": "6368536216112",
+    "game_id": 2024020885,
+    "date": "2025-02-08",
+    "shot_type": "wrist",
+    "event_id": 448,
+    "source_goal_scorer": "Rasmus Dahlin",
+    "source_sha256": "9fd34e43f0576c92f0e9fbc91cc55faf2b2d0ebcf032b9075f8fd3d74c2afa50",
+    "edit_start_seconds": 30.45,
+    "edit_duration_seconds": 2.5,
+    "exported_frames": 60,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-32.json",
+    "identity_verification": "BUF26 Dahlin wrist shot; goal retained, ending cropped to60frames before later forearm gap.",
+    "trim_note": "Goal is complete by frame40. End before later celebration leaves forearm contour disconnected.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "3e8c1a8495632788a3c1b8939ccb87da4dc0bf3e3fb1d8724c6c534ab26dd9f9",
+      "reveal": "a52e86e166427ef25ba03a698c39410bf122804af136dfbaafea9f75704a41d1",
+      "poster": "92a7b1644d476b28a147fd2fef347ac36eb3d1c1deec3bde9f9142efe88e90d8"
+    }
+  },
+  {
+    "id": "goal-33",
+    "pid": 8482105,
+    "player": "Jake Sanderson",
+    "team": "OTT",
+    "jersey": 85,
+    "source": "https://nhl.com/video/min-ott-sanderson-scores-ppg-against-filip-gustavsson-6368142035112",
+    "source_video_id": "6368142035112",
+    "game_id": 2024020828,
+    "date": "2025-02-01",
+    "shot_type": "wrist",
+    "event_id": 810,
+    "source_goal_scorer": "Jake Sanderson",
+    "source_sha256": "4144f561fb9966968632784b5a00d2538963cad9c4d746151cdb073cadb20dce",
+    "edit_start_seconds": 42.5,
+    "edit_duration_seconds": 2.5,
+    "exported_frames": 60,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-33.json",
+    "identity_verification": "OTT85 Sanderson point shot; shooter exits at36 as camera follows goal. Empty36..59 verified.",
+    "verified_scorer_exit_frames": [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59
+    ],
+    "trim_note": "Retain full wrist release and puck-to-net pan; end after goal, before extended celebration.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "f22f2bb392104fb6d09896110585faac4813ee5b21c382f0ef17531f96457734",
+      "reveal": "4f652c596566fcd37f6506aafeb164ca0fe39f147b52d2448cc0b09dd0c5c036",
+      "poster": "60f8618ed83a486df636c905863168e82970769c1aa925447a159e150fef00ae"
+    }
+  },
+  {
+    "id": "goal-34",
+    "pid": 8478444,
+    "player": "Brock Boeser",
+    "team": "VAN",
+    "jersey": 6,
+    "source": "https://nhl.com/video/van-edm-boeser-scores-goal-against-calvin-pickard-6382641995112",
+    "source_video_id": "6382641995112",
+    "game_id": 2025020035,
+    "date": "2025-10-11",
+    "shot_type": "wrist",
+    "event_id": 706,
+    "source_goal_scorer": "Brock Boeser",
+    "source_sha256": "be7837140eb52c95a0241ee26ef6bb47e58933de40f67f67c551a81fe788f0bd",
+    "edit_start_seconds": 33.7,
+    "edit_duration_seconds": 3.4166666666666665,
+    "exported_frames": 82,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-34.json",
+    "identity_verification": "All82 paired frames inspected: Vancouver #6 Boeser scorer follows pass reception through wrist release into goal. Helmet/body/gloves/skates hidden, scorebug absent, original replay angle unchanged.",
+    "crop_960x540": [
+      0,
+      20,
+      960,
+      520
+    ],
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "291e8c966628bb8cedeeb6d67f55b838e04c0855720a4f5afb763394094e2fe5",
+      "reveal": "97b416efe59772457555786732da5b355e3e015c3c4479ba92839d6451333e96",
+      "poster": "2664aee9881a4214faac0d9a80bd396caf7a1725d0ac2552aa139dd6a0ccdc54"
+    }
+  },
+  {
+    "id": "goal-35",
+    "pid": 8478414,
+    "player": "Timo Meier",
+    "team": "NJD",
+    "jersey": 28,
+    "source": "https://nhl.com/video/njd-tbl-meier-scores-goal-against-andrei-vasilevskiy-6382631762112",
+    "source_video_id": "6382631762112",
+    "game_id": 2025020026,
+    "date": "2025-10-11",
+    "shot_type": "poke",
+    "event_id": 252,
+    "source_goal_scorer": "Timo Meier",
+    "source_sha256": "721f5bb03f8efef6b5aa3fc4fb109ae80125275f8fb2ec401509c1d0cc534c57",
+    "edit_start_seconds": 42.45,
+    "edit_duration_seconds": 3.0833333333333335,
+    "exported_frames": 74,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-35.json",
+    "identity_verification": "All74 paired frames inspected after extra SAM anchors plus12 ellipse/16 line corrections; #28 Meier pokes rebound while#13 Hischier screens and#91 trails. Glove/forearm and shin strips manually patched after SAM occlusion gaps. Reproduction: track, patch_goal35.py, render.",
+    "crop_960x540": [
+      0,
+      42,
+      960,
+      498
+    ],
+    "explicit_mask_corrections": true,
+    "exported_sha256": {
+      "masked": "be715832f603a6caf35c6f9e39b2a285d9bd5e0687a3388d7e9ee7866468ccaf",
+      "reveal": "41da5a0ce86343848dc62c14de53a7d967130082c305331be03b657bd17d64b8",
+      "poster": "39260156d39debcc370a44b97a4889e8519e248bdccda66a9fbfdf83685d41d2"
+    }
+  },
+  {
+    "id": "goal-36",
+    "pid": 8480002,
+    "player": "Nico Hischier",
+    "team": "NJD",
+    "jersey": 13,
+    "source": "https://nhl.com/video/njd-mtl-hischier-scores-goal-against-jakub-dobes-6367765815112",
+    "source_video_id": "6367765815112",
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "shot_type": "backhand",
+    "event_id": 281,
+    "source_goal_scorer": "Nico Hischier",
+    "source_sha256": "cc0d8a939c7e34fb62f5ea3c35ac194171691a9878588f73b6f16fda0406ac9c",
+    "edit_start_seconds": 30.15,
+    "edit_duration_seconds": 3.7083333333333335,
+    "exported_frames": 89,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-36.json",
+    "identity_verification": "All89 paired frames inspected: NJD #13 in right circle receives from Bratt #63 left, tracks around/right of net through backhand into goal. Helmet/body/gloves/skates hidden; scoreboard removed. No switches to #11 screening or #63 passer.",
+    "crop_960x540": [
+      0,
+      42,
+      960,
+      498
+    ],
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "94ec43bd94905c5c79140ba444203d6616a765e1bfe0af75041a682475498587",
+      "reveal": "c5f60de1e51ad1e1216191afed46345041018b2dfca6dae89ee76e71240d90e3",
+      "poster": "8f4bfe46c47b765aedded8ce4eda923be34cbc3fff475d00df1d43545482d3ee"
+    }
+  },
+  {
+    "id": "goal-37",
+    "pid": 8479407,
+    "player": "Jesper Bratt",
+    "team": "NJD",
+    "jersey": 63,
+    "source": "https://nhl.com/video/njd-mtl-bratt-scores-goal-against-jakub-dobes-6367764774112",
+    "source_video_id": "6367764774112",
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "shot_type": "snap",
+    "event_id": 406,
+    "source_goal_scorer": "Jesper Bratt",
+    "source_sha256": "bfd5ecd229317f2dcc1f125273180cc0d16813a03f4af84e340d0ba476439244",
+    "edit_start_seconds": 30.05,
+    "edit_duration_seconds": 3.7083333333333335,
+    "exported_frames": 89,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-37.json",
+    "identity_verification": "All89 paired frames inspected. #63 Bratt curls behind goal from left to right corner and shoots, while#13 Hischier screens crease and remains visible. Entire scorer covered through continuous replay.",
+    "crop_960x540": [
+      0,
+      40,
+      960,
+      500
+    ],
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "31745fc9d68a1b6ac68937870d6267d0fc95eb06591e14162794208820d35168",
+      "reveal": "d5ba5628c066113b962b150c81038ab19dd45c87b410edb80375c4af0e20b47c",
+      "poster": "31e352774982d57a876f66131043af957364089059e57c096ea328e6cdd185ca"
+    }
+  },
+  {
+    "id": "goal-38",
+    "pid": 8482093,
+    "player": "Seth Jarvis",
+    "team": "CAR",
+    "jersey": 24,
+    "source": "https://nhl.com/video/phi-car-jarvis-scores-goal-against-samuel-ersson-6382638852112",
+    "source_video_id": "6382638852112",
+    "game_id": 2025020030,
+    "date": "2025-10-11",
+    "shot_type": "slap",
+    "event_id": 1255,
+    "source_goal_scorer": "Seth Jarvis",
+    "source_sha256": "7e1bf1829a4035253688b35e7ae2164b67f108ca34facbd9986b3e7e7f66b682",
+    "edit_start_seconds": 40,
+    "edit_duration_seconds": 3.2083333333333335,
+    "exported_frames": 77,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-38.json",
+    "identity_verification": "CAR24 Jarvis one-timer; exposed upper glove50..76 corrected using verified per-frame hand ellipses.",
+    "crop_960x540": [
+      0,
+      20,
+      960,
+      520
+    ],
+    "explicit_mask_corrections": true,
+    "exported_sha256": {
+      "masked": "0e780fdc303acb2b86376d657ceca75a320336c0fb92c7b80add05bd03b585ea",
+      "reveal": "f229cd93f0053595549e99c3f241ad52e8034864b7841baf513a72cef0492d27",
+      "poster": "c07dec884b7b13708b03ba59ba64b73c00bc7a8dd50f3b16edb5e8cd12985062"
+    }
+  },
+  {
+    "id": "goal-39",
+    "pid": 8477933,
+    "player": "Sam Reinhart",
+    "team": "FLA",
+    "jersey": 13,
+    "source": "https://nhl.com/video/fla-sjs-reinhart-scores-goal-against-yaroslav-askarov-6367773124112",
+    "source_video_id": "6367773124112",
+    "game_id": 2024020788,
+    "date": "2025-01-25",
+    "shot_type": "backhand",
+    "event_id": 741,
+    "source_goal_scorer": "Sam Reinhart",
+    "source_sha256": "dafbf2ba4d4a85c28207323bf897292b434c37b1abfd9e0513b15974aabb51ad",
+    "edit_start_seconds": 24.6,
+    "edit_duration_seconds": 3.0,
+    "exported_frames": 72,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "edit": "tools/who_scored/edits/goal-39.json",
+    "identity_verification": "FLA13 Reinhart right-circle backhand; FLA19 Tkachuk and Sharks84 remain distinct. Goal retained in72frames; prolonged post-goal pileup trimmed.",
+    "crop_960x540": [
+      0,
+      40,
+      960,
+      500
+    ],
+    "trim_note": "Three seconds retain backhand release and goal; omit prolonged post-goal occlusion.",
+    "explicit_mask_corrections": false,
+    "exported_sha256": {
+      "masked": "af72dba2118ffec9af10188eebb6e699fc3755ddcb4eb0c858c3d887807894bf",
+      "reveal": "9c6bf551e1931eec6f3900860ac2a0aef44ae6eaf12c86336a5187285f858584",
+      "poster": "1e1936aee9f952cd987e4a591078c74422f46ebf67cde7cf5d61da5e8322645b"
+    }
   }
 ]

@@ -54,7 +54,7 @@
       "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
       "original_processing_source_sha256": null,
       "edit_start_seconds": 41.3,
-      "edit_start_basis": "Prior processing record supplied by owner, verified against matching reveal",
+      "edit_start_basis": "Prior processing record from interrupted session, verified against matching reveal",
       "edit_duration_seconds": 3.083333,
       "exported_frames": 74,
       "exported_fps": 24,
@@ -211,7 +211,7 @@
       "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
       "original_processing_source_sha256": null,
       "edit_start_seconds": 13.0,
-      "edit_start_basis": "Prior processing record supplied by owner, verified against matching reveal",
+      "edit_start_basis": "Prior processing record from interrupted session, verified against matching reveal",
       "edit_duration_seconds": 2.5,
       "exported_frames": 60,
       "exported_fps": 24,
@@ -360,11 +360,17 @@
       },
       "original_assets_unchanged": true,
       "prior_full_frame_review": {
-        "status": "Completed exports recovered from previous run by site owner",
+        "status": "Completed exports recovered from interrupted previous run; original per-frame record unavailable.",
         "per_frame_review_record_available": false
       },
-      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
-      "source_first_middle_final_matches": true
+      "current_review_scope": "All exported frames compared visually between masked/reveal, plus prior first/middle/final source match and official attribution. Original tracked masks unavailable.",
+      "source_first_middle_final_matches": true,
+      "correct_scorer": true,
+      "all_paired_review_frames_inspected": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "notes": "All74 decoded original/masked pairs visually inspected in current session. NJD86 Hughes rush and snap shot, with Montreal defenders left visible."
     },
     {
       "id": "goal-15",
@@ -386,11 +392,17 @@
       },
       "original_assets_unchanged": true,
       "prior_full_frame_review": {
-        "status": "Completed exports recovered from previous run by site owner",
+        "status": "Completed exports recovered from interrupted previous run; original per-frame record unavailable.",
         "per_frame_review_record_available": false
       },
-      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
-      "source_first_middle_final_matches": true
+      "current_review_scope": "All exported frames compared visually between masked/reveal, plus prior first/middle/final source match and official attribution. Original tracked masks unavailable.",
+      "source_first_middle_final_matches": true,
+      "correct_scorer": true,
+      "all_paired_review_frames_inspected": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "notes": "All96 decoded original/masked pairs visually inspected in current session. TOR88 Nylander rush release and follow-through, with Edmonton defenders left visible; exits frame85 and stays offscreen through95."
     },
     {
       "id": "goal-20",
@@ -412,11 +424,17 @@
       },
       "original_assets_unchanged": true,
       "prior_full_frame_review": {
-        "status": "Completed exports recovered from previous run by site owner",
+        "status": "Completed exports recovered from interrupted previous run; original per-frame record unavailable.",
         "per_frame_review_record_available": false
       },
-      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
-      "source_first_middle_final_matches": true
+      "current_review_scope": "All exported frames compared visually between masked/reveal, plus prior first/middle/final source match and official attribution. Original tracked masks unavailable.",
+      "source_first_middle_final_matches": true,
+      "correct_scorer": true,
+      "all_paired_review_frames_inspected": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "notes": "All60 decoded original/masked pairs visually inspected in current session. MTL14 Suzuki slot shot, with NJD defenders left visible."
     },
     {
       "id": "goal-30",
@@ -438,11 +456,17 @@
       },
       "original_assets_unchanged": true,
       "prior_full_frame_review": {
-        "status": "Completed exports recovered from previous run by site owner",
+        "status": "Completed exports recovered from interrupted previous run; original per-frame record unavailable.",
         "per_frame_review_record_available": false
       },
-      "current_review_scope": "Official scorer/game/jersey verified and recovered reveal first/middle/final matched to current original; all masked/reveal frames decode. Original tracked masks and prior per-frame QA work are unavailable.",
-      "source_first_middle_final_matches": true
+      "current_review_scope": "All exported frames compared visually between masked/reveal, plus prior first/middle/final source match and official attribution. Original tracked masks unavailable.",
+      "source_first_middle_final_matches": true,
+      "correct_scorer": true,
+      "all_paired_review_frames_inspected": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "notes": "All84 decoded original/masked pairs visually inspected in current session. PIT65 Karlsson circle shot; foreground glass properly occludes the scorer."
     }
   ]
 }

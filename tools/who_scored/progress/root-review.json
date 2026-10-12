@@ -119,6 +119,18 @@
       "identifying_overlays_removed": true,
       "decode_checks_passed": true,
       "notes": "FLA13 Reinhart right-circle backhand; FLA19 Tkachuk and Sharks84 remain distinct. Goal retained in72frames; prolonged post-goal pileup trimmed."
+    },
+    {
+      "id": "goal-25",
+      "player": "Lucas Raymond",
+      "frames": 60,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "notes": "DET23 Raymond is the far-circle shooter, not DET71 at crease. All60 frames re-reviewed after glove patches27/29/30 and43..59. Goal retained; skate away trimmed."
     }
   ],
   "completed": [
@@ -131,9 +143,8 @@
     "goal-32",
     "goal-33",
     "goal-38",
-    "goal-39"
-  ],
-  "pending": [
+    "goal-39",
     "goal-25"
-  ]
+  ],
+  "pending": []
 }

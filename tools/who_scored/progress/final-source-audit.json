@@ -1,0 +1,306 @@
+{
+  "records": [
+    {
+      "id": "goal-10",
+      "pid": 8481559,
+      "official_player": "Jack Hughes",
+      "game_id": 2024020779,
+      "event_id": 1111,
+      "source_video_id": "6367771449112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020779/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-11",
+      "pid": 8477956,
+      "official_player": "David Pastrnak",
+      "game_id": 2024020827,
+      "event_id": 860,
+      "source_video_id": "6368134275112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020827/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-12",
+      "pid": 8476453,
+      "official_player": "Nikita Kucherov",
+      "game_id": 2024020829,
+      "event_id": 1048,
+      "source_video_id": "6368142968112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020829/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-13",
+      "pid": 8477493,
+      "official_player": "Aleksander Barkov",
+      "game_id": 2024020808,
+      "event_id": 220,
+      "source_video_id": "6367975996112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020808/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-14",
+      "pid": 8478483,
+      "official_player": "Mitch Marner",
+      "game_id": 2024020833,
+      "event_id": 257,
+      "source_video_id": "6368140670112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020833/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-15",
+      "pid": 8477939,
+      "official_player": "William Nylander",
+      "game_id": 2024020833,
+      "event_id": 187,
+      "source_video_id": "6368137903112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020833/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-16",
+      "pid": 8478864,
+      "official_player": "Kirill Kaprizov",
+      "game_id": 2025020033,
+      "event_id": 616,
+      "source_video_id": "6382636486112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020033/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-17",
+      "pid": 8482116,
+      "official_player": "Tim Stützle",
+      "game_id": 2024020780,
+      "event_id": 302,
+      "source_video_id": "6367764265112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020780/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-18",
+      "pid": 8479314,
+      "official_player": "Matthew Tkachuk",
+      "game_id": 2024020788,
+      "event_id": 620,
+      "source_video_id": "6367773275112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020788/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-19",
+      "pid": 8480801,
+      "official_player": "Brady Tkachuk",
+      "game_id": 2024020828,
+      "event_id": 817,
+      "source_video_id": "6368141542112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020828/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-20",
+      "pid": 8480018,
+      "official_player": "Nick Suzuki",
+      "game_id": 2024020779,
+      "event_id": 537,
+      "source_video_id": "6367766068112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020779/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-21",
+      "pid": 8481540,
+      "official_player": "Cole Caufield",
+      "game_id": 2024020779,
+      "event_id": 688,
+      "source_video_id": "6367768445112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020779/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-22",
+      "pid": 8478427,
+      "official_player": "Sebastian Aho",
+      "game_id": 2024020785,
+      "event_id": 183,
+      "source_video_id": "6367765349112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020785/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-23",
+      "pid": 8478010,
+      "official_player": "Brayden Point",
+      "game_id": 2024020862,
+      "event_id": 1016,
+      "source_video_id": "6368406917112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020862/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-24",
+      "pid": 8474141,
+      "official_player": "Patrick Kane",
+      "game_id": 2025020025,
+      "event_id": 838,
+      "source_video_id": "6382636626112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020025/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-25",
+      "pid": 8482078,
+      "official_player": "Lucas Raymond",
+      "game_id": 2025020025,
+      "event_id": 790,
+      "source_video_id": "6382634388112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020025/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-26",
+      "pid": 8477946,
+      "official_player": "Dylan Larkin",
+      "game_id": 2024020834,
+      "event_id": 280,
+      "source_video_id": "6368143754112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020834/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-27",
+      "pid": 8480027,
+      "official_player": "Jason Robertson",
+      "game_id": 2025020034,
+      "event_id": 355,
+      "source_video_id": "6382639693112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020034/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-28",
+      "pid": 8476887,
+      "official_player": "Filip Forsberg",
+      "game_id": 2025020032,
+      "event_id": 252,
+      "source_video_id": "6382633663112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020032/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-29",
+      "pid": 8479323,
+      "official_player": "Adam Fox",
+      "game_id": 2024020656,
+      "event_id": 332,
+      "source_video_id": "6366884311112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020656/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-30",
+      "pid": 8474578,
+      "official_player": "Erik Karlsson",
+      "game_id": 2024020881,
+      "event_id": 471,
+      "source_video_id": "6368533717112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020881/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-31",
+      "pid": 8478460,
+      "official_player": "Zach Werenski",
+      "game_id": 2024020782,
+      "event_id": 263,
+      "source_video_id": "6367763638112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020782/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-32",
+      "pid": 8480839,
+      "official_player": "Rasmus Dahlin",
+      "game_id": 2024020885,
+      "event_id": 448,
+      "source_video_id": "6368536216112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020885/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-33",
+      "pid": 8482105,
+      "official_player": "Jake Sanderson",
+      "game_id": 2024020828,
+      "event_id": 810,
+      "source_video_id": "6368142035112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020828/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-34",
+      "pid": 8478444,
+      "official_player": "Brock Boeser",
+      "game_id": 2025020035,
+      "event_id": 706,
+      "source_video_id": "6382641995112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020035/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-35",
+      "pid": 8478414,
+      "official_player": "Timo Meier",
+      "game_id": 2025020026,
+      "event_id": 252,
+      "source_video_id": "6382631762112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020026/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-36",
+      "pid": 8480002,
+      "official_player": "Nico Hischier",
+      "game_id": 2024020779,
+      "event_id": 281,
+      "source_video_id": "6367765815112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020779/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-37",
+      "pid": 8479407,
+      "official_player": "Jesper Bratt",
+      "game_id": 2024020779,
+      "event_id": 406,
+      "source_video_id": "6367764774112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020779/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-38",
+      "pid": 8482093,
+      "official_player": "Seth Jarvis",
+      "game_id": 2025020030,
+      "event_id": 1255,
+      "source_video_id": "6382638852112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2025020030/landing",
+      "passed": true
+    },
+    {
+      "id": "goal-39",
+      "pid": 8477933,
+      "official_player": "Sam Reinhart",
+      "game_id": 2024020788,
+      "event_id": 741,
+      "source_video_id": "6367773124112",
+      "official_api": "https://api-web.nhle.com/v1/gamecenter/2024020788/landing",
+      "passed": true
+    }
+  ],
+  "checked_count": 30,
+  "all_official_scorers_match": true
+}
