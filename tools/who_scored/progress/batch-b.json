@@ -8,6 +8,15 @@
       "poster": "goal-19-v1.jpg",
       "motion": "Rush wrist shot",
       "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112"
+    },
+    {
+      "id": "goal-21",
+      "pid": 8481540,
+      "masked": "goal-21-masked-v1.mp4",
+      "reveal": "goal-21-original-v1.mp4",
+      "poster": "goal-21-v1.jpg",
+      "motion": "Slot snap shot",
+      "source": "https://nhl.com/video/njd-mtl-caufield-scores-goal-against-jake-allen-6367768445112"
     }
   ],
   "sources": [
@@ -27,6 +36,23 @@
       "sha256": "f1639b0e8899382d7b30f79d20e92fc6cb373eb03c3f5f13be144f57187f9b8c",
       "edit": "goal-19.json",
       "identity_verification": "Ottawa #7 Brady Tkachuk visible and skating with puck throughout overhead rush; shooting at frames73\u201380. Other Ottawa skaters stay visible."
+    },
+    {
+      "id": "goal-21",
+      "pid": 8481540,
+      "player": "Cole Caufield",
+      "team": "MTL",
+      "jersey": 13,
+      "source": "https://nhl.com/video/njd-mtl-caufield-scores-goal-against-jake-allen-6367768445112",
+      "source_video_id": "6367768445112",
+      "game_id": 2024020779,
+      "date": "2025-01-25",
+      "shot_type": "snap",
+      "start": 28.2,
+      "duration": 3.5,
+      "sha256": "e8ef2c8b8676c1bc36b7aa18fed62c3700e2eb89057e56cd62ba6f5cf41e2ede",
+      "edit": "goal-21.json",
+      "identity_verification": "Montreal #13 Caufield is fully visible and distinguishable from #14 Suzuki passer. Follows #13 through receiving, shooting and celebration."
     }
   ],
   "checks": [
@@ -41,13 +67,25 @@
       "decode_checks_passed": true,
       "review": "goal-19-dc80073448f1/review",
       "notes": "All96 paired frames inspected; helmet, gloves, jersey and skates covered. Crop removes live scorebug; replay SN network watermark remains."
+    },
+    {
+      "id": "goal-21",
+      "frames": 84,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-21-a74528aa2d20/review",
+      "notes": "All84 paired frames inspected: helmet, full jersey, gloves and skates fully black. #14 passer remains visible, as do crossing Devils defenders. Continuous replay."
     }
   ],
   "completed": [
-    "goal-19"
+    "goal-19",
+    "goal-21"
   ],
   "pending": [
-    "goal-21",
     "goal-22",
     "goal-23",
     "goal-24",
