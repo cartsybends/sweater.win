@@ -41,6 +41,11 @@ jobs:
       - name: Refresh current teams in archived and embedded player data
         run: python refresh_current_teams.py --html site/index.html --schedule schedule.json
 
+      - name: Install video validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y ffmpeg
+
       - name: Check Who Scored? round flow and rotations
         run: |
           node tests/who_scored.cjs
