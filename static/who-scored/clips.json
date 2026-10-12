@@ -1,0 +1,83 @@
+[
+  {
+    "id": "goal-01",
+    "pid": 8478402,
+    "masked": "goal-01-masked-v1.mp4",
+    "reveal": "goal-01-original-v1.mp4",
+    "poster": "goal-01-v1.jpg",
+    "motion": "Rush through defenders",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-9-6365907822112"
+  },
+  {
+    "id": "goal-02",
+    "pid": 8479318,
+    "masked": "goal-02-masked-v1.mp4",
+    "reveal": "goal-02-original-v1.mp4",
+    "poster": "goal-02-v1.jpg",
+    "motion": "Toe-drag wrist shot",
+    "source": "https://www.nhl.com/mapleleafs/video/matthews-strikes-on-perfect-deke-309285322"
+  },
+  {
+    "id": "goal-03",
+    "pid": 8484144,
+    "masked": "goal-03-masked-v1.mp4",
+    "reveal": "goal-03-original-v1.mp4",
+    "poster": "goal-03-v1.jpg",
+    "motion": "Toe-drag wrist shot",
+    "source": "https://www.nhl.com/video/topic/highlights/cgy-chi-bedard-scores-goal-against-dustin-wolf-6385286904112"
+  },
+  {
+    "id": "goal-04",
+    "pid": 8471675,
+    "masked": "goal-04-masked-v1.mp4",
+    "reveal": "goal-04-original-v1.mp4",
+    "poster": "goal-04-v1.jpg",
+    "motion": "Backhand finish",
+    "source": "https://www.nhl.com/video/det-pit-crosby-scores-goal-against-alex-lyon-6349145622112"
+  },
+  {
+    "id": "goal-05",
+    "pid": 8471214,
+    "masked": "goal-05-masked-v1.mp4",
+    "reveal": "goal-05-original-v1.mp4",
+    "poster": "goal-05-v1.jpg",
+    "motion": "Circle one-timer",
+    "source": "https://www.nhl.com/video/nsh-wsh-ovechkin-scores-goal-against-yaroslav-askarov-6344073401112"
+  },
+  {
+    "id": "goal-06",
+    "pid": 8477934,
+    "masked": "goal-06-masked-v1.mp4",
+    "reveal": "goal-06-original-v1.mp4",
+    "poster": "goal-06-v1.jpg",
+    "motion": "Sharp-angle one-timer",
+    "source": "https://www.nhl.com/video/van-edm-draisaitl-scores-goal-against-arturs-silovs-6352815670112"
+  },
+  {
+    "id": "goal-07",
+    "pid": 8477492,
+    "masked": "goal-07-masked-v1.mp4",
+    "reveal": "goal-07-original-v1.mp4",
+    "poster": "goal-07-v1.jpg",
+    "motion": "Return pass and shot",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-15-6367565833112"
+  },
+  {
+    "id": "goal-08",
+    "pid": 8475172,
+    "masked": "goal-08-masked-v1.mp4",
+    "reveal": "goal-08-original-v1.mp4",
+    "poster": "goal-08-v1.jpg",
+    "motion": "Jump, spin and shot",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-10-6366233137112"
+  },
+  {
+    "id": "goal-09",
+    "pid": 8478398,
+    "masked": "goal-09-masked-v1.mp4",
+    "reveal": "goal-09-original-v1.mp4",
+    "poster": "goal-09-v1.jpg",
+    "motion": "Deke and backhand finish",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-16-6368010340112"
+  }
+]

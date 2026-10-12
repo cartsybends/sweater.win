@@ -11,6 +11,7 @@ on:
       - "build_sweater.py"
       - "refresh_current_teams.py"
       - "make_preview_shell.py"
+      - "static/who-scored/**"
       - ".github/workflows/update.yml"
 
 permissions:
@@ -39,6 +40,9 @@ jobs:
 
       - name: Refresh current teams in archived and embedded player data
         run: python refresh_current_teams.py --html site/index.html --schedule schedule.json
+
+      - name: Check Who Scored? round flow and rotations
+        run: node tests/who_scored.cjs
 
       - name: Validate generated JavaScript
         shell: bash

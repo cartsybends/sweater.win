@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "129 · Trophy Case Simplicity"
+VERSION = "130 · Who Scored?"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -176,6 +176,47 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tabrow { display: flex; justify-content: center; }
   .view { max-width: 1480px; margin: 0 auto; }
   #view-statline .search { max-width: 620px; }
+  #view-whoscored { max-width: 880px; }
+  .ws-intro { margin: 4px auto 22px; color: var(--muted); text-align: center; line-height: 1.5; }
+  .ws-setup { max-width: 660px; margin: 12px auto; padding: clamp(22px,5vw,40px); border: 1px solid var(--sep); border-radius: 24px; background: var(--row); text-align: center; }
+  .ws-mark { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 20px; background: var(--cell); color: var(--accent, var(--link)); }
+  .ws-mark svg { width: 30px; height: 30px; }
+  .ws-setup h2 { margin: 0 0 10px; font-size: clamp(25px,5vw,32px); letter-spacing: -.7px; }
+  .ws-setup p { max-width: 42ch; margin: 0 auto 24px; color: var(--muted); line-height: 1.6; font-size: 15px; }
+  .ws-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .ws-modes button { padding: 17px 12px; border: 1px solid var(--sep); border-radius: 15px; background: var(--bg); color: var(--fg); cursor: pointer; font: inherit; }
+  .ws-modes button[aria-pressed="true"] { border-color: var(--accent, var(--link)); box-shadow: inset 0 0 0 1px var(--accent, var(--link)); background: color-mix(in srgb,var(--accent,var(--link)) 8%,var(--bg)); }
+  .ws-modes b, .ws-modes small { display: block; }
+  .ws-modes b { margin-bottom: 6px; font-size: 15px; }
+  .ws-modes small { color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .ws-primary, .ws-controls button { min-height: 44px; border: 1px solid var(--sep); border-radius: 12px; padding: 10px 18px; font: inherit; font-size: 14px; font-weight: 650; cursor: pointer; background: var(--row); color: var(--fg); }
+  .ws-primary { width: 100%; border-color: transparent; background: var(--accent,var(--link)); color: #fff; }
+  .ws-primary:disabled, .ws-controls button:disabled { opacity: .5; cursor: default; }
+  .ws-pool { display: block; margin-top: 16px; font-size: 12px; color: var(--muted); }
+  .ws-roundhead { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+  .ws-roundhead b { color: var(--fg); font-weight: 650; }
+  .ws-player { border: 1px solid var(--sep); border-radius: 20px; overflow: hidden; background: #111113; }
+  .ws-screen { position: relative; aspect-ratio: 16 / 9; }
+  .ws-screen video { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .ws-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; color: #fff; background: rgba(0,0,0,.25); text-align: center; }
+  .ws-overlay button { padding: 12px 20px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; background: rgba(17,17,19,.9); color: #fff; font: inherit; font-size: 14px; cursor: pointer; min-height: 44px; }
+  .ws-overlay span { font-size: 14px; line-height: 1.5; }
+  .ws-track { height: 3px; background: rgba(255,255,255,.15); }
+  .ws-track i { display: block; height: 100%; width: 0; background: var(--accent,var(--link)); transition: width .1s linear; }
+  .ws-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0 18px; }
+  .ws-controls button[aria-pressed="true"] { border-color: var(--accent,var(--link)); color: var(--accent,var(--link)); }
+  .ws-controls .ws-time { margin-left: auto; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  #view-whoscored .search { max-width: none; margin-bottom: 12px; }
+  #view-whoscored .search input { border-radius: 14px; border-color: var(--sep); }
+  .ws-feedback { min-height: 22px; margin: 8px 0; color: var(--muted); font-size: 13px; line-height: 1.5; text-align: center; }
+  .ws-attempts { display: flex; gap: 6px; }
+  .ws-attempts i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .ws-attempts i.used { background: var(--muted); }
+  .ws-attempts i.hit { background: var(--hit); }
+  #wsWrong { max-width: none; }
+  #wsContinue { max-width: 360px; display: block; margin: 16px auto; }
+  .ws-source { display: block; margin: 12px auto; color: var(--muted); font-size: 12px; text-align: center; }
+  @media (max-width: 520px) { .ws-player { border-radius: 14px; } .ws-controls button { padding: 9px 12px; } .ws-controls .ws-time { width: 100%; margin-left: 0; } }
   .ttcard .pname { font-size: 22px; font-weight: 600; margin: 0 0 2px; }
   .ttcard .pmeta { font-size: 14px; color: var(--muted); margin: 0; }
   .intro { text-align: center; color: var(--muted); margin: 6px 0 14px; font-size: 15px; }
@@ -3251,6 +3292,49 @@ TEMPLATE = r'''<!DOCTYPE html>
     <p class="hint"><span id="hlNote"></span><span class="keytip"> Tip: use the ↑ and ↓ keys.</span></p>
   </section>
 
+  <section class="view" id="view-whoscored" hidden>
+    <p class="ws-intro">Name the scorer from their skating, hands, and finish.</p>
+    <div class="ws-setup" id="wsSetup">
+      <div class="ws-mark" id="wsMark" aria-hidden="true"></div>
+      <h2>Recognize the move?</h2>
+      <p>The scorer is a black silhouette. Watch the goal, trust your hockey eye, and find the player in six guesses.</p>
+      <div class="ws-modes" role="group" aria-label="Choose your game">
+        <button type="button" data-ws-mode="daily" aria-pressed="true"><b>Daily goal</b><small>One goal. Same challenge for everyone.</small></button>
+        <button type="button" data-ws-mode="unlimited" aria-pressed="false"><b>Keep them coming</b><small>A rotating mix of different scorers.</small></button>
+      </div>
+      <button type="button" class="ws-primary" id="wsStart">Watch today's goal</button>
+      <small class="ws-pool" id="wsPool"></small>
+    </div>
+    <div id="wsRound" hidden>
+      <div class="ws-roundhead"><b id="wsRoundLabel">Mystery goal</b><span id="wsLeft">6 guesses left</span></div>
+      <div class="ws-player">
+        <div class="ws-screen">
+          <video id="wsVideo" muted playsinline preload="none" aria-label="Goal clip with the scorer shown as a black silhouette"></video>
+          <div class="ws-overlay" id="wsOverlay"><span id="wsLoading" role="status">Loading goal…</span><button type="button" id="wsWatch" hidden>▶ Watch goal</button></div>
+        </div>
+        <div class="ws-track" aria-hidden="true"><i id="wsProgress"></i></div>
+      </div>
+      <div class="ws-controls" role="group" aria-label="Video controls">
+        <button type="button" id="wsReplay">↻ Replay</button>
+        <button type="button" id="wsPause">Pause</button>
+        <button type="button" id="wsSlow" aria-pressed="false">0.5× Slow motion</button>
+        <button type="button" id="wsOriginal" aria-pressed="false" hidden>See original</button>
+        <span class="ws-time" id="wsTime">Replays are unlimited</span>
+      </div>
+      <div class="ws-attempts" id="wsAttempts" aria-label="Guess progress"></div>
+      <p class="ws-feedback" id="wsFeedback" role="status" aria-live="polite"></p>
+      <div class="search">
+        <input id="wsGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="wsOpts" aria-label="Guess the goal scorer" placeholder="Search for a player…">
+        <ul class="list" id="wsOpts" role="listbox" hidden></ul>
+      </div>
+      <ul class="wrong" id="wsWrong"></ul>
+      <a class="ws-source" id="wsSource" target="_blank" rel="noopener" hidden>Full highlight on NHL.com ↗</a>
+    </div>
+    <div class="slot"></div>
+    <button type="button" class="ws-primary" id="wsContinue" hidden>Keep playing · Unlimited</button>
+    <p class="nodata" hidden>No goal clips are available right now.</p>
+  </section>
+
   <section class="view" id="view-journey" hidden>
     <p class="intro">Whose NHL career path is this?</p>
     <div class="jypath" id="jyPath"></div>
@@ -4097,6 +4181,8 @@ const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" str
 const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
   edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.overtime = "clock";
+UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
+MODE_ICONS.whoscored = "video";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
 Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -4141,7 +4227,7 @@ const secondsToEtMidnight = () => {
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
 ["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
- "shoot", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups",
+ "shoot", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups", "whoscored",
  "edgerush", "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 ["edgerush", "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { START[g] = START[g] || "2026-10-05"; });
 const dailyNumber = (g, k) => Math.round((keyUTC(k) - keyUTC(validStart(startOf(g)) ? startOf(g) : k)) / 864e5) + 1;
@@ -6341,6 +6427,7 @@ window.addEventListener("pagehide",()=>{if(overtimeRun)endArcade("overtime",true
 
 // finish a running arcade game if the player leaves it
 function leaveGame(g) {
+  if (g === "whoscored") $("wsVideo").pause();
   if (g === "edgerush") edgeRushCancelAnimation();
   if (g === "overtime" && overtimeRun) endArcade("overtime",true);
   if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
@@ -9590,6 +9677,160 @@ G.edgebuild={
 };
 $("ebChoices").addEventListener("click",e=>{const b=e.target.closest("[data-eb]");if(b&&!G.edgebuild.pending)doGuess(b.dataset.eb);});
 
+// ---- Who Scored? A reviewed video library, with a persistent shuffle bag. ----
+const WS_CLIPS = /*__GOAL_CLIPS__*/[].map(c => ({ ...c, p: BYID.get(c.pid) })).filter(c => c.p);
+const WS_BYID = new Map(WS_CLIPS.map(c => [c.id, c]));
+const WS_DECK_KEY = "sweater-goal-rotation-v1";
+function wsRandom() {
+  const signature = WS_CLIPS.map(c => c.id).join("|");
+  let deck = store.get(WS_DECK_KEY);
+  if (!deck || deck.signature !== signature || !Array.isArray(deck.queue)) deck = { signature, queue: [], last: null };
+  deck.queue = [...new Set(deck.queue.filter(id => WS_BYID.has(id)))];
+  if (!deck.queue.length) deck.queue = shuffled(WS_CLIPS.map(c => c.id));
+  const last = deck.last || S.whoscored?.target?.id;
+  if (deck.queue.length > 1 && deck.queue[0] === last) [deck.queue[0], deck.queue[1]] = [deck.queue[1], deck.queue[0]];
+  const id = deck.queue.shift();
+  deck.last = id;
+  store.set(WS_DECK_KEY, deck);
+  return WS_BYID.get(id);
+}
+function wsMedia(t, original = false) { return `who-scored/${original ? t.reveal : t.masked}`; }
+function wsVideoState() {
+  const g = G.whoscored, v = $("wsVideo");
+  if (game !== "whoscored" || !g.started) return;
+  $("wsPause").textContent = v.paused || v.ended ? "Play" : "Pause";
+  $("wsOverlay").hidden = g.ready && !v.paused && !v.ended;
+  $("wsLoading").hidden = g.ready;
+  $("wsWatch").hidden = !g.ready && !g.failed;
+  $("wsWatch").textContent = g.failed ? "↻ Try again" : v.ended ? "↻ Watch again" : "▶ Play goal";
+  $("wsProgress").style.width = `${v.duration ? Math.min(100,100 * v.currentTime / v.duration) : 0}%`;
+  if (g.ready) $("wsTime").textContent = `${Math.min(v.currentTime || 0,v.duration || 0).toFixed(1)} / ${(v.duration || 0).toFixed(1)}s · Replays are unlimited`;
+}
+function wsPlay(restart = false) {
+  const g = G.whoscored, st = S.whoscored, v = $("wsVideo");
+  if (game !== "whoscored" || !st.target || !g.started) return;
+  if (g.failed) { g.file = ""; wsLoadVideo(st.target, g.original, true); return; }
+  if (restart || v.ended) v.currentTime = 0;
+  const clip = g.file;
+  const play = v.play();
+  if (play?.catch) play.catch(() => {
+    if (g.file !== clip || game !== "whoscored") return;
+    wsVideoState();
+  });
+}
+function wsLoadVideo(t, original = false, play = false) {
+  const g = G.whoscored, v = $("wsVideo");
+  original = !!original && S.whoscored.over;
+  const file = wsMedia(t, original);
+  if (g.file === file) { if (play) wsPlay(true); return; }
+  v.pause();
+  g.file = file; g.original = original; g.ready = false; g.failed = false;
+  $("wsLoading").textContent = "Loading goal…";
+  $("wsTime").textContent = "Replays are unlimited";
+  v.poster = `who-scored/${t.poster}`;
+  v.setAttribute("aria-label", original ? "Original goal clip, scorer revealed" : "Goal clip with the scorer shown as a black silhouette");
+  v.src = file; v.load(); v.playbackRate = g.slow ? .5 : 1;
+  wsVideoState();
+  if (play) wsPlay();
+}
+G.whoscored = {
+  title: "Who Scored?", share: "Sweater Who Scored?", view: "view-whoscored", max: 6, next: "Next goal",
+  quietFinish: true, localOnly: true, persistUnlimited: true, orderedRotation: true,
+  cheers: ["You know that move! 🏒", "What a read! 🎯", "Found the finish! 🥅", "Nice eye! 👀", "Got there! 🙌", "Buzzer beater! 🚨"],
+  pool: () => WS_CLIPS,
+  daily(k) {
+    const scheduled = WS_CLIPS.find(c => c.pid === DAILY.whoscored[k]);
+    return scheduled || WS_CLIPS[hash(`sweater-goal-${k}`) % WS_CLIPS.length];
+  },
+  random: wsRandom, tid: t => t.id, player: t => t.p, meta: t => t.motion,
+  isWin: (t, id) => id === t.pid,
+  reset(t) {
+    this.started = !!this.advance; this.autoPlay = !!this.advance; this.advance = false;
+    this.ready = false; this.failed = false; this.original = false; this.slow = false; this.file = "";
+    const v = $("wsVideo"); v.pause(); v.removeAttribute("src"); v.load(); v.playbackRate = 1;
+    v.poster = `who-scored/${t.poster}`;
+    $("wsGuess").value = ""; $("wsWrong").innerHTML = "";
+    $("wsSource").removeAttribute("href");
+  },
+  guess(t, id, fresh) {
+    const p = BYID.get(id);
+    if (!p || p.pos === "G") return null;
+    if (fresh && (!this.started || !this.ready)) { toast("Watch the goal first."); return null; }
+    this.started = true;
+    if (id !== t.pid) addWrong("wsWrong", p);
+    return id === t.pid;
+  },
+  render(t, st) {
+    $("wsMark").innerHTML = uiIcon("video");
+    $("wsSetup").hidden = this.started;
+    $("wsRound").hidden = !this.started;
+    $("wsPool").textContent = `${WS_CLIPS.length} scorers in rotation · Unlimited replays · No timer`;
+    document.querySelectorAll("[data-ws-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.wsMode === mode));
+    $("wsStart").textContent = mode === "unlimited" ? "Watch the next goal" : mode === "archive" ? "Watch this goal" : "Watch today's goal";
+    $("wsRoundLabel").textContent = st.over ? "Scorer revealed" : mode === "unlimited" ? "Mystery goal · Unlimited" : "Today's mystery goal";
+    $("wsLeft").textContent = st.over ? `${st.guesses.length} ${st.guesses.length === 1 ? "guess" : "guesses"}` : `${this.max - st.guesses.length} guesses left`;
+    $("wsAttempts").innerHTML = Array.from({length:this.max},(_,i) => `<i class="${st.guesses[i] === t.pid ? "hit" : i < st.guesses.length ? "used" : ""}"></i>`).join("");
+    $("wsAttempts").setAttribute("aria-label", `${st.guesses.length} of ${this.max} guesses used`);
+    const wrong = st.guesses.filter(id => id !== t.pid).length;
+    const hints = [];
+    if (!st.over && wrong >= 2) hints.push(`Shoots ${t.p.shoots === "R" ? "right" : "left"}`);
+    if (!st.over && wrong >= 4) hints.push(`Born in ${countryName(t.p.nation)}`);
+    $("wsFeedback").textContent = st.over ? "Watch the original to see the move with the scorer revealed."
+      : hints.length ? hints.join(" · ") : wrong ? "Not quite. Take another look at the move." : "Watch the black silhouette. Who does that move belong to?";
+    $("wsOriginal").hidden = !st.over;
+    $("wsOriginal").textContent = this.original ? "See silhouette" : "See original";
+    $("wsOriginal").setAttribute("aria-pressed", this.original);
+    $("wsSlow").setAttribute("aria-pressed", this.slow);
+    $("wsSource").hidden = !st.over;
+    if (st.over) $("wsSource").href = t.source;
+    $("wsContinue").hidden = !st.over || mode === "unlimited";
+    $("wsGuess").disabled = st.over || !this.started || !this.ready;
+    if (this.started && !this.file) wsLoadVideo(t, false, this.autoPlay);
+  },
+  onFinish() { $("wsVideo").pause(); },
+  squares: (t,id) => id === t.pid ? "🟩" : "⬛"
+};
+$("wsStart").onclick = () => {
+  const st = S.whoscored, g = G.whoscored;
+  if (game !== "whoscored" || !st.target) return;
+  g.started = true; g.autoPlay = true; g.render(st.target, st);
+};
+document.querySelectorAll("[data-ws-mode]").forEach(b => b.onclick = () => {
+  if (game !== "whoscored" || mode === b.dataset.wsMode) return;
+  mode = b.dataset.wsMode; store.set("sweater-mode", mode);
+  if (mode === "daily") loadDaily(); else loadUnlimited();
+});
+$("wsWatch").onclick = () => wsPlay($("wsVideo").ended);
+$("wsReplay").onclick = () => wsPlay(true);
+$("wsPause").onclick = () => $("wsVideo").paused ? wsPlay() : $("wsVideo").pause();
+$("wsSlow").onclick = () => {
+  const g = G.whoscored; g.slow = !g.slow;
+  $("wsVideo").playbackRate = g.slow ? .5 : 1;
+  $("wsSlow").setAttribute("aria-pressed",g.slow);
+};
+$("wsOriginal").onclick = () => {
+  const st = S.whoscored, g = G.whoscored;
+  if (game !== "whoscored" || !st.over) return;
+  wsLoadVideo(st.target,!g.original,true); g.render(st.target,st);
+};
+$("wsContinue").onclick = () => {
+  mode = "unlimited"; store.set("sweater-mode",mode); G.whoscored.advance = true; loadUnlimited(true);
+};
+$("wsVideo").addEventListener("loadeddata", () => {
+  const g = G.whoscored, st = S.whoscored;
+  if (game !== "whoscored" || !g.started || !g.file || !st.target) return;
+  g.ready = true; g.failed = false; g.render(st.target,st); updateLabels(); wsVideoState();
+});
+$("wsVideo").addEventListener("error", () => {
+  const g = G.whoscored;
+  if (game !== "whoscored" || !g.started || !g.file) return;
+  g.failed = true; g.ready = false;
+  $("wsLoading").textContent = "This goal couldn't load. Try again.";
+  $("wsGuess").disabled = true; wsVideoState();
+});
+["play","pause","ended","timeupdate","waiting"].forEach(name => $("wsVideo").addEventListener(name,wsVideoState));
+document.addEventListener("visibilitychange", () => { if (document.hidden) $("wsVideo").pause(); });
+
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
 const KEYS = Object.fromEntries(Object.keys(G).map(g => [g, g === "classic"
@@ -9724,6 +9965,7 @@ function startGame(t, restore = [], opts) {
   g.render && g.render(t, st);
   renderOptions();
   updateLabels();
+  if (mode === "unlimited" && g.persistUnlimited) saveProgress();
 }
 
 function saveProgress() {
@@ -9731,6 +9973,7 @@ function saveProgress() {
   const rec = { date: st.day, target: g.tid(st.target), guesses: st.guesses, opts: st.opts };
   if (mode === "daily") store.set(KEYS[game].daily, rec);
   if (mode === "archive") archiveSet(game, st.day, rec);
+  if (mode === "unlimited" && g.persistUnlimited) store.set(`sweater-unlimited-${game}`, rec);
 }
 
 function doGuess(x, fresh = true) {
@@ -9828,8 +10071,13 @@ function loadUnlimited(forceNew = false) {
   const st = S[game], g = G[game];
   if (!g.pool().length) return noData();
   if (!forceNew && st.target && st.mode === "unlimited") return startGame(st.target, st.guesses.slice(), st.opts);
+  if (!forceNew && g.persistUnlimited) {
+    const saved = store.get(`sweater-unlimited-${game}`);
+    const target = saved && g.pool().find(t => g.tid(t) === saved.target);
+    if (target && Array.isArray(saved.guesses)) return startGame(target, ...restoreFrom(saved,target));
+  }
   let t, tries = 0;
-  do { t = g.random(); } while (st.target && g.tid(t) === g.tid(st.target) && ++tries < 10);
+  do { t = g.random(); } while (!g.orderedRotation && st.target && g.tid(t) === g.tid(st.target) && ++tries < 10);
   startGame(t);
 }
 
@@ -9857,7 +10105,10 @@ function updateLabels() {
     : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
-  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "phGuess"]) { $(id).placeholder = text; $(id).disabled = !st.target || st.over; }
+  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "phGuess", "wsGuess"]) {
+    $(id).placeholder = id === "wsGuess" && !st.over ? "Search for the goal scorer…" : text;
+    $(id).disabled = !st.target || st.over || (id === "wsGuess" && game === "whoscored" && (!g.started || !g.ready));
+  }
   const today = shortDay(dayKey());
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
     : mode === "archive" ? `Archive · #${dailyNumber(game, archiveDay)}` : "Unlimited play";
@@ -10016,6 +10267,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
                   makeSearch("phGuess", "phOpts"),
+                  makeSearch("wsGuess", "wsOpts", id => id, () => [...BYID.values()].filter(p => p.pos !== "G").sort((a,b) => a.name.localeCompare(b.name))),
                   makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p))];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
@@ -10340,7 +10592,10 @@ $("unlimited").addEventListener("change", e => {
   store.set("sweater-mode", mode);
   if (mode === "daily") loadDaily(); else loadUnlimited(true);
 });
-$("again").onclick = () => mode === "archive" ? openArchive() : loadUnlimited(true);
+$("again").onclick = () => {
+  if (game === "whoscored") G.whoscored.advance = true;
+  return mode === "archive" ? openArchive() : loadUnlimited(true);
+};
 
 // ---- appearance controls ----
 const isDark = () => {
@@ -10416,6 +10671,7 @@ $("hlPair").addEventListener("click", e => {
 
 // ======================= global leaderboard =======================
 const LB_RULES = {
+  whoscored: "Name the scorer in 6 guesses. Daily wins and guess counts appear in your stats.",
   journey: "Journey: 10 points for 1 guess, then 8, 6, 4, 2 and 1 for 6 guesses.",
   blur: "Blur: 10 points for 1 guess, then 8, 6, 4, 2 and 1 for 6 guesses.",
   number: "Sweater #: 10 points on the first try, then 7, 5, 3 and 1 on the fifth.",
@@ -10501,8 +10757,8 @@ function submitPending() {
 }
 
 function renderStatsLb(game = currentGame()) {
-  $("stLb").hidden = !API_ON;
-  if (!API_ON) return;
+  $("stLb").hidden = !API_ON || !!G[game].localOnly;
+  if (!API_ON || G[game].localOnly) return;
   const pts = (store.get("sweater-lb-sent") || {})[`${game}:${dayKey()}`];
   $("stLbText").textContent = !store.get("sweater-lb-name") ? "Add your name to compete with other players."
     : typeof pts === "number" ? `You scored ${pts} ${pts === 1 ? "point" : "points"} today.` : "";
@@ -10558,7 +10814,7 @@ async function renderLeaderboard() {
   const req = ++lbRequest, me = lbIdentity(false), name = store.get("sweater-lb-name");
   if (G[lbGame].localOnly) {
     $("lbList").innerHTML='<li class="empty">Scores for this new mode are saved on your device. Global rankings are not available yet.</li>';
-    $("lbYou").textContent=`Personal best: ${Number(store.get(`sweater-${lbGame}-best`)) || 0}`;
+    $("lbYou").textContent = lbGame === "whoscored" ? `Daily wins: ${getStats(lbGame).wins}` : `Personal best: ${Number(store.get(`sweater-${lbGame}-best`)) || 0}`;
     return;
   }
   if (!$("lbList").children.length) $("lbList").innerHTML = '<li class="empty">Loading…</li>';
@@ -10590,6 +10846,7 @@ document.querySelectorAll(".lbhelp").forEach(el => el.hidden = !API_ON);
 // ======================= home screen and navigation =======================
 const HUB = [
   { title: "Name the player", tone: "green", games: [
+    ["whoscored", "▶", "Watch a silhouette goal. Name the player from the move."],
     ["classic", "🏒", "Guess the player from his team, position, age and more."],
     ["statline", "📈", "Name him from his season-by-season stats."],
     ["playoff", "🏒", "Name him from one postseason run as clues build."],
@@ -10639,6 +10896,7 @@ const MODE_META = Object.freeze({
   statline: { type: "Stats", time: "2–4 min", difficulty: "Hard", fact: "Each miss reveals another carefully chosen season and more of the player’s career fingerprint.", next: "playoff" },
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
+  whoscored:{ type: "Video", time: "1–2 min", difficulty: "Medium", fact: "A skating stride, a release, a familiar finish: playstyle is its own fingerprint.", next: "classic" },
   blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "classic" },
   edgerush: { type: "NHL EDGE Arcade", time: "2–3 min", difficulty: "Medium", fact: "The Rush assigns carrier, support and finisher roles from real NHL EDGE speed, distance, shot velocity and shot-location data.", next: "edgespeed" },
   edgespeed:{ type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Max skating speed comes directly from NHL EDGE player tracking.", next: "edgeshot" },
@@ -10711,7 +10969,7 @@ function hubStatus(id) {
   return ["", "Play"];
 }
 
-const FEATURE_SEQUENCE = ["trophy", "cups", "classic", "shoot", "map", "conn", "journey"];
+const FEATURE_SEQUENCE = ["whoscored", "trophy", "cups", "classic", "shoot", "map", "conn", "journey"];
 const gameIsReady = id => !MAINTENANCE_GAMES.has(id) && (id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0);
 const LIBRARY_FILTERS = [
   ["all", "All games"], ["favourites", "Favourites"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
@@ -11405,6 +11663,7 @@ const HELP = {
     <p>Before your first guess, choose whether his oldest or newest seasons appear first. After 4 misses you'll see his current team.</p>`,
   journey: `<p>Name the player from the teams he's played for, in order, with seasons and games. 6 tries.</p>
     <p>Hints appear after 2, 4 and 5 misses: position, birth country, then sweater number.</p>`,
+  whoscored: `<p>Watch a short goal with the scorer rendered as a black silhouette. Name the player in 6 guesses using the search box. Replays and 0.5× slow motion are unlimited.</p><p>After 2 misses you learn their handedness; after 4, their birth country. At the end, switch between the silhouette and the original clip.</p><p>Daily gives everyone the same goal. Unlimited cycles through the clip library without repeating a scorer until the rotation is complete, and saves your current goal when you refresh.</p>`,
   blur: `<p>Name the player from a blurry photo. Every miss sharpens it. 6 tries, with hints after 3 and 5 misses.</p>`,
   team: `<p>You see a player and one season of his stats. Pick the team he played for that season. 5 tries.</p>
     <p>Yellow means the right team is in the same division.</p>`,
@@ -13206,6 +13465,32 @@ def extra_ids(v):
     return []
 
 
+def load_goal_clips():
+    """Only reviewed, committed clips are eligible for the video game."""
+    root = HERE / "static" / "who-scored"
+    clips = json.loads((root / "clips.json").read_text(encoding="utf-8"))
+    seen, players = set(), set()
+    for clip in clips:
+        if clip["id"] in seen or clip["pid"] in players:
+            raise ValueError("Who Scored? needs unique clip and player IDs.")
+        seen.add(clip["id"])
+        players.add(clip["pid"])
+        for kind, suffix in (("masked", ".mp4"), ("reveal", ".mp4"), ("poster", ".jpg")):
+            name = clip[kind]
+            if Path(name).name != name or not name.endswith(suffix) or not (root / name).is_file():
+                raise ValueError(f"Missing or invalid Who Scored? {kind}: {name}")
+    return clips
+
+
+def copy_goal_media(out_dir, clips):
+    destination = out_dir / "who-scored"
+    destination.mkdir(parents=True, exist_ok=True)
+    for clip in clips:
+        for kind in ("masked", "reveal", "poster"):
+            name = clip[kind]
+            shutil.copy2(HERE / "static" / "who-scored" / name, destination / name)
+
+
 def player_of(v):
     """What counts as 'the same puzzle' for no-repeat rules."""
     if isinstance(v, dict):
@@ -13250,7 +13535,7 @@ def plan_days(days, candidates, today, seed, no_repeat=NO_REPEAT_DAYS):
     return dict(sorted(days.items()))
 
 
-def update_schedule(players, today, roster_players):
+def update_schedule(players, today, roster_players, goal_clips=None):
     """Keep a fixed day-by-day list of puzzles for each game. Past days and tomorrow never change."""
     try:
         sched = json.loads(SCHEDULE.read_text(encoding="utf-8"))
@@ -13283,6 +13568,12 @@ def update_schedule(players, today, roster_players):
                    {t: {"team": t, "ids": sorted(ids)} for t, ids in roster_teams.items() if len(ids) >= 10},
                    "sweater-ro", 20),
     }
+    clips = load_goal_clips() if goal_clips is None else goal_clips
+    clip_ids = {c["pid"] for c in clips if c["pid"] in pool or c["pid"] in archive}
+    if len(clip_ids) != len(clips):
+        raise ValueError("Who Scored? scorer is missing from player data.")
+    games["whoscored"] = ("whoscored_days", "whoscored_start",
+                          {str(i): i for i in clip_ids}, "sweater-goal", max(0, len(clip_ids) - 1))
     first = "0000-00-00"   # every past day, for the archive
     last = (today + timedelta(days=EMBED_AHEAD)).isoformat()
     result, new = {}, {}
@@ -13725,7 +14016,8 @@ def main():
     edge_data = fetch_edge_data(roster_players, today)
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
-    games, extras, roster_extras = update_schedule(players, today, roster_players)
+    goal_clips = load_goal_clips()
+    games, extras, roster_extras = update_schedule(players, today, roster_players, goal_clips)
     embedded = players + extras
     roster_embedded = list({p["id"]: p for p in roster_players + roster_extras}.values())
     for g, (start, window) in games.items():
@@ -13736,6 +14028,7 @@ def main():
         site += "/"
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     fills = {
+        "/*__GOAL_CLIPS__*/[]": esc(goal_clips),
         "/*__PLAYERS__*/[]": esc(embedded),
         "/*__ROSTER_PLAYERS__*/[]": esc(roster_embedded),
         "/*__ROSTER_LINEUPS__*/{}": esc(roster_lineups),
@@ -13756,6 +14049,7 @@ def main():
     out = Path(args.out).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
+    copy_goal_media(out.parent, goal_clips)
     og = HERE / "sweater-trivia-preview.png"
     if og.exists() and out.parent != HERE:
         shutil.copy(og, out.parent / "sweater-trivia-preview.png")
@@ -13783,6 +14077,8 @@ self.addEventListener("activate", event => event.waitUntil(
 ));
 self.addEventListener("fetch", event => {{
   if (event.request.method !== "GET" || new URL(event.request.url).origin !== location.origin) return;
+  // Video range responses must pass through intact; keep the offline cache small.
+  if (event.request.headers.has("range") || /\\.(mp4|webm)$/i.test(new URL(event.request.url).pathname)) return;
   event.respondWith(fetch(event.request).then(response => {{
     const copy = response.clone(); caches.open(CACHE).then(cache => cache.put(event.request, copy)); return response;
   }}).catch(() => caches.match(event.request)));

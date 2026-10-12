@@ -1,0 +1,74 @@
+[
+  {
+    "id": "goal-01",
+    "player": "Connor McDavid",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-9-6365907822112",
+    "source_sha256": "5a6cff6ad836c9811c1a7792807da5f3fd98d7f3f9767a36d66b0080399d102b",
+    "edit_start_seconds": 10.9,
+    "edit_duration_seconds": 4.166667
+  },
+  {
+    "id": "goal-02",
+    "player": "Auston Matthews",
+    "source": "https://www.nhl.com/mapleleafs/video/matthews-strikes-on-perfect-deke-309285322",
+    "source_sha256": "05989d1880985a1f11d5b0bc517d61d969731c3ceb3547b972ac9083698e3c8c",
+    "edit_start_seconds": 37.5,
+    "edit_duration_seconds": 2.5
+  },
+  {
+    "id": "goal-03",
+    "player": "Connor Bedard",
+    "source": "https://www.nhl.com/video/topic/highlights/cgy-chi-bedard-scores-goal-against-dustin-wolf-6385286904112",
+    "source_sha256": "72385174a7e211d56f408adfbc61af17b9e3ab0ed845d44606ab59cbac5df033",
+    "edit_start_seconds": 40.0,
+    "edit_duration_seconds": 3.5
+  },
+  {
+    "id": "goal-04",
+    "player": "Sidney Crosby",
+    "source": "https://www.nhl.com/video/det-pit-crosby-scores-goal-against-alex-lyon-6349145622112",
+    "source_sha256": "79409704526b5644e0aa86178d9201866aca998d8bd85b5db4ee15bcecaefba8",
+    "edit_start_seconds": 27.0,
+    "edit_duration_seconds": 3.5
+  },
+  {
+    "id": "goal-05",
+    "player": "Alex Ovechkin",
+    "source": "https://www.nhl.com/video/nsh-wsh-ovechkin-scores-goal-against-yaroslav-askarov-6344073401112",
+    "source_sha256": "a7dc0dfe885dfca835570ffb9cd1921cff48bd9b174a939a32a85c01d4fd0625",
+    "edit_start_seconds": 29.0,
+    "edit_duration_seconds": 3.3333333333333335
+  },
+  {
+    "id": "goal-06",
+    "player": "Leon Draisaitl",
+    "source": "https://www.nhl.com/video/van-edm-draisaitl-scores-goal-against-arturs-silovs-6352815670112",
+    "source_sha256": "f357cac8648e3d6f1e219d6d8f31a1c2bdf7bf6937d95a9308fd199bac93f22f",
+    "edit_start_seconds": 9.0,
+    "edit_duration_seconds": 4.0
+  },
+  {
+    "id": "goal-07",
+    "player": "Nathan MacKinnon",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-15-6367565833112",
+    "source_sha256": "f30d0ed9d75bc8b64ba088f42e371a7c162baa70650c365a0e4b324fcaa4c1c7",
+    "edit_start_seconds": 12.0,
+    "edit_duration_seconds": 5.0
+  },
+  {
+    "id": "goal-08",
+    "player": "Nazem Kadri",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-10-6366233137112",
+    "source_sha256": "d5a8267f88ba7695619d11b818e21834efef3b449ff3a2b446cad31e2116cb8f",
+    "edit_start_seconds": 7.5,
+    "edit_duration_seconds": 4.75
+  },
+  {
+    "id": "goal-09",
+    "player": "Kyle Connor",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-16-6368010340112",
+    "source_sha256": "cadacc7e29feddf547c99c0860126e7c9c02b6a0e531fa1cead50630c7c4460d",
+    "edit_start_seconds": 11.1,
+    "edit_duration_seconds": 4.791666666666667
+  }
+]
