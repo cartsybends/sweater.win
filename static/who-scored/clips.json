@@ -20,9 +20,9 @@
   {
     "id": "goal-03",
     "pid": 8484144,
-    "masked": "goal-03-masked-v1.mp4",
-    "reveal": "goal-03-original-v1.mp4",
-    "poster": "goal-03-v1.jpg",
+    "masked": "goal-03-masked-v2.mp4",
+    "reveal": "goal-03-original-v2.mp4",
+    "poster": "goal-03-v2.jpg",
     "motion": "Toe-drag wrist shot",
     "source": "https://www.nhl.com/video/topic/highlights/cgy-chi-bedard-scores-goal-against-dustin-wolf-6385286904112"
   },
@@ -38,18 +38,18 @@
   {
     "id": "goal-05",
     "pid": 8471214,
-    "masked": "goal-05-masked-v1.mp4",
-    "reveal": "goal-05-original-v1.mp4",
-    "poster": "goal-05-v1.jpg",
+    "masked": "goal-05-masked-v2.mp4",
+    "reveal": "goal-05-original-v2.mp4",
+    "poster": "goal-05-v2.jpg",
     "motion": "Circle one-timer",
     "source": "https://www.nhl.com/video/nsh-wsh-ovechkin-scores-goal-against-yaroslav-askarov-6344073401112"
   },
   {
     "id": "goal-06",
     "pid": 8477934,
-    "masked": "goal-06-masked-v1.mp4",
-    "reveal": "goal-06-original-v1.mp4",
-    "poster": "goal-06-v1.jpg",
+    "masked": "goal-06-masked-v2.mp4",
+    "reveal": "goal-06-original-v2.mp4",
+    "poster": "goal-06-v2.jpg",
     "motion": "Sharp-angle one-timer",
     "source": "https://www.nhl.com/video/van-edm-draisaitl-scores-goal-against-arturs-silovs-6352815670112"
   },

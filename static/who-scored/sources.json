@@ -20,8 +20,8 @@
     "player": "Connor Bedard",
     "source": "https://www.nhl.com/video/topic/highlights/cgy-chi-bedard-scores-goal-against-dustin-wolf-6385286904112",
     "source_sha256": "72385174a7e211d56f408adfbc61af17b9e3ab0ed845d44606ab59cbac5df033",
-    "edit_start_seconds": 40.0,
-    "edit_duration_seconds": 3.5
+    "edit_start_seconds": 46.8,
+    "edit_duration_seconds": 3.6666666666666665
   },
   {
     "id": "goal-04",
@@ -36,16 +36,16 @@
     "player": "Alex Ovechkin",
     "source": "https://www.nhl.com/video/nsh-wsh-ovechkin-scores-goal-against-yaroslav-askarov-6344073401112",
     "source_sha256": "a7dc0dfe885dfca835570ffb9cd1921cff48bd9b174a939a32a85c01d4fd0625",
-    "edit_start_seconds": 29.0,
-    "edit_duration_seconds": 3.3333333333333335
+    "edit_start_seconds": 42.5,
+    "edit_duration_seconds": 4.0
   },
   {
     "id": "goal-06",
     "player": "Leon Draisaitl",
     "source": "https://www.nhl.com/video/van-edm-draisaitl-scores-goal-against-arturs-silovs-6352815670112",
     "source_sha256": "f357cac8648e3d6f1e219d6d8f31a1c2bdf7bf6937d95a9308fd199bac93f22f",
-    "edit_start_seconds": 9.0,
-    "edit_duration_seconds": 4.0
+    "edit_start_seconds": 35.9,
+    "edit_duration_seconds": 2.75
   },
   {
     "id": "goal-07",

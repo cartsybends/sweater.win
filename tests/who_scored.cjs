@@ -25,7 +25,7 @@ const ctx = vm.createContext({console,Math,Map,Set,Date,Array,Number,String,JSON
   G:{}, BYID:new Map(players.map(p=>[p.id,p])), $, DAILY:{whoscored:{'2026-10-12':clips[0].pid}}, START:{whoscored:'2026-10-12'},
   store:{get:k=>storage.has(k)?JSON.parse(storage.get(k)):null,set:(k,v)=>storage.set(k,JSON.stringify(v))},
   document:{hidden:false,querySelectorAll:sel=>sel==='[data-ws-mode]'?modeButtons:[],addEventListener(){}},
-  uiIcon:()=>'<svg></svg>', countryName:s=>s, toast:()=>{}, addWrong:()=>{}, FALLBACK:'',
+  uiIcon:()=>'<svg></svg>', esc:s=>String(s), countryName:s=>s, toast:()=>{}, addWrong:()=>{}, FALLBACK:'',
   renderOptions(){},updateLabels(){},tick(){},renderResultRecap(){},recordResult(){},awardProgression:()=>[],submitPending(){},confetti(){},
   archiveGet:()=>null, archiveSet(){}, historyGet:()=>null, historySet(){},
   dayKey:()=> '2026-10-12', shortDay:k=>k, dailyNumber:()=>1, onHub:false, setTimeout:()=>0,
@@ -55,14 +55,18 @@ $('wsOriginal').onclick();assert.equal($('wsVideo').src,'');
 $('wsStart').onclick();assert.equal($('wsSetup').hidden,true);assert.equal($('wsRound').hidden,false);
 assert.equal($('wsVideo').src,`who-scored/${target.masked}`);
 $('wsVideo').events.loadeddata();
+assert.equal($('wsLeft').textContent,'Guess 1 of 6');assert.equal($('wsHistory').hidden,true);
 const wrong=clips.find(c=>c.pid!==target.pid).pid;
 run(`doGuess(${wrong}); doGuess(${wrong})`);assert.equal(run('S.whoscored.guesses.length'),1,'duplicate guesses do not consume a try');
+assert.equal($('wsLeft').textContent,'Guess 2 of 6');assert.equal($('wsHistory').hidden,false);assert($('wsWrong').innerHTML.includes('Miss'));
 run('loadUnlimited()');assert.equal(run('S.whoscored.target.id'),target.id);assert.equal(run('S.whoscored.guesses.length'),1);
 // Restore the browser-local round after clearing in-memory state.
 run('S.whoscored.target=null; S.whoscored.mode=null; loadUnlimited()');
 assert.equal(run('S.whoscored.target.id'),target.id);assert.equal(run('S.whoscored.guesses.length'),1);
 $('wsVideo').events.loadeddata();run(`doGuess(${target.pid})`);
 assert.equal(run('S.whoscored.over'),true);assert.equal($('wsOriginal').hidden,false);
+assert.equal($('wsGuessing').hidden,true);assert.equal($('wsQuestionCopy').hidden,true);assert.equal($('wsFinishActions').hidden,false);assert.equal($('wsContinue').hidden,false);
+assert($('wsWrong').innerHTML.includes('Correct'));
 $('wsOriginal').onclick();assert.equal($('wsVideo').src,`who-scored/${target.reveal}`);
 $('wsSlow').onclick();assert.equal($('wsVideo').playbackRate,.5);
 $('wsOriginal').onclick();assert.equal($('wsVideo').src,`who-scored/${target.masked}`);

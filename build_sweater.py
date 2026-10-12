@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "130 · Who Scored?"
+VERSION = "131 · Who Scored? Scorer Review"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -176,7 +176,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .tabrow { display: flex; justify-content: center; }
   .view { max-width: 1480px; margin: 0 auto; }
   #view-statline .search { max-width: 620px; }
-  #view-whoscored { max-width: 880px; }
+  #view-whoscored { max-width: 1120px; }
   .ws-intro { margin: 4px auto 22px; color: var(--muted); text-align: center; line-height: 1.5; }
   .ws-setup { max-width: 660px; margin: 12px auto; padding: clamp(22px,5vw,40px); border: 1px solid var(--sep); border-radius: 24px; background: var(--row); text-align: center; }
   .ws-mark { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 20px; background: var(--cell); color: var(--accent, var(--link)); }
@@ -193,9 +193,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ws-primary { width: 100%; border-color: transparent; background: var(--accent,var(--link)); color: #fff; }
   .ws-primary:disabled, .ws-controls button:disabled { opacity: .5; cursor: default; }
   .ws-pool { display: block; margin-top: 16px; font-size: 12px; color: var(--muted); }
-  .ws-roundhead { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+  .ws-round { display: grid; grid-template-columns: minmax(0,1.75fr) minmax(300px,1fr); gap: 20px; align-items: start; }
+  .ws-media-pane, .ws-question-pane { min-width: 0; }
+  .ws-roundhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 12px; font-size: 12px; color: var(--label2); }
   .ws-roundhead b { color: var(--fg); font-weight: 650; }
-  .ws-player { border: 1px solid var(--sep); border-radius: 20px; overflow: hidden; background: #111113; }
+  .ws-roundhead .ws-replay-note { display: flex; align-items: center; gap: 5px; }
+  .ws-replay-note svg { width: 14px; height: 14px; }
+  .ws-video-card { border: 1px solid var(--sep); border-radius: 20px; overflow: hidden; background: var(--row); }
+  .ws-player { overflow: hidden; background: #111113; }
   .ws-screen { position: relative; aspect-ratio: 16 / 9; }
   .ws-screen video { display: block; width: 100%; height: 100%; object-fit: contain; }
   .ws-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; color: #fff; background: rgba(0,0,0,.25); text-align: center; }
@@ -203,20 +208,61 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ws-overlay span { font-size: 14px; line-height: 1.5; }
   .ws-track { height: 3px; background: rgba(255,255,255,.15); }
   .ws-track i { display: block; height: 100%; width: 0; background: var(--accent,var(--link)); transition: width .1s linear; }
-  .ws-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0 18px; }
+  .ws-controls { display: flex; align-items: center; gap: 7px; padding: 12px; }
+  .ws-controls button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-color: transparent; background: var(--cell); padding: 8px 12px; font-size: 13px; border-radius: 10px; }
+  .ws-controls button svg { width: 16px; height: 16px; }
+  .ws-controls #wsPause { width: 44px; padding: 8px; }
+  .ws-controls #wsSlow { min-width: 52px; }
   .ws-controls button[aria-pressed="true"] { border-color: var(--accent,var(--link)); color: var(--accent,var(--link)); }
-  .ws-controls .ws-time { margin-left: auto; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-  #view-whoscored .search { max-width: none; margin-bottom: 12px; }
-  #view-whoscored .search input { border-radius: 14px; border-color: var(--sep); }
-  .ws-feedback { min-height: 22px; margin: 8px 0; color: var(--muted); font-size: 13px; line-height: 1.5; text-align: center; }
-  .ws-attempts { display: flex; gap: 6px; }
-  .ws-attempts i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
-  .ws-attempts i.used { background: var(--muted); }
+  .ws-controls .ws-time { margin-left: auto; color: var(--label2); font-size: 11px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ws-question-pane { padding: 22px; border: 1px solid var(--sep); border-radius: 20px; background: var(--row); }
+  .ws-question-status { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+  .ws-question-status span:first-child { font-size: 10px; font-weight: 650; letter-spacing: 1.2px; color: var(--label2); }
+  #wsLeft { font-size: 12px; color: var(--fg); font-weight: 600; }
+  .ws-question-copy h2 { margin: 24px 0 8px; font-size: clamp(25px,3vw,30px); line-height: 1.15; font-weight: 650; letter-spacing: -.8px; }
+  .ws-question-copy p { margin: 0 0 20px; color: var(--label2); font-size: 13px; line-height: 1.6; }
+  .ws-input-label { display: block; margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--fg); }
+  #view-whoscored .search { max-width: none; margin: 0; }
+  #view-whoscored .search input { min-height: 52px; padding: 14px; border-radius: 12px; border-color: var(--sep); font-size: 15px; background: var(--bg); }
+  #view-whoscored .list { border-radius: 12px; max-height: 270px; }
+  .ws-feedback { min-height: 20px; margin: 12px 0 0; color: var(--fg); font-size: 12px; line-height: 1.6; }
+  .ws-attempts { display: flex; gap: 5px; }
+  .ws-attempts i { flex: 1; height: 4px; border-radius: 4px; background: var(--cell); transition: background-color .2s ease; }
+  .ws-attempts i.used { background: var(--label2); opacity: .45; }
+  .ws-attempts i.active { background: var(--accent,var(--link)); }
   .ws-attempts i.hit { background: var(--hit); }
-  #wsWrong { max-width: none; }
-  #wsContinue { max-width: 360px; display: block; margin: 16px auto; }
-  .ws-source { display: block; margin: 12px auto; color: var(--muted); font-size: 12px; text-align: center; }
-  @media (max-width: 520px) { .ws-player { border-radius: 14px; } .ws-controls button { padding: 9px 12px; } .ws-controls .ws-time { width: 100%; margin-left: 0; } }
+  .ws-history { margin-top: 20px; }
+  .ws-history > small { display: block; margin-bottom: 9px; color: var(--label2); font-size: 11px; font-weight: 600; }
+  .ws-guesses { display: grid; gap: 6px; list-style: none; padding: 0; margin: 0; }
+  .ws-guesses li { display: flex; align-items: center; gap: 9px; min-height: 39px; padding: 8px 10px; border: 1px solid var(--sep); border-radius: 10px; font-size: 12px; }
+  .ws-guesses .ws-guess-index { color: var(--label2); font-size: 10px; font-variant-numeric: tabular-nums; }
+  .ws-guesses .ws-guess-name { flex: 1; font-weight: 550; min-width: 0; overflow-wrap: anywhere; }
+  .ws-guesses .ws-guess-mark { display: inline-flex; align-items: center; gap: 5px; color: var(--label2); font-size: 10px; }
+  .ws-guess-mark i { width: 5px; height: 5px; border-radius: 50%; background: #c95158; }
+  .ws-guesses li.hit { border-color: color-mix(in srgb,var(--hit) 40%,var(--sep)); background: color-mix(in srgb,var(--hit) 6%,var(--row)); }
+  .ws-guesses li.hit .ws-guess-mark i { background: var(--hit); }
+  .ws-guesses li.fresh { animation: ws-guess-in .2s ease both; }
+  @keyframes ws-guess-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .ws-finish-actions { display: grid; gap: 8px; margin-top: 18px; }
+  .ws-finish-actions button { width: 100%; min-height: 44px; border: 1px solid var(--sep); border-radius: 12px; background: var(--bg); color: var(--fg); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .ws-finish-actions #wsContinue { background: var(--accent,var(--link)); color: #fff; border-color: transparent; margin: 0; }
+  .ws-source { display: block; margin: 11px 0 0; color: var(--label2); font-size: 11px; text-align: center; }
+  #view-whoscored #banner { margin: 20px 0 0; }
+  #view-whoscored #banner .headline { font-size: 20px; font-weight: 600; }
+  #view-whoscored #banner .cheer, #view-whoscored #banner #again { display: none; }
+  #view-whoscored #banner > img { width: 80px; height: 80px; margin-top: 14px; }
+  #view-whoscored #banner .pname { font-size: 23px; letter-spacing: -.5px; }
+  #view-whoscored #banner .pmeta { font-size: 12px; }
+  #view-whoscored #banner .profile { padding: 7px 12px; font-size: 11px; background: var(--cell); color: var(--fg); }
+  #view-whoscored #banner .countdown { font-size: 11px; color: var(--label2); }
+  #view-whoscored .resultrecap { font-size: 11px; padding: 9px; }
+  #view-whoscored .recapfact, #view-whoscored [data-result-next] { display: none; }
+  #view-whoscored .recapstats { min-width: 0; }
+  #view-whoscored .recapstats b { font-size: 12px; }
+  #view-whoscored .recapstats small { font-size: 10px; }
+  @media (max-width: 900px) { .ws-round { grid-template-columns: 1fr; max-width: 740px; margin: 0 auto; gap: 16px; } .ws-question-copy h2 { margin-top: 18px; } }
+  @media (max-width: 520px) { .ws-video-card, .ws-question-pane { border-radius: 16px; } .ws-question-pane { padding: 20px; } .ws-roundhead .ws-replay-note { font-size: 10px; } .ws-controls .ws-time { font-size: 10px; } }
+  @media (prefers-reduced-motion: reduce) { .ws-guesses li.fresh { animation: none; } .ws-attempts i { transition: none; } }
   .ttcard .pname { font-size: 22px; font-weight: 600; margin: 0 0 2px; }
   .ttcard .pmeta { font-size: 14px; color: var(--muted); margin: 0; }
   .intro { text-align: center; color: var(--muted); margin: 6px 0 14px; font-size: 15px; }
@@ -3293,7 +3339,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <section class="view" id="view-whoscored" hidden>
-    <p class="ws-intro">Name the scorer from their skating, hands, and finish.</p>
+    <p class="ws-intro" id="wsIntro">Name the scorer from their skating, hands, and finish.</p>
     <div class="ws-setup" id="wsSetup">
       <div class="ws-mark" id="wsMark" aria-hidden="true"></div>
       <h2>Recognize the move?</h2>
@@ -3305,33 +3351,46 @@ TEMPLATE = r'''<!DOCTYPE html>
       <button type="button" class="ws-primary" id="wsStart">Watch today's goal</button>
       <small class="ws-pool" id="wsPool"></small>
     </div>
-    <div id="wsRound" hidden>
-      <div class="ws-roundhead"><b id="wsRoundLabel">Mystery goal</b><span id="wsLeft">6 guesses left</span></div>
-      <div class="ws-player">
-        <div class="ws-screen">
-          <video id="wsVideo" muted playsinline preload="none" aria-label="Goal clip with the scorer shown as a black silhouette"></video>
-          <div class="ws-overlay" id="wsOverlay"><span id="wsLoading" role="status">Loading goal…</span><button type="button" id="wsWatch" hidden>▶ Watch goal</button></div>
+    <div id="wsRound" class="ws-round" hidden>
+      <div class="ws-media-pane">
+        <div class="ws-roundhead"><b id="wsRoundLabel">Mystery goal</b><span class="ws-replay-note">Unlimited replays</span></div>
+        <div class="ws-video-card">
+          <div class="ws-player">
+            <div class="ws-screen">
+              <video id="wsVideo" muted playsinline preload="none" aria-label="Goal clip with the scorer shown as a black silhouette"></video>
+              <div class="ws-overlay" id="wsOverlay"><span id="wsLoading" role="status">Loading goal…</span><button type="button" id="wsWatch" hidden>▶ Watch goal</button></div>
+            </div>
+            <div class="ws-track" aria-hidden="true"><i id="wsProgress"></i></div>
+          </div>
+          <div class="ws-controls" role="group" aria-label="Video controls">
+            <button type="button" id="wsReplay">↻ Replay</button>
+            <button type="button" id="wsPause" aria-label="Pause video" title="Pause video">Ⅱ</button>
+            <button type="button" id="wsSlow" aria-label="Toggle half-speed playback" title="Toggle half-speed playback" aria-pressed="false">1×</button>
+            <span class="ws-time" id="wsTime">Ready to watch</span>
+          </div>
         </div>
-        <div class="ws-track" aria-hidden="true"><i id="wsProgress"></i></div>
       </div>
-      <div class="ws-controls" role="group" aria-label="Video controls">
-        <button type="button" id="wsReplay">↻ Replay</button>
-        <button type="button" id="wsPause">Pause</button>
-        <button type="button" id="wsSlow" aria-pressed="false">0.5× Slow motion</button>
-        <button type="button" id="wsOriginal" aria-pressed="false" hidden>See original</button>
-        <span class="ws-time" id="wsTime">Replays are unlimited</span>
+      <div class="ws-question-pane">
+        <div class="ws-question-status"><span>NAME THE PLAYER</span><span id="wsLeft">Guess 1 of 6</span></div>
+        <div class="ws-attempts" id="wsAttempts" aria-label="Guess progress"></div>
+        <div class="ws-question-copy" id="wsQuestionCopy"><h2>Who scored this goal?</h2><p>A familiar stride. A signature release. Trust your hockey eye.</p></div>
+        <div id="wsGuessing">
+          <label class="ws-input-label" for="wsGuess">Player name</label>
+          <div class="search">
+            <input id="wsGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="wsOpts" aria-label="Guess the goal scorer" placeholder="Type a player’s name…">
+            <ul class="list" id="wsOpts" role="listbox" hidden></ul>
+          </div>
+          <p class="ws-feedback" id="wsFeedback" role="status" aria-live="polite"></p>
+        </div>
+        <div class="slot"></div>
+        <div class="ws-finish-actions" id="wsFinishActions" hidden>
+          <button type="button" id="wsOriginal" aria-pressed="false" hidden>Watch original</button>
+          <button type="button" class="ws-primary" id="wsContinue" hidden>More goals · Unlimited</button>
+        </div>
+        <div class="ws-history" id="wsHistory" hidden><small>Your guesses</small><ol class="ws-guesses" id="wsWrong"></ol></div>
+        <a class="ws-source" id="wsSource" target="_blank" rel="noopener" hidden>Full highlight on NHL.com ↗</a>
       </div>
-      <div class="ws-attempts" id="wsAttempts" aria-label="Guess progress"></div>
-      <p class="ws-feedback" id="wsFeedback" role="status" aria-live="polite"></p>
-      <div class="search">
-        <input id="wsGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="wsOpts" aria-label="Guess the goal scorer" placeholder="Search for a player…">
-        <ul class="list" id="wsOpts" role="listbox" hidden></ul>
-      </div>
-      <ul class="wrong" id="wsWrong"></ul>
-      <a class="ws-source" id="wsSource" target="_blank" rel="noopener" hidden>Full highlight on NHL.com ↗</a>
     </div>
-    <div class="slot"></div>
-    <button type="button" class="ws-primary" id="wsContinue" hidden>Keep playing · Unlimited</button>
     <p class="nodata" hidden>No goal clips are available right now.</p>
   </section>
 
@@ -4182,6 +4241,8 @@ const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", jou
   edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.overtime = "clock";
 UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
+UI_ICONS.play = '<path d="m8 4 12 8-12 8V4Z"/>';
+UI_ICONS.pause = '<path d="M8 4v16M16 4v16"/>';
 MODE_ICONS.whoscored = "video";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
 Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
@@ -9698,13 +9759,16 @@ function wsMedia(t, original = false) { return `who-scored/${original ? t.reveal
 function wsVideoState() {
   const g = G.whoscored, v = $("wsVideo");
   if (game !== "whoscored" || !g.started) return;
-  $("wsPause").textContent = v.paused || v.ended ? "Play" : "Pause";
+  const paused = v.paused || v.ended;
+  $("wsPause").innerHTML = uiIcon(paused ? "play" : "pause");
+  $("wsPause").setAttribute("aria-label", paused ? "Play video" : "Pause video");
+  $("wsPause").title = paused ? "Play video" : "Pause video";
   $("wsOverlay").hidden = g.ready && !v.paused && !v.ended;
   $("wsLoading").hidden = g.ready;
   $("wsWatch").hidden = !g.ready && !g.failed;
   $("wsWatch").textContent = g.failed ? "↻ Try again" : v.ended ? "↻ Watch again" : "▶ Play goal";
   $("wsProgress").style.width = `${v.duration ? Math.min(100,100 * v.currentTime / v.duration) : 0}%`;
-  if (g.ready) $("wsTime").textContent = `${Math.min(v.currentTime || 0,v.duration || 0).toFixed(1)} / ${(v.duration || 0).toFixed(1)}s · Replays are unlimited`;
+  if (g.ready) $("wsTime").textContent = `${Math.min(v.currentTime || 0,v.duration || 0).toFixed(1)} / ${(v.duration || 0).toFixed(1)}s`;
 }
 function wsPlay(restart = false) {
   const g = G.whoscored, st = S.whoscored, v = $("wsVideo");
@@ -9726,7 +9790,7 @@ function wsLoadVideo(t, original = false, play = false) {
   v.pause();
   g.file = file; g.original = original; g.ready = false; g.failed = false;
   $("wsLoading").textContent = "Loading goal…";
-  $("wsTime").textContent = "Replays are unlimited";
+  $("wsTime").textContent = "Loading…";
   v.poster = `who-scored/${t.poster}`;
   v.setAttribute("aria-label", original ? "Original goal clip, scorer revealed" : "Goal clip with the scorer shown as a black silhouette");
   v.src = file; v.load(); v.playbackRate = g.slow ? .5 : 1;
@@ -9746,7 +9810,7 @@ G.whoscored = {
   isWin: (t, id) => id === t.pid,
   reset(t) {
     this.started = !!this.advance; this.autoPlay = !!this.advance; this.advance = false;
-    this.ready = false; this.failed = false; this.original = false; this.slow = false; this.file = "";
+    this.ready = false; this.failed = false; this.original = false; this.slow = false; this.file = ""; this.guessCount = 0;
     const v = $("wsVideo"); v.pause(); v.removeAttribute("src"); v.load(); v.playbackRate = 1;
     v.poster = `who-scored/${t.poster}`;
     $("wsGuess").value = ""; $("wsWrong").innerHTML = "";
@@ -9757,33 +9821,45 @@ G.whoscored = {
     if (!p || p.pos === "G") return null;
     if (fresh && (!this.started || !this.ready)) { toast("Watch the goal first."); return null; }
     this.started = true;
-    if (id !== t.pid) addWrong("wsWrong", p);
     return id === t.pid;
   },
   render(t, st) {
     $("wsMark").innerHTML = uiIcon("video");
     $("wsSetup").hidden = this.started;
     $("wsRound").hidden = !this.started;
+    $("wsIntro").hidden = this.started;
+    $("wsQuestionCopy").hidden = st.over;
+    $("wsGuessing").hidden = st.over;
+    $("wsFinishActions").hidden = !st.over;
     $("wsPool").textContent = `${WS_CLIPS.length} scorers in rotation · Unlimited replays · No timer`;
     document.querySelectorAll("[data-ws-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.wsMode === mode));
     $("wsStart").textContent = mode === "unlimited" ? "Watch the next goal" : mode === "archive" ? "Watch this goal" : "Watch today's goal";
-    $("wsRoundLabel").textContent = st.over ? "Scorer revealed" : mode === "unlimited" ? "Mystery goal · Unlimited" : "Today's mystery goal";
-    $("wsLeft").textContent = st.over ? `${st.guesses.length} ${st.guesses.length === 1 ? "guess" : "guesses"}` : `${this.max - st.guesses.length} guesses left`;
-    $("wsAttempts").innerHTML = Array.from({length:this.max},(_,i) => `<i class="${st.guesses[i] === t.pid ? "hit" : i < st.guesses.length ? "used" : ""}"></i>`).join("");
+    $("wsRoundLabel").textContent = this.original ? "Original goal" : st.over ? "Scorer revealed" : mode === "unlimited" ? "Mystery goal · Unlimited" : mode === "archive" ? "Mystery goal · Archive" : "Today's mystery goal";
+    $("wsLeft").textContent = st.over ? st.guesses.includes(t.pid) ? `Solved in ${st.guesses.length}` : "Scorer revealed" : `Guess ${st.guesses.length + 1} of ${this.max}`;
+    $("wsAttempts").innerHTML = Array.from({length:this.max},(_,i) => `<i class="${st.guesses[i] === t.pid ? "hit" : i < st.guesses.length ? "used" : !st.over && i === st.guesses.length ? "active" : ""}"></i>`).join("");
     $("wsAttempts").setAttribute("aria-label", `${st.guesses.length} of ${this.max} guesses used`);
     const wrong = st.guesses.filter(id => id !== t.pid).length;
     const hints = [];
     if (!st.over && wrong >= 2) hints.push(`Shoots ${t.p.shoots === "R" ? "right" : "left"}`);
     if (!st.over && wrong >= 4) hints.push(`Born in ${countryName(t.p.nation)}`);
-    $("wsFeedback").textContent = st.over ? "Watch the original to see the move with the scorer revealed."
-      : hints.length ? hints.join(" · ") : wrong ? "Not quite. Take another look at the move." : "Watch the black silhouette. Who does that move belong to?";
+    $("wsFeedback").textContent = st.over ? "" : hints.length ? hints.join(" · ") : wrong ? "Not quite. Take another look at the release." : "A last name works too.";
+    $("wsHistory").hidden = st.guesses.length === 0;
+    const fresh = st.guesses.length > this.guessCount;
+    $("wsWrong").innerHTML = st.guesses.map((id,i) => {
+      const p = BYID.get(id), correct = id === t.pid;
+      if (!p) return "";
+      return `<li class="${correct ? "hit" : "miss"}${fresh && i === st.guesses.length-1 ? " fresh" : ""}"><span class="ws-guess-index">${String(i+1).padStart(2,"0")}</span><span class="ws-guess-name">${esc(p.name)}</span><span class="ws-guess-mark"><i aria-hidden="true"></i>${correct ? "Correct" : "Miss"}</span></li>`;
+    }).join("");
+    this.guessCount = st.guesses.length;
     $("wsOriginal").hidden = !st.over;
-    $("wsOriginal").textContent = this.original ? "See silhouette" : "See original";
+    $("wsOriginal").textContent = this.original ? "Watch silhouette" : "Watch original";
     $("wsOriginal").setAttribute("aria-pressed", this.original);
     $("wsSlow").setAttribute("aria-pressed", this.slow);
+    $("wsSlow").textContent = this.slow ? "0.5×" : "1×";
     $("wsSource").hidden = !st.over;
     if (st.over) $("wsSource").href = t.source;
-    $("wsContinue").hidden = !st.over || mode === "unlimited";
+    $("wsContinue").hidden = !st.over;
+    $("wsContinue").textContent = mode === "unlimited" ? "Next goal →" : "More goals · Unlimited";
     $("wsGuess").disabled = st.over || !this.started || !this.ready;
     if (this.started && !this.file) wsLoadVideo(t, false, this.autoPlay);
   },
@@ -9807,6 +9883,7 @@ $("wsSlow").onclick = () => {
   const g = G.whoscored; g.slow = !g.slow;
   $("wsVideo").playbackRate = g.slow ? .5 : 1;
   $("wsSlow").setAttribute("aria-pressed",g.slow);
+  $("wsSlow").textContent = g.slow ? "0.5×" : "1×";
 };
 $("wsOriginal").onclick = () => {
   const st = S.whoscored, g = G.whoscored;
