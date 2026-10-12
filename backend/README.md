@@ -13,7 +13,12 @@ After the source is saved in `cartsybends/sweater.win`:
 2. Authorize the Cloudflare GitHub app for `cartsybends/sweater.win`.
 3. Set production branch to `main`, root directory to `backend`, build command
    to `npm run build`, and deploy command to `npm run deploy`.
-4. Save and deploy.
+4. If a preview command is requested, use
+   `npx wrangler versions upload --config wrangler.generated.json`.
+5. Save the connection. A push to `main` starts the production build.
+
+The build command prepares `wrangler.generated.json` with the existing D1 database.
+Both deploy commands must use that generated configuration.
 
 The configuration helper resolves the existing database by name with Wrangler.
 It fails if the database cannot be found uniquely, and never creates a database.
