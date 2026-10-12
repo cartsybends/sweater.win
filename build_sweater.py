@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "132 · Who Scored? Expanded Rotation"
+VERSION = "133 · Private Mode Analytics"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -5132,6 +5132,7 @@ function roTick() {
 function roStart() {
   const st = S.roster;
   if (game !== "roster" || !st.target || st.over || st.endsAt) return;
+  globalThis.SweaterAnalytics?.beginRound();
   st.endsAt = Date.now() + RO_SECONDS * 1000;
   const rec = { key: G.roster.clockKey(st.target), endsAt: st.endsAt };
   if (mode === "unlimited") roMemory = rec; else store.set("sweater-roster-clock", rec);
@@ -6210,6 +6211,7 @@ function stopPuck() { if (puckRun) { cancelAnimationFrame(puckRun.raf); puckRun 
 function startPuck() {
   const st = S.puck, t = st.target;
   if (game !== "puck" || !t || st.over || puckRun) return;
+  globalThis.SweaterAnalytics?.beginRound();
   if (mode !== "unlimited") store.set("sweater-puck-clock", { key: G.puck.clockKey(t) });
   const lane = $("pkLane"), queue = t.ids.filter(id => !st.guesses.includes(id));
   lane.innerHTML = "";
@@ -9869,6 +9871,7 @@ G.whoscored = {
 $("wsStart").onclick = () => {
   const st = S.whoscored, g = G.whoscored;
   if (game !== "whoscored" || !st.target) return;
+  if (!st.over) globalThis.SweaterAnalytics?.beginRound();
   g.started = true; g.autoPlay = true; g.render(st.target, st);
 };
 document.querySelectorAll("[data-ws-mode]").forEach(b => b.onclick = () => {
@@ -9907,6 +9910,8 @@ $("wsVideo").addEventListener("error", () => {
 });
 ["play","pause","ended","timeupdate","waiting"].forEach(name => $("wsVideo").addEventListener(name,wsVideoState));
 document.addEventListener("visibilitychange", () => { if (document.hidden) $("wsVideo").pause(); });
+
+/*__MODE_ANALYTICS__*/
 
 // ======================= game engine =======================
 const GAME_IDS = Object.keys(G);
@@ -10032,9 +10037,10 @@ function renderResultRecap(unlocked = []) {
   box.innerHTML = `<div class="recapstats"><i>✦</i><span><b>+${entry ? xpFor(entry) : 0} XP${achievement}</b><small>Level ${p.level} · Daily Hat Trick ${Math.min(done, 3)}/3</small><span class="recapfact"><small>${esc(info.fact)}</small></span></span></div><div class="recapactions"><button type="button" data-result-share>Share</button><button type="button" class="ghost" data-result-next="${next}">Next</button></div>`;
 }
 
-function startGame(t, restore = [], opts) {
+function startGame(t, restore = [], opts, analyticsNew = false) {
   const st = S[game], g = G[game];
   Object.assign(st, { target: t, guesses: [], over: false, mode, opts: opts || prefOpts(game) });
+  globalThis.SweaterAnalytics?.context(game, mode, `${mode === "unlimited" ? "" : st.day}:${g.tid(t)}`, analyticsNew);
   hideBanner();
   $("resultRecap").hidden = true;
   g.reset(t);
@@ -10058,6 +10064,7 @@ function doGuess(x, fresh = true) {
   if (!st.target || st.over || g.pending || (!g.repeat && st.guesses.includes(x))) return;
   const won = g.guess(st.target, x, fresh);
   if (won === null) return;
+  if (fresh) globalThis.SweaterAnalytics?.beginRound();
   st.guesses.push(x);
   if (fresh) saveProgress();
   if (isDone(game, st.target, st.guesses)) finish(g.wonGame ? g.wonGame(st.target, st.guesses) : won, fresh);
@@ -10094,6 +10101,7 @@ function finish(won, fresh) {
   }
   renderResultRecap(unlocked);
   if (fresh) {
+    globalThis.SweaterAnalytics?.completeRound(won);
     const party = g.celebrate ? g.celebrate(st.target, st.guesses, won) : won;
     void $("banner").offsetWidth; // restart the pop animation
     $("banner").classList.add("pop");
@@ -10155,7 +10163,7 @@ function loadUnlimited(forceNew = false) {
   }
   let t, tries = 0;
   do { t = g.random(); } while (!g.orderedRotation && st.target && g.tid(t) === g.tid(st.target) && ++tries < 10);
-  startGame(t);
+  startGame(t, [], undefined, true);
 }
 
 function loadCurrent() {
@@ -10217,6 +10225,7 @@ function changeOption(key, value) {
 $("hardMode").addEventListener("change", e => changeOption("hard", e.target.checked));
 
 function setGame(g) {
+  if (g !== game) globalThis.SweaterAnalytics?.leave();
   if (g !== game) leaveGame(game);
   game = g;
   store.set("sweater-game", g);
@@ -11407,8 +11416,9 @@ function startTeamMystery(t){
   const img=$("teamMysteryImg");img.onerror=function(){this.onerror=null;this.src=FALLBACK};img.src=teamHistHeadshot(t,target.id,row.y);
   const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);if(y===row.y||guesses.length>=max)over=true;draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
 }
-function openTeamMode(t, mode) { if(mode==="best")startTeamBest(t, true); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
+function openTeamMode(t, mode) { globalThis.SweaterAnalytics?.view(`team_${mode}`, "unlimited"); if(mode==="best")startTeamBest(t, true); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
 function openTeams(team = "", push = true) {
+  globalThis.SweaterAnalytics?.view("teams", "unlimited");
   if (push) rememberHubScroll();
   leaveGame(game); closeParty(); onHub = false;
   document.body.classList.remove("hubmode");
@@ -11427,6 +11437,7 @@ $("view-teams").addEventListener("click", e => {
 });
 
 function showHub(push = true) {
+  globalThis.SweaterAnalytics?.leave();
   const returningToHub = !onHub;
   leaveGame(game);
   closeParty();
@@ -11515,6 +11526,7 @@ let party = null, partyTimer = null, partyBusy = false;
 const partySaved = () => { const p = store.get("sweater-party"); return p && Date.now() - p.at < 6 * 3600e3 ? p : null; };
 
 function openParty(code, push = true) {
+  globalThis.SweaterAnalytics?.view("party", "party");
   if (push) rememberHubScroll();
   if (push) history.pushState(null, "", code ? `#party-${code}` : "#party");
   leaveGame(game);
@@ -11634,6 +11646,11 @@ function partyBoard(st, n = 5) {
 let partySig = "";
 function partyRender(message = "") {
   const box = $("ptBody"), st = party && party.state;
+  if (st && !$("view-party").hidden) {
+    globalThis.SweaterAnalytics?.context("party", "party", `${dayKey()}:${st.code}`);
+    if (st.status === "question") globalThis.SweaterAnalytics?.beginRound();
+    if (st.status === "done") globalThis.SweaterAnalytics?.completeRound(false);
+  }
   const sig = JSON.stringify([message, party && party.role, party && party.picked, party && party.rounds, st && { ...st, now: 0 }]);
   if (sig === partySig && box.innerHTML) {
     if (st && st.endsAt) {
@@ -14117,6 +14134,7 @@ def main():
         site += "/"
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     fills = {
+        "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__GOAL_CLIPS__*/[]": esc(goal_clips),
         "/*__PLAYERS__*/[]": esc(embedded),
         "/*__ROSTER_PLAYERS__*/[]": esc(roster_embedded),

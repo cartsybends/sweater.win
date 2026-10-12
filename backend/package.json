@@ -1,0 +1,11 @@
+{
+  "name":"sweater-api",
+  "private":true,
+  "type":"module",
+  "scripts":{
+    "test":"node ../tests/analytics_backend.mjs",
+    "deploy":"node prepare-config.mjs --production && wrangler deploy --config wrangler.generated.json",
+    "build":"node prepare-config.mjs && wrangler deploy --config wrangler.generated.json --dry-run"
+  },
+  "devDependencies":{"wrangler":"^4.0.0"}
+}

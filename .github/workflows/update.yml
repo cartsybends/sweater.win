@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - "build_sweater.py"
+      - "analytics/**"
       - "refresh_current_teams.py"
       - "make_preview_shell.py"
       - "static/who-scored/**"

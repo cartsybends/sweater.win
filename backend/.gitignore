@@ -1,0 +1,6 @@
+node_modules/
+.wrangler/
+wrangler.json
+wrangler.generated.json
+.dev.vars
+.env*

@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sweater-api",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-10-12",
+  "workers_dev": true,
+  "keep_vars": true,
+  "triggers": {
+    "crons": [
+      "0 10 * * *"
+    ]
+  },
+  "routes": [
+    {
+      "pattern": "api.sweater.win",
+      "custom_domain": true
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sweater-leaderboard",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
