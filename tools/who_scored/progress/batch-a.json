@@ -8,6 +8,15 @@
       "poster": "goal-11-v1.jpg",
       "motion": "Circle slap shot",
       "source": "https://www.nhl.com/gamecenter/nyr-vs-bos/2025/02/01/2024020827"
+    },
+    {
+      "id": "goal-12",
+      "pid": 8476453,
+      "masked": "goal-12-masked-v1.mp4",
+      "reveal": "goal-12-original-v1.mp4",
+      "poster": "goal-12-v1.jpg",
+      "motion": "Circle snap shot",
+      "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112"
     }
   ],
   "sources": [
@@ -29,6 +38,23 @@
       "start": 19.8,
       "edit": "goal-11.json",
       "identity_verification": "Boston #88 visible at frame36 shooting; same player followed backward to left shooter at frame0 and forward to frame93."
+    },
+    {
+      "id": "goal-12",
+      "pid": 8476453,
+      "player": "Nikita Kucherov",
+      "team": "TBL",
+      "jersey": 86,
+      "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112",
+      "source_video_id": "6368142968112",
+      "game_id": 2024020829,
+      "date": "2025-02-01",
+      "shot_type": "snap",
+      "start": 32.0,
+      "duration": 4.0,
+      "sha256": "eaf6ecd3d5fc3c63fc15296a79a37a1ae6e8e96083c7d197eb1be5b067267685",
+      "edit": "goal-12.json",
+      "identity_verification": "Tampa #86 Kucherov readable across receiving and release, distinct from #21 passer and #59 net front."
     }
   ],
   "checks": [
@@ -43,13 +69,25 @@
       "decode_checks_passed": true,
       "review": "goal-11-f82f39b3fdbc/review",
       "notes": "#88 identity confirmed. Paired QA94/94 frames covers helmet, body, gloves and skates. Continuous replay, no scorebug or player-name overlay."
+    },
+    {
+      "id": "goal-12",
+      "frames": 96,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-12-f9f2508cce8c/review",
+      "notes": "#86 Kucherov identity confirmed96/96. Helmet, body, gloves and skates covered, late skates partly outside frame. Other Lightning players21,38,59 remain visible."
     }
   ],
   "completed": [
-    "goal-11"
+    "goal-11",
+    "goal-12"
   ],
   "pending": [
-    "goal-12",
     "goal-13",
     "goal-14",
     "goal-16",

@@ -57,7 +57,9 @@ def candidates():
         for period in data.get('summary',{}).get('scoring',[]):
             for goal in period['goals']:
                 if goal['playerId'] in targets and goal.get('highlightClip'):
-                    found.append((goal['playerId'],{'game_id':game['id'],'date':data['gameDate'],'team':goal['teamAbbrev']['default'],'jersey':jerseys.get(goal['playerId']),'source':goal.get('highlightClipSharingUrl') or f"https://www.nhl.com/gamecenter/{game['id']}",'source_video_id':str(goal['highlightClip']),'shot_type':goal.get('shotType'),'event_id':goal['eventId']}))
+                    scorer=goal['firstName']['default']+' '+goal['lastName']['default']
+                    if normalize(scorer)!=normalize(targets[goal['playerId']]['player']):raise ValueError('Scoring event name disagrees with selected player')
+                    found.append((goal['playerId'],{'game_id':game['id'],'date':data['gameDate'],'team':goal['teamAbbrev']['default'],'jersey':jerseys.get(goal['playerId']),'source':goal.get('highlightClipSharingUrl') or f"https://www.nhl.com/gamecenter/{game['id']}",'source_video_id':str(goal['highlightClip']),'shot_type':goal.get('shotType'),'event_id':goal['eventId'],'source_goal_scorer':scorer}))
         return found
     with ThreadPoolExecutor(max_workers=6) as pool:
         for result in pool.map(gameinfo,games):
@@ -66,10 +68,20 @@ def candidates():
         r['candidates'].sort(key=lambda c:(c['date'],c['event_id']))
         if r['candidates']:r.update(r['candidates'][0]);r['status']='source_selected'
     # Recovered media must retain the exact original source and scorer.
-    overrides={10:('6367771449112','2024020779'),15:('6368137903112','2024020845'),20:('6367766068112','2024020779')}
+    overrides={10:('6367771449112','2024020779'),11:('6368134275112','2024020827'),15:('6368137903112','2024020833'),20:('6367766068112','2024020779')}
     for i,(video,game) in overrides.items():
         r=records[i-10];match=next((c for c in r['candidates'] if c['source_video_id']==video),None)
         if match:r.update(match)
+    # Preserve the chosen replay for every existing source, including alternates
+    # outside the discovery slates. Re-scanning must never relabel an existing file.
+    previous=ROOT/'new-sources.json'
+    if not previous.exists():previous=REPO/'tools/who_scored/expansion-sources.json'
+    if previous.exists():
+        prior={r['id']:r for r in json.loads(previous.read_text())}
+        for r in records:
+            old=prior.get(r['id'])
+            if old and old.get('pid')==r['pid'] and old.get('source_video_id'):
+                new_candidates=r['candidates'];r.update(old);r['candidates']=new_candidates
     atomic(ROOT/'new-sources.json',records)
     atomic(REPO/'tools/who_scored/expansion-sources.json',records)
     print('Source candidates: '+', '.join(f"{r['id']} {r['player']} ({len(r['candidates'])})" for r in records),flush=True)
@@ -95,13 +107,15 @@ def download(r,config):
     if not eligible:raise ValueError('No public unencrypted MP4')
     chosen=max(eligible,key=lambda s:(s.get('height',0),s.get('avg_bitrate',0)))
     path=ROOT/'originals'/(r['id']+'.mp4')
+    if path.exists() and r.get('sha256') and hashlib.sha256(path.read_bytes()).hexdigest()!=r['sha256']:
+        raise ValueError('Original source checksum changed; refusing to reuse or overwrite it')
     if not path.exists():
         partial=path.with_suffix('.partial')
         with get(chosen['src']) as response,partial.open('wb') as stream:shutil.copyfileobj(response,stream)
         partial.replace(path)
     metadata=probe(path);stream=next(s for s in metadata['streams'] if s['codec_type']=='video');duration=float(metadata['format']['duration'])
     storyboard(path,r['id'],duration)
-    return {**r,'original_path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'duration':duration,'width':stream['width'],'height':stream['height'],'media_title':data.get('name'),'status':'original_ready'}
+    return {**r,'original_path':str(path),'original_relative_path':'goal-expansion/originals/'+path.name,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'duration':duration,'width':stream['width'],'height':stream['height'],'media_title':data.get('name'),'media_description':data.get('long_description') or data.get('description'),'status':'original_ready'}
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--candidates',action='store_true');parser.add_argument('--ids',nargs='*');args=parser.parse_args()

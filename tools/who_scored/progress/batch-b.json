@@ -1,0 +1,57 @@
+{
+  "clips": [
+    {
+      "id": "goal-19",
+      "pid": 8480801,
+      "masked": "goal-19-masked-v1.mp4",
+      "reveal": "goal-19-original-v1.mp4",
+      "poster": "goal-19-v1.jpg",
+      "motion": "Rush wrist shot",
+      "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112"
+    }
+  ],
+  "sources": [
+    {
+      "id": "goal-19",
+      "pid": 8480801,
+      "player": "Brady Tkachuk",
+      "team": "OTT",
+      "jersey": 7,
+      "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112",
+      "source_video_id": "6368141542112",
+      "game_id": 2024020828,
+      "date": "2025-02-01",
+      "shot_type": "wrist",
+      "start": 35.2,
+      "duration": 4.0,
+      "sha256": "f1639b0e8899382d7b30f79d20e92fc6cb373eb03c3f5f13be144f57187f9b8c",
+      "edit": "goal-19.json",
+      "identity_verification": "Ottawa #7 Brady Tkachuk visible and skating with puck throughout overhead rush; shooting at frames73\u201380. Other Ottawa skaters stay visible."
+    }
+  ],
+  "checks": [
+    {
+      "id": "goal-19",
+      "frames": 96,
+      "all_paired_review_frames_inspected": true,
+      "correct_scorer": true,
+      "full_body_coverage": true,
+      "no_camera_cuts": true,
+      "identifying_overlays_removed": true,
+      "decode_checks_passed": true,
+      "review": "goal-19-dc80073448f1/review",
+      "notes": "All96 paired frames inspected; helmet, gloves, jersey and skates covered. Crop removes live scorebug; replay SN network watermark remains."
+    }
+  ],
+  "completed": [
+    "goal-19"
+  ],
+  "pending": [
+    "goal-21",
+    "goal-22",
+    "goal-23",
+    "goal-24",
+    "goal-25",
+    "goal-26"
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "goal-12",
+  "pid": 8476453,
+  "player": "Nikita Kucherov",
+  "original": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-12.mp4",
+  "start": 32.0,
+  "duration": 4.0,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        540,
+        266,
+        642,
+        468
+      ],
+      "points": [
+        [
+          571,
+          285
+        ],
+        [
+          593,
+          330
+        ],
+        [
+          563,
+          373
+        ],
+        [
+          602,
+          391
+        ],
+        [
+          581,
+          451
+        ],
+        [
+          623,
+          424
+        ]
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        430,
+        282,
+        541,
+        503
+      ],
+      "points": [
+        [
+          460,
+          302
+        ],
+        [
+          477,
+          352
+        ],
+        [
+          455,
+          386
+        ],
+        [
+          489,
+          420
+        ],
+        [
+          449,
+          483
+        ],
+        [
+          512,
+          445
+        ]
+      ]
+    },
+    {
+      "frame": 95,
+      "box": [
+        370,
+        343,
+        502,
+        540
+      ],
+      "points": [
+        [
+          420,
+          365
+        ],
+        [
+          449,
+          414
+        ],
+        [
+          389,
+          473
+        ],
+        [
+          460,
+          489
+        ],
+        [
+          479,
+          523
+        ]
+      ]
+    }
+  ],
+  "seed": 0,
+  "source_sha256": "eaf6ecd3d5fc3c63fc15296a79a37a1ae6e8e96083c7d197eb1be5b067267685",
+  "version": "v1",
+  "identity_verification": "Tampa #86 Kucherov readable across receiving and release, distinct from #21 passer and #59 net front."
+}
