@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "131 · Who Scored? Scorer Review"
+VERSION = "132 · Who Scored? Expanded Rotation"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -13612,6 +13612,16 @@ def plan_days(days, candidates, today, seed, no_repeat=NO_REPEAT_DAYS):
     return dict(sorted(days.items()))
 
 
+def goal_days_for_library(sched, clip_ids, today):
+    """Refresh unlocked goal assignments only when the reviewed library changes."""
+    days = dict(sched.get("whoscored_days", {}))
+    previous = set(sched.get("whoscored_clip_ids", days.values()))
+    if previous != set(clip_ids):
+        lock = (today + timedelta(days=LOCK_DAYS)).isoformat()
+        days = {k: v for k, v in days.items() if k <= lock}
+    return days
+
+
 def update_schedule(players, today, roster_players, goal_clips=None):
     """Keep a fixed day-by-day list of puzzles for each game. Past days and tomorrow never change."""
     try:
@@ -13649,11 +13659,12 @@ def update_schedule(players, today, roster_players, goal_clips=None):
     clip_ids = {c["pid"] for c in clips if c["pid"] in pool or c["pid"] in archive}
     if len(clip_ids) != len(clips):
         raise ValueError("Who Scored? scorer is missing from player data.")
+    sched["whoscored_days"] = goal_days_for_library(sched, clip_ids, today)
     games["whoscored"] = ("whoscored_days", "whoscored_start",
                           {str(i): i for i in clip_ids}, "sweater-goal", max(0, len(clip_ids) - 1))
     first = "0000-00-00"   # every past day, for the archive
     last = (today + timedelta(days=EMBED_AHEAD)).isoformat()
-    result, new = {}, {}
+    result, new = {}, {"whoscored_clip_ids": sorted(clip_ids)}
     for g, (dk, sk, cands, seed, *rest) in games.items():
         days = plan_days(sched.get(dk, {}), cands, today, seed, *rest)
         start = sched.get(sk) or (today.isoformat() if days else "")
@@ -13723,6 +13734,7 @@ def update_schedule(players, today, roster_players, goal_clips=None):
     SCHEDULE.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
 
     needed = {i for g, (_, window) in result.items() if g not in ("hl", "roster") for v in window.values() for i in ids_of(v)}
+    needed |= clip_ids  # Retain every reviewed scorer for the unlimited rotation.
     needed |= {i for day in hl_window.values() for seq in day.values() for i in seq}
     extras = [archive[i] for i in sorted(needed) if i not in pool and i in archive]
     roster_needed = {i for v in result.get("roster", ("", {}))[1].values() for i in ids_of(v)}

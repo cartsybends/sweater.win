@@ -42,7 +42,10 @@ jobs:
         run: python refresh_current_teams.py --html site/index.html --schedule schedule.json
 
       - name: Check Who Scored? round flow and rotations
-        run: node tests/who_scored.cjs
+        run: |
+          node tests/who_scored.cjs
+          python tests/who_scored_schedule.py
+          python tools/who_scored/validate.py
 
       - name: Validate generated JavaScript
         shell: bash

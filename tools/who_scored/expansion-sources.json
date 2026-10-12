@@ -1,0 +1,898 @@
+[
+  {
+    "id": "goal-10",
+    "pid": 8481559,
+    "player": "Jack Hughes",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020779,
+        "date": "2025-01-25",
+        "team": "NJD",
+        "jersey": 86,
+        "source": "https://nhl.com/video/njd-mtl-hughes-scores-goal-against-jakub-dobes-6367771449112",
+        "source_video_id": "6367771449112",
+        "shot_type": "snap",
+        "event_id": 1111
+      }
+    ],
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "team": "NJD",
+    "jersey": 86,
+    "source": "https://nhl.com/video/njd-mtl-hughes-scores-goal-against-jakub-dobes-6367771449112",
+    "source_video_id": "6367771449112",
+    "shot_type": "snap",
+    "event_id": 1111,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-10.mp4",
+    "sha256": "e481035946c606b52d3a7514b3571ba4c58f7bed23f9f29b704608b5519d8330",
+    "duration": 52.348345
+  },
+  {
+    "id": "goal-11",
+    "pid": 8477956,
+    "player": "David Pastrnak",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020776,
+        "date": "2025-01-25",
+        "team": "BOS",
+        "jersey": 88,
+        "source": "https://nhl.com/video/col-bos-pastrnak-scores-empty-net-goal-6367754796112",
+        "source_video_id": "6367754796112",
+        "shot_type": "wrist",
+        "event_id": 1058
+      },
+      {
+        "game_id": 2024020827,
+        "date": "2025-02-01",
+        "team": "BOS",
+        "jersey": 88,
+        "source": "https://nhl.com/video/nyr-bos-pastrnak-scores-goal-against-igor-shesterkin-6368129870112",
+        "source_video_id": "6368129870112",
+        "shot_type": "snap",
+        "event_id": 506
+      },
+      {
+        "game_id": 2024020827,
+        "date": "2025-02-01",
+        "team": "BOS",
+        "jersey": 88,
+        "source": "https://nhl.com/video/",
+        "source_video_id": "6368134275112",
+        "shot_type": "slap",
+        "event_id": 860
+      },
+      {
+        "game_id": 2024020827,
+        "date": "2025-02-01",
+        "team": "BOS",
+        "jersey": 88,
+        "source": "https://nhl.com/video/",
+        "source_video_id": "6368135282112",
+        "shot_type": "wrist",
+        "event_id": 1087
+      }
+    ],
+    "game_id": 2024020827,
+    "date": "2025-02-01",
+    "team": "BOS",
+    "jersey": 88,
+    "source": "https://www.nhl.com/gamecenter/nyr-vs-bos/2025/02/01/2024020827",
+    "source_video_id": "6368134275112",
+    "shot_type": "slap",
+    "event_id": 1058,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-11.mp4",
+    "sha256": "6fa026b3a4e0fe8d84a1a8bb6a33d204d9ae2470e156574c85522d275df7334b",
+    "duration": 32.146667
+  },
+  {
+    "id": "goal-12",
+    "pid": 8476453,
+    "player": "Nikita Kucherov",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020829,
+        "date": "2025-02-01",
+        "team": "TBL",
+        "jersey": 86,
+        "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112",
+        "source_video_id": "6368142968112",
+        "shot_type": "snap",
+        "event_id": 1048
+      }
+    ],
+    "game_id": 2024020829,
+    "date": "2025-02-01",
+    "team": "TBL",
+    "jersey": 86,
+    "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112",
+    "source_video_id": "6368142968112",
+    "shot_type": "snap",
+    "event_id": 1048,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-12.mp4",
+    "sha256": "eaf6ecd3d5fc3c63fc15296a79a37a1ae6e8e96083c7d197eb1be5b067267685",
+    "duration": 38.161678
+  },
+  {
+    "id": "goal-13",
+    "pid": 8477493,
+    "player": "Aleksander Barkov",
+    "status": "awaiting_source",
+    "candidates": []
+  },
+  {
+    "id": "goal-14",
+    "pid": 8478483,
+    "player": "Mitch Marner",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020833,
+        "date": "2025-02-01",
+        "team": "TOR",
+        "jersey": 16,
+        "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112",
+        "source_video_id": "6368140670112",
+        "shot_type": "deflected",
+        "event_id": 257
+      }
+    ],
+    "game_id": 2024020833,
+    "date": "2025-02-01",
+    "team": "TOR",
+    "jersey": 16,
+    "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112",
+    "source_video_id": "6368140670112",
+    "shot_type": "deflected",
+    "event_id": 257,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-14.mp4",
+    "sha256": "41cf297efd8c31220df706d420a0ec8cd36eaaf4d85bf776c1ab9f9bd8c77949",
+    "duration": 45.963333
+  },
+  {
+    "id": "goal-15",
+    "pid": 8477939,
+    "player": "William Nylander",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020833,
+        "date": "2025-02-01",
+        "team": "TOR",
+        "jersey": 88,
+        "source": "https://nhl.com/video/tor-edm-nylander-scores-goal-against-stuart-skinner-6368137903112",
+        "source_video_id": "6368137903112",
+        "shot_type": "snap",
+        "event_id": 187
+      }
+    ],
+    "game_id": 2024020833,
+    "date": "2025-02-01",
+    "team": "TOR",
+    "jersey": 88,
+    "source": "https://nhl.com/video/tor-edm-nylander-scores-goal-against-stuart-skinner-6368137903112",
+    "source_video_id": "6368137903112",
+    "shot_type": "snap",
+    "event_id": 187,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-15.mp4",
+    "sha256": "2239e1d51bccc6c2e240ec08d07d3bdd4aa7b97d1f2b1c860b336b30d0324d00",
+    "duration": 29.731678
+  },
+  {
+    "id": "goal-16",
+    "pid": 8478864,
+    "player": "Kirill Kaprizov",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020033,
+        "date": "2025-10-11",
+        "team": "MIN",
+        "jersey": 97,
+        "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382636486112",
+        "source_video_id": "6382636486112",
+        "shot_type": "snap",
+        "event_id": 616
+      },
+      {
+        "game_id": 2025020033,
+        "date": "2025-10-11",
+        "team": "MIN",
+        "jersey": 97,
+        "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382638522112",
+        "source_video_id": "6382638522112",
+        "shot_type": "tip-in",
+        "event_id": 1018
+      }
+    ],
+    "game_id": 2025020033,
+    "date": "2025-10-11",
+    "team": "MIN",
+    "jersey": 97,
+    "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382636486112",
+    "source_video_id": "6382636486112",
+    "shot_type": "snap",
+    "event_id": 616,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-16.mp4",
+    "sha256": "e8a07e2af776e02ba565e1b5b5dfca2a2822d4a21bf5afaf1ca0e816ee7a81e6",
+    "duration": 47.588345
+  },
+  {
+    "id": "goal-17",
+    "pid": 8482116,
+    "player": "Tim Stützle",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020780,
+        "date": "2025-01-25",
+        "team": "OTT",
+        "jersey": 18,
+        "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112",
+        "source_video_id": "6367764265112",
+        "shot_type": "slap",
+        "event_id": 302
+      },
+      {
+        "game_id": 2024020828,
+        "date": "2025-02-01",
+        "team": "OTT",
+        "jersey": 18,
+        "source": "https://nhl.com/video/min-ott-stutzle-scores-goal-against-filip-gustavsson-6368139846112",
+        "source_video_id": "6368139846112",
+        "shot_type": "wrist",
+        "event_id": 595
+      }
+    ],
+    "game_id": 2024020780,
+    "date": "2025-01-25",
+    "team": "OTT",
+    "jersey": 18,
+    "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112",
+    "source_video_id": "6367764265112",
+    "shot_type": "slap",
+    "event_id": 302,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-17.mp4",
+    "sha256": "b341fe175c1c6292574ae981045aef53caff169d45ce286e659d078952c912dd",
+    "duration": 52.07
+  },
+  {
+    "id": "goal-18",
+    "pid": 8479314,
+    "player": "Matthew Tkachuk",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020788,
+        "date": "2025-01-25",
+        "team": "FLA",
+        "jersey": 19,
+        "source": "https://nhl.com/video/fla-sjs-tkachuk-scores-ppg-against-yaroslav-askarov-6367773275112",
+        "source_video_id": "6367773275112",
+        "shot_type": "tip-in",
+        "event_id": 620
+      },
+      {
+        "game_id": 2024020826,
+        "date": "2025-02-01",
+        "team": "FLA",
+        "jersey": 19,
+        "source": "https://nhl.com/video/chi-fla-tkachuk-scores-goal-against-petr-mrazek-6368126645112",
+        "source_video_id": "6368126645112",
+        "shot_type": "tip-in",
+        "event_id": 739
+      }
+    ],
+    "game_id": 2024020788,
+    "date": "2025-01-25",
+    "team": "FLA",
+    "jersey": 19,
+    "source": "https://nhl.com/video/fla-sjs-tkachuk-scores-ppg-against-yaroslav-askarov-6367773275112",
+    "source_video_id": "6367773275112",
+    "shot_type": "tip-in",
+    "event_id": 620,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-18.mp4",
+    "sha256": "e48426dc224dbca34fcd7cd7da4e709b2f28c23f5c8203437a0e7c376500da9f",
+    "duration": 45.846667
+  },
+  {
+    "id": "goal-19",
+    "pid": 8480801,
+    "player": "Brady Tkachuk",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020828,
+        "date": "2025-02-01",
+        "team": "OTT",
+        "jersey": 7,
+        "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112",
+        "source_video_id": "6368141542112",
+        "shot_type": "wrist",
+        "event_id": 817
+      }
+    ],
+    "game_id": 2024020828,
+    "date": "2025-02-01",
+    "team": "OTT",
+    "jersey": 7,
+    "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112",
+    "source_video_id": "6368141542112",
+    "shot_type": "wrist",
+    "event_id": 817,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-19.mp4",
+    "sha256": "f1639b0e8899382d7b30f79d20e92fc6cb373eb03c3f5f13be144f57187f9b8c",
+    "duration": 47.913333
+  },
+  {
+    "id": "goal-20",
+    "pid": 8480018,
+    "player": "Nick Suzuki",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020779,
+        "date": "2025-01-25",
+        "team": "MTL",
+        "jersey": 14,
+        "source": "https://nhl.com/video/njd-mtl-suzuki-scores-goal-against-jake-allen-6367766068112",
+        "source_video_id": "6367766068112",
+        "shot_type": "snap",
+        "event_id": 537
+      }
+    ],
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "team": "MTL",
+    "jersey": 14,
+    "source": "https://nhl.com/video/njd-mtl-suzuki-scores-goal-against-jake-allen-6367766068112",
+    "source_video_id": "6367766068112",
+    "shot_type": "snap",
+    "event_id": 537,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-20.mp4",
+    "sha256": "7b5a7b4d3febdc346d3f1ccc9c27f6752853e15ad0cadb388e1bf847f3945ef8",
+    "duration": 50.7
+  },
+  {
+    "id": "goal-21",
+    "pid": 8481540,
+    "player": "Cole Caufield",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020779,
+        "date": "2025-01-25",
+        "team": "MTL",
+        "jersey": 13,
+        "source": "https://nhl.com/video/njd-mtl-caufield-scores-goal-against-jake-allen-6367768445112",
+        "source_video_id": "6367768445112",
+        "shot_type": "snap",
+        "event_id": 688
+      },
+      {
+        "game_id": 2025020031,
+        "date": "2025-10-11",
+        "team": "MTL",
+        "jersey": 13,
+        "source": "https://nhl.com/video/mtl-chi-caufield-scores-ppg-against-spencer-knight-6382633768112",
+        "source_video_id": "6382633768112",
+        "shot_type": "bat",
+        "event_id": 519
+      }
+    ],
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "team": "MTL",
+    "jersey": 13,
+    "source": "https://nhl.com/video/njd-mtl-caufield-scores-goal-against-jake-allen-6367768445112",
+    "source_video_id": "6367768445112",
+    "shot_type": "snap",
+    "event_id": 688,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-21.mp4",
+    "sha256": "e8ef2c8b8676c1bc36b7aa18fed62c3700e2eb89057e56cd62ba6f5cf41e2ede",
+    "duration": 49.538345
+  },
+  {
+    "id": "goal-22",
+    "pid": 8478427,
+    "player": "Sebastian Aho",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020785,
+        "date": "2025-01-25",
+        "team": "CAR",
+        "jersey": 20,
+        "source": "https://nhl.com/video/car-nyi-aho-scores-goal-against-marcus-hogberg-6367765349112",
+        "source_video_id": "6367765349112",
+        "shot_type": "wrist",
+        "event_id": 183
+      }
+    ],
+    "game_id": 2024020785,
+    "date": "2025-01-25",
+    "team": "CAR",
+    "jersey": 20,
+    "source": "https://nhl.com/video/car-nyi-aho-scores-goal-against-marcus-hogberg-6367765349112",
+    "source_video_id": "6367765349112",
+    "shot_type": "wrist",
+    "event_id": 183,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-22.mp4",
+    "sha256": "d9b0aba206fb3458a3ceb77906da2cda52b305218e315e7edb24246e2764c83d",
+    "duration": 42.108345
+  },
+  {
+    "id": "goal-23",
+    "pid": 8478010,
+    "player": "Brayden Point",
+    "status": "awaiting_source",
+    "candidates": []
+  },
+  {
+    "id": "goal-24",
+    "pid": 8474141,
+    "player": "Patrick Kane",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020025,
+        "date": "2025-10-11",
+        "team": "DET",
+        "jersey": 88,
+        "source": "https://nhl.com/video/tor-det-kane-scores-goal-against-anthony-stolarz-6382636626112",
+        "source_video_id": "6382636626112",
+        "shot_type": "snap",
+        "event_id": 838
+      }
+    ],
+    "game_id": 2025020025,
+    "date": "2025-10-11",
+    "team": "DET",
+    "jersey": 88,
+    "source": "https://nhl.com/video/tor-det-kane-scores-goal-against-anthony-stolarz-6382636626112",
+    "source_video_id": "6382636626112",
+    "shot_type": "snap",
+    "event_id": 838,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-24.mp4",
+    "sha256": "b517b4350bfae960539b1075dcd8c6efefba7b348c41d61bdfeb66107d9319c1",
+    "duration": 52.603333
+  },
+  {
+    "id": "goal-25",
+    "pid": 8482078,
+    "player": "Lucas Raymond",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020025,
+        "date": "2025-10-11",
+        "team": "DET",
+        "jersey": 23,
+        "source": "https://nhl.com/video/tor-det-raymond-scores-goal-against-anthony-stolarz-6382634388112",
+        "source_video_id": "6382634388112",
+        "shot_type": "wrist",
+        "event_id": 790
+      },
+      {
+        "game_id": 2025020025,
+        "date": "2025-10-11",
+        "team": "DET",
+        "jersey": 23,
+        "source": "https://nhl.com/video/tor-det-raymond-scores-ppg-against-anthony-stolarz-6382637158112",
+        "source_video_id": "6382637158112",
+        "shot_type": "deflected",
+        "event_id": 970
+      }
+    ],
+    "game_id": 2025020025,
+    "date": "2025-10-11",
+    "team": "DET",
+    "jersey": 23,
+    "source": "https://nhl.com/video/tor-det-raymond-scores-goal-against-anthony-stolarz-6382634388112",
+    "source_video_id": "6382634388112",
+    "shot_type": "wrist",
+    "event_id": 790,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-25.mp4",
+    "sha256": "2846e1a430ed1e6015ccbc2fd92a4a1ca964da5bb05e4a841167468772a8b3fe",
+    "duration": 50.955011
+  },
+  {
+    "id": "goal-26",
+    "pid": 8477946,
+    "player": "Dylan Larkin",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020834,
+        "date": "2025-02-01",
+        "team": "DET",
+        "jersey": 71,
+        "source": "https://nhl.com/video/det-cgy-larkin-scores-goal-against-dustin-wolf-6368143754112",
+        "source_video_id": "6368143754112",
+        "shot_type": "snap",
+        "event_id": 280
+      }
+    ],
+    "game_id": 2024020834,
+    "date": "2025-02-01",
+    "team": "DET",
+    "jersey": 71,
+    "source": "https://nhl.com/video/det-cgy-larkin-scores-goal-against-dustin-wolf-6368143754112",
+    "source_video_id": "6368143754112",
+    "shot_type": "snap",
+    "event_id": 280,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-26.mp4",
+    "sha256": "04fc9c6200a019efbfe1ba076514291397514f9000c1303d1cd27727e5063aca",
+    "duration": 49.863333
+  },
+  {
+    "id": "goal-27",
+    "pid": 8480027,
+    "player": "Jason Robertson",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020034,
+        "date": "2025-10-11",
+        "team": "DAL",
+        "jersey": 21,
+        "source": "https://nhl.com/video/dal-col-robertson-scores-goal-against-scott-wedgewood-6382639693112",
+        "source_video_id": "6382639693112",
+        "shot_type": "tip-in",
+        "event_id": 355
+      }
+    ],
+    "game_id": 2025020034,
+    "date": "2025-10-11",
+    "team": "DAL",
+    "jersey": 21,
+    "source": "https://nhl.com/video/dal-col-robertson-scores-goal-against-scott-wedgewood-6382639693112",
+    "source_video_id": "6382639693112",
+    "shot_type": "tip-in",
+    "event_id": 355,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-27.mp4",
+    "sha256": "c9fc9b70d4997cba062cee45c65ece0687d933b0c46636d158e5d3eee45b8ef6",
+    "duration": 46.45
+  },
+  {
+    "id": "goal-28",
+    "pid": 8476887,
+    "player": "Filip Forsberg",
+    "status": "source_selected",
+    "candidates": [
+      {
+        "game_id": 2025020032,
+        "date": "2025-10-11",
+        "team": "NSH",
+        "jersey": 9,
+        "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112",
+        "source_video_id": "6382633663112",
+        "shot_type": "snap",
+        "event_id": 252
+      }
+    ],
+    "game_id": 2025020032,
+    "date": "2025-10-11",
+    "team": "NSH",
+    "jersey": 9,
+    "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112",
+    "source_video_id": "6382633663112",
+    "shot_type": "snap",
+    "event_id": 252
+  },
+  {
+    "id": "goal-29",
+    "pid": 8480145,
+    "player": "Adam Fox",
+    "status": "awaiting_source",
+    "candidates": []
+  },
+  {
+    "id": "goal-30",
+    "pid": 8474578,
+    "player": "Erik Karlsson",
+    "status": "original_ready",
+    "candidates": [],
+    "source": "https://www.nhl.com/video/pit-phi-karlsson-scores-goal-against-samuel-ersson-6368533717112",
+    "source_video_id": "6368533717112",
+    "team": "PIT",
+    "jersey": 65,
+    "date": "2025-02-08",
+    "shot_type": "snap",
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-30.mp4",
+    "sha256": "84459d9c551595c6f013dbfc443b840f56fbb391f8997061a7a029b12deba84a",
+    "duration": 33.423333
+  },
+  {
+    "id": "goal-31",
+    "pid": 8478460,
+    "player": "Zach Werenski",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020782,
+        "date": "2025-01-25",
+        "team": "CBJ",
+        "jersey": 8,
+        "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112",
+        "source_video_id": "6367763638112",
+        "shot_type": "wrist",
+        "event_id": 263
+      },
+      {
+        "game_id": 2025020033,
+        "date": "2025-10-11",
+        "team": "CBJ",
+        "jersey": 8,
+        "source": "https://nhl.com/video/cbj-min-werenski-scores-goal-against-filip-gustavsson-6382638572112",
+        "source_video_id": "6382638572112",
+        "shot_type": "slap",
+        "event_id": 830
+      }
+    ],
+    "game_id": 2024020782,
+    "date": "2025-01-25",
+    "team": "CBJ",
+    "jersey": 8,
+    "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112",
+    "source_video_id": "6367763638112",
+    "shot_type": "wrist",
+    "event_id": 263,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-31.mp4",
+    "sha256": "eab2270ebb9bd44aea53dcf1a2af548aeb15fb50084aa86791a470679be4582e",
+    "duration": 40.621678
+  },
+  {
+    "id": "goal-32",
+    "pid": 8480839,
+    "player": "Rasmus Dahlin",
+    "status": "awaiting_source",
+    "candidates": []
+  },
+  {
+    "id": "goal-33",
+    "pid": 8482105,
+    "player": "Jake Sanderson",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020828,
+        "date": "2025-02-01",
+        "team": "OTT",
+        "jersey": 85,
+        "source": "https://nhl.com/video/min-ott-sanderson-scores-ppg-against-filip-gustavsson-6368142035112",
+        "source_video_id": "6368142035112",
+        "shot_type": "wrist",
+        "event_id": 810
+      }
+    ],
+    "game_id": 2024020828,
+    "date": "2025-02-01",
+    "team": "OTT",
+    "jersey": 85,
+    "source": "https://nhl.com/video/min-ott-sanderson-scores-ppg-against-filip-gustavsson-6368142035112",
+    "source_video_id": "6368142035112",
+    "shot_type": "wrist",
+    "event_id": 810,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-33.mp4",
+    "sha256": "4144f561fb9966968632784b5a00d2538963cad9c4d746151cdb073cadb20dce",
+    "duration": 56.575011
+  },
+  {
+    "id": "goal-34",
+    "pid": 8478444,
+    "player": "Brock Boeser",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020035,
+        "date": "2025-10-11",
+        "team": "VAN",
+        "jersey": 6,
+        "source": "https://nhl.com/video/van-edm-boeser-scores-goal-against-calvin-pickard-6382641995112",
+        "source_video_id": "6382641995112",
+        "shot_type": "wrist",
+        "event_id": 706
+      }
+    ],
+    "game_id": 2025020035,
+    "date": "2025-10-11",
+    "team": "VAN",
+    "jersey": 6,
+    "source": "https://nhl.com/video/van-edm-boeser-scores-goal-against-calvin-pickard-6382641995112",
+    "source_video_id": "6382641995112",
+    "shot_type": "wrist",
+    "event_id": 706,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-34.mp4",
+    "sha256": "be7837140eb52c95a0241ee26ef6bb47e58933de40f67f67c551a81fe788f0bd",
+    "duration": 38.37
+  },
+  {
+    "id": "goal-35",
+    "pid": 8478414,
+    "player": "Timo Meier",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020026,
+        "date": "2025-10-11",
+        "team": "NJD",
+        "jersey": 28,
+        "source": "https://nhl.com/video/njd-tbl-meier-scores-goal-against-andrei-vasilevskiy-6382631762112",
+        "source_video_id": "6382631762112",
+        "shot_type": "poke",
+        "event_id": 252
+      }
+    ],
+    "game_id": 2025020026,
+    "date": "2025-10-11",
+    "team": "NJD",
+    "jersey": 28,
+    "source": "https://nhl.com/video/njd-tbl-meier-scores-goal-against-andrei-vasilevskiy-6382631762112",
+    "source_video_id": "6382631762112",
+    "shot_type": "poke",
+    "event_id": 252,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-35.mp4",
+    "sha256": "721f5bb03f8efef6b5aa3fc4fb109ae80125275f8fb2ec401509c1d0cc534c57",
+    "duration": 47.031678
+  },
+  {
+    "id": "goal-36",
+    "pid": 8480002,
+    "player": "Nico Hischier",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020779,
+        "date": "2025-01-25",
+        "team": "NJD",
+        "jersey": 13,
+        "source": "https://nhl.com/video/njd-mtl-hischier-scores-goal-against-jakub-dobes-6367765815112",
+        "source_video_id": "6367765815112",
+        "shot_type": "backhand",
+        "event_id": 281
+      },
+      {
+        "game_id": 2025020026,
+        "date": "2025-10-11",
+        "team": "NJD",
+        "jersey": 13,
+        "source": "https://nhl.com/video/njd-tbl-hischier-scores-goal-against-andrei-vasilevskiy-6382632255112",
+        "source_video_id": "6382632255112",
+        "shot_type": "wrist",
+        "event_id": 253
+      }
+    ],
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "team": "NJD",
+    "jersey": 13,
+    "source": "https://nhl.com/video/njd-mtl-hischier-scores-goal-against-jakub-dobes-6367765815112",
+    "source_video_id": "6367765815112",
+    "shot_type": "backhand",
+    "event_id": 281,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-36.mp4",
+    "sha256": "cc0d8a939c7e34fb62f5ea3c35ac194171691a9878588f73b6f16fda0406ac9c",
+    "duration": 41.76
+  },
+  {
+    "id": "goal-37",
+    "pid": 8479407,
+    "player": "Jesper Bratt",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020779,
+        "date": "2025-01-25",
+        "team": "NJD",
+        "jersey": 63,
+        "source": "https://nhl.com/video/njd-mtl-bratt-scores-goal-against-jakub-dobes-6367764774112",
+        "source_video_id": "6367764774112",
+        "shot_type": "snap",
+        "event_id": 406
+      },
+      {
+        "game_id": 2025020026,
+        "date": "2025-10-11",
+        "team": "NJD",
+        "jersey": 63,
+        "source": "https://nhl.com/video/njd-tbl-bratt-scores-shg-against-andrei-vasilevskiy-6382635894112",
+        "source_video_id": "6382635894112",
+        "shot_type": "wrist",
+        "event_id": 844
+      }
+    ],
+    "game_id": 2024020779,
+    "date": "2025-01-25",
+    "team": "NJD",
+    "jersey": 63,
+    "source": "https://nhl.com/video/njd-mtl-bratt-scores-goal-against-jakub-dobes-6367764774112",
+    "source_video_id": "6367764774112",
+    "shot_type": "snap",
+    "event_id": 406,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-37.mp4",
+    "sha256": "bfd5ecd229317f2dcc1f125273180cc0d16813a03f4af84e340d0ba476439244",
+    "duration": 47.076667
+  },
+  {
+    "id": "goal-38",
+    "pid": 8482093,
+    "player": "Seth Jarvis",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2025020030,
+        "date": "2025-10-11",
+        "team": "CAR",
+        "jersey": 24,
+        "source": "https://nhl.com/video/phi-car-jarvis-scores-goal-against-samuel-ersson-6382638852112",
+        "source_video_id": "6382638852112",
+        "shot_type": "slap",
+        "event_id": 1255
+      }
+    ],
+    "game_id": 2025020030,
+    "date": "2025-10-11",
+    "team": "CAR",
+    "jersey": 24,
+    "source": "https://nhl.com/video/phi-car-jarvis-scores-goal-against-samuel-ersson-6382638852112",
+    "source_video_id": "6382638852112",
+    "shot_type": "slap",
+    "event_id": 1255,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-38.mp4",
+    "sha256": "7e1bf1829a4035253688b35e7ae2164b67f108ca34facbd9986b3e7e7f66b682",
+    "duration": 56.69
+  },
+  {
+    "id": "goal-39",
+    "pid": 8477933,
+    "player": "Sam Reinhart",
+    "status": "original_ready",
+    "candidates": [
+      {
+        "game_id": 2024020788,
+        "date": "2025-01-25",
+        "team": "FLA",
+        "jersey": 13,
+        "source": "https://nhl.com/video/fla-sjs-reinhart-scores-goal-against-yaroslav-askarov-6367773124112",
+        "source_video_id": "6367773124112",
+        "shot_type": "backhand",
+        "event_id": 741
+      },
+      {
+        "game_id": 2024020826,
+        "date": "2025-02-01",
+        "team": "FLA",
+        "jersey": 13,
+        "source": "https://nhl.com/video/chi-fla-reinhart-scores-goal-against-petr-mrazek-6368123886112",
+        "source_video_id": "6368123886112",
+        "shot_type": "wrist",
+        "event_id": 325
+      },
+      {
+        "game_id": 2025020027,
+        "date": "2025-10-11",
+        "team": "FLA",
+        "jersey": 13,
+        "source": "https://nhl.com/video/sam-reinhart-with-a-goal-vs-ottawa-senators-6382636383112",
+        "source_video_id": "6382636383112",
+        "shot_type": "wrist",
+        "event_id": 1030
+      }
+    ],
+    "game_id": 2024020788,
+    "date": "2025-01-25",
+    "team": "FLA",
+    "jersey": 13,
+    "source": "https://nhl.com/video/fla-sjs-reinhart-scores-goal-against-yaroslav-askarov-6367773124112",
+    "source_video_id": "6367773124112",
+    "shot_type": "backhand",
+    "event_id": 741,
+    "original_path": "/workspace/scratch/0dd3b8cd1029/goal-expansion/originals/goal-39.mp4",
+    "sha256": "dafbf2ba4d4a85c28207323bf897292b434c37b1abfd9e0513b15974aabb51ad",
+    "duration": 38.3
+  }
+]
