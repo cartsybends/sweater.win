@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import worker from '../backend/src/index.mjs';
 import {purgeAnalytics} from '../backend/src/analytics.mjs';
-import {dashboard} from '../backend/src/dashboard.mjs';
+import {dashboard,loginPage} from '../backend/src/dashboard.mjs';
 import vm from 'node:vm';
 class DB {
   constructor(){this.sql=new DatabaseSync(':memory:');this.queries=0;}
@@ -11,7 +11,7 @@ class DB {
   async batch(statements){this.sql.exec('BEGIN');try{const out=statements.map(s=>s.execute(false));this.sql.exec('COMMIT');return out;}catch(e){this.sql.exec('ROLLBACK');throw e;}}
 }
 const env={DB:new DB(),ALLOWED_ORIGINS:'https://sweater.win',SWEATER_ANALYTICS_PASSWORD:'owner-password-for-testing-only-000000000000'};
-const req=(path,body,opts={})=>new Request('https://api.sweater.win'+path,{method:body===undefined?'GET':'POST',headers:{Origin:opts.origin||'https://sweater.win','CF-Connecting-IP':opts.ip||'203.0.113.1',...(opts.cookie?{Cookie:opts.cookie}:{}),'Content-Type':'application/json'},...(body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)})});
+const req=(path,body,opts={})=>new Request('https://api.sweater.win'+path,{method:body===undefined?'GET':'POST',headers:{Origin:opts.origin||'https://sweater.win','CF-Connecting-IP':opts.ip||'203.0.113.1',...(opts.cookie?{Cookie:opts.cookie}:{}),...(opts.accept?{Accept:opts.accept}:{}),'Content-Type':'application/json'},...(body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)})});
 const call=(path,body,opts)=>worker.fetch(req(path,body,opts),env,{});
 const session=crypto.randomUUID(),round=crypto.randomUUID();
 const event=(kind,more={})=>({id:crypto.randomUUID(),session,mode:'whoscored',variant:'unlimited',kind,device:'desktop',...(kind.startsWith('round')?{round}:{}),...more});
@@ -37,6 +37,12 @@ const authOrigin='https://api.sweater.win';
 r=await call('/analytics/login','password=wrong',{origin:authOrigin});assert.equal(r.status,401);
 r=await call('/analytics/login','password='+encodeURIComponent(env.SWEATER_ANALYTICS_PASSWORD),{origin:authOrigin});assert.equal(r.status,303);
 const cookie=r.headers.get('Set-Cookie');assert(cookie.includes('Secure')&&cookie.includes('HttpOnly')&&cookie.includes('SameSite=Strict'));const sessionCookie=cookie.split(';')[0];
+assert.equal((await call('/api/analytics/session')).status,401,'Session checks cannot succeed without the sign-in cookie');
+r=await call('/analytics/login','password=wrong',{origin:authOrigin,accept:'application/json'});assert.equal(r.status,401);assert.deepEqual(await r.json(),{error:'That password did not match.'});
+r=await call('/analytics/login','password='+encodeURIComponent(env.SWEATER_ANALYTICS_PASSWORD),{origin:authOrigin,accept:'application/json'});assert.equal(r.status,200);assert.deepEqual(await r.json(),{ok:true});assert.equal(r.headers.get('Location'),null,'Mobile fetch login has no navigation redirect');
+const fetchCookie=r.headers.get('Set-Cookie');assert(fetchCookie.includes('Secure')&&fetchCookie.includes('HttpOnly')&&fetchCookie.includes('SameSite=Strict'));
+r=await call('/api/analytics/session',undefined,{cookie:fetchCookie.split(';')[0]});assert.equal(r.status,200);assert.deepEqual(await r.json(),{authenticated:true});assert(r.headers.get('Cache-Control').includes('no-store'));
+assert.equal((await call('/analytics/login','password='+encodeURIComponent(env.SWEATER_ANALYTICS_PASSWORD),{origin:'https://elsewhere.example',accept:'application/json'})).status,403,'Fetch login retains origin protection');
 r=await call('/api/analytics/report?days=7',undefined,{cookie:sessionCookie});assert.equal(r.status,200);const report=await r.json();assert.equal(report.sessions,1);assert.equal(report.modes[0].opens,1);assert.equal(report.modes[0].starts,1);assert.equal(report.modes[0].finishes,1);assert.equal(report.modes[0].completed_starts,1);assert.equal(report.modes[0].active_ms,12000);
 r=await call('/api/analytics/report?days=7&variant=daily',undefined,{cookie:sessionCookie});assert.deepEqual((await r.json()).modes,[]);
 r=await call('/api/analytics/report?days=30&variant=unlimited',undefined,{cookie:sessionCookie});assert.equal((await r.json()).modes[0].opens,1);
@@ -58,4 +64,5 @@ env.DB.sql.prepare('UPDATE sweater_analytics_events SET received_at=? WHERE day=
 r=await call('/api/health');assert.equal(r.status,200);assert.equal((await r.json()).ok,true,'Existing health handler preserved');
 r=await call('/api/leaderboard?game=unsupported');assert.equal(r.status,400,'Existing endpoint behavior preserved');
 new vm.Script(dashboard.match(/<script[^>]*>([\s\S]*?)<\/script>/)[1]);
+new vm.Script(loginPage('').match(/<script[^>]*>([\s\S]*?)<\/script>/)[1]);
 console.log('Analytics backend: real SQLite queries, protected reports, login, tamper rejection, CSRF/origin checks, deduplication, ranges/cohorts, rate limits, retention, existing API routing and dashboard JS passed.');

@@ -26,6 +26,7 @@ jobs:
           cache-dependency-path: backend/package-lock.json
       - run: npm ci --prefix backend --no-audit --no-fund
       - run: node tests/analytics_backend.mjs
+      - run: node tests/analytics_login.mjs
       - run: node tests/analytics_client.mjs
       - run: node tests/who_scored.cjs
       - name: Package Worker without deploying

@@ -118,12 +118,15 @@ function sameOrigin(request) {
 async function login(request,env) {
   sameOrigin(request);if(!configured(env))throw fail(503,'Analytics needs its private password configured');
   await ensureSchema(env);await rate(request,env,'login',10,900);
+  const wantsJSON=(request.headers.get('Accept')||'').includes('application/json');
   const form=new URLSearchParams(await readBody(request,1024)),password=form.get('password')||'';
   const a=new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(password))),b=new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(env.SWEATER_ANALYTICS_PASSWORD)));
   let diff=0;for(let i=0;i<a.length;i++)diff|=a[i]^b[i];
-  if(diff) return html(loginPage('That password did not match.'),401);
+  if(diff) return wantsJSON?json({error:'That password did not match.'},401):html(loginPage('That password did not match.'),401);
   const content=`${Math.floor(Date.now()/1000)+TTL}.${crypto.randomUUID()}`,token=content+'.'+await hmac(env,'cookie:'+content);
-  return new Response(null,{status:303,headers:{...security,Location:'/analytics','Set-Cookie':`${COOKIE}=${token}; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=${TTL}`}});
+  const cookie=`${COOKIE}=${token}; Secure; HttpOnly; SameSite=Strict; Path=/; Max-Age=${TTL}`;
+  if(wantsJSON)return json({ok:true},200,{'Set-Cookie':cookie});
+  return new Response(null,{status:303,headers:{...security,Location:'/analytics','Set-Cookie':cookie}});
 }
 function html(content,status=200) {
   const nonce=crypto.randomUUID().replaceAll('-','');
@@ -179,6 +182,7 @@ export async function handleAnalytics(request,env) {
       return new Response(null,{status:303,headers:{...security,Location:'/analytics/login'}});
     }
     if(path==='/analytics'&&request.method==='GET')return html(dashboard);
+    if(path==='/api/analytics/session'&&request.method==='GET')return json({authenticated:true});
     if(path==='/api/analytics/report'&&request.method==='GET')return json(await report(url,env));
     throw fail(404,'Not found');
   } catch(error) {if(!error.status)console.error('Analytics request failed');return json({error:error.status?error.message:'Analytics is temporarily unavailable'},error.status||503,cors);}
