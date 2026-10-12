@@ -10,13 +10,17 @@ That reported permission is the basis for this supplied library; it has not been
 
 To add a scorer:
 
-1. Prepare and inspect a masked clip, matching reveal and masked JPEG poster. Verify
-   the scorer's identity at the start and through every camera movement. Remove
+1. Identify the scorer in the original shooting action, using their jersey number
+   and the official goal attribution. Track that same player backwards through
+   the lead-up; the initial puck carrier may be the passer. Prepare and inspect a
+   masked clip, matching reveal and masked JPEG poster. Compare the original and
+   silhouette frame by frame, including overlaps, the first frame and the finish. Remove
    score graphics, name labels and commentary. Export H.264 MP4, 960×540, 24 fps,
    `yuv420p`, with a fast-start header. Keep one camera angle and a short goal sequence.
 2. Add a unique opaque `id`, NHL player `pid`, filenames, move description and official
    `source` URL to `clips.json`. Add its edit provenance to `sources.json`.
-   Keep existing IDs and files so saved rounds and archived dailies continue to work.
+   Keep existing IDs so saved rounds and archived dailies continue to work. Use new
+   filenames when replacing a clip so browsers load the corrected edit immediately.
 3. Run `node tests/who_scored.cjs`, build the site, and check both videos before publishing.
 
 The builder validates and copies every referenced asset. Daily assignments are persisted
