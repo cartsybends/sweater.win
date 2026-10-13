@@ -97,8 +97,9 @@
   for(const name of ['pointerdown','keydown','scroll','touchstart','pointermove'])document.addEventListener(name,()=>{tick();lastInteraction=performance.now();},{passive:true});
   let lcp,cls,windowShift=0,windowStart=0,windowEnd=0,performanceSent=false;
   try{if(globalThis.PerformanceObserver){
-    new PerformanceObserver(list=>{for(const e of list.getEntries())lcp=Math.round(e.startTime);}).observe({type:'largest-contentful-paint',buffered:true});
-    new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput){if(e.startTime-windowEnd>1000||e.startTime-windowStart>5000){windowShift=0;windowStart=e.startTime;}windowEnd=e.startTime;windowShift+=e.value;cls=Math.max(cls||0,windowShift);}}).observe({type:'layout-shift',buffered:true});cls=0;
+    const types=PerformanceObserver.supportedEntryTypes||[];
+    if(types.includes('largest-contentful-paint'))try{new PerformanceObserver(list=>{for(const e of list.getEntries())lcp=Math.round(e.startTime);}).observe({type:'largest-contentful-paint',buffered:true});}catch{}
+    if(types.includes('layout-shift'))try{new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput){if(e.startTime-windowEnd>1000||e.startTime-windowStart>5000){windowShift=0;windowStart=e.startTime;}windowEnd=e.startTime;windowShift+=e.value;cls=Math.max(cls||0,windowShift);}}).observe({type:'layout-shift',buffered:true});cls=0;}catch{}
   }}catch{}
   function performanceSample(){
     if(performanceSent)return;const nav=performance.getEntriesByType?.('navigation')?.[0],fields={};

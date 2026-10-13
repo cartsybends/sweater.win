@@ -3,12 +3,13 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const source=fs.readFileSync('analytics/client.js','utf8');
 const settle=async()=>{await new Promise(r=>setImmediate(r));await new Promise(r=>setImmediate(r));};
-function make({local=new Map(),session=new Map(),blocked=false,dnt=false,gpc=false,enabled=true,failures=0,url='https://sweater.win/',referrer='',coarse=false,width=1200,ua='Mozilla/5.0 Chrome/130.0 Windows NT 10.0',nav={loadEventEnd:1000,responseStart:120}}={}){
+function make({local=new Map(),session=new Map(),blocked=false,dnt=false,gpc=false,enabled=true,failures=0,url='https://sweater.win/',referrer='',coarse=false,width=1200,ua='Mozilla/5.0 Chrome/130.0 Windows NT 10.0',nav={loadEventEnd:1000,responseStart:120},observerTypes=['largest-contentful-paint','layout-shift']}={}){
   let now=0;const sent=[],calls=[],intervals=new Map(),timers=[],events=new Map(),windowEvents=new Map(),observers=new Map();
   const storage=map=>({getItem:k=>{if(blocked)throw Error('blocked');return map.get(k)||null;},setItem:(k,v)=>{if(blocked)throw Error('blocked');map.set(k,v);},removeItem:k=>{if(blocked)throw Error('blocked');map.delete(k);}});
   const doc={visibilityState:'visible',hasFocus:()=>true,referrer:'https://sweater.win/',documentElement:{dataset:{theme:'dark'}},addEventListener:(n,f)=>events.set(n,f)};
   const root={location:new URL(url),document:{referrer}},location=new URL('https://sweater.win/app.html'),window={location,parent:root,addEventListener:(n,f)=>windowEvents.set(n,f)};
   class Observer{constructor(fn){this.fn=fn;}observe({type}){observers.set(type,this.fn);}}
+  Observer.supportedEntryTypes=observerTypes;
   const context=vm.createContext({API:'https://api.sweater.win',API_ON:true,BUILT:'2026-10-13 (builder v138)',G:{shoot:{},whoscored:{},classic:{}},location,window,document:doc,
     navigator:{doNotTrack:dnt?'1':'0',globalPrivacyControl:gpc,userAgent:ua,maxTouchPoints:coarse?5:0},crypto,AbortController,URL,Date,PerformanceObserver:Observer,
     localStorage:storage(local),sessionStorage:storage(session),performance:{now:()=>now,getEntriesByType:()=>nav?[nav]:[]},matchMedia:()=>({matches:coarse}),innerWidth:width,
@@ -37,9 +38,11 @@ const exits=c.all().filter(e=>e.kind==='round_exit');assert.equal(exits.length,2
 const current=c.api.context('classic','unlimited','next',true),before=c.all().length;c.api.step(1,true,unfinished);c.api.completeRound(true,{token:unfinished});await settle();assert.equal(c.all().length,before+1,'A stale Teams callback cannot start or finish the newly opened round');c.api.step(1,true,current);await settle();assert(c.all().some(e=>e.kind==='round_start'&&e.mode==='classic'));
 
 c.emit('largest-contentful-paint',[{startTime:1750}]);c.emit('layout-shift',[{startTime:100,value:.1,hadRecentInput:false},{startTime:500,value:.2,hadRecentInput:false},{startTime:700,value:2,hadRecentInput:true},{startTime:2200,value:.05,hadRecentInput:false}]);
-c.windowEvents.get('load')();c.timers.find(t=>t.t===5000).f();c.doc.visibilityState='hidden';c.events.get('visibilitychange')();
+c.windowEvents.get('load')();c.timers.filter(t=>t.t===5000).at(-1).f();c.doc.visibilityState='hidden';c.events.get('visibilitychange')();
 for(let i=0;i<12;i++)c.windowEvents.get('error')({target:c.window,message:'private-name / private-url / password'});c.windowEvents.get('pagehide')();await settle();
 const perf=c.all().filter(e=>e.kind==='performance');assert.equal(perf.length,1);assert.equal(perf[0].load_ms,1000);assert.equal(perf[0].ttfb_ms,120);assert.equal(perf[0].lcp_ms,1750);assert(Math.abs(perf[0].cls-.3)<1e-10,'CLS uses the largest shift window and excludes input shifts');assert.equal(c.all().filter(e=>e.kind==='error').length,10);assert(c.all().some(e=>e.kind==='page_exit'));
+const unsupported=make({observerTypes:[]});unsupported.windowEvents.get('load')();unsupported.timers.filter(t=>t.t===5000).at(-1).f();await settle();const partial=unsupported.all().find(e=>e.kind==='performance');assert.equal(partial.ttfb_ms,120);assert(!('lcp_ms' in partial));assert(!('cls' in partial),'Unsupported measurements are absent rather than fabricated zeroes');assert.equal(unsupported.observers.size,0);
+const shiftOnly=make({observerTypes:['layout-shift']});shiftOnly.emit('layout-shift',[{startTime:100,value:.05,hadRecentInput:false}]);shiftOnly.windowEvents.get('load')();shiftOnly.timers.filter(t=>t.t===5000).at(-1).f();await settle();assert.equal(shiftOnly.all().find(e=>e.kind==='performance').cls,.05,'Supported metrics remain available independently');
 for(const b of c.sent)assert(b.events.length>=1&&b.events.length<=5);for(const e of c.all()){assert.equal(e.version,2);assert.equal(e.source,'instagram');assert.equal(e.campaign,'hockey-launch');assert.equal(e.build,'138');assert(!JSON.stringify(e).includes('private'));assert(!('name' in e)&&!('message' in e)&&!('referrer' in e)&&!('url' in e));}
 for(const {url,opts}of c.calls.filter(r=>r.url.endsWith('/collect'))){assert.equal(opts.credentials,'omit');assert.equal(opts.keepalive,true);}
 
