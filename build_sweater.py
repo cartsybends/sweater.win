@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "134 · Shootout Animation"
+VERSION = "135 · Shootout Refinement"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -3489,6 +3489,17 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="view" id="view-shoot" hidden>
     <div class="shdots" id="shDots"></div>
     <!--__SHOOTOUT_SCENE__-->
+    <div class="sh-aim" id="shAim" hidden>
+      <p class="sh-aim-title">Choose your shot</p>
+      <p class="sh-aim-note">Tap a gold target or choose a spot below.</p>
+      <div class="sh-shots" role="group" aria-label="Shot placement">
+        <button type="button" class="sh-shot" data-z="0">High blocker</button>
+        <button type="button" class="sh-shot" data-z="1">High glove</button>
+        <button type="button" class="sh-shot" data-z="2">Low blocker</button>
+        <button type="button" class="sh-shot" data-z="3">Low glove</button>
+        <button type="button" class="sh-shot" data-z="4">Five-hole</button>
+      </div>
+    </div>
     <p class="ttq" id="shQ"></p>
     <div class="shopts" id="shOpts"></div>
     <p class="hint" id="shMsg"></p>
@@ -6099,6 +6110,8 @@ G.shoot = {
     paintOptions("shOpts", shRound, shHtml, answered ? n => n === r.a ? "right" : n === chosen ? "wrong" : "dim" : null);
     const aiming = shootUI.phase === "aim";
     $("shNet").classList.toggle("aim", aiming);
+    $("shAim").hidden = !aiming;
+    $("shAim").querySelectorAll("button").forEach(b => { b.disabled = !aiming; });
     $("shNet").querySelectorAll(".zone").forEach(z => {
       z.classList.toggle("off", !aiming); z.setAttribute("tabindex", aiming ? "0" : "-1"); z.setAttribute("aria-disabled", String(!aiming));
     });
@@ -6107,7 +6120,7 @@ G.shoot = {
     else if (showResult) {
       const out = this.outcome(t, st.guesses[lastI], lastI);
       msg = out === "goal" ? "Goal! 🚨" : out === "save" ? "Saved by the goalie 🧤" : "Wrong answer, so no shot ❌";
-    } else if (aiming) msg = "Pick your spot and shoot.";
+    } else if (aiming) msg = "Choose a gold target or use the shot buttons.";
     else if (!st.over) msg = "Answer right to earn a shot.";
     $("shMsg").textContent = msg;
     $("shNext").hidden = !(showResult && !st.over);
@@ -6147,6 +6160,7 @@ function shootTakeTarget(e) {
   });
 }
 $("shNet").addEventListener("click", shootTakeTarget);
+$("shAim").addEventListener("click", shootTakeTarget);
 $("shNet").addEventListener("keydown", e => {
   if ((e.key === "Enter" || e.key === " ") && e.target.closest("[data-z]")) { e.preventDefault(); shootTakeTarget(e); }
 });
