@@ -1,0 +1,37 @@
+{
+  "corrected_highlights": 41,
+  "replacement_highlights": 4,
+  "visually_reviewed_frames": 3953,
+  "matching_corrected_video_streams": 82,
+  "full_library_scorers": 79,
+  "full_library_streams_decoded": 158,
+  "footage_years": "2019\u20132025",
+  "mobile_desktop_themes": [
+    "light",
+    "dark"
+  ],
+  "status": "local_validation_passed",
+  "verified_at": "2026-10-13T23:47:42.388761+00:00",
+  "browser": {
+    "scorers": 79,
+    "corrected": 41,
+    "fullVideoPlays": 82,
+    "replays": 41,
+    "correctGuesses": 41,
+    "javascriptErrors": []
+  },
+  "browser_validation_playback_rate": 4,
+  "default_game_playback_rate": 1,
+  "checks": {
+    "source_and_edit_and_export_checksums": "passed",
+    "full_library_decode": "158 streams passed",
+    "who_scored_game_flow": "passed",
+    "schedule_and_footage_years": "4 tests passed",
+    "batch_and_correction_gate": "15 tests passed",
+    "shootout_regression": "30100 animation samples passed",
+    "generated_javascript_and_assets": "passed",
+    "mobile_desktop_light_dark_notice": "passed",
+    "render_preserves_tracked_mattes": "passed",
+    "repeated_render_identical_export_bytes": "passed"
+  }
+}

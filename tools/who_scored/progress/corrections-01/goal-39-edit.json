@@ -1,0 +1,295 @@
+{
+  "id": "goal-39",
+  "pid": 8477933,
+  "player": "Sam Reinhart",
+  "original": "/workspace/who-scored-corrections/originals/goal-39-6367773124112.mp4",
+  "start": 24.6,
+  "duration": 5.208333333333333,
+  "seed": 40,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        302,
+        68,
+        342,
+        138
+      ],
+      "points": [
+        [
+          316,
+          80
+        ],
+        [
+          321,
+          96
+        ],
+        [
+          322,
+          111
+        ],
+        [
+          329,
+          124
+        ],
+        [
+          334,
+          132
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 40,
+      "box": [
+        130,
+        148,
+        232,
+        224
+      ],
+      "points": [
+        [
+          146,
+          159
+        ],
+        [
+          161,
+          173
+        ],
+        [
+          160,
+          190
+        ],
+        [
+          197,
+          193
+        ],
+        [
+          217,
+          213
+        ],
+        [
+          110,
+          138
+        ],
+        [
+          117,
+          174
+        ],
+        [
+          136,
+          212
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 80,
+      "box": [
+        309,
+        150,
+        375,
+        274
+      ],
+      "points": [
+        [
+          347,
+          166
+        ],
+        [
+          333,
+          186
+        ],
+        [
+          332,
+          208
+        ],
+        [
+          337,
+          237
+        ],
+        [
+          346,
+          263
+        ],
+        [
+          369,
+          196
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 124,
+      "box": [
+        472,
+        110,
+        541,
+        245
+      ],
+      "points": [
+        [
+          518,
+          123
+        ],
+        [
+          518,
+          151
+        ],
+        [
+          509,
+          177
+        ],
+        [
+          500,
+          201
+        ],
+        [
+          505,
+          231
+        ],
+        [
+          519,
+          225
+        ],
+        [
+          485,
+          135
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "source_sha256": "dafbf2ba4d4a85c28207323bf897292b434c37b1abfd9e0513b15974aabb51ad",
+  "crop": [
+    0,
+    40,
+    960,
+    500
+  ],
+  "version": "v2",
+  "identity_verification": "Reinhart 13 enters from the left circle, takes the shot and celebrates on the left/center behind Minnesota 21. Verified the readable 13 on his back in frames 80 and 124. Greer 10 stays right of the net, and Tkachuk 19 falls into the crease; both remain visible.",
+  "trim_note": "Three seconds retain backhand release and goal; omit prolonged post-goal occlusion.",
+  "trimmed_tail_anchors": [
+    {
+      "frame": 72,
+      "box": [
+        608,
+        164,
+        684,
+        273
+      ],
+      "points": [
+        [
+          647,
+          176
+        ],
+        [
+          655,
+          203
+        ],
+        [
+          669,
+          224
+        ],
+        [
+          663,
+          257
+        ],
+        [
+          629,
+          235
+        ],
+        [
+          599,
+          246
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 95,
+      "box": [
+        617,
+        122,
+        714,
+        231
+      ],
+      "points": [
+        [
+          683,
+          137
+        ],
+        [
+          677,
+          165
+        ],
+        [
+          694,
+          189
+        ],
+        [
+          630,
+          218
+        ],
+        [
+          700,
+          201
+        ],
+        [
+          548,
+          210
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "tracking_image_size": 512,
+  "poster_frame": 0,
+  "scoring_play_end_frame": 114
+}

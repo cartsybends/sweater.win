@@ -1,0 +1,187 @@
+{
+  "id": "goal-58",
+  "pid": 8481013,
+  "player": "Jonatan Berggren",
+  "original": "/workspace/who-scored-expansion/originals/goal-58-6366638650112.mp4",
+  "source_sha256": "249032b5ffecc394df6060fc2f66e5a6b05dd9c6e1da7fde51eb8e6887620ce9",
+  "start": 40,
+  "duration": 3.5,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        420,
+        170,
+        474,
+        244
+      ],
+      "points": [
+        [
+          451,
+          181
+        ],
+        [
+          454,
+          201
+        ],
+        [
+          449,
+          218
+        ],
+        [
+          432,
+          235
+        ],
+        [
+          465,
+          225
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 28,
+      "box": [
+        546,
+        116,
+        601,
+        194
+      ],
+      "points": [
+        [
+          572,
+          126
+        ],
+        [
+          566,
+          148
+        ],
+        [
+          552,
+          176
+        ],
+        [
+          584,
+          160
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 47,
+      "box": [
+        623,
+        115,
+        768,
+        305
+      ],
+      "points": [
+        [
+          734,
+          137
+        ],
+        [
+          756,
+          167
+        ],
+        [
+          646,
+          276
+        ],
+        [
+          685,
+          147
+        ],
+        [
+          710,
+          198
+        ],
+        [
+          690,
+          249
+        ],
+        [
+          840,
+          183
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Official Berggren48, BERGGREN48 visible on the lone white Detroit rush skater carrying across the blue line and shooting. Defender, goalie and referee remain visible; continuous clear rush replay.",
+  "tracking_image_size": 512,
+  "poster_frame": 0,
+  "seed": 0,
+  "allow_empty": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83
+  ],
+  "manual_fill_polygons": {
+    "57": [
+      [
+        [
+          948,
+          506
+        ],
+        [
+          959,
+          506
+        ],
+        [
+          959,
+          526
+        ],
+        [
+          948,
+          521
+        ]
+      ]
+    ]
+  },
+  "scoring_play_end_frame": 60
+}

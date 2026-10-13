@@ -5,7 +5,10 @@
     "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-9-6365907822112",
     "source_sha256": "5a6cff6ad836c9811c1a7792807da5f3fd98d7f3f9767a36d66b0080399d102b",
     "edit_start_seconds": 10.9,
-    "edit_duration_seconds": 4.166667
+    "edit_duration_seconds": 4.166667,
+    "clip_year": 2024,
+    "source_video_id": "6365907822112",
+    "year_verification": "Official NHL playback metadata content date"
   },
   {
     "id": "goal-02",
@@ -13,7 +16,12 @@
     "source": "https://www.nhl.com/mapleleafs/video/matthews-strikes-on-perfect-deke-309285322",
     "source_sha256": "05989d1880985a1f11d5b0bc517d61d969731c3ceb3547b972ac9083698e3c8c",
     "edit_start_seconds": 37.5,
-    "edit_duration_seconds": 2.5
+    "edit_duration_seconds": 2.5,
+    "date": "2019-09-18",
+    "game_id": 2019010028,
+    "clip_year": 2019,
+    "source_video_id": "6336030058112",
+    "year_verification": "Official NHL playback metadata content date and official game date"
   },
   {
     "id": "goal-03",
@@ -21,7 +29,12 @@
     "source": "https://www.nhl.com/video/topic/highlights/cgy-chi-bedard-scores-goal-against-dustin-wolf-6385286904112",
     "source_sha256": "72385174a7e211d56f408adfbc61af17b9e3ab0ed845d44606ab59cbac5df033",
     "edit_start_seconds": 46.8,
-    "edit_duration_seconds": 3.6666666666666665
+    "edit_duration_seconds": 3.6666666666666665,
+    "date": "2025-11-18",
+    "game_id": 2025020312,
+    "clip_year": 2025,
+    "source_video_id": "6385286904112",
+    "year_verification": "Official NHL playback metadata content date and official game date"
   },
   {
     "id": "goal-04",
@@ -29,7 +42,12 @@
     "source": "https://www.nhl.com/video/det-pit-crosby-scores-goal-against-alex-lyon-6349145622112",
     "source_sha256": "79409704526b5644e0aa86178d9201866aca998d8bd85b5db4ee15bcecaefba8",
     "edit_start_seconds": 27.0,
-    "edit_duration_seconds": 3.5
+    "edit_duration_seconds": 3.5,
+    "date": "2024-03-17",
+    "game_id": 2023021078,
+    "clip_year": 2024,
+    "source_video_id": "6349145622112",
+    "year_verification": "Official NHL playback metadata content date and official game date"
   },
   {
     "id": "goal-05",
@@ -37,7 +55,12 @@
     "source": "https://www.nhl.com/video/nsh-wsh-ovechkin-scores-goal-against-yaroslav-askarov-6344073401112",
     "source_sha256": "a7dc0dfe885dfca835570ffb9cd1921cff48bd9b174a939a32a85c01d4fd0625",
     "edit_start_seconds": 42.5,
-    "edit_duration_seconds": 4.0
+    "edit_duration_seconds": 4.0,
+    "date": "2023-12-30",
+    "game_id": 2023020562,
+    "clip_year": 2023,
+    "source_video_id": "6344073401112",
+    "year_verification": "Official NHL playback metadata content date and official game date"
   },
   {
     "id": "goal-06",
@@ -45,7 +68,12 @@
     "source": "https://www.nhl.com/video/van-edm-draisaitl-scores-goal-against-arturs-silovs-6352815670112",
     "source_sha256": "f357cac8648e3d6f1e219d6d8f31a1c2bdf7bf6937d95a9308fd199bac93f22f",
     "edit_start_seconds": 35.9,
-    "edit_duration_seconds": 2.75
+    "edit_duration_seconds": 2.75,
+    "date": "2024-05-12",
+    "game_id": 2023030243,
+    "clip_year": 2024,
+    "source_video_id": "6352815670112",
+    "year_verification": "Official NHL playback metadata content date and official game date"
   },
   {
     "id": "goal-07",
@@ -53,7 +81,10 @@
     "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-15-6367565833112",
     "source_sha256": "f30d0ed9d75bc8b64ba088f42e371a7c162baa70650c365a0e4b324fcaa4c1c7",
     "edit_start_seconds": 12.0,
-    "edit_duration_seconds": 5.0
+    "edit_duration_seconds": 5.0,
+    "clip_year": 2025,
+    "source_video_id": "6367565833112",
+    "year_verification": "Official NHL playback metadata content date"
   },
   {
     "id": "goal-08",
@@ -61,7 +92,10 @@
     "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-10-6366233137112",
     "source_sha256": "d5a8267f88ba7695619d11b818e21834efef3b449ff3a2b446cad31e2116cb8f",
     "edit_start_seconds": 7.5,
-    "edit_duration_seconds": 4.75
+    "edit_duration_seconds": 4.75,
+    "clip_year": 2024,
+    "source_video_id": "6366233137112",
+    "year_verification": "Official NHL playback metadata content date"
   },
   {
     "id": "goal-09",
@@ -69,7 +103,10 @@
     "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-16-6368010340112",
     "source_sha256": "cadacc7e29feddf547c99c0860126e7c9c02b6a0e531fa1cead50630c7c4460d",
     "edit_start_seconds": 11.1,
-    "edit_duration_seconds": 4.791666666666667
+    "edit_duration_seconds": 4.791666666666667,
+    "clip_year": 2025,
+    "source_video_id": "6368010340112",
+    "year_verification": "Official NHL playback metadata content date"
   },
   {
     "id": "goal-10",
@@ -406,21 +443,24 @@
     "source_goal_scorer": "Tim Stützle",
     "source_sha256": "b341fe175c1c6292574ae981045aef53caff169d45ce286e659d078952c912dd",
     "edit_start_seconds": 38.6,
-    "edit_duration_seconds": 3.2083333333333335,
-    "exported_frames": 77,
+    "edit_duration_seconds": 4.5,
+    "exported_frames": 108,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-17.json",
-    "identity_verification": "Ottawa18 Stutzle close continuous release. All77pairedframes inspected; gloves, helmet, torso and legs covered throughout. No celebration tail or scorebug.",
-    "explicit_mask_corrections": false,
+    "identity_verification": "Ottawa #18 Stutzle close continuous slap-shot release, #7 Tkachuk not masked. Jersey18 readable at start and shooting.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 4.5,
+    "scoring_play_end_frame": 100,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "e115b53aa65eeffc608d281b1ea7048b19aa93c336289bc8c230c13dd33e7ecb",
-      "reveal": "eb6f7f06e055367288fbb3d5e386abc794a11cac73b4673eb478ddeebd397fd9",
+      "masked": "23ee1792d189af01297aec519b3ae949e45e24e5c4e616f7e6d5f7882ddef013",
+      "reveal": "4364c8f68b7d37c2af11548047c47c22aafb9dbc1d164e5a2b2e75492422402e",
       "poster": "510a6130f44ef466abfea4523da0b3bf68ba97056cbf28cb55556f28fa06e6c1"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-18",
@@ -437,21 +477,24 @@
     "source_goal_scorer": "Matthew Tkachuk",
     "source_sha256": "e48426dc224dbca34fcd7cd7da4e709b2f28c23f5c8203437a0e7c376500da9f",
     "edit_start_seconds": 38.8,
-    "edit_duration_seconds": 2.7916666666666665,
-    "exported_frames": 67,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-18.json",
-    "identity_verification": "FLA19 Tkachuk tracked through goal; same scorer rather than the Shark defenders.",
-    "explicit_mask_corrections": false,
+    "identity_verification": "Florida #19 Matthew Tkachuk net-front redirect, jersey19 readable in first half; #16 Barkov passer visible in background.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 3.5,
+    "scoring_play_end_frame": 65,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "17f2738557caf63c9c1899b79fcf5108770618a2d9cce66d4ed660049ef3a9b9",
-      "reveal": "2e82490a3852c98d52fdc33b9690101faa16e2777f5a31a1b43f674bd35d704f",
+      "masked": "d2245613cda7c091465583f0d2b7e008fbffc3eab14e48177ae0a6b6ff7ebc03",
+      "reveal": "1b37062cb596722ef18407c24ae0590761daf96aa92cc5247481b2cc844f3a12",
       "poster": "c730ee147c12aee67ea14a5feb69e3c4d34878e4385ccd5844bd1a4f51192a05"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-19",
@@ -468,27 +511,30 @@
     "source_goal_scorer": "Brady Tkachuk",
     "source_sha256": "f1639b0e8899382d7b30f79d20e92fc6cb373eb03c3f5f13be144f57187f9b8c",
     "edit_start_seconds": 35.2,
-    "edit_duration_seconds": 4.0,
-    "exported_frames": 96,
+    "edit_duration_seconds": 4.791666666666667,
+    "exported_frames": 115,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-19.json",
-    "identity_verification": "All96 paired frames inspected; helmet, gloves, jersey and skates covered. Crop removes live scorebug; replay SN network watermark remains.",
+    "identity_verification": "Brady 7 carries from neutral zone, shoots and scores; net and celebration retained, teammates unmasked.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 4.791666666666667,
+    "scoring_play_end_frame": 105,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "crop_960x540": [
       0,
       44,
       960,
       496
     ],
-    "explicit_mask_corrections": false,
     "exported_sha256": {
-      "masked": "b1b4a6a13e80e3609f0fe41b92f8978d95897ecc95e8e676a673019db7b23a59",
-      "reveal": "f4297cf42f4643cfb2c0a86659f8a6f6215265b2e1d12e003ffee71ace307608",
+      "masked": "fc084fe6544ea95a2b8b1c67cd16faf60989abb3908b25845bef7c23c00810ab",
+      "reveal": "230539dd96a3c9cba07140f9c3a539a13ed6c01cbc59b76c7005f23bc656093a",
       "poster": "2d7786155686de1d00a18810ed8c6458134e209ca666701c4ef64eff3a5d6190"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-20",
@@ -611,27 +657,30 @@
     "source_goal_scorer": "Sebastian Aho",
     "source_sha256": "d9b0aba206fb3458a3ceb77906da2cda52b305218e315e7edb24246e2764c83d",
     "edit_start_seconds": 12.5,
-    "edit_duration_seconds": 3.5,
-    "exported_frames": 84,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-22.json",
-    "identity_verification": "CAR20 Aho tracked from receive through release; glove and trailing shin/waist edge explicitly patched and rechecked.",
+    "identity_verification": "Aho 20 rush, shot, full net finish and aftermath; full-frame and encoded review passed.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 4.0,
+    "scoring_play_end_frame": 85,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "crop_960x540": [
       0,
       0,
       960,
       492
     ],
-    "explicit_mask_corrections": true,
     "exported_sha256": {
-      "masked": "99922ef4d0bc18bc31cbc4e4d7e7762049cc0792ac91de763f90da4dd7ec49f9",
-      "reveal": "6df0aeccc84a4e68367ce9ea7a006a40624b587a1a79870b2820cf20b63c0655",
+      "masked": "54bc72a323e18b881427bc40a4aafe5eec516652bf7bc0ca594258acd1e42926",
+      "reveal": "1b29cccde54ab3627f81d72cffc78d2b98d632f0643a84de278e4be68086a4c9",
       "poster": "4277c3b295fd01299181bcdefcc79124deba2dd86fed5a2ac59423106882e51a"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-23",
@@ -648,21 +697,24 @@
     "source_goal_scorer": "Brayden Point",
     "source_sha256": "ce7001e90c32f6045a70a01e63426415d98f952c571db69b2a4e5eaed2df59bf",
     "edit_start_seconds": 42.7,
-    "edit_duration_seconds": 2.7083333333333335,
-    "exported_frames": 65,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-23.json",
-    "identity_verification": "TBL21 Point tracked through goal; OTT opponents remain visible.",
-    "explicit_mask_corrections": false,
+    "identity_verification": "Point 21 one-timer, goal and extended net aftermath, full player covered throughout.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 4.0,
+    "scoring_play_end_frame": 74,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "3e093a08cf08e5253f217a5e12e9bb7e6d5ad10217de64e535877c8af8c55fbc",
-      "reveal": "c76c6a47bceb200ebf9cad290186fee7ee60d4ecbfee130649fb349edc29f415",
+      "masked": "99f814e1fa9dba79956964950a61a81d0b8e0544a7ad7c03a4204b0d9399d928",
+      "reveal": "79d26d11e160630d379513c8c526339a64ee79e64ef3d68f2883e18454c036e9",
       "poster": "12dab07a8b10847924748cb7cab0bb637c13745856659f4cd93b58083511e45e"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-24",
@@ -679,21 +731,24 @@
     "source_goal_scorer": "Patrick Kane",
     "source_sha256": "b517b4350bfae960539b1075dcd8c6efefba7b348c41d61bdfeb66107d9319c1",
     "edit_start_seconds": 40.5,
-    "edit_duration_seconds": 4.0,
-    "exported_frames": 96,
+    "edit_duration_seconds": 5.5,
+    "exported_frames": 132,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-24.json",
-    "identity_verification": "DET88 Kane tracked from circle carry to wrist release; rear-leg and skate gaps corrected and rechecked. Foreground glass remains visible.",
-    "explicit_mask_corrections": true,
+    "identity_verification": "Kane 88 delay, wrist shot, goal at 45.2s, goalie down and scorer turns away by end at 46s; checked full source timeline.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 5.5,
+    "scoring_play_end_frame": 120,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "29f3cf97cf571b50ce801a5c8a5d3a4e23ba648c0f598b6fc0dcd09e5e207bd3",
-      "reveal": "a1234efc6fa92b2313bbb9679438651a60cbf0ce79df8542951f43f6e1f35375",
+      "masked": "b453ea27e2965fff5900c36114e5ca2d76dee667c250b568b26010038296ecd2",
+      "reveal": "11cad88486322a739973bc4123b9e8ab67e0624afee456cb7b4c160a252d18a5",
       "poster": "a4a38917ba03259bd5fbc6100c34a7eb28d74bc75950c035d2933cf82a86cb5d"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-25",
@@ -710,28 +765,30 @@
     "source_goal_scorer": "Lucas Raymond",
     "source_sha256": "2846e1a430ed1e6015ccbc2fd92a4a1ca964da5bb05e4a841167468772a8b3fe",
     "edit_start_seconds": 5.8,
-    "edit_duration_seconds": 2.5,
-    "exported_frames": 60,
+    "edit_duration_seconds": 3.9583333333333335,
+    "exported_frames": 95,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-25.json",
-    "identity_verification": "DET23 Raymond is the far-circle shooter, not DET71 at crease. All60 frames re-reviewed after glove patches27/29/30 and43..59. Goal retained; skate away trimmed.",
+    "identity_verification": "Raymond 23 finishes net-front, then raises stick; Larkin 71 remains visible separately.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 3.9583333333333335,
+    "scoring_play_end_frame": 82,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "crop_960x540": [
       0,
       0,
       960,
       486
     ],
-    "trim_note": "Goal and follow-through retained for2.5sec; post-goal skate away omitted.",
-    "explicit_mask_corrections": true,
     "exported_sha256": {
-      "masked": "0fbc9163c59bbbaf1cc1d9336d479aca1ead485649b5cedb39f113ed8579522b",
-      "reveal": "746f3a3dfa0c9b5567c5d0f1b040de0084123d86262e22b97931a4248247e11f",
+      "masked": "de1b5436947126efa6439e912b03e3a4b327d1b42d107431e684b5590666d864",
+      "reveal": "9ac6026f26ff0d8b01747a31cc4be7e8ae09333b91b785552c83381b7ba09a75",
       "poster": "9b6d58c0c70bea68d518e5db441f0fc0f5d96ec8d3c16a2e93fe739c44d57b0c"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-26",
@@ -747,53 +804,70 @@
     "event_id": 280,
     "source_goal_scorer": "Dylan Larkin",
     "source_sha256": "04fc9c6200a019efbfe1ba076514291397514f9000c1303d1cd27727e5063aca",
-    "edit_start_seconds": 38.4,
-    "edit_duration_seconds": 4.0,
-    "exported_frames": 96,
+    "edit_start_seconds": 40.3,
+    "edit_duration_seconds": 3.2083333333333335,
+    "exported_frames": 77,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-26.json",
-    "identity_verification": "DET71 Larkin is the away-white carrier from boards into circle and shot; Calgary defenders remain visible.",
-    "explicit_mask_corrections": false,
+    "identity_verification": "Larkin 71 receives from Raymond 23, shoots and scores; follows his celebration until he exits bottom at 69. Raymond stays visible.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 3.2083333333333335,
+    "scoring_play_end_frame": 68,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "06ac897a0cabb5cbe52fbec4b0c9e88fdc4b1b65bceec8f22a28c4f1e533e08d",
-      "reveal": "8bfc24b2c8773f2152dd4acda50ff2d96f19b1a7f189854542815dbf9e962f1d",
-      "poster": "6b45347dfe912df940e38881bdd1617a040ddc597f533b2d33bea25896b67cfb"
-    }
+      "masked": "e517656428aba8f9ee3b18c6737f18a5dd6fb563b314cab656724171ce8d2d45",
+      "reveal": "cc3abd81be63ad514bd920d2a60d8920d3f4337099c2c38b7e6f45e361790a37",
+      "poster": "bb4b210069750d56c7eabb6292945a62eb8e1e2a8f284e4ea4f7f738855334f4"
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-27",
     "pid": 8480027,
     "player": "Jason Robertson",
+    "game_id": 2024020774,
+    "date": "2025-01-24",
+    "period": 2,
+    "time_in_period": "07:31",
+    "official_goal_scorer": "Jason Robertson",
     "team": "DAL",
+    "source": "https://nhl.com/video/vgk-dal-robertson-scores-goal-against-adin-hill-6367711375112",
+    "source_video_id": "6367711375112",
+    "discrete_video_id": "6367711282112",
+    "goal_modifier": "none",
+    "official_event_id": 638,
     "jersey": 21,
-    "source": "https://nhl.com/video/dal-col-robertson-scores-goal-against-scott-wedgewood-6382639693112",
-    "source_video_id": "6382639693112",
-    "game_id": 2025020034,
-    "date": "2025-10-11",
-    "shot_type": "tip-in",
-    "event_id": 355,
+    "source_attribution_verified": true,
+    "source_sha256": "3b877c71df3d25b3bc5b673abbcfa03b62f6b0f7e50b7ac2809c773e8e8456af",
+    "media_title": "VGK@DAL: Robertson scores goal against Adin Hill",
+    "duration": 50.606667,
+    "dimensions": [
+      1280,
+      720
+    ],
     "source_goal_scorer": "Jason Robertson",
-    "source_sha256": "c9fc9b70d4997cba062cee45c65ece0687d933b0c46636d158e5d3eee45b8ef6",
-    "edit_start_seconds": 31.1,
-    "edit_duration_seconds": 3.5,
-    "exported_frames": 84,
+    "clip_year": 2025,
+    "edit_start_seconds": 38.5,
+    "extraction_duration_seconds": 5.291666666666667,
+    "edit_duration_seconds": 5.291666666666667,
+    "exported_frames": 127,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-27.json",
-    "identity_verification": "DAL21 Robertson is the left-goalmouth tip-in finisher; earlier glove anchors corrected. Other Dallas screen and Colorado defenders remain visible.",
-    "explicit_mask_corrections": false,
+    "scoring_play_end_frame": 100,
+    "identity_verification": "Replacement Robertson 21 rebound/shot vs VGK; full finish and celebration, no player switches.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "2c7ee721f0649ef9ea9e4268e55a1e974b2cb6f58abdf643f814d4b36ae74f90",
-      "reveal": "5395175c525fd08ea5c77325886583fc39bc2edd8e06bf38f35a93ae86f89169",
-      "poster": "3b53abc258598c99e2332cb98920ad5a44bb9032f2ca32b60eff7312fb964325"
-    }
+      "masked": "c998f0d089fbb515bfac07267e8d6bc675e9f4644c7cd35d76e79d76629d8d40",
+      "reveal": "30969163058136dce861e2023db0553c3e86c056462961bba6ea52e851fe1087",
+      "poster": "6bc0ba5d3de46cb9b38013c3d898ce5787f17cb0852f8d609b020a10de14bf4a"
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-28",
@@ -870,68 +944,26 @@
     "shot_type": "snap",
     "source_goal_scorer": "Erik Karlsson",
     "source_sha256": "84459d9c551595c6f013dbfc443b840f56fbb391f8997061a7a029b12deba84a",
-    "source_sha256_basis": "Current public original rendition downloaded for source verification; not the unavailable original processing source checksum.",
-    "original_processing_source_sha256": null,
-    "edit_start_seconds": null,
-    "edit_start_basis": "Exact original processing start parameter unavailable. Frame matching identifies nominal equivalent timing, recorded separately.",
-    "edit_duration_seconds": 3.5,
-    "exported_frames": 84,
+    "edit_start_seconds": 28.0,
+    "edit_duration_seconds": 5.333333333333333,
+    "exported_frames": 128,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
+    "event_id": 471,
+    "clip_year": 2025,
+    "extraction_duration_seconds": 5.333333333333333,
+    "scoring_play_end_frame": 119,
+    "identity_verification": "Karlsson 65 shoots from point; puck finish and goalie reaction remain visible.",
     "exported_sha256": {
-      "masked": "9b97c55750aeb8678468df1ef3f2c87afb49532960706270c523c02411194f41",
-      "reveal": "1c1824c418d47094a7c399f2bbb8a558edb377803e0e7ad7ed004d3e73dbb8f3",
-      "poster": "c7ed861de8b7a777bee1c434505b8a38aca70a3ea6c36048791d2821be0e80bf"
+      "masked": "deae24c24571d5043fcfaf58000ef4c1403c61e419fb45743acfb37c690b87b1",
+      "reveal": "2888ab4678542cc577a10064625d2725b655b078023df3a796ffa51dd153b7e1",
+      "poster": "2595f59521dea46cb67bfb9dd8cd504a9e8437a131d1106d719dc0caccc9f7e2"
     },
-    "source_verification": "Official scoring-event scorer/game/jersey verified; first/middle/final reveal frames match the current public source after accounting for the recovered crop.",
-    "source_frame_matches": [
-      {
-        "export_frame": 0,
-        "export_time": 0.0,
-        "visible_rows": [
-          0,
-          540
-        ],
-        "source_frame": 1679,
-        "source_time": 28.011316666666666,
-        "pixel_mse": 1.4908324480056763
-      },
-      {
-        "export_frame": 42,
-        "export_time": 1.75,
-        "visible_rows": [
-          0,
-          540
-        ],
-        "source_frame": 1784,
-        "source_time": 29.763066666666667,
-        "pixel_mse": 1.90934157371521
-      },
-      {
-        "export_frame": 83,
-        "export_time": 3.4583333333333335,
-        "visible_rows": [
-          0,
-          540
-        ],
-        "source_frame": 1886,
-        "source_time": 31.464766666666666,
-        "pixel_mse": 3.1093931198120117
-      }
-    ],
-    "processing_crop_scaled_960x540": [
-      0,
-      0,
-      960,
-      540
-    ],
-    "crop_status": "No crop: full-height matching reveal verified",
-    "nominal_recovered_start_seconds": 28.0,
-    "original_processing_crop_command": null,
-    "event_id": 471
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-31",
@@ -1180,27 +1212,30 @@
     "source_goal_scorer": "Jesper Bratt",
     "source_sha256": "bfd5ecd229317f2dcc1f125273180cc0d16813a03f4af84e340d0ba476439244",
     "edit_start_seconds": 30.05,
-    "edit_duration_seconds": 3.7083333333333335,
-    "exported_frames": 89,
+    "edit_duration_seconds": 6.958333333333333,
+    "exported_frames": 167,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-37.json",
-    "identity_verification": "All89 paired frames inspected. #63 Bratt curls behind goal from left to right corner and shoots, while#13 Hischier screens crease and remains visible. Entire scorer covered through continuous replay.",
+    "identity_verification": "NJD #63 BRATT seen continuously carrying puck behind net from left boards to right corner, shooting snap shot from right circle, then continuing along far boards. #13 Hischier remains screening goalie and is not masked.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 6.958333333333333,
+    "scoring_play_end_frame": 155,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "crop_960x540": [
       0,
       40,
       960,
       500
     ],
-    "explicit_mask_corrections": false,
     "exported_sha256": {
-      "masked": "31745fc9d68a1b6ac68937870d6267d0fc95eb06591e14162794208820d35168",
-      "reveal": "d5ba5628c066113b962b150c81038ab19dd45c87b410edb80375c4af0e20b47c",
+      "masked": "094640737a6687229dad2c271292be00f5c2ed2199c28298bf6cf8b1362fc9df",
+      "reveal": "b5b9782b0d4a6757d8fab2bc4a1e9f423f7049215dc368234f923f48c7eea843",
       "poster": "31e352774982d57a876f66131043af957364089059e57c096ea328e6cdd185ca"
-    }
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-38",
@@ -1254,28 +1289,30 @@
     "source_goal_scorer": "Sam Reinhart",
     "source_sha256": "dafbf2ba4d4a85c28207323bf897292b434c37b1abfd9e0513b15974aabb51ad",
     "edit_start_seconds": 24.6,
-    "edit_duration_seconds": 3.0,
-    "exported_frames": 72,
+    "edit_duration_seconds": 5.208333333333333,
+    "exported_frames": 125,
     "exported_fps": 24,
     "exported_dimensions": [
       960,
       540
     ],
-    "edit": "tools/who_scored/edits/goal-39.json",
-    "identity_verification": "FLA13 Reinhart right-circle backhand; FLA19 Tkachuk and Sharks84 remain distinct. Goal retained in72frames; prolonged post-goal pileup trimmed.",
+    "identity_verification": "Reinhart 13 enters from the left circle, takes the shot and celebrates on the left/center behind Minnesota 21. Verified the readable 13 on his back in frames 80 and 124. Greer 10 stays right of the net, and Tkachuk 19 falls into the crease; both remain visible.",
+    "clip_year": 2025,
+    "extraction_duration_seconds": 5.208333333333333,
+    "scoring_play_end_frame": 114,
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "crop_960x540": [
       0,
       40,
       960,
       500
     ],
-    "trim_note": "Three seconds retain backhand release and goal; omit prolonged post-goal occlusion.",
-    "explicit_mask_corrections": false,
     "exported_sha256": {
-      "masked": "af72dba2118ffec9af10188eebb6e699fc3755ddcb4eb0c858c3d887807894bf",
-      "reveal": "9c6bf551e1931eec6f3900860ac2a0aef44ae6eaf12c86336a5187285f858584",
-      "poster": "1e1936aee9f952cd987e4a591078c74422f46ebf67cde7cf5d61da5e8322645b"
-    }
+      "masked": "ed84d3eceaeea17c2f33c94b15e36f5ac93a6cbc093dc91b8943c642e956f638",
+      "reveal": "4da394af6ebf87f41c4ce73303adedcb8e309b9071139a1d0a2aac2cf3bd99c0",
+      "poster": "be9262b4d321c1c73fe8c9f6118efcba3bcf0971b82402e6f836b3671e82caaa"
+    },
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-40",
@@ -1351,12 +1388,25 @@
       720
     ],
     "duration": 49.515011,
+    "clip_year": 2025,
+    "edit_start_seconds": 43.6,
+    "extraction_duration_seconds": 5.416666666666667,
+    "edit_duration_seconds": 5.416666666666667,
+    "exported_frames": 130,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 125,
+    "identity_verification": "Official event credits Kempe 9. The close replay shows black jersey 9 receiving from teammate 37 and shooting past Hughes. Teammates 37/11 and defending Hughes remain unmasked.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "6a3fde075d9c61c8f4d65053d597d64498ab6664a7784c84ed9fed406f8dac3f",
-      "reveal": "a5b3dc01b806d56088851923146b46035cd581c2d0704447f07b6b644e414329",
+      "masked": "8698d19e6a08715c3bc937780e30bb599b04d534728787ace36d1b5185ba3c90",
+      "reveal": "0da66d72d302c12df726e17799fce1ad3b1daf78ee63077a33472ca6a1947462",
       "poster": "349633d0b37f30741312107a5edcbb406274f41b70b0b390dbdf8f418563607b"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-43",
@@ -1378,12 +1428,31 @@
       720
     ],
     "duration": 29.261667,
+    "clip_year": 2025,
+    "edit_start_seconds": 10.1,
+    "extraction_duration_seconds": 3.7916666666666665,
+    "edit_duration_seconds": 3.7916666666666665,
+    "exported_frames": 91,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 86,
+    "identity_verification": "Official scorer Burns8. Number8 visible on the near-side point skater receiving and shooting; Gostisbehere53 at the boards remains visible. Export ends before Burns leaves the right edge.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
+    "crop_960x540": [
+      0,
+      0,
+      960,
+      482
+    ],
     "exported_sha256": {
-      "masked": "22b5b8cd0f4c9ae3ba0dab02f0b09bfffe1d110d2df970e29e3fdd5347c77871",
-      "reveal": "d92e282cb24839558536725f0ef0b9b1707c3e8ba85e2bb6ceb65c756388abcc",
+      "masked": "eca506fc157e86e9964994baa69ddd9dc755acbf5ac22d2532ec13516cf7237c",
+      "reveal": "cdfaed6172c165fc0d31152b3272e913b0b2871a42c2f7810c83bbf02bf56188",
       "poster": "48fa7c34fbc8bd6b55145a071b6f8afef98aaf2cfa63b4912c8de2e0b29e1ca7"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-44",
@@ -1470,28 +1539,46 @@
     "id": "goal-47",
     "pid": 8476459,
     "player": "Mika Zibanejad",
-    "game_id": 2024020604,
-    "date": "2025-01-02",
-    "period": 1,
-    "time_in_period": "09:48",
+    "game_id": 2024020882,
+    "date": "2025-02-08",
+    "period": 2,
+    "time_in_period": "06:38",
+    "official_goal_scorer": "Mika Zibanejad",
     "team": "NYR",
-    "source": "https://nhl.com/video/bos-nyr-zibanejad-scores-goal-against-jeremy-swayman-6366634849112",
-    "source_video_id": "6366634849112",
-    "official_event_id": 351,
+    "source": "https://nhl.com/video/nyr-cbj-zibanejad-scores-goal-against-elvis-merzlikins-6368533623112",
+    "source_video_id": "6368533623112",
+    "discrete_video_id": "6368532244112",
+    "goal_modifier": "none",
+    "official_event_id": 602,
     "jersey": 93,
-    "source_sha256": "fec979522896a81567ac29fa37274c66fd582fcedb2b4a01bb0bfbfaf260c99b",
-    "media_title": "Zibanejad kicks off scoring with 700th career point",
+    "source_attribution_verified": true,
+    "source_sha256": "d70e5509809627b57a20004a0ee1a04ebe512e78f18b079edda62d855822b531",
+    "media_title": "Zibanejad ties it up with the wrister",
+    "duration": 42.641667,
     "dimensions": [
       1280,
       720
     ],
-    "duration": 48.633333,
+    "source_goal_scorer": "Mika Zibanejad",
+    "clip_year": 2025,
+    "edit_start_seconds": 24.9,
+    "extraction_duration_seconds": 5.7,
+    "edit_duration_seconds": 5.708333333333333,
+    "exported_frames": 137,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 112,
+    "identity_verification": "Official scorer Zibanejad 93. Jersey 93 readable on receiving the pass, then this player shoots and follows through in front of the goalie. Blue teammate 17 and Bruins defenders are excluded.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "670ac5747ebd68c11b50603da4eebc498bf70a3386b1f22a537cb2380d7e63e8",
-      "reveal": "3d3c81cfd1d9f541c492bd99337904972fc7903ac00a98d06275cff25bdd5733",
-      "poster": "7f59731a3b80a84cdf22620420a9620a2c29b3bf5f99d0624ac6bf4f576639af"
+      "masked": "3434617b4f27fac229b3fcd7ff1566f2d5f10656715492882787096143ce7060",
+      "reveal": "3d7b6bae7fd6320a4eebfc4ca1afd7766aad1a4ad081c30131adef87c9464531",
+      "poster": "8b656f0f5ce2cb252ae4b569bc3350e7c9239785f2a7412502c80fd36e9ed8b7"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-48",
@@ -1513,12 +1600,25 @@
       720
     ],
     "duration": 49.585011,
+    "clip_year": 2025,
+    "edit_start_seconds": 41.0,
+    "extraction_duration_seconds": 3.75,
+    "edit_duration_seconds": 3.75,
+    "exported_frames": 90,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 79,
+    "identity_verification": "Brett Berard 65, number and BERARD clearly visible receiving, skating and shooting. Player remains continuous through the close replay; foreground fans, glass posts and Bruins defenders remain unmasked.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "4a5dfc7a5014627faf50b1b354b756d88247965c9db513a12d61e6453112bb90",
-      "reveal": "f70d3b84e954ba38aa0409096d39d13a2f08ce0ceff944169a69632e7713d6b8",
+      "masked": "81968db0054b5408c05a64add0be8dfc9e5e0b35e265ed37b716177c446ed016",
+      "reveal": "f7debc14883a530dab569345d9c4a2ec4b1d95748a75ef102498c493573267e8",
       "poster": "62dbc22e390b1fe8d595404371f8f4158e092b6065d457820edcb7fd321142a2"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-49",
@@ -1540,12 +1640,25 @@
       720
     ],
     "duration": 51.885,
+    "clip_year": 2025,
+    "edit_start_seconds": 46.6,
+    "extraction_duration_seconds": 3.2083333333333335,
+    "edit_duration_seconds": 3.2083333333333335,
+    "exported_frames": 77,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 64,
+    "identity_verification": "Official Lindholm28, LINDHOLM28 visible on the near-side white Bruins skater shooting and following through. Marchand63 and Coyle13 at the net and blue Rangers skaters remain visible; foreground glass posts and railing preserved.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "9c01536829722a7adef9d03f22b3bb228e13ef07629ba23ccc9f744d899248c9",
-      "reveal": "e8a23562ee2b1db24161f1c52605f7e8554b2c9ffcf3953543a60df0391354f7",
+      "masked": "32abba519c7fac374e321f64794bced3fdf596fb8fb7bab401fe092592f55aad",
+      "reveal": "9db8a8ae182ec86bf89b93ca27e42ea1ff0686fc58a938e5ed03ff1f888031db",
       "poster": "ba58bf0e35c2944888f48d6d21115d8ccee09ff5383423243cbcf92a8511425e"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-50",
@@ -1567,12 +1680,25 @@
       720
     ],
     "duration": 41.203333,
+    "clip_year": 2025,
+    "edit_start_seconds": 29.9,
+    "extraction_duration_seconds": 3.25,
+    "edit_duration_seconds": 3.25,
+    "exported_frames": 78,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 63,
+    "identity_verification": "Official Wilson43. WILSON43 visible on the red net-front scorer, tipping the shot and turning away after the finish. Wild23, Faber7, goalie and the other red skater crossing the foreground remain visible.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "747bbf39186e01e673e76df8ef51ccdcc6ac8b1b960144d9090439b1dfc19aba",
-      "reveal": "21487c6b57dee11937d7195a4844729d797433411dcc057b7ca74f03669a8d25",
+      "masked": "8a2faa6cc69ec04bdf234f4a5bafd08dd3b1e3ff549da87dac6b4f64c830d9c0",
+      "reveal": "944b2c1a8ae86d80c3d1c91d89c02c2f8cd896d3c4d0bd68c2f2e2ff37a815f8",
       "poster": "dbaa84bed97b51795cce9f36e747681a806bdc6c8af3ea00880024de94a155d7"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-51",
@@ -1648,12 +1774,25 @@
       720
     ],
     "duration": 55.901678,
+    "clip_year": 2025,
+    "edit_start_seconds": 46.2,
+    "extraction_duration_seconds": 4.291666666666667,
+    "edit_duration_seconds": 4.291666666666667,
+    "exported_frames": 103,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 90,
+    "identity_verification": "Official scorer Fehervary 42. FEHERVARY and jersey 42 clearly visible throughout this continuous point-shot replay; the same skater winds up and shoots. Wild defenders and net-front Capitals remain visible.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "88a7d94afd88b01e8b2752467ad13188ef316fd2e22c8ee6c37594e691835d22",
-      "reveal": "c2dacbf502094b2e52f2818c082bc6b152657309cea29a0547382f263365b9ed",
+      "masked": "08114c72f4ebeecdec2a6c62715fbef6834135906aa8c84386a964844b0df2b2",
+      "reveal": "a81f782db0ce1de302303e94f19f9ac33904e1ac58d9164dabb488c92ddbcbb6",
       "poster": "c8b7a080012054f33b323e37acb01c4863b9e6f05d925fedb5d2da903134961d"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-54",
@@ -1675,12 +1814,25 @@
       720
     ],
     "duration": 50.375011,
+    "clip_year": 2025,
+    "edit_start_seconds": 30.0,
+    "extraction_duration_seconds": 2.9166666666666665,
+    "edit_duration_seconds": 2.9166666666666665,
+    "exported_frames": 70,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 49,
+    "identity_verification": "Official event and jersey corroboration; foreground green ROSSI 23 continuously receives and shoots, with net-front Wild 14 and Oilers 27/28 retained.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "5bf603b6eae5b01f30c0a2137e5abba4107d2873961d523b8d9d0609eba55e32",
-      "reveal": "2aa05a14572e7aa5a7a18325453cffa118501a2f0946c94baaa2ef1332d5b580",
+      "masked": "92b33de4e3c5a635c2bc996c573467438592d5b66ef24a3ea37f5f7561c28efb",
+      "reveal": "618a6f0ce4a9fa9d8dfc4b7d075b0c4a8317a7869327fa4b417082b748c5ef0f",
       "poster": "cab8c2c021d76e084b23a7ea51b653a13fda66d50781bf3cf6af4252f16ec13d"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-55",
@@ -1702,12 +1854,25 @@
       720
     ],
     "duration": 46.938345,
+    "clip_year": 2025,
+    "edit_start_seconds": 26.3,
+    "extraction_duration_seconds": 3.2916666666666665,
+    "edit_duration_seconds": 3.2916666666666665,
+    "exported_frames": 79,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 65,
+    "identity_verification": "Official Gustafsson56, back56 visible on the near-side left point shooter winding up and releasing. Export0–31 stops before the camera follows the puck and scorer exits left. Other white Red Wings and blue Columbus skaters remain visible.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "4c6d7bda4e28774534dff4b61f8321422cbc53f0fa9d21ae8e86cf953d03c22f",
-      "reveal": "503f4f12f216156b3c8baea1ac6886c3a8aea719f333a17b26c0899252650956",
-      "poster": "296cd3105e633e14f09d76df7fcfec953cde4654753857a0569705e7842cbcf8"
+      "masked": "b21553691f5b1fcb674ab226b3a950e054061d2388e721531df262ae518d94a6",
+      "reveal": "2bab83b70059afd213e574ea80b54b8cf218031c7533ef4e03a7565cc5327d3a",
+      "poster": "1829899950b503e630aa6b835c06d0e7d251d93a0997c3c3811370696fc4c4ee"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-56",
@@ -1729,12 +1894,25 @@
       720
     ],
     "duration": 41.945011,
+    "clip_year": 2025,
+    "edit_start_seconds": 29.8,
+    "extraction_duration_seconds": 2.2083333333333335,
+    "edit_duration_seconds": 2.2083333333333335,
+    "exported_frames": 53,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 45,
+    "identity_verification": "Official DeBrincat93, DEBRINCAT93 on the near-side white Detroit skater receiving and shooting, then following toward the crease. Johnson3 crossing the foreground, Provorov9 and the goalie remain visible. Poster12 avoids the cropped opening.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "c29a69debbcffc5694c5a73c2b0e4133bcb0fd18b5ae233173b3678fb894ad5a",
-      "reveal": "ce5e65eda4153a362d07cac269cb6fcab7eeb61a71c4d70f53fc7160814470bb",
+      "masked": "75cd5fd625ebcfa237781fc569e8f9eee29ddf4e5196c5555ce9b8f3ca3ac6ff",
+      "reveal": "3807cc8cb3959d10386fc31f4ee077465594b49c3f6e3b745795adb4234ae751",
       "poster": "0ba41dea934425ab3deca38a8c792af86997c9cb0c0eade9b70b16303557441b"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-57",
@@ -1783,12 +1961,25 @@
       720
     ],
     "duration": 47.286667,
+    "clip_year": 2025,
+    "edit_start_seconds": 40,
+    "extraction_duration_seconds": 3.5,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 60,
+    "identity_verification": "Official Berggren48, BERGGREN48 visible on the lone white Detroit rush skater carrying across the blue line and shooting. Defender, goalie and referee remain visible; continuous clear rush replay.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "e4dad92e1c13a19dc90b6686b26b18f0b92f3dbb3bc86feaefbb51eeacfc1f7a",
-      "reveal": "504d47a4e5bc6b770a9c760d3a0a2db53d7d415b9adac5d8bb085e055d0c1320",
-      "poster": "d74be2b8076be10d41cc507fa3364de45630f95e808c75de17be0387022294c7"
+      "masked": "e44ced1c1b9857b129d0e03fdd7a4431ea1b5e3519fd65757bf3f1a85b166b57",
+      "reveal": "e7413b909d7fc80fe5219ed94bc7cb22ae163a83b091ade67210188035c21535",
+      "poster": "db6c0a81dc0274554246d7791e6e01d307fddc9bd38fd08878f7f3cfc6a69d64"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-59",
@@ -1810,12 +2001,25 @@
       720
     ],
     "duration": 39.321678,
+    "clip_year": 2025,
+    "edit_start_seconds": 10.5,
+    "extraction_duration_seconds": 4.958333333333333,
+    "edit_duration_seconds": 4.958333333333333,
+    "exported_frames": 119,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 89,
+    "identity_verification": "Official McMann74, McMANN74 visible on the white Toronto scorer shooting and raising his arms. Cizikas53 crosses the foreground after the shot; other blue Islanders, goalie and Toronto teammate remain visible. Continuous replay with no name graphic.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "061e018692b45eca0d1b9ab0894b0c89991b9e65774f36c6a4cd9cfb5104045b",
-      "reveal": "296e15b723e8f8d80a376ad342eff9b069f2b4ed5a17b16746563293ef5c47ab",
-      "poster": "5c1e3aa0128c5fac0224f5c37fc6cbd6f941cbea13a8c8c221278ac0c8e54406"
+      "masked": "c658c2e56665c9712257778948e096009314e550a95eb6584196ab4d1533f295",
+      "reveal": "30b8644f3099d7841dcfc1928c258614352379c1c326da180e6cf28b54468b03",
+      "poster": "aa1412475d372873fbe92cc8861d968f0ad700fd4853e88d00de9bc39f0a2cd9"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-60",
@@ -1837,12 +2041,25 @@
       720
     ],
     "duration": 45.056667,
+    "clip_year": 2025,
+    "edit_start_seconds": 37.4,
+    "extraction_duration_seconds": 3.5833333333333335,
+    "edit_duration_seconds": 3.5833333333333335,
+    "exported_frames": 86,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 73,
+    "identity_verification": "Official Mayfield24, MAYFIELD24 visible on the near-side blue Islanders skater receiving and taking the point shot. Poster12 avoids the cropped opening. Toronto defenders/goalie, other Islanders and referee remain visible.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "aace0c0037b77e3ff9b6ec0717b253f89f41e85f0f221a892b7702307a519d56",
-      "reveal": "f491b4bbf02ba19317a245aad870bcffceaf2a1112b6926f5116534cb3e59f84",
+      "masked": "a22a032d667ae3da441d4479e362dd123559bebe4f233f4c8b56c4fe0e1779e4",
+      "reveal": "f0174ee3c4a2ef748e7e67d73018540e0e3075dfe40ed8885740f9193159100f",
       "poster": "1b74b06b36df7f8e2dc1564d6df47dbcbbfb8f08f1081ae9df7e7580d5a9a098"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-61",
@@ -1864,12 +2081,25 @@
       720
     ],
     "duration": 50.375011,
+    "clip_year": 2025,
+    "edit_start_seconds": 37.5,
+    "extraction_duration_seconds": 4.416666666666667,
+    "edit_duration_seconds": 4.416666666666667,
+    "exported_frames": 106,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 57,
+    "identity_verification": "Official Hintz24, HINTZ24 visible on the net-front green Stars scorer throughout the shot and deflection sequence. Robertson21 shooting in the background, Ottawa defenders and Merilainen1 remain visible. Track the credited scorer24, not the point shooter21.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "9ae223858c2ebcff4d627d37f036d39fd5cdc0bdcfb3d30bae447810a4dfbcc1",
-      "reveal": "d54bd5043549d1330a850e9cf3d07178b872191149d246ca6147e5749c586061",
-      "poster": "906cee5f4814cdb61d089327420c7f2500137f076c633109d7191b25ee74541b"
+      "masked": "e456982b117290d0c8ce466dd2ebacaff4b8793b0f1f63e9282cb970e9999c38",
+      "reveal": "eb57337ddec06acc0813ada36c79b93d8a96ce0c39cbfb81d3dfdb7e7c1ed3b0",
+      "poster": "2f8b64fcce38601f5bc54554a1bd6393a2c7ed454dc6e0722fe2be3c6f133d06"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-62",
@@ -1918,12 +2148,25 @@
       720
     ],
     "duration": 48.888345,
+    "clip_year": 2025,
+    "edit_start_seconds": 42.35,
+    "extraction_duration_seconds": 3.9583333333333335,
+    "edit_duration_seconds": 3.9583333333333335,
+    "exported_frames": 95,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 83,
+    "identity_verification": "BENN 14 clear on foreground green scorer throughout the one-timer; Duchene 95 passing behind stays visible. Start after the broadcast dissolve.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "0d349c6a364c18ca84485076dd79763dec0b9a003a02ad2eb77fa7c0acea96e7",
-      "reveal": "30b52d6eebd329cab4b5632448c795644713528c546ee13b09aacdc021b57c46",
+      "masked": "c222adc9bed90147c78042021e15324e317041503fa90da8012a2d9c2c66fcd1",
+      "reveal": "9a4f7a78e84c384d4f588c6314d268ad1041fe2dc341384df26f0d926a6c0f4c",
       "poster": "a68d51f0c65f62f4011a3fe6a28bd7893ff315802d56a52f15ac8e4ea0ef62ab"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-64",
@@ -1945,12 +2188,25 @@
       720
     ],
     "duration": 47.75,
+    "clip_year": 2025,
+    "edit_start_seconds": 38.0,
+    "extraction_duration_seconds": 3.7083333333333335,
+    "edit_duration_seconds": 3.7083333333333335,
+    "exported_frames": 89,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 79,
+    "identity_verification": "White Stars 95 continuously receives and shoots along the near-side circle; Johnston 53 passing at left and Rangers Trocheck 16 stay visible.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "4a27d44e46c36f0c56f3e64aa32f8ab774fef969989e27d14ffac4bf6f766cc0",
-      "reveal": "4df136c73571ae9a5bbd5f248b810d824abb771f6e5fbe81f6662bb210ddbc5b",
+      "masked": "114c8aaf5a673f59df9d2efaabea721fa36d562b2f49bf94834a8baf9945ff5e",
+      "reveal": "ac4d8709f84736b6255346a67f35bb1450e59ed6a0aaf1a9bad01e312da12609",
       "poster": "ced88204976e0296e4cb49c00d84f14ddf4058204c3931f9f3143869457c6016"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-65",
@@ -1972,12 +2228,25 @@
       720
     ],
     "duration": 45.916667,
+    "clip_year": 2025,
+    "edit_start_seconds": 32.5,
+    "extraction_duration_seconds": 2.7916666666666665,
+    "edit_duration_seconds": 2.7916666666666665,
+    "exported_frames": 67,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 57,
+    "identity_verification": "Scheifele 55 enters from the left behind Connor 81, receives the rebound, and shoots from the slot. Connor 81 and Ehlers 27 remain unmasked.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "5b50b96d5ecaa0878ff33f18475218e975168da4ea61b705912877e8a99ba2a8",
-      "reveal": "df5b2c6b319b14c1a31379e3bc10292ea93b66c81c0871716a2a65d4120a54e2",
-      "poster": "38212c99c8003575233661fcdf02a27371bd23ba9a810ebcefb86a8492325457"
+      "masked": "4ea0e07765b9294562f7660e5a24cd401834c11145dc9bea5129227c35258fc1",
+      "reveal": "8fe4166be2167113fcd4934a941127ed28b4e6db62fe5f4beb668190acdce9d5",
+      "poster": "a53aaebcc1ac1f4cdcb4c4c77a690ebf6f73ae7e78ce0ecd08e1cf55675dfcaa"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-66",
@@ -1999,12 +2268,25 @@
       720
     ],
     "duration": 40.436667,
+    "clip_year": 2025,
+    "edit_start_seconds": 8.5,
+    "extraction_duration_seconds": 4.0,
+    "edit_duration_seconds": 4.0,
+    "exported_frames": 96,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 78,
+    "identity_verification": "White Jets LOWRY17 receives from Niederreiter22, shoots from the right slot and continues across the front of the net; Flyers and passer22 remain visible.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "17be6105f4f109fae36649c2e6e9f074ab1ab4eedb49fb7c68eec16553a95d7e",
-      "reveal": "7501179a51862dad1624a5fd03cb0629efb8e6ae02a955fbcd0948618ce7930e",
-      "poster": "69e1fd47a6261e5fb4d7910307cfb6016b55b158b16f3365985123dd1a18198f"
+      "masked": "9038f37ed7df1698abad47f02edc9f55469b3626b80320433b8e2659327ba150",
+      "reveal": "c2a08c7c1a56898480f82aa490a0bbd72b2fc81e97bd80aa97cafe4b2397ed8b",
+      "poster": "b2edfeafb4db0576347b70b01ca1d05df48e6f169b473cd9086f33fffa88ffab"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-67",
@@ -2026,12 +2308,34 @@
       720
     ],
     "duration": 46.891678,
+    "clip_year": 2025,
+    "edit_start_seconds": 35.0,
+    "extraction_duration_seconds": 4.416666666666667,
+    "edit_duration_seconds": 3.75,
+    "exported_frames": 90,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 84,
+    "identity_verification": "Orange CARLSSON 91 continuously net-front shooter; passing Jets 7 at opening and Jets 2 behind retained.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
+    "export_cap_frames": 90,
+    "masked_hide_rects": [
+      [
+        0,
+        510,
+        960,
+        30
+      ]
+    ],
     "exported_sha256": {
-      "masked": "79aecc1c08161da8d9e1de78b1e222816cdac5c8a266679b8abe6cf6c7a16cd7",
-      "reveal": "b8cd85795524e688c9f49edf9698cf49a9588be84e111dd32ddfcd3744bac741",
-      "poster": "3725120401a6814e6f08f9687efdc2fa824420d74479a078186a014c4b9765c4"
+      "masked": "ceafb3a3c1988698290cb2d8ef51c6bcdf2278def670b214511758e6f5dbef7b",
+      "reveal": "915710ed92dad9da824231457c1c2a6d4641fb1af1a8cb196c370dbc7f8a04a2",
+      "poster": "842c95f013267cebfcb93f93bb49cb2b0729bb79248f88abba1b633b18d1f4c6"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-68",
@@ -2080,12 +2384,25 @@
       720
     ],
     "duration": 27.898345,
+    "clip_year": 2025,
+    "edit_start_seconds": 24.0,
+    "extraction_duration_seconds": 3.5,
+    "edit_duration_seconds": 3.5,
+    "exported_frames": 84,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 72,
+    "identity_verification": "IAFALLO9 clearly on the foreground white Jets scorer redirecting Pionk54 shot; Washington defenders and goalie retained.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "46d2e207d849548c32d77155c94e869c10ea5bfb221dbcbd0cbc75a7a9442ff1",
-      "reveal": "c8f6b2b54d547cead9b07cc28980d91423ba1545371e081ad7ad457bce4aab1c",
+      "masked": "4f0c2eaf774fdb8e17f8e24444c0488222689a4e04ea7d8380234c35d2d410fd",
+      "reveal": "86b7446e9f4873ee28578d6bdfa84a8905a9c87169cbeec1cb3283785e34fe39",
       "poster": "239c312b7f56cf237cda2d8ff00ebdd0279aa440051f1314120a3ecc5fe4792a"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-70",
@@ -2107,12 +2424,25 @@
       720
     ],
     "duration": 45.29,
+    "clip_year": 2025,
+    "edit_start_seconds": 40.0,
+    "extraction_duration_seconds": 4.416666666666667,
+    "edit_duration_seconds": 4.416666666666667,
+    "exported_frames": 106,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 91,
+    "identity_verification": "GUDAS7 back readable on orange point shooter. Window captures raised stick and slapshot, capped before the fast camera pan.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "9ddd3050610aaa4a617cf688085d0aa70140b6dee0a819fef598fc254216d5be",
-      "reveal": "6716bc90967fd2dba0719057fb618b868a435578f178038ca1ac89e3efa498df",
+      "masked": "7e812f76d989c81ea93459890623399d4c80e63453356ab0d349ae5accba5d6d",
+      "reveal": "c3145ae68d1e42ace61e2e8db385f42af0ecadddbe0ce4bb83dd4431f8309e0d",
       "poster": "ad2bb539f684868bcaa27326d5b31a8cff734e665171bd2a5db7308676646fee"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-71",
@@ -2134,12 +2464,25 @@
       720
     ],
     "duration": 40.065011,
+    "clip_year": 2025,
+    "edit_start_seconds": 28.2,
+    "extraction_duration_seconds": 4.5,
+    "edit_duration_seconds": 4.5,
+    "exported_frames": 108,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 95,
+    "identity_verification": "ZUCKER17 clearly on the foreground white Sabres skater tipping Thompson72 shot; second Jan2 goal distinct official event; goalie and Toews7 retained. Export ends after the tip and before the raised glove overlaps Toews7.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "5b97d5b4ceb7a63f951cd7765eb20b8c41427ef0a8657ae0fe922e9b1d1c2ecc",
-      "reveal": "8c77d30cefc2303e8cfd1ac06274a8519b31ee9ed5a3bdbf04899f5a5a2fad8f",
+      "masked": "e62d6664db65aed1fd4a2a151503ce709beb6a92ec9288967be72bd60c1aa2ea",
+      "reveal": "85a8044687a6332251cba5236eda2e49548066cb9c4dd989297f9ada38e9dd11",
       "poster": "58f75ad67cd03b54c0ccca602e283b8a993633c259582ce047ba88f0f301fafd"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-72",
@@ -2161,12 +2504,25 @@
       720
     ],
     "duration": 45.243333,
+    "clip_year": 2025,
+    "edit_start_seconds": 31.7,
+    "extraction_duration_seconds": 4.083333333333333,
+    "edit_duration_seconds": 4.083333333333333,
+    "exported_frames": 98,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 79,
+    "identity_verification": "BYRAM4 is the lone dark Sabres puck carrier entering from the right circle; he receives, carries into the slot and shoots. Teammate17 and Columbus defenders/goalie retained. Start after dissolve.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "e9bdc6c057a6c4866299b89d23b37bb38e1b24033e1fb2f88497dda0e9e9bd04",
-      "reveal": "34d11f18572241b50fa4712f4efa840c8b33631a479446a760fb49ab6470b8dd",
+      "masked": "4f6347ee5a67751379f055d3c5e784ebc93bb0d97efee1b81c21f271289adf06",
+      "reveal": "aac825a633966e63803017ab22be616a8faa7e87a9f4f2630ef747b6e1a7cbc6",
       "poster": "59b1b3208b023f11c71465d247566496922345e786bb574848e84ec83e13ed78"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-73",
@@ -2188,12 +2544,25 @@
       720
     ],
     "duration": 46.45,
+    "clip_year": 2025,
+    "edit_start_seconds": 30.2,
+    "extraction_duration_seconds": 3.9166666666666665,
+    "edit_duration_seconds": 3.9166666666666665,
+    "exported_frames": 94,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 80,
+    "identity_verification": "MAKAR8 clearly on the sole blue point scorer driving to the shot; Sabres and teammates retained. Cap ends before close celebration overlap.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "f217ca17b46c045f800a24a7ea944d8dee21118fb441596a3a609c19aaccb414",
-      "reveal": "38554251ade3aa50faa107c42017d311266609a41dd0a63d193a7c80922539c3",
+      "masked": "5e9c32e4dda3de188ad9cc1533f4cb88bc0c43aec9867e0f65a0a074fc1e2fef",
+      "reveal": "57f0c856fadf13b8c2f198a194c4cfac972d09dba62ebf7e2671114bfaeff705",
       "poster": "4d7c4e3cf9f4da8b68b7ca6ff74e55bc758e7a203d33eeca48c4dbd6ae845c20"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-74",
@@ -2215,12 +2584,25 @@
       720
     ],
     "duration": 47.983333,
+    "clip_year": 2025,
+    "edit_start_seconds": 42.4,
+    "extraction_duration_seconds": 3.5833333333333335,
+    "edit_duration_seconds": 3.5833333333333335,
+    "exported_frames": 86,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 65,
+    "identity_verification": "Foreground COLTON20 continuously in the net-front deflection, with goalie and Sabres defender behind retained. Window starts after the dissolve.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "161d3f0cfbd489f519f0533b4e14fb21506c4f5310ec8626559de97adb52f46d",
-      "reveal": "c93d8b5c356d1b80fa897bc59ca6c61d554fd0c49ab501b94c6cf70e097aab5c",
+      "masked": "898a3d6169fc31438669bc7a314a5eeea847e8fce5a436c9b049bb6af9632975",
+      "reveal": "d47f2191ca6dedfa29b27bcf93f485ddd6c02fb8fc00930869bf7c3182975307",
       "poster": "0db42094864f3a0110f9c760ba6c5f86e3dde989c3231cf4410d940bff2a234c"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-75",
@@ -2269,12 +2651,25 @@
       720
     ],
     "duration": 46.335011,
+    "clip_year": 2025,
+    "edit_start_seconds": 36.0,
+    "extraction_duration_seconds": 3.75,
+    "edit_duration_seconds": 3.75,
+    "exported_frames": 90,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 66,
+    "identity_verification": "RANTANEN96 continuously receives alone in the near-side circle and drops to a knee for the one-timer; passers and Sabres retained.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "606866a4042262b4e269ad32822476b3e77af2a0cd9a48a9fb07ea7c61fbdf58",
-      "reveal": "20602e9acb631ed31b93cfb45fe9498f8755acfa40092ba0c656a5921efaae13",
+      "masked": "f1e62d8b69ea5949db6d803bea43ccf9141cf8d1373c5a2ec7aaa9c2b1df0b99",
+      "reveal": "3cb3c7359f40cc3f9331ad27aa42c69392aa9ae01aa81fa1d1f5a930e1c7d109",
       "poster": "420fdcd33a520594fa300fecc9d822245376296d3a3b659ed30d474fad980a61"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-77",
@@ -2296,65 +2691,114 @@
       720
     ],
     "duration": 64.236667,
+    "clip_year": 2025,
+    "edit_start_seconds": 51.3,
+    "extraction_duration_seconds": 2.75,
+    "edit_duration_seconds": 2.75,
+    "exported_frames": 66,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 61,
+    "identity_verification": "Blue TOEWS7 continuously carries into the rush shot and skates across the front of the goal. Sabres defender25, goalie and other Avalanche retained.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "50aa3e6da90373fbf97c9d5dcc2d2efcb40b8973eae24ccb6bf3b09b570c7afc",
-      "reveal": "e70878c49f59b1f29007760f253e3644c12428db1581e976d5b4082cec509bdf",
+      "masked": "979078082a33853aef813f1b196e4b18e1726b7b8fcbdcb136b7c7b932db6f14",
+      "reveal": "6affa92b90895807c10fdee520247e239767ed44cf19f2333b9e39f1d458104c",
       "poster": "8114007177f0719d6e757c487c8dceeb6d96dca9d67bcc555f11af2f7a3b9829"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-78",
     "pid": 8478474,
     "player": "Lawson Crouse",
-    "game_id": 2024020766,
-    "date": "2025-01-23",
-    "period": 2,
-    "time_in_period": "14:14",
+    "game_id": 2024020929,
+    "date": "2025-02-25",
+    "period": 3,
+    "time_in_period": "12:12",
+    "official_goal_scorer": "Lawson Crouse",
     "team": "UTA",
-    "source": "https://nhl.com/video/uta-min-crouse-scores-goal-against-filip-gustavsson-6367601039112",
-    "source_video_id": "6367601039112",
-    "official_event_id": 744,
+    "source": "https://nhl.com/video/chi-uta-crouse-scores-goal-against-arvid-soderblom-6369329133112",
+    "source_video_id": "6369329133112",
+    "discrete_video_id": "6369329329112",
+    "goal_modifier": "none",
+    "official_event_id": 1018,
     "jersey": 67,
-    "source_sha256": "7c0544dcc312e4474c1bd68193206acdccb29100ec2e2abf3b46083703d99380",
-    "media_title": "UTA@MIN: Crouse scores goal against Filip Gustavsson",
+    "source_attribution_verified": true,
+    "source_sha256": "529514508a8e6b2ba94b50a9c2a805e60fdeb98cf5b868826c2d22f81bed1dbd",
+    "media_title": "Crouse grabs lead with backhand",
+    "duration": 36.976667,
     "dimensions": [
       1280,
       720
     ],
-    "duration": 50.77,
+    "source_goal_scorer": "Lawson Crouse",
+    "clip_year": 2025,
+    "edit_start_seconds": 25.0,
+    "extraction_duration_seconds": 2.6666666666666665,
+    "edit_duration_seconds": 2.6666666666666665,
+    "exported_frames": 64,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 39,
+    "identity_verification": "Crouse67 visually confirmed on the LEFT white Utah skater after the replay cut and continuously followed through his reaction to the credited goal. White Utah23 on the right and green Wild46 in the foreground retained throughout.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "5269a2e7ee28919baa1d9d457fa648c22d5a18bd77aaf2e74ef5e039d80e94e6",
-      "reveal": "a8bd7ef0afa9cf7409d59e38cce19cb5c79d70f77597fa0f550af2b61e8f9578",
-      "poster": "353af041d7ff3df25fce6dccf753dceca3ae6e8568c12a96bc346deebdd94861"
+      "masked": "1196f9f9692c6d8ffc0f93f8150b35fd8e05e3b4e04dc74a9b030f311fcb900d",
+      "reveal": "156028e9f52d4ac0e2c030ce95e13eec3b7776c05ad2e730fb83c84dff4d1e4a",
+      "poster": "9b50407bb8c669691ad8b7ceb4f3f9d72ecf7c3139db14efd107a144a163fa12"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   },
   {
     "id": "goal-79",
     "pid": 8476399,
     "player": "Blake Coleman",
-    "game_id": 2024020730,
-    "date": "2025-01-18",
+    "game_id": 2024021052,
+    "date": "2025-03-14",
     "period": 3,
-    "time_in_period": "18:55",
+    "time_in_period": "03:08",
+    "official_goal_scorer": "Blake Coleman",
     "team": "CGY",
-    "source": "https://nhl.com/video/cgy-wpg-coleman-scores-empty-net-goal-6367330187112",
-    "source_video_id": "6367330187112",
-    "official_event_id": 1114,
+    "source": "https://nhl.com/video/col-cgy-coleman-scores-goal-against-scott-wedgewood-6370064078112",
+    "source_video_id": "6370064078112",
+    "discrete_video_id": "6370063013112",
+    "goal_modifier": "none",
+    "official_event_id": 834,
     "jersey": 20,
-    "source_sha256": "8da0f7e1638848895179d54f09b43998571975951de3d3dee8d81d7555ed39c0",
-    "media_title": "CGY@WPG: Coleman scores empty-net goal",
+    "source_attribution_verified": true,
+    "source_sha256": "c2d34afa344aa634eba653ab5bb7aa26bd5e2d197f004cd8bd17c9dd527d7b59",
+    "media_title": "COL@CGY: Coleman scores goal against Scott Wedgewood",
+    "duration": 50.375011,
     "dimensions": [
       1280,
       720
     ],
-    "duration": 40.226667,
+    "source_goal_scorer": "Blake Coleman",
+    "clip_year": 2025,
+    "edit_start_seconds": 41.6,
+    "extraction_duration_seconds": 2.8,
+    "edit_duration_seconds": 2.7916666666666665,
+    "exported_frames": 67,
+    "exported_fps": 24,
+    "exported_dimensions": [
+      960,
+      540
+    ],
+    "scoring_play_end_frame": 55,
+    "identity_verification": "Coleman20 confirmed on white Calgary jersey in the scoring replay and following closeup. White20 travels from the right boards behind Jets44 then shoots the empty-net goal; foreground Jets27 and referees retained.",
+    "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction.",
     "exported_sha256": {
-      "masked": "e65b6ee4d769cd7db5438081d943409e71896533d4306b70f36ca6748d55e803",
-      "reveal": "d6dd08ec946eabc0ea8a4a51b8dbb74c441e2467a6b02726b941db0baf714d71",
-      "poster": "454eb22b371e20bc16a2e1494590f8c5c7a770ec11a330b86296b2ed59682bd7"
+      "masked": "61fdc33aeb2fc525bbe2a89439a40378f499c6dbb82f1119ba79bda9c755cab4",
+      "reveal": "7c0372dde8c3297b5b485d1ca7c9e915221fa3c406af5abb5a70894ef189b250",
+      "poster": "587650a27bd0293cc45912e5ad0fdf23f5270a0567fd366e27dfbd12fb9b62fd"
     },
-    "review_record": "tools/who_scored/progress/batch-01/review.json"
+    "review_record": "tools/who_scored/progress/corrections-01/review.json"
   }
 ]

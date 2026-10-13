@@ -1,0 +1,195 @@
+{
+  "id": "goal-78",
+  "pid": 8478474,
+  "player": "Lawson Crouse",
+  "source_sha256": "529514508a8e6b2ba94b50a9c2a805e60fdeb98cf5b868826c2d22f81bed1dbd",
+  "original": "/workspace/who-scored-corrections/crouse-choice4/originals/goal-78-6369329133112.mp4",
+  "start": 25.0,
+  "duration": 2.6666666666666665,
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Crouse67 visually confirmed on the LEFT white Utah skater after the replay cut and continuously followed through his reaction to the credited goal. White Utah23 on the right and green Wild46 in the foreground retained throughout.",
+  "tracking_image_size": 512,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        495,
+        82,
+        558,
+        167
+      ],
+      "points": [
+        [
+          524,
+          100
+        ],
+        [
+          524,
+          113
+        ],
+        [
+          525,
+          129
+        ],
+        [
+          518,
+          146
+        ],
+        [
+          538,
+          149
+        ],
+        [
+          575,
+          157
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 21,
+      "box": [
+        335,
+        130,
+        412,
+        218
+      ],
+      "points": [
+        [
+          379,
+          145
+        ],
+        [
+          380,
+          158
+        ],
+        [
+          369,
+          175
+        ],
+        [
+          352,
+          192
+        ],
+        [
+          404,
+          196
+        ],
+        [
+          448,
+          169
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 42,
+      "box": [
+        238,
+        133,
+        303,
+        232
+      ],
+      "points": [
+        [
+          255,
+          148
+        ],
+        [
+          258,
+          158
+        ],
+        [
+          269,
+          175
+        ],
+        [
+          272,
+          201
+        ],
+        [
+          267,
+          220
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 63,
+      "box": [
+        157,
+        274,
+        278,
+        510
+      ],
+      "points": [
+        [
+          230,
+          294
+        ],
+        [
+          231,
+          315
+        ],
+        [
+          237,
+          343
+        ],
+        [
+          233,
+          398
+        ],
+        [
+          246,
+          484
+        ],
+        [
+          204,
+          485
+        ],
+        [
+          178,
+          307
+        ],
+        [
+          345,
+          293
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "poster_frame": 0,
+  "seed": 0,
+  "scoring_play_end_frame": 39
+}

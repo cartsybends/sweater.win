@@ -13,9 +13,17 @@ sys.path.insert(0, str(TOOLS))
 import batch
 import discover
 import pipeline
+import corrections
 
 
 class BatchGateTests(unittest.TestCase):
+    def test_export_cap_cannot_remove_the_reviewed_scoring_finish(self):
+        edit={'duration':3.0,'scoring_play_end_frame':60}
+        self.assertEqual(pipeline.frame_count(edit),72)
+        with self.assertRaisesRegex(ValueError,'scoring finish'):
+            pipeline.frame_count({**edit,'export_frames':40})
+        self.assertEqual(pipeline.frame_count({**edit,'export_frames':66}),66)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
@@ -143,6 +151,84 @@ class SourceQueueTests(unittest.TestCase):
         baseline = json.loads((TOOLS.parents[1] / 'static/who-scored/clips.json').read_text())
         new_ids = set(ids) - {clip['id'] for clip in baseline}
         self.assertFalse({by_id[ident]['pid'] for ident in new_ids} & {clip['pid'] for clip in baseline})
+
+
+class CorrectionGateTests(unittest.TestCase):
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.folder = Path(temp.name)
+        self.baseline = [{'id': 'goal-17', 'pid': 42, 'masked': 'goal-17-masked-v1.mp4',
+                          'reveal': 'goal-17-original-v1.mp4', 'poster': 'goal-17-v1.jpg',
+                          'motion': 'Wrist shot', 'source': 'https://nhl.com/video/17'}]
+        issue = {'id': 'goal-17', 'pid': 42, 'previous_assets': {
+            kind: self.baseline[0][kind] for kind in ['masked', 'reveal', 'poster']}}
+        source = {'id': 'goal-17', 'pid': 42, 'player': 'Test Scorer', 'jersey': 18,
+                  'source': 'https://nhl.com/video/17', 'source_sha256': 'a' * 64}
+        edit = {'id': 'goal-17', 'pid': 42, 'player': 'Test Scorer', 'version': 'v2',
+                'source_sha256': source['source_sha256'], 'duration': 3 / 24,
+                'scoring_play_end_frame': 1}
+        edit_path = self.folder / 'goal-17-edit.json'
+        edit_path.write_text(json.dumps(edit))
+        assets = {'masked': 'goal-17-masked-v2.mp4', 'reveal': 'goal-17-original-v2.mp4',
+                  'poster': 'goal-17-v2.jpg'}
+        for name in assets.values():
+            (self.folder / name).write_bytes(name.encode())
+        self.record = {'id': 'goal-17', 'pid': 42, 'frames': 3, 'source': source,
+                       'motion': 'Wrist shot', 'assets': assets,
+                       'edit_sha256': batch.digest(edit_path),
+                       'asset_sha256': {kind: batch.digest(self.folder / name) for kind, name in assets.items()},
+                       'reviews': {
+                           'official_identity': {'passed': True, 'jersey': 18, 'note': 'Verified 18.'},
+                           'silhouette_coverage': {'passed': True, 'visually_reviewed_frames': [0, 1, 2], 'note': 'Full coverage.'},
+                           'scoring_highlight': {'passed': True, 'finish_frame': 1, 'note': 'Goal and aftermath.'},
+                           'encoded_video': {'passed': True, 'all_frames_decoded': True, 'matching_pair': True,
+                                             'visually_sampled_frames': [0, 1, 2]}}}
+        (self.folder / 'clips-before.json').write_text(json.dumps(self.baseline))
+        (self.folder / 'issues.json').write_text(json.dumps({'clips': [issue]}))
+
+    def verify(self, records=None, current=None):
+        (self.folder / 'review.json').write_text(json.dumps({'reviewed_clips': records if records is not None else [self.record]}))
+        return corrections.verify_corrections(self.folder, self.folder,
+                                               self.baseline if current is None else current, inspect=False)
+
+    def test_complete_correction_preserves_ids_and_scorers(self):
+        proposed, _ = self.verify()
+        self.assertEqual([(c['id'], c['pid']) for c in proposed], [('goal-17', 42)])
+        self.assertEqual(proposed[0]['masked'], 'goal-17-masked-v2.mp4')
+        self.verify(current=proposed)  # Rechecking staged assets is supported.
+
+    def test_missing_review_or_wrong_scorer_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'Every reported clip'):
+            self.verify(records=[])
+        self.record['pid'] = 99
+        with self.assertRaisesRegex(ValueError, 'retain the reported scorer'):
+            self.verify()
+
+    def test_changed_media_or_unrelated_library_changes_are_rejected(self):
+        (self.folder / self.record['assets']['masked']).write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'matching the review'):
+            self.verify()
+        (self.folder / self.record['assets']['masked']).write_bytes(self.record['assets']['masked'].encode())
+        with self.assertRaisesRegex(ValueError, 'outside the reported corrections'):
+            self.verify(current=self.baseline + [{'id': 'unreviewed', 'pid': 99}])
+
+    def test_incomplete_coverage_or_scoring_finish_is_rejected(self):
+        self.record['reviews']['silhouette_coverage']['visually_reviewed_frames'] = [0, 2]
+        with self.assertRaisesRegex(ValueError, 'every frame'):
+            self.verify()
+        self.record['reviews']['silhouette_coverage']['visually_reviewed_frames'] = [0, 1, 2]
+        self.record['reviews']['scoring_highlight']['finish_frame'] = 0
+        with self.assertRaisesRegex(ValueError, 'complete scoring finish'):
+            self.verify()
+        edit_path = self.folder / 'goal-17-edit.json'
+        edit = json.loads(edit_path.read_text())
+        edit.pop('scoring_play_end_frame')
+        edit_path.write_text(json.dumps(edit))
+        self.record['edit_sha256'] = batch.digest(edit_path)
+        self.record['reviews']['scoring_highlight']['finish_frame'] = None
+        with self.assertRaisesRegex(ValueError, 'complete scoring finish'):
+            self.verify()
 
 
 if __name__ == '__main__':

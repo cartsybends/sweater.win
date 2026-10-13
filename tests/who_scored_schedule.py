@@ -7,6 +7,13 @@ spec=importlib.util.spec_from_file_location('sweater',Path(__file__).resolve().p
 builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
 
 class GoalScheduleTests(unittest.TestCase):
+    def test_footage_years_follow_active_clips(self):
+        sources=[{'id':'old','clip_year':2019},{'id':'new','date':'2025-01-02'}, {'id':'unused','date':'2010-01-01'}]
+        self.assertEqual(builder.goal_clip_year_range([{'id':'old'},{'id':'new'}],sources),'2019–2025')
+        self.assertEqual(builder.goal_clip_year_range([{'id':'new'}],sources),'2025')
+        with self.assertRaisesRegex(ValueError,'footage year'):
+            builder.goal_clip_year_range([{'id':'missing'}],sources)
+
     def test_library_growth_and_stability(self):
         today=date(2026,10,12);old=list(range(1,10));expanded=list(range(1,40))
         days={(today+timedelta(days=i)).isoformat():old[(i+9)%9] for i in range(-1,builder.AHEAD+1)}

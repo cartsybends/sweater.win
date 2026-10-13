@@ -1,0 +1,543 @@
+{
+  "requirements": [
+    "continuous correct scorer identity",
+    "complete visible body silhouette every frame",
+    "clear scoring action and finish with enough aftermath; visible puck crossing line is not required",
+    "matching encoded reveal"
+  ],
+  "clips": [
+    {
+      "id": "goal-22",
+      "player": "Sebastian Aho",
+      "pid": 8478427,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-22-masked-v1.mp4",
+        "reveal": "goal-22-original-v1.mp4",
+        "poster": "goal-22-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-64",
+      "player": "Matt Duchene",
+      "pid": 8475168,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-64-masked-v1.mp4",
+        "reveal": "goal-64-original-v1.mp4",
+        "poster": "goal-64-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-50",
+      "player": "Tom Wilson",
+      "pid": 8476880,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-50-masked-v1.mp4",
+        "reveal": "goal-50-original-v1.mp4",
+        "poster": "goal-50-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-37",
+      "player": "Jesper Bratt",
+      "pid": 8479407,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-37-masked-v1.mp4",
+        "reveal": "goal-37-original-v1.mp4",
+        "poster": "goal-37-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-78",
+      "player": "Lawson Crouse",
+      "pid": 8478474,
+      "issue": "Not a scoring sequence",
+      "previous_assets": {
+        "masked": "goal-78-masked-v1.mp4",
+        "reveal": "goal-78-original-v1.mp4",
+        "poster": "goal-78-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "replacement_highlight"
+    },
+    {
+      "id": "goal-30",
+      "player": "Erik Karlsson",
+      "pid": 8474578,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-30-masked-v1.mp4",
+        "reveal": "goal-30-original-v1.mp4",
+        "poster": "goal-30-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-43",
+      "player": "Brent Burns",
+      "pid": 8470613,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-43-masked-v1.mp4",
+        "reveal": "goal-43-original-v1.mp4",
+        "poster": "goal-43-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-58",
+      "player": "Jonatan Berggren",
+      "pid": 8481013,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-58-masked-v1.mp4",
+        "reveal": "goal-58-original-v1.mp4",
+        "poster": "goal-58-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-18",
+      "player": "Matthew Tkachuk",
+      "pid": 8479314,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-18-masked-v1.mp4",
+        "reveal": "goal-18-original-v1.mp4",
+        "poster": "goal-18-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-48",
+      "player": "Brett Berard",
+      "pid": 8482132,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-48-masked-v1.mp4",
+        "reveal": "goal-48-original-v1.mp4",
+        "poster": "goal-48-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-19",
+      "player": "Brady Tkachuk",
+      "pid": 8480801,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-19-masked-v1.mp4",
+        "reveal": "goal-19-original-v1.mp4",
+        "poster": "goal-19-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-67",
+      "player": "Leo Carlsson",
+      "pid": 8484153,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-67-masked-v1.mp4",
+        "reveal": "goal-67-original-v1.mp4",
+        "poster": "goal-67-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-25",
+      "player": "Lucas Raymond",
+      "pid": 8482078,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-25-masked-v1.mp4",
+        "reveal": "goal-25-original-v1.mp4",
+        "poster": "goal-25-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-77",
+      "player": "Devon Toews",
+      "pid": 8478038,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-77-masked-v1.mp4",
+        "reveal": "goal-77-original-v1.mp4",
+        "poster": "goal-77-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-70",
+      "player": "Radko Gudas",
+      "pid": 8475462,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-70-masked-v1.mp4",
+        "reveal": "goal-70-original-v1.mp4",
+        "poster": "goal-70-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-27",
+      "player": "Jason Robertson",
+      "pid": 8480027,
+      "issue": "Wrong player, ends before shot",
+      "previous_assets": {
+        "masked": "goal-27-masked-v1.mp4",
+        "reveal": "goal-27-original-v1.mp4",
+        "poster": "goal-27-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "replacement_highlight"
+    },
+    {
+      "id": "goal-71",
+      "player": "Jason Zucker",
+      "pid": 8475722,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-71-masked-v1.mp4",
+        "reveal": "goal-71-original-v1.mp4",
+        "poster": "goal-71-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-17",
+      "player": "Tim St\u00fctzle",
+      "pid": 8482116,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-17-masked-v1.mp4",
+        "reveal": "goal-17-original-v1.mp4",
+        "poster": "goal-17-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-56",
+      "player": "Alex DeBrincat",
+      "pid": 8479337,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-56-masked-v1.mp4",
+        "reveal": "goal-56-original-v1.mp4",
+        "poster": "goal-56-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-60",
+      "player": "Scott Mayfield",
+      "pid": 8476429,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-60-masked-v1.mp4",
+        "reveal": "goal-60-original-v1.mp4",
+        "poster": "goal-60-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-59",
+      "player": "Bobby McMann",
+      "pid": 8482259,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-59-masked-v1.mp4",
+        "reveal": "goal-59-original-v1.mp4",
+        "poster": "goal-59-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-24",
+      "player": "Patrick Kane",
+      "pid": 8474141,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-24-masked-v1.mp4",
+        "reveal": "goal-24-original-v1.mp4",
+        "poster": "goal-24-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-42",
+      "player": "Adrian Kempe",
+      "pid": 8477960,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-42-masked-v1.mp4",
+        "reveal": "goal-42-original-v1.mp4",
+        "poster": "goal-42-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-66",
+      "player": "Adam Lowry",
+      "pid": 8476392,
+      "issue": "Wrong player initially, ends before goal",
+      "previous_assets": {
+        "masked": "goal-66-masked-v1.mp4",
+        "reveal": "goal-66-original-v1.mp4",
+        "poster": "goal-66-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-74",
+      "player": "Ross Colton",
+      "pid": 8479525,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-74-masked-v1.mp4",
+        "reveal": "goal-74-original-v1.mp4",
+        "poster": "goal-74-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-76",
+      "player": "Mikko Rantanen",
+      "pid": 8478420,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-76-masked-v1.mp4",
+        "reveal": "goal-76-original-v1.mp4",
+        "poster": "goal-76-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-54",
+      "player": "Marco Rossi",
+      "pid": 8482079,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-54-masked-v1.mp4",
+        "reveal": "goal-54-original-v1.mp4",
+        "poster": "goal-54-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-69",
+      "player": "Alex Iafallo",
+      "pid": 8480113,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-69-masked-v1.mp4",
+        "reveal": "goal-69-original-v1.mp4",
+        "poster": "goal-69-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-53",
+      "player": "Martin Feh\u00e9rv\u00e1ry",
+      "pid": 8480796,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-53-masked-v1.mp4",
+        "reveal": "goal-53-original-v1.mp4",
+        "poster": "goal-53-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-47",
+      "player": "Mika Zibanejad",
+      "pid": 8476459,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-47-masked-v1.mp4",
+        "reveal": "goal-47-original-v1.mp4",
+        "poster": "goal-47-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "replacement_highlight"
+    },
+    {
+      "id": "goal-26",
+      "player": "Dylan Larkin",
+      "pid": 8477946,
+      "issue": "Wrong player, ends before goal",
+      "previous_assets": {
+        "masked": "goal-26-masked-v1.mp4",
+        "reveal": "goal-26-original-v1.mp4",
+        "poster": "goal-26-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-39",
+      "player": "Sam Reinhart",
+      "pid": 8477933,
+      "issue": "Scorer uncertain, ends before goal",
+      "previous_assets": {
+        "masked": "goal-39-masked-v1.mp4",
+        "reveal": "goal-39-original-v1.mp4",
+        "poster": "goal-39-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-79",
+      "player": "Blake Coleman",
+      "pid": 8476399,
+      "issue": "Replace unsuitable goal",
+      "previous_assets": {
+        "masked": "goal-79-masked-v1.mp4",
+        "reveal": "goal-79-original-v1.mp4",
+        "poster": "goal-79-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "replacement_highlight"
+    },
+    {
+      "id": "goal-61",
+      "player": "Roope Hintz",
+      "pid": 8478449,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-61-masked-v1.mp4",
+        "reveal": "goal-61-original-v1.mp4",
+        "poster": "goal-61-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-73",
+      "player": "Cale Makar",
+      "pid": 8480069,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-73-masked-v1.mp4",
+        "reveal": "goal-73-original-v1.mp4",
+        "poster": "goal-73-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-49",
+      "player": "Elias Lindholm",
+      "pid": 8477496,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-49-masked-v1.mp4",
+        "reveal": "goal-49-original-v1.mp4",
+        "poster": "goal-49-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-23",
+      "player": "Brayden Point",
+      "pid": 8478010,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-23-masked-v1.mp4",
+        "reveal": "goal-23-original-v1.mp4",
+        "poster": "goal-23-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-65",
+      "player": "Mark Scheifele",
+      "pid": 8476460,
+      "issue": "Wrong player, ends before goal",
+      "previous_assets": {
+        "masked": "goal-65-masked-v1.mp4",
+        "reveal": "goal-65-original-v1.mp4",
+        "poster": "goal-65-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-55",
+      "player": "Erik Gustafsson",
+      "pid": 8476979,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-55-masked-v1.mp4",
+        "reveal": "goal-55-original-v1.mp4",
+        "poster": "goal-55-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-72",
+      "player": "Bowen Byram",
+      "pid": 8481524,
+      "issue": "Wrong player, ends before goal",
+      "previous_assets": {
+        "masked": "goal-72-masked-v1.mp4",
+        "reveal": "goal-72-original-v1.mp4",
+        "poster": "goal-72-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    },
+    {
+      "id": "goal-63",
+      "player": "Jamie Benn",
+      "pid": 8473994,
+      "issue": "Ends before the complete scoring play",
+      "previous_assets": {
+        "masked": "goal-63-masked-v1.mp4",
+        "reveal": "goal-63-original-v1.mp4",
+        "poster": "goal-63-v1.jpg"
+      },
+      "status": "reviewed_awaiting_publication",
+      "resolution": "complete_scoring_window_and_repaired_silhouette"
+    }
+  ]
+}

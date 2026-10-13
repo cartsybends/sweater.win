@@ -1,0 +1,233 @@
+{
+  "id": "goal-66",
+  "pid": 8476392,
+  "player": "Adam Lowry",
+  "source_sha256": "9484b607468ed95f00d497d132503e6891a3050c7cc166badef1ced104720b8c",
+  "original": "/workspace/who-scored-expansion/originals/goal-66-6369702010112.mp4",
+  "start": 8.5,
+  "duration": 4.0,
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "White Jets LOWRY17 receives from Niederreiter22, shoots from the right slot and continues across the front of the net; Flyers and passer22 remain visible.",
+  "tracking_image_size": 512,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        905,
+        373,
+        960,
+        492
+      ],
+      "points": [
+        [
+          942,
+          397
+        ],
+        [
+          945,
+          407
+        ],
+        [
+          944,
+          433
+        ],
+        [
+          940,
+          448
+        ],
+        [
+          936,
+          468
+        ],
+        [
+          943,
+          485
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 31,
+      "box": [
+        766,
+        306,
+        844,
+        414
+      ],
+      "points": [
+        [
+          797,
+          321
+        ],
+        [
+          812,
+          335
+        ],
+        [
+          817,
+          357
+        ],
+        [
+          808,
+          378
+        ],
+        [
+          786,
+          398
+        ],
+        [
+          831,
+          393
+        ],
+        [
+          724,
+          408
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 63,
+      "box": [
+        560,
+        169,
+        616,
+        236
+      ],
+      "points": [
+        [
+          585,
+          182
+        ],
+        [
+          579,
+          193
+        ],
+        [
+          579,
+          207
+        ],
+        [
+          567,
+          222
+        ],
+        [
+          593,
+          218
+        ],
+        [
+          545,
+          247
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 95,
+      "box": [
+        704,
+        54,
+        765,
+        158
+      ],
+      "points": [
+        [
+          741,
+          71
+        ],
+        [
+          739,
+          99
+        ],
+        [
+          736,
+          118
+        ],
+        [
+          721,
+          147
+        ],
+        [
+          740,
+          148
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "poster_frame": 0,
+  "seed": 0,
+  "mask_patch_lines": [
+    {
+      "frame": 79,
+      "line": [
+        590,
+        120,
+        614,
+        137,
+        11
+      ]
+    },
+    {
+      "frame": 80,
+      "line": [
+        600,
+        116,
+        622,
+        132,
+        9
+      ]
+    },
+    {
+      "frame": 85,
+      "line": [
+        635,
+        94,
+        646,
+        106,
+        8
+      ]
+    }
+  ],
+  "mask_patch_ellipses": [
+    {
+      "frame": 85,
+      "ellipse": [
+        675,
+        146,
+        6,
+        8
+      ]
+    }
+  ],
+  "scoring_play_end_frame": 78
+}

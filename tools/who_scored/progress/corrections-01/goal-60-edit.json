@@ -1,0 +1,248 @@
+{
+  "id": "goal-60",
+  "pid": 8476429,
+  "player": "Scott Mayfield",
+  "original": "/workspace/who-scored-expansion/originals/goal-60-6366636885112.mp4",
+  "source_sha256": "d7af0266a049f06026ab3ddb7552499ae78d9f4b53adcd93d9de5b9e749c0c6c",
+  "start": 37.4,
+  "duration": 3.5833333333333335,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        0,
+        340,
+        120,
+        540
+      ],
+      "points": [
+        [
+          81,
+          357
+        ],
+        [
+          82,
+          367
+        ],
+        [
+          82,
+          375
+        ],
+        [
+          47,
+          414
+        ],
+        [
+          96,
+          456
+        ],
+        [
+          20,
+          493
+        ],
+        [
+          18,
+          528
+        ],
+        [
+          374,
+          133
+        ],
+        [
+          235,
+          204
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        256,
+        235,
+        357,
+        417
+      ],
+      "points": [
+        [
+          342,
+          253
+        ],
+        [
+          340,
+          263
+        ],
+        [
+          340,
+          273
+        ],
+        [
+          311,
+          293
+        ],
+        [
+          338,
+          333
+        ],
+        [
+          308,
+          257
+        ],
+        [
+          298,
+          354
+        ],
+        [
+          279,
+          371
+        ],
+        [
+          283,
+          393
+        ],
+        [
+          308,
+          402
+        ],
+        [
+          646,
+          171
+        ],
+        [
+          500,
+          140
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 47,
+      "box": [
+        311,
+        233,
+        423,
+        466
+      ],
+      "points": [
+        [
+          400,
+          249
+        ],
+        [
+          400,
+          258
+        ],
+        [
+          400,
+          269
+        ],
+        [
+          366,
+          303
+        ],
+        [
+          335,
+          256
+        ],
+        [
+          375,
+          358
+        ],
+        [
+          351,
+          365
+        ],
+        [
+          330,
+          394
+        ],
+        [
+          334,
+          411
+        ],
+        [
+          364,
+          438
+        ],
+        [
+          365,
+          450
+        ],
+        [
+          744,
+          204
+        ],
+        [
+          43,
+          233
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Official Mayfield24, MAYFIELD24 visible on the near-side blue Islanders skater receiving and taking the point shot. Poster12 avoids the cropped opening. Toronto defenders/goalie, other Islanders and referee remain visible.",
+  "poster_frame": 12,
+  "manual_fill_polygons": {
+    "0": [
+      [
+        [
+          0,
+          428
+        ],
+        [
+          29,
+          431
+        ],
+        [
+          20,
+          442
+        ],
+        [
+          0,
+          448
+        ]
+      ]
+    ]
+  },
+  "tracking_image_size": 512,
+  "scoring_play_end_frame": 73
+}

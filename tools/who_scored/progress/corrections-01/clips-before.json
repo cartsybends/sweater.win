@@ -1,0 +1,713 @@
+[
+  {
+    "id": "goal-01",
+    "pid": 8478402,
+    "masked": "goal-01-masked-v1.mp4",
+    "reveal": "goal-01-original-v1.mp4",
+    "poster": "goal-01-v1.jpg",
+    "motion": "Rush through defenders",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-9-6365907822112"
+  },
+  {
+    "id": "goal-02",
+    "pid": 8479318,
+    "masked": "goal-02-masked-v1.mp4",
+    "reveal": "goal-02-original-v1.mp4",
+    "poster": "goal-02-v1.jpg",
+    "motion": "Toe-drag wrist shot",
+    "source": "https://www.nhl.com/mapleleafs/video/matthews-strikes-on-perfect-deke-309285322"
+  },
+  {
+    "id": "goal-03",
+    "pid": 8484144,
+    "masked": "goal-03-masked-v2.mp4",
+    "reveal": "goal-03-original-v2.mp4",
+    "poster": "goal-03-v2.jpg",
+    "motion": "Toe-drag wrist shot",
+    "source": "https://www.nhl.com/video/topic/highlights/cgy-chi-bedard-scores-goal-against-dustin-wolf-6385286904112"
+  },
+  {
+    "id": "goal-04",
+    "pid": 8471675,
+    "masked": "goal-04-masked-v1.mp4",
+    "reveal": "goal-04-original-v1.mp4",
+    "poster": "goal-04-v1.jpg",
+    "motion": "Backhand finish",
+    "source": "https://www.nhl.com/video/det-pit-crosby-scores-goal-against-alex-lyon-6349145622112"
+  },
+  {
+    "id": "goal-05",
+    "pid": 8471214,
+    "masked": "goal-05-masked-v2.mp4",
+    "reveal": "goal-05-original-v2.mp4",
+    "poster": "goal-05-v2.jpg",
+    "motion": "Circle one-timer",
+    "source": "https://www.nhl.com/video/nsh-wsh-ovechkin-scores-goal-against-yaroslav-askarov-6344073401112"
+  },
+  {
+    "id": "goal-06",
+    "pid": 8477934,
+    "masked": "goal-06-masked-v2.mp4",
+    "reveal": "goal-06-original-v2.mp4",
+    "poster": "goal-06-v2.jpg",
+    "motion": "Sharp-angle one-timer",
+    "source": "https://www.nhl.com/video/van-edm-draisaitl-scores-goal-against-arturs-silovs-6352815670112"
+  },
+  {
+    "id": "goal-07",
+    "pid": 8477492,
+    "masked": "goal-07-masked-v1.mp4",
+    "reveal": "goal-07-original-v1.mp4",
+    "poster": "goal-07-v1.jpg",
+    "motion": "Return pass and shot",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-15-6367565833112"
+  },
+  {
+    "id": "goal-08",
+    "pid": 8475172,
+    "masked": "goal-08-masked-v1.mp4",
+    "reveal": "goal-08-original-v1.mp4",
+    "poster": "goal-08-v1.jpg",
+    "motion": "Jump, spin and shot",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-10-6366233137112"
+  },
+  {
+    "id": "goal-09",
+    "pid": 8478398,
+    "masked": "goal-09-masked-v1.mp4",
+    "reveal": "goal-09-original-v1.mp4",
+    "poster": "goal-09-v1.jpg",
+    "motion": "Deke and backhand finish",
+    "source": "https://www.nhl.com/video/topic/goal-of-the-week/hyundai-electric-goal-of-week-16-6368010340112"
+  },
+  {
+    "id": "goal-10",
+    "pid": 8481559,
+    "masked": "goal-10-masked-v1.mp4",
+    "reveal": "goal-10-original-v1.mp4",
+    "poster": "goal-10-v1.jpg",
+    "motion": "Rush snap shot",
+    "source": "https://nhl.com/video/njd-mtl-hughes-scores-goal-against-jakub-dobes-6367771449112"
+  },
+  {
+    "id": "goal-11",
+    "pid": 8477956,
+    "masked": "goal-11-masked-v1.mp4",
+    "reveal": "goal-11-original-v1.mp4",
+    "poster": "goal-11-v1.jpg",
+    "motion": "Circle slap shot",
+    "source": "https://www.nhl.com/gamecenter/nyr-vs-bos/2025/02/01/2024020827"
+  },
+  {
+    "id": "goal-12",
+    "pid": 8476453,
+    "masked": "goal-12-masked-v1.mp4",
+    "reveal": "goal-12-original-v1.mp4",
+    "poster": "goal-12-v1.jpg",
+    "motion": "Circle snap shot",
+    "source": "https://nhl.com/video/nyi-tbl-kucherov-scores-goal-against-ilya-sorokin-6368142968112"
+  },
+  {
+    "id": "goal-13",
+    "pid": 8477493,
+    "masked": "goal-13-masked-v1.mp4",
+    "reveal": "goal-13-original-v1.mp4",
+    "poster": "goal-13-v1.jpg",
+    "motion": "Net-front backhand",
+    "source": "https://nhl.com/video/lak-fla-barkov-scores-ppg-against-darcy-kuemper-6367975996112"
+  },
+  {
+    "id": "goal-14",
+    "pid": 8478483,
+    "masked": "goal-14-masked-v1.mp4",
+    "reveal": "goal-14-original-v1.mp4",
+    "poster": "goal-14-v1.jpg",
+    "motion": "Slot redirection",
+    "source": "https://nhl.com/video/tor-edm-marner-scores-goal-against-stuart-skinner-6368140670112"
+  },
+  {
+    "id": "goal-15",
+    "pid": 8477939,
+    "masked": "goal-15-masked-v1.mp4",
+    "reveal": "goal-15-original-v1.mp4",
+    "poster": "goal-15-v1.jpg",
+    "motion": "Rush snap shot",
+    "source": "https://nhl.com/video/tor-edm-nylander-scores-goal-against-stuart-skinner-6368137903112"
+  },
+  {
+    "id": "goal-16",
+    "pid": 8478864,
+    "masked": "goal-16-masked-v1.mp4",
+    "reveal": "goal-16-original-v1.mp4",
+    "poster": "goal-16-v1.jpg",
+    "motion": "Quick circle release",
+    "source": "https://nhl.com/video/cbj-min-kaprizov-scores-ppg-against-elvis-merzlikins-6382636486112"
+  },
+  {
+    "id": "goal-17",
+    "pid": 8482116,
+    "masked": "goal-17-masked-v1.mp4",
+    "reveal": "goal-17-original-v1.mp4",
+    "poster": "goal-17-v1.jpg",
+    "motion": "Quick slap shot",
+    "source": "https://nhl.com/video/tor-ott-stutzle-scores-ppg-against-joseph-woll-6367764265112"
+  },
+  {
+    "id": "goal-18",
+    "pid": 8479314,
+    "masked": "goal-18-masked-v1.mp4",
+    "reveal": "goal-18-original-v1.mp4",
+    "poster": "goal-18-v1.jpg",
+    "motion": "Quick wrist shot from the slot",
+    "source": "https://nhl.com/video/fla-sjs-tkachuk-scores-ppg-against-yaroslav-askarov-6367773275112"
+  },
+  {
+    "id": "goal-19",
+    "pid": 8480801,
+    "masked": "goal-19-masked-v1.mp4",
+    "reveal": "goal-19-original-v1.mp4",
+    "poster": "goal-19-v1.jpg",
+    "motion": "Rush wrist shot",
+    "source": "https://nhl.com/video/min-ott-tkachuk-scores-ppg-against-filip-gustavsson-6368141542112"
+  },
+  {
+    "id": "goal-20",
+    "pid": 8480018,
+    "masked": "goal-20-masked-v1.mp4",
+    "reveal": "goal-20-original-v1.mp4",
+    "poster": "goal-20-v1.jpg",
+    "motion": "Slot snap shot",
+    "source": "https://nhl.com/video/njd-mtl-suzuki-scores-goal-against-jake-allen-6367766068112"
+  },
+  {
+    "id": "goal-21",
+    "pid": 8481540,
+    "masked": "goal-21-masked-v1.mp4",
+    "reveal": "goal-21-original-v1.mp4",
+    "poster": "goal-21-v1.jpg",
+    "motion": "Slot snap shot",
+    "source": "https://nhl.com/video/njd-mtl-caufield-scores-goal-against-jake-allen-6367768445112"
+  },
+  {
+    "id": "goal-22",
+    "pid": 8478427,
+    "masked": "goal-22-masked-v1.mp4",
+    "reveal": "goal-22-original-v1.mp4",
+    "poster": "goal-22-v1.jpg",
+    "motion": "Wrist shot from the circle",
+    "source": "https://nhl.com/video/car-nyi-aho-scores-goal-against-marcus-hogberg-6367765349112"
+  },
+  {
+    "id": "goal-23",
+    "pid": 8478010,
+    "masked": "goal-23-masked-v1.mp4",
+    "reveal": "goal-23-original-v1.mp4",
+    "poster": "goal-23-v1.jpg",
+    "motion": "Slot wrist shot",
+    "source": "https://nhl.com/video/ott-tbl-point-scores-goal-against-anton-forsberg-6368406917112"
+  },
+  {
+    "id": "goal-24",
+    "pid": 8474141,
+    "masked": "goal-24-masked-v1.mp4",
+    "reveal": "goal-24-original-v1.mp4",
+    "poster": "goal-24-v1.jpg",
+    "motion": "Circle carry and wrist shot",
+    "source": "https://nhl.com/video/tor-det-kane-scores-goal-against-anthony-stolarz-6382636626112"
+  },
+  {
+    "id": "goal-25",
+    "pid": 8482078,
+    "masked": "goal-25-masked-v1.mp4",
+    "reveal": "goal-25-original-v1.mp4",
+    "poster": "goal-25-v1.jpg",
+    "motion": "Quick release from the circle",
+    "source": "https://nhl.com/video/tor-det-raymond-scores-goal-against-anthony-stolarz-6382634388112"
+  },
+  {
+    "id": "goal-26",
+    "pid": 8477946,
+    "masked": "goal-26-masked-v1.mp4",
+    "reveal": "goal-26-original-v1.mp4",
+    "poster": "goal-26-v1.jpg",
+    "motion": "Skate in and snap shot",
+    "source": "https://nhl.com/video/det-cgy-larkin-scores-goal-against-dustin-wolf-6368143754112"
+  },
+  {
+    "id": "goal-27",
+    "pid": 8480027,
+    "masked": "goal-27-masked-v1.mp4",
+    "reveal": "goal-27-original-v1.mp4",
+    "poster": "goal-27-v1.jpg",
+    "motion": "Net-front tip-in",
+    "source": "https://nhl.com/video/dal-col-robertson-scores-goal-against-scott-wedgewood-6382639693112"
+  },
+  {
+    "id": "goal-28",
+    "pid": 8476887,
+    "masked": "goal-28-masked-v1.mp4",
+    "reveal": "goal-28-original-v1.mp4",
+    "poster": "goal-28-v1.jpg",
+    "motion": "Rush snap shot",
+    "source": "https://nhl.com/video/uta-nsh-forsberg-scores-goal-against-karel-vejmelka-6382633663112"
+  },
+  {
+    "id": "goal-29",
+    "pid": 8479323,
+    "masked": "goal-29-masked-v1.mp4",
+    "reveal": "goal-29-original-v1.mp4",
+    "poster": "goal-29-v1.jpg",
+    "motion": "Point shot",
+    "source": "https://nhl.com/video/njd-nyr-fox-scores-ppg-against-jacob-markstrom-6366884311112"
+  },
+  {
+    "id": "goal-30",
+    "pid": 8474578,
+    "masked": "goal-30-masked-v1.mp4",
+    "reveal": "goal-30-original-v1.mp4",
+    "poster": "goal-30-v1.jpg",
+    "motion": "Circle snap shot",
+    "source": "https://nhl.com/video/pit-phi-karlsson-scores-goal-against-samuel-ersson-6368533717112"
+  },
+  {
+    "id": "goal-31",
+    "pid": 8478460,
+    "masked": "goal-31-masked-v1.mp4",
+    "reveal": "goal-31-original-v1.mp4",
+    "poster": "goal-31-v1.jpg",
+    "motion": "Rush wrist shot",
+    "source": "https://nhl.com/video/lak-cbj-werenski-scores-goal-against-darcy-kuemper-6367763638112"
+  },
+  {
+    "id": "goal-32",
+    "pid": 8480839,
+    "masked": "goal-32-masked-v1.mp4",
+    "reveal": "goal-32-original-v1.mp4",
+    "poster": "goal-32-v1.jpg",
+    "motion": "Point wrist shot",
+    "source": "https://nhl.com/video/buf-nsh-dahlin-scores-goal-against-justus-annunen-6368536216112"
+  },
+  {
+    "id": "goal-33",
+    "pid": 8482105,
+    "masked": "goal-33-masked-v1.mp4",
+    "reveal": "goal-33-original-v1.mp4",
+    "poster": "goal-33-v1.jpg",
+    "motion": "Point slap shot",
+    "source": "https://nhl.com/video/min-ott-sanderson-scores-ppg-against-filip-gustavsson-6368142035112"
+  },
+  {
+    "id": "goal-34",
+    "pid": 8478444,
+    "masked": "goal-34-masked-v1.mp4",
+    "reveal": "goal-34-original-v1.mp4",
+    "poster": "goal-34-v1.jpg",
+    "motion": "Quick wrist shot in traffic",
+    "source": "https://nhl.com/video/van-edm-boeser-scores-goal-against-calvin-pickard-6382641995112"
+  },
+  {
+    "id": "goal-35",
+    "pid": 8478414,
+    "masked": "goal-35-masked-v1.mp4",
+    "reveal": "goal-35-original-v1.mp4",
+    "poster": "goal-35-v1.jpg",
+    "motion": "Rebound poke in traffic",
+    "source": "https://nhl.com/video/njd-tbl-meier-scores-goal-against-andrei-vasilevskiy-6382631762112"
+  },
+  {
+    "id": "goal-36",
+    "pid": 8480002,
+    "masked": "goal-36-masked-v1.mp4",
+    "reveal": "goal-36-original-v1.mp4",
+    "poster": "goal-36-v1.jpg",
+    "motion": "Backhand around the goal",
+    "source": "https://nhl.com/video/njd-mtl-hischier-scores-goal-against-jakub-dobes-6367765815112"
+  },
+  {
+    "id": "goal-37",
+    "pid": 8479407,
+    "masked": "goal-37-masked-v1.mp4",
+    "reveal": "goal-37-original-v1.mp4",
+    "poster": "goal-37-v1.jpg",
+    "motion": "Curl behind the net and snap shot",
+    "source": "https://nhl.com/video/njd-mtl-bratt-scores-goal-against-jakub-dobes-6367764774112"
+  },
+  {
+    "id": "goal-38",
+    "pid": 8482093,
+    "masked": "goal-38-masked-v1.mp4",
+    "reveal": "goal-38-original-v1.mp4",
+    "poster": "goal-38-v1.jpg",
+    "motion": "Circle one-timer",
+    "source": "https://nhl.com/video/phi-car-jarvis-scores-goal-against-samuel-ersson-6382638852112"
+  },
+  {
+    "id": "goal-39",
+    "pid": 8477933,
+    "masked": "goal-39-masked-v1.mp4",
+    "reveal": "goal-39-original-v1.mp4",
+    "poster": "goal-39-v1.jpg",
+    "motion": "Backhand at the crease",
+    "source": "https://nhl.com/video/fla-sjs-reinhart-scores-goal-against-yaroslav-askarov-6367773124112"
+  },
+  {
+    "id": "goal-40",
+    "pid": 8481732,
+    "masked": "goal-40-masked-v1.mp4",
+    "reveal": "goal-40-original-v1.mp4",
+    "poster": "goal-40-v1.jpg",
+    "motion": "Slot snap shot",
+    "source": "https://nhl.com/video/njd-lak-lee-scores-goal-against-jake-allen-6366607048112"
+  },
+  {
+    "id": "goal-41",
+    "pid": 8482124,
+    "masked": "goal-41-masked-v1.mp4",
+    "reveal": "goal-41-original-v1.mp4",
+    "poster": "goal-41-v1.jpg",
+    "motion": "Slot wrist shot",
+    "source": "https://nhl.com/video/njd-lak-byfield-scores-goal-against-jake-allen-6366609236112"
+  },
+  {
+    "id": "goal-42",
+    "pid": 8477960,
+    "masked": "goal-42-masked-v1.mp4",
+    "reveal": "goal-42-original-v1.mp4",
+    "poster": "goal-42-v1.jpg",
+    "motion": "Empty-net wrist shot",
+    "source": "https://nhl.com/video/njd-lak-kempe-scores-empty-net-goal-6366609045112"
+  },
+  {
+    "id": "goal-43",
+    "pid": 8470613,
+    "masked": "goal-43-masked-v1.mp4",
+    "reveal": "goal-43-original-v1.mp4",
+    "poster": "goal-43-v1.jpg",
+    "motion": "Point wrist shot",
+    "source": "https://nhl.com/video/bos-car-burns-with-a-goal-against-joonas-korpisalo-6369702340112"
+  },
+  {
+    "id": "goal-44",
+    "pid": 8482113,
+    "masked": "goal-44-masked-v1.mp4",
+    "reveal": "goal-44-original-v1.mp4",
+    "poster": "goal-44-v1.jpg",
+    "motion": "Net-front wrist shot",
+    "source": "https://nhl.com/video/car-fla-lundell-scores-goal-against-pyotr-kochetkov-6366636035112"
+  },
+  {
+    "id": "goal-45",
+    "pid": 8476958,
+    "masked": "goal-45-masked-v1.mp4",
+    "reveal": "goal-45-original-v1.mp4",
+    "poster": "goal-45-v1.jpg",
+    "motion": "Slot wrist shot",
+    "source": "https://nhl.com/video/chi-car-slavin-scores-goal-against-arvid-soderblom-6368025564112"
+  },
+  {
+    "id": "goal-46",
+    "pid": 8480039,
+    "masked": "goal-46-masked-v1.mp4",
+    "reveal": "goal-46-original-v1.mp4",
+    "poster": "goal-46-v1.jpg",
+    "motion": "Kneeling one-timer",
+    "source": "https://nhl.com/video/car-buf-necas-scores-goal-against-ukko-pekka-luukkonen-6367154460112"
+  },
+  {
+    "id": "goal-47",
+    "pid": 8476459,
+    "masked": "goal-47-masked-v1.mp4",
+    "reveal": "goal-47-original-v1.mp4",
+    "poster": "goal-47-v1.jpg",
+    "motion": "Rush shot and rebound finish",
+    "source": "https://nhl.com/video/bos-nyr-zibanejad-scores-goal-against-jeremy-swayman-6366634849112"
+  },
+  {
+    "id": "goal-48",
+    "pid": 8482132,
+    "masked": "goal-48-masked-v1.mp4",
+    "reveal": "goal-48-original-v1.mp4",
+    "poster": "goal-48-v1.jpg",
+    "motion": "Circle wrist shot",
+    "source": "https://nhl.com/video/bos-nyr-berard-scores-goal-against-jeremy-swayman-6366635233112"
+  },
+  {
+    "id": "goal-49",
+    "pid": 8477496,
+    "masked": "goal-49-masked-v1.mp4",
+    "reveal": "goal-49-original-v1.mp4",
+    "poster": "goal-49-v1.jpg",
+    "motion": "Circle wrist shot",
+    "source": "https://nhl.com/video/bos-nyr-lindholm-scores-goal-against-igor-shesterkin-6368338624112"
+  },
+  {
+    "id": "goal-50",
+    "pid": 8476880,
+    "masked": "goal-50-masked-v1.mp4",
+    "reveal": "goal-50-original-v1.mp4",
+    "poster": "goal-50-v1.jpg",
+    "motion": "Net-front deflection",
+    "source": "https://nhl.com/video/min-wsh-wilson-scores-goal-against-marc-andre-fleury-6366635134112"
+  },
+  {
+    "id": "goal-51",
+    "pid": 8477451,
+    "masked": "goal-51-masked-v1.mp4",
+    "reveal": "goal-51-original-v1.mp4",
+    "poster": "goal-51-v1.jpg",
+    "motion": "Crease finish",
+    "source": "https://nhl.com/video/min-wsh-hartman-scores-goal-against-charlie-lindgren-6366634853112"
+  },
+  {
+    "id": "goal-52",
+    "pid": 8478508,
+    "masked": "goal-52-masked-v1.mp4",
+    "reveal": "goal-52-original-v1.mp4",
+    "poster": "goal-52-v1.jpg",
+    "motion": "Wraparound finish",
+    "source": "https://nhl.com/video/min-wsh-trenin-scores-shg-against-charlie-lindgren-6366634179112"
+  },
+  {
+    "id": "goal-53",
+    "pid": 8480796,
+    "masked": "goal-53-masked-v1.mp4",
+    "reveal": "goal-53-original-v1.mp4",
+    "poster": "goal-53-v1.jpg",
+    "motion": "Point wrist shot",
+    "source": "https://nhl.com/video/min-wsh-fehervary-scores-goal-against-marc-andre-fleury-6366637169112"
+  },
+  {
+    "id": "goal-54",
+    "pid": 8482079,
+    "masked": "goal-54-masked-v1.mp4",
+    "reveal": "goal-54-original-v1.mp4",
+    "poster": "goal-54-v1.jpg",
+    "motion": "Slot shot to kneeling follow-through",
+    "source": "https://nhl.com/video/marco-rossi-with-a-goal-vs-edmonton-oilers-6367157726112"
+  },
+  {
+    "id": "goal-55",
+    "pid": 8476979,
+    "masked": "goal-55-masked-v1.mp4",
+    "reveal": "goal-55-original-v1.mp4",
+    "poster": "goal-55-v1.jpg",
+    "motion": "Point slap shot",
+    "source": "https://nhl.com/video/det-cbj-gustafsson-scores-goal-against-elvis-merzlikins-6366635424112"
+  },
+  {
+    "id": "goal-56",
+    "pid": 8479337,
+    "masked": "goal-56-masked-v1.mp4",
+    "reveal": "goal-56-original-v1.mp4",
+    "poster": "goal-56-v1.jpg",
+    "motion": "Circle wrist shot",
+    "source": "https://nhl.com/video/det-cbj-debrincat-scores-ppg-against-elvis-merzlikins-6366634577112"
+  },
+  {
+    "id": "goal-57",
+    "pid": 8477497,
+    "masked": "goal-57-masked-v1.mp4",
+    "reveal": "goal-57-original-v1.mp4",
+    "poster": "goal-57-v1.jpg",
+    "motion": "Slot one-timer",
+    "source": "https://nhl.com/video/det-cbj-monahan-scores-goal-against-cam-talbot-6366636462112"
+  },
+  {
+    "id": "goal-58",
+    "pid": 8481013,
+    "masked": "goal-58-masked-v1.mp4",
+    "reveal": "goal-58-original-v1.mp4",
+    "poster": "goal-58-v1.jpg",
+    "motion": "Rush wrist shot",
+    "source": "https://nhl.com/video/jonatan-berggren-with-a-goal-vs-columbus-blue-jackets-6366638650112"
+  },
+  {
+    "id": "goal-59",
+    "pid": 8482259,
+    "masked": "goal-59-masked-v1.mp4",
+    "reveal": "goal-59-original-v1.mp4",
+    "poster": "goal-59-v1.jpg",
+    "motion": "Circle wrist shot",
+    "source": "https://nhl.com/video/tor-nyi-mcmann-scores-goal-against-ilya-sorokin-6366637346112"
+  },
+  {
+    "id": "goal-60",
+    "pid": 8476429,
+    "masked": "goal-60-masked-v1.mp4",
+    "reveal": "goal-60-original-v1.mp4",
+    "poster": "goal-60-v1.jpg",
+    "motion": "Point wrist shot",
+    "source": "https://nhl.com/video/tor-nyi-mayfield-scores-goal-against-joseph-woll-6366636885112"
+  },
+  {
+    "id": "goal-61",
+    "pid": 8478449,
+    "masked": "goal-61-masked-v1.mp4",
+    "reveal": "goal-61-original-v1.mp4",
+    "poster": "goal-61-v1.jpg",
+    "motion": "Net-front deflection",
+    "source": "https://nhl.com/video/ott-dal-hintz-scores-ppg-against-leevi-merilainen-6366635080112"
+  },
+  {
+    "id": "goal-62",
+    "pid": 8482092,
+    "masked": "goal-62-masked-v1.mp4",
+    "reveal": "goal-62-original-v1.mp4",
+    "poster": "goal-62-v1.jpg",
+    "motion": "Shorthanded rush wrist shot",
+    "source": "https://nhl.com/video/uta-ott-greig-scores-shg-against-karel-vejmelka-6367805124112"
+  },
+  {
+    "id": "goal-63",
+    "pid": 8473994,
+    "masked": "goal-63-masked-v1.mp4",
+    "reveal": "goal-63-original-v1.mp4",
+    "poster": "goal-63-v1.jpg",
+    "motion": "One-timer",
+    "source": "https://nhl.com/video/ott-dal-benn-scores-goal-against-leevi-merilainen-6366638346112"
+  },
+  {
+    "id": "goal-64",
+    "pid": 8475168,
+    "masked": "goal-64-masked-v1.mp4",
+    "reveal": "goal-64-original-v1.mp4",
+    "poster": "goal-64-v1.jpg",
+    "motion": "Circle wrist shot",
+    "source": "https://nhl.com/video/dal-nyr-duchene-scores-goal-against-jonathan-quick-6366792021112"
+  },
+  {
+    "id": "goal-65",
+    "pid": 8476460,
+    "masked": "goal-65-masked-v1.mp4",
+    "reveal": "goal-65-original-v1.mp4",
+    "poster": "goal-65-v1.jpg",
+    "motion": "Slot wrist shot",
+    "source": "https://nhl.com/video/ana-wpg-scheifele-scores-goal-against-john-gibson-6366636142112"
+  },
+  {
+    "id": "goal-66",
+    "pid": 8476392,
+    "masked": "goal-66-masked-v1.mp4",
+    "reveal": "goal-66-original-v1.mp4",
+    "poster": "goal-66-v1.jpg",
+    "motion": "Slot wrist shot",
+    "source": "https://nhl.com/video/wpg-phi-lowry-scores-goal-against-samuel-ersson-6369702010112"
+  },
+  {
+    "id": "goal-67",
+    "pid": 8484153,
+    "masked": "goal-67-masked-v1.mp4",
+    "reveal": "goal-67-original-v1.mp4",
+    "poster": "goal-67-v1.jpg",
+    "motion": "Net-front deflection",
+    "source": "https://nhl.com/video/ana-wpg-carlsson-scores-goal-against-connor-hellebuyck-6366635794112"
+  },
+  {
+    "id": "goal-68",
+    "pid": 8478873,
+    "masked": "goal-68-masked-v1.mp4",
+    "reveal": "goal-68-original-v1.mp4",
+    "poster": "goal-68-v1.jpg",
+    "motion": "Overtime rush wrist shot",
+    "source": "https://nhl.com/video/ana-wpg-terry-scores-goal-against-connor-hellebuyck-6366638910112"
+  },
+  {
+    "id": "goal-69",
+    "pid": 8480113,
+    "masked": "goal-69-masked-v1.mp4",
+    "reveal": "goal-69-original-v1.mp4",
+    "poster": "goal-69-v1.jpg",
+    "motion": "Net-front deflection",
+    "source": "https://nhl.com/video/wpg-wsh-iafallo-scores-goal-against-logan-thompson-6368138760112"
+  },
+  {
+    "id": "goal-70",
+    "pid": 8475462,
+    "masked": "goal-70-masked-v1.mp4",
+    "reveal": "goal-70-original-v1.mp4",
+    "poster": "goal-70-v1.jpg",
+    "motion": "Point slap shot",
+    "source": "https://nhl.com/video/ana-wpg-gudas-scores-goal-against-connor-hellebuyck-6366640349112"
+  },
+  {
+    "id": "goal-71",
+    "pid": 8475722,
+    "masked": "goal-71-masked-v1.mp4",
+    "reveal": "goal-71-original-v1.mp4",
+    "poster": "goal-71-v1.jpg",
+    "motion": "Net-front tip-in",
+    "source": "https://nhl.com/video/buf-col-zucker-scores-goal-against-scott-wedgewood-6366639402112"
+  },
+  {
+    "id": "goal-72",
+    "pid": 8481524,
+    "masked": "goal-72-masked-v1.mp4",
+    "reveal": "goal-72-original-v1.mp4",
+    "poster": "goal-72-v1.jpg",
+    "motion": "Circle drive and wrist shot",
+    "source": "https://nhl.com/video/cbj-buf-byram-scores-goal-against-elvis-merzlikins-6368274769112"
+  },
+  {
+    "id": "goal-73",
+    "pid": 8480069,
+    "masked": "goal-73-masked-v1.mp4",
+    "reveal": "goal-73-original-v1.mp4",
+    "poster": "goal-73-v1.jpg",
+    "motion": "Point drive and wrist shot",
+    "source": "https://nhl.com/video/buf-col-makar-scores-goal-against-ukko-pekka-luukkonen-6366639305112"
+  },
+  {
+    "id": "goal-74",
+    "pid": 8479525,
+    "masked": "goal-74-masked-v1.mp4",
+    "reveal": "goal-74-original-v1.mp4",
+    "poster": "goal-74-v1.jpg",
+    "motion": "Net-front deflection",
+    "source": "https://nhl.com/video/buf-col-colton-scores-goal-against-ukko-pekka-luukkonen-6366641172112"
+  },
+  {
+    "id": "goal-75",
+    "pid": 8484145,
+    "masked": "goal-75-masked-v1.mp4",
+    "reveal": "goal-75-original-v1.mp4",
+    "poster": "goal-75-v1.jpg",
+    "motion": "Kneeling shot beside the net",
+    "source": "https://nhl.com/video/buf-col-benson-scores-goal-against-scott-wedgewood-6366640297112"
+  },
+  {
+    "id": "goal-76",
+    "pid": 8478420,
+    "masked": "goal-76-masked-v1.mp4",
+    "reveal": "goal-76-original-v1.mp4",
+    "poster": "goal-76-v1.jpg",
+    "motion": "Circle one-timer to one knee",
+    "source": "https://nhl.com/video/mikko-rantanen-with-a-powerplay-goal-vs-buffalo-sabres-6366639930112"
+  },
+  {
+    "id": "goal-77",
+    "pid": 8478038,
+    "masked": "goal-77-masked-v1.mp4",
+    "reveal": "goal-77-original-v1.mp4",
+    "poster": "goal-77-v1.jpg",
+    "motion": "Rush wrist shot",
+    "source": "https://nhl.com/video/buf-col-toews-scores-goal-against-ukko-pekka-luukkonen-6366642086112"
+  },
+  {
+    "id": "goal-78",
+    "pid": 8478474,
+    "masked": "goal-78-masked-v1.mp4",
+    "reveal": "goal-78-original-v1.mp4",
+    "poster": "goal-78-v1.jpg",
+    "motion": "Scorer follow-through and reaction",
+    "source": "https://nhl.com/video/uta-min-crouse-scores-goal-against-filip-gustavsson-6367601039112"
+  },
+  {
+    "id": "goal-79",
+    "pid": 8476399,
+    "masked": "goal-79-masked-v1.mp4",
+    "reveal": "goal-79-original-v1.mp4",
+    "poster": "goal-79-v1.jpg",
+    "motion": "Empty-net wrist shot",
+    "source": "https://nhl.com/video/cgy-wpg-coleman-scores-empty-net-goal-6367330187112"
+  }
+]

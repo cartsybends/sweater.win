@@ -1,0 +1,139 @@
+{
+  "id": "goal-48",
+  "pid": 8482132,
+  "player": "Brett Berard",
+  "original": "/workspace/who-scored-expansion/originals/goal-48-6366635233112.mp4",
+  "source_sha256": "adb5ff678d4232944aae2b3f3479009790fec857a31fba6ac24985d465e3de56",
+  "start": 41.0,
+  "duration": 3.75,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        498,
+        196,
+        673,
+        437
+      ],
+      "points": [
+        [
+          544,
+          218
+        ],
+        [
+          556,
+          292
+        ],
+        [
+          618,
+          290
+        ],
+        [
+          537,
+          340
+        ],
+        [
+          601,
+          385
+        ],
+        [
+          658,
+          415
+        ],
+        [
+          704,
+          405
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        530,
+        176,
+        761,
+        431
+      ],
+      "points": [
+        [
+          591,
+          194
+        ],
+        [
+          620,
+          253
+        ],
+        [
+          550,
+          333
+        ],
+        [
+          606,
+          337
+        ],
+        [
+          583,
+          381
+        ],
+        [
+          704,
+          355
+        ],
+        [
+          738,
+          410
+        ]
+      ]
+    },
+    {
+      "frame": 64,
+      "box": [
+        214,
+        276,
+        315,
+        524
+      ],
+      "points": [
+        [
+          252,
+          295
+        ],
+        [
+          251,
+          347
+        ],
+        [
+          297,
+          346
+        ],
+        [
+          265,
+          402
+        ],
+        [
+          247,
+          457
+        ],
+        [
+          242,
+          504
+        ]
+      ]
+    }
+  ],
+  "version": "v2",
+  "identity_verification": "Brett Berard 65, number and BERARD clearly visible receiving, skating and shooting. Player remains continuous through the close replay; foreground fans, glass posts and Bruins defenders remain unmasked.",
+  "max_cond_frames_in_attn": 2,
+  "tracking_image_size": 512,
+  "poster_frame": 0,
+  "scoring_play_end_frame": 79
+}

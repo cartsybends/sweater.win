@@ -193,6 +193,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ws-primary { width: 100%; border-color: transparent; background: var(--accent,var(--link)); color: #fff; }
   .ws-primary:disabled, .ws-controls button:disabled { opacity: .5; cursor: default; }
   .ws-pool { display: block; margin-top: 16px; font-size: 12px; color: var(--muted); }
+  .ws-setup .ws-era { max-width: 48ch; margin: 0 auto 20px; padding-top: 18px; border-top: 1px solid var(--sep); font-size: 12px; line-height: 1.6; }
+  .ws-era strong { display: block; margin-bottom: 3px; color: var(--fg); font-weight: 600; }
   .ws-round { display: grid; grid-template-columns: minmax(0,1.75fr) minmax(300px,1fr); gap: 20px; align-items: start; }
   .ws-media-pane, .ws-question-pane { min-width: 0; }
   .ws-roundhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 12px; font-size: 12px; color: var(--label2); }
@@ -3348,6 +3350,7 @@ TEMPLATE = r'''<!DOCTYPE html>
         <button type="button" data-ws-mode="daily" aria-pressed="true"><b>Daily goal</b><small>One goal. Same challenge for everyone.</small></button>
         <button type="button" data-ws-mode="unlimited" aria-pressed="false"><b>Keep them coming</b><small>A rotating mix of different scorers.</small></button>
       </div>
+      <p class="ws-era" id="wsEra"><strong>Goals from <!--__GOAL_YEARS__--></strong>Players may have changed teams since these clips were filmed.</p>
       <button type="button" class="ws-primary" id="wsStart">Watch today's goal</button>
       <small class="ws-pool" id="wsPool"></small>
     </div>
@@ -13503,6 +13506,26 @@ def load_goal_clips():
     return clips
 
 
+def goal_clip_year_range(clips, sources=None):
+    """Describe the footage's years, including older and traded players."""
+    if sources is None:
+        sources = json.loads((HERE / "static" / "who-scored" / "sources.json").read_text(encoding="utf-8"))
+    by_id = {source["id"]: source for source in sources}
+    years = []
+    for clip in clips:
+        source = by_id.get(clip["id"], {})
+        year = source.get("clip_year")
+        if year is None and source.get("date"):
+            year = date.fromisoformat(source["date"]).year
+        if type(year) is not int or not 1900 <= year <= date.today().year:
+            raise ValueError(f"Missing or invalid footage year for {clip['id']}")
+        years.append(year)
+    if not years:
+        raise ValueError("Who Scored? needs dated footage")
+    first, last = min(years), max(years)
+    return str(first) if first == last else f"{first}–{last}"
+
+
 def copy_goal_media(out_dir, clips):
     destination = out_dir / "who-scored"
     destination.mkdir(parents=True, exist_ok=True)
@@ -14066,6 +14089,7 @@ def main():
         "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_ANIMATION__*/": (HERE / "static" / "shootout" / "animation.js").read_text(encoding="utf-8"),
         "/*__GOAL_CLIPS__*/[]": esc(goal_clips),
+        "<!--__GOAL_YEARS__-->": goal_clip_year_range(goal_clips),
         "/*__PLAYERS__*/[]": esc(embedded),
         "/*__ROSTER_PLAYERS__*/[]": esc(roster_embedded),
         "/*__ROSTER_LINEUPS__*/{}": esc(roster_lineups),

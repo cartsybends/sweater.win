@@ -12,6 +12,12 @@ def frame_count(edit, full_window=False):
     exported=edit.get('export_frames',original)
     if original<1 or type(exported) is not int or not 1<=exported<=original:
         raise ValueError('Export cap must be a positive frame count within the source window')
+    finish=edit.get('scoring_play_end_frame')
+    if finish is not None:
+        if type(finish) is not int or not 0<=finish<original:
+            raise ValueError('The reviewed scoring finish must be within the source window')
+        if exported<=finish:
+            raise ValueError('Export cap would cut off the reviewed scoring finish')
     return original if full_window else exported
 
 def work_dir(path, edit):
@@ -85,9 +91,11 @@ def track(path,edit,args):
             predictor.add_new_points_or_box(state,**kw)
         seed=edit.get('seed',edit['anchors'][0]['frame']);assert 0<=seed<count
         records={}
+        allowed_empty=set(edit.get('allow_empty',[]))
+        last_visible=max(i for i in range(count) if i not in allowed_empty)
         for reverse in [False,True]:
             if reverse and seed==0:continue
-            limit=seed if reverse else count-seed-1
+            limit=seed if reverse else last_visible-seed
             for i,ids,logits in predictor.propagate_in_video(state,start_frame_idx=seed,reverse=reverse,max_frame_num_to_track=limit):
                 mask=logits[0,0].cpu().numpy()>0
                 # Empty frames are permitted only after a manually verified exit.
@@ -96,6 +104,11 @@ def track(path,edit,args):
                 ys,xs=np.where(mask)
                 records[i]={'frame':i,'area':int(mask.sum()),'bbox':[int(xs.min()),int(ys.min()),int(xs.max()),int(ys.max())] if len(xs) else None}
                 if i%24==0:print(edit['id'],i,records[i]['area'],round(time.time()-start,1),flush=True)
+        # Keep the full scoring finish when the camera follows the puck after
+        # the scorer exits. Do not track a different skater in those frames.
+        for i in range(last_visible+1,count):
+            Image.new('L',(960,540)).save(out/f'{i:05d}.png')
+            records[i]={'frame':i,'area':0,'bbox':None}
         assert len(records)==count
         (work/'mask-stats.json').write_text(json.dumps([records[i] for i in sorted(records)],indent=2)+'\n')
         (work/'tracking-complete.json').write_text(json.dumps({
@@ -134,7 +147,8 @@ def render(path,edit,args):
         for patch in edit.get('mask_patch_lines',[]):
             if patch['frame']==i:
                 x0,y0,x1,y1,width=patch['line'];cv2.line(mask,(x0,y0),(x1,y1),255,width)
-        cv2.imwrite(str(work/'masks'/f'{i:05d}.png'),mask)
+        # Keep the tracked matte pristine so changing a manual correction
+        # never leaves a previous fill baked into subsequent renders.
         assert mask.any() or i in edit.get('allow_empty',[]),(edit['id'],i,'empty matte')
         n,labels,stats,_=cv2.connectedComponentsWithStats((mask==0).astype(np.uint8),8)
         for c in range(1,n):

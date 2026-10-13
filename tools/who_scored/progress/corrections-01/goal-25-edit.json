@@ -1,0 +1,542 @@
+{
+  "id": "goal-25",
+  "pid": 8482078,
+  "player": "Lucas Raymond",
+  "original": "/workspace/who-scored-corrections/originals/goal-25-6382634388112.mp4",
+  "start": 5.8,
+  "duration": 3.9583333333333335,
+  "seed": 48,
+  "source_sha256": "2846e1a430ed1e6015ccbc2fd92a4a1ca964da5bb05e4a841167468772a8b3fe",
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        3,
+        239,
+        69,
+        352
+      ],
+      "points": [
+        [
+          48,
+          253
+        ],
+        [
+          34,
+          282
+        ],
+        [
+          31,
+          336
+        ],
+        [
+          58,
+          315
+        ]
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        124,
+        225,
+        197,
+        342
+      ],
+      "points": [
+        [
+          169,
+          240
+        ],
+        [
+          151,
+          269
+        ],
+        [
+          181,
+          286
+        ],
+        [
+          158,
+          322
+        ]
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        303,
+        177,
+        367,
+        291
+      ],
+      "points": [
+        [
+          347,
+          191
+        ],
+        [
+          334,
+          222
+        ],
+        [
+          321,
+          276
+        ],
+        [
+          348,
+          271
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        464,
+        139,
+        527,
+        234
+      ],
+      "points": [
+        [
+          502,
+          153
+        ],
+        [
+          494,
+          178
+        ],
+        [
+          487,
+          213
+        ],
+        [
+          510,
+          213
+        ]
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        523,
+        102,
+        604,
+        202
+      ],
+      "points": [
+        [
+          555,
+          121
+        ],
+        [
+          563,
+          146
+        ],
+        [
+          548,
+          181
+        ],
+        [
+          590,
+          183
+        ]
+      ]
+    }
+  ],
+  "crop": [
+    0,
+    0,
+    960,
+    486
+  ],
+  "manual_fill_polygons": {
+    "27": [
+      [
+        [
+          387,
+          235
+        ],
+        [
+          391,
+          237
+        ],
+        [
+          393,
+          239
+        ],
+        [
+          393,
+          245
+        ],
+        [
+          387,
+          245
+        ],
+        [
+          385,
+          244
+        ],
+        [
+          384,
+          242
+        ],
+        [
+          383,
+          239
+        ],
+        [
+          383,
+          235
+        ]
+      ]
+    ],
+    "29": [
+      [
+        [
+          420,
+          235
+        ],
+        [
+          420,
+          239
+        ],
+        [
+          419,
+          241
+        ],
+        [
+          413,
+          241
+        ],
+        [
+          413,
+          236
+        ],
+        [
+          416,
+          235
+        ]
+      ]
+    ],
+    "30": [
+      [
+        [
+          430,
+          232
+        ],
+        [
+          430,
+          236
+        ],
+        [
+          426,
+          236
+        ],
+        [
+          426,
+          232
+        ]
+      ]
+    ]
+  },
+  "manual_glove_coverage_note": "Explicit scorer-glove polygons27/29/30 and hand ellipses43..59; all retained frames re-reviewed after retracking.",
+  "trim_note": "Goal and follow-through retained for2.5sec; post-goal skate away omitted.",
+  "trimmed_tail_anchors": [
+    {
+      "frame": 60,
+      "box": [
+        490,
+        128,
+        544,
+        217
+      ],
+      "points": [
+        [
+          521,
+          145
+        ],
+        [
+          516,
+          167
+        ],
+        [
+          514,
+          195
+        ],
+        [
+          534,
+          184
+        ]
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        371,
+        102,
+        441,
+        221
+      ],
+      "points": [
+        [
+          396,
+          116
+        ],
+        [
+          400,
+          148
+        ],
+        [
+          418,
+          192
+        ],
+        [
+          415,
+          208
+        ]
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        206,
+        68,
+        313,
+        203
+      ],
+      "points": [
+        [
+          237,
+          90
+        ],
+        [
+          254,
+          117
+        ],
+        [
+          256,
+          166
+        ],
+        [
+          296,
+          188
+        ]
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        124,
+        42,
+        224,
+        192
+      ],
+      "points": [
+        [
+          145,
+          59
+        ],
+        [
+          164,
+          91
+        ],
+        [
+          168,
+          154
+        ],
+        [
+          209,
+          173
+        ]
+      ]
+    }
+  ],
+  "mask_patch_ellipses": [
+    {
+      "frame": 57,
+      "ellipse": [
+        558,
+        161,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 56,
+      "ellipse": [
+        567,
+        154,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 55,
+      "ellipse": [
+        571,
+        150,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 54,
+      "ellipse": [
+        574,
+        148,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 53,
+      "ellipse": [
+        574,
+        152,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 52,
+      "ellipse": [
+        578,
+        151,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 51,
+      "ellipse": [
+        577,
+        150,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 50,
+      "ellipse": [
+        577,
+        153,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 49,
+      "ellipse": [
+        578,
+        152,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 48,
+      "ellipse": [
+        580,
+        150,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 47,
+      "ellipse": [
+        582,
+        149,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 46,
+      "ellipse": [
+        583,
+        146,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 45,
+      "ellipse": [
+        582,
+        150,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 44,
+      "ellipse": [
+        575,
+        153,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 43,
+      "ellipse": [
+        570,
+        155,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 57,
+      "ellipse": [
+        558,
+        161,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 58,
+      "ellipse": [
+        550,
+        166,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    },
+    {
+      "frame": 59,
+      "ellipse": [
+        538,
+        173,
+        7,
+        7
+      ],
+      "reason": "Verified detached upper glove, followed in source frames."
+    }
+  ],
+  "version": "v2",
+  "max_cond_frames_in_attn": 2,
+  "tracking_image_size": 512,
+  "poster_frame": 0,
+  "scoring_play_end_frame": 82
+}

@@ -1,0 +1,142 @@
+{
+  "id": "goal-53",
+  "pid": 8480796,
+  "player": "Martin Feh\u00e9rv\u00e1ry",
+  "original": "/workspace/who-scored-expansion/originals/goal-53-6366637169112.mp4",
+  "source_sha256": "948ce60bc66c82aed6affed99042eb4337128fc7da05c1dd43dba28735b11fa3",
+  "start": 46.2,
+  "duration": 4.291666666666667,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        439,
+        309,
+        634,
+        518
+      ],
+      "points": [
+        [
+          486,
+          328
+        ],
+        [
+          505,
+          373
+        ],
+        [
+          458,
+          412
+        ],
+        [
+          510,
+          424
+        ],
+        [
+          488,
+          462
+        ],
+        [
+          486,
+          490
+        ],
+        [
+          583,
+          463
+        ],
+        [
+          613,
+          502
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        509,
+        295,
+        658,
+        498
+      ],
+      "points": [
+        [
+          529,
+          310
+        ],
+        [
+          555,
+          350
+        ],
+        [
+          521,
+          416
+        ],
+        [
+          576,
+          395
+        ],
+        [
+          546,
+          456
+        ],
+        [
+          536,
+          482
+        ],
+        [
+          637,
+          460
+        ]
+      ]
+    },
+    {
+      "frame": 73,
+      "box": [
+        460,
+        258,
+        606,
+        540
+      ],
+      "points": [
+        [
+          498,
+          280
+        ],
+        [
+          513,
+          337
+        ],
+        [
+          575,
+          350
+        ],
+        [
+          525,
+          397
+        ],
+        [
+          530,
+          462
+        ],
+        [
+          531,
+          482
+        ],
+        [
+          569,
+          507
+        ],
+        [
+          564,
+          335
+        ]
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Official scorer Fehervary 42. FEHERVARY and jersey 42 clearly visible throughout this continuous point-shot replay; the same skater winds up and shoots. Wild defenders and net-front Capitals remain visible.",
+  "tracking_image_size": 512,
+  "poster_frame": 0,
+  "scoring_play_end_frame": 90
+}

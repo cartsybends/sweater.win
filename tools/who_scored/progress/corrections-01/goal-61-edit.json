@@ -1,0 +1,215 @@
+{
+  "id": "goal-61",
+  "pid": 8478449,
+  "player": "Roope Hintz",
+  "original": "/workspace/who-scored-expansion/originals/goal-61-6366635080112.mp4",
+  "source_sha256": "8290bd2191853f69b6a000ea6cb12524c4b4a673b3b3a8c45e4d91c6f1b8b16c",
+  "start": 37.5,
+  "duration": 4.416666666666667,
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Official Hintz24, HINTZ24 visible on the net-front green Stars scorer throughout the shot and deflection sequence. Robertson21 shooting in the background, Ottawa defenders and Merilainen1 remain visible. Track the credited scorer24, not the point shooter21.",
+  "tracking_image_size": 512,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        316,
+        305,
+        445,
+        517
+      ],
+      "points": [
+        [
+          391,
+          323
+        ],
+        [
+          387,
+          345
+        ],
+        [
+          378,
+          384
+        ],
+        [
+          374,
+          427
+        ],
+        [
+          342,
+          485
+        ],
+        [
+          422,
+          380
+        ],
+        [
+          582,
+          378
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 35,
+      "box": [
+        396,
+        265,
+        480,
+        425
+      ],
+      "points": [
+        [
+          437,
+          274
+        ],
+        [
+          438,
+          295
+        ],
+        [
+          440,
+          323
+        ],
+        [
+          435,
+          350
+        ],
+        [
+          469,
+          339
+        ],
+        [
+          440,
+          380
+        ],
+        [
+          487,
+          358
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 70,
+      "box": [
+        487,
+        128,
+        583,
+        302
+      ],
+      "points": [
+        [
+          508,
+          146
+        ],
+        [
+          523,
+          166
+        ],
+        [
+          537,
+          192
+        ],
+        [
+          565,
+          167
+        ],
+        [
+          520,
+          254
+        ],
+        [
+          508,
+          280
+        ],
+        [
+          440,
+          251
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 105,
+      "box": [
+        555,
+        81,
+        626,
+        244
+      ],
+      "points": [
+        [
+          571,
+          91
+        ],
+        [
+          579,
+          111
+        ],
+        [
+          590,
+          147
+        ],
+        [
+          596,
+          171
+        ],
+        [
+          574,
+          227
+        ],
+        [
+          580,
+          211
+        ],
+        [
+          558,
+          87
+        ],
+        [
+          646,
+          162
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "poster_frame": 0,
+  "seed": 0,
+  "scoring_play_end_frame": 57
+}

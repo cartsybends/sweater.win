@@ -1,0 +1,220 @@
+{
+  "id": "goal-79",
+  "pid": 8476399,
+  "player": "Blake Coleman",
+  "source_sha256": "c2d34afa344aa634eba653ab5bb7aa26bd5e2d197f004cd8bd17c9dd527d7b59",
+  "original": "/workspace/who-scored-corrections/coleman-choice4/originals/goal-79-6370064078112.mp4",
+  "start": 41.6,
+  "duration": 2.8,
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Coleman20 confirmed on white Calgary jersey in the scoring replay and following closeup. White20 travels from the right boards behind Jets44 then shoots the empty-net goal; foreground Jets27 and referees retained.",
+  "tracking_image_size": 512,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        566,
+        252,
+        760,
+        519
+      ],
+      "points": [
+        [
+          639,
+          271
+        ],
+        [
+          637,
+          290
+        ],
+        [
+          646,
+          332
+        ],
+        [
+          650,
+          359
+        ],
+        [
+          594,
+          366
+        ],
+        [
+          614,
+          472
+        ],
+        [
+          738,
+          501
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 22,
+      "box": [
+        604,
+        223,
+        790,
+        454
+      ],
+      "points": [
+        [
+          680,
+          242
+        ],
+        [
+          680,
+          260
+        ],
+        [
+          693,
+          295
+        ],
+        [
+          690,
+          325
+        ],
+        [
+          708,
+          374
+        ],
+        [
+          704,
+          412
+        ],
+        [
+          771,
+          428
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 44,
+      "box": [
+        607,
+        179,
+        777,
+        383
+      ],
+      "points": [
+        [
+          657,
+          204
+        ],
+        [
+          652,
+          220
+        ],
+        [
+          679,
+          248
+        ],
+        [
+          687,
+          275
+        ],
+        [
+          712,
+          321
+        ],
+        [
+          741,
+          350
+        ],
+        [
+          642,
+          362
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 66,
+      "box": [
+        650,
+        0,
+        914,
+        456
+      ],
+      "points": [
+        [
+          854,
+          26
+        ],
+        [
+          860,
+          49
+        ],
+        [
+          846,
+          107
+        ],
+        [
+          844,
+          151
+        ],
+        [
+          843,
+          251
+        ],
+        [
+          851,
+          342
+        ],
+        [
+          831,
+          425
+        ],
+        [
+          674,
+          116
+        ],
+        [
+          703,
+          135
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "poster_frame": 0,
+  "seed": 0,
+  "scoring_play_end_frame": 55
+}

@@ -50,6 +50,39 @@ pool replaces only unlocked future assignments and preserves past, today and
 tomorrow. The builder retains every clip's scorer in the embedded player data,
 including players available only from the schedule archive.
 
+The setup screen derives the footage year range from the active clips' official
+game dates and explains that players may have changed teams. Use game dates for
+migrated videos; their publication date can be years later than the actual goal.
+
+## Correcting existing highlights
+
+`progress/corrections-01/` records the 41 reported early endings and silhouette
+problems. Each corrected version retains the same scorer and clip ID. Four use a
+replacement official goal (Robertson, Zibanejad, Crouse and Coleman). The other
+cuts retain the scoring action and its finish/aftermath, including camera pans
+after the scorer exits. A visible puck crossing the line is not required.
+
+Review every original/masked frame, the full scene and the compressed export.
+Readable jersey numbers and continuous movement must confirm the scorer; official
+attribution alone does not identify which person to mask. Pay particular attention
+to foreground faces, helmets, gloves, teammate overlaps and the last frame. Keep
+`allow_empty` limited to verified exits or complete occlusions. Record the reviewed
+scoring finish in `scoring_play_end_frame`; export caps cannot remove it.
+
+The correction gate checks the complete reported set, all visual review records,
+source/edit/media hashes, matching decoded video timing, and preserved scorer IDs:
+
+```sh
+python tools/who_scored/corrections.py --review tools/who_scored/progress/corrections-01 --exports /workspace/who-scored-corrections/exports
+# Stage only the completed, reviewed set.
+python tools/who_scored/corrections.py --review tools/who_scored/progress/corrections-01 --exports /workspace/who-scored-corrections/exports --stage
+python tests/who_scored_batches.py
+```
+
+Keep previous media versions and review records intact. After staging, run the
+game/schedule/media checks, browser playback through the end of both streams,
+publish to GitHub and verify the live assets. Staging is not publication.
+
 ## Expansion: six batches of 40
 
 The new expansion targets **240 additional unique scorers**, for 279 total.

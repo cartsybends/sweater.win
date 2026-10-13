@@ -1,0 +1,231 @@
+{
+  "id": "goal-27",
+  "pid": 8480027,
+  "player": "Jason Robertson",
+  "original": "/workspace/who-scored-corrections/robertson-choice6/originals/goal-27-6367711375112.mp4",
+  "start": 38.5,
+  "duration": 5.291666666666667,
+  "source_sha256": "3b877c71df3d25b3bc5b673abbcfa03b62f6b0f7e50b7ac2809c773e8e8456af",
+  "identity_check": "Official NHL goal event 355, game2025020034 credits DAL21 Jason Robertson8480027 tip-in; continuous replay tracks the left-goalmouth finisher backward, not screen96 or point shooter.",
+  "qa_revision": "Added right-arm and glove anchors after full-frame review revealed detached glove patch at frames0\u201340.",
+  "poster_frame": 65,
+  "version": "v2",
+  "max_cond_frames_in_attn": 2,
+  "tracking_image_size": 512,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        563,
+        306,
+        828,
+        539
+      ],
+      "points": [
+        [
+          658,
+          327
+        ],
+        [
+          660,
+          349
+        ],
+        [
+          715,
+          377
+        ],
+        [
+          704,
+          440
+        ],
+        [
+          609,
+          482
+        ],
+        [
+          685,
+          512
+        ],
+        [
+          794,
+          518
+        ],
+        [
+          884,
+          349
+        ],
+        [
+          743,
+          229
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 42,
+      "box": [
+        373,
+        42,
+        513,
+        287
+      ],
+      "points": [
+        [
+          411,
+          62
+        ],
+        [
+          418,
+          81
+        ],
+        [
+          430,
+          108
+        ],
+        [
+          429,
+          134
+        ],
+        [
+          460,
+          205
+        ],
+        [
+          427,
+          255
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        147,
+        91,
+        333,
+        333
+      ],
+      "points": [
+        [
+          290,
+          115
+        ],
+        [
+          294,
+          133
+        ],
+        [
+          282,
+          164
+        ],
+        [
+          265,
+          183
+        ],
+        [
+          251,
+          248
+        ],
+        [
+          177,
+          301
+        ],
+        [
+          297,
+          302
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 126,
+      "box": [
+        16,
+        184,
+        194,
+        427
+      ],
+      "points": [
+        [
+          133,
+          204
+        ],
+        [
+          136,
+          220
+        ],
+        [
+          127,
+          256
+        ],
+        [
+          158,
+          230
+        ],
+        [
+          165,
+          301
+        ],
+        [
+          81,
+          363
+        ],
+        [
+          32,
+          399
+        ],
+        [
+          121,
+          400
+        ],
+        [
+          144,
+          458
+        ],
+        [
+          63,
+          444
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "seed": 0,
+  "scoring_play_end_frame": 100
+}

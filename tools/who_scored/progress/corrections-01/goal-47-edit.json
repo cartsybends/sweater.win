@@ -1,0 +1,186 @@
+{
+  "id": "goal-47",
+  "pid": 8476459,
+  "player": "Mika Zibanejad",
+  "original": "/workspace/who-scored-corrections/zibanejad-choice4/originals/goal-47-6368533623112.mp4",
+  "source_sha256": "d70e5509809627b57a20004a0ee1a04ebe512e78f18b079edda62d855822b531",
+  "start": 24.9,
+  "duration": 5.7,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        123,
+        61,
+        199,
+        169
+      ],
+      "points": [
+        [
+          166,
+          81
+        ],
+        [
+          163,
+          96
+        ],
+        [
+          166,
+          125
+        ],
+        [
+          146,
+          146
+        ],
+        [
+          162,
+          153
+        ],
+        [
+          72,
+          172
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 45,
+      "box": [
+        225,
+        80,
+        283,
+        170
+      ],
+      "points": [
+        [
+          248,
+          100
+        ],
+        [
+          248,
+          117
+        ],
+        [
+          252,
+          134
+        ],
+        [
+          263,
+          150
+        ],
+        [
+          266,
+          157
+        ],
+        [
+          230,
+          106
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        150,
+        58,
+        201,
+        117
+      ],
+      "points": [
+        [
+          174,
+          74
+        ],
+        [
+          176,
+          84
+        ],
+        [
+          177,
+          98
+        ],
+        [
+          183,
+          103
+        ],
+        [
+          172,
+          110
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v2",
+  "identity_verification": "Official scorer Zibanejad 93. Jersey 93 readable on receiving the pass, then this player shoots and follows through in front of the goalie. Blue teammate 17 and Bruins defenders are excluded.",
+  "max_cond_frames_in_attn": 2,
+  "mask_corrections": "Blue jersey edge pixels near the scorer matte in frames52\u201369; selected only around the single blue skater against white/gold Bruins. All patched frames require renewed visual review.",
+  "tracking_image_size": 512,
+  "poster_frame": 0,
+  "seed": 0,
+  "allow_empty": [
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136
+  ],
+  "scoring_play_end_frame": 112
+}

@@ -1,0 +1,190 @@
+{
+  "id": "goal-59",
+  "pid": 8482259,
+  "player": "Bobby McMann",
+  "original": "/workspace/who-scored-expansion/originals/goal-59-6366637346112.mp4",
+  "source_sha256": "486c2c0769b034c5c58958ecdf845db3914dbfb936e7ea5f8a1c96f749bad59d",
+  "start": 10.5,
+  "duration": 4.958333333333333,
+  "max_cond_frames_in_attn": 2,
+  "version": "v2",
+  "identity_verification": "Official McMann74, McMANN74 visible on the white Toronto scorer shooting and raising his arms. Cizikas53 crosses the foreground after the shot; other blue Islanders, goalie and Toronto teammate remain visible. Continuous replay with no name graphic.",
+  "tracking_image_size": 512,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        211,
+        278,
+        274,
+        371
+      ],
+      "points": [
+        [
+          247,
+          292
+        ],
+        [
+          248,
+          309
+        ],
+        [
+          240,
+          329
+        ],
+        [
+          250,
+          347
+        ],
+        [
+          235,
+          356
+        ],
+        [
+          298,
+          307
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 39,
+      "box": [
+        671,
+        237,
+        714,
+        321
+      ],
+      "points": [
+        [
+          686,
+          248
+        ],
+        [
+          687,
+          260
+        ],
+        [
+          694,
+          279
+        ],
+        [
+          698,
+          299
+        ],
+        [
+          703,
+          311
+        ],
+        [
+          664,
+          260
+        ],
+        [
+          665,
+          285
+        ],
+        [
+          681,
+          288
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 78,
+      "box": [
+        390,
+        230,
+        459,
+        306
+      ],
+      "points": [
+        [
+          418,
+          243
+        ],
+        [
+          419,
+          256
+        ],
+        [
+          426,
+          273
+        ],
+        [
+          410,
+          293
+        ],
+        [
+          476,
+          273
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 118,
+      "box": [
+        132,
+        102,
+        199,
+        228
+      ],
+      "points": [
+        [
+          158,
+          116
+        ],
+        [
+          160,
+          145
+        ],
+        [
+          161,
+          174
+        ],
+        [
+          182,
+          200
+        ],
+        [
+          166,
+          213
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "poster_frame": 0,
+  "seed": 0,
+  "scoring_play_end_frame": 89
+}
