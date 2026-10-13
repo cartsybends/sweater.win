@@ -1,0 +1,205 @@
+{
+  "id": "goal-55",
+  "pid": 8476979,
+  "player": "Erik Gustafsson",
+  "original": "/workspace/who-scored-expansion/originals/goal-55-6366635424112.mp4",
+  "source_sha256": "defc8bccdf3306176973a2cc4bb1c98b296b06dc22f5f83ddeb1d76f5e40e148",
+  "start": 26.3,
+  "duration": 2.3,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        220,
+        275,
+        352,
+        419
+      ],
+      "points": [
+        [
+          274,
+          285
+        ],
+        [
+          277,
+          294
+        ],
+        [
+          276,
+          303
+        ],
+        [
+          283,
+          322
+        ],
+        [
+          234,
+          297
+        ],
+        [
+          252,
+          350
+        ],
+        [
+          268,
+          378
+        ],
+        [
+          245,
+          405
+        ],
+        [
+          337,
+          402
+        ],
+        [
+          431,
+          286
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        232,
+        273,
+        354,
+        419
+      ],
+      "points": [
+        [
+          285,
+          283
+        ],
+        [
+          285,
+          292
+        ],
+        [
+          289,
+          303
+        ],
+        [
+          290,
+          321
+        ],
+        [
+          243,
+          302
+        ],
+        [
+          274,
+          324
+        ],
+        [
+          266,
+          380
+        ],
+        [
+          245,
+          394
+        ],
+        [
+          338,
+          397
+        ],
+        [
+          438,
+          289
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 31,
+      "box": [
+        111,
+        280,
+        194,
+        405
+      ],
+      "points": [
+        [
+          172,
+          291
+        ],
+        [
+          173,
+          300
+        ],
+        [
+          166,
+          311
+        ],
+        [
+          155,
+          326
+        ],
+        [
+          129,
+          304
+        ],
+        [
+          172,
+          329
+        ],
+        [
+          143,
+          351
+        ],
+        [
+          137,
+          383
+        ],
+        [
+          172,
+          389
+        ],
+        [
+          211,
+          288
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official Gustafsson56, back56 visible on the near-side left point shooter winding up and releasing. Export0\u201331 stops before the camera follows the puck and scorer exits left. Other white Red Wings and blue Columbus skaters remain visible.",
+  "export_frames": 32,
+  "tracking_image_size": 1024
+}

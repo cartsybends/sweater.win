@@ -1,0 +1,244 @@
+{
+  "id": "goal-59",
+  "pid": 8482259,
+  "player": "Bobby McMann",
+  "original": "/workspace/who-scored-expansion/originals/goal-59-6366637346112.mp4",
+  "source_sha256": "486c2c0769b034c5c58958ecdf845db3914dbfb936e7ea5f8a1c96f749bad59d",
+  "start": 34.6,
+  "duration": 2.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        220,
+        103,
+        430,
+        482
+      ],
+      "points": [
+        [
+          392,
+          122
+        ],
+        [
+          391,
+          136
+        ],
+        [
+          392,
+          151
+        ],
+        [
+          318,
+          228
+        ],
+        [
+          308,
+          253
+        ],
+        [
+          390,
+          265
+        ],
+        [
+          399,
+          310
+        ],
+        [
+          281,
+          309
+        ],
+        [
+          345,
+          340
+        ],
+        [
+          265,
+          449
+        ],
+        [
+          350,
+          402
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 31,
+      "box": [
+        269,
+        84,
+        562,
+        448
+      ],
+      "points": [
+        [
+          455,
+          101
+        ],
+        [
+          459,
+          115
+        ],
+        [
+          469,
+          132
+        ],
+        [
+          410,
+          198
+        ],
+        [
+          380,
+          278
+        ],
+        [
+          477,
+          220
+        ],
+        [
+          529,
+          262
+        ],
+        [
+          339,
+          341
+        ],
+        [
+          319,
+          357
+        ],
+        [
+          472,
+          419
+        ],
+        [
+          565,
+          288
+        ],
+        [
+          308,
+          442
+        ],
+        [
+          284,
+          377
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 61,
+      "box": [
+        309,
+        64,
+        587,
+        413
+      ],
+      "points": [
+        [
+          457,
+          84
+        ],
+        [
+          457,
+          95
+        ],
+        [
+          458,
+          107
+        ],
+        [
+          461,
+          182
+        ],
+        [
+          337,
+          109
+        ],
+        [
+          368,
+          141
+        ],
+        [
+          568,
+          185
+        ],
+        [
+          502,
+          281
+        ],
+        [
+          477,
+          335
+        ],
+        [
+          496,
+          371
+        ],
+        [
+          492,
+          391
+        ],
+        [
+          602,
+          258
+        ],
+        [
+          570,
+          358
+        ],
+        [
+          716,
+          369
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official McMann74, McMANN74 visible on the white Toronto scorer shooting and raising his arms. Cizikas53 crosses the foreground after the shot; other blue Islanders, goalie and Toronto teammate remain visible. Continuous replay with no name graphic.",
+  "export_frames": 54
+}

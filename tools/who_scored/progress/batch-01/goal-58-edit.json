@@ -1,0 +1,218 @@
+{
+  "id": "goal-58",
+  "pid": 8481013,
+  "player": "Jonatan Berggren",
+  "original": "/workspace/who-scored-expansion/originals/goal-58-6366638650112.mp4",
+  "source_sha256": "249032b5ffecc394df6060fc2f66e5a6b05dd9c6e1da7fde51eb8e6887620ce9",
+  "start": 44.8,
+  "duration": 2.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        545,
+        239,
+        666,
+        441
+      ],
+      "points": [
+        [
+          566,
+          252
+        ],
+        [
+          566,
+          262
+        ],
+        [
+          567,
+          274
+        ],
+        [
+          606,
+          306
+        ],
+        [
+          565,
+          338
+        ],
+        [
+          622,
+          353
+        ],
+        [
+          584,
+          408
+        ],
+        [
+          651,
+          393
+        ],
+        [
+          947,
+          82
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 25,
+      "box": [
+        536,
+        216,
+        666,
+        414
+      ],
+      "points": [
+        [
+          577,
+          229
+        ],
+        [
+          577,
+          239
+        ],
+        [
+          578,
+          250
+        ],
+        [
+          609,
+          278
+        ],
+        [
+          548,
+          320
+        ],
+        [
+          570,
+          310
+        ],
+        [
+          623,
+          312
+        ],
+        [
+          607,
+          331
+        ],
+        [
+          565,
+          390
+        ],
+        [
+          636,
+          358
+        ],
+        [
+          906,
+          147
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 49,
+      "box": [
+        498,
+        222,
+        708,
+        415
+      ],
+      "points": [
+        [
+          543,
+          240
+        ],
+        [
+          543,
+          251
+        ],
+        [
+          546,
+          261
+        ],
+        [
+          572,
+          270
+        ],
+        [
+          521,
+          286
+        ],
+        [
+          541,
+          291
+        ],
+        [
+          623,
+          327
+        ],
+        [
+          565,
+          351
+        ],
+        [
+          546,
+          392
+        ],
+        [
+          670,
+          320
+        ],
+        [
+          681,
+          321
+        ],
+        [
+          915,
+          372
+        ],
+        [
+          173,
+          276
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official Berggren48, BERGGREN48 visible on the lone white Detroit rush skater carrying across the blue line and shooting. Defender, goalie and referee remain visible; continuous clear rush replay."
+}

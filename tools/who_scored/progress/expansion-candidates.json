@@ -821,6 +821,19 @@
           "source_video_id": "6366637318112",
           "discrete_video_id": "6366637314112",
           "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020790,
+          "date": "2025-01-26",
+          "period": 2,
+          "time_in_period": "12:16",
+          "player": "Ridly Greig",
+          "official_goal_scorer": "Ridly Greig",
+          "team": "OTT",
+          "source": "https://nhl.com/video/uta-ott-greig-scores-shg-against-karel-vejmelka-6367805124112",
+          "source_video_id": "6367805124112",
+          "discrete_video_id": "6367806293112",
+          "goal_modifier": "none"
         }
       ]
     },

@@ -1,0 +1,244 @@
+{
+  "id": "goal-56",
+  "pid": 8479337,
+  "player": "Alex DeBrincat",
+  "original": "/workspace/who-scored-expansion/originals/goal-56-6366634577112.mp4",
+  "source_sha256": "8384ac2676d6de8fcf9a28e84569a0594c63b942fac12813452b93fcd2360bc3",
+  "start": 29.8,
+  "duration": 1.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        126,
+        343,
+        259,
+        540
+      ],
+      "points": [
+        [
+          224,
+          364
+        ],
+        [
+          225,
+          374
+        ],
+        [
+          225,
+          385
+        ],
+        [
+          195,
+          431
+        ],
+        [
+          169,
+          379
+        ],
+        [
+          243,
+          489
+        ],
+        [
+          218,
+          477
+        ],
+        [
+          195,
+          506
+        ],
+        [
+          161,
+          535
+        ],
+        [
+          201,
+          529
+        ],
+        [
+          503,
+          341
+        ],
+        [
+          942,
+          411
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 21,
+      "box": [
+        226,
+        162,
+        434,
+        429
+      ],
+      "points": [
+        [
+          381,
+          175
+        ],
+        [
+          381,
+          185
+        ],
+        [
+          381,
+          195
+        ],
+        [
+          354,
+          246
+        ],
+        [
+          393,
+          287
+        ],
+        [
+          315,
+          203
+        ],
+        [
+          324,
+          305
+        ],
+        [
+          279,
+          355
+        ],
+        [
+          255,
+          406
+        ],
+        [
+          379,
+          365
+        ],
+        [
+          399,
+          399
+        ],
+        [
+          489,
+          147
+        ],
+        [
+          625,
+          319
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 42,
+      "box": [
+        121,
+        189,
+        346,
+        415
+      ],
+      "points": [
+        [
+          144,
+          205
+        ],
+        [
+          149,
+          216
+        ],
+        [
+          150,
+          226
+        ],
+        [
+          176,
+          259
+        ],
+        [
+          147,
+          341
+        ],
+        [
+          179,
+          247
+        ],
+        [
+          188,
+          258
+        ],
+        [
+          210,
+          295
+        ],
+        [
+          193,
+          390
+        ],
+        [
+          327,
+          383
+        ],
+        [
+          267,
+          167
+        ],
+        [
+          277,
+          291
+        ],
+        [
+          405,
+          217
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official DeBrincat93, DEBRINCAT93 on the near-side white Detroit skater receiving and shooting, then following toward the crease. Johnson3 crossing the foreground, Provorov9 and the goalie remain visible. Poster12 avoids the cropped opening.",
+  "poster_frame": 12
+}

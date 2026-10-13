@@ -1,0 +1,233 @@
+{
+  "id": "goal-61",
+  "pid": 8478449,
+  "player": "Roope Hintz",
+  "original": "/workspace/who-scored-expansion/originals/goal-61-6366635080112.mp4",
+  "source_sha256": "8290bd2191853f69b6a000ea6cb12524c4b4a673b3b3a8c45e4d91c6f1b8b16c",
+  "start": 35.2,
+  "duration": 2.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        548,
+        325,
+        704,
+        489
+      ],
+      "points": [
+        [
+          602,
+          336
+        ],
+        [
+          606,
+          346
+        ],
+        [
+          601,
+          358
+        ],
+        [
+          642,
+          374
+        ],
+        [
+          577,
+          428
+        ],
+        [
+          658,
+          415
+        ],
+        [
+          654,
+          432
+        ],
+        [
+          613,
+          472
+        ],
+        [
+          680,
+          467
+        ],
+        [
+          707,
+          469
+        ],
+        [
+          361,
+          316
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 26,
+      "box": [
+        335,
+        308,
+        446,
+        516
+      ],
+      "points": [
+        [
+          366,
+          320
+        ],
+        [
+          370,
+          332
+        ],
+        [
+          376,
+          342
+        ],
+        [
+          383,
+          374
+        ],
+        [
+          357,
+          418
+        ],
+        [
+          433,
+          384
+        ],
+        [
+          396,
+          429
+        ],
+        [
+          374,
+          488
+        ],
+        [
+          377,
+          507
+        ],
+        [
+          412,
+          486
+        ],
+        [
+          640,
+          266
+        ],
+        [
+          435,
+          164
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 52,
+      "box": [
+        287,
+        293,
+        419,
+        492
+      ],
+      "points": [
+        [
+          364,
+          309
+        ],
+        [
+          364,
+          319
+        ],
+        [
+          364,
+          330
+        ],
+        [
+          357,
+          367
+        ],
+        [
+          318,
+          381
+        ],
+        [
+          397,
+          370
+        ],
+        [
+          351,
+          421
+        ],
+        [
+          314,
+          453
+        ],
+        [
+          303,
+          473
+        ],
+        [
+          356,
+          448
+        ],
+        [
+          346,
+          461
+        ],
+        [
+          602,
+          344
+        ],
+        [
+          641,
+          302
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official Hintz24, HINTZ24 visible on the net-front green Stars scorer throughout the shot and deflection sequence. Robertson21 shooting in the background, Ottawa defenders and Merilainen1 remain visible. Track the credited scorer24, not the point shooter21."
+}

@@ -26,8 +26,11 @@ python tools/who_scored/pipeline.py track EDIT.json --checkpoint MODEL.pt --thre
 python tools/who_scored/pipeline.py render EDIT.json --output static/who-scored
 ```
 
-Reviewed prompts select only the credited scorer. Explicit per-frame polygons,
-ellipses and lines fix occlusion gaps. `allow_empty` is permitted only after a
+Reviewed prompts select only the credited scorer.
+`tracking_image_size` optionally selects 1024 instead of the default 512 when
+small hands or helmet edges need more detail; CPU tracking takes longer. Changing
+the resolution invalidates the tracking signature and requires retracking.
+Explicit per-frame polygons, ellipses and lines fix occlusion gaps. `allow_empty` is permitted only after a
 verified exit from the camera. `export_frames` shortens a reviewed source sequence
 without reusing any frames beyond the cap. Goal 35's corrections are also supported
 by `patch_goal35.py`. Always compare every original/masked frame after retracking.

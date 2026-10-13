@@ -23,7 +23,10 @@ def work_dir(path, edit):
 
 def tracking_signature(edit):
     keys=['id','original','start','duration','crop','source_sha256','anchors','seed','allow_empty','max_cond_frames_in_attn']
-    return hashlib.sha256(json.dumps({k:edit.get(k) for k in keys},sort_keys=True).encode()).hexdigest()
+    values={k:edit.get(k) for k in keys}
+    if 'tracking_image_size' in edit:
+        values['tracking_image_size']=edit['tracking_image_size']
+    return hashlib.sha256(json.dumps(values,sort_keys=True).encode()).hexdigest()
 
 def prepare(path, edit):
     from PIL import Image, ImageDraw
@@ -63,9 +66,12 @@ def track(path,edit,args):
     max_conditioning = edit.get('max_cond_frames_in_attn', -1)
     if max_conditioning != -1 and (not isinstance(max_conditioning, int) or max_conditioning < 2):
         raise ValueError('SAM2 requires unlimited or at least two conditioning frames')
+    image_size=edit.get('tracking_image_size',512)
+    if type(image_size) is not int or image_size not in (512,1024):
+        raise ValueError('Tracking image size must be 512 or 1024')
     predictor=build_sam2_video_predictor('configs/sam2.1/sam2.1_hiera_t.yaml',args.checkpoint,
         device=device,apply_postprocessing=False,
-        hydra_overrides_extra=['++model.image_size=512','++model.fill_hole_area=0',
+        hydra_overrides_extra=[f'++model.image_size={image_size}','++model.fill_hole_area=0',
                               f'++model.max_cond_frames_in_attn={max_conditioning}'])
     count=frame_count(edit,full_window=True);start=time.time()
     for name in ['mask-stats.json','tracking-complete.json']:(work/name).unlink(missing_ok=True)
