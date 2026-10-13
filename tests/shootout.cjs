@@ -113,22 +113,25 @@ function sleeveIntersections(points){
 for(let read=0;read<5;read++)for(let i=0;i<=1000;i++){
   const p=run(`shootPose(${read},${i/1000})`),stick=run(`shootStick(shootPose(${read},${i/1000}))`);
   for(const side of ['L','R']){
-    const s=p['shoulder'+side],e=p['elbow'+side],h=p['wrist'+side],sign=side==='L'?-1:1,fore=Math.hypot(h[0]-e[0],h[1]-e[1]);
-    const a=[e[0]-s[0],e[1]-s[1]],b=[h[0]-e[0],h[1]-e[1]],bend=Math.atan2(a[0]*b[1]-a[1]*b[0],a[0]*b[0]+a[1]*b[1]);
-    assert(sign*a[0]>=12.99&&Math.hypot(...a)<70,'The shoulder lifts without lengthening or crossing its upper arm');
-    assert(sign*bend>0&&Math.abs(bend)<2.27,'The elbow stays on one bend branch and cannot fold backward');
-    assert(b[1]>10,'The forearm never reverses above its elbow during the high blocker transition');
-    assert(sign*h[0]>30&&fore>=12&&fore<=50,'Wrists connect to the correct cuff without collapsing or crossing the torso');
-    const expected=run(`shOffset([${side==='L'?p.blocker:p.glove}],[${side==='L'?'-5,-42':'-33.04,-15.34'}],${side==='L'?p.blockerAngle:p.gloveAngle})`);
-    assert(Math.hypot(h[0]-expected[0],h[1]-expected[1])<1e-9,'The sleeve ends at the actual hand entrance');
+    const s=p['shoulder'+side],e=p['elbow'+side],h=p['wrist'+side],sign=side==='L'?-1:1,depth=p['elbowDepth'+side];
+    const a=[e[0]-s[0],e[1]-s[1],depth],b=[h[0]-e[0],h[1]-e[1],-depth],upper=Math.hypot(...a),fore=Math.hypot(...b),bend=Math.acos(a.reduce((sum,v,k)=>sum+v*b[k],0)/(upper*fore));
+    assert(Math.abs(upper-run(`SH_RIG.upper${side}`))<1e-8&&Math.abs(fore-run(`SH_RIG.fore${side}`))<1e-8,'Both arm bones retain their lengths as the forearm turns toward the shooter');
+    assert(bend>1&&bend<2.27,'The actual elbow angle stays in a natural flexion range through its full shoulder rotation');
+    assert(sign*h[0]>30&&Math.hypot(b[0],b[1])>17,'Projected wrists cannot collapse or cross the torso');
+    const expected=run(`shOffset([${side==='L'?p.blocker:p.glove}],SH_RIG.${side==='L'?'blockerCuff':'gloveCuff'},${side==='L'?p.blockerAngle:p.gloveAngle})`);
+    assert(Math.hypot(h[0]-expected[0],h[1]-expected[1])<1e-9,'The sleeve ends at the wrist behind the padded hand');
+    const shoulder=run(`shRotate(SH_RIG.shoulder${side},${p.lean},SH_RIG.hip)`);
+    assert(Math.hypot(s[0]-shoulder[0],s[1]-shoulder[1]-p.drop)<1e-9,'The shoulder root follows the torso transform exactly');
     {
       const sleeve=run(`shootSleeve(shootPose(${read},${i/1000}),"${side}")`),outline=[...sleeve.points.map(q=>q.left),...sleeve.points.slice().reverse().map(q=>q.right)];
       assert.equal(sleeveIntersections(outline),0,'The single sleeve outline cannot cross itself or form a pinched elbow');
       assert(sleeve.outline.endsWith(' Z')&&!/NaN|Infinity/.test(sleeve.outline),'The sleeve remains a closed, continuous silhouette');
+      assert(sleeve.yoke.endsWith(' Z')&&!/NaN|Infinity/.test(sleeve.yoke),'The shoulder yoke stays part of the continuous sleeve');
     }
     const angle=Math.abs(p['pad'+side])*Math.PI/180,k=p['knee'+side];
     assert(Math.abs(k[1]+35*Math.sin(angle)+163*Math.cos(angle)-390)<1e-8,'Skates and pads remain on the ice through the drop');
   }
+  assert(p.blockerAngle>=-12&&p.blockerAngle<=17,'The blocker stays upright while the shoulder and elbow lift the hand');
   const reference=run('SH_STICK'),[a,b,c,d,x,y]=stick.matrix,[gx,gy]=reference.grip;
   assert(Math.hypot(a*gx+c*gy+x-stick.grip[0],b*gx+d*gy+y-stick.grip[1])<1e-8,'The photographed paddle shoulder stays inside the blocker grip');
   const theta=(p.stickTurn||0)*Math.PI/180,zx=reference.scale*Math.sin(theta)*stick.depth,zy=reference.scale*Math.cos(theta)*stick.depth;
@@ -141,14 +144,17 @@ for(let read=0;read<5;read++)for(let i=0;i<=1000;i++){
 for(const side of [0,1])for(const w of [-.8,0,.8])assert(run(`shootPostPath(${side},${w})`).startsWith(`M${side?506:134} 358 `),'Posts remain anchored during a ring');
 assert(svg.indexOf('id="shBody"')<svg.indexOf('id="shSleeveL"'),'Continuous sleeves stay in front of the torso');
 assert(svg.indexOf('id="shSleeveL"')<svg.indexOf('id="shBlocker"'),'Equipment stays in front of the wrist');
+for(const id of ['shShoulderYokeL','shShoulderYokeR','shBlockerPalm','shBlockerThumb','shGlovePalm','shGloveHandThumb'])assert(svg.includes(`id="${id}"`),'Each shoulder and hand has visible artwork');
+assert(svg.indexOf('id="shSleeveL"')<svg.indexOf('id="shBlockerHand"')&&svg.indexOf('id="shBlockerHand"')<svg.indexOf('id="shBlocker"'),'The blocker hand bridges the jersey cuff and the board');
+assert(svg.indexOf('id="shSleeveR"')<svg.indexOf('id="shGloveHand"')&&svg.indexOf('id="shGloveHand"')<svg.indexOf('id="shGlove"'),'The catcher encloses a padded palm behind its cuff');
 assert(!/id="sh(?:Forearm|Arm[LR]|Elbow|StickBlade)/.test(svg),'Separate arm modules and independently animated blade pieces are gone');
-const photo=svg.match(/<image[^>]+id="shStickPhoto"[^>]+href="data:image\/png;base64,([^"]+)"/);
-assert(photo,'The stick uses the supplied photograph inside its traced silhouette');
-assert.equal(crypto.createHash('sha256').update(Buffer.from(photo[1],'base64')).digest('hex'),'48d325a840b917bb07a15c93b1f16cfb90b7c1ccabc77949de96e4d5e1c5c2cb','Surface details and proportions must come from the unmodified reference, not replacement artwork');
+const photo=svg.match(/<image[^>]+id="shStickPhoto"[^>]+href="data:image\/webp;base64,([^"]+)"/);
+assert(photo,'The plain stick finish stays inside its reference silhouette');
+assert.equal(crypto.createHash('sha256').update(Buffer.from(photo[1],'base64')).digest('hex'),'60f627d29b80aec4d12bfc010d5d41967643535e22adfbf4577b3b6f732cc4c4','The stick keeps the reviewed unbranded finish');
 assert.equal([...svg.matchAll(/class="sh-target-hit"[^>]*r="47"/g)].length,5,'Every on-net target retains a large touch area');
 const css=fs.readFileSync('static/shootout/styles.css','utf8');
 function luminance(hex){return hex.match(/[0-9a-f]{2}/gi).map(s=>parseInt(s,16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);}
-assert((luminance('ffd261')+.05)/(luminance('152c40')+.05)>9);
+assert((luminance('f4f4f5')+.05)/(luminance('171719')+.05)>9);
 assert.match(css,/\.sh-shot\{[^}]*min-height:50px/);
 
 for(const fps of [15,30,60,144]){
@@ -156,7 +162,8 @@ for(const fps of [15,30,60,144]){
     choose(2);assert.equal(context.S.shoot.guesses.length,i+1,'The accepted shot is stored immediately');assert.equal(run('shootUI.phase'),'shot');assert.equal($('shNext').hidden,true);assert.equal(marks[i],null,'The outcome marker waits for the shot');
     $('shNet').events.click({target:zones[3]});assert.equal(context.S.shoot.guesses.length,i+1,'Repeated taps cannot add a shot');
     if(i===4){assert.equal(context.S.shoot.over,false);assert.equal(finishes.length,0,'The final result waits for playback');}
-    drain(fps);assert.equal(run('shootUI.phase'),'result');assert(marks[i]);assert.equal($('shPuckFront').attrs.opacity,'0','The scored puck is behind the goal frame');assert.equal($('shPuckShadowFront').attrs.opacity,'0','There is no front shadow left after a goal');
+    const beforePlayback=now;drain(fps);assert.equal(run('shootUI.phase'),'result');assert(marks[i]);assert.equal($('shPuckFront').attrs.opacity,'0','The scored puck is behind the goal frame');assert.equal($('shPuckShadowFront').attrs.opacity,'0','There is no front shadow left after a goal');
+    assert(now-beforePlayback<2000+1000/fps,'A full shot settles in under two seconds at every playback frame rate');
     if(i<4)$('shNext').onclick();
   }
   assert.equal(context.S.shoot.over,true);assert.equal(finishes.length,1);assert.equal(finishes[0].won,true);assert.equal(saves,5);

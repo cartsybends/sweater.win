@@ -3490,14 +3490,16 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="shdots" id="shDots"></div>
     <!--__SHOOTOUT_SCENE__-->
     <div class="sh-aim" id="shAim" hidden>
-      <p class="sh-aim-title">Choose your shot</p>
-      <p class="sh-aim-note">Tap a gold target or choose a spot below.</p>
-      <div class="sh-shots" role="group" aria-label="Shot placement">
-        <button type="button" class="sh-shot" data-z="0">High blocker</button>
-        <button type="button" class="sh-shot" data-z="1">High glove</button>
-        <button type="button" class="sh-shot" data-z="2">Low blocker</button>
-        <button type="button" class="sh-shot" data-z="3">Low glove</button>
-        <button type="button" class="sh-shot" data-z="4">Five-hole</button>
+      <div class="sh-aim-head">
+        <p class="sh-aim-title" id="shAimTitle">Choose your shot</p>
+        <p class="sh-aim-note" id="shAimNote">Select a target on the net or a spot below.</p>
+      </div>
+      <div class="sh-shots" role="group" aria-labelledby="shAimTitle" aria-describedby="shAimNote">
+        <button type="button" class="sh-shot" data-z="0"><svg class="sh-shot-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V5h18v15M3 20h18" /><circle cx="7" cy="9" r="2" /></svg><span>High blocker</span></button>
+        <button type="button" class="sh-shot" data-z="1"><svg class="sh-shot-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V5h18v15M3 20h18" /><circle cx="17" cy="9" r="2" /></svg><span>High glove</span></button>
+        <button type="button" class="sh-shot" data-z="2"><svg class="sh-shot-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V5h18v15M3 20h18" /><circle cx="7" cy="16" r="2" /></svg><span>Low blocker</span></button>
+        <button type="button" class="sh-shot" data-z="3"><svg class="sh-shot-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V5h18v15M3 20h18" /><circle cx="17" cy="16" r="2" /></svg><span>Low glove</span></button>
+        <button type="button" class="sh-shot" data-z="4"><svg class="sh-shot-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V5h18v15M3 20h18" /><circle cx="12" cy="17" r="2" /></svg><span>Five-hole</span></button>
       </div>
     </div>
     <p class="ttq" id="shQ"></p>
@@ -6120,7 +6122,7 @@ G.shoot = {
     else if (showResult) {
       const out = this.outcome(t, st.guesses[lastI], lastI);
       msg = out === "goal" ? "Goal! 🚨" : out === "save" ? "Saved by the goalie 🧤" : "Wrong answer, so no shot ❌";
-    } else if (aiming) msg = "Choose a gold target or use the shot buttons.";
+    } else if (aiming) msg = "Choose a target or use the shot buttons.";
     else if (!st.over) msg = "Answer right to earn a shot.";
     $("shMsg").textContent = msg;
     $("shNext").hidden = !(showResult && !st.over);

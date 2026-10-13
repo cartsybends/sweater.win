@@ -1,11 +1,13 @@
 // Equipment contours and ready joints follow the supplied frontal reference photograph.
 const NET_ZONES=[[179,150],[461,150],[179,320],[461,320],[320,331]];
 const SH_GOAL={left:134,right:506,top:110,bottom:358,postRadius:6,horizon:-32,scale:31/6,depth:40,roofDepth:22};
-const SH_RIG={ground:390,padHalfWidth:35,padLength:163,hip:[0,228],shoulderL:[-68,137],shoulderR:[53,134],blockerCuff:[-5,-42],gloveCuff:[-33.04,-15.34],grip:[19,-1]};
-// Both texture and outline come from the supplied Warrior M3 photo, in its original pixel coordinates.
+const SH_RIG={ground:390,padHalfWidth:35,padLength:163,hip:[0,228],shoulderL:[-53,139],shoulderR:[53,139],blockerCuff:[23,-29],gloveCuff:[-44,-18],upperL:55,foreL:50,upperR:44,foreR:44,grip:[19,-1]};
+// The unbranded finish uses the reference stick's grip and traced silhouette.
 const SH_STICK={grip:[362,502],scale:0.293931181442,bounds:[[41,23],[965,905],[969,909],[971,912],[973,916],[975,922],[977,930],[978,936],[979,943],[979,962],[978,965],[976,969],[973,972],[971,973],[968,974],[958,975],[743,978],[692,978],[686,977],[678,975],[669,972],[661,968],[656,965],[652,962],[646,957],[644,955],[639,949],[621,925],[600,896],[590,882],[561,841],[491,742],[363,560],[356,550],[354,547],[22,37],[21,35],[21,32],[25,28],[31,23],[34,21],[38,21]]};
 // World units are inches; gravity and time are slowed consistently for readable shot playback.
 const SH_PHYS={gravity:180,step:1/240,startZ:-18,radius:12.2/(31/6),halfHeight:.55,netRestitution:.07,netTangent:.26,iceRestitution:.18,iceFriction:9};
+// A sharper shot: 300 ms to the goal plane, with keeper and contacts in sync.
+const SH_PLAYBACK_RATE=1.6;
 const shClamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const shLerp=(a,b,u)=>a+(b-a)*u;
 const shEase=u=>{u=shClamp(u);return u*u*u*(u*(u*6-15)+10);};
@@ -33,21 +35,26 @@ function shootReferenceContact(read){
   if(!SH_CONTACTS[read]){const p={release:.16,launch:shootLaunch(NET_ZONES[read])},w=shootFlight(p,.592);SH_CONTACTS[read]=shProject(w.x,w.y,w.z);}
   return SH_CONTACTS[read];
 }
+function shootArm(shoulder,wrist,side,lift){
+  const [dx,dy]=[wrist[0]-shoulder[0],wrist[1]-shoulder[1]],distance=Math.hypot(dx,dy),upper=SH_RIG['upper'+side],fore=SH_RIG['fore'+side];
+  const along=(upper*upper-fore*fore+distance*distance)/(2*distance),height=Math.sqrt(Math.max(0,upper*upper-along*along));
+  // The blocker rotates its upper arm as it rises. The elbow moves forward in
+  // depth, so the projected forearm can point up without reversing the elbow.
+  const plane=side==='L'?lift*Math.PI*.62:0,bend=(side==='L'?1:-1)*Math.cos(plane);
+  return{elbow:[shoulder[0]+dx/distance*along-dy/distance*height*bend,shoulder[1]+dy/distance*along+dx/distance*height*bend],depth:height*Math.sin(plane)};
+}
 function shootPose(read,u=0,impact=0){
   const low=read>=2,side=read===0||read===2?-1:read===1||read===3?1:0,dx=side*(low?57:12);
-  const drop=(low?88:2)*u,lean=side*(low?3:4)*u,contact=shootReferenceContact(read),push=low?0:Math.sin(u*Math.PI);
+  const drop=(low?88:2)*u,lean=-side*(low?3:4)*u,contact=shootReferenceContact(read),push=low?0:Math.sin(u*Math.PI);
   const padL=shLerp(31+(side>0?5:-2)*push,84,low?u:0),padR=shLerp(-31+(side<0?-5:2)*push,-84,low?u:0);
   const shoulders=[shRotate(SH_RIG.shoulderL,lean,SH_RIG.hip),shRotate(SH_RIG.shoulderR,lean,SH_RIG.hip)].map(p=>[p[0],p[1]+drop]);
-  const blockerAngle=shLerp(17,read===0?-82:low?7:17,u),gloveAngle=shLerp(0,read===1?-50:low?8:0,u);
+  const blockerAngle=shLerp(17,read===0?-12:low?7:17,u),gloveAngle=shLerp(0,read===1?-50:low?8:0,u);
   const blocker=shPoint([-100.3,245.49],read===0?[contact[0]-320-dx,contact[1]]:low?[-93,304]:[-101,247],u);
   const glove=shPoint([103.84,207.14],read===1?[contact[0]-320-dx,contact[1]]:low?[99,293]:[104,208],u);
   blocker[1]+=impact*1.1;glove[1]+=impact*1.1;
-  // Lift the elbow with the hand. The projected forearm stays in front of the body
-  // and on the same bend branch, including the entire blocker rotation and recovery.
-  const elbowL=[shoulders[0][0]-shLerp(28,read===0?66:low?24:28,u),shoulders[0][1]+shLerp(50,read===0?-16:low?12:50,u)];
-  const elbowR=[shoulders[1][0]+shLerp(13,read===1?26:low?20:20,u),shoulders[1][1]+shLerp(33,read===1?6:low?20:28,u)];
-  return{x:dx*u,drop,lean,shoulderL:shoulders[0],shoulderR:shoulders[1],elbowL,elbowR,blocker,glove,
-    wristL:shOffset(blocker,SH_RIG.blockerCuff,blockerAngle),wristR:shOffset(glove,SH_RIG.gloveCuff,gloveAngle),
+  const wristL=shOffset(blocker,SH_RIG.blockerCuff,blockerAngle),wristR=shOffset(glove,SH_RIG.gloveCuff,gloveAngle);
+  const armL=shootArm(shoulders[0],wristL,'L',read===0?u:0),armR=shootArm(shoulders[1],wristR,'R',0);
+  return{x:dx*u,drop,lean,shoulderL:shoulders[0],shoulderR:shoulders[1],elbowL:armL.elbow,elbowR:armR.elbow,elbowDepthL:armL.depth,elbowDepthR:armR.depth,blocker,glove,wristL,wristR,
     kneeL:[shLerp(-45+(side>0?-5:2)*push,read===4?-8:-20,low?u:0),shPadY(padL)],
     kneeR:[shLerp(45+(side<0?5:-2)*push,read===4?8:20,low?u:0),shPadY(padR)],padL,padR,
     head:side*3*u,blockerAngle,gloveAngle,gloveClose:read===1?impact:0,absorb:impact,stickTurn:read===0?-12*u:read===1?4*u:0};
@@ -59,20 +66,21 @@ function shootSleeve(p,side){
   const v=unit(s,e),w=unit(e,h),tangent=unit([0,0],[v[0]+w[0],v[1]+w[1]]);
   const plus=(a,b,k)=>[a[0]+b[0]*k,a[1]+b[1]*k];
   // A single cubic drapes the jersey over the joints. It has no elbow cap or limb seam.
-  const curve=[s,shPoint(s,e,.85),shPoint(h,e,.85),h];
+  const curve=[s,shPoint(s,e,.65),shPoint(h,e,.65),h];
   const at=(u)=>{
     const t=u,q=1-t,c=curve;
     const point=[0,1].map(k=>q*q*q*c[0][k]+3*q*q*t*c[1][k]+3*q*t*t*c[2][k]+t*t*t*c[3][k]);
     const d=[0,1].map(k=>3*q*q*(c[1][k]-c[0][k])+6*q*t*(c[2][k]-c[1][k])+3*t*t*(c[3][k]-c[2][k]));
-    const n=unit([0,0],[-d[1],d[0]]),width=shLerp(21,12.5,shEase(t));
+    const n=unit([0,0],[-d[1],d[0]]),width=shLerp(21,10.5,shEase(t));
     return{point,n,left:plus(point,n,width),right:plus(point,n,-width)};
   };
   const points=Array.from({length:33},(_,i)=>at(i/32)),fmt=a=>a.map(shNumber).join(' '),left=points.map(q=>q.left),right=points.map(q=>q.right);
   const outline='M'+fmt(left[0])+left.slice(1).map(q=>'L'+fmt(q)).join(' ')+` Q${fmt(plus(h,w,3))} ${fmt(right.at(-1))} `+right.slice(0,-1).reverse().map(q=>'L'+fmt(q)).join(' ')+` Q${fmt(plus(s,v,-18))} ${fmt(left[0])} Z`;
   const band=Array.from({length:7},(_,i)=>at(shLerp(.68,.83,i/6))),stripe='M'+fmt(band[0].left)+band.slice(1).map(q=>'L'+fmt(q.left)).join(' ')+' '+band.slice().reverse().map(q=>'L'+fmt(q.right)).join(' ')+' Z';
+  const shoulder=points.slice(0,9),yoke='M'+fmt(shoulder[0].left)+shoulder.slice(1).map(q=>'L'+fmt(q.left)).join(' ')+' '+shoulder.slice().reverse().map(q=>'L'+fmt(q.right)).join(' ')+' Z';
   const fold=at(.46),a=plus(fold.point,fold.n,-12),b=plus(fold.point,fold.n,9),c=plus(shPoint(a,b,.5),tangent,3.5);
   const seam=at(.25),last=at(.90),seamA=plus(seam.point,seam.n,-15),seamB=plus(last.point,last.n,-9);
-  return{outline,stripe,points,folds:`M${fmt(a)} Q${fmt(c)} ${fmt(b)} M${fmt(seamA)} Q${fmt(plus(e,fold.n,-13))} ${fmt(seamB)}`,shade:[plus(e,fold.n,-23),plus(e,fold.n,23)]};
+  return{outline,stripe,yoke,points,folds:`M${fmt(a)} Q${fmt(c)} ${fmt(b)} M${fmt(seamA)} Q${fmt(plus(e,fold.n,-13))} ${fmt(seamB)}`,shade:[plus(e,fold.n,-23),plus(e,fold.n,23)]};
 }
 function shootNetBoundary(w){
   const a=36-SH_PHYS.radius,d=40-18*shClamp(w.y/48)-SH_PHYS.radius;
@@ -215,11 +223,13 @@ function shootPaint(frame){
     a('shPad'+side,'transform',`translate(${k.map(shNumber).join(' ')}) rotate(${shNumber(p['pad'+side])})`);
     a('shSleeve'+side,'d',sleeve.outline);a('shSleeveClip'+side,'d',sleeve.outline);
     a('shSleeveStripe'+side,'d',sleeve.stripe);a('shSleeveFolds'+side,'d',sleeve.folds);
+    a('shShoulderYoke'+side,'d',sleeve.yoke);
     for(const [i,point]of sleeve.shade.entries()){a('shSleeveGradient'+side,'x'+(i+1),point[0]);a('shSleeveGradient'+side,'y'+(i+1),point[1]);}
   }
   a('shBlocker','transform',`translate(${p.blocker.map(shNumber).join(' ')}) rotate(${shNumber(p.blockerAngle)})`);
   a('shGlove','transform',`translate(${p.glove.map(shNumber).join(' ')}) rotate(${shNumber(p.gloveAngle)})`);
   a('shBlockerHand','transform',`translate(${p.blocker.map(shNumber).join(' ')}) rotate(${shNumber(p.blockerAngle)})`);
+  a('shGloveHand','transform',`translate(${p.glove.map(shNumber).join(' ')}) rotate(${shNumber(p.gloveAngle)})`);
   a('shGloveThumb','transform',`rotate(${shNumber(p.gloveClose*13)} -33 -15)`);
   a('shGlovePocket','transform',`translate(-33 -15) scale(${shNumber(1-p.gloveClose*.18)} 1) translate(33 15)`);
   const stick=shootStick(p);a('shStick','transform',`matrix(${stick.matrix.map(x=>Number(x.toFixed(6))).join(' ')})`);
@@ -247,7 +257,7 @@ function shootAnimate(zone,keep,seed,onComplete){
   shootCancelAnimation();const plan=shootPlan(zone,keep,seed),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const run={plan,start:null,raf:0,onComplete};shootSceneRun=run;$('shNet').classList.add('shooting');
   const step=now=>{if(shootSceneRun!==run)return;if(run.start===null)run.start=now;
-    const time=reduced?plan.duration:Math.min(plan.duration,(now-run.start)/1000);shootPaint(shootFrame(plan,time));
+    const time=reduced?plan.duration:Math.min(plan.duration,(now-run.start)*SH_PLAYBACK_RATE/1000);shootPaint(shootFrame(plan,time));
     if(time>=plan.duration){shootSceneRun=null;$('shNet').classList.remove('shooting');$('shNet').classList.add('settled');onComplete();return;}
     run.raf=requestAnimationFrame(step);
   };run.raf=requestAnimationFrame(step);return plan;
