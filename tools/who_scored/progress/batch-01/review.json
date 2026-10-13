@@ -318,6 +318,109 @@
       "motion": "Empty-net wrist shot"
     },
     {
+      "id": "goal-43",
+      "pid": 8470613,
+      "frames": 60,
+      "edit_sha256": "3f24e19f64aa43f87638417fc0e64c9309865133f9de8223d588af2a2e451010",
+      "source_sha256": "990cbc0e7d3b737d1cd4d071ffc8dce5d2e0e84b01dde3f9dd71a991e1a03960",
+      "assets": {
+        "masked": "goal-43-masked-v1.mp4",
+        "reveal": "goal-43-original-v1.mp4",
+        "poster": "goal-43-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "22b5b8cd0f4c9ae3ba0dab02f0b09bfffe1d110d2df970e29e3fdd5347c77871",
+        "reveal": "d0eaa4d57dd595d1e92336fe7d293874c59cb222494491d734c0f744d983e055",
+        "poster": "48fa7c34fbc8bd6b55145a071b6f8afef98aaf2cfa63b4912c8de2e0b29e1ca7"
+      },
+      "motion": "Point wrist shot",
+      "status": "reviewed_staged_outside_checkout_not_playable",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 8,
+          "event_id": 136
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59
+          ],
+          "note": "Burns8 receiving and shooting from the near-side point. Every paired frame0–59 visually compared again after added helmet/face prompts at0/12/24/31; helmet, face, torso, gloves, legs and skates covered. Gostisbehere53, opponents and foreground objects remain visible. Export stops before the scorer exits right."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            30,
+            59
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+        }
+      }
+    },
+    {
       "id": "goal-44",
       "pid": 8482113,
       "frames": 45,
@@ -402,6 +505,191 @@
             44
           ],
           "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed."
+        }
+      }
+    },
+    {
+      "id": "goal-45",
+      "pid": 8476958,
+      "frames": 63,
+      "edit_sha256": "e0d171dbae712d921d3490b1329f56319223e315b21ce76d4bd1f7d43de7a8ed",
+      "source_sha256": "afd163b015c716d6519f92ea9928935fddb998bee7ef798dede9bfced99047b4",
+      "assets": {
+        "masked": "goal-45-masked-v1.mp4",
+        "reveal": "goal-45-original-v1.mp4",
+        "poster": "goal-45-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "dcf79141237854289049d18cc6a0207d3113a1470aa4aaead4ea51977898b1bc",
+        "reveal": "966a7a6499de8a3263e478b5a9f625b528a33f2ea00a1fcc068c0c0b270147c7",
+        "poster": "999e4f80797bab5bc0b4a6996f2cc20496b600bb9ff0ed9039acdfbeeeeb8ce3"
+      },
+      "motion": "Slot wrist shot",
+      "status": "reviewed_staged_outside_checkout_not_playable",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 74,
+          "event_id": 576
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62
+          ],
+          "note": "Slavin74 receives from Gostisbehere53, shoots and moves to the crease. Every exported paired frame0–62 visually compared; helmet, torso, gloves, legs and skates covered, including partial occlusion behind Kurashev23. Export stops before the rising scorer overlaps teammate53. Opponents and other teammates remain visible."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            31,
+            62
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+        }
+      }
+    },
+    {
+      "id": "goal-46",
+      "pid": 8480039,
+      "frames": 36,
+      "edit_sha256": "24a4e4e29fa15884af36b72397fb601b1b7c67bd99f5866b76abc40e7198abaa",
+      "source_sha256": "28942c846ad7dec877ddd172700fc4e900124b4c7f2bd9075d27840e6e818834",
+      "assets": {
+        "masked": "goal-46-masked-v1.mp4",
+        "reveal": "goal-46-original-v1.mp4",
+        "poster": "goal-46-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "45fc9a9b36f302c99e090dfe1bcfea0147c2138d0ab63feadce42a101c422341",
+        "reveal": "c5c45777ad3fb3ccaedd62403c87279b87f043e7b4eea53bb1847ca46153bd0a",
+        "poster": "f06ffb31fe3c7f153e29184e53bf9110a8921ab1f1d895f41e33eb46edb7ff91"
+      },
+      "motion": "Kneeling one-timer",
+      "status": "reviewed_staged_outside_checkout_not_playable",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 88,
+          "event_id": 1079
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "note": "Necas88 visible continuously through the foreground one-timer follow-through; NECAS88 visible on his back. All36 paired frames visually compared, covering helmet, torso, raised gloves, legs and skates, including portions cropped by the camera edge. Teammates24/31 and blue Sabres defenders/goalie remain visible. Poster9 shows the scorer away from the first-frame edge."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            18,
+            35
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
         }
       }
     },
@@ -627,6 +915,191 @@
       "status": "reviewed_staged_outside_checkout_not_playable"
     },
     {
+      "id": "goal-49",
+      "pid": 8477496,
+      "frames": 58,
+      "edit_sha256": "073a65bdba6f19b8ed51d880ef5c1aedbd142bdcd42bf722f2443aa26818690e",
+      "source_sha256": "5af55d3e9ef2bcf6928396fea08a4ccd97ab121361fa673d6f3f5fdd65e7731d",
+      "assets": {
+        "masked": "goal-49-masked-v1.mp4",
+        "reveal": "goal-49-original-v1.mp4",
+        "poster": "goal-49-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "9c01536829722a7adef9d03f22b3bb228e13ef07629ba23ccc9f744d899248c9",
+        "reveal": "b8021f7b5f99ad29b4141cf233ee3ba058ec92e8476a62f69e188583fef81740",
+        "poster": "ba58bf0e35c2944888f48d6d21115d8ccee09ff5383423243cbcf92a8511425e"
+      },
+      "motion": "Circle wrist shot",
+      "status": "reviewed_staged_outside_checkout_not_playable",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 28,
+          "event_id": 690
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57
+          ],
+          "note": "Lindholm28 near-side shot and follow-through; LINDHOLM28 visible throughout the selected Feb5 replay. All58 paired frames visually compared: helmet, torso, both gloves, legs and visible skates covered. Marchand63, Coyle13 and Rangers skaters remain visible, as do foreground glass posts and railing where they occlude the scorer. Earlier passer/faceoff windows were rejected."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            29,
+            57
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+        }
+      }
+    },
+    {
+      "id": "goal-50",
+      "pid": 8476880,
+      "frames": 41,
+      "edit_sha256": "412b5b4d4f99fad553d6419a5c59797470db22989d8853af2345b8a12ca3b0cc",
+      "source_sha256": "b7e47bbaf47b869a60adc916f2d2403bd77672dff9bf13f0350f46b4d81cdb43",
+      "assets": {
+        "masked": "goal-50-masked-v1.mp4",
+        "reveal": "goal-50-original-v1.mp4",
+        "poster": "goal-50-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "747bbf39186e01e673e76df8ef51ccdcc6ac8b1b960144d9090439b1dfc19aba",
+        "reveal": "d7602a86cc35112d5029a542b0b1725339d0b9dbfb36031deefd28084bf45ca1",
+        "poster": "dbaa84bed97b51795cce9f36e747681a806bdc6c8af3ea00880024de94a155d7"
+      },
+      "motion": "Net-front deflection",
+      "status": "reviewed_staged_outside_checkout_not_playable",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 43,
+          "event_id": 325
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ],
+          "note": "Wilson43 tips and turns away at the net. All41 original/masked pairs visually compared: helmet, body, gloves, legs and skates covered. Wild23, Faber7, goalie and the foreground crossing red teammate remain visible through overlap; WILSON43 is hidden in every frame."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            20,
+            40
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+        }
+      }
+    },
+    {
       "id": "goal-51",
       "pid": 8477451,
       "frames": 52,
@@ -718,6 +1191,102 @@
             51
           ],
           "note": "Final encoded first/middle/last original/masked pairs visually inspected after the glove correction. Entire streams decoded with identical52-frame silent H.264 timing."
+        }
+      }
+    },
+    {
+      "id": "goal-52",
+      "pid": 8478508,
+      "frames": 53,
+      "edit_sha256": "625b600d8f5002d11a31c6283e8ba721eedb220ff73443919863dc4d159e57e5",
+      "source_sha256": "ba764435e04962dcf444ca1f68f2cebdf8818c247b42ad03884706d20c406289",
+      "assets": {
+        "masked": "goal-52-masked-v1.mp4",
+        "reveal": "goal-52-original-v1.mp4",
+        "poster": "goal-52-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "8a45259a003326c2d8e8dbf11beb0a85ee44532955f53fcf3d28f80e12b5a5c1",
+        "reveal": "365273028d7d739a58605721dbaa9b369e2dae548b6891afa149cdd1ac25b4eb",
+        "poster": "0191bf14c986d35cf53eead52cce91fdbc21d677a67c9cbcb3034a7d4249d69f"
+      },
+      "motion": "Wraparound finish",
+      "status": "reviewed_staged_outside_checkout_not_playable",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 13,
+          "event_id": 485
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "note": "Trenin13 wraps around the goal, finishes and raises both gloves. All53 paired frames compared again after exact helmet/face prompts at8/18/32/40 corrected drift and removed background spots. Helmet, face, torso, both gloves, legs and visible skates covered; red Capitals players, goalie, Carlson74 and foreground objects remain visible."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            26,
+            52
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
         }
       }
     },

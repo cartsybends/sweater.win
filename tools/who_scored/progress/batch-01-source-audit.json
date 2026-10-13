@@ -197,22 +197,22 @@
       "id": "goal-49",
       "pid": 8477496,
       "player": "Elias Lindholm",
-      "game_id": 2024020740,
-      "date": "2025-01-20",
-      "period": 3,
-      "time_in_period": "19:35",
+      "game_id": 2024020859,
+      "date": "2025-02-05",
+      "period": 2,
+      "time_in_period": "15:19",
       "team": "BOS",
-      "source": "https://nhl.com/video/elias-lindholm-with-a-goal-vs-san-jose-sharks-6367409221112",
-      "source_video_id": "6367409221112",
-      "official_event_id": 1112,
+      "source": "https://nhl.com/video/bos-nyr-lindholm-scores-goal-against-igor-shesterkin-6368338624112",
+      "source_video_id": "6368338624112",
+      "official_event_id": 690,
       "jersey": 28,
-      "source_sha256": "6d45dbe2a8d5c8a55451b3e6735b1dd184882aff45a3560dbff2b86787f46d8d",
-      "media_title": "SJS@BOS: Lindholm with empty-net goal vs. San Jose Sharks",
+      "source_sha256": "5af55d3e9ef2bcf6928396fea08a4ccd97ab121361fa673d6f3f5fdd65e7731d",
+      "media_title": "Lindholm puts the Bruins on top ",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 26.9
+      "duration": 51.885
     },
     {
       "id": "goal-50",

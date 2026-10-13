@@ -1,0 +1,169 @@
+{
+  "id": "goal-45",
+  "pid": 8476958,
+  "player": "Jaccob Slavin",
+  "original": "/workspace/who-scored-expansion/originals/goal-45-6368025564112.mp4",
+  "source_sha256": "afd163b015c716d6519f92ea9928935fddb998bee7ef798dede9bfced99047b4",
+  "start": 49.2,
+  "duration": 3.3,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        414,
+        332,
+        558,
+        539
+      ],
+      "points": [
+        [
+          473,
+          355
+        ],
+        [
+          487,
+          403
+        ],
+        [
+          435,
+          457
+        ],
+        [
+          490,
+          492
+        ],
+        [
+          520,
+          530
+        ],
+        [
+          598,
+          309
+        ],
+        [
+          710,
+          180
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        375,
+        267,
+        481,
+        414
+      ],
+      "points": [
+        [
+          449,
+          282
+        ],
+        [
+          450,
+          325
+        ],
+        [
+          418,
+          353
+        ],
+        [
+          401,
+          385
+        ],
+        [
+          385,
+          405
+        ],
+        [
+          473,
+          318
+        ],
+        [
+          487,
+          361
+        ],
+        [
+          512,
+          421
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 78,
+      "box": [
+        229,
+        117,
+        414,
+        273
+      ],
+      "points": [
+        [
+          380,
+          151
+        ],
+        [
+          338,
+          174
+        ],
+        [
+          285,
+          197
+        ],
+        [
+          249,
+          219
+        ],
+        [
+          354,
+          243
+        ],
+        [
+          362,
+          265
+        ],
+        [
+          424,
+          174
+        ],
+        [
+          422,
+          284
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "identity_verification": "Official scorer Slavin74, SLAVIN74 visible on receiving and shooting. Export ends at frame62 before the rising player overlaps with teammate53.",
+  "export_frames": 63
+}

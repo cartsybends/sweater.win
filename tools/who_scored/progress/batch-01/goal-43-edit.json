@@ -1,0 +1,300 @@
+{
+  "id": "goal-43",
+  "pid": 8470613,
+  "player": "Brent Burns",
+  "original": "/workspace/who-scored-expansion/originals/goal-43-6369702340112.mp4",
+  "source_sha256": "990cbc0e7d3b737d1cd4d071ffc8dce5d2e0e84b01dde3f9dd71a991e1a03960",
+  "start": 10.1,
+  "duration": 3.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        266,
+        353,
+        374,
+        489
+      ],
+      "points": [
+        [
+          350,
+          369
+        ],
+        [
+          328,
+          409
+        ],
+        [
+          356,
+          422
+        ],
+        [
+          295,
+          445
+        ],
+        [
+          277,
+          472
+        ],
+        [
+          337,
+          474
+        ],
+        [
+          171,
+          318
+        ],
+        [
+          351,
+          363
+        ],
+        [
+          352,
+          374
+        ],
+        [
+          353,
+          381
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        320,
+        368,
+        386,
+        505
+      ],
+      "points": [
+        [
+          372,
+          378
+        ],
+        [
+          372,
+          386
+        ],
+        [
+          374,
+          392
+        ],
+        [
+          353,
+          434
+        ],
+        [
+          397,
+          383
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        408,
+        361,
+        490,
+        504
+      ],
+      "points": [
+        [
+          476,
+          371
+        ],
+        [
+          476,
+          379
+        ],
+        [
+          478,
+          385
+        ],
+        [
+          448,
+          428
+        ],
+        [
+          501,
+          376
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 31,
+      "box": [
+        480,
+        361,
+        549,
+        508
+      ],
+      "points": [
+        [
+          535,
+          371
+        ],
+        [
+          535,
+          379
+        ],
+        [
+          537,
+          385
+        ],
+        [
+          510,
+          429
+        ],
+        [
+          560,
+          376
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        522,
+        349,
+        627,
+        505
+      ],
+      "points": [
+        [
+          589,
+          368
+        ],
+        [
+          573,
+          402
+        ],
+        [
+          603,
+          440
+        ],
+        [
+          553,
+          449
+        ],
+        [
+          534,
+          487
+        ],
+        [
+          588,
+          494
+        ],
+        [
+          548,
+          335
+        ],
+        [
+          906,
+          359
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 59,
+      "box": [
+        824,
+        276,
+        916,
+        414
+      ],
+      "points": [
+        [
+          875,
+          293
+        ],
+        [
+          874,
+          332
+        ],
+        [
+          855,
+          354
+        ],
+        [
+          880,
+          381
+        ],
+        [
+          896,
+          402
+        ],
+        [
+          671,
+          321
+        ],
+        [
+          744,
+          413
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "identity_verification": "Official scorer Burns8. Number8 visible on the near-side point skater receiving and shooting; Gostisbehere53 at the boards remains visible. Export ends before Burns leaves the right edge.",
+  "crop": [
+    0,
+    0,
+    960,
+    482
+  ],
+  "export_frames": 60,
+  "mask_corrections": "Additional helmet, face and neck prompts at0/12/24/31 after the first review found an uncovered head. Every frame requires renewed comparison."
+}

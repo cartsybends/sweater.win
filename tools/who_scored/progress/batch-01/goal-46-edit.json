@@ -1,0 +1,189 @@
+{
+  "id": "goal-46",
+  "pid": 8480039,
+  "player": "Martin Necas",
+  "original": "/workspace/who-scored-expansion/originals/goal-46-6367154460112.mp4",
+  "source_sha256": "28942c846ad7dec877ddd172700fc4e900124b4c7f2bd9075d27840e6e818834",
+  "start": 35.6,
+  "duration": 1.5,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        0,
+        302,
+        127,
+        520
+      ],
+      "points": [
+        [
+          84,
+          318
+        ],
+        [
+          80,
+          325
+        ],
+        [
+          66,
+          355
+        ],
+        [
+          8,
+          326
+        ],
+        [
+          27,
+          413
+        ],
+        [
+          74,
+          455
+        ],
+        [
+          95,
+          493
+        ],
+        [
+          210,
+          174
+        ],
+        [
+          280,
+          124
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 18,
+      "box": [
+        225,
+        298,
+        379,
+        492
+      ],
+      "points": [
+        [
+          320,
+          314
+        ],
+        [
+          321,
+          322
+        ],
+        [
+          307,
+          351
+        ],
+        [
+          243,
+          345
+        ],
+        [
+          263,
+          353
+        ],
+        [
+          264,
+          409
+        ],
+        [
+          256,
+          450
+        ],
+        [
+          323,
+          427
+        ],
+        [
+          358,
+          477
+        ],
+        [
+          420,
+          230
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 35,
+      "box": [
+        316,
+        399,
+        437,
+        540
+      ],
+      "points": [
+        [
+          400,
+          418
+        ],
+        [
+          398,
+          427
+        ],
+        [
+          396,
+          458
+        ],
+        [
+          331,
+          459
+        ],
+        [
+          353,
+          462
+        ],
+        [
+          373,
+          518
+        ],
+        [
+          482,
+          336
+        ],
+        [
+          621,
+          267
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "identity_verification": "Official Necas88. The foreground white Hurricanes skater kneels in the one-timer follow-through, NECAS88 visible at the end. Teammate24 near the crease, teammate31 and blue Sabres defenders/goalie remain visible. Short continuous replay window includes only the scorer movement, no passer lead-in.",
+  "max_cond_frames_in_attn": 2,
+  "poster_frame": 9
+}

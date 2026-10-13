@@ -340,6 +340,19 @@
           "source_video_id": "6367409221112",
           "discrete_video_id": "6367408346112",
           "goal_modifier": "empty-net"
+        },
+        {
+          "game_id": 2024020859,
+          "date": "2025-02-05",
+          "period": 2,
+          "time_in_period": "15:19",
+          "player": "Elias Lindholm",
+          "official_goal_scorer": "Elias Lindholm",
+          "team": "BOS",
+          "source": "https://nhl.com/video/bos-nyr-lindholm-scores-goal-against-igor-shesterkin-6368338624112",
+          "source_video_id": "6368338624112",
+          "discrete_video_id": "6368340292112",
+          "goal_modifier": "none"
         }
       ]
     },

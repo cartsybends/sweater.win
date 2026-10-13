@@ -1,0 +1,183 @@
+{
+  "id": "goal-49",
+  "pid": 8477496,
+  "player": "Elias Lindholm",
+  "original": "/workspace/who-scored-expansion/originals/goal-49-6368338624112.mp4",
+  "source_sha256": "5af55d3e9ef2bcf6928396fea08a4ccd97ab121361fa673d6f3f5fdd65e7731d",
+  "start": 46.6,
+  "duration": 2.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        304,
+        309,
+        410,
+        508
+      ],
+      "points": [
+        [
+          391,
+          331
+        ],
+        [
+          369,
+          342
+        ],
+        [
+          350,
+          377
+        ],
+        [
+          337,
+          415
+        ],
+        [
+          366,
+          440
+        ],
+        [
+          332,
+          448
+        ],
+        [
+          377,
+          484
+        ],
+        [
+          500,
+          255
+        ],
+        [
+          390,
+          173
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 29,
+      "box": [
+        303,
+        349,
+        403,
+        529
+      ],
+      "points": [
+        [
+          379,
+          373
+        ],
+        [
+          341,
+          388
+        ],
+        [
+          352,
+          426
+        ],
+        [
+          317,
+          466
+        ],
+        [
+          319,
+          493
+        ],
+        [
+          365,
+          491
+        ],
+        [
+          391,
+          419
+        ],
+        [
+          451,
+          305
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 57,
+      "box": [
+        335,
+        300,
+        461,
+        462
+      ],
+      "points": [
+        [
+          419,
+          316
+        ],
+        [
+          403,
+          350
+        ],
+        [
+          426,
+          374
+        ],
+        [
+          350,
+          347
+        ],
+        [
+          437,
+          384
+        ],
+        [
+          382,
+          408
+        ],
+        [
+          418,
+          434
+        ],
+        [
+          364,
+          449
+        ],
+        [
+          460,
+          272
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official Lindholm28, LINDHOLM28 visible on the near-side white Bruins skater shooting and following through. Marchand63 and Coyle13 at the net and blue Rangers skaters remain visible; foreground glass posts and railing preserved."
+}
