@@ -136,6 +136,19 @@
           "source_video_id": "6366635012112",
           "discrete_video_id": "6366633654112",
           "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020992,
+          "date": "2025-03-06",
+          "period": 2,
+          "time_in_period": "02:06",
+          "player": "Brent Burns",
+          "official_goal_scorer": "Brent Burns",
+          "team": "CAR",
+          "source": "https://nhl.com/video/bos-car-burns-with-a-goal-against-joonas-korpisalo-6369702340112",
+          "source_video_id": "6369702340112",
+          "discrete_video_id": "6369702097112",
+          "goal_modifier": "none"
         }
       ]
     },
@@ -190,6 +203,19 @@
           "source": "https://nhl.com/video/car-buf-slavin-scores-goal-against-ukko-pekka-luukkonen-6367153573112",
           "source_video_id": "6367153573112",
           "discrete_video_id": "6367152791112",
+          "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020817,
+          "date": "2025-01-30",
+          "period": 2,
+          "time_in_period": "05:59",
+          "player": "Jaccob Slavin",
+          "official_goal_scorer": "Jaccob Slavin",
+          "team": "CAR",
+          "source": "https://nhl.com/video/chi-car-slavin-scores-goal-against-arvid-soderblom-6368025564112",
+          "source_video_id": "6368025564112",
+          "discrete_video_id": "6368024381112",
           "goal_modifier": "none"
         }
       ]
@@ -301,6 +327,19 @@
           "source_video_id": "6366636247112",
           "discrete_video_id": "6366636935112",
           "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020740,
+          "date": "2025-01-20",
+          "period": 3,
+          "time_in_period": "19:35",
+          "player": "Elias Lindholm",
+          "official_goal_scorer": "Elias Lindholm",
+          "team": "BOS",
+          "source": "https://nhl.com/video/elias-lindholm-with-a-goal-vs-san-jose-sharks-6367409221112",
+          "source_video_id": "6367409221112",
+          "discrete_video_id": "6367408346112",
+          "goal_modifier": "empty-net"
         }
       ]
     },
