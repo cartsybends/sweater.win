@@ -1,8 +1,8 @@
 {
   "batch": 1,
   "verified_official_sources": 40,
-  "playable_additions": 0,
-  "status": "awaiting_complete_mask_and_encoded_visual_reviews",
+  "playable_additions": 40,
+  "status": "published_live_verified",
   "sources": [
     {
       "id": "goal-40",
@@ -207,7 +207,7 @@
       "official_event_id": 690,
       "jersey": 28,
       "source_sha256": "5af55d3e9ef2bcf6928396fea08a4ccd97ab121361fa673d6f3f5fdd65e7731d",
-      "media_title": "Lindholm puts the Bruins on top ",
+      "media_title": "Lindholm puts the Bruins on top\u00a0",
       "dimensions": [
         1280,
         720
@@ -280,7 +280,7 @@
     {
       "id": "goal-53",
       "pid": 8480796,
-      "player": "Martin Fehérváry",
+      "player": "Martin Feh\u00e9rv\u00e1ry",
       "game_id": 2024020605,
       "date": "2025-01-02",
       "period": 3,

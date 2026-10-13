@@ -1,0 +1,621 @@
+{
+  "batch": 1,
+  "status": "published_live_verified",
+  "release_commit": "86cbea1ad6b6bc3f9dce5af1c8a7e84869d2cea4",
+  "workflow_run": "https://github.com/cartsybends/sweater.win/actions/runs/38463852529",
+  "live_url": "https://sweater.win/",
+  "verified_at": "2026-10-13T20:37:20.701180+00:00",
+  "live_library_size": 79,
+  "new_unique_players": 40,
+  "manifest_matches_github_release": true,
+  "verified_assets": [
+    {
+      "file": "goal-40-masked-v1.mp4",
+      "sha256": "ef5b80bce34b2afc5d8f3f7adb0faa4b33e31e7c8a3078973c742e0dc9c95919",
+      "bytes": 951224
+    },
+    {
+      "file": "goal-40-original-v1.mp4",
+      "sha256": "22e1e809fd7f615e38a036f58c85d3252c908f4829db465b87336eb5c2fa71b8",
+      "bytes": 1037972
+    },
+    {
+      "file": "goal-40-v1.jpg",
+      "sha256": "fb43ac615360c88c27d06053723e5da348e7a504991969de37edf0c4cf68b6ee",
+      "bytes": 56176
+    },
+    {
+      "file": "goal-41-masked-v1.mp4",
+      "sha256": "5c7e9e01481aa5868b6425bfaf441f6c523b59020496780a283f820e0351c2a9",
+      "bytes": 586226
+    },
+    {
+      "file": "goal-41-original-v1.mp4",
+      "sha256": "96b258c8eb6f8906aa74fd35b1311b68c0c9969fa14ad7ec4557fb8a9968d15e",
+      "bytes": 621849
+    },
+    {
+      "file": "goal-41-v1.jpg",
+      "sha256": "8a2efed4429389aa66542bc16b5fde56a8096ad1ca9b41f6d904590db000d46a",
+      "bytes": 56572
+    },
+    {
+      "file": "goal-42-masked-v1.mp4",
+      "sha256": "6a3fde075d9c61c8f4d65053d597d64498ab6664a7784c84ed9fed406f8dac3f",
+      "bytes": 671402
+    },
+    {
+      "file": "goal-42-original-v1.mp4",
+      "sha256": "a5b3dc01b806d56088851923146b46035cd581c2d0704447f07b6b644e414329",
+      "bytes": 697376
+    },
+    {
+      "file": "goal-42-v1.jpg",
+      "sha256": "349633d0b37f30741312107a5edcbb406274f41b70b0b390dbdf8f418563607b",
+      "bytes": 77126
+    },
+    {
+      "file": "goal-43-masked-v1.mp4",
+      "sha256": "22b5b8cd0f4c9ae3ba0dab02f0b09bfffe1d110d2df970e29e3fdd5347c77871",
+      "bytes": 793329
+    },
+    {
+      "file": "goal-43-original-v1.mp4",
+      "sha256": "d92e282cb24839558536725f0ef0b9b1707c3e8ba85e2bb6ceb65c756388abcc",
+      "bytes": 815599
+    },
+    {
+      "file": "goal-43-v1.jpg",
+      "sha256": "48fa7c34fbc8bd6b55145a071b6f8afef98aaf2cfa63b4912c8de2e0b29e1ca7",
+      "bytes": 87920
+    },
+    {
+      "file": "goal-44-masked-v1.mp4",
+      "sha256": "b7af8b99201ab81cf323bb1cdb2b1a2552393dc460514b71d38737e6d390d894",
+      "bytes": 1001773
+    },
+    {
+      "file": "goal-44-original-v1.mp4",
+      "sha256": "3259e29e7fd1d797012109da5a77f92ac17f185343541c137be7547084f61639",
+      "bytes": 1061455
+    },
+    {
+      "file": "goal-44-v1.jpg",
+      "sha256": "3645ee66596979999567e04986d126f8c906974124f34ca30a54f86bc6f3771a",
+      "bytes": 114056
+    },
+    {
+      "file": "goal-45-masked-v1.mp4",
+      "sha256": "dcf79141237854289049d18cc6a0207d3113a1470aa4aaead4ea51977898b1bc",
+      "bytes": 950643
+    },
+    {
+      "file": "goal-45-original-v1.mp4",
+      "sha256": "c03c771f50841cf0bcfd859f79801334dfaae037646c7d448aae055751f979e7",
+      "bytes": 970827
+    },
+    {
+      "file": "goal-45-v1.jpg",
+      "sha256": "999e4f80797bab5bc0b4a6996f2cc20496b600bb9ff0ed9039acdfbeeeeb8ce3",
+      "bytes": 64293
+    },
+    {
+      "file": "goal-46-masked-v1.mp4",
+      "sha256": "45fc9a9b36f302c99e090dfe1bcfea0147c2138d0ab63feadce42a101c422341",
+      "bytes": 449969
+    },
+    {
+      "file": "goal-46-original-v1.mp4",
+      "sha256": "ce8f8cd246f9c162ec1b713cce0d432873ca17a73308f09a5e6124bd7139fafc",
+      "bytes": 454611
+    },
+    {
+      "file": "goal-46-v1.jpg",
+      "sha256": "f06ffb31fe3c7f153e29184e53bf9110a8921ab1f1d895f41e33eb46edb7ff91",
+      "bytes": 66227
+    },
+    {
+      "file": "goal-47-masked-v1.mp4",
+      "sha256": "670ac5747ebd68c11b50603da4eebc498bf70a3386b1f22a537cb2380d7e63e8",
+      "bytes": 1008557
+    },
+    {
+      "file": "goal-47-original-v1.mp4",
+      "sha256": "3d3c81cfd1d9f541c492bd99337904972fc7903ac00a98d06275cff25bdd5733",
+      "bytes": 1071386
+    },
+    {
+      "file": "goal-47-v1.jpg",
+      "sha256": "7f59731a3b80a84cdf22620420a9620a2c29b3bf5f99d0624ac6bf4f576639af",
+      "bytes": 54390
+    },
+    {
+      "file": "goal-48-masked-v1.mp4",
+      "sha256": "4a5dfc7a5014627faf50b1b354b756d88247965c9db513a12d61e6453112bb90",
+      "bytes": 755326
+    },
+    {
+      "file": "goal-48-original-v1.mp4",
+      "sha256": "f70d3b84e954ba38aa0409096d39d13a2f08ce0ceff944169a69632e7713d6b8",
+      "bytes": 837050
+    },
+    {
+      "file": "goal-48-v1.jpg",
+      "sha256": "62dbc22e390b1fe8d595404371f8f4158e092b6065d457820edcb7fd321142a2",
+      "bytes": 55498
+    },
+    {
+      "file": "goal-49-masked-v1.mp4",
+      "sha256": "9c01536829722a7adef9d03f22b3bb228e13ef07629ba23ccc9f744d899248c9",
+      "bytes": 659766
+    },
+    {
+      "file": "goal-49-original-v1.mp4",
+      "sha256": "e8a23562ee2b1db24161f1c52605f7e8554b2c9ffcf3953543a60df0391354f7",
+      "bytes": 670960
+    },
+    {
+      "file": "goal-49-v1.jpg",
+      "sha256": "ba58bf0e35c2944888f48d6d21115d8ccee09ff5383423243cbcf92a8511425e",
+      "bytes": 71075
+    },
+    {
+      "file": "goal-50-masked-v1.mp4",
+      "sha256": "747bbf39186e01e673e76df8ef51ccdcc6ac8b1b960144d9090439b1dfc19aba",
+      "bytes": 565406
+    },
+    {
+      "file": "goal-50-original-v1.mp4",
+      "sha256": "21487c6b57dee11937d7195a4844729d797433411dcc057b7ca74f03669a8d25",
+      "bytes": 582388
+    },
+    {
+      "file": "goal-50-v1.jpg",
+      "sha256": "dbaa84bed97b51795cce9f36e747681a806bdc6c8af3ea00880024de94a155d7",
+      "bytes": 72079
+    },
+    {
+      "file": "goal-51-masked-v1.mp4",
+      "sha256": "68add39b3a73671e1d0c850aed6b8c641bb983f8648912a6e292e25fe4bd0969",
+      "bytes": 639116
+    },
+    {
+      "file": "goal-51-original-v1.mp4",
+      "sha256": "ef6998737649ac349e9530c89023c62ff4de6ff9e8f415b7b03a695206ca363c",
+      "bytes": 671802
+    },
+    {
+      "file": "goal-51-v1.jpg",
+      "sha256": "bb228858a08d13e4dbacf8e1493cdad56b49a13b372bb17a468df001b0d90a05",
+      "bytes": 56017
+    },
+    {
+      "file": "goal-52-masked-v1.mp4",
+      "sha256": "8a45259a003326c2d8e8dbf11beb0a85ee44532955f53fcf3d28f80e12b5a5c1",
+      "bytes": 1092650
+    },
+    {
+      "file": "goal-52-original-v1.mp4",
+      "sha256": "f4f27c9a6eb9ef4387e03dad39b573d22f6cb5534e554ca2d74b19c27e8ef2de",
+      "bytes": 1110281
+    },
+    {
+      "file": "goal-52-v1.jpg",
+      "sha256": "0191bf14c986d35cf53eead52cce91fdbc21d677a67c9cbcb3034a7d4249d69f",
+      "bytes": 120431
+    },
+    {
+      "file": "goal-53-masked-v1.mp4",
+      "sha256": "88a7d94afd88b01e8b2752467ad13188ef316fd2e22c8ee6c37594e691835d22",
+      "bytes": 922216
+    },
+    {
+      "file": "goal-53-original-v1.mp4",
+      "sha256": "c2dacbf502094b2e52f2818c082bc6b152657309cea29a0547382f263365b9ed",
+      "bytes": 958658
+    },
+    {
+      "file": "goal-53-v1.jpg",
+      "sha256": "c8b7a080012054f33b323e37acb01c4863b9e6f05d925fedb5d2da903134961d",
+      "bytes": 91160
+    },
+    {
+      "file": "goal-54-masked-v1.mp4",
+      "sha256": "5bf603b6eae5b01f30c0a2137e5abba4107d2873961d523b8d9d0609eba55e32",
+      "bytes": 608907
+    },
+    {
+      "file": "goal-54-original-v1.mp4",
+      "sha256": "2aa05a14572e7aa5a7a18325453cffa118501a2f0946c94baaa2ef1332d5b580",
+      "bytes": 636251
+    },
+    {
+      "file": "goal-54-v1.jpg",
+      "sha256": "cab8c2c021d76e084b23a7ea51b653a13fda66d50781bf3cf6af4252f16ec13d",
+      "bytes": 87395
+    },
+    {
+      "file": "goal-55-masked-v1.mp4",
+      "sha256": "4c6d7bda4e28774534dff4b61f8321422cbc53f0fa9d21ae8e86cf953d03c22f",
+      "bytes": 457279
+    },
+    {
+      "file": "goal-55-original-v1.mp4",
+      "sha256": "503f4f12f216156b3c8baea1ac6886c3a8aea719f333a17b26c0899252650956",
+      "bytes": 465484
+    },
+    {
+      "file": "goal-55-v1.jpg",
+      "sha256": "296cd3105e633e14f09d76df7fcfec953cde4654753857a0569705e7842cbcf8",
+      "bytes": 119379
+    },
+    {
+      "file": "goal-56-masked-v1.mp4",
+      "sha256": "c29a69debbcffc5694c5a73c2b0e4133bcb0fd18b5ae233173b3678fb894ad5a",
+      "bytes": 646494
+    },
+    {
+      "file": "goal-56-original-v1.mp4",
+      "sha256": "ce5e65eda4153a362d07cac269cb6fcab7eeb61a71c4d70f53fc7160814470bb",
+      "bytes": 674655
+    },
+    {
+      "file": "goal-56-v1.jpg",
+      "sha256": "0ba41dea934425ab3deca38a8c792af86997c9cb0c0eade9b70b16303557441b",
+      "bytes": 74550
+    },
+    {
+      "file": "goal-57-masked-v1.mp4",
+      "sha256": "d0ef65fef9cf3329d8dc9701afee1f706661fb7e96b667dfb9b089b1f4f58ec1",
+      "bytes": 702949
+    },
+    {
+      "file": "goal-57-original-v1.mp4",
+      "sha256": "37dbc319094fa326b02a2ef62288a4bdadfb6f65e5c28d21e00d62d5d9b8a51d",
+      "bytes": 734406
+    },
+    {
+      "file": "goal-57-v1.jpg",
+      "sha256": "6d8b35481e61dedd88adaef7c71beeeeaa178a5dce77212d7a23c94a16432e92",
+      "bytes": 88955
+    },
+    {
+      "file": "goal-58-masked-v1.mp4",
+      "sha256": "e4dad92e1c13a19dc90b6686b26b18f0b92f3dbb3bc86feaefbb51eeacfc1f7a",
+      "bytes": 444887
+    },
+    {
+      "file": "goal-58-original-v1.mp4",
+      "sha256": "504d47a4e5bc6b770a9c760d3a0a2db53d7d415b9adac5d8bb085e055d0c1320",
+      "bytes": 467063
+    },
+    {
+      "file": "goal-58-v1.jpg",
+      "sha256": "d74be2b8076be10d41cc507fa3364de45630f95e808c75de17be0387022294c7",
+      "bytes": 30196
+    },
+    {
+      "file": "goal-59-masked-v1.mp4",
+      "sha256": "061e018692b45eca0d1b9ab0894b0c89991b9e65774f36c6a4cd9cfb5104045b",
+      "bytes": 535346
+    },
+    {
+      "file": "goal-59-original-v1.mp4",
+      "sha256": "296e15b723e8f8d80a376ad342eff9b069f2b4ed5a17b16746563293ef5c47ab",
+      "bytes": 586152
+    },
+    {
+      "file": "goal-59-v1.jpg",
+      "sha256": "5c1e3aa0128c5fac0224f5c37fc6cbd6f941cbea13a8c8c221278ac0c8e54406",
+      "bytes": 29607
+    },
+    {
+      "file": "goal-60-masked-v1.mp4",
+      "sha256": "aace0c0037b77e3ff9b6ec0717b253f89f41e85f0f221a892b7702307a519d56",
+      "bytes": 667072
+    },
+    {
+      "file": "goal-60-original-v1.mp4",
+      "sha256": "f491b4bbf02ba19317a245aad870bcffceaf2a1112b6926f5116534cb3e59f84",
+      "bytes": 688298
+    },
+    {
+      "file": "goal-60-v1.jpg",
+      "sha256": "1b74b06b36df7f8e2dc1564d6df47dbcbbfb8f08f1081ae9df7e7580d5a9a098",
+      "bytes": 74775
+    },
+    {
+      "file": "goal-61-masked-v1.mp4",
+      "sha256": "9ae223858c2ebcff4d627d37f036d39fd5cdc0bdcfb3d30bae447810a4dfbcc1",
+      "bytes": 727571
+    },
+    {
+      "file": "goal-61-original-v1.mp4",
+      "sha256": "d54bd5043549d1330a850e9cf3d07178b872191149d246ca6147e5749c586061",
+      "bytes": 760485
+    },
+    {
+      "file": "goal-61-v1.jpg",
+      "sha256": "906cee5f4814cdb61d089327420c7f2500137f076c633109d7191b25ee74541b",
+      "bytes": 88743
+    },
+    {
+      "file": "goal-62-masked-v1.mp4",
+      "sha256": "8a731f3ad5b5f2d608ccfcf346fd2da8348dc641f5e0132375ccd51cada60eeb",
+      "bytes": 1307680
+    },
+    {
+      "file": "goal-62-original-v1.mp4",
+      "sha256": "5945b1fcb587efac6d474a28300910eeb26dff31bc9b8bf186c584a9bb0ae7b9",
+      "bytes": 1316824
+    },
+    {
+      "file": "goal-62-v1.jpg",
+      "sha256": "e71249c5687cf6084d5287ec0633a883f740c954bc5f482f7cd354f63e1c79b0",
+      "bytes": 120075
+    },
+    {
+      "file": "goal-63-masked-v1.mp4",
+      "sha256": "0d349c6a364c18ca84485076dd79763dec0b9a003a02ad2eb77fa7c0acea96e7",
+      "bytes": 423220
+    },
+    {
+      "file": "goal-63-original-v1.mp4",
+      "sha256": "30b52d6eebd329cab4b5632448c795644713528c546ee13b09aacdc021b57c46",
+      "bytes": 453769
+    },
+    {
+      "file": "goal-63-v1.jpg",
+      "sha256": "a68d51f0c65f62f4011a3fe6a28bd7893ff315802d56a52f15ac8e4ea0ef62ab",
+      "bytes": 61325
+    },
+    {
+      "file": "goal-64-masked-v1.mp4",
+      "sha256": "4a27d44e46c36f0c56f3e64aa32f8ab774fef969989e27d14ffac4bf6f766cc0",
+      "bytes": 691746
+    },
+    {
+      "file": "goal-64-original-v1.mp4",
+      "sha256": "4df136c73571ae9a5bbd5f248b810d824abb771f6e5fbe81f6662bb210ddbc5b",
+      "bytes": 704882
+    },
+    {
+      "file": "goal-64-v1.jpg",
+      "sha256": "ced88204976e0296e4cb49c00d84f14ddf4058204c3931f9f3143869457c6016",
+      "bytes": 97421
+    },
+    {
+      "file": "goal-65-masked-v1.mp4",
+      "sha256": "5b50b96d5ecaa0878ff33f18475218e975168da4ea61b705912877e8a99ba2a8",
+      "bytes": 613970
+    },
+    {
+      "file": "goal-65-original-v1.mp4",
+      "sha256": "df5b2c6b319b14c1a31379e3bc10292ea93b66c81c0871716a2a65d4120a54e2",
+      "bytes": 631622
+    },
+    {
+      "file": "goal-65-v1.jpg",
+      "sha256": "38212c99c8003575233661fcdf02a27371bd23ba9a810ebcefb86a8492325457",
+      "bytes": 59570
+    },
+    {
+      "file": "goal-66-masked-v1.mp4",
+      "sha256": "17be6105f4f109fae36649c2e6e9f074ab1ab4eedb49fb7c68eec16553a95d7e",
+      "bytes": 495880
+    },
+    {
+      "file": "goal-66-original-v1.mp4",
+      "sha256": "7501179a51862dad1624a5fd03cb0629efb8e6ae02a955fbcd0948618ce7930e",
+      "bytes": 497349
+    },
+    {
+      "file": "goal-66-v1.jpg",
+      "sha256": "69e1fd47a6261e5fb4d7910307cfb6016b55b158b16f3365985123dd1a18198f",
+      "bytes": 80309
+    },
+    {
+      "file": "goal-67-masked-v1.mp4",
+      "sha256": "79aecc1c08161da8d9e1de78b1e222816cdac5c8a266679b8abe6cf6c7a16cd7",
+      "bytes": 572018
+    },
+    {
+      "file": "goal-67-original-v1.mp4",
+      "sha256": "b8cd85795524e688c9f49edf9698cf49a9588be84e111dd32ddfcd3744bac741",
+      "bytes": 622216
+    },
+    {
+      "file": "goal-67-v1.jpg",
+      "sha256": "3725120401a6814e6f08f9687efdc2fa824420d74479a078186a014c4b9765c4",
+      "bytes": 57358
+    },
+    {
+      "file": "goal-68-masked-v1.mp4",
+      "sha256": "5d60df3633edcb5961718ea5e3bdf4baca980b5d9910e004d26a072bf9906f67",
+      "bytes": 1018266
+    },
+    {
+      "file": "goal-68-original-v1.mp4",
+      "sha256": "119ea5ea0f0f7a6362ae14bd6dc24a7ff9b7bfb4983fc56ba5d667d47dc3ad0a",
+      "bytes": 1029098
+    },
+    {
+      "file": "goal-68-v1.jpg",
+      "sha256": "d7927e5e2aeab469674908e5af81aa9668390f7bc1b494e390c64f08a2c3eb39",
+      "bytes": 73149
+    },
+    {
+      "file": "goal-69-masked-v1.mp4",
+      "sha256": "46d2e207d849548c32d77155c94e869c10ea5bfb221dbcbd0cbc75a7a9442ff1",
+      "bytes": 387147
+    },
+    {
+      "file": "goal-69-original-v1.mp4",
+      "sha256": "c8f6b2b54d547cead9b07cc28980d91423ba1545371e081ad7ad457bce4aab1c",
+      "bytes": 409674
+    },
+    {
+      "file": "goal-69-v1.jpg",
+      "sha256": "239c312b7f56cf237cda2d8ff00ebdd0279aa440051f1314120a3ecc5fe4792a",
+      "bytes": 65739
+    },
+    {
+      "file": "goal-70-masked-v1.mp4",
+      "sha256": "9ddd3050610aaa4a617cf688085d0aa70140b6dee0a819fef598fc254216d5be",
+      "bytes": 198022
+    },
+    {
+      "file": "goal-70-original-v1.mp4",
+      "sha256": "6716bc90967fd2dba0719057fb618b868a435578f178038ca1ac89e3efa498df",
+      "bytes": 205747
+    },
+    {
+      "file": "goal-70-v1.jpg",
+      "sha256": "ad2bb539f684868bcaa27326d5b31a8cff734e665171bd2a5db7308676646fee",
+      "bytes": 33156
+    },
+    {
+      "file": "goal-71-masked-v1.mp4",
+      "sha256": "5b97d5b4ceb7a63f951cd7765eb20b8c41427ef0a8657ae0fe922e9b1d1c2ecc",
+      "bytes": 287217
+    },
+    {
+      "file": "goal-71-original-v1.mp4",
+      "sha256": "8c77d30cefc2303e8cfd1ac06274a8519b31ee9ed5a3bdbf04899f5a5a2fad8f",
+      "bytes": 337994
+    },
+    {
+      "file": "goal-71-v1.jpg",
+      "sha256": "58f75ad67cd03b54c0ccca602e283b8a993633c259582ce047ba88f0f301fafd",
+      "bytes": 93217
+    },
+    {
+      "file": "goal-72-masked-v1.mp4",
+      "sha256": "e9bdc6c057a6c4866299b89d23b37bb38e1b24033e1fb2f88497dda0e9e9bd04",
+      "bytes": 507577
+    },
+    {
+      "file": "goal-72-original-v1.mp4",
+      "sha256": "34d11f18572241b50fa4712f4efa840c8b33631a479446a760fb49ab6470b8dd",
+      "bytes": 518995
+    },
+    {
+      "file": "goal-72-v1.jpg",
+      "sha256": "59b1b3208b023f11c71465d247566496922345e786bb574848e84ec83e13ed78",
+      "bytes": 64789
+    },
+    {
+      "file": "goal-73-masked-v1.mp4",
+      "sha256": "f217ca17b46c045f800a24a7ea944d8dee21118fb441596a3a609c19aaccb414",
+      "bytes": 902136
+    },
+    {
+      "file": "goal-73-original-v1.mp4",
+      "sha256": "38554251ade3aa50faa107c42017d311266609a41dd0a63d193a7c80922539c3",
+      "bytes": 1021734
+    },
+    {
+      "file": "goal-73-v1.jpg",
+      "sha256": "4d7c4e3cf9f4da8b68b7ca6ff74e55bc758e7a203d33eeca48c4dbd6ae845c20",
+      "bytes": 41626
+    },
+    {
+      "file": "goal-74-masked-v1.mp4",
+      "sha256": "161d3f0cfbd489f519f0533b4e14fb21506c4f5310ec8626559de97adb52f46d",
+      "bytes": 689633
+    },
+    {
+      "file": "goal-74-original-v1.mp4",
+      "sha256": "c93d8b5c356d1b80fa897bc59ca6c61d554fd0c49ab501b94c6cf70e097aab5c",
+      "bytes": 753356
+    },
+    {
+      "file": "goal-74-v1.jpg",
+      "sha256": "0db42094864f3a0110f9c760ba6c5f86e3dde989c3231cf4410d940bff2a234c",
+      "bytes": 123654
+    },
+    {
+      "file": "goal-75-masked-v1.mp4",
+      "sha256": "db2639924002471b44cc1793247f86ab62402efe4bb6a5fbf2d55b2f2e8afb34",
+      "bytes": 538861
+    },
+    {
+      "file": "goal-75-original-v1.mp4",
+      "sha256": "0f12844ce4027f14d29e8c8bbaac4defeea72a8b19abbe6f5679e7bdb79fabd3",
+      "bytes": 550968
+    },
+    {
+      "file": "goal-75-v1.jpg",
+      "sha256": "96f7a2e748831e418a15cef57bc72e093d620212b08b182f22ecd44d230a0d57",
+      "bytes": 110795
+    },
+    {
+      "file": "goal-76-masked-v1.mp4",
+      "sha256": "606866a4042262b4e269ad32822476b3e77af2a0cd9a48a9fb07ea7c61fbdf58",
+      "bytes": 687777
+    },
+    {
+      "file": "goal-76-original-v1.mp4",
+      "sha256": "20602e9acb631ed31b93cfb45fe9498f8755acfa40092ba0c656a5921efaae13",
+      "bytes": 698278
+    },
+    {
+      "file": "goal-76-v1.jpg",
+      "sha256": "420fdcd33a520594fa300fecc9d822245376296d3a3b659ed30d474fad980a61",
+      "bytes": 95667
+    },
+    {
+      "file": "goal-77-masked-v1.mp4",
+      "sha256": "50aa3e6da90373fbf97c9d5dcc2d2efcb40b8973eae24ccb6bf3b09b570c7afc",
+      "bytes": 758921
+    },
+    {
+      "file": "goal-77-original-v1.mp4",
+      "sha256": "e70878c49f59b1f29007760f253e3644c12428db1581e976d5b4082cec509bdf",
+      "bytes": 819606
+    },
+    {
+      "file": "goal-77-v1.jpg",
+      "sha256": "8114007177f0719d6e757c487c8dceeb6d96dca9d67bcc555f11af2f7a3b9829",
+      "bytes": 72270
+    },
+    {
+      "file": "goal-78-masked-v1.mp4",
+      "sha256": "5269a2e7ee28919baa1d9d457fa648c22d5a18bd77aaf2e74ef5e039d80e94e6",
+      "bytes": 350739
+    },
+    {
+      "file": "goal-78-original-v1.mp4",
+      "sha256": "a8bd7ef0afa9cf7409d59e38cce19cb5c79d70f77597fa0f550af2b61e8f9578",
+      "bytes": 373366
+    },
+    {
+      "file": "goal-78-v1.jpg",
+      "sha256": "353af041d7ff3df25fce6dccf753dceca3ae6e8568c12a96bc346deebdd94861",
+      "bytes": 50435
+    },
+    {
+      "file": "goal-79-masked-v1.mp4",
+      "sha256": "e65b6ee4d769cd7db5438081d943409e71896533d4306b70f36ca6748d55e803",
+      "bytes": 331890
+    },
+    {
+      "file": "goal-79-original-v1.mp4",
+      "sha256": "d6dd08ec946eabc0ea8a4a51b8dbb74c441e2467a6b02726b941db0baf714d71",
+      "bytes": 340903
+    },
+    {
+      "file": "goal-79-v1.jpg",
+      "sha256": "454eb22b371e20bc16a2e1494590f8c5c7a770ec11a330b86296b2ed59682bd7",
+      "bytes": 76830
+    }
+  ],
+  "live_app_sha256": "ff8b444a7fafdad02a119897a8c25f50885c30fc8ecde7f8d19e538d2597232e",
+  "browser_check": {
+    "method": "TLS-verified live app HTML served locally with byte-identical reviewed media",
+    "live_resolved_library_size": 79,
+    "new_players_present": 40,
+    "new_video_streams_decoded": 80,
+    "javascript_errors": 0
+  }
+}

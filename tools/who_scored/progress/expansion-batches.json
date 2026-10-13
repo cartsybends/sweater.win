@@ -48,7 +48,7 @@
         "goal-78",
         "goal-79"
       ],
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "approved_clips": [
         "goal-40",
         "goal-41",
@@ -91,7 +91,13 @@
         "goal-78",
         "goal-79"
       ],
-      "verified_source_originals": 40
+      "verified_source_originals": 40,
+      "release_commit": "86cbea1ad6b6bc3f9dce5af1c8a7e84869d2cea4",
+      "workflow_run": "https://github.com/cartsybends/sweater.win/actions/runs/38463852529",
+      "live_url": "https://sweater.win/",
+      "live_library_size": 79,
+      "live_verification_record": "tools/who_scored/progress/batch-01/live-verification.json",
+      "verified_at": "2026-10-13T20:37:20.701180+00:00"
     },
     {
       "batch": 2,
@@ -137,8 +143,9 @@
         "goal-118",
         "goal-119"
       ],
-      "status": "queued",
-      "approved_clips": []
+      "status": "sources_collected_awaiting_visual_reviews",
+      "approved_clips": [],
+      "verified_source_originals": 40
     },
     {
       "batch": 3,
@@ -328,5 +335,6 @@
       "status": "queued",
       "approved_clips": []
     }
-  ]
+  ],
+  "published_live_additions": 40
 }

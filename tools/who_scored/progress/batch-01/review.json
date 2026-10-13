@@ -120,7 +120,7 @@
           "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "assets": {
         "masked": "goal-40-masked-v1.mp4",
         "reveal": "goal-40-original-v1.mp4",
@@ -211,7 +211,7 @@
           "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "assets": {
         "masked": "goal-41-masked-v1.mp4",
         "reveal": "goal-41-original-v1.mp4",
@@ -309,7 +309,7 @@
           "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "assets": {
         "masked": "goal-42-masked-v1.mp4",
         "reveal": "goal-42-original-v1.mp4",
@@ -334,7 +334,7 @@
         "poster": "48fa7c34fbc8bd6b55145a071b6f8afef98aaf2cfa63b4912c8de2e0b29e1ca7"
       },
       "motion": "Point wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -437,7 +437,7 @@
         "poster": "3645ee66596979999567e04986d126f8c906974124f34ca30a54f86bc6f3771a"
       },
       "motion": "Net-front wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -525,7 +525,7 @@
         "poster": "999e4f80797bab5bc0b4a6996f2cc20496b600bb9ff0ed9039acdfbeeeeb8ce3"
       },
       "motion": "Slot wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -631,7 +631,7 @@
         "poster": "f06ffb31fe3c7f153e29184e53bf9110a8921ab1f1d895f41e33eb46edb7ff91"
       },
       "motion": "Kneeling one-timer",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -710,7 +710,7 @@
         "poster": "7f59731a3b80a84cdf22620420a9620a2c29b3bf5f99d0624ac6bf4f576639af"
       },
       "motion": "Rush shot and rebound finish",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -912,7 +912,7 @@
           "note": "Encoded first/middle/final pairs visually inspected; silent H.264 matching timing, and no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "staged_awaiting_github_and_live_verification"
+      "status": "published_live_verified"
     },
     {
       "id": "goal-49",
@@ -931,7 +931,7 @@
         "poster": "ba58bf0e35c2944888f48d6d21115d8ccee09ff5383423243cbcf92a8511425e"
       },
       "motion": "Circle wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1032,7 +1032,7 @@
         "poster": "dbaa84bed97b51795cce9f36e747681a806bdc6c8af3ea00880024de94a155d7"
       },
       "motion": "Net-front deflection",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1116,7 +1116,7 @@
         "poster": "bb228858a08d13e4dbacf8e1493cdad56b49a13b372bb17a468df001b0d90a05"
       },
       "motion": "Crease finish",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1211,7 +1211,7 @@
         "poster": "0191bf14c986d35cf53eead52cce91fdbc21d677a67c9cbcb3034a7d4249d69f"
       },
       "motion": "Wraparound finish",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1307,7 +1307,7 @@
         "poster": "c8b7a080012054f33b323e37acb01c4863b9e6f05d925fedb5d2da903134961d"
       },
       "motion": "Point wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1424,7 +1424,7 @@
         "poster": "cab8c2c021d76e084b23a7ea51b653a13fda66d50781bf3cf6af4252f16ec13d"
       },
       "motion": "Slot shot to kneeling follow-through",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1503,7 +1503,7 @@
         "poster": "296cd3105e633e14f09d76df7fcfec953cde4654753857a0569705e7842cbcf8"
       },
       "motion": "Point slap shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1578,7 +1578,7 @@
         "poster": "0ba41dea934425ab3deca38a8c792af86997c9cb0c0eade9b70b16303557441b"
       },
       "motion": "Circle wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1664,7 +1664,7 @@
         "poster": "6d8b35481e61dedd88adaef7c71beeeeaa178a5dce77212d7a23c94a16432e92"
       },
       "motion": "Slot one-timer",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1762,7 +1762,7 @@
         "poster": "d74be2b8076be10d41cc507fa3364de45630f95e808c75de17be0387022294c7"
       },
       "motion": "Rush wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1855,7 +1855,7 @@
         "poster": "5c1e3aa0128c5fac0224f5c37fc6cbd6f941cbea13a8c8c221278ac0c8e54406"
       },
       "motion": "Circle wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1952,7 +1952,7 @@
         "poster": "1b74b06b36df7f8e2dc1564d6df47dbcbbfb8f08f1081ae9df7e7580d5a9a098"
       },
       "motion": "Point wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2043,7 +2043,7 @@
         "poster": "906cee5f4814cdb61d089327420c7f2500137f076c633109d7191b25ee74541b"
       },
       "motion": "Net-front deflection",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2139,7 +2139,7 @@
         "poster": "e71249c5687cf6084d5287ec0633a883f740c954bc5f482f7cd354f63e1c79b0"
       },
       "motion": "Shorthanded rush wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2264,7 +2264,7 @@
         "poster": "a68d51f0c65f62f4011a3fe6a28bd7893ff315802d56a52f15ac8e4ea0ef62ab"
       },
       "motion": "One-timer",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2344,7 +2344,7 @@
         "poster": "ced88204976e0296e4cb49c00d84f14ddf4058204c3931f9f3143869457c6016"
       },
       "motion": "Circle wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2435,7 +2435,7 @@
         "poster": "38212c99c8003575233661fcdf02a27371bd23ba9a810ebcefb86a8492325457"
       },
       "motion": "Slot wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2519,7 +2519,7 @@
         "poster": "69e1fd47a6261e5fb4d7910307cfb6016b55b158b16f3365985123dd1a18198f"
       },
       "motion": "Slot wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2595,7 +2595,7 @@
         "poster": "3725120401a6814e6f08f9687efdc2fa824420d74479a078186a014c4b9765c4"
       },
       "motion": "Net-front deflection",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2691,7 +2691,7 @@
         "poster": "d7927e5e2aeab469674908e5af81aa9668390f7bc1b494e390c64f08a2c3eb39"
       },
       "motion": "Overtime rush wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2820,7 +2820,7 @@
         "poster": "239c312b7f56cf237cda2d8ff00ebdd0279aa440051f1314120a3ecc5fe4792a"
       },
       "motion": "Net-front deflection",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2894,7 +2894,7 @@
         "poster": "ad2bb539f684868bcaa27326d5b31a8cff734e665171bd2a5db7308676646fee"
       },
       "motion": "Point slap shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2964,7 +2964,7 @@
         "poster": "58f75ad67cd03b54c0ccca602e283b8a993633c259582ce047ba88f0f301fafd"
       },
       "motion": "Net-front tip-in",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3027,7 +3027,7 @@
         "poster": "59b1b3208b023f11c71465d247566496922345e786bb574848e84ec83e13ed78"
       },
       "motion": "Circle drive and wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3118,7 +3118,7 @@
         "poster": "4d7c4e3cf9f4da8b68b7ca6ff74e55bc758e7a203d33eeca48c4dbd6ae845c20"
       },
       "motion": "Point drive and wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3231,7 +3231,7 @@
         "poster": "0db42094864f3a0110f9c760ba6c5f86e3dde989c3231cf4410d940bff2a234c"
       },
       "motion": "Net-front deflection",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3309,7 +3309,7 @@
         "poster": "96f7a2e748831e418a15cef57bc72e093d620212b08b182f22ecd44d230a0d57"
       },
       "motion": "Kneeling shot beside the net",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3383,7 +3383,7 @@
         "poster": "420fdcd33a520594fa300fecc9d822245376296d3a3b659ed30d474fad980a61"
       },
       "motion": "Circle one-timer to one knee",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3479,7 +3479,7 @@
         "poster": "8114007177f0719d6e757c487c8dceeb6d96dca9d67bcc555f11af2f7a3b9829"
       },
       "motion": "Rush wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3575,7 +3575,7 @@
         "poster": "353af041d7ff3df25fce6dccf753dceca3ae6e8568c12a96bc346deebdd94861"
       },
       "motion": "Scorer follow-through and reaction",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3649,7 +3649,7 @@
         "poster": "454eb22b371e20bc16a2e1494590f8c5c7a770ec11a330b86296b2ed59682bd7"
       },
       "motion": "Empty-net wrist shot",
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -3700,5 +3700,6 @@
       }
     }
   ],
-  "active_additions": 40
+  "active_additions": 40,
+  "live_verification_record": "tools/who_scored/progress/batch-01/live-verification.json"
 }
