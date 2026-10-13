@@ -2,7 +2,7 @@
   "batch_size": 40,
   "target_new_players": 240,
   "starting_library_size": 39,
-  "verified_playable_additions": 0,
+  "verified_playable_additions": 40,
   "batches": [
     {
       "batch": 1,
@@ -48,7 +48,7 @@
         "goal-78",
         "goal-79"
       ],
-      "status": "silhouette_production_and_review",
+      "status": "staged_awaiting_github_and_live_verification",
       "approved_clips": [
         "goal-40",
         "goal-41",
@@ -78,7 +78,18 @@
         "goal-65",
         "goal-66",
         "goal-67",
-        "goal-70"
+        "goal-68",
+        "goal-69",
+        "goal-70",
+        "goal-71",
+        "goal-72",
+        "goal-73",
+        "goal-74",
+        "goal-75",
+        "goal-76",
+        "goal-77",
+        "goal-78",
+        "goal-79"
       ],
       "verified_source_originals": 40
     },

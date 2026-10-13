@@ -149,12 +149,15 @@ def render(path,edit,args):
         records.append({'frame':i,'pixels':int((mask>0).sum()),'black_core':True})
     version=edit.get('version','v1');slug=edit['id']
     masked=out/f'{slug}-masked-{version}.mp4';reveal=out/f'{slug}-original-{version}.mp4';poster=out/f'{slug}-{version}.jpg'
-    encode=['-an','-c:v','libx264','-threads','1','-preset','medium','-crf','20','-pix_fmt','yuv420p','-movflags','+faststart']
+    # JPEG inputs carry full-range metadata; explicitly convert and tag the
+    # output range so reveals use the same browser format as masked PNGs.
+    encode=['-vf','scale=in_range=auto:out_range=tv,format=yuv420p','-an','-c:v','libx264','-threads','1','-preset','medium','-crf','20','-pix_fmt','yuv420p','-color_range','tv','-movflags','+faststart']
     for src,dest in [(rendered/'%05d.png',masked),(work/'frames'/'%05d.jpg',reveal)]:
         subprocess.run(['ffmpeg','-v','error','-framerate','24','-i',str(src),'-frames:v',str(count),*encode,'-y',str(dest)],check=True)
         subprocess.run(['ffmpeg','-v','error','-threads','1','-i',str(dest),'-f','null','-'],check=True)
         v=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-of','json',str(dest)]))['streams']
         assert len(v)==1 and int(v[0]['nb_frames'])==count
+        assert (v[0]['codec_name'],v[0]['pix_fmt'],v[0]['width'],v[0]['height'],v[0]['r_frame_rate'])==('h264','yuv420p',960,540,'24/1'),dest
     cv2.imwrite(str(poster),cv2.imread(str(rendered/f'{edit.get("poster_frame",0):05d}.png')),[cv2.IMWRITE_JPEG_QUALITY,90])
     for batch in range((count+19)//20):
         canvas=Image.new('RGB',(1920,1024),'#eee');draw=ImageDraw.Draw(canvas)

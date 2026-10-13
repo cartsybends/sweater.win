@@ -1495,6 +1495,19 @@
           "source_video_id": "6366640004112",
           "discrete_video_id": "6366640877112",
           "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020766,
+          "date": "2025-01-23",
+          "period": 2,
+          "time_in_period": "14:14",
+          "player": "Lawson Crouse",
+          "official_goal_scorer": "Lawson Crouse",
+          "team": "UTA",
+          "source": "https://nhl.com/video/uta-min-crouse-scores-goal-against-filip-gustavsson-6367601039112",
+          "source_video_id": "6367601039112",
+          "discrete_video_id": "6367602777112",
+          "goal_modifier": "none"
         }
       ]
     },
@@ -1516,6 +1529,19 @@
           "source_video_id": "6366639248112",
           "discrete_video_id": "6366639165112",
           "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020730,
+          "date": "2025-01-18",
+          "period": 3,
+          "time_in_period": "18:55",
+          "player": "Blake Coleman",
+          "official_goal_scorer": "Blake Coleman",
+          "team": "CGY",
+          "source": "https://nhl.com/video/cgy-wpg-coleman-scores-empty-net-goal-6367330187112",
+          "source_video_id": "6367330187112",
+          "discrete_video_id": "6367328850112",
+          "goal_modifier": "empty-net"
         }
       ]
     },

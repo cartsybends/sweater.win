@@ -9,7 +9,7 @@
       "source_sha256": "917e27e9456c42d19df5ea8c4550b97f7623ae3b0873d09fc1ca40616dd653ff",
       "asset_sha256": {
         "masked": "ef5b80bce34b2afc5d8f3f7adb0faa4b33e31e7c8a3078973c742e0dc9c95919",
-        "reveal": "e86ce7c0d3883f5d616c68111aa1b7abf9b8c67393ca48cb4b9438f435fb32c0",
+        "reveal": "22e1e809fd7f615e38a036f58c85d3252c908f4829db465b87336eb5c2fa71b8",
         "poster": "fb43ac615360c88c27d06053723e5da348e7a504991969de37edf0c4cf68b6ee"
       },
       "reviews": {
@@ -106,7 +106,7 @@
             82,
             83
           ],
-          "note": "Lee 47 visible continuously receiving, shooting and following through. Every paired frame 0–83 visually compared. Pesce 22, Allen 34 and the foreground fan remain visible; scorer gloves, helmet, torso, legs and skates are covered."
+          "note": "Lee 47 visible continuously receiving, shooting and following through. Every paired frame 0\u201383 visually compared. Pesce 22, Allen 34 and the foreground fan remain visible; scorer gloves, helmet, torso, legs and skates are covered."
         },
         "encoded_video": {
           "passed": true,
@@ -117,10 +117,10 @@
             42,
             83
           ],
-          "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics."
+          "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "assets": {
         "masked": "goal-40-masked-v1.mp4",
         "reveal": "goal-40-original-v1.mp4",
@@ -136,7 +136,7 @@
       "source_sha256": "3ee384ff37790fba8e4351fae8c73fb1460d855007ca54236c64b6a2ef5182d8",
       "asset_sha256": {
         "masked": "5c7e9e01481aa5868b6425bfaf441f6c523b59020496780a283f820e0351c2a9",
-        "reveal": "0378269b50fdcdec345f8e22fd964adefad76487a62711df470fe98f95508a9e",
+        "reveal": "96b258c8eb6f8906aa74fd35b1311b68c0c9969fa14ad7ec4557fb8a9968d15e",
         "poster": "8a2efed4429389aa66542bc16b5fde56a8096ad1ca9b41f6d904590db000d46a"
       },
       "reviews": {
@@ -197,7 +197,7 @@
             46,
             47
           ],
-          "note": "Byfield 55 visible continuously shooting then leaving at the left edge. Every paired frame 0–47 visually compared. Danault 24, Pesce 22 and Allen 34 remain visible; foreground glass supports retained where they occlude the scorer."
+          "note": "Byfield 55 visible continuously shooting then leaving at the left edge. Every paired frame 0\u201347 visually compared. Danault 24, Pesce 22 and Allen 34 remain visible; foreground glass supports retained where they occlude the scorer."
         },
         "encoded_video": {
           "passed": true,
@@ -208,10 +208,10 @@
             24,
             47
           ],
-          "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics."
+          "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "assets": {
         "masked": "goal-41-masked-v1.mp4",
         "reveal": "goal-41-original-v1.mp4",
@@ -227,7 +227,7 @@
       "source_sha256": "f8c7f87904b5e34c42ee7030b442c2f0502bcf5f4b6b0ec02d64b01ce6479ec3",
       "asset_sha256": {
         "masked": "6a3fde075d9c61c8f4d65053d597d64498ab6664a7784c84ed9fed406f8dac3f",
-        "reveal": "7bd716f7d1d8eb9dd718994b028a5e5664689a228970fec033340ba1d604ecd9",
+        "reveal": "a5b3dc01b806d56088851923146b46035cd581c2d0704447f07b6b644e414329",
         "poster": "349633d0b37f30741312107a5edcbb406274f41b70b0b390dbdf8f418563607b"
       },
       "reviews": {
@@ -295,7 +295,7 @@
             53,
             54
           ],
-          "note": "Kempe 9 receives from teammate 37 and shoots past Hughes. Every paired frame 0–54 visually compared. Background teammate Kopitar 11 and defenders remain visible through overlap; scorer covered including the kneeling follow-through."
+          "note": "Kempe 9 receives from teammate 37 and shoots past Hughes. Every paired frame 0\u201354 visually compared. Background teammate Kopitar 11 and defenders remain visible through overlap; scorer covered including the kneeling follow-through."
         },
         "encoded_video": {
           "passed": true,
@@ -306,10 +306,10 @@
             27,
             54
           ],
-          "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics."
+          "note": "Encoded original/masked first, middle and last frames visually inspected. Silent matching H.264 pairs and poster; no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "assets": {
         "masked": "goal-42-masked-v1.mp4",
         "reveal": "goal-42-original-v1.mp4",
@@ -330,11 +330,11 @@
       },
       "asset_sha256": {
         "masked": "22b5b8cd0f4c9ae3ba0dab02f0b09bfffe1d110d2df970e29e3fdd5347c77871",
-        "reveal": "d0eaa4d57dd595d1e92336fe7d293874c59cb222494491d734c0f744d983e055",
+        "reveal": "d92e282cb24839558536725f0ef0b9b1707c3e8ba85e2bb6ceb65c756388abcc",
         "poster": "48fa7c34fbc8bd6b55145a071b6f8afef98aaf2cfa63b4912c8de2e0b29e1ca7"
       },
       "motion": "Point wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -405,7 +405,7 @@
             58,
             59
           ],
-          "note": "Burns8 receiving and shooting from the near-side point. Every paired frame0–59 visually compared again after added helmet/face prompts at0/12/24/31; helmet, face, torso, gloves, legs and skates covered. Gostisbehere53, opponents and foreground objects remain visible. Export stops before the scorer exits right."
+          "note": "Burns8 receiving and shooting from the near-side point. Every paired frame0\u201359 visually compared again after added helmet/face prompts at0/12/24/31; helmet, face, torso, gloves, legs and skates covered. Gostisbehere53, opponents and foreground objects remain visible. Export stops before the scorer exits right."
         },
         "encoded_video": {
           "passed": true,
@@ -416,7 +416,7 @@
             30,
             59
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -433,11 +433,11 @@
       },
       "asset_sha256": {
         "masked": "b7af8b99201ab81cf323bb1cdb2b1a2552393dc460514b71d38737e6d390d894",
-        "reveal": "bdc7054d49fca8fc96fb6b412c33d2f01a32dddb776f3d22590a5df7c27a3950",
+        "reveal": "3259e29e7fd1d797012109da5a77f92ac17f185343541c137be7547084f61639",
         "poster": "3645ee66596979999567e04986d126f8c906974124f34ca30a54f86bc6f3771a"
       },
       "motion": "Net-front wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -504,7 +504,7 @@
             22,
             44
           ],
-          "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed."
+          "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -521,11 +521,11 @@
       },
       "asset_sha256": {
         "masked": "dcf79141237854289049d18cc6a0207d3113a1470aa4aaead4ea51977898b1bc",
-        "reveal": "966a7a6499de8a3263e478b5a9f625b528a33f2ea00a1fcc068c0c0b270147c7",
+        "reveal": "c03c771f50841cf0bcfd859f79801334dfaae037646c7d448aae055751f979e7",
         "poster": "999e4f80797bab5bc0b4a6996f2cc20496b600bb9ff0ed9039acdfbeeeeb8ce3"
       },
       "motion": "Slot wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -599,7 +599,7 @@
             61,
             62
           ],
-          "note": "Slavin74 receives from Gostisbehere53, shoots and moves to the crease. Every exported paired frame0–62 visually compared; helmet, torso, gloves, legs and skates covered, including partial occlusion behind Kurashev23. Export stops before the rising scorer overlaps teammate53. Opponents and other teammates remain visible."
+          "note": "Slavin74 receives from Gostisbehere53, shoots and moves to the crease. Every exported paired frame0\u201362 visually compared; helmet, torso, gloves, legs and skates covered, including partial occlusion behind Kurashev23. Export stops before the rising scorer overlaps teammate53. Opponents and other teammates remain visible."
         },
         "encoded_video": {
           "passed": true,
@@ -610,7 +610,7 @@
             31,
             62
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -627,11 +627,11 @@
       },
       "asset_sha256": {
         "masked": "45fc9a9b36f302c99e090dfe1bcfea0147c2138d0ab63feadce42a101c422341",
-        "reveal": "c5c45777ad3fb3ccaedd62403c87279b87f043e7b4eea53bb1847ca46153bd0a",
+        "reveal": "ce8f8cd246f9c162ec1b713cce0d432873ca17a73308f09a5e6124bd7139fafc",
         "poster": "f06ffb31fe3c7f153e29184e53bf9110a8921ab1f1d895f41e33eb46edb7ff91"
       },
       "motion": "Kneeling one-timer",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -689,7 +689,7 @@
             18,
             35
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -706,11 +706,11 @@
       },
       "asset_sha256": {
         "masked": "670ac5747ebd68c11b50603da4eebc498bf70a3386b1f22a537cb2380d7e63e8",
-        "reveal": "2d92f1ec31ef97db00123aa7aad7197a40062a5f3c1c7213b6172b0582fcc7ad",
+        "reveal": "3d3c81cfd1d9f541c492bd99337904972fc7903ac00a98d06275cff25bdd5733",
         "poster": "7f59731a3b80a84cdf22620420a9620a2c29b3bf5f99d0624ac6bf4f576639af"
       },
       "motion": "Rush shot and rebound finish",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -791,7 +791,7 @@
             68,
             69
           ],
-          "note": "Zibanejad 93 receiving, shooting and following the rebound. All70 paired frames visually compared after additional prompts at the fast pan and crease overlap, then all patched52–69 frames checked again for blue cloth edge coverage. Teammate17 and Bruins defenders/goalie remain visible."
+          "note": "Zibanejad 93 receiving, shooting and following the rebound. All70 paired frames visually compared after additional prompts at the fast pan and crease overlap, then all patched52\u201369 frames checked again for blue cloth edge coverage. Teammate17 and Bruins defenders/goalie remain visible."
         },
         "encoded_video": {
           "passed": true,
@@ -802,7 +802,7 @@
             35,
             69
           ],
-          "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed."
+          "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -819,7 +819,7 @@
       },
       "asset_sha256": {
         "masked": "4a5dfc7a5014627faf50b1b354b756d88247965c9db513a12d61e6453112bb90",
-        "reveal": "f051da8ff0df19e478d594a85fb3863ef54742ffed55c10aae25234f496b14cc",
+        "reveal": "f70d3b84e954ba38aa0409096d39d13a2f08ce0ceff944169a69632e7713d6b8",
         "poster": "62dbc22e390b1fe8d595404371f8f4158e092b6065d457820edcb7fd321142a2"
       },
       "motion": "Circle wrist shot",
@@ -909,10 +909,10 @@
             32,
             64
           ],
-          "note": "Encoded first/middle/final pairs visually inspected; silent H.264 matching timing, and no scorer name graphics."
+          "note": "Encoded first/middle/final pairs visually inspected; silent H.264 matching timing, and no scorer name graphics. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       },
-      "status": "reviewed_staged_outside_checkout_not_playable"
+      "status": "staged_awaiting_github_and_live_verification"
     },
     {
       "id": "goal-49",
@@ -927,11 +927,11 @@
       },
       "asset_sha256": {
         "masked": "9c01536829722a7adef9d03f22b3bb228e13ef07629ba23ccc9f744d899248c9",
-        "reveal": "b8021f7b5f99ad29b4141cf233ee3ba058ec92e8476a62f69e188583fef81740",
+        "reveal": "e8a23562ee2b1db24161f1c52605f7e8554b2c9ffcf3953543a60df0391354f7",
         "poster": "ba58bf0e35c2944888f48d6d21115d8ccee09ff5383423243cbcf92a8511425e"
       },
       "motion": "Circle wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1011,7 +1011,7 @@
             29,
             57
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1028,11 +1028,11 @@
       },
       "asset_sha256": {
         "masked": "747bbf39186e01e673e76df8ef51ccdcc6ac8b1b960144d9090439b1dfc19aba",
-        "reveal": "d7602a86cc35112d5029a542b0b1725339d0b9dbfb36031deefd28084bf45ca1",
+        "reveal": "21487c6b57dee11937d7195a4844729d797433411dcc057b7ca74f03669a8d25",
         "poster": "dbaa84bed97b51795cce9f36e747681a806bdc6c8af3ea00880024de94a155d7"
       },
       "motion": "Net-front deflection",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1095,7 +1095,7 @@
             20,
             40
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1112,11 +1112,11 @@
       },
       "asset_sha256": {
         "masked": "68add39b3a73671e1d0c850aed6b8c641bb983f8648912a6e292e25fe4bd0969",
-        "reveal": "7beeafaaabb5294a615a4b91f9a28f57fae946ad8c1821c68e44d5415023ad06",
+        "reveal": "ef6998737649ac349e9530c89023c62ff4de6ff9e8f415b7b03a695206ca363c",
         "poster": "bb228858a08d13e4dbacf8e1493cdad56b49a13b372bb17a468df001b0d90a05"
       },
       "motion": "Crease finish",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1179,7 +1179,7 @@
             50,
             51
           ],
-          "note": "Hartman38 finishes at the crease and raises his glove. Every paired frame0–51 visually compared; frames42–51 rechecked after correcting the entire glove, cuff and white sleeve in the full scene. Teammate gesture and Capitals defenders/goalie remain visible. Export stops before the embrace."
+          "note": "Hartman38 finishes at the crease and raises his glove. Every paired frame0\u201351 visually compared; frames42\u201351 rechecked after correcting the entire glove, cuff and white sleeve in the full scene. Teammate gesture and Capitals defenders/goalie remain visible. Export stops before the embrace."
         },
         "encoded_video": {
           "passed": true,
@@ -1190,7 +1190,7 @@
             26,
             51
           ],
-          "note": "Final encoded first/middle/last original/masked pairs visually inspected after the glove correction. Entire streams decoded with identical52-frame silent H.264 timing."
+          "note": "Final encoded first/middle/last original/masked pairs visually inspected after the glove correction. Entire streams decoded with identical52-frame silent H.264 timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1207,11 +1207,11 @@
       },
       "asset_sha256": {
         "masked": "8a45259a003326c2d8e8dbf11beb0a85ee44532955f53fcf3d28f80e12b5a5c1",
-        "reveal": "365273028d7d739a58605721dbaa9b369e2dae548b6891afa149cdd1ac25b4eb",
+        "reveal": "f4f27c9a6eb9ef4387e03dad39b573d22f6cb5534e554ca2d74b19c27e8ef2de",
         "poster": "0191bf14c986d35cf53eead52cce91fdbc21d677a67c9cbcb3034a7d4249d69f"
       },
       "motion": "Wraparound finish",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1286,7 +1286,7 @@
             26,
             52
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1303,11 +1303,11 @@
       },
       "asset_sha256": {
         "masked": "88a7d94afd88b01e8b2752467ad13188ef316fd2e22c8ee6c37594e691835d22",
-        "reveal": "c22040da5200e5e6ab0b30e74d87e43ab6f618e18cc5a84bf12c7247f5d11f73",
+        "reveal": "c2dacbf502094b2e52f2818c082bc6b152657309cea29a0547382f263365b9ed",
         "poster": "c8b7a080012054f33b323e37acb01c4863b9e6f05d925fedb5d2da903134961d"
       },
       "motion": "Point wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1403,7 +1403,7 @@
             37,
             73
           ],
-          "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed."
+          "note": "Final encoded first/middle/last original/masked pairs visually inspected; complete decoding and silent H.264 timing checks passed. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1420,11 +1420,11 @@
       },
       "asset_sha256": {
         "masked": "5bf603b6eae5b01f30c0a2137e5abba4107d2873961d523b8d9d0609eba55e32",
-        "reveal": "7c23f394ebd9b0e870fe52b588ec35ffe406c5082b965c8e2164bc17f2a5a208",
+        "reveal": "2aa05a14572e7aa5a7a18325453cffa118501a2f0946c94baaa2ef1332d5b580",
         "poster": "cab8c2c021d76e084b23a7ea51b653a13fda66d50781bf3cf6af4252f16ec13d"
       },
       "motion": "Slot shot to kneeling follow-through",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1482,7 +1482,7 @@
             18,
             35
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1499,11 +1499,11 @@
       },
       "asset_sha256": {
         "masked": "4c6d7bda4e28774534dff4b61f8321422cbc53f0fa9d21ae8e86cf953d03c22f",
-        "reveal": "658139ba71e064df8a0df7d9ffee4ab0d743671787de8f14b63d4caf4a8e9a89",
+        "reveal": "503f4f12f216156b3c8baea1ac6886c3a8aea719f333a17b26c0899252650956",
         "poster": "296cd3105e633e14f09d76df7fcfec953cde4654753857a0569705e7842cbcf8"
       },
       "motion": "Point slap shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1557,7 +1557,7 @@
             16,
             31
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1574,11 +1574,11 @@
       },
       "asset_sha256": {
         "masked": "c29a69debbcffc5694c5a73c2b0e4133bcb0fd18b5ae233173b3678fb894ad5a",
-        "reveal": "ba984f905aba5786b6a89ec338c975c34b50d4ba7ab1ee542446bb64e176d145",
+        "reveal": "ce5e65eda4153a362d07cac269cb6fcab7eeb61a71c4d70f53fc7160814470bb",
         "poster": "0ba41dea934425ab3deca38a8c792af86997c9cb0c0eade9b70b16303557441b"
       },
       "motion": "Circle wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1643,7 +1643,7 @@
             21,
             42
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1660,11 +1660,11 @@
       },
       "asset_sha256": {
         "masked": "d0ef65fef9cf3329d8dc9701afee1f706661fb7e96b667dfb9b089b1f4f58ec1",
-        "reveal": "0fe17a89861819c6c1ca951524b4896b0a8948a57150da4fd5878948cc44b9df",
+        "reveal": "37dbc319094fa326b02a2ef62288a4bdadfb6f65e5c28d21e00d62d5d9b8a51d",
         "poster": "6d8b35481e61dedd88adaef7c71beeeeaa178a5dce77212d7a23c94a16432e92"
       },
       "motion": "Slot one-timer",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1741,7 +1741,7 @@
             27,
             54
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1758,11 +1758,11 @@
       },
       "asset_sha256": {
         "masked": "e4dad92e1c13a19dc90b6686b26b18f0b92f3dbb3bc86feaefbb51eeacfc1f7a",
-        "reveal": "d156a520fbc4ca817fa2659b659e2d45ea24998be0bd537246dc39d4b52e8517",
+        "reveal": "504d47a4e5bc6b770a9c760d3a0a2db53d7d415b9adac5d8bb085e055d0c1320",
         "poster": "d74be2b8076be10d41cc507fa3364de45630f95e808c75de17be0387022294c7"
       },
       "motion": "Rush wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1834,7 +1834,7 @@
             25,
             49
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1851,11 +1851,11 @@
       },
       "asset_sha256": {
         "masked": "061e018692b45eca0d1b9ab0894b0c89991b9e65774f36c6a4cd9cfb5104045b",
-        "reveal": "9d381c61c9b4ef5b696af284e941e1c03b6e9950be90ebc7e6fdfaa403cbad84",
+        "reveal": "296e15b723e8f8d80a376ad342eff9b069f2b4ed5a17b16746563293ef5c47ab",
         "poster": "5c1e3aa0128c5fac0224f5c37fc6cbd6f941cbea13a8c8c221278ac0c8e54406"
       },
       "motion": "Circle wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -1931,7 +1931,7 @@
             27,
             53
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -1948,11 +1948,11 @@
       },
       "asset_sha256": {
         "masked": "aace0c0037b77e3ff9b6ec0717b253f89f41e85f0f221a892b7702307a519d56",
-        "reveal": "52b1a8187618415ea7842ebfb721043c44873c77c9ae624bcfa24cd9e6cf140d",
+        "reveal": "f491b4bbf02ba19317a245aad870bcffceaf2a1112b6926f5116534cb3e59f84",
         "poster": "1b74b06b36df7f8e2dc1564d6df47dbcbbfb8f08f1081ae9df7e7580d5a9a098"
       },
       "motion": "Point wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2022,7 +2022,7 @@
             24,
             47
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2039,11 +2039,11 @@
       },
       "asset_sha256": {
         "masked": "9ae223858c2ebcff4d627d37f036d39fd5cdc0bdcfb3d30bae447810a4dfbcc1",
-        "reveal": "1af94c586ff60546e3e6bb6e5905d0ccab81689dc7791e828edda1668075513a",
+        "reveal": "d54bd5043549d1330a850e9cf3d07178b872191149d246ca6147e5749c586061",
         "poster": "906cee5f4814cdb61d089327420c7f2500137f076c633109d7191b25ee74541b"
       },
       "motion": "Net-front deflection",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2118,7 +2118,7 @@
             26,
             52
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2135,11 +2135,11 @@
       },
       "asset_sha256": {
         "masked": "8a731f3ad5b5f2d608ccfcf346fd2da8348dc641f5e0132375ccd51cada60eeb",
-        "reveal": "b74dafce621b4ba2e7935fc7f65fa51405dd728bc844cfe16708ed9c1bd161ea",
+        "reveal": "5945b1fcb587efac6d474a28300910eeb26dff31bc9b8bf186c584a9bb0ae7b9",
         "poster": "e71249c5687cf6084d5287ec0633a883f740c954bc5f482f7cd354f63e1c79b0"
       },
       "motion": "Shorthanded rush wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2243,7 +2243,7 @@
             41,
             81
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2260,11 +2260,11 @@
       },
       "asset_sha256": {
         "masked": "0d349c6a364c18ca84485076dd79763dec0b9a003a02ad2eb77fa7c0acea96e7",
-        "reveal": "87c9772ef06e018db192419d8cf3d6067ebc95d4de2b3c96d0ce4a420a27618c",
+        "reveal": "30b52d6eebd329cab4b5632448c795644713528c546ee13b09aacdc021b57c46",
         "poster": "a68d51f0c65f62f4011a3fe6a28bd7893ff315802d56a52f15ac8e4ea0ef62ab"
       },
       "motion": "One-timer",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2323,7 +2323,7 @@
             18,
             36
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2340,11 +2340,11 @@
       },
       "asset_sha256": {
         "masked": "4a27d44e46c36f0c56f3e64aa32f8ab774fef969989e27d14ffac4bf6f766cc0",
-        "reveal": "450fd5a2e9a9b46a351f329c3d8ab3f61c57f77adc5bd326328508406b3091e6",
+        "reveal": "4df136c73571ae9a5bbd5f248b810d824abb771f6e5fbe81f6662bb210ddbc5b",
         "poster": "ced88204976e0296e4cb49c00d84f14ddf4058204c3931f9f3143869457c6016"
       },
       "motion": "Circle wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2414,7 +2414,7 @@
             24,
             47
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2431,11 +2431,11 @@
       },
       "asset_sha256": {
         "masked": "5b50b96d5ecaa0878ff33f18475218e975168da4ea61b705912877e8a99ba2a8",
-        "reveal": "2992674d344368ad8c288e37f845deacf54d5e8ae9a31be3ebab8a53d1890c8f",
+        "reveal": "df5b2c6b319b14c1a31379e3bc10292ea93b66c81c0871716a2a65d4120a54e2",
         "poster": "38212c99c8003575233661fcdf02a27371bd23ba9a810ebcefb86a8492325457"
       },
       "motion": "Slot wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2498,7 +2498,7 @@
             20,
             40
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2515,11 +2515,11 @@
       },
       "asset_sha256": {
         "masked": "17be6105f4f109fae36649c2e6e9f074ab1ab4eedb49fb7c68eec16553a95d7e",
-        "reveal": "19cd6150c979d2b111517773ac58351f654528f5851c1a87c96ec928089ac320",
+        "reveal": "7501179a51862dad1624a5fd03cb0629efb8e6ae02a955fbcd0948618ce7930e",
         "poster": "69e1fd47a6261e5fb4d7910307cfb6016b55b158b16f3365985123dd1a18198f"
       },
       "motion": "Slot wrist shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2574,7 +2574,7 @@
             16,
             32
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2591,11 +2591,11 @@
       },
       "asset_sha256": {
         "masked": "79aecc1c08161da8d9e1de78b1e222816cdac5c8a266679b8abe6cf6c7a16cd7",
-        "reveal": "aab3a62b527f3cc40f32b924b6848773191e764fa9b49885a196a18ca336fb05",
+        "reveal": "b8cd85795524e688c9f49edf9698cf49a9588be84e111dd32ddfcd3744bac741",
         "poster": "3725120401a6814e6f08f9687efdc2fa824420d74479a078186a014c4b9765c4"
       },
       "motion": "Net-front deflection",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2670,7 +2670,210 @@
             26,
             52
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-68",
+      "pid": 8478873,
+      "frames": 86,
+      "edit_sha256": "f45ee4b0ef510b78e01e6cb602e055102390bb441ab7dbc5af246719ea799649",
+      "source_sha256": "437c6d971878a74e5d84ded4731acc20b3fc99bd64f65519fd00185e0f361db9",
+      "assets": {
+        "masked": "goal-68-masked-v1.mp4",
+        "reveal": "goal-68-original-v1.mp4",
+        "poster": "goal-68-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "5d60df3633edcb5961718ea5e3bdf4baca980b5d9910e004d26a072bf9906f67",
+        "reveal": "119ea5ea0f0f7a6362ae14bd6dc24a7ff9b7bfb4983fc56ba5d667d47dc3ad0a",
+        "poster": "d7927e5e2aeab469674908e5af81aa9668390f7bc1b494e390c64f08a2c3eb39"
+      },
+      "motion": "Overtime rush wrist shot",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 19,
+          "event_id": 1109
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85
+          ],
+          "note": "All 86 frames compared in the cleaner alternate OT replay. Orange TERRY19 alone in the right lane receives, carries and shoots; helmet, both gloves, jersey, legs and skates covered throughout. Jets4/14, Strome21, goalie and referee remain visible; matched final encoded full-scene samples verified."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            43,
+            85
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-69",
+      "pid": 8480113,
+      "frames": 31,
+      "edit_sha256": "839cf2462dc2c1a070429368ec830045ee0a5c2bedbb9827eccc3bc646a47c85",
+      "source_sha256": "759c9ce763e76b49cc319bfb8b59ebf94001bc418312f466ed43288800c31319",
+      "assets": {
+        "masked": "goal-69-masked-v1.mp4",
+        "reveal": "goal-69-original-v1.mp4",
+        "poster": "goal-69-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "46d2e207d849548c32d77155c94e869c10ea5bfb221dbcbd0cbc75a7a9442ff1",
+        "reveal": "c8f6b2b54d547cead9b07cc28980d91423ba1545371e081ad7ad457bce4aab1c",
+        "poster": "239c312b7f56cf237cda2d8ff00ebdd0279aa440051f1314120a3ecc5fe4792a"
+      },
+      "motion": "Net-front deflection",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 9,
+          "event_id": 559
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "note": "Iafallo9 identified by readable name and number with official credited goal. All thirty-one paired frames reviewed through the deflection, ending before the camera whip. Helmet, jersey, hands, legs and skates covered; crossing Capitals38 and Carlson8 retained. Final encoded first, middle and last pairs visually compared."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            15,
+            30
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     },
@@ -2687,11 +2890,11 @@
       },
       "asset_sha256": {
         "masked": "9ddd3050610aaa4a617cf688085d0aa70140b6dee0a819fef598fc254216d5be",
-        "reveal": "e4470be897c228b538eed741dcdd3eaee055353fddcc768b1889186078693dae",
+        "reveal": "6716bc90967fd2dba0719057fb618b868a435578f178038ca1ac89e3efa498df",
         "poster": "ad2bb539f684868bcaa27326d5b31a8cff734e665171bd2a5db7308676646fee"
       },
       "motion": "Point slap shot",
-      "status": "reviewed_staged_outside_checkout_not_playable",
+      "status": "staged_awaiting_github_and_live_verification",
       "reviews": {
         "official_identity": {
           "passed": true,
@@ -2740,10 +2943,762 @@
             13,
             26
           ],
-          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing."
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-71",
+      "pid": 8475722,
+      "frames": 20,
+      "edit_sha256": "0a1430a6bdc4b7280c6a066244c4449836a3f42f3e579eeab47cc954dbe2bf69",
+      "source_sha256": "e05819d850118beecdd5d76da1b6f9bc2a0f2a3d76384a39280e11510574c987",
+      "assets": {
+        "masked": "goal-71-masked-v1.mp4",
+        "reveal": "goal-71-original-v1.mp4",
+        "poster": "goal-71-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "5b97d5b4ceb7a63f951cd7765eb20b8c41427ef0a8657ae0fe922e9b1d1c2ecc",
+        "reveal": "8c77d30cefc2303e8cfd1ac06274a8519b31ee9ed5a3bdbf04899f5a5a2fad8f",
+        "poster": "58f75ad67cd03b54c0ccca602e283b8a993633c259582ce047ba88f0f301fafd"
+      },
+      "motion": "Net-front tip-in",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 17,
+          "event_id": 752
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+          ],
+          "note": "Zucker17 verified by readable jersey and name, continuous tip-in replay and official attribution. All twenty exported frame pairs and fresh encoded first, middle and final frames compared; helmet, both visible arms, left glove, uniform, legs and skates covered. Thompson72 own blue and gold right glove and Toews7 foreground body remain visible; those are occluders, not exposed Zucker body parts. Export stops before the later glove/body overlap."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            10,
+            19
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-72",
+      "pid": 8481524,
+      "frames": 48,
+      "edit_sha256": "25828da60a27439ec2e9502dc33fc84a7adf06af413d223c289e99ae11a39619",
+      "source_sha256": "8a49247b45fd8686a6eac4edf5373618b7819114cfa3aca7f4ecb72757646fcb",
+      "assets": {
+        "masked": "goal-72-masked-v1.mp4",
+        "reveal": "goal-72-original-v1.mp4",
+        "poster": "goal-72-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "e9bdc6c057a6c4866299b89d23b37bb38e1b24033e1fb2f88497dda0e9e9bd04",
+        "reveal": "34d11f18572241b50fa4712f4efa840c8b33631a479446a760fb49ab6470b8dd",
+        "poster": "59b1b3208b023f11c71465d247566496922345e786bb574848e84ec83e13ed78"
+      },
+      "motion": "Circle drive and wrist shot",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 4,
+          "event_id": 245
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "note": "Byram4 corroborated on the black Sabres jersey and official goal. All forty-eight pairs reviewed after retracking the raised forearm at frame28; helmet, hands, sleeves, torso and legs covered. Opposing CBJ82 and other players retained. Final encoded first, middle and final pairs compared and both streams fully decoded."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            24,
+            47
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-73",
+      "pid": 8480069,
+      "frames": 70,
+      "edit_sha256": "f059098e951c15c2bca87c05debef2153528dd164e54a420d58b82ceb2954b91",
+      "source_sha256": "b0e7119c8d9a8b1873b67441efa60eac2fac33d6de03a2a9e1155a9296867905",
+      "assets": {
+        "masked": "goal-73-masked-v1.mp4",
+        "reveal": "goal-73-original-v1.mp4",
+        "poster": "goal-73-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "f217ca17b46c045f800a24a7ea944d8dee21118fb441596a3a609c19aaccb414",
+        "reveal": "38554251ade3aa50faa107c42017d311266609a41dd0a63d193a7c80922539c3",
+        "poster": "4d7c4e3cf9f4da8b68b7ca6ff74e55bc758e7a203d33eeca48c4dbd6ae845c20"
+      },
+      "motion": "Point drive and wrist shot",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 8,
+          "event_id": 921
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69
+          ],
+          "note": "Makar8 identified by jersey and continuous source shot; all seventy frame pairs reviewed and final encoded samples compared. Helmet, both gloves, legs and skates covered; foreground glass post and crossing Sabres remain visible. Disconnected skate at frame47 is correctly separated by the foreground glass post, corroborated in the source."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            35,
+            69
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-74",
+      "pid": 8479525,
+      "frames": 35,
+      "edit_sha256": "0a594c5d72f74fd6c8c8a9fce58055a20862a2cc48a034334393674da83231df",
+      "source_sha256": "4bbb68ee1ae8b23b4716db04b33384f8bc62a25cb4b9a9485ff3367fc349adbe",
+      "assets": {
+        "masked": "goal-74-masked-v1.mp4",
+        "reveal": "goal-74-original-v1.mp4",
+        "poster": "goal-74-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "161d3f0cfbd489f519f0533b4e14fb21506c4f5310ec8626559de97adb52f46d",
+        "reveal": "c93d8b5c356d1b80fa897bc59ca6c61d554fd0c49ab501b94c6cf70e097aab5c",
+        "poster": "0db42094864f3a0110f9c760ba6c5f86e3dde989c3231cf4410d940bff2a234c"
+      },
+      "motion": "Net-front deflection",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 20,
+          "event_id": 1047
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34
+          ],
+          "note": "All 35 exported frames compared. Foreground COLTON20 fully covered, including both hands, jumping legs and skates, while goalie and defenders remain visible behind him. Start follows the dissolve; export stops before the final flash disrupts tracking. Poster19 and fresh encoded samples checked."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            17,
+            34
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-75",
+      "pid": 8484145,
+      "frames": 31,
+      "edit_sha256": "39f23f7e6e528332a985427e8903025c39971a4e6d8ee69946ba6ca14e6e2760",
+      "source_sha256": "1f9bfa5f2db198bae26ecc6865f00e1a4b53d43d43d4bbe010a62c1d6a1af573",
+      "assets": {
+        "masked": "goal-75-masked-v1.mp4",
+        "reveal": "goal-75-original-v1.mp4",
+        "poster": "goal-75-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "db2639924002471b44cc1793247f86ab62402efe4bb6a5fbf2d55b2f2e8afb34",
+        "reveal": "0f12844ce4027f14d29e8c8bbaac4defeea72a8b19abbe6f5679e7bdb79fabd3",
+        "poster": "96f7a2e748831e418a15cef57bc72e093d620212b08b182f22ecd44d230a0d57"
+      },
+      "motion": "Kneeling shot beside the net",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 9,
+          "event_id": 1051
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "note": "Benson9 is the white Sabres scorer on the right receiving from Peterka77. All thirty-one pairs re-reviewed after adding background exclusions around the helmet; helmet, face, both gloves, jersey, knees and skates covered. Pepsi background logo, opposing defenders and goalie remain visible. Final encoded samples visually compared."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            15,
+            30
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-76",
+      "pid": 8478420,
+      "frames": 53,
+      "edit_sha256": "3b6d7a50836b0fd13506b7314d2218fc6f01bf7eddd2ac6dc4dff0f46b2c5230",
+      "source_sha256": "f1e00476453d965f9184aa170e510a986f6b0bef17b40cb5f30b1d1c613bec31",
+      "assets": {
+        "masked": "goal-76-masked-v1.mp4",
+        "reveal": "goal-76-original-v1.mp4",
+        "poster": "goal-76-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "606866a4042262b4e269ad32822476b3e77af2a0cd9a48a9fb07ea7c61fbdf58",
+        "reveal": "20602e9acb631ed31b93cfb45fe9498f8755acfa40092ba0c656a5921efaae13",
+        "poster": "420fdcd33a520594fa300fecc9d822245376296d3a3b659ed30d474fad980a61"
+      },
+      "motion": "Circle one-timer to one knee",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 96,
+          "event_id": 1105
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "note": "All 53 frames compared. Blue RANTANEN96 receives alone at the near-side circle and drops to one knee for the shot. Helmet, both gloves, jersey, pants, kneeling leg and both skates fully black throughout. Sabres, goalie and teammates remain visible; final encoded samples verified."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            26,
+            52
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-77",
+      "pid": 8478038,
+      "frames": 53,
+      "edit_sha256": "01bf6a2b536dc31bc558013bda3120677ac4e02e2af1e1d27acc67fca3962842",
+      "source_sha256": "997d42722b17c3297d213c2b0c9602760fd0c7181be28cc50cbe65db325e4bfc",
+      "assets": {
+        "masked": "goal-77-masked-v1.mp4",
+        "reveal": "goal-77-original-v1.mp4",
+        "poster": "goal-77-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "50aa3e6da90373fbf97c9d5dcc2d2efcb40b8973eae24ccb6bf3b09b570c7afc",
+        "reveal": "e70878c49f59b1f29007760f253e3644c12428db1581e976d5b4082cec509bdf",
+        "poster": "8114007177f0719d6e757c487c8dceeb6d96dca9d67bcc555f11af2f7a3b9829"
+      },
+      "motion": "Rush wrist shot",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 7,
+          "event_id": 1319
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "note": "Toews7 identified on the sole blue shooter; all fifty-three pairs and final encoded samples visually compared. Helmet, both gloves, torso, legs and skates covered through shot and follow-through, including camera-border cropping. Following Sabres25, goalie and referee retained."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            26,
+            52
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-78",
+      "pid": 8478474,
+      "frames": 31,
+      "edit_sha256": "103b8cd4f5f66e11effe3e569157055fae0412c44c8aeeeb741deb32bb83ece9",
+      "source_sha256": "7c0544dcc312e4474c1bd68193206acdccb29100ec2e2abf3b46083703d99380",
+      "assets": {
+        "masked": "goal-78-masked-v1.mp4",
+        "reveal": "goal-78-original-v1.mp4",
+        "poster": "goal-78-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "5269a2e7ee28919baa1d9d457fa648c22d5a18bd77aaf2e74ef5e039d80e94e6",
+        "reveal": "a8bd7ef0afa9cf7409d59e38cce19cb5c79d70f77597fa0f550af2b61e8f9578",
+        "poster": "353af041d7ff3df25fce6dccf753dceca3ae6e8568c12a96bc346deebdd94861"
+      },
+      "motion": "Scorer follow-through and reaction",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 67,
+          "event_id": 744
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "note": "Crouse67 identified on the LEFT Utah skater by sleeve number and continuous source movement after the camera cut. Earlier angle and right-side Utah23 excluded from the selected subject. All thirty-one paired frames reviewed, covering helmet, face, both gloves, jersey, legs and visible skates through the goal reaction. Utah23, foreground Wild46 and referee retained. Fresh final encoded first, middle and final samples compared."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            15,
+            30
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
+        }
+      }
+    },
+    {
+      "id": "goal-79",
+      "pid": 8476399,
+      "frames": 24,
+      "edit_sha256": "6c79cad0220833fec4de17c6da392db859ef46c4f7c70d2507c5aef8faf93621",
+      "source_sha256": "8da0f7e1638848895179d54f09b43998571975951de3d3dee8d81d7555ed39c0",
+      "assets": {
+        "masked": "goal-79-masked-v1.mp4",
+        "reveal": "goal-79-original-v1.mp4",
+        "poster": "goal-79-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "e65b6ee4d769cd7db5438081d943409e71896533d4306b70f36ca6748d55e803",
+        "reveal": "d6dd08ec946eabc0ea8a4a51b8dbb74c441e2467a6b02726b941db0baf714d71",
+        "poster": "454eb22b371e20bc16a2e1494590f8c5c7a770ec11a330b86296b2ed59682bd7"
+      },
+      "motion": "Empty-net wrist shot",
+      "status": "staged_awaiting_github_and_live_verification",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 20,
+          "event_id": 1114
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "note": "Coleman20 followed from the right boards through the credited empty-net shot and confirmed in the official source closeup. All twenty-four exported pairs reviewed, with frame6 face and neck coverage repaired and rechecked. Helmet, visible hands, uniform and skates covered; foreground Jets44, Calgary16 and referees retained. Final encoded first, middle and last pairs visually compared. Later camera-whip frames excluded."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            12,
+            23
+          ],
+          "note": "Final encoded original/masked first, middle and last samples visually compared. Pipeline decoded both entire streams and verified identical frame counts, silent H.264 and matching timing. Reveal subsequently converted to explicit limited-range yuv420p for browser consistency, fully decoded again, and its new first/middle/final samples visually inspected; all 120 new samples also compared against source RGB (worst mean difference 3.252/255). Scorer masks and source extraction frames unchanged."
         }
       }
     }
   ],
-  "active_additions": 0
+  "active_additions": 40
 }

@@ -1,6 +1,7 @@
 # Reviewed Who Scored? expansion
 
-The manifest has 39 unique players: the existing 9 plus 30 new scorers. Media are
+The manifest has 79 unique players: the original 9, 30 earlier additions and the
+first expansion batch of 40. Media are
 960x540, 24fps, silent H.264 with fast-start headers. Each masked video shares
 its frame count and camera angle with its reveal. Existing goal01..09 IDs and
 corrected v2 media stay intact.
@@ -13,7 +14,7 @@ interrupted run; their original masks are unavailable, and their provenance stat
 which source rendition was used for verification. All their exported pairs were
 visually reviewed again.
 
-## Reproducing the 26 new tracked edits
+## Reproducing tracked edits
 
 Install SAM2 and its dependencies, and obtain the SAM2.1 Hiera tiny checkpoint.
 Use `gather_expansion.py` to collect the selected sources. Restore each edit's
@@ -44,19 +45,21 @@ python tools/who_scored/validate.py --decode
 python build_sweater.py --quiet --out site/index.html --site-url https://sweater.win/
 ```
 
-Unlimited completes a 39-player shuffle bag without repeats. Expanding the Daily
+Unlimited completes a 79-player shuffle bag without repeats. Expanding the Daily
 pool replaces only unlocked future assignments and preserves past, today and
 tomorrow. The builder retains every clip's scorer in the embedded player data,
 including players available only from the schedule archive.
 
-## Pending expansion: six batches of 40
+## Expansion: six batches of 40
 
 The new expansion targets **240 additional unique scorers**, for 279 total.
 `progress/expansion-candidates.json` contains 268 distinct official scorer
 candidates with spare events. These are discovery records, not playable clips.
 `progress/expansion-batches.json` fixes six ordered groups of 40. The first batch
-has 40 corroborated source originals and reviewed exports tracked in the batch registry; **none of this
-expansion is active or published in the game yet**.
+has 40 corroborated source originals and completed reviews. Its 40 video pairs
+and posters are included in the playable manifest. The batch registry records
+GitHub and live-deployment verification separately from local staging.
+Batches 2–6 contain the remaining 200 planned additions.
 
 Use the isolated SAM2 environment and store raw footage, API caches, models and
 working frames outside the checkout:
@@ -82,8 +85,9 @@ the initial matte cannot be overlooked. Automatic opaque-pixel assertions prove 
 not that the correct player or all body parts were selected.
 
 Reviewed edits and immutable review hashes live under `progress/batch-01/`.
-Their exported media remain staged at
-`/workspace/who-scored-expansion/batch-01/exports` until the entire batch passes.
+Raw footage and working exports stay outside the checkout. Only the reviewed
+video pairs and posters are copied into `static/who-scored/` after the entire
+batch passes.
 The batch gate rejects fewer than 40 reviews, duplicate scorers, missing frames,
 and media/edit checksums that changed after review:
 

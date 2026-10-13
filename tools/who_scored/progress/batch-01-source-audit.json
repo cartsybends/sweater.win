@@ -661,20 +661,20 @@
       "player": "Jason Zucker",
       "game_id": 2024020610,
       "date": "2025-01-02",
-      "period": 1,
-      "time_in_period": "13:17",
+      "period": 2,
+      "time_in_period": "11:08",
       "team": "BUF",
-      "source": "https://nhl.com/video/buf-col-zucker-scores-ppg-against-scott-wedgewood-6366638942112",
-      "source_video_id": "6366638942112",
-      "official_event_id": 463,
+      "source": "https://nhl.com/video/buf-col-zucker-scores-goal-against-scott-wedgewood-6366639402112",
+      "source_video_id": "6366639402112",
+      "official_event_id": 752,
       "jersey": 17,
-      "source_sha256": "7596bfa10986f31851ad8a99c649fba3d28521c1dee397b2cfe0186037c2a5e0",
-      "media_title": "Zucker knocks in opener ",
+      "source_sha256": "e05819d850118beecdd5d76da1b6f9bc2a0f2a3d76384a39280e11510574c987",
+      "media_title": "Zucker's second tip-in of the game",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 38.578345
+      "duration": 40.065011
     },
     {
       "id": "goal-72",
@@ -806,43 +806,43 @@
       "id": "goal-78",
       "pid": 8478474,
       "player": "Lawson Crouse",
-      "game_id": 2024020611,
-      "date": "2025-01-02",
-      "period": 1,
-      "time_in_period": "08:51",
+      "game_id": 2024020766,
+      "date": "2025-01-23",
+      "period": 2,
+      "time_in_period": "14:14",
       "team": "UTA",
-      "source": "https://nhl.com/video/lawson-crouse-with-a-goal-vs-calgary-flames-6366637480112",
-      "source_video_id": "6366637480112",
-      "official_event_id": 275,
+      "source": "https://nhl.com/video/uta-min-crouse-scores-goal-against-filip-gustavsson-6367601039112",
+      "source_video_id": "6367601039112",
+      "official_event_id": 744,
       "jersey": 67,
-      "source_sha256": "19f3b37d1238e5dc5df3ac0e21695e4944c8770fce83bc0eae3e055eb044d685",
-      "media_title": "Crouse breaks the ice",
+      "source_sha256": "7c0544dcc312e4474c1bd68193206acdccb29100ec2e2abf3b46083703d99380",
+      "media_title": "UTA@MIN: Crouse scores goal against Filip Gustavsson",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 52.533333
+      "duration": 50.77
     },
     {
       "id": "goal-79",
       "pid": 8476399,
       "player": "Blake Coleman",
-      "game_id": 2024020611,
-      "date": "2025-01-02",
-      "period": 1,
-      "time_in_period": "19:12",
+      "game_id": 2024020730,
+      "date": "2025-01-18",
+      "period": 3,
+      "time_in_period": "18:55",
       "team": "CGY",
-      "source": "https://nhl.com/video/uta-cgy-coleman-scores-ppg-against-karel-vejmelka-6366639248112",
-      "source_video_id": "6366639248112",
-      "official_event_id": 512,
+      "source": "https://nhl.com/video/cgy-wpg-coleman-scores-empty-net-goal-6367330187112",
+      "source_video_id": "6367330187112",
+      "official_event_id": 1114,
       "jersey": 20,
-      "source_sha256": "1850995f51bce531afdb1598a20c7f25fd586fdb1be85c663d569921ff149800",
-      "media_title": "Coleman buries a PPG",
+      "source_sha256": "8da0f7e1638848895179d54f09b43998571975951de3d3dee8d81d7555ed39c0",
+      "media_title": "CGY@WPG: Coleman scores empty-net goal",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 49.26
+      "duration": 40.226667
     }
   ]
 }
