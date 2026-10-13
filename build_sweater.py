@@ -2983,23 +2983,35 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-hub .hubfeature.primary { min-height: 220px; padding: 30px; }
   #view-hub .hubfeature.primary .featuretitle { font-size: 34px; }
   #view-hub .hubfeature.primary .featurecopy { max-width: 38ch; margin-top: 10px; }
-  #view-hub .queststack { align-self: stretch; }
-  #view-hub .hubfeature.quest { padding-top: 20px; padding-bottom: 20px; }
+  #view-hub .queststack { align-self: stretch; gap: 12px; }
+  #view-hub .hubfeature.quest { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+  .challengehead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .challengehead .featureeyebrow { margin: 0; }
+  #view-hub .challengehead .questprogress, .lockerchallenge .questprogress { position: static; flex: none; min-width: 42px; padding: 5px 9px; background: color-mix(in srgb, var(--accent) 9%, var(--panel)); color: var(--accent); }
+  #view-hub .hubfeature.quest .featuretitle { font-size: 18px; line-height: 1.3; }
+  #view-hub .hubfeature.quest .featurecopy { margin: 7px 0 14px; line-height: 1.5; }
+  .questaction { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--accent); font-size: 12px; font-weight: 750; }
 
   #view-hub .explorehead { margin: 0 4px 16px; }
   #view-hub .explorehead p { margin: 0 0 5px; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .105em; text-transform: uppercase; }
   #view-hub .explorehead h2 { margin: 0; font-size: 25px; font-weight: 760; letter-spacing: -.035em; }
   #view-hub .teams-homecard { min-height: 150px; margin-bottom: 14px; padding: 24px; border-radius: 18px; }
-  #view-hub .teams-homecard b { font-size: 26px; }
+  #view-hub .teams-homecard b { font-size: 22px; line-height: 1.3; }
   #view-hub .teams-homecard small { max-width: 42ch; line-height: 1.55; }
+  #view-hub .edgehome { margin-top: 32px; margin-bottom: 28px; }
   #view-hub .partycard { min-height: 100px; margin-bottom: 44px; padding: 18px 22px; }
   #view-hub .partytext span { color: rgba(255,255,255,.78); }
 
   #view-hub .libraryhead { margin: 0 4px 18px; }
   #view-hub .libraryhead h2 { font-size: 27px; }
   #view-hub .libraryfilters { margin-bottom: 30px; }
-  #view-hub .hubsec { margin-bottom: 36px; }
-  #view-hub .hubsec h2 { margin-bottom: 11px; font-size: 13px; letter-spacing: .105em; }
+  #hubSections { scroll-margin-top: 90px; }
+  #view-hub .hubsec { margin-bottom: 28px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+  .hubsec-header { padding: 0 0 18px; margin-bottom: 4px; border-bottom: 1px solid var(--line); text-align: left; }
+  .hubsec-header h3 { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 19px; font-weight: 750; letter-spacing: -.025em; line-height: 1.3; }
+  .hubsec-header h3::before { content: ""; width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--tone); }
+  .hubsec-header p { margin: 7px 0 0; max-width: 56ch; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  #view-hub .librarygame:last-child { border-bottom: 0; }
   #view-hub .grow { min-height: 84px; padding: 16px 10px; }
   #view-hub .grow .gicon { width: 42px; height: 42px; }
   #view-hub .grow .gtext b { font-size: 16px; font-weight: 650; }
@@ -3010,20 +3022,83 @@ TEMPLATE = r'''<!DOCTYPE html>
   @media (max-width: 700px) {
     #view-hub { padding-top: 18px; }
     #view-hub .hubhead { margin-bottom: 22px; padding-bottom: 20px; }
-    #view-hub .hubfeatures { gap: 10px; margin-bottom: 32px; }
+    #view-hub .hubfeatures { grid-template-columns: 1fr; gap: 16px; margin-bottom: 36px; }
+    #view-hub .queststack { grid-template-columns: 1fr; grid-template-rows: none; gap: 12px; }
+    #view-hub .hubfeature.quest { min-height: 0; padding: 18px; }
     #view-hub .hubfeature.primary { min-height: 188px; padding: 22px; }
     #view-hub .hubfeature.primary .featuretitle { font-size: 30px; }
     #view-hub .explorehead { margin-bottom: 12px; }
     #view-hub .explorehead h2 { font-size: 22px; }
     #view-hub .teams-homecard { min-height: 144px; margin-bottom: 12px; padding: 19px; }
+    #view-hub .teams-homecard > span:not(.teamlogos) { max-width: 88%; }
+    #view-hub .teams-homecard b { font-size: 19px; }
+    #view-hub .teams-homecard .teamlogos { opacity: .28; }
     #view-hub .partycard { min-height: 104px; margin-bottom: 36px; padding: 16px; }
     #view-hub .libraryhead { margin-bottom: 14px; }
     #view-hub .libraryhead h2 { font-size: 24px; }
     #view-hub .libraryfilters { margin-bottom: 24px; }
-    #view-hub .hubsec { margin-bottom: 32px; }
+    #view-hub .hubsec { margin-bottom: 24px; padding: 18px 14px; border-radius: 16px; }
     #view-hub .grow { min-height: 76px; padding: 13px 6px; }
     #view-hub .grow .gicon { width: 34px; height: 34px; }
     #view-hub .grow .gtext small { font-size: 12.5px; line-height: 1.42; }
+  }
+
+  /* Locker: progress first, then a clear next step and saved games. */
+  .card.wide.lockercard { width: min(620px, calc(100vw - 32px)); max-height: min(88vh, calc(100dvh - 40px)); padding: 26px; }
+  .lockercard .xbtn { top: 14px; right: 14px; width: 44px; height: 44px; }
+  .lockerheading { display: flex; align-items: center; gap: 13px; padding-right: 40px; margin-bottom: 22px; }
+  .lockerheading-icon { display: grid; place-items: center; width: 46px; height: 46px; flex: none; border-radius: 13px; background: color-mix(in srgb, var(--accent) 10%, var(--panel)); color: var(--accent); }
+  .lockerheading-icon .ui-icon { width: 28px; height: 28px; }
+  .lockercard .lockerheading h2 { margin: 0; font-size: 25px; font-weight: 750; letter-spacing: -.035em; }
+  .lockerheading p { margin: 5px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .lockerhero { padding: 18px; gap: 16px; }
+  .levelmark { width: 58px; border-radius: 15px; box-shadow: none; }
+  .levelcopy { min-width: 0; }
+  .levelcopy b { font-size: 18px; line-height: 1.3; }
+  .levelcopy small { margin-top: 5px; line-height: 1.4; }
+  .xpbar { height: 8px; margin-top: 12px; }
+  .xpmeta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 10px; margin-top: 7px; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .lockerstats { gap: 8px; border: 0; background: transparent; border-radius: 0; }
+  .lockerstats div { padding: 13px 8px; border: 1px solid var(--line); border-radius: 12px; }
+  .lockerstats b { font-size: 20px; }
+  .lockerstats span { margin-top: 4px; font-size: 11px; letter-spacing: 0; text-transform: none; line-height: 1.3; }
+  .lockeraction { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 16px; padding: 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--cell); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .lockeraction:hover { border-color: var(--accent); }
+  .lockeraction-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 11px; background: color-mix(in srgb, var(--accent) 10%, var(--panel)); color: var(--accent); }
+  .lockeraction-copy { flex: 1; min-width: 0; }
+  .lockeraction b, .lockeraction small { display: block; }
+  .lockeraction b { font-size: 15px; }
+  .lockeraction small { margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .lockeraction-chevron { color: var(--muted); font-size: 22px; }
+  .lockersection { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .lockersectionhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .lockercard .lockersectionhead h3 { margin: 0; font-size: 16px; letter-spacing: -.015em; }
+  .lockersectionhead > span { color: var(--muted); font-size: 12px; }
+  .lockerchallenges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .lockerchallenge { min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+  .lockerchallenge:hover { border-color: var(--accent); }
+  .lockerchallenge .featuretitle { font-size: 17px; line-height: 1.3; }
+  .lockerchallenge .featurecopy { margin: 7px 0 14px; font-size: 12px; line-height: 1.5; }
+  .achievement { min-height: 86px; padding: 13px; grid-template-columns: 30px minmax(0, 1fr); }
+  .achievement.locked { opacity: 1; filter: none; }
+  .achievement.locked i { filter: grayscale(1); opacity: .6; }
+  .achievement small { margin-top: 3px; line-height: 1.5; }
+  .achievementstate { display: block; margin-top: 4px; color: var(--accent); font-size: 10px; font-style: normal; font-weight: 700; }
+  .achievement.locked .achievementstate { color: var(--muted); }
+  .lockerbench { gap: 16px; }
+  .lockerbenchsection:only-child, .lockerempty { grid-column: 1 / -1; }
+  .lockerbenchsection > b { margin-bottom: 9px; font-size: 12px; letter-spacing: 0; text-transform: none; }
+  .lockerrow { min-height: 52px; padding: 10px; gap: 10px; }
+  .lockerrow b { font-size: 13px; }
+  .lockerrow small { font-size: 11px; }
+  .lockerempty { padding: 16px; border: 1px dashed var(--line); border-radius: 12px; }
+  .lockerempty b { display: block; margin-bottom: 5px; font-size: 13px; }
+  .lockerempty p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .lockerlink { padding: 0; margin-top: 12px; border: 0; background: none; color: var(--accent); font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
+  @media (max-width: 700px) {
+    .card.wide.lockercard { padding: 20px; }
+    .lockerhero { padding: 15px; gap: 12px; }
+    .lockerchallenges { grid-template-columns: 1fr; }
   }
 
   /* Explicit light appearance. Older visual layers are intentionally overridden
@@ -3125,10 +3200,9 @@ TEMPLATE = r'''<!DOCTYPE html>
   <a href="./" id="homeLink" class="brand" title="All games"><span>SWEATER</span></a>
   <div class="navactions">
     <button class="iconbtn round" id="statsBtn" type="button" aria-label="Statistics" title="Statistics">📊</button>
-    <button class="iconbtn round" id="lbBtn" type="button" aria-label="Leaderboard" title="Leaderboard" hidden>🏆</button>
     <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
     <button class="iconbtn round" id="helpBtn" type="button" aria-label="How to play" title="How to play">?</button>
-    <button class="iconbtn round" id="profileBtn" type="button" aria-label="Your locker" title="Your locker">★</button>
+    <button class="iconbtn round" id="profileBtn" type="button" aria-label="Your locker" title="Your locker" aria-haspopup="dialog" aria-controls="profileModal"></button>
     <label class="switch" title="Play as many puzzles as you like"><input type="checkbox" id="unlimited"><span class="track"></span><span>Unlimited</span></label>
     <button class="iconbtn round" id="settingsBtn" type="button" aria-label="Theme settings" title="Theme settings">🖌️</button>
   </div>
@@ -3155,10 +3229,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     <section class="hubfeatures" id="hubFeatures" aria-label="Featured games"></section>
     <div class="explorehead">
       <p>Explore Sweater</p>
-      <h2>More ways to play</h2>
+      <h2>Think you know your team?</h2>
     </div>
     <button type="button" class="teams-homecard" data-open="teams" aria-label="Explore NHL teams">
-      <span><b>Teams</b><small>Pick your team and test how deep your franchise knowledge goes — seasons, leaders, rosters and history.</small><strong>Choose a team →</strong></span>
+      <span><b>Dive into team based games!</b><small>Pick your team and test how deep your franchise knowledge goes — seasons, leaders, rosters and history.</small><strong>Choose a team →</strong></span>
       <span class="teamlogos" id="teamLogoMosaic" aria-hidden="true"></span>
     </button>
     <section class="edgehome" aria-labelledby="edgeHomeTitle">
@@ -3864,15 +3938,12 @@ TEMPLATE = r'''<!DOCTYPE html>
 <div class="modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
   <div class="card wide lockercard">
     <button class="xbtn" data-close aria-label="Close">×</button>
-    <p class="settingskicker">Your locker</p>
-    <h2 id="profileTitle">Rink Rat</h2>
+    <div class="lockerheading"><span class="lockerheading-icon" id="lockerHeadingIcon" aria-hidden="true"></span><div><h2 id="profileTitle">Your locker</h2><p>Daily progress, challenges and standings.</p></div></div>
     <div id="profileHero"></div>
-    <h3>Achievements</h3>
-    <div class="achievementgrid" id="achievementGrid"></div>
-    <h3>Keep going</h3>
-    <p class="lockerhint" id="lockerHint"></p>
-    <h3>Your bench</h3>
-    <div class="lockerbench" id="lockerBench"></div>
+    <button class="lockeraction" id="lbBtn" type="button" aria-haspopup="dialog" aria-controls="lbModal" hidden><span class="lockeraction-icon" id="lockerLeaderboardIcon" aria-hidden="true"></span><span class="lockeraction-copy"><b>Leaderboard</b><small>See how your daily scores stack up.</small></span><span class="lockeraction-chevron" aria-hidden="true">›</span></button>
+    <section class="lockersection" aria-labelledby="lockerChallengesTitle"><div class="lockersectionhead"><h3 id="lockerChallengesTitle">Your next challenge</h3></div><div class="lockerchallenges" id="lockerChallenges"></div></section>
+    <section class="lockersection" aria-labelledby="lockerAchievementsTitle"><div class="lockersectionhead"><h3 id="lockerAchievementsTitle">Achievements</h3><span id="lockerAchievementCount"></span></div><div class="achievementgrid" id="achievementGrid"></div></section>
+    <section class="lockersection" aria-labelledby="lockerBenchTitle"><div class="lockersectionhead"><h3 id="lockerBenchTitle">Your bench</h3></div><div class="lockerbench" id="lockerBench"></div><button type="button" class="lockerlink" data-locker-browse>Explore the game library →</button></section>
   </div>
 </div>
 
@@ -4007,6 +4078,7 @@ const UI_ICONS = {
   calendar: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 11h18m-14 4h2m6 0h2m-10 3h2"/>',
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 2M12 16h.01"/>',
   star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
+  locker: '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M4 18h16M8 5h8m-6 3-3 2 1.5 2 1.5-1v5h4v-5l1.5 1 1.5-2-3-2h-4Z"/>',
   brush: '<path d="m14 12 6-6a2.1 2.1 0 0 0-3-3l-6 6 3 3ZM11 9l-2 3 3 3 2-3M9 12c-4 0-2 6-6 7 5 2 10-1 9-4"/>',
   stick: '<path d="m17 3-7 14H4a2 2 0 0 0 0 4h8L21 3m-6 4 4 2"/>',
   route: '<circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h9a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h9"/>',
@@ -4033,7 +4105,7 @@ UI_ICONS.play = '<path d="m8 4 12 8-12 8V4Z"/>';
 UI_ICONS.pause = '<path d="M8 4v16M16 4v16"/>';
 MODE_ICONS.whoscored = "video";
 const modeIcon = id => uiIcon(MODE_ICONS[id.startsWith("hl_") ? "hl" : id]);
-Object.entries({ statsBtn: "chart", lbBtn: "trophy", archiveBtn: "calendar", helpBtn: "help", profileBtn: "star", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
+Object.entries({ statsBtn: "chart", archiveBtn: "calendar", helpBtn: "help", profileBtn: "locker", lockerHeadingIcon: "locker", lockerLeaderboardIcon: "trophy", settingsBtn: "brush" }).forEach(([id, name]) => { $(id).innerHTML = uiIcon(name); });
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 const ageOf = bd => {
@@ -9808,19 +9880,43 @@ function awardProgression() {
   }
   return unlocked;
 }
+function challengeCard({ id, label, title, copy, count, action, locker = false }) {
+  const progress = Math.min(count, 3);
+  return `<button type="button" class="challengecard ${locker ? "lockerchallenge" : "hubfeature quest"}" ${locker ? "data-locker-open" : "data-open"}="${id}" aria-label="${esc(`${label}: ${title}. ${progress} of 3 complete. ${action}`)}">
+    <span class="challengehead"><span class="featureeyebrow">${esc(label)}</span><span class="questprogress" aria-hidden="true">${progress}/3</span></span>
+    <b class="featuretitle">${esc(title)}</b><p class="featurecopy">${esc(copy)}</p>
+    <span class="questaction">${esc(action)}<span aria-hidden="true">→</span></span>
+  </button>`;
+}
+function nextDailyChallenge(fallback = "classic") {
+  const ids = [...new Set(["classic", "trophy", "shoot", ...HUB.flatMap(section => section.games.map(([id]) => id))])];
+  return ids.find(id => !["done", "missed"].includes(hubStatus(id)[0]) && gameIsReady(id)) || fallback;
+}
+function openDailyChallenge(id) {
+  mode = "daily";
+  store.set("sweater-mode", mode);
+  openGame(id);
+}
 function renderPlayerProfile() {
   const p = progressSummary(), levelCap = 500;
-  const todayDone = dailyEntries(dayKey()).length;
-  $("profileHero").innerHTML = `<div class="lockerhero"><div class="levelmark">${p.level}</div><div class="levelcopy"><b>Level ${p.level} · Rink Rat</b><small>${p.xp} XP earned · ${levelCap - p.intoLevel} XP to the next level</small><div class="xpbar"><i style="width:${p.intoLevel / levelCap * 100}%"></i></div></div></div><div class="lockerstats"><div><b>${p.entries.length}</b><span>Daily plays</span></div><div><b>${p.wins}</b><span>Wins</span></div><div><b>${todayDone}/3</b><span>Today's hat trick</span></div></div>`;
-  $("achievementGrid").innerHTML = achievementList().map(a => `<div class="achievement${a.on ? "" : " locked"}"><i>${a.icon}</i><span><b>${a.title}</b><small>${a.copy}</small></span></div>`).join("");
-  const theme = activeWeeklyTheme(), progress = weeklyProgress(theme);
-  $("lockerHint").textContent = `${theme.title}: ${progress}/3 complete. ${progress >= 3 ? "Challenge cleared—nice work." : theme.copy}`;
-  const gameRows = (ids, empty) => ids.length ? ids.slice(0, 3).map(id => {
-    const card = CARD[id] || { icon: "🏒" }, meta = modeMeta(id);
+  const todayDone = dailyEntries(dayKey()).length, achievements = achievementList();
+  const earned = achievements.filter(a => a.on).length;
+  $("profileHero").innerHTML = `<div class="lockerhero"><div class="levelmark" aria-hidden="true">${p.level}</div><div class="levelcopy"><b>Level ${p.level} · Rink Rat</b><small>${levelCap - p.intoLevel} XP to level ${p.level + 1}</small><div class="xpbar" role="progressbar" aria-label="Progress to level ${p.level + 1}" aria-valuemin="0" aria-valuemax="${levelCap}" aria-valuenow="${p.intoLevel}"><i style="width:${p.intoLevel / levelCap * 100}%"></i></div><div class="xpmeta"><span>${p.intoLevel} / ${levelCap} XP</span><span>${p.xp} XP total</span></div></div></div><div class="lockerstats"><div><b>${p.entries.length}</b><span>Dailies played</span></div><div><b>${p.wins}</b><span>Daily wins</span></div><div><b>${earned}/${achievements.length}</b><span>Badges earned</span></div></div>`;
+  $("achievementGrid").innerHTML = achievements.map(a => `<div class="achievement${a.on ? "" : " locked"}"><i aria-hidden="true">${a.icon}</i><span><b>${a.title}</b><small>${a.copy}</small><em class="achievementstate">${a.on ? "Unlocked" : "To unlock"}</em></span></div>`).join("");
+  $("lockerAchievementCount").textContent = `${earned} of ${achievements.length} unlocked`;
+  const theme = activeWeeklyTheme(), completed = weeklyDoneGames(theme);
+  const dailyGame = nextDailyChallenge();
+  const weeklyGame = theme.games.find(id => !completed.includes(id) && gameIsReady(id)) || dailyGame;
+  $("lockerChallenges").innerHTML = challengeCard({ id: dailyGame, label: "Daily challenge", title: "Daily Hat Trick", copy: "Finish any three daily games today to earn your Hat Trick badge.", count: todayDone, action: todayDone >= 3 ? "Play another daily" : "Play a daily", locker: true }) +
+    challengeCard({ id: weeklyGame, label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completed.length, action: completed.length >= 3 ? "Keep playing" : "Play the next challenge", locker: true });
+  const gameRows = ids => ids.slice(0, 3).map(id => {
+    const meta = modeMeta(id);
     return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${modeIcon(id)}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></span><em aria-hidden="true">›</em></button>`;
-  }).join("") : `<p class="lockerhint">${esc(empty)}</p>`;
-  $("lockerBench").innerHTML = `<section class="lockerbenchsection"><b>Favourites</b><div class="lockerlist">${gameRows(favouriteIds(), "Star modes in the game library to keep them here.")}</div></section>
-    <section class="lockerbenchsection"><b>Recently played</b><div class="lockerlist">${gameRows(recentIds(), "Your last few modes will show up here.")}</div></section>`;
+  }).join("");
+  const favourites = favouriteIds(), recents = recentIds();
+  $("lockerBench").innerHTML = favourites.length || recents.length ?
+    `${favourites.length ? `<section class="lockerbenchsection"><b>Favourites</b><div class="lockerlist">${gameRows(favourites)}</div></section>` : ""}${recents.length ? `<section class="lockerbenchsection"><b>Recently played</b><div class="lockerlist">${gameRows(recents)}</div></section>` : ""}` :
+    `<div class="lockerempty"><b>Make this bench your own</b><p>Star games in the library to save your favourites. Games you play will also appear here.</p></div>`;
 }
 function renderResultRecap(unlocked = []) {
   const box = $("resultRecap");
@@ -10344,10 +10440,18 @@ document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e =
 $("statsBtn").onclick = () => { statsGame = null; openModal("statsModal"); };
 $("profileBtn").onclick = () => { renderPlayerProfile(); openModal("profileModal"); };
 $("profileModal").addEventListener("click", e => {
+  if (e.target.closest("[data-locker-browse]")) {
+    closeModals();
+    hubReturnScroll = null;
+    showHub();
+    requestAnimationFrame(() => $("hubSections").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+    return;
+  }
   const b = e.target.closest("[data-locker-open]");
   if (!b) return;
   closeModals();
-  openGame(b.dataset.lockerOpen);
+  if (b.classList.contains("challengecard")) openDailyChallenge(b.dataset.lockerOpen);
+  else openGame(b.dataset.lockerOpen);
 });
 document.querySelectorAll("[data-welcome-open]").forEach(b => b.onclick = () => {
   $("welcomeModal").classList.remove("open");
@@ -10745,7 +10849,7 @@ document.querySelectorAll(".lbhelp").forEach(el => el.hidden = !API_ON);
 
 // ======================= home screen and navigation =======================
 const HUB = [
-  { title: "Name the player", tone: "green", games: [
+  { title: "Name the player", copy: "Follow the clues and work your way to the player.", tone: "green", games: [
     ["whoscored", "▶", "Watch a silhouette goal. Name the player from the move."],
     ["classic", "🏒", "Guess the player from his team, position, age and more."],
     ["statline", "📈", "Name him from his season-by-season stats."],
@@ -10753,7 +10857,7 @@ const HUB = [
     ["journey", "🧭", "Name him from the teams he's played for."],
     ["blur", "🔍", "Under construction · We’re rebuilding this mode. Check back soon."],
   ]},
-  { title: "Know the details", tone: "blue", games: [
+  { title: "Know the details", copy: "Test your memory for stats, seasons and hockey history.", tone: "blue", games: [
     ["team", "🛡️", "Which team was he on that season?"],
     ["number", "👕", "What number does he wear?"],
     ["draft", "📋", "When was he drafted, and in which round?"],
@@ -10763,7 +10867,7 @@ const HUB = [
     ["mroster", "🧢", "Six players, one team. Name it fast."],
     ["map", "📍", "Find where he was born on the map."],
   ]},
-  { title: "Streaks and puzzles", tone: "amber", games: [
+  { title: "Streaks and puzzles", copy: "Build a streak or solve a different kind of puzzle.", tone: "amber", games: [
     ["hl", "↕️", "Whose number is bigger? Keep the streak alive."],
     ["rank", "🥇", "Put five players in order by a stat."],
     ["hlt", "🛡️", "Team against team: which roster has more?"],
@@ -10771,7 +10875,7 @@ const HUB = [
     ["roster", "⏱️", "Name as much of a team's roster as you can in 60 seconds."],
     ["conn", "🧩", "Sort 16 players into 4 hidden groups."],
   ]},
-  { title: "Arcade", tone: "red", games: [
+  { title: "Arcade", copy: "Quick rounds, fast decisions and a little competition.", tone: "red", games: [
     ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
     ["shoot", "🥅", "Answer right to earn a shot, then beat the goalie."],
     ["overtime", "⏱️", "Fast hockey trivia. Keep the clock alive."],
@@ -10891,7 +10995,7 @@ function renderHub() {
   const primaryIcon = (CARD[primary] || {}).icon || "🏒";
   const primaryCopy = going ? "Your current run is waiting—pick up where you left off." : HUB.flatMap(s => s.games).find(([id]) => id === primary)?.[2] || "Your next daily puzzle is ready.";
   const hatTrickCount = dailyEntries(dayKey()).length;
-  const quickGame = ["classic", "trophy", "shoot"].find(id => hubStatus(id)[0] !== "done" && gameIsReady(id)) || primary;
+  const quickGame = nextDailyChallenge(primary);
   const theme = activeWeeklyTheme(), completedThemeGames = weeklyDoneGames(theme);
   const weeklyGame = theme.games.find(id => !completedThemeGames.includes(id) && gameIsReady(id)) || primary;
   $("hubFeatures").innerHTML = `<button type="button" class="hubfeature primary" data-open="${primary}">
@@ -10900,14 +11004,8 @@ function renderHub() {
       <p class="featurecopy">${esc(primaryCopy)}</p>
       <span class="featurefooter"><span>${primaryState[0] === "done" ? "Daily complete" : primaryState[0] === "going" ? "In progress" : "New daily puzzle"}</span><b>${going ? "Resume" : "Play"} →</b></span>
     </button><div class="queststack">
-      <button type="button" class="hubfeature quest" data-open="${quickGame}">
-        <span class="questprogress">${Math.min(hatTrickCount, 3)}/3</span><p class="featureeyebrow">Daily Hat Trick</p>
-        <h2 class="featuretitle">Play any 3 dailies</h2><p class="featurecopy">Build your daily routine and earn a badge.</p>
-      </button>
-      <button type="button" class="hubfeature quest" data-open="${weeklyGame}">
-        <span class="questprogress">${completedThemeGames.length}/3</span><p class="featureeyebrow">Weekly challenge</p>
-        <h2 class="featuretitle">${esc(theme.title)}</h2><p class="featurecopy">${esc(theme.copy)}</p>
-      </button>
+      ${challengeCard({ id: quickGame, label: "Daily challenge", title: "Play any 3 dailies", copy: "Build your daily routine and earn a Hat Trick badge.", count: hatTrickCount, action: hatTrickCount >= 3 ? "Play another daily" : "Play a daily" })}
+      ${challengeCard({ id: weeklyGame, label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completedThemeGames.length, action: completedThemeGames.length >= 3 ? "Keep playing" : "Play the next challenge" })}
     </div>`;
   const favourites = favouriteIds(), recents = recentIds();
   $("hubShelf").hidden = true;
@@ -10930,7 +11028,7 @@ function renderHub() {
   ) })).filter(sec => sec.games.length);
   $("hubSections").innerHTML = librarySections.length ? librarySections.map(sec => `
     <section class="hubsec tone-${sec.tone}">
-      <h2>${sec.title}</h2>
+      <header class="hubsec-header"><h3>${esc(sec.title)}</h3><p>${esc(sec.copy)}</p></header>
       <div class="glist">${sec.games.map(([id, icon, blurb]) => {
         const [cls, text] = hubStatus(id);
         const maintenance = MAINTENANCE_GAMES.has(id);
@@ -10973,7 +11071,8 @@ $("view-hub").addEventListener("click", e => {
   }
   const b = e.target.closest("[data-open]");
   if (!b || b.disabled) return;
-  if (b.dataset.open === "party") openParty("");
+  if (b.classList.contains("challengecard")) openDailyChallenge(b.dataset.open);
+  else if (b.dataset.open === "party") openParty("");
   else if (b.dataset.open === "teams") openTeams();
   else openGame(b.dataset.open);
 });
