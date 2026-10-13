@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "136 · Shootout Equipment & Puck Physics"
+VERSION = "137 · Shootout Stick & Save Motion"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 

@@ -1,5 +1,5 @@
 // Analytic contact, frame-rate independence, stored shots and canceled playback.
-const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const source=fs.readFileSync('build_sweater.py','utf8');
 const animation=fs.readFileSync('static/shootout/animation.js','utf8');
 const svg=fs.readFileSync('static/shootout/scene.svg','utf8');
@@ -102,24 +102,49 @@ for(const[u,v]of [[0,.5],[1,.5],[.5,0],[.5,1]]){
   const before=[...run(`shootNetPoint(${u},${v})`)],after=[...run(`shootMeshPoint(shootNetPoint(${u},${v}),{point:[320,160],uv:[.5,.5],time:.08},[${u},${v}])`)];
   assert(Math.hypot(after[0]-before[0],after[1]-before[1])<1e-9,'Frame ties remain fixed as the fabric moves');
 }
+const cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+function sleeveIntersections(points){
+  let count=0;for(let i=0;i<points.length;i++)for(let j=i+2;j<points.length;j++){
+    if(i===0&&j===points.length-1)continue;
+    const a=points[i],b=points[(i+1)%points.length],c=points[j],d=points[(j+1)%points.length];
+    if(cross(a,b,c)*cross(a,b,d)<-1e-7&&cross(c,d,a)*cross(c,d,b)<-1e-7)count++;
+  }return count;
+}
 for(let read=0;read<5;read++)for(let i=0;i<=1000;i++){
   const p=run(`shootPose(${read},${i/1000})`),stick=run(`shootStick(shootPose(${read},${i/1000}))`);
   for(const side of ['L','R']){
     const s=p['shoulder'+side],e=p['elbow'+side],h=p['wrist'+side],sign=side==='L'?-1:1,fore=Math.hypot(h[0]-e[0],h[1]-e[1]);
-    assert(sign*(e[0]-s[0])>=12.99&&e[1]>s[1],'Each elbow remains outside and below its own shoulder');
-    assert(sign*h[0]>30&&fore>=12&&fore<=74,'Wrists connect to the correct cuff without collapsing or crossing the torso');
+    const a=[e[0]-s[0],e[1]-s[1]],b=[h[0]-e[0],h[1]-e[1]],bend=Math.atan2(a[0]*b[1]-a[1]*b[0],a[0]*b[0]+a[1]*b[1]);
+    assert(sign*a[0]>=12.99&&Math.hypot(...a)<70,'The shoulder lifts without lengthening or crossing its upper arm');
+    assert(sign*bend>0&&Math.abs(bend)<2.27,'The elbow stays on one bend branch and cannot fold backward');
+    assert(b[1]>10,'The forearm never reverses above its elbow during the high blocker transition');
+    assert(sign*h[0]>30&&fore>=12&&fore<=50,'Wrists connect to the correct cuff without collapsing or crossing the torso');
     const expected=run(`shOffset([${side==='L'?p.blocker:p.glove}],[${side==='L'?'-5,-42':'-33.04,-15.34'}],${side==='L'?p.blockerAngle:p.gloveAngle})`);
     assert(Math.hypot(h[0]-expected[0],h[1]-expected[1])<1e-9,'The sleeve ends at the actual hand entrance');
+    {
+      const sleeve=run(`shootSleeve(shootPose(${read},${i/1000}),"${side}")`),outline=[...sleeve.points.map(q=>q.left),...sleeve.points.slice().reverse().map(q=>q.right)];
+      assert.equal(sleeveIntersections(outline),0,'The single sleeve outline cannot cross itself or form a pinched elbow');
+      assert(sleeve.outline.endsWith(' Z')&&!/NaN|Infinity/.test(sleeve.outline),'The sleeve remains a closed, continuous silhouette');
+    }
     const angle=Math.abs(p['pad'+side])*Math.PI/180,k=p['knee'+side];
     assert(Math.abs(k[1]+35*Math.sin(angle)+163*Math.cos(angle)-390)<1e-8,'Skates and pads remain on the ice through the drop');
   }
-  const dx=stick.end[0]-stick.grip[0],dy=stick.end[1]-stick.grip[1];
-  assert(Math.abs(Math.hypot(dx,dy,stick.depth)-152)<1e-8,'The rigid stick retains its length while pitching toward the camera');
-  assert(stick.end[1]<=390,'The blade cannot pass through the ice');
+  const reference=run('SH_STICK'),[a,b,c,d,x,y]=stick.matrix,[gx,gy]=reference.grip;
+  assert(Math.hypot(a*gx+c*gy+x-stick.grip[0],b*gx+d*gy+y-stick.grip[1])<1e-8,'The photographed paddle shoulder stays inside the blocker grip');
+  const theta=(p.stickTurn||0)*Math.PI/180,zx=reference.scale*Math.sin(theta)*stick.depth,zy=reference.scale*Math.cos(theta)*stick.depth;
+  assert(Math.abs(Math.hypot(a,b,zx)-reference.scale)<1e-9&&Math.abs(Math.hypot(c,d,zy)-reference.scale)<1e-9,'The complete shaft, paddle and blade retain their rigid dimensions in 3D');
+  assert(Math.abs(a*c+b*d+zx*zy)<1e-9,'The whole stick is projected without bending its heel or changing its blade separately');
+  const bottom=Math.max(...reference.bounds.map(([px,py])=>b*px+d*py+y));
+  assert(bottom<=390+1e-8,'No part of the traced blade can penetrate the ice');
+  if(read===0&&i===1000)assert(bottom<330,'The stick lifts with the high blocker rather than stretching back to the ground');
 }
 for(const side of [0,1])for(const w of [-.8,0,.8])assert(run(`shootPostPath(${side},${w})`).startsWith(`M${side?506:134} 358 `),'Posts remain anchored during a ring');
-assert(svg.indexOf('id="shBody"')<svg.indexOf('id="shForearmL"'),'Forearms stay in front of the torso');
-assert(svg.indexOf('id="shForearmL"')<svg.indexOf('id="shBlocker"'),'Equipment stays in front of the wrist');
+assert(svg.indexOf('id="shBody"')<svg.indexOf('id="shSleeveL"'),'Continuous sleeves stay in front of the torso');
+assert(svg.indexOf('id="shSleeveL"')<svg.indexOf('id="shBlocker"'),'Equipment stays in front of the wrist');
+assert(!/id="sh(?:Forearm|Arm[LR]|Elbow|StickBlade)/.test(svg),'Separate arm modules and independently animated blade pieces are gone');
+const photo=svg.match(/<image[^>]+id="shStickPhoto"[^>]+href="data:image\/png;base64,([^"]+)"/);
+assert(photo,'The stick uses the supplied photograph inside its traced silhouette');
+assert.equal(crypto.createHash('sha256').update(Buffer.from(photo[1],'base64')).digest('hex'),'48d325a840b917bb07a15c93b1f16cfb90b7c1ccabc77949de96e4d5e1c5c2cb','Surface details and proportions must come from the unmodified reference, not replacement artwork');
 assert.equal([...svg.matchAll(/class="sh-target-hit"[^>]*r="47"/g)].length,5,'Every on-net target retains a large touch area');
 const css=fs.readFileSync('static/shootout/styles.css','utf8');
 function luminance(hex){return hex.match(/[0-9a-f]{2}/gi).map(s=>parseInt(s,16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);}

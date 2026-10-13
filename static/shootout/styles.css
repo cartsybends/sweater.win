@@ -9,9 +9,9 @@
 .shnet #shPostL .sh-post{stroke:url(#shTubeL)}
 .shnet #shPostR .sh-post{stroke:url(#shTubeR)}
 .shnet .sh-post-shine{stroke:#ffb4ae;stroke-width:1.2;opacity:.68}
-.shnet .sh-upper-arm{fill:none;stroke:url(#shBlueSleeve);stroke-width:38;stroke-linecap:round}
-.shnet .sh-forearm{fill:none;stroke:url(#shBlueSleeve);stroke-width:34;stroke-linecap:round}
-.shnet .sh-arm-stripe{fill:none;stroke:#e0e9ee;stroke-width:35;stroke-linecap:butt}
+.shnet .sh-sleeve{stroke:#173c56;stroke-width:1.2;stroke-linejoin:round}
+.shnet .sh-sleeve-stripe{fill:#e4edf1}
+.shnet .sh-sleeve-folds{fill:none;stroke:#163c58;stroke-width:1.1;stroke-opacity:.48;stroke-linecap:round}
 .shnet .sh-gear-seam{fill:none;stroke:#879ca8;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
 .shnet .sh-stitch{fill:none;stroke:#8e9fa8;stroke-width:.85;stroke-dasharray:1.6 2.5}
 .shnet .sh-cage{fill:none;stroke:#d3dce0;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
