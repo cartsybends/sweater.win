@@ -12,6 +12,7 @@ TOOLS = Path(__file__).resolve().parents[1] / 'tools/who_scored'
 sys.path.insert(0, str(TOOLS))
 import batch
 import discover
+import pipeline
 
 
 class BatchGateTests(unittest.TestCase):
@@ -105,6 +106,13 @@ class BatchGateTests(unittest.TestCase):
 
 
 class SourceQueueTests(unittest.TestCase):
+    def test_export_cap_preserves_the_full_tracking_window(self):
+        edit={'duration':2,'export_frames':45}
+        self.assertEqual(pipeline.frame_count(edit),45)
+        self.assertEqual(pipeline.frame_count(edit,full_window=True),48)
+        for cap in [0,49,True,1.5]:
+            with self.assertRaises(ValueError):pipeline.frame_count(dict(edit,export_frames=cap))
+
     def test_only_new_completed_regular_season_scorers_with_official_sources(self):
         goal = {'playerId': 42, 'highlightClip': 99, 'highlightClipSharingUrl': 'https://nhl.com/video/official-99',
                 'firstName': {'default': 'Test'}, 'lastName': {'default': 'Scorer'},

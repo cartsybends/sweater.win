@@ -52,7 +52,7 @@ The new expansion targets **240 additional unique scorers**, for 279 total.
 `progress/expansion-candidates.json` contains 268 distinct official scorer
 candidates with spare events. These are discovery records, not playable clips.
 `progress/expansion-batches.json` fixes six ordered groups of 40. The first batch
-has 40 corroborated source originals and three reviewed exports; **none of this
+has 40 corroborated source originals and reviewed exports tracked in the batch registry; **none of this
 expansion is active or published in the game yet**.
 
 Use the isolated SAM2 environment and store raw footage, API caches, models and
@@ -74,7 +74,8 @@ A clip requires three recorded checks: official attribution plus visual jersey
 identity; comparison of **every** original/masked frame; and complete encoded
 video decoding with matching timing, plus visual first/middle/final inspection.
 Keep occluding teammates and foreground objects visible. Repair coverage gaps
-and recheck after any edit. Automatic opaque-pixel assertions prove rendering,
+and recheck after any edit. Review the complete scene as well as the scorer crop so a raised hand outside
+the initial matte cannot be overlooked. Automatic opaque-pixel assertions prove rendering,
 not that the correct player or all body parts were selected.
 
 Reviewed edits and immutable review hashes live under `progress/batch-01/`.

@@ -1,0 +1,161 @@
+{
+  "id": "goal-44",
+  "pid": 8482113,
+  "player": "Anton Lundell",
+  "original": "/workspace/who-scored-expansion/originals/goal-44-6366636035112.mp4",
+  "source_sha256": "3d0fc536cd8c4ae51cb799cd1bf54d58624dbdf28d9867ddc551ab8ca446653b",
+  "start": 15.9,
+  "duration": 1.9,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        296,
+        75,
+        459,
+        253
+      ],
+      "points": [
+        [
+          394,
+          93
+        ],
+        [
+          380,
+          136
+        ],
+        [
+          351,
+          119
+        ],
+        [
+          418,
+          182
+        ],
+        [
+          311,
+          230
+        ],
+        [
+          444,
+          237
+        ]
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        295,
+        156,
+        430,
+        351
+      ],
+      "points": [
+        [
+          364,
+          179
+        ],
+        [
+          366,
+          236
+        ],
+        [
+          317,
+          249
+        ],
+        [
+          377,
+          309
+        ],
+        [
+          348,
+          293
+        ],
+        [
+          316,
+          311
+        ],
+        [
+          321,
+          350
+        ],
+        [
+          431,
+          288
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 45,
+      "box": [
+        118,
+        161,
+        285,
+        434
+      ],
+      "points": [
+        [
+          240,
+          190
+        ],
+        [
+          221,
+          259
+        ],
+        [
+          128,
+          287
+        ],
+        [
+          265,
+          324
+        ],
+        [
+          188,
+          373
+        ],
+        [
+          192,
+          425
+        ],
+        [
+          250,
+          371
+        ],
+        [
+          247,
+          409
+        ],
+        [
+          350,
+          397
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "identity_verification": "Official scorer Lundell 15, both shoulder numbers visible. Window starts after Boqvist 70 passes. Lundell receives and shoots continuously; Boqvist 70, Orlov 7 and goalie remain visible through the overlaps.",
+  "max_cond_frames_in_attn": 2,
+  "export_frames": 45
+}

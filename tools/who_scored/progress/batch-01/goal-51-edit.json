@@ -1,0 +1,354 @@
+{
+  "id": "goal-51",
+  "pid": 8477451,
+  "player": "Ryan Hartman",
+  "original": "/workspace/who-scored-expansion/originals/goal-51-6366634853112.mp4",
+  "source_sha256": "b099f8d6797b6f7ae887e993a008ddf8b5c65a31c9ec9bb5fe2a9656b66a0c6c",
+  "start": 38.2,
+  "duration": 2.5,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        526,
+        186,
+        681,
+        467
+      ],
+      "points": [
+        [
+          575,
+          213
+        ],
+        [
+          601,
+          287
+        ],
+        [
+          615,
+          358
+        ],
+        [
+          592,
+          399
+        ],
+        [
+          587,
+          447
+        ],
+        [
+          640,
+          433
+        ],
+        [
+          644,
+          294
+        ],
+        [
+          404,
+          221
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        674,
+        116,
+        839,
+        438
+      ],
+      "points": [
+        [
+          755,
+          145
+        ],
+        [
+          753,
+          236
+        ],
+        [
+          821,
+          289
+        ],
+        [
+          747,
+          306
+        ],
+        [
+          740,
+          359
+        ],
+        [
+          769,
+          382
+        ],
+        [
+          774,
+          418
+        ],
+        [
+          698,
+          417
+        ]
+      ]
+    },
+    {
+      "frame": 59,
+      "box": [
+        605,
+        132,
+        726,
+        434
+      ],
+      "points": [
+        [
+          651,
+          160
+        ],
+        [
+          644,
+          249
+        ],
+        [
+          628,
+          313
+        ],
+        [
+          657,
+          346
+        ],
+        [
+          660,
+          379
+        ],
+        [
+          686,
+          421
+        ],
+        [
+          737,
+          260
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "identity_verification": "Official scorer Hartman 38. HARTMAN and number 38 visible continuously at the net, shooting then raising his arms. Red Fehervary 42 and Dubois 80, goalie Lindgren 79 and the celebrating teammate remain visible.",
+  "export_frames": 52,
+  "mask_patch_ellipses": [
+    {
+      "frame": 42,
+      "ellipse": [
+        745,
+        119,
+        15,
+        17
+      ]
+    },
+    {
+      "frame": 43,
+      "ellipse": [
+        731,
+        119,
+        15,
+        16
+      ]
+    },
+    {
+      "frame": 44,
+      "ellipse": [
+        716,
+        119,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 45,
+      "ellipse": [
+        703,
+        120,
+        15,
+        19
+      ]
+    },
+    {
+      "frame": 46,
+      "ellipse": [
+        696,
+        120,
+        17,
+        19
+      ]
+    },
+    {
+      "frame": 47,
+      "ellipse": [
+        693,
+        119,
+        17,
+        19
+      ]
+    },
+    {
+      "frame": 48,
+      "ellipse": [
+        691,
+        120,
+        18,
+        20
+      ]
+    },
+    {
+      "frame": 49,
+      "ellipse": [
+        691,
+        120,
+        18,
+        20
+      ]
+    },
+    {
+      "frame": 50,
+      "ellipse": [
+        692,
+        120,
+        18,
+        20
+      ]
+    },
+    {
+      "frame": 51,
+      "ellipse": [
+        693,
+        120,
+        18,
+        20
+      ]
+    }
+  ],
+  "mask_patch_lines": [
+    {
+      "frame": 42,
+      "line": [
+        750,
+        118,
+        726,
+        181,
+        22
+      ]
+    },
+    {
+      "frame": 43,
+      "line": [
+        731,
+        119,
+        719,
+        181,
+        22
+      ]
+    },
+    {
+      "frame": 44,
+      "line": [
+        714,
+        120,
+        706,
+        182,
+        22
+      ]
+    },
+    {
+      "frame": 45,
+      "line": [
+        702,
+        119,
+        692,
+        184,
+        22
+      ]
+    },
+    {
+      "frame": 46,
+      "line": [
+        697,
+        118,
+        679,
+        185,
+        22
+      ]
+    },
+    {
+      "frame": 47,
+      "line": [
+        689,
+        116,
+        666,
+        186,
+        22
+      ]
+    },
+    {
+      "frame": 48,
+      "line": [
+        687,
+        117,
+        664,
+        187,
+        22
+      ]
+    },
+    {
+      "frame": 49,
+      "line": [
+        686,
+        117,
+        661,
+        188,
+        22
+      ]
+    },
+    {
+      "frame": 50,
+      "line": [
+        687,
+        117,
+        658,
+        188,
+        22
+      ]
+    },
+    {
+      "frame": 51,
+      "line": [
+        690,
+        117,
+        656,
+        189,
+        22
+      ]
+    }
+  ],
+  "mask_corrections": "Raised glove and white sleeve in42\u201351 manually completed from the full original scene, including the dark outer glove and cuff. All patched frames reviewed again alongside the original; encoded first/middle/final pair checked. Teammate gesture stays visible."
+}

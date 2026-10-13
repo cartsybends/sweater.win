@@ -7,8 +7,12 @@ Usage: python pipeline.py prepare EDIT.json
 import argparse, hashlib, json, subprocess
 from pathlib import Path
 
-def frame_count(edit):
-    return edit.get('export_frames', round(edit['duration'] * 24))
+def frame_count(edit, full_window=False):
+    original=round(edit['duration'] * 24)
+    exported=edit.get('export_frames',original)
+    if original<1 or type(exported) is not int or not 1<=exported<=original:
+        raise ValueError('Export cap must be a positive frame count within the source window')
+    return original if full_window else exported
 
 def work_dir(path, edit):
     # A changed source, extraction window or crop gets fresh paths. export_frames
@@ -27,7 +31,7 @@ def prepare(path, edit):
     if not expected or hashlib.sha256(Path(edit['original']).read_bytes()).hexdigest() != expected:
         raise ValueError('Source checksum must match the verified edit before extracting frames')
     work=work_dir(path,edit);frames=work/'frames';frames.mkdir(parents=True,exist_ok=True)
-    count=frame_count(edit)
+    count=frame_count(edit,full_window=True)
     vf='fps=24,scale=960:540'
     if 'crop' in edit:
         x,y,w,h=edit['crop']
@@ -63,7 +67,7 @@ def track(path,edit,args):
         device=device,apply_postprocessing=False,
         hydra_overrides_extra=['++model.image_size=512','++model.fill_hole_area=0',
                               f'++model.max_cond_frames_in_attn={max_conditioning}'])
-    count=frame_count(edit);start=time.time()
+    count=frame_count(edit,full_window=True);start=time.time()
     for name in ['mask-stats.json','tracking-complete.json']:(work/name).unlink(missing_ok=True)
     with torch.inference_mode():
         state=predictor.init_state(str(work/'frames'),offload_video_to_cpu=True,offload_state_to_cpu=True)
