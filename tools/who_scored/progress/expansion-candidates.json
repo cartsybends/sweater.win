@@ -1022,6 +1022,19 @@
           "source_video_id": "6366636956112",
           "discrete_video_id": "6366636184112",
           "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020991,
+          "date": "2025-03-06",
+          "period": 2,
+          "time_in_period": "09:03",
+          "player": "Adam Lowry",
+          "official_goal_scorer": "Adam Lowry",
+          "team": "WPG",
+          "source": "https://nhl.com/video/wpg-phi-lowry-scores-goal-against-samuel-ersson-6369702010112",
+          "source_video_id": "6369702010112",
+          "discrete_video_id": "6369702797112",
+          "goal_modifier": "none"
         }
       ]
     },
@@ -1110,6 +1123,19 @@
           "source": "https://nhl.com/video/ana-wpg-iafallo-scores-goal-against-john-gibson-6366639580112",
           "source_video_id": "6366639580112",
           "discrete_video_id": "6366639682112",
+          "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020831,
+          "date": "2025-02-01",
+          "period": 2,
+          "time_in_period": "04:03",
+          "player": "Alex Iafallo",
+          "official_goal_scorer": "Alex Iafallo",
+          "team": "WPG",
+          "source": "https://nhl.com/video/wpg-wsh-iafallo-scores-goal-against-logan-thompson-6368138760112",
+          "source_video_id": "6368138760112",
+          "discrete_video_id": "6368138968112",
           "goal_modifier": "none"
         }
       ]
@@ -1212,6 +1238,19 @@
           "source": "https://nhl.com/video/buf-col-byram-scores-goal-against-scott-wedgewood-6366639162112",
           "source_video_id": "6366639162112",
           "discrete_video_id": "6366637410112",
+          "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020846,
+          "date": "2025-02-04",
+          "period": 1,
+          "time_in_period": "10:07",
+          "player": "Bowen Byram",
+          "official_goal_scorer": "Bowen Byram",
+          "team": "BUF",
+          "source": "https://nhl.com/video/cbj-buf-byram-scores-goal-against-elvis-merzlikins-6368274769112",
+          "source_video_id": "6368274769112",
+          "discrete_video_id": "6368275257112",
           "goal_modifier": "none"
         }
       ]
