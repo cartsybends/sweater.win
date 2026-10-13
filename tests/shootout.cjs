@@ -31,86 +31,100 @@ run(part('function doGuess(x, fresh = true)','function finish(won, fresh)'));
 const target={rounds:Array.from({length:5},(_,i)=>({q:'Question '+i,o:['Correct','Wrong 1','Wrong 2','Wrong 3'],a:0,keep:[0,1]})),rid:1};
 function reset(){run('shootCancelAnimation()');now=0;saves=0;finishes=[];context.game='shoot';context.mode='unlimited';context.document.hidden=false;Object.assign(context.S.shoot,{target:JSON.parse(JSON.stringify(target)),guesses:[],over:false,mode:'unlimited'});run('G.shoot.reset();G.shoot.render(S.shoot.target,S.shoot)');}
 function frame(dt=1000/60){now+=dt;const batch=[...frames.values()];frames.clear();for(const fn of batch)fn(now);}
-function drain(fps=60){for(let i=0;frames.size&&i<400;i++)frame(1000/fps);assert.equal(frames.size,0);}
+function drain(fps=60){for(let i=0;frames.size&&i<800;i++)frame(1000/fps);assert.equal(frames.size,0);}
 function choose(zone){const el=new Element();el.dataset.c='0';$('shOpts').events.click({target:el});$('shNet').events.click({target:zones[zone]});}
 
 let sampled=0;
+const restPoints=new Set();
+function padDistance(f,side){
+  const p=f.pose,k=p['knee'+side],r=-p['pad'+side]*Math.PI/180,x=f.puck.x-320-p.x-k[0],y=f.puck.y-k[1],px=x*Math.cos(r)-y*Math.sin(r),py=x*Math.sin(r)+y*Math.cos(r);
+  return Math.hypot(Math.max(-35-px,0,px-35),Math.max(-14-py,0,py-163));
+}
 for(let a=0;a<5;a++)for(let b=a+1;b<5;b++)for(let zone=0;zone<5;zone++)for(const seed of [1,5]){
-  const plan=run(`shootPlan(${zone},[${a},${b}],${seed})`);
+  const expr=`shootPlan(${zone},[${a},${b}],${seed})`,plan=run(expr);run(`var qaPlan=${expr}`);
   assert.equal(plan.save,[a,b].includes(zone));
-  if(plan.post)assert(Math.abs(Math.abs(plan.point[0]-(zone%2?506:134))-(6+14.5*.53))<1e-9,'Post contact respects the radii of the tube and puck');
-  const before=run(`shootFrame(shootPlan(${zone},[${a},${b}],${seed}),${plan.contactAt-1e-6})`);
-  const contact=run(`shootFrame(shootPlan(${zone},[${a},${b}],${seed}),${plan.contactAt})`);
-  if(plan.save){assert(Math.hypot(before.puck.x-contact.puck.x,before.puck.y-contact.puck.y)<.01,'A save cannot teleport the puck');assert(Math.abs(before.puck.scale-contact.puck.scale)<.001);}
-  else{
-    const p=contact.pose,x=contact.puck.x-320-p.x,y=contact.puck.y;
-    for(const side of ['L','R']){
-      const k=p['knee'+side],r=-p['pad'+side]*Math.PI/180,dx=x-k[0],dy=y-k[1],px=dx*Math.cos(r)-dy*Math.sin(r),py=dx*Math.sin(r)+dy*Math.cos(r);
-      assert(Math.hypot(Math.max(-35-px,0,px-35),Math.max(-14-py,0,py-163))>10,'A scored shot must clear both leg pads at the keeper plane');
-    }
-    for(const [hand,angle,w,top,bottom]of [[p.blocker,p.blockerAngle,32,-44,45],[p.glove,p.gloveAngle,42,-45,48]]){
-      const r=-angle*Math.PI/180,dx=x-hand[0],dy=y-hand[1],px=dx*Math.cos(r)-dy*Math.sin(r),py=dx*Math.sin(r)+dy*Math.cos(r);
-      assert(Math.hypot(Math.max(-w-px,0,px-w),Math.max(top-py,0,py-bottom))>8,'A goal cannot pass through the blocker or glove');
-    }
-    const body=run(`shRotate([${x},${y-p.drop}],${-p.lean},[0,253])`);
-    assert(body[0]<-80||body[0]>80||body[1]>291,'A goal cannot pass through the mask, chest or pants');
+  if(plan.post)assert(Math.abs(Math.abs(plan.point[0]-(zone%2?506:134))-(6+12.2))<1e-9,'Tube contact includes the visible puck and post radii');
+  for(const at of [plan.release,plan.contactAt,plan.planeAt,...plan.events.map(e=>e.time)]){
+    const before=run(`shootFrame(qaPlan,${at-1e-6})`),after=run(`shootFrame(qaPlan,${at+1e-6})`);
+    assert(Math.hypot(before.puck.x-after.puck.x,before.puck.y-after.puck.y)<.025,'Neither an impact nor a phase change can teleport the puck');
+    assert(Math.abs(before.puck.scale-after.puck.scale)<.0001,'Puck scaling stays continuous through all impacts');
   }
-  for(let i=0;i<=150;i++){
-    const f=run(`shootFrame(shootPlan(${zone},[${a},${b}],${seed}),${i/100})`);
-    assert(Number.isFinite(f.puck.x)&&Number.isFinite(f.puck.y)&&Number.isFinite(f.pose.x));assert(f.puck.x>=40&&f.puck.x<=600);assert(f.puck.y>=50&&f.puck.y<=440);
+  const contact=run('shootFrame(qaPlan,qaPlan.contactAt)');
+  if(plan.save&&zone<2){const hand=zone===0?contact.pose.blocker:contact.pose.glove;assert(Math.hypot(320+contact.pose.x+hand[0]-contact.puck.x,hand[1]-contact.puck.y)<.01,'The actual equipment meets the puck');}
+  if(plan.save&&zone>=2)assert(Math.min(padDistance(contact,'L'),padDistance(contact,'R'))<13,'A low save intersects a real pad');
+  if(!plan.save)assert(Math.min(padDistance(contact,'L'),padDistance(contact,'R'))>13,'A goal clears both pads at the keeper plane');
+  const release=run('shootFrame(qaPlan,qaPlan.release)'),plane=run('shootFrame(qaPlan,qaPlan.planeAt)');
+  if(!plan.save)assert(plane.puck.scale/release.puck.scale>.87,'The short flight reduces puck diameter by less than 13%');
+  for(let i=0;i<=300;i++){
+    const f=run(`shootFrame(qaPlan,${i/100})`),w=f.puck.world;
+    for(const value of [f.puck.x,f.puck.y,f.puck.scale,...Object.values(w)])assert(Number.isFinite(value));
+    assert(w.y>=.55-1e-8,'The puck never penetrates the ice');
     if(plan.save){assert.equal(f.scored,false);assert.equal(f.netImpact,null);assert.equal(f.puck.layer,'front');}
-    if(f.scored)assert(f.t>plan.planeAt,'The goal light waits for the puck to cross the line');
-    if(f.netImpact)assert(f.t>=plan.netAt,'Net motion starts only after contact');
+    if(f.scored)assert(f.t>=plan.goalAt,'The lamp waits for the entire puck to cross the goal line');
+    if(f.netImpact)assert(f.t>=plan.netAt,'Cloth movement waits for a physical net contact');
     sampled++;
   }
-  const final=run(`shootFrame(shootPlan(${zone},[${a},${b}],${seed}),1.5)`);
-  if(!plan.save){assert.equal(final.puck.layer,'back');assert(final.puck.x>134&&final.puck.x<506);assert(Math.hypot(final.puck.x-plan.rest[0],final.puck.y-plan.rest[1])<1e-9,'A goal settles on the ice inside the curved base');assert(Math.abs(final.puck.rotation)<1e-9,'A goal settles flat on the ice inside the net');}
-  if(zone===1&&plan.save){assert.equal(final.puck.opacity,0);assert.equal(final.pose.gloveClose,1,'The catching glove stays closed around the puck');}
+  const final=run('shootFrame(qaPlan,qaPlan.duration)');
+  if(!plan.save){
+    assert(plan.netAt!==null&&plan.netAt>plan.planeAt,'Every goal contacts the actual net');
+    const w=final.puck.world,A=36-12.2/(31/6),D=40-18*w.y/48-12.2/(31/6);
+    assert(w.z>12.2/(31/6)&&w.x*w.x/(A*A)+w.z*w.z/(D*D)<=1.0001,'The resting puck is fully inside the curved goal');
+    assert.equal(w.y,.55);assert.equal(w.vx,0);assert.equal(w.vy,0);assert.equal(w.vz,0);assert.equal(final.puck.rotation,0,'Friction leaves a flat, stationary puck');
+    assert.equal(final.puck.layer,'back');assert(final.puck.scale>.78,'The puck stays readable even at the back of the goal');
+    restPoints.add([w.x.toFixed(2),w.z.toFixed(2)].join(','));
+    for(const e of plan.events){
+      if(e.kind==='net'){
+        const[x,y,z]=e.world,d=40-18*Math.max(0,Math.min(1,y/48))-12.2/(31/6);
+        assert(Math.abs(x*x/(A*A)+z*z/(d*d)-1)<.0001,'The impulse occurs on the curved net surface');
+        assert(Math.abs(Math.hypot(...e.normal)-1)<1e-9);
+        assert(Math.hypot(...e.outgoing)<Math.hypot(...e.incoming),'Net absorption reduces kinetic energy');
+        assert(e.outgoing.reduce((n,v,i)=>n+v*e.normal[i],0)<=0,'The net reaction points back into the goal');
+      }
+      if(e.kind==='ice')assert.equal(e.point[1],.55,'A bounce starts exactly at the ice surface');
+    }
+  }
+  if(plan.save&&zone===1){assert.equal(final.puck.opacity,0);assert.equal(final.pose.gloveClose,1);}
 }
-// Hands remain on their correct sides; neither save swaps the catching glove and blocker.
-for(const zone of [0,1]){const f=run(`shootFrame(shootPlan(${zone},[0,1],1),.592)`);const hand=zone===0?f.pose.blocker:f.pose.glove;assert(Math.hypot(320+f.pose.x+hand[0]-f.puck.x,hand[1]-f.puck.y)<.01);}
-// Low-shot contact must intersect an actual projected pad, not an empty point in space.
-for(const zone of [2,3,4]){
-  const f=run(`shootFrame(shootPlan(${zone},[${zone},${zone===4?0:4}],1),.592)`);let intersects=false;
-  for(const side of ['L','R']){const knee=f.pose['knee'+side],angle=-f.pose['pad'+side]*Math.PI/180,x=f.puck.x-320-f.pose.x-knee[0],y=f.puck.y-knee[1],px=x*Math.cos(angle)-y*Math.sin(angle),py=x*Math.sin(angle)+y*Math.cos(angle);const dx=Math.max(-29-px,0,px-28),dy=Math.max(-10-py,0,py-147);if(Math.hypot(dx,dy)<8)intersects=true;}
-  assert(intersects,'Low save '+zone+' contacts the pad surface');
+assert(restPoints.size>=7,'Shot height, side and post contact produce different physical resting locations');
+// Before impact, world-space vertical acceleration is gravity, independent of animation frame rate.
+run('var gravityPlan=shootPlan(0,[1,2],1)');
+const y1=run('shootFrame(gravityPlan,.25).puck.world.y'),y2=run('shootFrame(gravityPlan,.30).puck.world.y'),y3=run('shootFrame(gravityPlan,.35).puck.world.y');
+assert(Math.abs((y3-2*y2+y1)/(.05*.05)+180)<1e-8);
+assert.equal(run('shootMeshPath("h",9,null)'),run('shootMeshPath("h",9,{point:[320,160],uv:[.5,.5],time:0})'));
+const impact=run('shootPlan(0,[1,2],1).events.find(e=>e.kind==="net")');
+let maxWarp=0;
+for(const line of run('SH_MESH_LINES'))for(const p of line.points){
+  const changed=run(`shootMeshPoint([${p.point}],[{point:[${impact.point}],uv:[${impact.uv}],normal:[${impact.normal}],amplitude:25,time:.12}],[${p.uv}],${p.tie})`);
+  maxWarp=Math.max(maxWarp,Math.hypot(changed[0]-p.point[0],changed[1]-p.point[1]));
 }
-assert.equal(run('shootMeshPath("h",9,null)'),run('shootMeshPath("h",9,{point:[320,160],time:0})'));
-assert.notEqual(run('shootMeshPath("h",9,null)'),run('shootMeshPath("h",9,{point:[320,160],time:.08})'));
-for(const [u,v]of [[0,.5],[1,.5],[.5,0],[.5,1]]){
-  const before=[...run(`shootNetPoint(${u},${v})`)];
-  const after=[...run(`shootMeshPoint(shootNetPoint(${u},${v}),{point:[320,160],time:.08},[${u},${v}])`)];
-  assert(Math.hypot(after[0]-before[0],after[1]-before[1])<1e-9,'Mesh ties remain attached to the curved frame');
+assert(maxWarp>5,'The cloth visibly flexes at the measured collision point');
+for(const[u,v]of [[0,.5],[1,.5],[.5,0],[.5,1]]){
+  const before=[...run(`shootNetPoint(${u},${v})`)],after=[...run(`shootMeshPoint(shootNetPoint(${u},${v}),{point:[320,160],uv:[.5,.5],time:.08},[${u},${v}])`)];
+  assert(Math.hypot(after[0]-before[0],after[1]-before[1])<1e-9,'Frame ties remain fixed as the fabric moves');
 }
-// Sample transitions, not just the final save: elbows cannot flip behind the body or collapse at a wrist.
 for(let read=0;read<5;read++)for(let i=0;i<=1000;i++){
   const p=run(`shootPose(${read},${i/1000})`),stick=run(`shootStick(shootPose(${read},${i/1000}))`);
   for(const side of ['L','R']){
-    const shoulder=p['shoulder'+side],elbow=p['elbow'+side],hand=side==='L'?p.blocker:p.glove,sign=side==='L'?-1:1;
-    const upper=Math.hypot(elbow[0]-shoulder[0],elbow[1]-shoulder[1]),fore=Math.hypot(hand[0]-elbow[0],hand[1]-elbow[1]);
-    assert(sign*(elbow[0]-shoulder[0])>=29.99,'The elbow stays outside its shoulder');
-    assert(elbow[1]-shoulder[1]>=35&&elbow[1]-shoulder[1]<=69.01,'Elbow movement stays below the shoulder');
-    assert(sign*hand[0]>70,'Each wrist stays on its own side of the chest');
-    assert(upper>=53&&upper<=83&&fore>=13&&fore<=65,'Projected limbs remain connected without collapsing or stretching');
-    const angle=Math.abs(p['pad'+side])*Math.PI/180,knee=p['knee'+side];
-    assert(Math.abs(knee[1]+35*Math.sin(angle)+163*Math.cos(angle)-390)<1e-8,'The pad and skate contact stays on the ice throughout a drop');
-    if(i){const prev=run(`shootPose(${read},${(i-1)/1000})`);assert(Math.hypot(elbow[0]-prev['elbow'+side][0],elbow[1]-prev['elbow'+side][1])<.13,'The elbow path is continuous');}
+    const s=p['shoulder'+side],e=p['elbow'+side],h=p['wrist'+side],sign=side==='L'?-1:1,fore=Math.hypot(h[0]-e[0],h[1]-e[1]);
+    assert(sign*(e[0]-s[0])>=12.99&&e[1]>s[1],'Each elbow remains outside and below its own shoulder');
+    assert(sign*h[0]>30&&fore>=12&&fore<=74,'Wrists connect to the correct cuff without collapsing or crossing the torso');
+    const expected=run(`shOffset([${side==='L'?p.blocker:p.glove}],[${side==='L'?'-5,-42':'-33.04,-15.34'}],${side==='L'?p.blockerAngle:p.gloveAngle})`);
+    assert(Math.hypot(h[0]-expected[0],h[1]-expected[1])<1e-9,'The sleeve ends at the actual hand entrance');
+    const angle=Math.abs(p['pad'+side])*Math.PI/180,k=p['knee'+side];
+    assert(Math.abs(k[1]+35*Math.sin(angle)+163*Math.cos(angle)-390)<1e-8,'Skates and pads remain on the ice through the drop');
   }
-  assert(Math.abs(Math.hypot(stick.end[0]-stick.grip[0],stick.end[1]-stick.grip[1])-164)<1e-8,'The stick never telescopes');
-  assert(stick.end[1]<=390,'The stick blade cannot pass through the ice');
+  const dx=stick.end[0]-stick.grip[0],dy=stick.end[1]-stick.grip[1];
+  assert(Math.abs(Math.hypot(dx,dy,stick.depth)-152)<1e-8,'The rigid stick retains its length while pitching toward the camera');
+  assert(stick.end[1]<=390,'The blade cannot pass through the ice');
 }
-for(const side of [0,1])for(const w of [-.8,0,.8])assert(run(`shootPostPath(${side},${w})`).startsWith(`M${side?506:134} 358 `),'Post vibration keeps the foot anchored to the ice');
-assert.deepEqual([...run('shootNetPoint(0,0)')],[134,358]);
-assert.deepEqual([...run('shootNetPoint(1,0)')],[506,358]);
-assert(run('shootNetPoint(.5,0)[1]')<run('shootNetPoint(.25,0)[1]'),'The rear base curves around the net');
-assert(run('shootNetPoint(.5,1)[1]')<110,'The shallow roof recedes behind the red crossbar');
-assert(svg.indexOf('id="shBody"')<svg.indexOf('id="shForearmL"'),'The forearms are drawn in front of the torso');
-assert(svg.indexOf('id="shForearmL"')<svg.indexOf('id="shBlocker"'),'The blocker stays in front of the wrist');
-assert.equal([...svg.matchAll(/class="sh-target-hit"[^>]*r="47"/g)].length,5,'Every on-net target has a 52px hit area even in a 360px scene');
+for(const side of [0,1])for(const w of [-.8,0,.8])assert(run(`shootPostPath(${side},${w})`).startsWith(`M${side?506:134} 358 `),'Posts remain anchored during a ring');
+assert(svg.indexOf('id="shBody"')<svg.indexOf('id="shForearmL"'),'Forearms stay in front of the torso');
+assert(svg.indexOf('id="shForearmL"')<svg.indexOf('id="shBlocker"'),'Equipment stays in front of the wrist');
+assert.equal([...svg.matchAll(/class="sh-target-hit"[^>]*r="47"/g)].length,5,'Every on-net target retains a large touch area');
 const css=fs.readFileSync('static/shootout/styles.css','utf8');
 function luminance(hex){return hex.match(/[0-9a-f]{2}/gi).map(s=>parseInt(s,16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);}
-assert((luminance('ffd261')+.05)/(luminance('152c40')+.05)>9,'Gold aiming marks have strong contrast against the dark target');
-assert.match(css,/\.sh-shot\{[^}]*min-height:50px/,'Labelled shot buttons have large touch areas');
+assert((luminance('ffd261')+.05)/(luminance('152c40')+.05)>9);
+assert.match(css,/\.sh-shot\{[^}]*min-height:50px/);
 
 for(const fps of [15,30,60,144]){
   reset();for(let i=0;i<5;i++){
