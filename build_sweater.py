@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "133 · Private Mode Analytics"
+VERSION = "134 · Shootout Animation"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -751,81 +751,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .chips .chip.bad, .pksummary .chip.bad { background: #c0392b; color: #fff; }
 
   /* shootout */
-  .shdots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 4px 0 10px; }
-  .shdot { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--cell); color: var(--cell-fg); font-weight: 600; }
-  .shdot.now { box-shadow: 0 0 0 2px var(--fg); }
-  .shnet { display: block; width: min(460px, 100%); margin: 0 auto; overflow: visible; user-select: none; }
-  .shnet .ice { fill: color-mix(in srgb, #bfdcf0 45%, var(--bg)); }
-  .shnet .netback { fill: color-mix(in srgb, var(--fg) 3%, var(--bg)); }
-  .shnet .meshline { stroke: color-mix(in srgb, var(--fg) 20%, transparent); stroke-width: .7; fill: none; }
-  .shnet .crease { fill: rgba(80,150,220,.28); stroke: #d6312f; stroke-width: 1.2; }
-  .shnet .posts { fill: none; stroke: url(#gPost); stroke-width: 7; stroke-linejoin: round; stroke-linecap: round; }
-  .shnet .postshine { fill: none; stroke: rgba(255,255,255,.35); stroke-width: 1; }
-  .shnet .lamp { fill: color-mix(in srgb, var(--fg) 15%, transparent); transition: fill .2s, filter .2s; }
-  .shnet.scored .lamp { fill: #ff3b30; filter: drop-shadow(0 0 6px #ff3b30); animation: lamp .5s ease-in-out 3; }
-  .shnet.scored .posts { filter: drop-shadow(0 0 4px rgba(255,59,48,.8)); }
-  .shnet.scored .mesh { animation: ripple .45s ease-out; transform-box: fill-box; transform-origin: center; }
-  @keyframes lamp { 50% { fill: #7a1712; filter: none; } }
-  @keyframes ripple { 30% { transform: scale(1.015, 1.03); } }
-
-  .goalie { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .3s cubic-bezier(.25,1.3,.5,1); }
-  .goalie .posewrap { transition: transform 0s; }
-  .goalie.mirror .posewrap { transform: matrix(-1, 0, 0, 1, 300, 0); }
-  .goalie.mirror .crestS { transform: scale(-1, 1); transform-box: fill-box; transform-origin: center; }
-  .goalie .pose { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transform: scale(.94);
-                  transition: opacity .14s ease-out, transform .3s cubic-bezier(.25,1.4,.5,1); }
-  .goalie[data-pose="ready"] .pose-ready, .goalie[data-pose="stretch"] .pose-stretch,
-  .goalie[data-pose="split"] .pose-split { opacity: 1; transform: none; }
-  .goalie .shaft { stroke: #3a2a1d; stroke-width: 4; stroke-linecap: round; }
-  .goalie .paddle, .goalie .blade { fill: #1b1b1b; }
-  .goalie .tape { fill: #f4f4f4; opacity: .85; }
-  .goalie .skate { fill: #3a3d42; }
-  .goalie .pad rect:first-child { fill: url(#gPad); stroke: #8e9bb0; stroke-width: 1; }
-  .goalie .knee { fill: #fff; stroke: #8e9bb0; stroke-width: .8; }
-  .goalie .trim { fill: #2d63c4; }
-  .goalie .seam { stroke: #b8c2d2; stroke-width: .8; fill: none; }
-  .goalie .pants { fill: #10295a; }
-  .goalie .arm { stroke: #1f4ea6; stroke-width: 15; stroke-linecap: round; fill: none; }
-  .goalie .armstripe { stroke: #fff; stroke-width: 15; fill: none; opacity: .92; }
-  .goalie .jersey { fill: url(#gJersey); stroke: #0f2a5a; stroke-width: 1; }
-  .goalie .stripe { fill: #fff; opacity: .92; }
-  .goalie .crest { fill: #fff; stroke: #0f2a5a; stroke-width: 1; }
-  .goalie .crestS { fill: #173f86; font-size: 11px; font-weight: 800; text-anchor: middle; font-family: inherit; }
-  .goalie .blocker { fill: #fbfbfc; stroke: #8e9bb0; stroke-width: 1; }
-  .goalie .blockertrim { fill: none; stroke: #2d63c4; stroke-width: 1.4; }
-  .goalie .glove { fill: #fbfbfc; stroke: #8e9bb0; stroke-width: 1; }
-  .goalie .pocket { stroke: #2d63c4; stroke-width: 1.4; fill: none; stroke-linecap: round; }
-  .goalie .cuff { fill: #2d63c4; }
-  .goalie .helmet { fill: url(#gHelmet); stroke: #8e9bb0; stroke-width: 1; }
-  .goalie .helmetstripe { stroke: #2d63c4; stroke-width: 3.5; fill: none; stroke-linecap: round; }
-  .goalie .face { fill: #2a2d33; }
-  .goalie .cage { stroke: #d9dde4; stroke-width: 1; fill: none; }
-  .goalie .throat { fill: #dfe5ee; stroke: #8e9bb0; stroke-width: .6; }
-
-  .zone { cursor: pointer; transition: opacity .2s; }
-  .zone circle:first-child { fill: rgba(52,168,83,.12); stroke: var(--hit); stroke-width: 1.6; stroke-dasharray: 3 3; }
-  .zone .dot { fill: var(--hit); }
-  .zone:hover circle:first-child { fill: rgba(52,168,83,.3); stroke-dasharray: none; }
-  .zone.off { opacity: 0; pointer-events: none; }
-
-  .shpuck { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .2s; }
-  .shnet.aim .shpuck { opacity: 1; }
-  .shpuck .puckside { fill: #050505; }
-  .shpuck .pucktop { fill: #2c2c2e; stroke: rgba(255,255,255,.4); stroke-width: .6; }
-  .shpuck .puckshine { fill: rgba(255,255,255,.22); }
-  .shpuck.fly { opacity: 1; animation: shot .42s cubic-bezier(.3,.6,.4,1) forwards; }
-  .shpuck.fly.saved { animation: shot .42s cubic-bezier(.3,.6,.4,1) forwards, deflect .35s .42s ease-out forwards; }
-  @keyframes shot { from { transform: translate(0, 0) scale(1.15) rotate(0); } to { transform: translate(var(--tx), var(--ty)) scale(.62) rotate(-8deg); } }
-  @keyframes deflect { from { transform: translate(var(--tx), var(--ty)) scale(.62); } to { transform: translate(calc(var(--tx) * .5), -2px) scale(.8); opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) { .goalie { transition: none; } .shpuck.fly, .shpuck.fly.saved { animation-duration: .01s; } .shnet.scored .lamp, .shnet.scored .mesh { animation: none; } }
-  .shopts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 560px; margin: 0 auto; }
-  .shopt { padding: 12px; border-radius: 12px; border: 0; background: var(--cell); color: var(--cell-fg); font: inherit; font-size: 15px; cursor: pointer; }
-  .shopt:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 12%, var(--cell)); }
-  .shopt.right { background: var(--hit); color: var(--hit-fg); }
-  .shopt.wrong { background: #c0392b; color: #fff; }
-  .shopt.dim { opacity: .45; }
-  .shopt:disabled { cursor: default; }
-
+  /*__SHOOTOUT_CSS__*/
 
   /* NHL EDGE hub + games */
   .edgehome { margin: 20px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 18px;
@@ -3562,158 +3488,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="view" id="view-shoot" hidden>
     <div class="shdots" id="shDots"></div>
-    <svg class="shnet" id="shNet" viewBox="0 0 300 204" role="img" aria-label="Hockey net with a goalie">
-      <defs>
-        <linearGradient id="gJersey" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2d63c4"/><stop offset="1" stop-color="#173f86"/></linearGradient>
-        <linearGradient id="gPad" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#eef1f6"/><stop offset="1" stop-color="#cfd7e3"/></linearGradient>
-        <radialGradient id="gHelmet" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c3cddb"/></radialGradient>
-        <linearGradient id="gPost" x1="0" x2="1"><stop offset="0" stop-color="#b3201d"/><stop offset=".45" stop-color="#ef4b45"/><stop offset="1" stop-color="#b3201d"/></linearGradient>
-        <pattern id="gMesh" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <path d="M0 0 H10 M0 0 V10" class="meshline"/>
-        </pattern>
-      </defs>
-      <rect x="0" y="190" width="300" height="14" class="ice"/>
-      <circle class="lamp" cx="150" cy="9" r="5"/>
-      <rect x="24" y="24" width="252" height="166" class="netback"/>
-      <rect x="24" y="24" width="252" height="166" fill="url(#gMesh)" class="mesh"/>
-      <path d="M78 190 A72 30 0 0 1 222 190 Z" class="crease"/>
-      <path d="M22 190 V22 H278 V190" class="posts"/>
-      <path d="M24 190 V24 H276 V190" class="postshine"/>
-
-      <g id="shGoalie" class="goalie" data-pose="ready">
-       <g class="posewrap">
-        <g class="pose pose-ready">
-        <!-- skates -->
-        <rect x="116" y="182" width="30" height="7" rx="3" class="skate"/>
-        <rect x="154" y="182" width="30" height="7" rx="3" class="skate"/>
-        <!-- leg pads -->
-        <g class="pad"><rect x="115" y="124" width="32" height="62" rx="10"/><rect x="117" y="124" width="28" height="13" rx="6" class="knee"/>
-          <rect x="115" y="150" width="32" height="5" class="trim"/><rect x="115" y="164" width="32" height="3" class="trim"/><path d="M121 140 V182 M141 140 V182" class="seam"/></g>
-        <g class="pad"><rect x="153" y="124" width="32" height="62" rx="10"/><rect x="155" y="124" width="28" height="13" rx="6" class="knee"/>
-          <rect x="153" y="150" width="32" height="5" class="trim"/><rect x="153" y="164" width="32" height="3" class="trim"/><path d="M159 140 V182 M179 140 V182" class="seam"/></g>
-        <!-- pants -->
-        <path d="M118 110 H182 L187 132 Q150 138 113 132 Z" class="pants"/>
-        <!-- stick -->
-        <path d="M100 128 L138 162" class="shaft"/>
-        <path d="M134 156 L145 156 L149 183 L139 183 Z" class="paddle"/>
-        <rect x="138" y="181" width="48" height="6" rx="2" class="blade"/>
-        <rect x="160" y="181" width="14" height="6" class="tape"/>
-        <!-- arms -->
-        <path d="M114 84 L100 118" class="arm"/>
-        <path d="M186 84 L202 110" class="arm"/>
-        <path d="M109 96 L104 108" class="armstripe"/>
-        <path d="M191 94 L197 105" class="armstripe"/>
-        <!-- body -->
-        <path d="M110 80 Q150 68 190 80 L194 100 Q186 104 182 102 L181 118 Q150 122 119 118 L118 102 Q114 104 106 100 Z" class="jersey"/>
-        <path d="M119 106 Q150 110 181 106 L181 113 Q150 117 119 113 Z" class="stripe"/>
-        <circle cx="150" cy="92" r="8.5" class="crest"/>
-        <text x="150" y="95.6" class="crestS">S</text>
-        <!-- blocker -->
-        <rect x="84" y="104" width="24" height="34" rx="4" class="blocker"/>
-        <rect x="87" y="108" width="18" height="26" rx="2" class="blockertrim"/>
-        <!-- catching glove -->
-        <path d="M192 100 C192 88 216 86 222 97 L226 117 C227 129 208 134 197 126 Z" class="glove"/>
-        <path d="M198 104 C204 99 214 99 219 106 M199 113 C206 109 214 110 221 115" class="pocket"/>
-        <rect x="190" y="118" width="14" height="10" rx="3" class="cuff"/>
-        <!-- helmet and cage -->
-        <rect x="145" y="74" width="10" height="7" rx="2" class="throat"/>
-        <circle cx="150" cy="61" r="16" class="helmet"/>
-        <path d="M136 52 Q150 38 164 52" class="helmetstripe"/>
-        <path d="M139 59 Q150 55 161 59 L160 72 Q150 80 140 72 Z" class="face"/>
-        <path d="M143 58 V76 M147 57 V78 M153 57 V78 M157 58 V76 M139 63 H161 M140 68 H160 M141 73 H159" class="cage"/>
-        </g>
-
-        <g class="pose pose-stretch">
-          <path d="M92 138 L96 172" class="shaft"/>
-          <path d="M90 168 L101 168 L103 185 L92 185 Z" class="paddle"/>
-          <rect x="92" y="182" width="34" height="6" rx="2" class="blade"/>
-          <rect x="108" y="182" width="11" height="6" class="tape"/>
-          <g transform="translate(138 120) rotate(42)">
-            <g class="pad"><rect x="-15" y="0" width="30" height="64" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
-              <rect x="-15" y="26" width="30" height="5" class="trim"/><rect x="-15" y="40" width="30" height="3" class="trim"/><path d="M-9 16 V60 M9 16 V60" class="seam"/></g>
-            <rect x="-10" y="61" width="20" height="6" rx="3" class="skate"/>
-          </g>
-          <g transform="translate(166 120) rotate(-60)">
-            <g class="pad"><rect x="-15" y="0" width="30" height="64" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
-              <rect x="-15" y="26" width="30" height="5" class="trim"/><rect x="-15" y="40" width="30" height="3" class="trim"/><path d="M-9 16 V60 M9 16 V60" class="seam"/></g>
-            <rect x="-10" y="61" width="20" height="6" rx="3" class="skate"/>
-          </g>
-          <path d="M128 106 Q156 98 182 108 L184 128 Q156 138 126 128 Z" class="pants"/>
-          <g transform="rotate(-8 156 96)">
-            <path d="M130 84 L100 124" class="arm"/>
-            <path d="M122 95 L115 105" class="armstripe"/>
-            <path d="M184 82 L220 58" class="arm"/>
-            <path d="M198 73 L206 67" class="armstripe"/>
-            <path d="M112 80 Q152 68 192 80 L196 100 Q188 104 184 102 L183 118 Q152 122 121 118 L120 102 Q116 104 108 100 Z" class="jersey"/>
-            <path d="M121 106 Q152 110 183 106 L183 113 Q152 117 121 113 Z" class="stripe"/>
-            <circle cx="152" cy="92" r="8.5" class="crest"/>
-            <text x="152" y="95.6" class="crestS">S</text>
-            <rect x="80" y="116" width="24" height="34" rx="4" class="blocker"/>
-            <rect x="83" y="120" width="18" height="26" rx="2" class="blockertrim"/>
-            <path d="M214 58 C208 42 228 30 242 38 L250 56 C254 70 236 78 224 72 Z" class="glove"/>
-            <path d="M220 52 C226 44 236 42 242 48 M222 62 C230 56 238 56 246 60" class="pocket"/>
-            <rect x="210" y="58" width="12" height="12" rx="3" transform="rotate(-35 216 64)" class="cuff"/>
-            <rect x="152" y="73" width="10" height="7" rx="2" class="throat"/>
-            <circle cx="160" cy="60" r="16" class="helmet"/>
-            <path d="M146 51 Q160 37 174 51" class="helmetstripe"/>
-            <path d="M151 58 Q162 54 172 58 L171 71 Q162 79 152 71 Z" class="face"/>
-            <path d="M155 57 V75 M159 56 V77 M165 56 V77 M169 57 V75 M151 62 H172 M152 67 H171 M153 72 H170" class="cage"/>
-          </g>
-        </g>
-
-        <g class="pose pose-split">
-          <path d="M92 138 L94 172" class="shaft"/>
-          <path d="M88 168 L99 168 L101 185 L90 185 Z" class="paddle"/>
-          <rect x="68" y="182" width="32" height="6" rx="2" class="blade"/>
-          <g transform="translate(140 128) rotate(22)">
-            <g class="pad"><rect x="-15" y="0" width="30" height="58" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
-              <rect x="-15" y="24" width="30" height="5" class="trim"/><rect x="-15" y="36" width="30" height="3" class="trim"/></g>
-            <rect x="-10" y="55" width="20" height="6" rx="3" class="skate"/>
-          </g>
-          <g transform="translate(166 134) rotate(-80)">
-            <g class="pad"><rect x="-15" y="0" width="30" height="66" rx="10"/><rect x="-13" y="0" width="26" height="12" rx="6" class="knee"/>
-              <rect x="-15" y="26" width="30" height="5" class="trim"/><rect x="-15" y="40" width="30" height="3" class="trim"/><path d="M-9 16 V62 M9 16 V62" class="seam"/></g>
-            <rect x="-10" y="63" width="20" height="6" rx="3" class="skate"/>
-          </g>
-          <path d="M128 116 Q154 108 180 118 L182 138 Q154 146 126 138 Z" class="pants"/>
-          <g transform="translate(0 14) rotate(-8 152 100)">
-            <path d="M128 86 L98 116" class="arm"/>
-            <path d="M120 96 L112 104" class="armstripe"/>
-            <path d="M178 84 L204 104" class="arm"/>
-            <path d="M188 90 L195 97" class="armstripe"/>
-            <path d="M112 80 Q152 68 192 80 L196 100 Q188 104 184 102 L183 118 Q152 122 121 118 L120 102 Q116 104 108 100 Z" class="jersey"/>
-            <path d="M121 106 Q152 110 183 106 L183 113 Q152 117 121 113 Z" class="stripe"/>
-            <circle cx="152" cy="92" r="8.5" class="crest"/>
-            <text x="152" y="95.6" class="crestS">S</text>
-            <rect x="80" y="104" width="24" height="34" rx="4" class="blocker"/>
-            <rect x="83" y="108" width="18" height="26" rx="2" class="blockertrim"/>
-            <path d="M196 96 C196 84 220 82 226 93 L230 113 C231 125 212 130 201 122 Z" class="glove"/>
-            <path d="M202 100 C208 95 218 95 223 102 M203 109 C210 105 218 106 225 111" class="pocket"/>
-            <rect x="148" y="73" width="10" height="7" rx="2" class="throat"/>
-            <circle cx="156" cy="60" r="16" class="helmet"/>
-            <path d="M142 51 Q156 37 170 51" class="helmetstripe"/>
-            <path d="M146 58 Q157 54 167 58 L166 71 Q157 79 147 71 Z" class="face"/>
-            <path d="M150 57 V75 M154 56 V77 M160 56 V77 M164 57 V75 M146 62 H167 M147 67 H166 M148 72 H165" class="cage"/>
-          </g>
-        </g>
-       </g>
-      </g>
-
-      <g class="zones">
-        <g class="zone" data-z="0"><circle cx="62" cy="52" r="17"/><circle cx="62" cy="52" r="3" class="dot"/></g>
-        <g class="zone" data-z="1"><circle cx="238" cy="52" r="17"/><circle cx="238" cy="52" r="3" class="dot"/></g>
-        <g class="zone" data-z="2"><circle cx="62" cy="140" r="17"/><circle cx="62" cy="140" r="3" class="dot"/></g>
-        <g class="zone" data-z="3"><circle cx="238" cy="140" r="17"/><circle cx="238" cy="140" r="3" class="dot"/></g>
-        <g class="zone" data-z="4"><circle cx="150" cy="172" r="12"/><circle cx="150" cy="172" r="2.5" class="dot"/></g>
-      </g>
-
-      <g id="shPuck" class="shpuck">
-        <ellipse cx="150" cy="197" rx="11" ry="3.8" class="puckside"/>
-        <rect x="139" y="192" width="22" height="5" class="puckside"/>
-        <ellipse cx="150" cy="192" rx="11" ry="3.8" class="pucktop"/>
-        <ellipse cx="146.5" cy="191.2" rx="4.5" ry="1.1" class="puckshine"/>
-      </g>
-    </svg>
+    <!--__SHOOTOUT_SCENE__-->
     <p class="ttq" id="shQ"></p>
     <div class="shopts" id="shOpts"></div>
     <p class="hint" id="shMsg"></p>
@@ -6256,22 +6031,7 @@ $("pkLane").addEventListener("pointerdown", e => {
 });
 
 // ---- Shootout: answer to earn a shot, then beat the goalie ----
-const NET_ZONES = [[62, 52], [238, 52], [62, 140], [238, 140], [150, 172]];
-// how the goalie reacts to each spot: a full stretch up high, a pad-extension split down low,
-// and a butterfly for the five-hole. Blocker-side saves use the mirrored pose.
-const GOALIE_AT = [
-  { pose: "stretch", mirror: true,  move: "translate(-8px, -4px)" },
-  { pose: "stretch", mirror: false, move: "translate(8px, -4px)" },
-  { pose: "split",   mirror: true,  move: "translate(-10px, 2px)" },
-  { pose: "split",   mirror: false, move: "translate(10px, 2px)" },
-  { pose: "ready",   mirror: false, move: "translate(0, 12px) scale(1.12, .84)" },
-];
-function setGoalie(at) {
-  const g = $("shGoalie");
-  g.dataset.pose = at ? at.pose : "ready";
-  g.classList.toggle("mirror", !!(at && at.mirror));
-  g.style.transform = at ? at.move : "";
-}
+/*__SHOOTOUT_ANIMATION__*/
 function shootRandom(rnd) {
   const rounds = [], used = { kinds: new Set(), players: new Set() };
   for (let i = 0; i < 5; i++) {
@@ -6309,72 +6069,93 @@ G.shoot = {
     const n = this.goals(t, g);
     return { result: `${n} for 5`, cheer: n === 5 ? "Perfect shootout! 🚨" : won ? "You win the shootout! 🏆" : "The goalie stole this one. 🧤" };
   },
-  celebrate: (t, g, won) => won,
+  celebrate(t, g, won) { return won && !this.quietFinish; },
   archiveStatus: h => `${h.s / 2}/5 goals`,
   shareText(t, saved, num, link) {
     const icon = { goal: "🚨", save: "🧤", miss: "❌" };
     return `Sweater Shootout #${num}\n${saved.guesses.map((x, i) => icon[this.outcome(t, x, i)]).join("")}\n${this.goals(t, saved.guesses)}/5 goals${link}`;
   },
-  reset() { shootUI = { phase: "ask", choice: null, zone: null }; },
+  reset() { shootCancelAnimation(); shootUI = { phase: "ask", choice: null, zone: null }; shootSceneRest(); },
+  deferFinish() { return shootUI.phase === "shot"; },
   guess(t, x) { return typeof x === "string" && /^[0-3]:(-1|[0-4])$/.test(x) ? false : null; },
   render(t, st) {
-    const i = st.guesses.length, icon = { goal: "🚨", save: "🧤", miss: "❌" };
-    paintQuestionProgress("shDots", 5, st.over ? -1 : i, [0, 1, 2, 3, 4].map(n => {
-      if (n >= i) return null;
+    const i = st.guesses.length, playing = shootUI.phase === "shot";
+    const shown = playing ? Math.max(0, i - 1) : i;
+    paintQuestionProgress("shDots", 5, st.over ? -1 : shown, [0, 1, 2, 3, 4].map(n => {
+      if (n >= shown) return null;
       const out = this.outcome(t, st.guesses[n], n);
       return out === "goal" ? { status: "ok", text: "🚨", label: "goal" }
         : out === "save" ? { status: "neutral", text: "🧤", label: "saved" }
         : { status: "bad", mark: "x", label: "missed" };
     }));
     const lastI = i - 1, showResult = shootUI.phase === "result" && lastI >= 0;
-    const r = t.rounds[showResult ? lastI : Math.min(i, 4)];
-    $("shQ").textContent = st.over && !showResult ? "Shootout over" : `Shooter ${(showResult ? lastI : i) + 1}: ${r.q}`;
-    const answered = showResult || shootUI.phase === "aim";
-    const chosen = showResult ? Number(st.guesses[lastI].split(":")[0]) : shootUI.choice;
-    const shRound = `${r.q}#${showResult ? lastI : Math.min(i, 4)}`;
+    const current = showResult || playing ? lastI : Math.min(i, 4), r = t.rounds[current];
+    $("shQ").textContent = st.over && !showResult ? "Shootout over" : `Shooter ${current + 1}: ${r.q}`;
+    const answered = showResult || playing || shootUI.phase === "aim";
+    const chosen = showResult || playing ? Number(st.guesses[lastI].split(":")[0]) : shootUI.choice;
+    const shRound = `${r.q}#${current}`;
     const shHtml = st.over && !showResult ? "" : r.o.map((o, n) =>
       `<button type="button" class="shopt" style="--i:${n}" data-c="${n}">${esc(o)}</button>`).join("");
     paintOptions("shOpts", shRound, shHtml, answered ? n => n === r.a ? "right" : n === chosen ? "wrong" : "dim" : null);
     const aiming = shootUI.phase === "aim";
     $("shNet").classList.toggle("aim", aiming);
-    $("shNet").querySelectorAll(".zone").forEach(z => z.classList.toggle("off", !aiming));
+    $("shNet").querySelectorAll(".zone").forEach(z => {
+      z.classList.toggle("off", !aiming); z.setAttribute("tabindex", aiming ? "0" : "-1"); z.setAttribute("aria-disabled", String(!aiming));
+    });
     let msg = "";
-    if (showResult) {
+    if (playing) msg = "On the way…";
+    else if (showResult) {
       const out = this.outcome(t, st.guesses[lastI], lastI);
       msg = out === "goal" ? "Goal! 🚨" : out === "save" ? "Saved by the goalie 🧤" : "Wrong answer, so no shot ❌";
     } else if (aiming) msg = "Pick your spot and shoot.";
     else if (!st.over) msg = "Answer right to earn a shot.";
     $("shMsg").textContent = msg;
     $("shNext").hidden = !(showResult && !st.over);
-    if (!showResult) { $("shPuck").setAttribute("class", "shpuck"); setGoalie(null); $("shNet").classList.remove("scored", "saved"); }
+    if (!showResult && !playing) shootSceneRest(aiming);
   },
 };
-function shootAnimate(zone, keep) {
-  const puck = $("shPuck"), net = $("shNet");
-  const [x, y] = NET_ZONES[zone], save = keep.includes(zone);
-  setGoalie(GOALIE_AT[save ? zone : keep[0]]);
-  puck.style.setProperty("--tx", `${x - 150}px`);
-  puck.style.setProperty("--ty", `${y - 194}px`);
-  puck.setAttribute("class", `shpuck fly${save ? " saved" : ""}`);
-  setTimeout(() => net.classList.add(save ? "saved" : "scored"), 380);
+function shootSettle(quiet = false) {
+  if (shootUI.phase !== "shot") return;
+  shootFastForward();shootUI.phase = "result";
+  const st = S.shoot, g = G.shoot;
+  if (st.target && st.guesses.length >= 5 && !st.over) {
+    const previousMode = mode; mode = st.mode || mode; g.quietFinish = quiet;
+    try { finish(g.wonGame(st.target, st.guesses), true); }
+    finally { mode = previousMode; g.quietFinish = false; }
+  }
+  if (game === "shoot" && st.target) g.render(st.target, st);
+  if (!quiet && game === "shoot") { renderOptions(); updateLabels(); }
 }
 $("shOpts").addEventListener("click", e => {
   const b = e.target.closest("[data-c]"), st = S.shoot;
-  if (!b || st.over || shootUI.phase !== "ask") return;
+  if (game !== "shoot" || !b || st.over || shootUI.phase !== "ask") return;
   const c = Number(b.dataset.c), r = st.target.rounds[st.guesses.length];
   if (c === r.a) { shootUI = { phase: "aim", choice: c }; G.shoot.render(st.target, st); }
   else { shootUI = { phase: "result" }; doGuess(`${c}:-1`); }
 });
-$("shNet").addEventListener("click", e => {
+function shootTakeTarget(e) {
   const z = e.target.closest("[data-z]"), st = S.shoot;
-  if (!z || shootUI.phase !== "aim" || st.over) return;
-  const zone = Number(z.dataset.z), r = st.target.rounds[st.guesses.length];
-  shootAnimate(zone, r.keep);
-  const choice = shootUI.choice;
-  shootUI = { phase: "result" };
-  setTimeout(() => doGuess(`${choice}:${zone}`), 450);
+  if (game !== "shoot" || !z || shootUI.phase !== "aim" || st.over) return;
+  const zone = Number(z.dataset.z);
+  if (!Number.isInteger(zone) || zone < 0 || zone > 4) return;
+  const index = st.guesses.length, target = st.target, r = target.rounds[index], choice = shootUI.choice;
+  shootUI = { phase: "shot", choice, zone };
+  // Persist the accepted shot before playback so leaving cannot undo its outcome.
+  doGuess(`${choice}:${zone}`);
+  shootAnimate(zone, r.keep, hash(`${r.q}:${index}:${zone}`), () => {
+    if (game === "shoot" && S.shoot === st && st.target === target && shootUI.phase === "shot") shootSettle();
+  });
+}
+$("shNet").addEventListener("click", shootTakeTarget);
+$("shNet").addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.closest("[data-z]")) { e.preventDefault(); shootTakeTarget(e); }
 });
-$("shNext").onclick = () => { shootUI = { phase: "ask" }; G.shoot.render(S.shoot.target, S.shoot); };
+$("shNext").onclick = () => {
+  if (game !== "shoot" || shootUI.phase !== "result" || S.shoot.over) return;
+  shootUI = { phase: "ask" }; G.shoot.render(S.shoot.target, S.shoot);
+};
+document.addEventListener("visibilitychange", () => { if (document.hidden && game === "shoot") shootSettle(true); });
+window.addEventListener("pagehide", () => { if (game === "shoot") shootSettle(true); });
 
 // ---- Overtime ----
 const arcadeAnswers = guesses => guesses.filter(x => x !== "START" && x !== "END");
@@ -6494,7 +6275,7 @@ function leaveGame(g) {
   if (g === "edgerush") edgeRushCancelAnimation();
   if (g === "overtime" && overtimeRun) endArcade("overtime",true);
   if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
-  if (g === "shoot" && shootUI.phase === "aim") shootUI = { phase: "ask" };
+  if (g === "shoot") { shootSettle(true); shootCancelAnimation(); if (shootUI.phase === "aim") shootUI = { phase: "ask" }; }
 }
 
 // ======================= two truths, higher or lower: teams, mystery season =======================
@@ -10038,6 +9819,7 @@ function renderResultRecap(unlocked = []) {
 }
 
 function startGame(t, restore = [], opts, analyticsNew = false) {
+  if (game === "shoot") shootSettle(true);
   const st = S[game], g = G[game];
   Object.assign(st, { target: t, guesses: [], over: false, mode, opts: opts || prefOpts(game) });
   globalThis.SweaterAnalytics?.context(game, mode, `${mode === "unlimited" ? "" : st.day}:${g.tid(t)}`, analyticsNew);
@@ -10067,7 +9849,7 @@ function doGuess(x, fresh = true) {
   if (fresh) globalThis.SweaterAnalytics?.beginRound();
   st.guesses.push(x);
   if (fresh) saveProgress();
-  if (isDone(game, st.target, st.guesses)) finish(g.wonGame ? g.wonGame(st.target, st.guesses) : won, fresh);
+  if (isDone(game, st.target, st.guesses) && !(fresh && g.deferFinish && g.deferFinish())) finish(g.wonGame ? g.wonGame(st.target, st.guesses) : won, fresh);
   if (fresh) { g.render && g.render(st.target, st); renderOptions(); updateLabels(); }
 }
 
@@ -14135,6 +13917,9 @@ def main():
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     fills = {
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
+        "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
+        "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),
+        "/*__SHOOTOUT_ANIMATION__*/": (HERE / "static" / "shootout" / "animation.js").read_text(encoding="utf-8"),
         "/*__GOAL_CLIPS__*/[]": esc(goal_clips),
         "/*__PLAYERS__*/[]": esc(embedded),
         "/*__ROSTER_PLAYERS__*/[]": esc(roster_embedded),

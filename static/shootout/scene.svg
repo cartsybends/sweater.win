@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="shnet" id="shNet" viewBox="0 0 640 440" role="group" aria-labelledby="shSceneTitle shSceneDescription">
+<title id="shSceneTitle">Shootout</title><desc id="shSceneDescription">A goalie in blue and white guards a red goal. Answer correctly, then choose one of five shot targets.</desc>
+<defs>
+ <linearGradient id="shArena" x2="0" y2="1"><stop stop-color="#152536"/><stop offset="1" stop-color="#2b4355"/></linearGradient>
+ <linearGradient id="shIce" x2="0" y2="1"><stop stop-color="#d4e3eb"/><stop offset=".52" stop-color="#eff5f7"/><stop offset="1" stop-color="#d4e4ec"/></linearGradient>
+ <linearGradient id="shNetShade" x2="0" y2="1"><stop stop-color="#476171" stop-opacity=".45"/><stop offset="1" stop-color="#a6bdcb" stop-opacity=".15"/></linearGradient>
+ <linearGradient id="shSideShade"><stop stop-color="#476777" stop-opacity=".29"/><stop offset="1" stop-color="#b0cbd6" stop-opacity=".15"/></linearGradient>
+ <linearGradient id="shWhite"><stop stop-color="#a7b7c7"/><stop offset=".14" stop-color="#e0e7ed"/><stop offset=".52" stop-color="#fcfdfe"/><stop offset="1" stop-color="#b8c6d3"/></linearGradient>
+ <linearGradient id="shPadFace" x2="1" y2=".25"><stop stop-color="#e0e7ec"/><stop offset=".35" stop-color="#fff"/><stop offset=".78" stop-color="#f3f6f8"/><stop offset="1" stop-color="#c1ceda"/></linearGradient>
+ <linearGradient id="shBlue" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#497caf"/><stop offset=".4" stop-color="#285885"/><stop offset="1" stop-color="#133650"/></linearGradient>
+ <linearGradient id="shBlueSleeve"><stop stop-color="#17374e"/><stop offset=".48" stop-color="#4478a4"/><stop offset="1" stop-color="#214d71"/></linearGradient>
+ <linearGradient id="shPantsShade" x2="1" y2="1"><stop stop-color="#294051"/><stop offset="1" stop-color="#101e2b"/></linearGradient>
+ <radialGradient id="shMask" cx=".34" cy=".23" r=".9"><stop stop-color="#fff"/><stop offset=".52" stop-color="#ecf1f5"/><stop offset="1" stop-color="#9eafbe"/></radialGradient>
+ <linearGradient id="shTubeL" gradientUnits="userSpaceOnUse" x1="129" x2="139"><stop stop-color="#782126"/><stop offset=".38" stop-color="#f26965"/><stop offset=".65" stop-color="#ce3538"/><stop offset="1" stop-color="#812027"/></linearGradient>
+ <linearGradient id="shTubeR" gradientUnits="userSpaceOnUse" x1="501" x2="511"><stop stop-color="#782126"/><stop offset=".38" stop-color="#f26965"/><stop offset=".65" stop-color="#ce3538"/><stop offset="1" stop-color="#812027"/></linearGradient>
+ <linearGradient id="shRedTube" gradientUnits="userSpaceOnUse" x1="0" y1="88" x2="0" y2="98"><stop stop-color="#80252c"/><stop offset=".4" stop-color="#f16b67"/><stop offset=".64" stop-color="#d3393c"/><stop offset="1" stop-color="#862229"/></linearGradient>
+ <radialGradient id="shRedLight"><stop stop-color="#ff7262" stop-opacity=".7"/><stop offset="1" stop-color="#ff463e" stop-opacity="0"/></radialGradient>
+ <filter id="shSoftShadow" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="2.2"/></filter>
+ <clipPath id="shRearClip"><path d="M179 65 H461 Q466 65 466 71 V259 H174 V71 Q174 65 179 65Z"/></clipPath>
+ <g id="shPuckArt"><ellipse cy="4" rx="14.5" ry="5.2" fill="#0a1118"/><path d="M-14.5-2H14.5V4H-14.5Z" fill="#111c26"/><ellipse cy="-2" rx="14.5" ry="5.2" fill="#273641" stroke="#677b8c" stroke-width=".55"/><path d="M-9-4Q-3-6 4-4" fill="none" stroke="#8ba0ac" stroke-width="1" opacity=".7"/></g>
+ <g id="shPadArt">
+  <path d="M-18-9Q-22-8-23-3L-25 73-22 100Q-20 109-12 109H14Q21 109 22 101L24 18 20-4Q19-9 13-9Z" fill="#a4b5c5" stroke="#71869a" stroke-width="1"/>
+  <path d="M-15-7H14L18-2 19 19 17 76 15 100H-14L-18 73-17-1Z" fill="url(#shPadFace)"/>
+  <path d="M-18-3-16 76-11 99H-17L-22 73-21-2Z" fill="#e2eaf1"/>
+  <path d="M17 7H22L20 92 16 102H12L15 76Z" fill="#346589"/>
+  <path d="M-16 11Q0 8 17 11M-17 34Q0 32 18 34M-18 59Q0 57 17 59M-16 80Q0 77 15 80" class="sh-gear-seam"/>
+  <path d="M-12 16V71M12 16V73M-11 85Q0 88 11 85" class="sh-stitch"/>
+  <path d="M-16 47Q0 44 18 47L17 52Q0 49-17 53Z" fill="#33688f"/>
+  <path d="M-15 88Q0 86 15 89L14 93Q0 90-14 93Z" fill="#326087"/>
+  <path d="M-12-6Q0-10 13-5L14 6Q0 3-14 7Z" fill="#fff" stroke="#cad6df" stroke-width=".65"/>
+  <path d="M-11 101Q0 105 14 100L20 109H-19Z" fill="#152c3d"/>
+  <path d="M-20 110H21" stroke="#8fabbc" stroke-width="1.8" stroke-linecap="round"/>
+ </g>
+</defs>
+<rect width="640" height="440" fill="url(#shArena)"/>
+<path d="M0 20Q320 32 640 20M0 43Q320 54 640 43" stroke="#95afbf" stroke-opacity=".08" fill="none"/>
+<path d="M0 52Q320 67 640 52V75H0Z" fill="#d1dce2"/><path d="M0 69Q320 81 640 69V440H0Z" fill="url(#shIce)"/>
+<path d="M0 78Q320 88 640 78" fill="none" stroke="#91b0c2" stroke-width="2"/>
+<path d="M51 415 83 410M550 402 591 399M87 294 109 291M220 401 246 397M470 369 498 366M21 363 50 359M550 255 573 253M70 199 89 197" stroke="#abc5d3" opacity=".32" fill="none" stroke-width="1.3"/>
+<ellipse cx="320" cy="334" rx="192" ry="14" fill="#325364" opacity=".15" filter="url(#shSoftShadow)"/>
+<path d="M72 341Q70 388 139 400Q320 430 501 400Q570 388 568 341Z" fill="#83b4d1" opacity=".38"/>
+<path d="M72 341Q70 388 139 400Q320 430 501 400Q570 388 568 341" stroke="#b94c57" stroke-width="1.5" fill="none" opacity=".72"/>
+<path d="M64 341H576" stroke="#d17880" stroke-width="1.6"/>
+<!-- The mesh encloses the rear, roof and sides, never the open goal mouth. -->
+<path d="M174 65H466V259H174Z" fill="url(#shNetShade)"/>
+<path d="M134 93 174 65V259L134 341Z M506 93 466 65V259L506 341Z" fill="url(#shSideShade)"/>
+<path d="M134 93 174 65H466L506 93Z" fill="#839eae" opacity=".27"/>
+<g id="shRearMesh" clip-path="url(#shRearClip)"><path id="shMeshH0" class="sh-cord" d="M174 65.0000 H466"/>
+<path id="shMeshH1" class="sh-cord" d="M174 75.7778 H466"/>
+<path id="shMeshH2" class="sh-cord" d="M174 86.5556 H466"/>
+<path id="shMeshH3" class="sh-cord" d="M174 97.3333 H466"/>
+<path id="shMeshH4" class="sh-cord" d="M174 108.1111 H466"/>
+<path id="shMeshH5" class="sh-cord" d="M174 118.8889 H466"/>
+<path id="shMeshH6" class="sh-cord" d="M174 129.6667 H466"/>
+<path id="shMeshH7" class="sh-cord" d="M174 140.4444 H466"/>
+<path id="shMeshH8" class="sh-cord" d="M174 151.2222 H466"/>
+<path id="shMeshH9" class="sh-cord" d="M174 162.0000 H466"/>
+<path id="shMeshH10" class="sh-cord" d="M174 172.7778 H466"/>
+<path id="shMeshH11" class="sh-cord" d="M174 183.5556 H466"/>
+<path id="shMeshH12" class="sh-cord" d="M174 194.3333 H466"/>
+<path id="shMeshH13" class="sh-cord" d="M174 205.1111 H466"/>
+<path id="shMeshH14" class="sh-cord" d="M174 215.8889 H466"/>
+<path id="shMeshH15" class="sh-cord" d="M174 226.6667 H466"/>
+<path id="shMeshH16" class="sh-cord" d="M174 237.4444 H466"/>
+<path id="shMeshH17" class="sh-cord" d="M174 248.2222 H466"/>
+<path id="shMeshH18" class="sh-cord" d="M174 259.0000 H466"/>
+<path id="shMeshV0" class="sh-cord" d="M174.0000 65 V259"/>
+<path id="shMeshV1" class="sh-cord" d="M185.2308 65 V259"/>
+<path id="shMeshV2" class="sh-cord" d="M196.4615 65 V259"/>
+<path id="shMeshV3" class="sh-cord" d="M207.6923 65 V259"/>
+<path id="shMeshV4" class="sh-cord" d="M218.9231 65 V259"/>
+<path id="shMeshV5" class="sh-cord" d="M230.1538 65 V259"/>
+<path id="shMeshV6" class="sh-cord" d="M241.3846 65 V259"/>
+<path id="shMeshV7" class="sh-cord" d="M252.6154 65 V259"/>
+<path id="shMeshV8" class="sh-cord" d="M263.8462 65 V259"/>
+<path id="shMeshV9" class="sh-cord" d="M275.0769 65 V259"/>
+<path id="shMeshV10" class="sh-cord" d="M286.3077 65 V259"/>
+<path id="shMeshV11" class="sh-cord" d="M297.5385 65 V259"/>
+<path id="shMeshV12" class="sh-cord" d="M308.7692 65 V259"/>
+<path id="shMeshV13" class="sh-cord" d="M320.0000 65 V259"/>
+<path id="shMeshV14" class="sh-cord" d="M331.2308 65 V259"/>
+<path id="shMeshV15" class="sh-cord" d="M342.4615 65 V259"/>
+<path id="shMeshV16" class="sh-cord" d="M353.6923 65 V259"/>
+<path id="shMeshV17" class="sh-cord" d="M364.9231 65 V259"/>
+<path id="shMeshV18" class="sh-cord" d="M376.1538 65 V259"/>
+<path id="shMeshV19" class="sh-cord" d="M387.3846 65 V259"/>
+<path id="shMeshV20" class="sh-cord" d="M398.6154 65 V259"/>
+<path id="shMeshV21" class="sh-cord" d="M409.8462 65 V259"/>
+<path id="shMeshV22" class="sh-cord" d="M421.0769 65 V259"/>
+<path id="shMeshV23" class="sh-cord" d="M432.3077 65 V259"/>
+<path id="shMeshV24" class="sh-cord" d="M443.5385 65 V259"/>
+<path id="shMeshV25" class="sh-cord" d="M454.7692 65 V259"/>
+<path id="shMeshV26" class="sh-cord" d="M466.0000 65 V259"/></g>
+<g><path class="sh-side-cord" d="M134 109.533 L174 77.933 M506 109.533 L466 77.933"/>
+<path class="sh-side-cord" d="M134 126.067 L174 90.867 M506 126.067 L466 90.867"/>
+<path class="sh-side-cord" d="M134 142.600 L174 103.800 M506 142.600 L466 103.800"/>
+<path class="sh-side-cord" d="M134 159.133 L174 116.733 M506 159.133 L466 116.733"/>
+<path class="sh-side-cord" d="M134 175.667 L174 129.667 M506 175.667 L466 129.667"/>
+<path class="sh-side-cord" d="M134 192.200 L174 142.600 M506 192.200 L466 142.600"/>
+<path class="sh-side-cord" d="M134 208.733 L174 155.533 M506 208.733 L466 155.533"/>
+<path class="sh-side-cord" d="M134 225.267 L174 168.467 M506 225.267 L466 168.467"/>
+<path class="sh-side-cord" d="M134 241.800 L174 181.400 M506 241.800 L466 181.400"/>
+<path class="sh-side-cord" d="M134 258.333 L174 194.333 M506 258.333 L466 194.333"/>
+<path class="sh-side-cord" d="M134 274.867 L174 207.267 M506 274.867 L466 207.267"/>
+<path class="sh-side-cord" d="M134 291.400 L174 220.200 M506 291.400 L466 220.200"/>
+<path class="sh-side-cord" d="M134 307.933 L174 233.133 M506 307.933 L466 233.133"/>
+<path class="sh-side-cord" d="M134 324.467 L174 246.067 M506 324.467 L466 246.067"/>
+<path class="sh-side-cord" d="M140.667 88.333 V327.333 M499.333 88.333 V327.333"/>
+<path class="sh-side-cord" d="M147.333 83.667 V313.667 M492.667 83.667 V313.667"/>
+<path class="sh-side-cord" d="M154.000 79.000 V300.000 M486.000 79.000 V300.000"/>
+<path class="sh-side-cord" d="M160.667 74.333 V286.333 M479.333 74.333 V286.333"/>
+<path class="sh-side-cord" d="M167.333 69.667 V272.667 M472.667 69.667 V272.667"/>
+<path class="sh-side-cord" d="M147.778 93 L184.815 65"/>
+<path class="sh-side-cord" d="M161.556 93 L195.630 65"/>
+<path class="sh-side-cord" d="M175.333 93 L206.444 65"/>
+<path class="sh-side-cord" d="M189.111 93 L217.259 65"/>
+<path class="sh-side-cord" d="M202.889 93 L228.074 65"/>
+<path class="sh-side-cord" d="M216.667 93 L238.889 65"/>
+<path class="sh-side-cord" d="M230.444 93 L249.704 65"/>
+<path class="sh-side-cord" d="M244.222 93 L260.519 65"/>
+<path class="sh-side-cord" d="M258.000 93 L271.333 65"/>
+<path class="sh-side-cord" d="M271.778 93 L282.148 65"/>
+<path class="sh-side-cord" d="M285.556 93 L292.963 65"/>
+<path class="sh-side-cord" d="M299.333 93 L303.778 65"/>
+<path class="sh-side-cord" d="M313.111 93 L314.593 65"/>
+<path class="sh-side-cord" d="M326.889 93 L325.407 65"/>
+<path class="sh-side-cord" d="M340.667 93 L336.222 65"/>
+<path class="sh-side-cord" d="M354.444 93 L347.037 65"/>
+<path class="sh-side-cord" d="M368.222 93 L357.852 65"/>
+<path class="sh-side-cord" d="M382.000 93 L368.667 65"/>
+<path class="sh-side-cord" d="M395.778 93 L379.481 65"/>
+<path class="sh-side-cord" d="M409.556 93 L390.296 65"/>
+<path class="sh-side-cord" d="M423.333 93 L401.111 65"/>
+<path class="sh-side-cord" d="M437.111 93 L411.926 65"/>
+<path class="sh-side-cord" d="M450.889 93 L422.741 65"/>
+<path class="sh-side-cord" d="M464.667 93 L433.556 65"/>
+<path class="sh-side-cord" d="M478.444 93 L444.370 65"/>
+<path class="sh-side-cord" d="M492.222 93 L455.185 65"/>
+<path class="sh-side-cord" d="M140.667 88.333 H499.333"/>
+<path class="sh-side-cord" d="M147.333 83.667 H492.667"/>
+<path class="sh-side-cord" d="M154.000 79.000 H486.000"/>
+<path class="sh-side-cord" d="M160.667 74.333 H479.333"/>
+<path class="sh-side-cord" d="M167.333 69.667 H472.667"/></g>
+<path d="M174 259V71Q174 65 181 65H459Q466 65 466 72V259M134 341 174 259H466L506 341" stroke="url(#shWhite)" stroke-width="5.3" fill="none" stroke-linejoin="round"/>
+<path d="M174 259H466" stroke="#fbfdff" stroke-width="10"/><path d="M174 254H466" stroke="#bacbd6" stroke-width=".7"/>
+<ellipse id="shPuckShadowBack" cx="320" cy="259" rx="6" ry="2" fill="#213b4c" opacity="0"/>
+<g id="shPuckBack" opacity="0"><use href="#shPuckArt"/></g>
+<g id="shPostL"><path class="sh-frame sh-post" d="M134 341V101Q134 93 142 93"/><path class="sh-frame sh-post-shine" d="M132 337V103Q132 95 140 95"/></g>
+<g id="shPostR"><path class="sh-frame sh-post" d="M498 93Q506 93 506 101V341"/><path class="sh-frame sh-post-shine" d="M499 95Q504 95 504 102V337"/></g>
+<g id="shCrossbar"><path class="sh-frame sh-post" d="M142 93H498"/><path class="sh-frame sh-post-shine" d="M143 91.4H497"/></g>
+<path d="M128 341H140M500 341H512" stroke="#b8c8d3" stroke-width="3.5" stroke-linecap="round"/>
+<ellipse id="shKeeperShadow" cx="320" cy="369" rx="78" ry="8" fill="#243e50" opacity=".23" filter="url(#shSoftShadow)"/>
+<g id="shGoalie" transform="translate(320 0)">
+ <g id="shPants"><path d="M-35 250Q0 246 35 250L43 290Q24 304 5 293L0 277-5 293Q-25 304-43 290Z" fill="url(#shPantsShade)" stroke="#142b3b" stroke-width="1.1"/><path d="M-27 260-25 287M27 260 25 287M-6 256H6" stroke="#506577" stroke-width="1.2" opacity=".55"/></g>
+ <g id="shPadL" transform="translate(-31 265) rotate(14)"><use href="#shPadArt"/></g>
+ <g id="shPadR" transform="translate(31 265) rotate(-14)"><use href="#shPadArt"/></g>
+ <g id="shStick" transform="translate(-60 257)"><path d="M-8-23 17 76" stroke="#142833" stroke-width="4.3" stroke-linecap="round"/><path d="M-8-23 15 70" stroke="#a3b4be" stroke-width="1.2" opacity=".65"/><path d="M11 57 21 55 39 110 29 113Z" fill="#243c4b" stroke="#102431" stroke-width=".9"/><path d="M17 68 26 69 36 102 29 105Z" fill="#a4b4bf" opacity=".65"/><path d="M28 109 87 109Q94 109 95 115L93 120 37 120Q31 120 28 115Z" fill="#192d3d" stroke="#0d1d28" stroke-width=".7"/><path d="M61 109H79V119H61Z" fill="#d8e4eb"/><path d="M65 110V119M70 110V119M75 110V119" stroke="#8dabbc" stroke-width=".65"/></g>
+ <path id="shArmL" d="M-43 210Q-65 230-68 248" fill="none" stroke="url(#shBlueSleeve)" stroke-width="28" stroke-linecap="round"/>
+ <path id="shArmR" d="M43 210Q67 231 76 242" fill="none" stroke="url(#shBlueSleeve)" stroke-width="28" stroke-linecap="round"/>
+ <path id="shArmLStripe" d="M-65 232-68 242" stroke="#e0e9ef" stroke-width="27"/>
+ <path id="shArmRStripe" d="M68 235 74 240" stroke="#e0e9ef" stroke-width="27"/>
+ <g id="shBody"><g class="sh-breathe">
+  <path d="M-46 201Q-48 189-32 186L-17 184Q0 188 17 184L32 186Q48 189 46 201L43 220 33 218 34 254Q0 267-34 254L-33 218-43 220Z" fill="url(#shBlue)" stroke="#173c56" stroke-width="1.2"/>
+  <path d="M-31 188-20 187Q0 204 20 187L31 189Q0 217-31 188Z" fill="#e8eef2"/><path d="M-19 186Q0 194 19 186L11 199H-11Z" fill="#112c40"/>
+  <path d="M-34 239Q0 249 34 239V248Q0 260-34 248Z" fill="#edf2f5"/>
+  <path d="M-35 232Q0 241 35 232" fill="none" stroke="#86abc7" stroke-width="1.2" opacity=".65"/>
+  <path d="M-38 203-30 216-29 231M38 203 30 216 29 231M-22 215-19 232M22 215 19 232" stroke="#113650" opacity=".6" fill="none" stroke-width="1.4"/>
+  <path d="M-12 207H12L15 219Q9 235 0 237-9 235-15 219Z" fill="#ecf3f7" stroke="#153e58" stroke-width="1"/><path d="M7 214H-4Q-9 214-8 220L5 224Q9 228 4 231H-7" stroke="#285b7e" stroke-width="3" fill="none" stroke-linecap="round"/>
+ </g>
+ <path d="M-13 182H13L15 193Q0 199-15 193Z" fill="#d4e0e8" stroke="#7591a5" stroke-width=".6"/>
+ <g id="shHead">
+  <path d="M-21 159Q-22 139-9 135Q0 131 9 135 22 139 21 159L18 180Q12 192 0 195-12 192-18 180Z" fill="url(#shMask)" stroke="#718b9f" stroke-width="1.1"/>
+  <path d="M-17 149Q-13 137-7 137L-9 151Z M17 149Q13 137 7 137L9 151Z" fill="#2d6087"/><path d="M-4 135H4L6 151H-6Z" fill="#d6e2ec"/>
+  <path d="M-17 157Q0 151 17 157L14 176Q0 185-14 176Z" fill="#203545"/>
+  <path d="M-12 162Q-8 159-3 162M3 162Q8 159 12 162" stroke="#9bafbc" stroke-width="1.4" fill="none" opacity=".6"/>
+  <path d="M-21 158-17 173M21 158 17 173" stroke="#456c88" stroke-width="2"/>
+  <path d="M-18 156Q0 149 18 156M-18 156-15 179Q0 190 15 179L18 156M-18 163Q0 158 18 163M-17 170Q0 167 17 170M-15 178Q0 180 15 178M-12 155-10 183M-5 153-4 186M5 153 4 186M12 155 10 183" class="sh-cage"/>
+  <path d="M-18 156Q0 149 18 156M-18 163Q0 158 18 163M-5 154-4 185" class="sh-cage-shine"/>
+  <path d="M-10 187Q0 191 10 187L5 194H-5Z" fill="#35658a"/>
+  <path d="M-15 144-12 141M15 144 12 141M-19 149-16 147M19 149 16 147" stroke="#7b99ad" stroke-width="1.1" stroke-linecap="round"/>
+ </g></g>
+ <g id="shBlocker" transform="translate(-68 248) rotate(-6)">
+  <path d="M-20-29Q-22-29-22-23L-21 23Q-20 30-15 31H15Q20 31 21 26L22-23Q22-29 16-29Z" fill="#a7bacb" stroke="#6f8ba0" stroke-width="1"/>
+  <path d="M-17-26H16L18-22 17 25H-16L-18-22Z" fill="url(#shPadFace)"/><path d="M11-25H17V25H10Z" fill="#2c6087"/>
+  <path d="M-12-17H5M-12-3H5M-12 11H5" class="sh-gear-seam"/><path d="M-14-23V23M8-23V23" class="sh-stitch"/><path d="M-17 25H16L12 30H-11Z" fill="#d2dfe9"/>
+ </g>
+ <g id="shGlove" transform="translate(76 242) rotate(12)">
+  <path d="M-16 26Q-25 15-25-3-27-20-14-27-5-34 11-28 28-21 29-6 31 10 17 23L6 30Z" fill="url(#shWhite)" stroke="#6e899e" stroke-width="1.1"/>
+  <path d="M-13-21Q-1-28 13-19L18-2 8 15-6 17-14 4Z" fill="#bfced9" stroke="#6f8b9c" stroke-width=".8"/>
+  <path d="M-10-18 12-18M-13-11 16-11M-13-4 16-4M-10 3 13 3M-5 10 9 10M-5-23-6 12M2-25 1 14M9-22 8 11" stroke="#55788d" stroke-width="1.1" fill="none"/>
+  <path d="M-23-5Q-22-24-10-27M19-23Q29-9 25 7M-17 20-8 24" class="sh-stitch"/>
+  <path id="shGloveThumb" d="M-19 24Q-31 13-24-2-20-9-13-5L-8 8-2 21-8 29Z" fill="#edf3f7" stroke="#839daf" stroke-width=".9"/>
+  <path d="M-12 25 8 26 7 36H-10Z" fill="#275a7d"/><path d="M-7 27H4V33H-7Z" fill="#d7e5ed"/>
+ </g>
+</g>
+<g id="shSnow" transform="translate(320 356)" opacity="0" fill="#f8fcff"><ellipse cx="-63" cy="4" rx="25" ry="2.5" opacity=".65"/><ellipse cx="63" cy="4" rx="25" ry="2.5" opacity=".65"/><circle cx="-84" cy="-2" r="1.7"/><circle cx="-69" cy="-5" r="1.2"/><circle cx="80" cy="-3" r="1.6"/><circle cx="58" cy="-5" r="1.1"/></g>
+<ellipse id="shPuckShadowFront" cx="320" cy="414" rx="9" ry="2.8" fill="#304e5d" opacity="0"/>
+<g id="shPuckFront" opacity="0"><use href="#shPuckArt"/></g>
+<g class="zones"><g class="sh-zone zone off" data-z="0" role="button" tabindex="-1" aria-disabled="true" aria-label="Shoot high blocker side"><title>High blocker side</title><circle class="sh-target-hit" cx="179" cy="137" r="45"/><circle class="sh-target" cx="179" cy="137" r="26"/><circle class="sh-target-dot" cx="179" cy="137" r="2.8"/></g>
+<g class="sh-zone zone off" data-z="1" role="button" tabindex="-1" aria-disabled="true" aria-label="Shoot high glove side"><title>High glove side</title><circle class="sh-target-hit" cx="461" cy="137" r="45"/><circle class="sh-target" cx="461" cy="137" r="26"/><circle class="sh-target-dot" cx="461" cy="137" r="2.8"/></g>
+<g class="sh-zone zone off" data-z="2" role="button" tabindex="-1" aria-disabled="true" aria-label="Shoot low blocker side"><title>Low blocker side</title><circle class="sh-target-hit" cx="179" cy="304" r="45"/><circle class="sh-target" cx="179" cy="304" r="26"/><circle class="sh-target-dot" cx="179" cy="304" r="2.8"/></g>
+<g class="sh-zone zone off" data-z="3" role="button" tabindex="-1" aria-disabled="true" aria-label="Shoot low glove side"><title>Low glove side</title><circle class="sh-target-hit" cx="461" cy="304" r="45"/><circle class="sh-target" cx="461" cy="304" r="26"/><circle class="sh-target-dot" cx="461" cy="304" r="2.8"/></g>
+<g class="sh-zone zone off" data-z="4" role="button" tabindex="-1" aria-disabled="true" aria-label="Shoot five-hole"><title>Five-hole</title><circle class="sh-target-hit" cx="320" cy="321" r="45"/><circle class="sh-target" cx="320" cy="321" r="20"/><circle class="sh-target-dot" cx="320" cy="321" r="2.8"/></g></g>
+<circle id="shLampGlow" cx="320" cy="39" r="29" fill="url(#shRedLight)" opacity="0"/>
+<path d="M310 32Q320 27 330 32V44H310Z" fill="#607583"/><rect x="310" y="43" width="20" height="3" rx="1" fill="#2b404f"/>
+<circle id="shLamp" cx="320" cy="37" r="6.2" fill="#a8b7bf"/><path d="M317 33Q320 31 323 34" fill="none" stroke="#e0e9ed" opacity=".6" stroke-width=".8"/>
+</svg>
