@@ -6,9 +6,11 @@ The stick has a plain, unbranded dark finish derived from the supplied photograp
 
 `SH_STICK` describes the source grip, scale, and convex bounds. `shootStick()` produces one affine projection for the complete stick. Dropping pitches its plane forward so the blade stays above the ice; a high blocker save lifts the stick with the hand. Do not animate or resize the blade separately from the shaft and paddle.
 
+The complete stick and its thin contour render in front of the torso and both sleeves, with the padded hands and equipment over its grip. Preserve that order through every pose so high blocker saves cannot hide the paddle behind the jersey. The rounded blocker sits close to the hip in its ready pose, with its cuff connected to a compact padded palm around the grip.
+
 Each sleeve is one closed, tapered silhouette draped over a single cubic curve. Its yoke, stripe, and fabric folds are clipped to that same silhouette. Shoulder roots stay inside the torso, and padded palms, thumbs, and cuffs connect the sleeves to the equipment. The arm solver preserves upper-arm and forearm lengths in three dimensions; elbow depth allows natural forearm foreshortening as the blocker rises. Keep the blocker near upright rather than twisting its board sideways, and check intermediate frames for pinching and self-intersection.
 
-Playback runs at 1.6× the simulation clock, giving the puck a 300 ms flight to the goal plane. Keeper movement, impact, net response, recovery, and completion all use the same clock, so faster shots cannot outrun their save animation.
+Every earned shot runs at the same 2.4× simulation clock, giving the puck a 200 ms flight to the goal plane. Keeper movement, impact, net response, recovery, and completion all use the same clock, so faster shots cannot outrun their save animation. Shot speed does not increase between rounds.
 
 The save motion was reviewed against these official NHL clips, frame by frame, and adapted to the site's frontal illustrated view:
 

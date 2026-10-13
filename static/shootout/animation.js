@@ -1,13 +1,13 @@
 // Equipment contours and ready joints follow the supplied frontal reference photograph.
 const NET_ZONES=[[179,150],[461,150],[179,320],[461,320],[320,331]];
 const SH_GOAL={left:134,right:506,top:110,bottom:358,postRadius:6,horizon:-32,scale:31/6,depth:40,roofDepth:22};
-const SH_RIG={ground:390,padHalfWidth:35,padLength:163,hip:[0,228],shoulderL:[-53,139],shoulderR:[53,139],blockerCuff:[23,-29],gloveCuff:[-44,-18],upperL:55,foreL:50,upperR:44,foreR:44,grip:[19,-1]};
+const SH_RIG={ground:390,padHalfWidth:35,padLength:163,hip:[0,228],shoulderL:[-53,139],shoulderR:[53,139],blockerReady:[-88,238],blockerCuff:[26,-15],gloveCuff:[-44,-18],upperL:55,foreL:50,upperR:44,foreR:44,grip:[21,8]};
 // The unbranded finish uses the reference stick's grip and traced silhouette.
 const SH_STICK={grip:[362,502],scale:0.293931181442,bounds:[[41,23],[965,905],[969,909],[971,912],[973,916],[975,922],[977,930],[978,936],[979,943],[979,962],[978,965],[976,969],[973,972],[971,973],[968,974],[958,975],[743,978],[692,978],[686,977],[678,975],[669,972],[661,968],[656,965],[652,962],[646,957],[644,955],[639,949],[621,925],[600,896],[590,882],[561,841],[491,742],[363,560],[356,550],[354,547],[22,37],[21,35],[21,32],[25,28],[31,23],[34,21],[38,21]]};
 // World units are inches; gravity and time are slowed consistently for readable shot playback.
 const SH_PHYS={gravity:180,step:1/240,startZ:-18,radius:12.2/(31/6),halfHeight:.55,netRestitution:.07,netTangent:.26,iceRestitution:.18,iceFriction:9};
-// A sharper shot: 300 ms to the goal plane, with keeper and contacts in sync.
-const SH_PLAYBACK_RATE=1.6;
+// Every earned shot has the same crisp 200 ms flight, with saves kept in sync.
+const SH_PLAYBACK_RATE=2.4;
 const shClamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const shLerp=(a,b,u)=>a+(b-a)*u;
 const shEase=u=>{u=shClamp(u);return u*u*u*(u*(u*6-15)+10);};
@@ -48,8 +48,10 @@ function shootPose(read,u=0,impact=0){
   const drop=(low?88:2)*u,lean=-side*(low?3:4)*u,contact=shootReferenceContact(read),push=low?0:Math.sin(u*Math.PI);
   const padL=shLerp(31+(side>0?5:-2)*push,84,low?u:0),padR=shLerp(-31+(side<0?-5:2)*push,-84,low?u:0);
   const shoulders=[shRotate(SH_RIG.shoulderL,lean,SH_RIG.hip),shRotate(SH_RIG.shoulderR,lean,SH_RIG.hip)].map(p=>[p[0],p[1]+drop]);
-  const blockerAngle=shLerp(17,read===0?-12:low?7:17,u),gloveAngle=shLerp(0,read===1?-50:low?8:0,u);
-  const blocker=shPoint([-100.3,245.49],read===0?[contact[0]-320-dx,contact[1]]:low?[-93,304]:[-101,247],u);
+  const blockerAngle=shLerp(12,read===0?-10:low?5:12,u),gloveAngle=shLerp(0,read===1?-50:low?8:0,u);
+  // The board sits beside the hip; the cuff enters the padded palm near the
+  // stick grip, rather than fastening the sleeve to the board's top corner.
+  const blocker=shPoint(SH_RIG.blockerReady,read===0?[contact[0]-320-dx,contact[1]]:low?[-83,299]:[-89,240],u);
   const glove=shPoint([103.84,207.14],read===1?[contact[0]-320-dx,contact[1]]:low?[99,293]:[104,208],u);
   blocker[1]+=impact*1.1;glove[1]+=impact*1.1;
   const wristL=shOffset(blocker,SH_RIG.blockerCuff,blockerAngle),wristR=shOffset(glove,SH_RIG.gloveCuff,gloveAngle);
