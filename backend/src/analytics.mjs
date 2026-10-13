@@ -1,7 +1,9 @@
 import { dashboard, loginPage } from './dashboard.mjs';
+import {RETENTION_DAYS,USAGE_VERSION,validateEvents,schemaStatements,eventStatements,pruneStatements} from './collection.mjs';
+import {usageReport} from './reports.mjs';
 
 export const MODES = {
-  classic:'Classic', statline:'Stat Line', team:'Guess the Team', journey:'Journey', blur:'Blur',
+  hub:'Home', classic:'Classic', statline:'Stat Line', team:'Guess the Team', journey:'Journey', blur:'Blur',
   number:'Sweater #', roster:'Roster Recall', draft:'Draft Day', map:'Birthplace', conn:'Connections',
   rank:"Rank ’Em", puck:'Puck Drop', shoot:'Shootout', overtime:'Overtime', truths:'Two Truths',
   hlt:'Team Higher or Lower', season:'Mystery Season', playoff:'Playoff Run', trophy:'Trophy Case',
@@ -12,8 +14,7 @@ export const MODES = {
   hl_assists:'Higher or Lower · Assists', hl_points:'Higher or Lower · Points', hl_pim:'Higher or Lower · PIM',
   hl_gp:'Higher or Lower · Games', hl_height:'Higher or Lower · Height', hl_weight:'Higher or Lower · Weight', hl_age:'Higher or Lower · Age'
 };
-const VARIANTS = new Set(['daily','unlimited','archive','party']);
-const KINDS = new Set(['mode_open','round_start','round_complete','engagement']);
+const VARIANTS = new Set(['daily','unlimited','archive','party','hub']);
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const COOKIE = '__Host-sweater-analytics';
 const TTL = 6 * 3600;
@@ -51,7 +52,8 @@ async function ensureSchema(env) {
       env.DB.prepare('CREATE INDEX IF NOT EXISTS sweater_analytics_date ON sweater_analytics_events(day,mode)'),
       env.DB.prepare('CREATE INDEX IF NOT EXISTS sweater_analytics_expiry ON sweater_analytics_events(received_at)'),
       env.DB.prepare(`CREATE UNIQUE INDEX IF NOT EXISTS sweater_analytics_round ON sweater_analytics_events(session_hash,mode,variant,round_hash,kind) WHERE kind IN ('round_start','round_complete')`),
-      env.DB.prepare('CREATE TABLE IF NOT EXISTS sweater_analytics_limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, expires INTEGER NOT NULL)')
+      env.DB.prepare('CREATE TABLE IF NOT EXISTS sweater_analytics_limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, expires INTEGER NOT NULL)'),
+      ...schemaStatements(env.DB)
     ]).catch(error=>{initialized.delete(env.DB);throw error;});
     initialized.set(env.DB,promise);
   }
@@ -83,23 +85,20 @@ async function rate(request,env,scope,limit,seconds) {
 }
 async function collect(request,env) {
   let body;try{body=JSON.parse(await readBody(request));}catch(e){if(e.status)throw e;throw fail(400,'Invalid JSON');}
-  if(!body||typeof body!=='object'||Array.isArray(body))throw fail(400,'Invalid event');
-  const allowed=new Set(['id','session','mode','variant','kind','round','device','active_ms','won']);
-  if(Object.keys(body).some(k=>!allowed.has(k)))throw fail(400,'Unexpected event fields');
-  if(['id','session','mode','variant','kind','device'].some(k=>typeof body[k]!=='string'))throw fail(400,'Invalid event');
-  if(!UUID.test(body.id||'')||!UUID.test(body.session||'')||!Object.hasOwn(MODES,body.mode)||!VARIANTS.has(body.variant)||!KINDS.has(body.kind)||!['mobile','tablet','desktop'].includes(body.device))throw fail(400,'Invalid event');
-  const isRound=body.kind==='round_start'||body.kind==='round_complete';
-  if(isRound&&(typeof body.round!=='string'||!UUID.test(body.round)))throw fail(400,'Invalid round');
-  const ms=body.kind==='engagement'?body.active_ms:0;
-  if(!Number.isInteger(ms)||ms<0||ms>60000||body.kind==='engagement'&&ms===0)throw fail(400,'Invalid active time');
-  if(body.kind==='round_complete'&&typeof body.won!=='boolean')throw fail(400,'Invalid result');
-  await ensureSchema(env);await rate(request,env,'collect',120,60);
-  const now=Date.now(),{day,hour}=clock(now),session=await hmac(env,'session:'+body.session);
-  const round=isRound?await hmac(env,'round:'+body.session+':'+body.round):null;
-  await env.DB.batch([
-    env.DB.prepare('INSERT OR IGNORE INTO sweater_analytics_events(id,received_at,day,hour,mode,variant,kind,session_hash,round_hash,device,active_ms,won) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').bind(body.id,now,day,hour,body.mode,body.variant,body.kind,session,round,body.device,ms,body.kind==='round_complete'?Number(body.won):null),
-    env.DB.prepare('DELETE FROM sweater_analytics_events WHERE id IN (SELECT id FROM sweater_analytics_events WHERE received_at<? LIMIT 100)').bind(now-90*86400000)
-  ]);
+  const events=validateEvents(body,MODES,VARIANTS);
+  await ensureSchema(env);await rate(request,env,'collect',600,60);
+  const statements=[],now=Date.now(),hashes=new Map();let enhanced=false;
+  const digest=value=>{if(!hashes.has(value))hashes.set(value,hmac(env,value));return hashes.get(value);};
+  for(const [i,event]of events.entries()){
+    const at=now+i,{day,hour}=clock(at),session=await digest('session:'+event.session);
+    const round=event.round?await digest('round:'+event.session+':'+event.round):null;
+    statements.push(env.DB.prepare('INSERT OR IGNORE INTO sweater_analytics_events(id,received_at,day,hour,mode,variant,kind,session_hash,round_hash,device,active_ms,won) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').bind(event.id,at,day,hour,event.mode,event.variant,event.kind,session,round,event.device,event.kind==='engagement'?event.active_ms:0,event.kind==='round_complete'&&event.won!==null?Number(event.won):null));
+    statements.push(...await eventStatements(env.DB,event,request,digest,session));
+    enhanced ||= event.version===USAGE_VERSION;
+  }
+  if(enhanced)statements.push(env.DB.prepare("INSERT OR IGNORE INTO sweater_analytics_meta(key,value) VALUES ('enhanced_since',?)").bind(String(now)));
+  statements.push(...pruneStatements(env.DB,now));
+  await env.DB.batch(statements);
   return {ok:true};
 }
 async function authorized(request,env) {
@@ -135,24 +134,8 @@ function html(content,status=200) {
   return new Response(content.replaceAll('__NONCE__',nonce),{status,headers:{...security,'Referrer-Policy':'same-origin','Content-Type':'text/html; charset=utf-8','Content-Security-Policy':`default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`}});
 }
 async function report(url,env) {
-  const days=Number(url.searchParams.get('days')||7);if(![1,7,30,90].includes(days))throw fail(400,'Invalid date range');
-  const to=clock().day,from=shift(to,1-days),variant=url.searchParams.get('variant')||'all';
-  if(variant!=='all'&&!VARIANTS.has(variant))throw fail(400,'Invalid variant');
   await ensureSchema(env);
-  const filter='day BETWEEN ? AND ?'+(variant==='all'?'':' AND variant=?'),args=variant==='all'?[from,to]:[from,to,variant];
-  const queries=[
-    `SELECT mode, SUM(kind='mode_open') opens, SUM(kind='round_start') starts, SUM(kind='round_complete') finishes, COUNT(DISTINCT session_hash) sessions, SUM(active_ms) active_ms FROM sweater_analytics_events WHERE ${filter} GROUP BY mode ORDER BY opens DESC`,
-    `SELECT day, SUM(kind='mode_open') opens, SUM(kind='round_start') starts, SUM(kind='round_complete') finishes FROM sweater_analytics_events WHERE ${filter} GROUP BY day ORDER BY day`,
-    `SELECT variant, SUM(kind='mode_open') opens, SUM(kind='round_start') starts FROM sweater_analytics_events WHERE ${filter} GROUP BY variant`,
-    `SELECT device, COUNT(*) opens FROM sweater_analytics_events WHERE ${filter} AND kind='mode_open' GROUP BY device`,
-    `SELECT COUNT(DISTINCT session_hash) sessions, MIN(day) first_day FROM sweater_analytics_events WHERE ${filter}`
-  ];
-  const res=await env.DB.batch(queries.map(q=>env.DB.prepare(q).bind(...args)));
-  const cohortArgs=variant==='all'?[from,to,to]:[from,to,variant,to];
-  const cohort=(await env.DB.prepare(`SELECT s.mode,COUNT(c.id) completed FROM sweater_analytics_events s LEFT JOIN sweater_analytics_events c ON c.session_hash=s.session_hash AND c.mode=s.mode AND c.variant=s.variant AND c.round_hash=s.round_hash AND c.kind='round_complete' AND c.day<=?${variant==='all'?3:4} WHERE s.kind='round_start' AND s.day BETWEEN ?1 AND ?2 ${variant==='all'?'':'AND s.variant=?3'} GROUP BY s.mode`).bind(...cohortArgs).all()).results;
-  const completed=new Map(cohort.map(r=>[r.mode,r.completed]));
-  const modes=res[0].results.map(r=>({...r,label:MODES[r.mode]||r.mode,completed_starts:completed.get(r.mode)||0,rounds_supported:r.mode!=='teams'&&!r.mode.startsWith('team_')}));
-  return {from,to,days,variant,time_zone:'America/Vancouver',retention_days:90,modes,trend:res[1].results,variants:res[2].results,devices:res[3].results,sessions:res[4].results[0]?.sessions||0};
+  return usageReport(url,env,MODES,VARIANTS,clock,shift);
 }
 export async function handleAnalytics(request,env) {
   const url=new URL(request.url),path=url.pathname;
@@ -164,7 +147,7 @@ export async function handleAnalytics(request,env) {
       if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...security,...cors}});
       if(path==='/api/analytics/status'&&request.method==='GET') {
         if(!configured(env))return json({enabled:false},200,cors);
-        await ensureSchema(env);return json({enabled:true},200,cors);
+        await ensureSchema(env);return json({enabled:true,version:USAGE_VERSION,retention_days:RETENTION_DAYS},200,cors);
       }
       if(path==='/api/analytics/collect'&&request.method==='POST') {
         if(!configured(env))return json({enabled:false},503,cors);
@@ -192,7 +175,7 @@ export async function purgeAnalytics(env) {
   if(!env.DB)return;
   await ensureSchema(env);
   await env.DB.batch([
-    env.DB.prepare('DELETE FROM sweater_analytics_events WHERE received_at<?').bind(Date.now()-90*86400000),
+    ...pruneStatements(env.DB,Date.now(),1000),
     env.DB.prepare('DELETE FROM sweater_analytics_limits WHERE expires<?').bind(Date.now())
   ]);
 }

@@ -5,6 +5,7 @@ on:
       - "backend/**"
       - "analytics/**"
       - "tests/analytics*"
+      - "tests/helpers/analytics_runtime.mjs"
       - "build_sweater.py"
       - ".github/workflows/analytics.yml"
   pull_request:
@@ -12,6 +13,7 @@ on:
       - "backend/**"
       - "analytics/**"
       - "tests/analytics*"
+      - "tests/helpers/analytics_runtime.mjs"
       - "build_sweater.py"
       - ".github/workflows/analytics.yml"
 jobs:
@@ -28,6 +30,9 @@ jobs:
       - run: node tests/analytics_backend.mjs
       - run: node tests/analytics_login.mjs
       - run: node tests/analytics_client.mjs
+      - run: node tests/analytics_client_v2.mjs
+      - run: node tests/analytics_insights.mjs
+      - run: node tests/analytics_dashboard.mjs
       - run: node tests/who_scored.cjs
       - name: Package Worker without deploying
         run: SWEATER_D1_DATABASE_ID=00000000-0000-0000-0000-000000000000 npm --prefix backend run build

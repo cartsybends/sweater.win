@@ -52,34 +52,86 @@ Global Privacy Control when those browser preferences are enabled.
 
 ## What is measured
 
-- Mode opens, separate from rounds started and finished.
-- Daily, Unlimited, Archive, and Party usage.
-- Browser-tab sessions, hashed by the server, not identifiable people.
-- Foreground active time, capped by visibility/focus and a 45-second idle cutoff.
-- Today, 7-day, 30-day and 90-day reports, trends, device categories and CSV exports.
+- Home visits, page loads, game opens, and navigation between modes.
+- Daily, Unlimited, Archive, Party, and the four independent Teams mini-games.
+- Anonymous recognized browsers, visits, and browser-tab sessions. All random
+  browser, visit, session, and round IDs are keyed hashes in the database.
+- New, returning, and repeat visitors; next-day and day-seven return cohorts.
+- Round starts and finishes, started-round finish rate, supported win rates,
+  actions/attempts, scores, foreground response and completion times, answer
+  accuracy where supported, and first exits from unfinished rounds.
+- Foreground active time, paused when hidden/unfocused or idle for 45 seconds.
+- Shares recorded after successful result copies, favourites, library filters,
+  stats/help/profile/archive opens, challenge copies, team choices, and Party joins.
+- Coarse device, browser, operating system, country, theme, and viewport categories.
+- Search/social/direct/referral source categories, plus safe `utm_source`,
+  `utm_medium`, and `utm_campaign` labels. The Traffic section builds tagged links.
+- Browser-provided load, first-byte, largest-paint, and layout-shift samples; up to
+  ten anonymous JavaScript/promise/resource error categories per visit and build.
+- Today, 7/30/90/365-day and custom-date reports, previous-period comparisons,
+  daily charts, weekday/hour heatmaps, filters, CSV exports, and full report JSON.
 
-The main game engine and Party Mode report rounds. The independent Teams
-mini-games report navigation and active time; round columns show unavailable.
-The collection payload excludes names, emails, guesses, target/scorer IDs,
-leaderboard credentials, and referrers.
+Visits are tracked page loads, sessions are browser tabs, and visitors are
+recognized anonymous browsers rather than identifiable people. Blocked or cleared
+storage can create a new visitor. Devices and browsers can obscure their category.
+Recent activity means signals received in the last two minutes, not an exact
+online headcount. Country is derived from Cloudflare's country field, not saved IPs.
+
+Finish rate follows rounds started in the selected period and completed by that
+period's end. Finishes can include rounds started earlier. First unfinished exits
+can later be completed; simply reading or pausing a round is not counted as an
+abandonment. Party, Best Lineup, and endless Teams Higher/Lower completions have
+no binary win outcome. Scores and action counts are compared within each game.
+The Teams landing page has no rounds. Return cohorts wait for their day-one or
+day-seven windows and count later activity anywhere on Sweater, even if its
+source changes. Unsupported performance measurements are blank, never zero.
+
+The payload excludes names, emails, typed guesses, target/scorer IDs, leaderboard
+credentials, room codes, full URLs, raw referrers/user agents, and error messages
+or stacks. No keystrokes, recordings, or precise location are collected. The
+dashboard exposes aggregates only and requires the existing owner sign-in.
+
+Use **Exclude my visits on this browser** in the dashboard to open
+`https://sweater.win/?analytics=off`, which saves an opt-out on that browser.
+`?analytics=on` includes it again. Each device/browser has its own preference;
+Do Not Track and Global Privacy Control still take precedence.
 
 The Worker creates separate `sweater_analytics_*` tables automatically.
-Existing leaderboard and Party tables are preserved. Event retries and round
-replays/restoration have separate deduplication rules. A daily maintenance
-trigger removes events older than 90 days; ingestion also prunes stale rows.
-Only temporary hashed IP buckets are used for request/login rate limits.
+Existing leaderboard, Party, and original analytics event tables are preserved.
+Version 2 adds detail, visitor, session, and metadata tables; no manual migration
+or new database is needed. Batches contain at most five events, are validated
+before writes, and stay within D1 statement and parameter budgets. Older clients
+continue sending their original event format until they reload. Retries and
+round replays/restoration retain separate deduplication rules.
 
-No historical mode visits can be reconstructed from this new event collection.
-Reports start when the backend is activated and visitors load the updated site.
+A daily maintenance trigger prunes events older than **365 days** in bounded
+batches; ingestion also prunes stale rows. Only temporary hashed IP buckets are
+used for request/login rate limits. Visitor first-seen dates remain available
+while that browser continues returning, to distinguish new and returning usage.
+
+Existing basic game totals remain visible. Detailed visitors, progression,
+sources, and performance begin when visitors load the expanded client; unavailable
+historical details cannot be reconstructed. The dashboard shows coverage when
+a selected range includes sessions without those details. Reports use Vancouver
+calendar dates and hours.
 
 ## Local verification
 
 ```sh
 node tests/analytics_backend.mjs
+node tests/analytics_login.mjs
 node tests/analytics_client.mjs
+node tests/analytics_client_v2.mjs
+node tests/analytics_insights.mjs
+node tests/analytics_dashboard.mjs
 node tests/who_scored.cjs
+node tests/shootout.cjs
 SWEATER_D1_DATABASE_ID=00000000-0000-0000-0000-000000000000 npm --prefix backend run build
 ```
 
 The zero UUID is only for local packaging/CI dry runs. Production uses the existing
 database resolved from Cloudflare or the actual build variable.
+
+The richer report and dashboard checks use real in-memory SQLite aggregates and
+a DOM simulation. Frontend tests exercise legacy fallback and enhanced batching,
+privacy preferences, attribution, round restoration, timing, and network retries.

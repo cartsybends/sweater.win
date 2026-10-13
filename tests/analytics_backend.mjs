@@ -18,7 +18,7 @@ const event=(kind,more={})=>({id:crypto.randomUUID(),session,mode:'whoscored',va
 let r=await worker.fetch(req('/api/analytics/status'),{DB:env.DB},{});assert.deepEqual(await r.json(),{enabled:false});
 r=await call('/api/analytics/report');assert.equal(r.status,401);assert.equal(env.DB.queries,0,'No data query before authentication');
 r=await call('/analytics');assert.equal(r.status,303);assert.equal(r.headers.get('Location'),'/analytics/login');
-r=await call('/api/analytics/status');assert.deepEqual(await r.json(),{enabled:true});
+r=await call('/api/analytics/status');assert.deepEqual(await r.json(),{enabled:true,version:2,retention_days:365});
 const opened=event('mode_open');assert.equal((await call('/api/analytics/collect',opened)).status,200);assert.equal((await call('/api/analytics/collect',opened)).status,200);
 assert.equal((await call('/api/analytics/collect',event('round_start'))).status,200);assert.equal((await call('/api/analytics/collect',event('round_start'))).status,200);
 assert.equal((await call('/api/analytics/collect',event('engagement',{active_ms:12000}))).status,200);
@@ -60,7 +60,7 @@ const row=env.DB.sql.prepare('SELECT * FROM sweater_analytics_events LIMIT 1').g
 env.DB.sql.prepare('INSERT INTO sweater_analytics_events VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').run(crypto.randomUUID(),Date.now()-86400000,'2000-01-01',10,'whoscored','unlimited','round_start',row.session_hash,'previous-round','desktop',0,null);
 env.DB.sql.prepare('INSERT INTO sweater_analytics_events VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').run(crypto.randomUUID(),Date.now(),row.day,10,'whoscored','unlimited','round_complete',row.session_hash,'previous-round','desktop',0,1);
 r=await call('/api/analytics/report?days=1',undefined,{cookie:sessionCookie});const cohort=(await r.json()).modes[0];assert.equal(cohort.finishes,2);assert.equal(cohort.completed_starts,1);
-env.DB.sql.prepare('UPDATE sweater_analytics_events SET received_at=? WHERE day=?').run(Date.now()-91*86400000,'2000-01-01');await purgeAnalytics(env);assert.equal(env.DB.sql.prepare('SELECT COUNT(*) n FROM sweater_analytics_events WHERE day=?').get('2000-01-01').n,0);
+env.DB.sql.prepare('UPDATE sweater_analytics_events SET received_at=? WHERE day=?').run(Date.now()-366*86400000,'2000-01-01');await purgeAnalytics(env);assert.equal(env.DB.sql.prepare('SELECT COUNT(*) n FROM sweater_analytics_events WHERE day=?').get('2000-01-01').n,0);
 r=await call('/api/health');assert.equal(r.status,200);assert.equal((await r.json()).ok,true,'Existing health handler preserved');
 r=await call('/api/leaderboard?game=unsupported');assert.equal(r.status,400,'Existing endpoint behavior preserved');
 new vm.Script(dashboard.match(/<script[^>]*>([\s\S]*?)<\/script>/)[1]);

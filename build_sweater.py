@@ -55,7 +55,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "137 · Shootout Stick & Save Motion"
+VERSION = "138 · Private Analytics Expanded"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -9862,7 +9862,18 @@ function doGuess(x, fresh = true) {
   if (won === null) return;
   if (fresh) globalThis.SweaterAnalytics?.beginRound();
   st.guesses.push(x);
-  if (fresh) saveProgress();
+  if (fresh) {
+    let correct;
+    try {
+      const i = st.guesses.length - 1, question = st.target.rounds?.[i];
+      if (typeof g.right === "function") { const answer = g.right(st.target, x, i); if (typeof answer === "boolean") correct = answer; }
+      else if (typeof g.correct === "function") { const answer = g.correct(st.target, i, x); if (typeof answer === "boolean") correct = answer; }
+      else if (Number.isInteger(question?.a) && /^\d+(?::|$)/.test(String(x))) correct = Number(String(x).split(":")[0]) === question.a;
+      else if (["classic","statline","team","journey","blur","number","mroster","season","draft","map"].includes(game) && typeof won === "boolean") correct = won;
+    } catch {}
+    globalThis.SweaterAnalytics?.step?.(st.guesses.length, correct);
+    saveProgress();
+  }
   if (isDone(game, st.target, st.guesses) && !(fresh && g.deferFinish && g.deferFinish())) finish(g.wonGame ? g.wonGame(st.target, st.guesses) : won, fresh);
   if (fresh) { g.render && g.render(st.target, st); renderOptions(); updateLabels(); }
 }
@@ -9897,7 +9908,9 @@ function finish(won, fresh) {
   }
   renderResultRecap(unlocked);
   if (fresh) {
-    globalThis.SweaterAnalytics?.completeRound(won);
+    const analyticsResult = { attempts: n };
+    try { if (isScored(game)) { const value = g.score(st.target, st.guesses); if (Number.isFinite(value)) analyticsResult.score = value; } } catch {}
+    globalThis.SweaterAnalytics?.completeRound(won, analyticsResult);
     const party = g.celebrate ? g.celebrate(st.target, st.guesses, won) : won;
     void $("banner").offsetWidth; // restart the pop animation
     $("banner").classList.add("pop");
@@ -10286,19 +10299,20 @@ function toast(msg) {
   clearTimeout(toast.t); toast.t = setTimeout(() => $("toast").classList.remove("show"), 1800);
 }
 async function copyToClipboard(text, message = "Result copied to clipboard") {
-  try { await navigator.clipboard.writeText(text); toast(message); }
+  try { await navigator.clipboard.writeText(text); toast(message); return true; }
   catch {
     const ta = Object.assign(document.createElement("textarea"), { value: text });
     document.body.appendChild(ta); ta.select();
-    try { document.execCommand("copy"); toast(message); } catch { toast("Couldn't copy the result"); }
-    ta.remove();
+    let copied = false;
+    try { copied = document.execCommand("copy"); if (copied) toast(message); else toast("Couldn't copy the result"); } catch { toast("Couldn't copy the result"); }
+    ta.remove(); return copied;
   }
 }
 async function shareResult() {
   // Copying the result is deliberate: when the user pastes it into Messages,
   // iOS builds the rich link preview on the sender's device. Web Share can hand
   // the URL off as an untrusted attachment and produce "Tap to Load Preview".
-  await copyToClipboard(shareText(), "Result copied — paste it into Messages");
+  if (await copyToClipboard(shareText(), "Result copied — paste it into Messages")) globalThis.SweaterAnalytics?.share?.(statsGame || currentGame());
 }
 $("shareBtn").onclick = shareResult;
 $("resultRecap").addEventListener("click", async e => {
@@ -10307,13 +10321,15 @@ $("resultRecap").addEventListener("click", async e => {
   if (next) openGame(next.dataset.resultNext);
   if (e.target.closest("[data-result-challenge]")) {
     const base = shareUrl(game);
-    await copyToClipboard(`Can you beat my ${cardTitle(game)} result on Sweater?\n\n${base}`, "Challenge link copied to clipboard");
+    if (await copyToClipboard(`Can you beat my ${cardTitle(game)} result on Sweater?\n\n${base}`, "Challenge link copied to clipboard")) globalThis.SweaterAnalytics?.interaction?.("challenge_copy");
   }
 });
 
 // ======================= modals =======================
 function closeModals() { document.querySelectorAll(".modal.open").forEach(m => m.classList.remove("open")); }
 function openModal(id) {
+  const action = { statsModal:"stats_open", lbModal:"leaderboard_open", helpModal:"help_open", profileModal:"profile_open", archiveModal:"archive_open" }[id];
+  if (action) globalThis.SweaterAnalytics?.interaction?.(action);
   closeModals();
   if (id === "statsModal") renderStats();
   if (id === "lbModal") renderLeaderboard();
@@ -10939,6 +10955,7 @@ $("libraryToggle").onclick = () => { $("hubSections").hidden = false; };
 $("libraryFilters").addEventListener("click", e => {
   const b = e.target.closest("[data-library-filter]");
   if (!b) return;
+  globalThis.SweaterAnalytics?.interaction?.("library_filter");
   store.set("sweater-library-filter", b.dataset.libraryFilter);
   store.set("sweater-library-open", true);
   renderHub();
@@ -10947,6 +10964,7 @@ $("view-hub").addEventListener("click", e => {
   const favourite = e.target.closest("[data-favorite]");
   if (favourite) {
     const on = toggleFavourite(favourite.dataset.favorite);
+    globalThis.SweaterAnalytics?.interaction?.(on ? "favorite_add" : "favorite_remove", { mode: favourite.dataset.favorite });
     toast(on ? `${cardTitle(favourite.dataset.favorite)} added to favourites` : `${cardTitle(favourite.dataset.favorite)} removed from favourites`);
     renderHub();
     return;
@@ -11071,7 +11089,8 @@ function startTeamBest(t, initial = false) {
   const decadeKey=`sweater-team-best-decade-${t}`, statKey=`sweater-team-best-stat-${t}`, roundsKey=`sweater-team-best-rounds-${t}`;
   let decade=initial ? "alltime" : String(store.get(decadeKey) ?? "alltime"), stat=String(store.get(statKey)||"points"), total=Number(store.get(roundsKey))||5;
   if(!stats.includes(stat))stat="points"; if(![5,10,15,20].includes(total))total=5; if(!["all","alltime"].includes(decade)&&!decades.includes(Number(decade)))decade="all";
-  let roundIndex=0, marks=[], usedYears=new Set();
+  let roundIndex=0, marks=[], usedYears=new Set(), analyticsMoves=0;
+  const analyticsRound=globalThis.SweaterAnalytics?.context("team_best","unlimited",`${t}:${decade}:${stat}`,true);
   const allTime = decade === "alltime";
   const controls=`<div class="optrow"><label class="pickstat">Decade <select id="teamBestDecade"><option value="alltime"${allTime?' selected':''}>ALL TIME</option><option value="all"${decade==='all'?' selected':''}>Any decade</option>${decades.map(d=>`<option value="${d}"${String(d)===decade?' selected':''}>${d}s</option>`).join("")}</select></label><label class="pickstat">Category <select id="teamBestStat">${[["points","Points"],["goals","Goals"],["assists","Assists"],["pim","PIM"],["gp","Games played"]].map(([v,l])=>`<option value="${v}"${v===stat?' selected':''}>${l}</option>`).join("")}</select></label><label class="pickstat">Questions <select id="teamBestRounds"${allTime?' disabled':''}>${allTime?'<option value="1">1</option>':[5,10,15,20].map(n=>`<option value="${n}"${n===total?' selected':''}>${n}</option>`).join("")}</select></label></div><div class="shdots" id="teamBestDots"></div><div id="teamBestRound"></div>`;
   teamModeShell(t,"best",controls);
@@ -11079,6 +11098,7 @@ function startTeamBest(t, initial = false) {
   ["teamBestDecade","teamBestStat","teamBestRounds"].forEach(id=>$(id).addEventListener("change",restart));
   function finishRun(){
     const runTotal = decade === "alltime" ? 1 : total;
+    globalThis.SweaterAnalytics?.completeRound(null,{token:analyticsRound,attempts:analyticsMoves,score:marks.filter(x=>x==="ok").length});
     paintQuestionProgress("teamBestDots", runTotal, -1, marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));
     $("teamBestRound").innerHTML=`<div class="team-best-season"><span>Run complete</span><strong>${marks.filter(x=>x==='ok').length}/${runTotal}</strong><small>Top-five boards cleared</small></div><div class="team-best-actions"><button type="button" class="btn" id="teamBestAgain">Play again</button></div>`;
     $("teamBestAgain").onclick=()=>startTeamBest(t);
@@ -11124,12 +11144,13 @@ function startTeamBest(t, initial = false) {
       lastFound=0;
     };
     draw();
-    const advance=(cleared)=>{if(!over){over=true;draw(true);marks.push(cleared?'ok':'bad');}roundIndex++;renderRound();};
+    const advance=(cleared)=>{if(!over){globalThis.SweaterAnalytics?.step?.(++analyticsMoves,undefined,analyticsRound);over=true;draw(true);marks.push(cleared?'ok':'bad');}roundIndex++;renderRound();};
     makeTeamSearch("teamBestInput","teamBestOpts",h,p=>{
       if(over)return;
       const msg=$("teamBestMsg"); msg.className="team-mode-msg";
       if(guessed.has(p.id)){msg.textContent="You already guessed him.";return;}
       guessed.add(p.id);
+      globalThis.SweaterAnalytics?.step?.(++analyticsMoves,answerIds.has(p.id),analyticsRound);
       if(answerIds.has(p.id)){
         found.add(p.id); lastFound=p.id; msg.classList.add("good"); msg.textContent=`Correct — ${found.size}/5.`; draw();
         if(found.size===5){over=true;marks.push("ok");paintQuestionProgress("teamBestDots",runTotal,roundIndex+1<runTotal?roundIndex+1:-1,marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));msg.textContent="5/5. Perfect.";setTimeout(()=>{roundIndex++;renderRound();},900);}
@@ -11140,7 +11161,7 @@ function startTeamBest(t, initial = false) {
         msg.textContent="";
       }
     },()=>[...guessed]);
-    $("teamBestGive").onclick=()=>{if(over)return;over=true;draw(true);marks.push('bad');paintQuestionProgress("teamBestDots",runTotal,roundIndex+1<runTotal?roundIndex+1:-1,marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
+    $("teamBestGive").onclick=()=>{if(over)return;globalThis.SweaterAnalytics?.step?.(++analyticsMoves,undefined,analyticsRound);over=true;draw(true);marks.push('bad');paintQuestionProgress("teamBestDots",runTotal,roundIndex+1<runTotal?roundIndex+1:-1,marks.map(m=>({status:m==="ok"?"ok":"bad",mark:m==="ok"?"check":"x"})));$("teamBestMsg").className="team-mode-msg";$("teamBestMsg").textContent="Answers revealed.";$("teamBestGive").hidden=true;$("teamBestSkip").textContent="Next question";$("teamBestSkip").onclick=()=>{roundIndex++;renderRound();};};
     $("teamBestSkip").onclick=()=>advance(false); $("teamBestInput").focus();
   }
   renderRound();
@@ -11148,9 +11169,11 @@ function startTeamBest(t, initial = false) {
 function teamStatCells(r){return [r.gp,r.goals,r.assists,r.points,signed(r.plusMinus)];}
 function startTeamGuess(t){
   const h=historyForTeam(t); h.team=t; const minSeasons=Math.min(3,Math.max(2,h.years.length));const pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=minSeasons);if(!pool.length)return teamModeNoData(t,"guess");const target=pick(pool),rows=target.rows.slice(),max=8;let guesses=[],over=false;
+  const analyticsRound=globalThis.SweaterAnalytics?.context("team_guess","unlimited",`${t}:${target.id}`,true);
+  let analyticsMoves=0;
   teamModeShell(t,"guess",`<p class="team-subprompt">Same rules as Stat Line: one season starts unlocked and every wrong guess reveals another.</p><p class="intro" id="teamGuessIntro"></p><table class="seasons"><thead><tr><th>Season</th><th>GP</th><th>G</th><th>A</th><th>PTS</th><th>+/−</th></tr></thead><tbody id="teamGuessRows"></tbody></table>${teamSearchMarkup("teamGuessInput","teamGuessOpts","Guess the player")}<ul class="wrong" id="teamGuessWrong"></ul><p class="hint" id="teamGuessLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamGuessNew">New player</button></div>`);
   const draw=()=>{const shown=over?rows.length:Math.min(rows.length,1+guesses.length);$("teamGuessIntro").textContent=over?`${target.name} · ${target.pos} · ${rows.length} ${teamFullName(t)} seasons`:`${target.pos} · ${rows.length} ${teamFullName(t)} seasons`;$("teamGuessRows").innerHTML=rows.map((r,i)=>i<shown?`<tr><td>${seasonText(r.y)}</td>${teamStatCells(r).map(v=>`<td>${v}</td>`).join("")}</tr>`:`<tr class="locked"><td>${seasonText(r.y)}</td><td colspan="5">🔒 Locked</td></tr>`).join("");$("teamGuessLeft").textContent=over?`Answer: ${target.name}`:`${max-guesses.length} tries left · each wrong guess unlocks another season.`;};draw();
-  makeTeamSearch("teamGuessInput","teamGuessOpts",h,p=>{if(over||guesses.includes(p.id))return;if(p.id===target.id){over=true;draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max)over=true;draw();},()=>guesses);
+  makeTeamSearch("teamGuessInput","teamGuessOpts",h,p=>{if(over||guesses.includes(p.id))return;globalThis.SweaterAnalytics?.step?.(++analyticsMoves,p.id===target.id,analyticsRound);if(p.id===target.id){over=true;globalThis.SweaterAnalytics?.completeRound(true,{token:analyticsRound,attempts:analyticsMoves});draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max){over=true;globalThis.SweaterAnalytics?.completeRound(false,{token:analyticsRound,attempts:analyticsMoves});}draw();},()=>guesses);
   $("teamGuessNew").onclick=()=>startTeamGuess(t);$("teamGuessInput").focus();
 }
 const TEAM_HL_STATS = {
@@ -11175,6 +11198,8 @@ function startTeamHigher(t){
   const h=historyForTeam(t);if(!h.skaters.length)return teamModeNoData(t,"higher");
   const statKey=`sweater-team-hl-stat-${t}`;let stat=String(store.get(statKey)||"points");if(!TEAM_HL_STATS[stat])stat="points";
   const info=TEAM_HL_STATS[stat],pool=teamHLPlayers(h,stat);if(pool.length<3)return teamModeNoData(t,"higher");
+  const analyticsRound=globalThis.SweaterAnalytics?.context("team_higher","unlimited",`${t}:${stat}`,true);
+  let analyticsMoves=0;
   let seq=shuffled(pool).slice(0,2),streak=0,over=false;const bestKey=`sweater-team-hl-best-${t}-${stat}`;
   const options=Object.entries(TEAM_HL_STATS).map(([v,x])=>`<option value="${v}"${v===stat?' selected':''}>${x.name}</option>`).join("");
   const intro=info.type==="teamCareer"
@@ -11198,8 +11223,9 @@ function startTeamHigher(t){
     $("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");
     if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{
       const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;
+      globalThis.SweaterAnalytics?.step?.(++analyticsMoves,ok,analyticsRound);
       $("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");
-      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw(true);},850);}else{over=true;}
+      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw(true);},850);}else{over=true;globalThis.SweaterAnalytics?.completeRound(null,{token:analyticsRound,attempts:analyticsMoves,score:streak});}
     });
   };
   draw();
@@ -11208,13 +11234,15 @@ function startTeamHigher(t){
 }
 function startTeamMystery(t){
   const h=historyForTeam(t),minSeasons=Math.min(4,Math.max(2,h.years.length)),pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=minSeasons);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
+  const analyticsRound=globalThis.SweaterAnalytics?.context("team_mystery","unlimited",`${t}:${target.id}:${row.y}`,true);
   teamModeShell(t,"mystery",`<div class="ttcard"><img id="teamMysteryImg" alt=""><div><p class="pname">${esc(target.name)}</p><p class="pmeta"><span class="team-mystery-logo"><img src="${logo(t)}" alt=""></span>${esc(teamFullName(t))} · ${esc(target.pos)}</p></div></div><p class="ttq">Which season is this?</p><div class="chips">${[["GP",row.gp],["G",row.goals],["A",row.assists],["PTS",row.points],["+/−",signed(row.plusMinus)]].map(([k,v])=>`<span class="chip"><b>${v}</b> ${k}</span>`).join("")}</div><div class="selist" id="teamMysteryList"></div><p class="hint" id="teamMysteryLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamMysteryNew">Next player</button></div>`);
   const img=$("teamMysteryImg");img.onerror=function(){this.onerror=null;this.src=FALLBACK};img.src=teamHistHeadshot(t,target.id,row.y);
-  const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);if(y===row.y||guesses.length>=max)over=true;draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
+  const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);globalThis.SweaterAnalytics?.step?.(guesses.length,y===row.y,analyticsRound);if(y===row.y||guesses.length>=max){over=true;globalThis.SweaterAnalytics?.completeRound(y===row.y,{token:analyticsRound,attempts:guesses.length});}draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
 }
 function openTeamMode(t, mode) { globalThis.SweaterAnalytics?.view(`team_${mode}`, "unlimited"); if(mode==="best")startTeamBest(t, true); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
 function openTeams(team = "", push = true) {
   globalThis.SweaterAnalytics?.view("teams", "unlimited");
+  if (team) globalThis.SweaterAnalytics?.team?.(team);
   if (push) rememberHubScroll();
   leaveGame(game); closeParty(); onHub = false;
   document.body.classList.remove("hubmode");
@@ -11233,7 +11261,7 @@ $("view-teams").addEventListener("click", e => {
 });
 
 function showHub(push = true) {
-  globalThis.SweaterAnalytics?.leave();
+  globalThis.SweaterAnalytics?.hub?.();
   const returningToHub = !onHub;
   leaveGame(game);
   closeParty();
@@ -11380,6 +11408,7 @@ const partyNow = () => Date.now() + (party.offset || 0);
 async function partyHostNew() {
   try {
     const r = await api("/api/party/create", {});
+    globalThis.SweaterAnalytics?.interaction?.("party_create");
     party = { role: "host", code: r.code, hostKey: r.hostKey, at: Date.now(), state: null, rounds: 10 };
     store.set("sweater-party", party);
     history.replaceState(null, "", "#party");
@@ -11391,6 +11420,7 @@ async function partyJoin() {
   if (!/^[A-Z]{4}$/.test(code)) { partyRender("Enter the 4-letter code from the big screen."); return; }
   try {
     const r = await api("/api/party/join", { code, name });
+    globalThis.SweaterAnalytics?.interaction?.("party_join");
     party = { role: "player", code: r.code, pid: r.pid, key: r.key, name: r.name, at: Date.now(), state: null };
     store.set("sweater-party", party);
     store.set("sweater-party-name", name);
@@ -11445,7 +11475,7 @@ function partyRender(message = "") {
   if (st && !$("view-party").hidden) {
     globalThis.SweaterAnalytics?.context("party", "party", `${dayKey()}:${st.code}`);
     if (st.status === "question") globalThis.SweaterAnalytics?.beginRound();
-    if (st.status === "done") globalThis.SweaterAnalytics?.completeRound(false);
+    if (st.status === "done") globalThis.SweaterAnalytics?.completeRound(null);
   }
   const sig = JSON.stringify([message, party && party.role, party && party.picked, party && party.rounds, st && { ...st, now: 0 }]);
   if (sig === partySig && box.innerHTML) {
