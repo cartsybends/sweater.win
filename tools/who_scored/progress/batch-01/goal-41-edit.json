@@ -1,0 +1,114 @@
+{
+  "id": "goal-41",
+  "pid": 8482124,
+  "player": "Quinton Byfield",
+  "original": "/workspace/who-scored-expansion/originals/goal-41-6366609236112.mp4",
+  "source_sha256": "3ee384ff37790fba8e4351fae8c73fb1460d855007ca54236c64b6a2ef5182d8",
+  "start": 35.7,
+  "duration": 2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        545,
+        0,
+        877,
+        288
+      ],
+      "points": [
+        [
+          593,
+          24
+        ],
+        [
+          653,
+          65
+        ],
+        [
+          575,
+          147
+        ],
+        [
+          646,
+          168
+        ],
+        [
+          639,
+          249
+        ],
+        [
+          791,
+          166
+        ],
+        [
+          840,
+          187
+        ]
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        184,
+        135,
+        450,
+        455
+      ],
+      "points": [
+        [
+          232,
+          165
+        ],
+        [
+          287,
+          230
+        ],
+        [
+          235,
+          286
+        ],
+        [
+          236,
+          353
+        ],
+        [
+          210,
+          433
+        ],
+        [
+          355,
+          378
+        ],
+        [
+          419,
+          410
+        ]
+      ]
+    },
+    {
+      "frame": 47,
+      "box": [
+        0,
+        277,
+        63,
+        432
+      ],
+      "points": [
+        [
+          13,
+          313
+        ],
+        [
+          21,
+          372
+        ],
+        [
+          33,
+          404
+        ]
+      ]
+    }
+  ],
+  "version": "v1",
+  "identity_verification": "Official goal attribution and jersey 55 corroborated. Continuous replay shows Byfield 55 shooting at Allen; Danault 24 and Pesce 22 remain unmasked. Scorer exits at the left edge after the shot."
+}

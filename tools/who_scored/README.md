@@ -45,3 +45,51 @@ Unlimited completes a 39-player shuffle bag without repeats. Expanding the Daily
 pool replaces only unlocked future assignments and preserves past, today and
 tomorrow. The builder retains every clip's scorer in the embedded player data,
 including players available only from the schedule archive.
+
+## Pending expansion: six batches of 40
+
+The new expansion targets **240 additional unique scorers**, for 279 total.
+`progress/expansion-candidates.json` contains 268 distinct official scorer
+candidates with spare events. These are discovery records, not playable clips.
+`progress/expansion-batches.json` fixes six ordered groups of 40. The first batch
+has 40 corroborated source originals and three reviewed exports; **none of this
+expansion is active or published in the game yet**.
+
+Use the isolated SAM2 environment and store raw footage, API caches, models and
+working frames outside the checkout:
+
+```sh
+python tools/who_scored/discover.py
+python tools/who_scored/collect.py --batch 1 --storyboards
+# Optional: inspect a different event for one scorer.
+python tools/who_scored/collect.py --ids goal-45 --source-choice 1 --storyboards
+```
+
+Source collection corroborates the exact scorer and highlight ID against a second
+official endpoint, records the game jersey number and checks the downloaded
+source checksum. Storyboards are keyed to the selected video ID. Do not save
+public-player policy keys or expiring rendition URLs in provenance.
+
+A clip requires three recorded checks: official attribution plus visual jersey
+identity; comparison of **every** original/masked frame; and complete encoded
+video decoding with matching timing, plus visual first/middle/final inspection.
+Keep occluding teammates and foreground objects visible. Repair coverage gaps
+and recheck after any edit. Automatic opaque-pixel assertions prove rendering,
+not that the correct player or all body parts were selected.
+
+Reviewed edits and immutable review hashes live under `progress/batch-01/`.
+Their exported media remain staged at
+`/workspace/who-scored-expansion/batch-01/exports` until the entire batch passes.
+The batch gate rejects fewer than 40 reviews, duplicate scorers, missing frames,
+and media/edit checksums that changed after review:
+
+```sh
+python tools/who_scored/batch.py --batch 1 --exports /workspace/who-scored-expansion/batch-01/exports
+# Once all 40 reviews pass, stage the batch locally.
+python tools/who_scored/batch.py --batch 1 --exports /workspace/who-scored-expansion/batch-01/exports --stage
+```
+
+Then run the game, Daily schedule and full-decode media checks above, build the
+site, publish the batch to GitHub, and verify its manifest and media on the live
+Pages deployment. Staging locally does not count as a published batch. Proceed
+with batches 2–6 in order. Daily assignments for past/today/tomorrow stay locked.

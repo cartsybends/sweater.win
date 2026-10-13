@@ -17,8 +17,15 @@ def work_dir(path, edit):
     tag = hashlib.sha256(json.dumps(key,sort_keys=True).encode()).hexdigest()[:12]
     return path.parent / (edit['id']+'-'+tag)
 
+def tracking_signature(edit):
+    keys=['id','original','start','duration','crop','source_sha256','anchors','seed','allow_empty','max_cond_frames_in_attn']
+    return hashlib.sha256(json.dumps({k:edit.get(k) for k in keys},sort_keys=True).encode()).hexdigest()
+
 def prepare(path, edit):
     from PIL import Image, ImageDraw
+    expected = edit.get('source_sha256')
+    if not expected or hashlib.sha256(Path(edit['original']).read_bytes()).hexdigest() != expected:
+        raise ValueError('Source checksum must match the verified edit before extracting frames')
     work=work_dir(path,edit);frames=work/'frames';frames.mkdir(parents=True,exist_ok=True)
     count=frame_count(edit)
     vf='fps=24,scale=960:540'
@@ -46,10 +53,18 @@ def track(path,edit,args):
     from sam2.build_sam import build_sam2_video_predictor
     torch.set_num_threads(args.threads);torch.set_num_interop_threads(1)
     work=work_dir(path,edit);out=work/'masks';out.mkdir(exist_ok=True)
+    device = 'cuda' if args.device == 'auto' and torch.cuda.is_available() else ('cpu' if args.device == 'auto' else args.device)
+    if device == 'cuda' and not torch.cuda.is_available():
+        raise RuntimeError('CUDA requested but this runner has no available CUDA device')
+    max_conditioning = edit.get('max_cond_frames_in_attn', -1)
+    if max_conditioning != -1 and (not isinstance(max_conditioning, int) or max_conditioning < 2):
+        raise ValueError('SAM2 requires unlimited or at least two conditioning frames')
     predictor=build_sam2_video_predictor('configs/sam2.1/sam2.1_hiera_t.yaml',args.checkpoint,
-        device='cpu',apply_postprocessing=False,
-        hydra_overrides_extra=['++model.image_size=512','++model.fill_hole_area=0'])
+        device=device,apply_postprocessing=False,
+        hydra_overrides_extra=['++model.image_size=512','++model.fill_hole_area=0',
+                              f'++model.max_cond_frames_in_attn={max_conditioning}'])
     count=frame_count(edit);start=time.time()
+    for name in ['mask-stats.json','tracking-complete.json']:(work/name).unlink(missing_ok=True)
     with torch.inference_mode():
         state=predictor.init_state(str(work/'frames'),offload_video_to_cpu=True,offload_state_to_cpu=True)
         for a in edit['anchors']:
@@ -73,6 +88,9 @@ def track(path,edit,args):
                 if i%24==0:print(edit['id'],i,records[i]['area'],round(time.time()-start,1),flush=True)
         assert len(records)==count
         (work/'mask-stats.json').write_text(json.dumps([records[i] for i in sorted(records)],indent=2)+'\n')
+        (work/'tracking-complete.json').write_text(json.dumps({
+            'tracking_signature':tracking_signature(edit),'frames':count,'device':device,
+            'checkpoint_sha256':hashlib.sha256(Path(args.checkpoint).read_bytes()).hexdigest()},indent=2)+'\n')
     print(edit['id'],count,'tracked',round(time.time()-start,1),'seconds',flush=True)
 
 def render(path,edit,args):
@@ -80,6 +98,12 @@ def render(path,edit,args):
     from PIL import Image,ImageDraw
     cv2.setNumThreads(1)
     work=work_dir(path,edit);count=frame_count(edit)
+    stats=work/'mask-stats.json'
+    if not stats.exists() or not set(range(count)) <= {row['frame'] for row in json.loads(stats.read_text())}:
+        raise ValueError('Tracking must finish for every exported frame before rendering')
+    completed=work/'tracking-complete.json'
+    if completed.exists() and json.loads(completed.read_text())['tracking_signature']!=tracking_signature(edit):
+        raise ValueError('Tracking prompts changed; retrack before rendering')
     out=Path(args.output).resolve();out.mkdir(parents=True,exist_ok=True)
     rendered=work/'rendered';rendered.mkdir(exist_ok=True)
     review=work/'review';review.mkdir(exist_ok=True)
@@ -140,6 +164,7 @@ def render(path,edit,args):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('action',choices=['prepare','track','render']);p.add_argument('edit')
     p.add_argument('--checkpoint');p.add_argument('--threads',type=int,default=2);p.add_argument('--output')
+    p.add_argument('--device',choices=['auto','cpu','cuda'],default='auto')
     args=p.parse_args();path=Path(args.edit).resolve();edit=json.loads(path.read_text())
     if args.action=='prepare':prepare(path,edit)
     elif args.action=='track':track(path,edit,args)

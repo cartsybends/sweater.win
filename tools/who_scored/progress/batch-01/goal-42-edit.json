@@ -1,0 +1,167 @@
+{
+  "id": "goal-42",
+  "pid": 8477960,
+  "player": "Adrian Kempe",
+  "original": "/workspace/who-scored-expansion/originals/goal-42-6366609045112.mp4",
+  "source_sha256": "f8c7f87904b5e34c42ee7030b442c2f0502bcf5f4b6b0ec02d64b01ce6479ec3",
+  "start": 43.6,
+  "duration": 2.3,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        659,
+        89,
+        870,
+        354
+      ],
+      "points": [
+        [
+          684,
+          130
+        ],
+        [
+          732,
+          176
+        ],
+        [
+          687,
+          245
+        ],
+        [
+          735,
+          300
+        ],
+        [
+          727,
+          332
+        ],
+        [
+          849,
+          268
+        ],
+        [
+          720,
+          62
+        ],
+        [
+          486,
+          179
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        312,
+        84,
+        496,
+        344
+      ],
+      "points": [
+        [
+          346,
+          110
+        ],
+        [
+          401,
+          158
+        ],
+        [
+          373,
+          236
+        ],
+        [
+          359,
+          294
+        ],
+        [
+          341,
+          324
+        ],
+        [
+          463,
+          315
+        ],
+        [
+          378,
+          64
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 54,
+      "box": [
+        514,
+        92,
+        683,
+        304
+      ],
+      "points": [
+        [
+          555,
+          110
+        ],
+        [
+          580,
+          157
+        ],
+        [
+          590,
+          247
+        ],
+        [
+          541,
+          272
+        ],
+        [
+          634,
+          280
+        ],
+        [
+          665,
+          280
+        ],
+        [
+          464,
+          176
+        ],
+        [
+          680,
+          169
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "identity_verification": "Official event credits Kempe 9. The close replay shows black jersey 9 receiving from teammate 37 and shooting past Hughes. Teammates 37/11 and defending Hughes remain unmasked."
+}
