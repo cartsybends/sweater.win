@@ -37,6 +37,7 @@ let sampled=0;
 for(let a=0;a<5;a++)for(let b=a+1;b<5;b++)for(let zone=0;zone<5;zone++)for(const seed of [1,5]){
   const plan=run(`shootPlan(${zone},[${a},${b}],${seed})`);
   assert.equal(plan.save,[a,b].includes(zone));
+  if(plan.post)assert(Math.abs(Math.abs(plan.point[0]-(zone%2?506:134))-(6+14.5*.53))<1e-9,'Post contact respects the radii of the tube and puck');
   const before=run(`shootFrame(shootPlan(${zone},[${a},${b}],${seed}),${plan.contactAt-1e-6})`);
   const contact=run(`shootFrame(shootPlan(${zone},[${a},${b}],${seed}),${plan.contactAt})`);
   if(plan.save){assert(Math.hypot(before.puck.x-contact.puck.x,before.puck.y-contact.puck.y)<.01,'A save cannot teleport the puck');assert(Math.abs(before.puck.scale-contact.puck.scale)<.001);}

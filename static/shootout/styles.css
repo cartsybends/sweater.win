@@ -3,7 +3,7 @@
 .shnet .sh-cord{fill:none;stroke:#dde7ed;stroke-width:.72;opacity:.73;stroke-linecap:round}
 .shnet .sh-side-cord{fill:none;stroke:#d8e3ea;stroke-width:.72;opacity:.62}
 .shnet .sh-frame{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.shnet .sh-post{stroke:url(#shRedTube);stroke-width:9}
+.shnet .sh-post{stroke:url(#shRedTube);stroke-width:12}
 .shnet #shPostL .sh-post{stroke:url(#shTubeL)}
 .shnet #shPostR .sh-post{stroke:url(#shTubeR)}
 .shnet .sh-post-shine{stroke:#ffbab6;stroke-width:1.1;opacity:.68}

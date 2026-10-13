@@ -1,6 +1,6 @@
 // One connected rig and one clock for the goalie, puck, frame and net.
 const NET_ZONES=[[179,137],[461,137],[179,304],[461,304],[320,321]];
-const SH_GOAL={left:134,right:506,top:93,bottom:341,rearScale:.78,horizon:-32};
+const SH_GOAL={left:134,right:506,top:93,bottom:341,postRadius:6,rearScale:.78,horizon:-32};
 const shClamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const shLerp=(a,b,u)=>a+(b-a)*u;
 const shEase=u=>{u=shClamp(u);return u*u*u*(u*(u*6-15)+10);};
@@ -29,7 +29,8 @@ function shootPlan(zone,keep,seed=0){
   if(!Number.isInteger(zone)||zone<0||zone>4)throw new Error('Invalid shootout target');
   const save=keep.includes(zone),read=save?zone:keep[0];
   const post=!save&&zone<4&&Math.abs(seed)%5===0;
-  const point=post?[zone%2?SH_GOAL.right-5.5:SH_GOAL.left+5.5,NET_ZONES[zone][1]]:NET_ZONES[zone];
+  const inside=SH_GOAL.postRadius+14.5*.53;
+  const point=post?[zone%2?SH_GOAL.right-inside:SH_GOAL.left+inside,NET_ZONES[zone][1]]:NET_ZONES[zone];
   const contact=shPoint([320,414],NET_ZONES[zone],.9),back=shRear(point);
   return {zone,save,read,post,point,contact,back,release:.16,contactAt:.592,planeAt:.64,netAt:post?.9:.81,duration:1.5};
 }
