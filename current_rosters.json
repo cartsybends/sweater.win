@@ -439,6 +439,11 @@
   "team": "MTL",
   "number": 17
  },
+ "8483424": {
+  "name": "Owen Beck",
+  "team": "MTL",
+  "number": 62
+ },
  "8482737": {
   "name": "Zachary Bolduc",
   "team": "MTL",
@@ -1484,6 +1489,11 @@
   "team": "PHI",
   "number": 39
  },
+ "8480021": {
+  "name": "Jack Studnicka",
+  "team": "PHI",
+  "number": 23
+ },
  "8480015": {
   "name": "Owen Tippett",
   "team": "PHI",
@@ -1799,11 +1809,6 @@
   "team": "CHI",
   "number": 88
  },
- "8484185": {
-  "name": "Nick Lardis",
-  "team": "CHI",
-  "number": 76
- },
  "8478233": {
   "name": "Andrew Mangiapane",
   "team": "CHI",
@@ -1828,6 +1833,11 @@
   "name": "Teuvo Teravainen",
   "team": "CHI",
   "number": 86
+ },
+ "8476952": {
+  "name": "Dominic Toninato",
+  "team": "CHI",
+  "number": 25
  },
  "8481524": {
   "name": "Bowen Byram",
@@ -2138,6 +2148,11 @@
   "name": "Kirill Kaprizov",
   "team": "MIN",
   "number": 97
+ },
+ "8477993": {
+  "name": "Justin Kirkland",
+  "team": "MIN",
+  "number": 28
  },
  "8477446": {
   "name": "Michael McCarron",
