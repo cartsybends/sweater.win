@@ -316,6 +316,114 @@
         "poster": "goal-42-v1.jpg"
       },
       "motion": "Empty-net wrist shot"
+    },
+    {
+      "id": "goal-48",
+      "pid": 8482132,
+      "frames": 65,
+      "edit_sha256": "850206ee8424373a7e529aa98f42bdfe5b157ab77e10a82bca566434fe047df1",
+      "source_sha256": "adb5ff678d4232944aae2b3f3479009790fec857a31fba6ac24985d465e3de56",
+      "assets": {
+        "masked": "goal-48-masked-v1.mp4",
+        "reveal": "goal-48-original-v1.mp4",
+        "poster": "goal-48-v1.jpg"
+      },
+      "asset_sha256": {
+        "masked": "4a5dfc7a5014627faf50b1b354b756d88247965c9db513a12d61e6453112bb90",
+        "reveal": "f051da8ff0df19e478d594a85fb3863ef54742ffed55c10aae25234f496b14cc",
+        "poster": "62dbc22e390b1fe8d595404371f8f4158e092b6065d457820edcb7fd321142a2"
+      },
+      "motion": "Circle wrist shot",
+      "reviews": {
+        "official_identity": {
+          "passed": true,
+          "jersey": 65,
+          "event_id": 311
+        },
+        "silhouette_coverage": {
+          "passed": true,
+          "visually_reviewed_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64
+          ],
+          "note": "Berard 65 and name visible on receiving the puck. All 65 paired frames visually compared: helmet, torso, gloves, legs and skates covered; glass posts, foreground crowd and Bruins defenders remain visible. Continuous shooting replay."
+        },
+        "encoded_video": {
+          "passed": true,
+          "all_frames_decoded": true,
+          "matching_pair": true,
+          "visually_sampled_frames": [
+            0,
+            32,
+            64
+          ],
+          "note": "Encoded first/middle/final pairs visually inspected; silent H.264 matching timing, and no scorer name graphics."
+        }
+      },
+      "status": "reviewed_staged_outside_checkout_not_playable"
     }
   ],
   "active_additions": 0
