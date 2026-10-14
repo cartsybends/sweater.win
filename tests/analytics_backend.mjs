@@ -18,7 +18,7 @@ const event=(kind,more={})=>({id:crypto.randomUUID(),session,mode:'whoscored',va
 let r=await worker.fetch(req('/api/analytics/status'),{DB:env.DB},{});assert.deepEqual(await r.json(),{enabled:false});
 r=await call('/api/analytics/report');assert.equal(r.status,401);assert.equal(env.DB.queries,0,'No data query before authentication');
 r=await call('/analytics');assert.equal(r.status,303);assert.equal(r.headers.get('Location'),'/analytics/login');
-r=await call('/api/analytics/status');assert.deepEqual(await r.json(),{enabled:true,version:2,retention_days:365});
+r=await call('/api/analytics/status');assert.deepEqual(await r.json(),{enabled:true,version:2,diagnostics:1,retention_days:365});
 const opened=event('mode_open');assert.equal((await call('/api/analytics/collect',opened)).status,200);assert.equal((await call('/api/analytics/collect',opened)).status,200);
 assert.equal((await call('/api/analytics/collect',event('round_start'))).status,200);assert.equal((await call('/api/analytics/collect',event('round_start'))).status,200);
 assert.equal((await call('/api/analytics/collect',event('engagement',{active_ms:12000}))).status,200);

@@ -147,7 +147,7 @@ export async function handleAnalytics(request,env) {
       if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...security,...cors}});
       if(path==='/api/analytics/status'&&request.method==='GET') {
         if(!configured(env))return json({enabled:false},200,cors);
-        await ensureSchema(env);return json({enabled:true,version:USAGE_VERSION,retention_days:RETENTION_DAYS},200,cors);
+        await ensureSchema(env);return json({enabled:true,version:USAGE_VERSION,diagnostics:1,retention_days:RETENTION_DAYS},200,cors);
       }
       if(path==='/api/analytics/collect'&&request.method==='POST') {
         if(!configured(env))return json({enabled:false},503,cors);

@@ -14,6 +14,7 @@ Usage:
 Standard library only. Everything the game needs is inside this one file.
 """
 import argparse
+import hashlib
 import random
 import shutil
 import json
@@ -3972,6 +3973,7 @@ const ROSTER_PLAYERS = /*__ROSTER_PLAYERS__*/[].sort((a, b) => a.id - b.id);
 const ROSTER_LINEUPS = /*__ROSTER_LINEUPS__*/{};
 const EDGE_DATA = /*__EDGE_DATA__*/[];
 const BUILT = "/*__BUILT__*/";
+const SITE_RELEASE = "/*__SITE_RELEASE__*/";
 const SITE = "/*__SITE__*/";
 const API = "/*__API__*/".replace(/\/+$/, "");
 const API_ON = /^https?:\/\//.test(API);
@@ -14118,6 +14120,8 @@ def main():
         site += "/"
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     fills = {
+        "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
         "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),

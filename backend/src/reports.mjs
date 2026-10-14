@@ -70,7 +70,12 @@ export async function usageReport(url,env,labels,variants,clock,shift){
     FROM scoped WHERE kind IN ('round_step','round_exit') AND step IS NOT NULL GROUP BY mode,step ORDER BY mode,step LIMIT 300`);
   query('performance',selected.cte+` SELECT COALESCE(browser,'unknown') browser,device,COUNT(*) samples,COUNT(load_ms) load_samples,COUNT(ttfb_ms) ttfb_samples,AVG(load_ms) load_ms,AVG(ttfb_ms) ttfb_ms,AVG(lcp_ms) lcp_ms,AVG(cls) cls,
     SUM(lcp_ms>2500) slow_paints,SUM(lcp_ms IS NOT NULL) paint_samples,SUM(cls>0.25) high_shifts,SUM(cls IS NOT NULL) shift_samples FROM scoped WHERE kind='performance' GROUP BY browser,device ORDER BY samples DESC LIMIT 30`);
-  query('errors',selected.cte+` SELECT mode,COALESCE(browser,'unknown') browser,COALESCE(build,'unknown') build,action,COUNT(*) errors,COUNT(DISTINCT session_hash) sessions FROM scoped WHERE kind='error' GROUP BY mode,browser,build,action ORDER BY errors DESC LIMIT 30`);
+  query('errors',selected.cte+` SELECT e.mode,COALESCE(e.browser,'unknown') browser,COALESCE(e.build,'unknown') build,e.action,
+    d.release,d.error_type,d.error_file,d.error_line,d.error_column,d.resource,d.asset,d.online,
+    COUNT(*) errors,COUNT(DISTINCT e.session_hash) sessions
+    FROM scoped e LEFT JOIN sweater_analytics_errors d ON d.event_id=e.id WHERE e.kind='error'
+    GROUP BY e.mode,e.browser,e.build,e.action,d.release,d.error_type,d.error_file,d.error_line,d.error_column,d.resource,d.asset,d.online
+    ORDER BY sessions DESC,errors DESC LIMIT 30`);
   query('visits',selected.cte+`, visit_groups AS (SELECT visit_hash,SUM(active_ms) active_ms,SUM(kind='round_start') starts,SUM(kind IN ('mode_open','page_view')) views,MAX(kind='page_exit') ended FROM scoped WHERE visit_hash IS NOT NULL GROUP BY visit_hash)
     SELECT COUNT(*) visits,SUM(active_ms>=10000 OR starts>0 OR views>=2) engaged,AVG(active_ms) avg_active_ms,SUM(ended) exits FROM visit_groups`);
   query('audience',selected.cte+`, seen AS (SELECT visitor_hash,COUNT(DISTINCT visit_hash) visits,COUNT(DISTINCT day) days_active FROM scoped WHERE visitor_hash IS NOT NULL GROUP BY visitor_hash)

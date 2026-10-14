@@ -34,7 +34,9 @@
   const campaign=clean(landingURL?.searchParams.get('utm_campaign')),medium=clean(landingURL?.searchParams.get('utm_medium'));
   const build=typeof BUILT==='string'?BUILT.match(/builder v(\d{1,5})/)?.[1]:undefined;
   const metadata=()=>({version:2,visitor:visitor.id,visit,browser,os,source,...(campaign?{campaign}:{}),...(medium?{medium}:{}),...(build?{build}:{}),theme:['light','dark'].includes(document.documentElement?.dataset?.theme)?document.documentElement.dataset.theme:'unknown',viewport:innerWidth<400?'small':innerWidth<768?'medium':innerWidth<1280?'large':'wide'});
-  let enabled=null,version=1,current=null,round=null,roundKey=null,previous=null,active=0,lastTick=performance.now(),lastInteraction=performance.now(),sending=false,errors=0;
+  let enabled=null,version=1,diagnostics=false,current=null,round=null,roundKey=null,previous=null,active=0,lastTick=performance.now(),lastInteraction=performance.now(),sending=false,errors=0;
+  const diagnosticFields=['release','error_type','error_file','error_line','error_column','resource','asset','online'];
+  const payload=data=>diagnostics?data:Object.fromEntries(Object.entries(data).filter(([key])=>!diagnosticFields.includes(key)));
   const awake=()=>document.visibilityState!=='hidden'&&document.hasFocus()&&performance.now()-lastInteraction<45000;
   function event(kind,extra={},scope=current){
     if(!scope||enabled===false)return;
@@ -48,7 +50,7 @@
     if(!enabled||sending)return;sending=true;
     try{while(queue.length){
       if(version<2&&(!legacyKinds.has(queue[0].data.kind)||queue[0].data.mode==='hub')){queue.shift();continue;}
-      const batch=queue.slice(0,version>=2?5:1),body=version>=2?{events:batch.map(e=>e.data)}:legacy(batch[0].data);
+      const batch=queue.slice(0,version>=2?5:1),body=version>=2?{events:batch.map(e=>payload(e.data))}:legacy(batch[0].data);
       try{
         const r=await fetch(API+'/api/analytics/collect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'omit',keepalive:true});
         if(r.ok||r.status>=400&&r.status<500&&r.status!==429){queue.splice(0,batch.length);continue;}
@@ -111,13 +113,59 @@
   window.addEventListener('pagehide',()=>{engagement();exitRound();performanceSample();event('page_exit',{},current||{mode:'hub',variant:'hub'});flush();});
   window.addEventListener('blur',engagement);window.addEventListener('focus',()=>{lastTick=lastInteraction=performance.now();});
   window.addEventListener('load',()=>setTimeout(performanceSample,5000));
-  const error=action=>{if(errors++>=10)return;event('error',{action},current||{mode:'hub',variant:'hub'});};
-  window.addEventListener('error',e=>error(e?.target&&e.target!==window?'resource':'javascript'),true);
-  window.addEventListener('unhandledrejection',()=>error('promise'));
+  const errorTypes=['Error','TypeError','ReferenceError','SyntaxError','RangeError','URIError','EvalError','AbortError','NotAllowedError','NotSupportedError','SecurityError','QuotaExceededError','NetworkError'];
+  function scriptLocation(filename,line,column){
+    try{
+      const url=new URL(filename,location.href);
+      if(!['sweater.win','www.sweater.win'].includes(url.hostname))return {error_file:'external'};
+      const file={'/app.html':'app.html','/':'home','/index.html':'home','/sw.js':'sw.js'}[url.pathname];
+      if(!file)return {error_file:'unknown'};
+      return {error_file:file,...(Number.isInteger(line)&&line>0&&line<=200000?{error_line:line}:{}),...(Number.isInteger(column)&&column>0&&column<=10000000?{error_column:column}:{})};
+    }catch{return {error_file:'unknown'};}
+  }
+  function errorDetails(reason){
+    const details={error_type:'unknown'};
+    try{if(errorTypes.includes(reason?.name))details.error_type=reason.name;}catch{}
+    try{
+      // Inspect frame locations only; never send messages, stacks, function names or URLs.
+      for(const [index,frame] of (typeof reason?.stack==='string'?reason.stack:'').split('\n').entries()){
+        // Safari/Firefox can start directly with a frame; Chrome starts with the message.
+        if(index===0&&!/^(?:[^@\s]*@)?https?:\/\/[^\s]+:\d+:\d+$/.test(frame))continue;
+        const match=frame.match(/(https?:\/\/[^\s)]+):(\d+):(\d+)\)?$/);
+        if(!match)continue;
+        const place=scriptLocation(match[1],Number(match[2]),Number(match[3]));
+        if(['app.html','home','sw.js'].includes(place.error_file)){Object.assign(details,place);break;}
+      }
+    }catch{}
+    return details;
+  }
+  function resourceDetails(target){
+    const tag=String(target?.tagName||'').toLowerCase(),kinds={img:'image',video:'video',audio:'audio',source:'media',script:'script',link:'stylesheet'};
+    const details={resource:kinds[tag]||'other'};
+    try{
+      const url=new URL(target.currentSrc||target.src||target.href,location.href);
+      const local=['sweater.win','www.sweater.win'].includes(url.hostname);
+      if(local&&/^\/who-scored\/goal-\d{2,3}-(?:(?:masked|original)-v[1-9]\d*\.mp4|v[1-9]\d*\.jpg)$/.test(url.pathname)){
+        details.resource=url.pathname.endsWith('.mp4')?'goal_video':'goal_poster';details.asset=url.pathname.split('/').pop();
+      }else if(url.hostname==='assets.nhle.com')details.resource=/\/(mugs|headshots)\//.test(url.pathname)?'headshot':/\/logos\//.test(url.pathname)?'team_logo':details.resource;
+      else if(url.hostname==='flagcdn.com')details.resource='country_flag';
+      else if(local&&url.pathname==='/sweater-icon.svg')details.resource='site_icon';
+      if(tag==='link'&&target.rel==='manifest')details.resource='manifest';
+      const mediaTypes={1:'MediaAbortError',2:'MediaNetworkError',3:'MediaDecodeError',4:'MediaSourceError'};
+      if(mediaTypes[target?.error?.code])details.error_type=mediaTypes[target.error.code];
+    }catch{}
+    return details;
+  }
+  const error=(action,details={})=>{if(errors++>=10)return;event('error',{action,...details,...(typeof SITE_RELEASE==='string'&&/^[a-f0-9]{12}$/.test(SITE_RELEASE)?{release:SITE_RELEASE}:{}),...(typeof navigator.onLine==='boolean'?{online:navigator.onLine}:{})},current||{mode:'hub',variant:'hub'});};
+  window.addEventListener('error',safe(e=>{
+    if(e?.target&&e.target!==window)error('resource',resourceDetails(e.target));
+    else error('javascript',{...errorDetails(e?.error),...(e?.filename?scriptLocation(e.filename,e.lineno,e.colno):{})});
+  }),true);
+  window.addEventListener('unhandledrejection',safe(e=>error('promise',errorDetails(e?.reason))));
   setInterval(tick,1000);setInterval(engagement,30000);
   const hash=(landingURL?.hash||location.hash||'').slice(1),entry=typeof G==='object'&&G!==null&&Object.hasOwn(G,hash)?hash:hash==='hl'?'hl':hash==='teams'||hash.startsWith('team-')?'teams':hash==='party'||hash.startsWith('party-')?'party':'hub';
   let play='daily';try{const stored=JSON.parse(localStorage.getItem('sweater-mode')||'null');if(['daily','unlimited','archive'].includes(stored))play=stored;}catch{}
   event('site_visit',{}, {mode:entry,variant:entry==='hub'?'hub':entry==='party'?'party':entry==='teams'?'unlimited':play});
   const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),5000);
-  fetch(API+'/api/analytics/status',{credentials:'omit',cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.json():{enabled:false}).then(d=>{enabled=d.enabled===true;version=d.version>=2?2:1;if(enabled)flush();else queue.length=0;}).catch(()=>{enabled=false;queue.length=0;}).finally(()=>clearTimeout(timeout));
+  fetch(API+'/api/analytics/status',{credentials:'omit',cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.json():{enabled:false}).then(d=>{enabled=d.enabled===true;version=d.version>=2?2:1;diagnostics=d.diagnostics===1;if(enabled)flush();else queue.length=0;}).catch(()=>{enabled=false;queue.length=0;}).finally(()=>clearTimeout(timeout));
 })();

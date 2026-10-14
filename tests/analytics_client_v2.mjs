@@ -3,18 +3,18 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const source=fs.readFileSync('analytics/client.js','utf8');
 const settle=async()=>{await new Promise(r=>setImmediate(r));await new Promise(r=>setImmediate(r));};
-function make({local=new Map(),session=new Map(),blocked=false,dnt=false,gpc=false,enabled=true,failures=0,url='https://sweater.win/',referrer='',coarse=false,width=1200,ua='Mozilla/5.0 Chrome/130.0 Windows NT 10.0',nav={loadEventEnd:1000,responseStart:120},observerTypes=['largest-contentful-paint','layout-shift']}={}){
+function make({diagnostics=0,online=true,local=new Map(),session=new Map(),blocked=false,dnt=false,gpc=false,enabled=true,failures=0,url='https://sweater.win/',referrer='',coarse=false,width=1200,ua='Mozilla/5.0 Chrome/130.0 Windows NT 10.0',nav={loadEventEnd:1000,responseStart:120},observerTypes=['largest-contentful-paint','layout-shift']}={}){
   let now=0;const sent=[],calls=[],intervals=new Map(),timers=[],events=new Map(),windowEvents=new Map(),observers=new Map();
   const storage=map=>({getItem:k=>{if(blocked)throw Error('blocked');return map.get(k)||null;},setItem:(k,v)=>{if(blocked)throw Error('blocked');map.set(k,v);},removeItem:k=>{if(blocked)throw Error('blocked');map.delete(k);}});
   const doc={visibilityState:'visible',hasFocus:()=>true,referrer:'https://sweater.win/',documentElement:{dataset:{theme:'dark'}},addEventListener:(n,f)=>events.set(n,f)};
   const root={location:new URL(url),document:{referrer}},location=new URL('https://sweater.win/app.html'),window={location,parent:root,addEventListener:(n,f)=>windowEvents.set(n,f)};
   class Observer{constructor(fn){this.fn=fn;}observe({type}){observers.set(type,this.fn);}}
   Observer.supportedEntryTypes=observerTypes;
-  const context=vm.createContext({API:'https://api.sweater.win',API_ON:true,BUILT:'2026-10-13 (builder v138)',G:{shoot:{},whoscored:{},classic:{}},location,window,document:doc,
-    navigator:{doNotTrack:dnt?'1':'0',globalPrivacyControl:gpc,userAgent:ua,maxTouchPoints:coarse?5:0},crypto,AbortController,URL,Date,PerformanceObserver:Observer,
+  const context=vm.createContext({API:'https://api.sweater.win',API_ON:true,BUILT:'2026-10-13 (builder v138)',SITE_RELEASE:'0123456789ab',G:{shoot:{},whoscored:{},classic:{}},location,window,document:doc,
+    navigator:{onLine:online,doNotTrack:dnt?'1':'0',globalPrivacyControl:gpc,userAgent:ua,maxTouchPoints:coarse?5:0},crypto,AbortController,URL,Date,PerformanceObserver:Observer,
     localStorage:storage(local),sessionStorage:storage(session),performance:{now:()=>now,getEntriesByType:()=>nav?[nav]:[]},matchMedia:()=>({matches:coarse}),innerWidth:width,
     setInterval:(f,t)=>intervals.set(t,f),setTimeout:(f,t)=>{timers.push({f,t});return timers.length;},clearTimeout(){},
-    fetch:async(url,opts)=>{calls.push({url,opts});if(url.endsWith('/status'))return {ok:true,json:async()=>({enabled,version:2})};const body=JSON.parse(opts.body);sent.push(body);if(failures-->0)throw Error('offline');return {ok:true,status:200};}
+    fetch:async(url,opts)=>{calls.push({url,opts});if(url.endsWith('/status'))return {ok:true,json:async()=>({enabled,version:2,diagnostics})};const body=JSON.parse(opts.body);sent.push(body);if(failures-->0)throw Error('offline');return {ok:true,status:200};}
   });
   vm.runInContext(source,context);
   return {api:context.SweaterAnalytics,sent,calls,doc,window,events,windowEvents,intervals,timers,observers,local,session,time:n=>now=n,all:()=>sent.flatMap(b=>b.events),emit:(type,entries)=>observers.get(type)?.({getEntries:()=>entries})};
@@ -45,6 +45,30 @@ const unsupported=make({observerTypes:[]});unsupported.windowEvents.get('load')(
 const shiftOnly=make({observerTypes:['layout-shift']});shiftOnly.emit('layout-shift',[{startTime:100,value:.05,hadRecentInput:false}]);shiftOnly.windowEvents.get('load')();shiftOnly.timers.filter(t=>t.t===5000).at(-1).f();await settle();assert.equal(shiftOnly.all().find(e=>e.kind==='performance').cls,.05,'Supported metrics remain available independently');
 for(const b of c.sent)assert(b.events.length>=1&&b.events.length<=5);for(const e of c.all()){assert.equal(e.version,2);assert.equal(e.source,'instagram');assert.equal(e.campaign,'hockey-launch');assert.equal(e.build,'138');assert(!JSON.stringify(e).includes('private'));assert(!('name' in e)&&!('message' in e)&&!('referrer' in e)&&!('url' in e));}
 for(const {url,opts}of c.calls.filter(r=>r.url.endsWith('/collect'))){assert.equal(opts.credentials,'omit');assert.equal(opts.keepalive,true);}
+// Real error-event shapes supply useful locations without leaking messages, input or full URLs.
+const diagnostic=make({diagnostics:1,online:false});
+diagnostic.api.context('whoscored','daily','private-target');
+diagnostic.windowEvents.get('error')({target:diagnostic.window,error:new TypeError('private-input'),filename:'https://sweater.win/app.html?email=private@example.com#private-target',lineno:4500,colno:17});
+diagnostic.windowEvents.get('unhandledrejection')({reason:{name:'ReferenceError',message:'private-name',stack:'ReferenceError: private-name\n    at privateFunction (https://sweater.win/app.html?token=private-secret:4600:22)\n    at https://extension.example/private-path:1:2'}});
+diagnostic.windowEvents.get('error')({target:{tagName:'VIDEO',currentSrc:'https://sweater.win/who-scored/goal-79-masked-v2.mp4?token=private-secret',error:{code:3}}});
+diagnostic.windowEvents.get('error')({target:{tagName:'IMG',src:'https://assets.nhle.com/mugs/nhl/20252026/CGY/8476399.png?private=secret'}});
+diagnostic.windowEvents.get('error')({target:diagnostic.window,error:{name:'private-name'},filename:'https://extension.example/private-user.js',lineno:100,colno:7});
+await settle();
+const errors=diagnostic.all().filter(e=>e.kind==='error');assert.equal(errors.length,5);
+assert.equal(errors[0].error_type,'TypeError');assert.equal(errors[0].error_file,'app.html');assert.equal(errors[0].error_line,4500);assert.equal(errors[0].error_column,17);assert.equal(errors[0].release,'0123456789ab');assert.equal(errors[0].online,false);
+assert.equal(errors[1].error_type,'ReferenceError');assert.equal(errors[1].error_line,4600);assert.equal(errors[1].error_column,22);
+assert.equal(errors[2].resource,'goal_video');assert.equal(errors[2].asset,'goal-79-masked-v2.mp4');assert.equal(errors[2].error_type,'MediaDecodeError');
+assert.equal(errors[3].resource,'headshot');assert(!('asset' in errors[3]));assert.equal(errors[4].error_file,'external');assert.equal(errors[4].error_type,'unknown');assert(!('error_line' in errors[4]));
+for(const privateText of ['private','https://','8476399','privateFunction','secret'])assert(!JSON.stringify(errors).includes(privateText));
+assert(!diagnostic.all().filter(e=>e.kind!=='error').some(e=>'release' in e));
+// Unsupported collectors receive the original payload so a staged frontend rollout cannot drop batches.
+const older=make();older.windowEvents.get('error')({target:older.window,error:new TypeError('private'),filename:'https://sweater.win/app.html',lineno:10,colno:2});await settle();
+for(const field of ['release','error_type','error_file','error_line','error_column','resource','asset','online'])assert(!(field in older.all().find(e=>e.kind==='error')));
+assert(older.all().some(e=>e.kind==='site_visit'));
+const webkit=make({diagnostics:1});webkit.windowEvents.get('unhandledrejection')({reason:{name:'TypeError',stack:'privateFunction@https://sweater.win/app.html?private=secret:4500:17'}});await settle();
+assert.equal(webkit.all().find(e=>e.kind==='error').error_line,4500);assert.equal(webkit.all().find(e=>e.kind==='error').error_column,17);assert(!JSON.stringify(webkit.all()).includes('private'));
+const filenameMissing=make({diagnostics:1});filenameMissing.windowEvents.get('error')({target:filenameMissing.window,error:{name:'TypeError',stack:'TypeError: private message\n    at https://sweater.win/app.html:4501:18'}});await settle();
+assert.equal(filenameMissing.all().find(e=>e.kind==='error').error_line,4501);
 
 for(const options of [{dnt:true},{gpc:true},{enabled:false},{url:'https://sweater.win/?analytics=off'}]){const x=make(options);x.api.context('classic','daily','target');x.api.step(1,true);await settle();assert.equal(x.sent.length,0);if(options.dnt||options.gpc||options.url)assert.equal(x.calls.length,0,'Opted-out browsers make no analytics requests');}
 const excluded=new Map();make({local:excluded,url:'https://sweater.win/?analytics=off'});const x=make({local:excluded});x.api.hub();await settle();assert.equal(x.calls.length,0);const included=make({local:excluded,url:'https://sweater.win/?analytics=on'});await settle();assert.equal(included.all().length,1,'The owner can re-enable collection in that browser');

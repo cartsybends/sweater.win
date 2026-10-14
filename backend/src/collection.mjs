@@ -9,6 +9,9 @@ export const ACTIONS=['favorite_add','favorite_remove','library_filter','stats_o
 const UUID=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const OLD_FIELDS=['id','session','mode','variant','kind','round','device','active_ms','won'];
 const EXTRA_FIELDS=['version','visitor','visit','from_mode','browser','os','source','campaign','medium','theme','viewport','build','step','correct','score','elapsed_ms','response_ms','action','team','load_ms','ttfb_ms','lcp_ms','cls'];
+const DIAGNOSTIC_FIELDS=['release','error_type','error_file','error_line','error_column','resource','asset','online'];
+const ERROR_TYPES=['unknown','Error','TypeError','ReferenceError','SyntaxError','RangeError','URIError','EvalError','AbortError','NotAllowedError','NotSupportedError','SecurityError','QuotaExceededError','NetworkError','MediaAbortError','MediaNetworkError','MediaDecodeError','MediaSourceError'];
+const RESOURCE_TYPES=['image','video','audio','media','script','stylesheet','other','goal_video','goal_poster','headshot','team_logo','country_flag','site_icon','manifest'];
 const fail=message=>Object.assign(new Error(message),{status:400});
 const label=/^[a-z0-9][a-z0-9._-]{0,59}$/i;
 const teams=new Set('ANA BOS BUF CAR CBJ CGY CHI COL DAL DET EDM FLA LAK MIN MTL NJD NSH NYI NYR OTT PHI PIT SEA SJS STL TBL TOR UTA VAN VGK WPG WSH'.split(' '));
@@ -21,7 +24,7 @@ export function validateEvents(raw,modes,variants){
   }
   for(const b of rows){
     if(!b||typeof b!=='object'||Array.isArray(b))throw fail('Invalid event');
-    const enhanced=b.version===USAGE_VERSION,allowed=new Set(enhanced?[...OLD_FIELDS,...EXTRA_FIELDS]:OLD_FIELDS);
+    const enhanced=b.version===USAGE_VERSION,allowed=new Set(enhanced?[...OLD_FIELDS,...EXTRA_FIELDS,...DIAGNOSTIC_FIELDS]:OLD_FIELDS);
     if(Object.keys(b).some(k=>!allowed.has(k)))throw fail('Unexpected event fields');
     if(['id','session','mode','variant','kind','device'].some(k=>typeof b[k]!=='string'))throw fail('Invalid event');
     if(!UUID.test(b.id)||!UUID.test(b.session)||!Object.hasOwn(modes,b.mode)||!variants.has(b.variant)||!USAGE_KINDS.has(b.kind)||!['mobile','tablet','desktop'].includes(b.device))throw fail('Invalid event');
@@ -46,6 +49,14 @@ export function validateEvents(raw,modes,variants){
       for(const field of ['load_ms','ttfb_ms','lcp_ms'])if(b[field]!==undefined&&!integer(b[field],0,120000))throw fail('Invalid performance sample');
       if(b.cls!==undefined&&(typeof b.cls!=='number'||!Number.isFinite(b.cls)||b.cls<0||b.cls>10))throw fail('Invalid layout shift');
       if(b.kind==='error'&&!['javascript','promise','resource'].includes(b.action))throw fail('Invalid error category');
+      if(DIAGNOSTIC_FIELDS.some(field=>b[field]!==undefined)&&b.kind!=='error')throw fail('Diagnostics require an error event');
+      if(b.release!==undefined&&(typeof b.release!=='string'||!/^[a-f0-9]{12}$/.test(b.release)))throw fail('Invalid release');
+      if(b.error_type!==undefined&&!ERROR_TYPES.includes(b.error_type))throw fail('Invalid error type');
+      if(b.error_file!==undefined&&!['app.html','home','sw.js','external','unknown'].includes(b.error_file))throw fail('Invalid error file');
+      for(const [field,max]of [['error_line',200000],['error_column',10000000]])if(b[field]!==undefined&&(!integer(b[field],1,max)||!['app.html','home','sw.js'].includes(b.error_file)))throw fail('Invalid code location');
+      if(b.resource!==undefined&&!RESOURCE_TYPES.includes(b.resource))throw fail('Invalid resource type');
+      if(b.asset!==undefined&&(typeof b.asset!=='string'||!/^goal-\d{2,3}-(?:(?:masked|original)-v[1-9]\d*\.mp4|v[1-9]\d*\.jpg)$/.test(b.asset)||!['goal_video','goal_poster'].includes(b.resource)))throw fail('Invalid diagnostic asset');
+      if(b.online!==undefined&&typeof b.online!=='boolean')throw fail('Invalid connection state');
       if(b.kind==='interaction'&&(!b.action||['javascript','promise','resource'].includes(b.action)))throw fail('Invalid interaction');
     }
   }
@@ -63,6 +74,10 @@ export function schemaStatements(db){
     )`,
     'CREATE INDEX IF NOT EXISTS sweater_analytics_visitor_events ON sweater_analytics_details(visitor_hash,event_id)',
     'CREATE INDEX IF NOT EXISTS sweater_analytics_visit_events ON sweater_analytics_details(visit_hash,event_id)',
+    `CREATE TABLE IF NOT EXISTS sweater_analytics_errors (
+      event_id TEXT PRIMARY KEY, release TEXT, error_type TEXT, error_file TEXT,
+      error_line INTEGER, error_column INTEGER, resource TEXT, asset TEXT, online INTEGER
+    )`,
     `CREATE TABLE IF NOT EXISTS sweater_analytics_sessions (
       session_hash TEXT PRIMARY KEY, visitor_hash TEXT, first_at INTEGER NOT NULL,last_at INTEGER NOT NULL,
       first_day TEXT NOT NULL,last_day TEXT NOT NULL,entry_mode TEXT NOT NULL,last_mode TEXT NOT NULL,
@@ -99,11 +114,17 @@ export async function eventStatements(db,b,request,hash,session){
     SELECT d.visitor_hash,e.received_at,e.received_at,e.day,e.day FROM sweater_analytics_events e JOIN sweater_analytics_details d ON d.event_id=e.id
     WHERE e.id=? AND e.session_hash=? AND d.visitor_hash IS NOT NULL
     ON CONFLICT(visitor_hash) DO UPDATE SET last_at=MAX(last_at,excluded.last_at),last_day=CASE WHEN excluded.last_at>=last_at THEN excluded.last_day ELSE last_day END`).bind(b.id,session);
-  return [detail,summary,visitorRow];
+  const statements=[detail,summary,visitorRow];
+  if(enhanced&&b.kind==='error')statements.push(db.prepare(`INSERT OR IGNORE INTO sweater_analytics_errors
+    (event_id,release,error_type,error_file,error_line,error_column,resource,asset,online)
+    SELECT ?,?,?,?,?,?,?,?,? WHERE EXISTS (SELECT 1 FROM sweater_analytics_events WHERE id=? AND session_hash=?)`)
+    .bind(b.id,b.release??null,b.error_type??null,b.error_file??null,b.error_line??null,b.error_column??null,b.resource??null,b.asset??null,b.online===undefined?null:Number(b.online),b.id,session));
+  return statements;
 }
 export function pruneStatements(db,now,limit=100){
   const cutoff=now-RETENTION_DAYS*86400000,tail=limit?` LIMIT ${limit}`:'';
   return [
+    db.prepare(`DELETE FROM sweater_analytics_errors WHERE event_id IN (SELECT id FROM sweater_analytics_events WHERE received_at<?${tail})`).bind(cutoff),
     db.prepare(`DELETE FROM sweater_analytics_details WHERE event_id IN (SELECT id FROM sweater_analytics_events WHERE received_at<?${tail})`).bind(cutoff),
     db.prepare(`DELETE FROM sweater_analytics_events WHERE id IN (SELECT id FROM sweater_analytics_events WHERE received_at<?${tail})`).bind(cutoff),
     db.prepare(`DELETE FROM sweater_analytics_sessions WHERE session_hash IN (SELECT session_hash FROM sweater_analytics_sessions WHERE last_at<?${tail})`).bind(cutoff),

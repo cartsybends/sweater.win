@@ -67,7 +67,12 @@ Global Privacy Control when those browser preferences are enabled.
 - Search/social/direct/referral source categories, plus safe `utm_source`,
   `utm_medium`, and `utm_campaign` labels. The Traffic section builds tagged links.
 - Browser-provided load, first-byte, largest-paint, and layout-shift samples; up to
-  ten anonymous JavaScript/promise/resource error categories per visit and build.
+  ten anonymous JavaScript/promise/resource diagnostics per visit. New reports
+  include a frontend release fingerprint, allowlisted error types, locations in
+  Sweater's own scripts, failed-asset categories and browser online/offline state.
+  Only Who Scored's public, neutral media filenames are retained; headshot player
+  IDs, arbitrary filenames, full URLs, query strings, error messages and stacks
+  are excluded. The release fingerprint changes with frontend code or clip assets.
 - Today, 7/30/90/365-day and custom-date reports, previous-period comparisons,
   daily charts, weekday/hour heatmaps, filters, CSV exports, and full report JSON.
 
@@ -76,6 +81,18 @@ recognized anonymous browsers rather than identifiable people. Blocked or cleare
 storage can create a new visitor. Devices and browsers can obscure their category.
 Recent activity means signals received in the last two minutes, not an exact
 online headcount. Country is derived from Cloudflare's country field, not saved IPs.
+
+The Browser errors table groups the same issue by release and code location or
+asset, and lists affected sessions first. Start with recurring reports in the
+current release. Resource failures can come from a missing file, a failed decode,
+the visitor's connection or a blocker; a category alone does not establish a
+cause. Old category-only rows retain their counts but cannot gain missing details.
+
+Deploy the backend changes through the existing Cloudflare Worker connection to
+activate diagnostics. `/api/analytics/status` advertises `diagnostics: 1` when
+supported. Until then, the upgraded client continues sending the original event
+fields. The backend creates a separate diagnostic table without altering existing
+analytics tables, and expires diagnostic rows with their original events.
 
 Finish rate follows rounds started in the selected period and completed by that
 period's end. Finishes can include rounds started earlier. First unfinished exits
