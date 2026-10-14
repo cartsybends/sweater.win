@@ -11,6 +11,7 @@ export const MODES = {
   edgeshot:'Hardest Shot', edgemap:'Shot Map', edgebuild:'Build a Player', edgerush:'The Rush',
   party:'Party Mode', teams:'Teams', team_best:'Teams · Best Lineup', team_guess:'Teams · Guess the Player',
   team_higher:'Teams · Higher or Lower', team_mystery:'Teams · Mystery Season', hl:'Higher or Lower', hl_goals:'Higher or Lower · Goals',
+  team_identity:'Teams · Who Am I?', team_journey:'Teams · Team Journey',
   hl_assists:'Higher or Lower · Assists', hl_points:'Higher or Lower · Points', hl_pim:'Higher or Lower · PIM',
   hl_gp:'Higher or Lower · Games', hl_height:'Higher or Lower · Height', hl_weight:'Higher or Lower · Weight', hl_age:'Higher or Lower · Age'
 };

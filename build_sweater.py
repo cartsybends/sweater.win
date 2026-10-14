@@ -755,6 +755,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   /* shootout */
   /*__SHOOTOUT_CSS__*/
+  /*__TEAM_GAMES_CSS__*/
 
   /* NHL EDGE hub + games */
   .edgehome { margin: 20px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 18px;
@@ -4010,6 +4011,7 @@ const TEAM_FULL_NAMES = {
 const DIV_NAMES = { A: "Atlantic", M: "Metropolitan", C: "Central", P: "Pacific" };
 const TEAM_IDS = { ANA:24,BOS:6,BUF:7,CGY:20,CAR:12,CHI:16,COL:21,CBJ:29,DAL:25,DET:17,EDM:22,FLA:13,LAK:26,MIN:30,MTL:8,NSH:18,NJD:1,NYI:2,NYR:3,OTT:9,PHI:4,PIT:5,SJS:28,SEA:55,STL:19,TBL:14,TOR:10,UTA:59,VAN:23,VGK:54,WSH:15,WPG:52 };
 const TEAM_START = { ANA:1993,BOS:1924,BUF:1970,CGY:1980,CAR:1997,CHI:1926,COL:1995,CBJ:2000,DAL:1993,DET:1926,EDM:1979,FLA:1993,LAK:1967,MIN:2000,MTL:1917,NSH:1998,NJD:1982,NYI:1972,NYR:1926,OTT:1992,PHI:1967,PIT:1967,SJS:1991,SEA:2021,STL:1967,TBL:1992,TOR:1917,UTA:2024,VAN:1970,VGK:2017,WSH:1974,WPG:2011 };
+const TEAM_CAREERS = /*__TEAM_CAREERS__*/[];
 const TEAM_HISTORY = /*__TEAM_HISTORY__*/{}; // compact historical regular-season rows, built server-side
 const TEAM_DIV_ORDER = ["A","M","C","P"];
 const BYID = new Map([...ROSTER_PLAYERS, ...PLAYERS].map(p => [p.id, p]));
@@ -4026,6 +4028,7 @@ const edgeSeasonLabel = () => {
 // focused archive map so historic trivia shows the proper mark instead of an
 // empty image. These are rendered PNG previews of the corresponding crest.
 const HISTORIC_LOGOS = Object.freeze({
+  WIN: "https://thumb.wikimedia.org/wikipedia/en/thumb/8/85/Winnipeg_Jets_Logo.svg/250px-Winnipeg_Jets_Logo.svg.png",
   MNS: "https://thumb.wikimedia.org/wikipedia/en/thumb/5/56/Minnesota_North_Stars_Logo_2.svg/250px-Minnesota_North_Stars_Logo_2.svg.png",
   ATL: "https://thumb.wikimedia.org/wikipedia/en/thumb/0/02/Atlanta_Thrashers.svg/250px-Atlanta_Thrashers.svg.png",
   HFD: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Hartford_Whalers_1992.svg/250px-Hartford_Whalers_1992.svg.png",
@@ -10531,7 +10534,7 @@ function paintOptions(host, round, html, grade) {
 function paintQuestionProgress(host, total, current, results = []) {
   const dots = $(host);
   if (!dots) return;
-  const movingHighlight = host !== "trDots";
+  const movingHighlight = !["trDots", "teamMiniDots"].includes(host);
   dots.classList.add("question-progress");
   let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
   if (dotNodes.length !== total) {
@@ -10692,7 +10695,7 @@ document.querySelectorAll("[data-theme-choice]").forEach(b => b.addEventListener
 applyAppearance(isDark() ? "dark" : "light", false);
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
 document.addEventListener("keydown", e => {
-  if (onHub || !game.startsWith("hl_") || document.querySelector(".modal.open") || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (onHub || !game.startsWith("hl_") || $("view-hl").hidden || document.querySelector(".modal.open") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
   if (e.key === "ArrowUp") { e.preventDefault(); doGuess("H"); }
   if (e.key === "ArrowDown") { e.preventDefault(); doGuess("L"); }
 });
@@ -11131,43 +11134,42 @@ function renderTeamPicker() {
 function renderTeamHub(t) {
   const h = historyForTeam(t), name = teamFullName(t), first = h.years.length ? Math.min(...h.years) : TEAM_START[t] || 1917;
   $("teamsBody").innerHTML = `<button class="backbtn" type="button" id="backTeamPicker"><span aria-hidden="true">‹</span> All teams</button>
-    ${teamHero(name, `Team trivia from ${first} onward · seasons are chosen by the game, not by the player`, t)}
+    ${teamHero(name, `Team trivia from ${first} onward · current players and familiar alumni`, t)}
     <div class="teammodes">
       <button class="teammode" type="button" data-team-mode="best"><em>Play now</em><b>Best Of</b><small>Choose an era and category, then name each season's five leaders.</small></button>
-      <button class="teammode" type="button" data-team-mode="guess"><em>Play now</em><b>Guess the Player</b><small>Stat Line rules, but every possible answer has played for ${esc(name)}.</small></button>
+      <button class="teammode" type="button" data-team-mode="identity"><em>Play now</em><b>Who Am I?</b><small>Five ${esc(name)} players. Follow the clues and choose from four names.</small></button>
       <button class="teammode" type="button" data-team-mode="higher"><em>Play now</em><b>Higher or Lower</b><small>Same streak game, using career highs from players who wore this sweater.</small></button>
-      <button class="teammode" type="button" data-team-mode="mystery"><em>Play now</em><b>Mystery Season</b><small>Same three-try season game, limited to ${esc(name)} seasons.</small></button>
+      <button class="teammode" type="button" data-team-mode="journey"><em>Play now</em><b>Team Journey</b><small>Five familiar alumni. Arrange their NHL teams in career order.</small></button>
     </div><div id="teamModePanel"></div>`;
-  $("backTeamPicker").onclick = () => { history.pushState(null, "", "#teams"); renderTeamPicker(); };
+  $("backTeamPicker").onclick = () => { teamMiniCleanup(); history.pushState(null, "", "#teams"); renderTeamPicker(); };
 }
 function centerTeamMode(mode) {
-  // Best Of should open with the mode title and all three selectors at the top
-  // of the viewport, matching the intended game framing. The other Team modes
-  // keep their actual play surface centered.
+  // Multi-question games open at their title and setup controls. Higher or
+  // Lower keeps its comparison cards centered.
   requestAnimationFrame(() => requestAnimationFrame(() => {
     const panel = $("teamModePanel")?.querySelector(".teammodepanel");
     if (!panel) return;
 
-    if (mode === "best") {
+    if (["best", "identity", "journey"].includes(mode)) {
       const rect = panel.getBoundingClientRect();
       const target = Math.max(0, window.scrollY + rect.top - 6);
-      window.scrollTo({ top: target, behavior: "smooth" });
+      window.scrollTo({ top: target, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       return;
     }
 
     const anchors = {
-      guess: panel.querySelector(".seasons"),
+      identity: panel.querySelector(".team-mini"),
       higher: panel.querySelector(".hlpair"),
-      mystery: panel.querySelector(".ttcard"),
+      journey: panel.querySelector(".team-mini"),
     };
     const anchor = anchors[mode] || panel;
     const rect = anchor.getBoundingClientRect();
     const target = Math.max(0, window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2);
-    window.scrollTo({ top: target, behavior: "smooth" });
+    window.scrollTo({ top: target, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }));
 }
 function teamModeShell(t, mode, body) {
-  const names = {best:"Best Of",guess:"Guess the Player",higher:"Higher or Lower",mystery:"Mystery Season"};
+  const names = {best:"Best Of",identity:"Who Am I?",higher:"Higher or Lower",journey:"Team Journey"};
   $("teamModePanel").innerHTML = `<section class="teammodepanel"><h3>${names[mode]}</h3>${body}</section>`;
   centerTeamMode(mode);
 }
@@ -11288,15 +11290,7 @@ function startTeamBest(t, initial = false) {
   renderRound();
 }
 function teamStatCells(r){return [r.gp,r.goals,r.assists,r.points,signed(r.plusMinus)];}
-function startTeamGuess(t){
-  const h=historyForTeam(t); h.team=t; const minSeasons=Math.min(3,Math.max(2,h.years.length));const pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=minSeasons);if(!pool.length)return teamModeNoData(t,"guess");const target=pick(pool),rows=target.rows.slice(),max=8;let guesses=[],over=false;
-  const analyticsRound=globalThis.SweaterAnalytics?.context("team_guess","unlimited",`${t}:${target.id}`,true);
-  let analyticsMoves=0;
-  teamModeShell(t,"guess",`<p class="team-subprompt">Same rules as Stat Line: one season starts unlocked and every wrong guess reveals another.</p><p class="intro" id="teamGuessIntro"></p><table class="seasons"><thead><tr><th>Season</th><th>GP</th><th>G</th><th>A</th><th>PTS</th><th>+/−</th></tr></thead><tbody id="teamGuessRows"></tbody></table>${teamSearchMarkup("teamGuessInput","teamGuessOpts","Guess the player")}<ul class="wrong" id="teamGuessWrong"></ul><p class="hint" id="teamGuessLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamGuessNew">New player</button></div>`);
-  const draw=()=>{const shown=over?rows.length:Math.min(rows.length,1+guesses.length);$("teamGuessIntro").textContent=over?`${target.name} · ${target.pos} · ${rows.length} ${teamFullName(t)} seasons`:`${target.pos} · ${rows.length} ${teamFullName(t)} seasons`;$("teamGuessRows").innerHTML=rows.map((r,i)=>i<shown?`<tr><td>${seasonText(r.y)}</td>${teamStatCells(r).map(v=>`<td>${v}</td>`).join("")}</tr>`:`<tr class="locked"><td>${seasonText(r.y)}</td><td colspan="5">🔒 Locked</td></tr>`).join("");$("teamGuessLeft").textContent=over?`Answer: ${target.name}`:`${max-guesses.length} tries left · each wrong guess unlocks another season.`;};draw();
-  makeTeamSearch("teamGuessInput","teamGuessOpts",h,p=>{if(over||guesses.includes(p.id))return;globalThis.SweaterAnalytics?.step?.(++analyticsMoves,p.id===target.id,analyticsRound);if(p.id===target.id){over=true;globalThis.SweaterAnalytics?.completeRound(true,{token:analyticsRound,attempts:analyticsMoves});draw();return;}guesses.push(p.id);$("teamGuessWrong").insertAdjacentHTML("afterbegin",`<li class="newrow"><span class="x">✕</span><span>${esc(p.name)}</span><small>${esc(p.pos)}</small></li>`);if(guesses.length>=max){over=true;globalThis.SweaterAnalytics?.completeRound(false,{token:analyticsRound,attempts:analyticsMoves});}draw();},()=>guesses);
-  $("teamGuessNew").onclick=()=>startTeamGuess(t);$("teamGuessInput").focus();
-}
+/*__TEAM_GAMES__*/
 const TEAM_HL_STATS = {
   points:  { name: "Points",       label: "points",          up: "More", down: "Fewer", type: "peak" },
   assists: { name: "Assists",      label: "assists",         up: "More", down: "Fewer", type: "peak" },
@@ -11353,15 +11347,16 @@ function startTeamHigher(t){
   $("teamHLStatSel").onchange=e=>{store.set(statKey,e.target.value);startTeamHigher(t);};
   $("teamHLNew").onclick=()=>startTeamHigher(t);
 }
-function startTeamMystery(t){
-  const h=historyForTeam(t),minSeasons=Math.min(4,Math.max(2,h.years.length)),pool=[...h.byPlayer.values()].filter(p=>p.rows.length>=minSeasons);if(!pool.length)return teamModeNoData(t,"mystery");const target=pick(pool),row=pick(target.rows),max=3;let guesses=[],over=false;
-  const analyticsRound=globalThis.SweaterAnalytics?.context("team_mystery","unlimited",`${t}:${target.id}:${row.y}`,true);
-  teamModeShell(t,"mystery",`<div class="ttcard"><img id="teamMysteryImg" alt=""><div><p class="pname">${esc(target.name)}</p><p class="pmeta"><span class="team-mystery-logo"><img src="${logo(t)}" alt=""></span>${esc(teamFullName(t))} · ${esc(target.pos)}</p></div></div><p class="ttq">Which season is this?</p><div class="chips">${[["GP",row.gp],["G",row.goals],["A",row.assists],["PTS",row.points],["+/−",signed(row.plusMinus)]].map(([k,v])=>`<span class="chip"><b>${v}</b> ${k}</span>`).join("")}</div><div class="selist" id="teamMysteryList"></div><p class="hint" id="teamMysteryLeft"></p><div class="team-best-actions"><button type="button" class="btn ghost" id="teamMysteryNew">Next player</button></div>`);
-  const img=$("teamMysteryImg");img.onerror=function(){this.onerror=null;this.src=FALLBACK};img.src=teamHistHeadshot(t,target.id,row.y);
-  const draw=()=>{$("teamMysteryList").innerHTML=target.rows.map(r=>{const tried=guesses.includes(r.y),cls=over&&r.y===row.y?' hit':tried?' miss':'',arrow=tried&&r.y!==row.y?(row.y>r.y?' ↑':' ↓'):'';return `<button type="button" class="sebtn${cls}" data-y="${r.y}"${tried||over?' disabled':''}>${seasonText(r.y)}${arrow}</button>`}).join('');$("teamMysteryLeft").textContent=over?"":`${max-guesses.length} ${max-guesses.length===1?'try':'tries'} left · arrows point to a later or earlier season`;$("teamMysteryList").querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{if(over)return;const y=+b.dataset.y;guesses.push(y);globalThis.SweaterAnalytics?.step?.(guesses.length,y===row.y,analyticsRound);if(y===row.y||guesses.length>=max){over=true;globalThis.SweaterAnalytics?.completeRound(y===row.y,{token:analyticsRound,attempts:guesses.length});}draw();});};draw();$("teamMysteryNew").onclick=()=>startTeamMystery(t);
+function openTeamMode(t, mode) {
+  teamMiniCleanup();
+  globalThis.SweaterAnalytics?.view(`team_${mode}`, "unlimited");
+  if (mode === "best") startTeamBest(t, true);
+  else if (mode === "identity" || mode === "guess") startTeamIdentity(t);
+  else if (mode === "higher") startTeamHigher(t);
+  else if (mode === "journey" || mode === "mystery") startTeamJourney(t);
 }
-function openTeamMode(t, mode) { globalThis.SweaterAnalytics?.view(`team_${mode}`, "unlimited"); if(mode==="best")startTeamBest(t, true); else if(mode==="guess")startTeamGuess(t); else if(mode==="higher")startTeamHigher(t); else if(mode==="mystery")startTeamMystery(t); }
 function openTeams(team = "", push = true) {
+  teamMiniCleanup();
   globalThis.SweaterAnalytics?.view("teams", "unlimited");
   if (team) globalThis.SweaterAnalytics?.team?.(team);
   if (push) rememberHubScroll();
@@ -11382,6 +11377,7 @@ $("view-teams").addEventListener("click", e => {
 });
 
 function showHub(push = true) {
+  if (typeof teamMiniCleanup === "function") teamMiniCleanup();
   globalThis.SweaterAnalytics?.hub?.();
   const returningToHub = !onHub;
   leaveGame(game);
@@ -11401,6 +11397,7 @@ function showHub(push = true) {
 }
 
 function openGame(id, push = true) {
+  if (typeof teamMiniCleanup === "function") teamMiniCleanup();
   if (MAINTENANCE_GAMES.has(id)) {
     if (location.hash) history.replaceState(null, "", location.pathname + location.search);
     showHub(false);
@@ -13558,6 +13555,28 @@ def goal_clip_year_range(clips, sources=None):
     return str(first) if first == last else f"{first}–{last}"
 
 
+def load_team_careers():
+    saved = json.loads((HERE / "team_careers.json").read_text(encoding="utf-8"))
+    if saved.get("version") != 1:
+        raise ValueError("Unsupported Team Journey career data")
+    players = saved["players"]
+    if len({p["id"] for p in players}) != len(players):
+        raise ValueError("Duplicate Team Journey player records")
+    for p in players:
+        stints = p["stints"]
+        if not p.get("name") or not stints or sum(s["gp"] for s in stints) != p.get("career_gp"):
+            raise ValueError(f"Incomplete Team Journey player: {p['id']}")
+        for i, stint in enumerate(stints):
+            if (stint["team"] not in set(TEAMS) | {"ARI", "ATL", "MNS", "HFD", "QUE", "AFM", "CLR", "KCS", "CGS", "OAK", "CLE", "WIN"}
+                    or not 1917 <= stint["from"] <= stint["to"] <= date.today().year or stint["gp"] <= 0
+                    or i and (stint["from"] < stints[i - 1]["to"] or stint["team"] == stints[i - 1]["team"])):
+                raise ValueError(f"Invalid Team Journey stint for {p['id']}")
+    for team in TEAMS:
+        if sum(3 <= len(p["stints"]) <= 5 and any(s["team"] == team and s["gp"] >= 20 for s in p["stints"]) for p in players) < 5:
+            raise ValueError(f"Not enough verified Team Journey careers for {team}")
+    return [p for p in players if 3 <= len(p["stints"]) <= 10]
+
+
 def load_trophy_images():
     """Use a verified local photo for every award in Trophy Case."""
     root = HERE / "static" / "trophies"
@@ -14138,9 +14157,12 @@ def main():
     trophy_images = load_trophy_images()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json"])).hexdigest()[:12],
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
+        "/*__TEAM_GAMES_CSS__*/": (HERE / "static" / "team-games" / "styles.css").read_text(encoding="utf-8"),
+        "/*__TEAM_GAMES__*/": (HERE / "static" / "team-games" / "games.js").read_text(encoding="utf-8"),
+        "/*__TEAM_CAREERS__*/[]": esc(load_team_careers()),
         "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_ANIMATION__*/": (HERE / "static" / "shootout" / "animation.js").read_text(encoding="utf-8"),
         "/*__GOAL_CLIPS__*/[]": esc(goal_clips),

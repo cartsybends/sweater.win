@@ -20,6 +20,8 @@ A GitHub Actions workflow (`.github/workflows/update.yml`) runs every day. It:
 | `og-image.png` | The preview image shown when the link is shared. |
 | `schedule.json` | Created automatically. Don't edit or delete it, or past daily answers change. |
 | `career_cache.json` | Created automatically. Saves career history so updates are faster. |
+| `team_careers.json` | Verified NHL career paths for Team Journey; active players refresh weekly. |
+| `static/team-games/` | Five-question Team Journey and Who Am I? games, with Classic and Challenge difficulties. |
 
 ## Settings
 

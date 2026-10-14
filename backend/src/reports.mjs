@@ -32,8 +32,8 @@ export async function usageReport(url,env,labels,variants,clock,shift){
   const summarySQL=`SELECT COUNT(DISTINCT session_hash) sessions,COUNT(DISTINCT visitor_hash) visitors,COUNT(DISTINCT visit_hash) visits,
     COUNT(DISTINCT CASE WHEN visitor_hash IS NOT NULL THEN session_hash END) recognized_sessions,
     SUM(kind='site_visit') page_loads,SUM(kind IN ('mode_open','page_view')) page_views,SUM(kind='mode_open') opens,SUM(kind='page_view' AND mode='hub') hub_views,
-    SUM(kind='round_start') starts,SUM(kind='round_complete') finishes,SUM(kind='round_complete' AND won=1 AND mode NOT IN ('party','team_higher','team_best')) wins,
-    SUM(kind='round_complete' AND won=0 AND mode NOT IN ('party','team_higher','team_best')) losses,SUM(kind='share') shares,SUM(active_ms) active_ms,
+    SUM(kind='round_start') starts,SUM(kind='round_complete') finishes,SUM(kind='round_complete' AND won=1 AND mode NOT IN ('party','team_higher','team_best','team_identity','team_journey')) wins,
+    SUM(kind='round_complete' AND won=0 AND mode NOT IN ('party','team_higher','team_best','team_identity','team_journey')) losses,SUM(kind='share') shares,SUM(active_ms) active_ms,
     SUM(kind='error') errors,SUM(kind='round_step') steps,SUM(correct=1) correct_answers,SUM(correct IS NOT NULL) answered,
     MIN(day) first_day,COUNT(*) events FROM scoped`;
   query('summary',selected.cte+' '+summarySQL);
@@ -96,7 +96,7 @@ export async function usageReport(url,env,labels,variants,clock,shift){
   const result=await env.DB.batch(queries),data=Object.fromEntries(names.map((name,i)=>[name,result[i].results||[]]));
   const summary=data.summary[0]||{},cohorts=new Map(data.cohort.map(r=>[r.mode,r]));
   for(const key of ['sessions','visitors','visits','recognized_sessions','page_loads','page_views','hub_views','opens','starts','finishes','wins','losses','shares','active_ms','errors','steps','correct_answers','answered','events'])summary[key]=Number(summary[key]||0);
-  const modes=data.modes.map(r=>({...r,label:labels[r.mode],completed_starts:cohorts.get(r.mode)?.completed||0,left_unfinished:cohorts.get(r.mode)?.left_unfinished||0,rounds_supported:r.mode!=='teams',outcomes_supported:!['party','team_higher','team_best'].includes(r.mode),finish_rate:ratio(cohorts.get(r.mode)?.completed||0,r.starts),win_rate:ratio(r.wins,r.wins+r.losses),answer_accuracy:ratio(r.correct_answers,r.answered)}));
+  const modes=data.modes.map(r=>({...r,label:labels[r.mode],completed_starts:cohorts.get(r.mode)?.completed||0,left_unfinished:cohorts.get(r.mode)?.left_unfinished||0,rounds_supported:r.mode!=='teams',outcomes_supported:!['party','team_higher','team_best','team_identity','team_journey'].includes(r.mode),finish_rate:ratio(cohorts.get(r.mode)?.completed||0,r.starts),win_rate:ratio(r.wins,r.wins+r.losses),answer_accuracy:ratio(r.correct_answers,r.answered)}));
   summary.completed_starts=modes.reduce((sum,r)=>sum+r.completed_starts,0);summary.finish_rate=ratio(summary.completed_starts,summary.starts);summary.win_rate=ratio(summary.wins,summary.wins+summary.losses);summary.avg_session_ms=summary.sessions?summary.active_ms/summary.sessions:null;
   const visits=data.visits[0]||{};summary.engaged_visits=Number(visits.engaged||0);summary.engagement_rate=ratio(visits.engaged,visits.visits);summary.bounce_rate=visits.visits?100-summary.engagement_rate:null;
   const audience=data.audience[0]||{};audience.repeat_rate=ratio(audience.repeat_visitors,audience.visitors);
