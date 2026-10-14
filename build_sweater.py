@@ -2802,7 +2802,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     70% { opacity: .18; transform: scale(1.3); }
     100% { opacity: 0; transform: scale(1.48); }
   }
-  /* Shared numbered-question progress: Trophy Case is the canonical motion/style. */
+  /* Shared numbered-question progress, with an optional moving highlight. */
   .question-progress { position: relative; }
   .question-progress .tr-active-glider {
     position: absolute; left: 0; top: 0; z-index: 0; width: 28px; height: 28px; border-radius: 50%;
@@ -2875,16 +2875,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .tr-roundline { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
   #view-trophy .tr-roundline b { display: inline-block; margin-left: 3px; color: var(--fg); font-weight: 650; }
   #view-trophy #trDots { position: relative; width: fit-content; max-width: min(100%, 352px); margin: 0 auto 24px; gap: 8px; }
-  #view-trophy #trDots .shdot { color: var(--muted); transform: none; box-shadow: none; transition: color .3s ease, background-color .3s ease, border-color .3s ease; }
-  #view-trophy #trDots .shdot.now { transform: none; color: var(--accent); background: transparent; border-color: transparent; box-shadow: none; }
+  #view-trophy #trDots .shdot { border-radius: 6px; color: var(--muted); transform: none; box-shadow: none; transition: color .18s ease, background-color .18s ease, border-color .18s ease; }
+  #view-trophy #trDots .shdot.now { transform: none; color: var(--fg); background: color-mix(in srgb, var(--accent) 13%, var(--panel)); border-color: var(--accent); box-shadow: none; }
   #view-trophy #trDots .shdot.ok { color: var(--tr-success-ink); box-shadow: none; }
   #view-trophy #trDots .shdot.bad { color: var(--tr-error); background: color-mix(in srgb, var(--tr-error) 9%, var(--panel)); border-color: color-mix(in srgb, var(--tr-error) 62%, var(--line)); box-shadow: none; }
-  #view-trophy #trDots .tr-dot-number, #view-trophy #trDots .tr-dot-mark { transform: none; transition: opacity .22s ease; }
+  #view-trophy #trDots .tr-dot-number, #view-trophy #trDots .tr-dot-mark { transform: none; transition: opacity .18s ease; }
   #view-trophy #trDots .shdot:is(.ok, .bad) :is(.tr-dot-number, .tr-dot-mark) { transform: none; }
   #view-trophy #trDots .tr-dot-mark path { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; }
-  #view-trophy #trDots .tr-active-glider { box-shadow: none; transition: transform .34s var(--tr-ease), opacity .2s ease, background-color .3s ease, border-color .3s ease; }
-  #view-trophy #trDots[data-outcome="ok"] .tr-active-glider { border-color: var(--hit); background-color: color-mix(in srgb, var(--hit) 10%, var(--panel)); }
-  #view-trophy #trDots[data-outcome="bad"] .tr-active-glider { border-color: var(--tr-error); background-color: color-mix(in srgb, var(--tr-error) 9%, var(--panel)); }
   #view-trophy #trDots .shdot::after { animation: none; }
   #view-trophy.setup-change .shdots { animation: none; }
   #view-trophy #trQ { width: 100%; max-width: none; min-height: 138px; margin: 0 0 20px; padding: 4px 6px 14px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
@@ -2903,7 +2900,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .tr-answer-mark path { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   #view-trophy .tr-answer-copy { position: relative; z-index: 1; flex: 1; min-width: 0; }
   #view-trophy .trname { padding: 0; font-size: 16px; font-weight: 650; line-height: 1.3; letter-spacing: -.015em; }
-  #view-trophy .trlogo { position: static; flex: 0 0 40px; width: 40px; height: 40px; opacity: .8; filter: none; transform: none; transition: opacity .3s ease; animation: none; }
+  #view-trophy .trlogo { position: static; flex: 0 0 64px; width: 64px; height: 64px; opacity: .9; filter: none; transform: none; transition: opacity .3s ease; animation: none; }
   #view-trophy .trlogo.logo-blue { filter: brightness(1.45); }
   :root[data-theme="light"] #view-trophy .trlogo { filter: none; }
   #view-trophy .shopt:hover:not(:disabled) .trlogo { opacity: 1; transform: none; }
@@ -2936,6 +2933,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     #view-trophy .tr-stage { padding: 20px 16px 14px; border-radius: 18px; }
     #view-trophy #trOpts { grid-template-columns: 1fr; gap: 9px; }
     #view-trophy .shopt { min-height: 72px; padding: 14px 16px; }
+    #view-trophy .trlogo { flex-basis: 56px; width: 56px; height: 56px; }
     #view-trophy #trQ { min-height: 128px; margin-bottom: 16px; padding-bottom: 8px; }
     #view-trophy .tr-footer { min-height: 78px; gap: 10px; }
   }
@@ -6952,8 +6950,8 @@ G.trophy = {
       b.setAttribute("aria-label", `${r.names[n]}${reviewing ? n === r.a ? ": correct answer" : selected ? ": your answer, incorrect" : "" : ""}`);
     });
     if (newRound && !reviewing && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      $("trQ").animate([{ opacity: .35 }, { opacity: 1 }], { duration: 220, easing: "ease-out" });
-      $("trOpts").animate([{ opacity: .35 }, { opacity: 1 }], { duration: 220, easing: "ease-out" });
+      $("trQ").animate([{ opacity: .6 }, { opacity: 1 }], { duration: 180, easing: "ease-out" });
+      $("trOpts").animate([{ opacity: .6 }, { opacity: 1 }], { duration: 180, easing: "ease-out" });
     }
     // Keep each choice self-contained as well as using the delegated handler
     // below. This avoids an interaction dead-end if a browser misses a
@@ -10519,10 +10517,11 @@ function paintOptions(host, round, html, grade) {
 function paintQuestionProgress(host, total, current, results = []) {
   const dots = $(host);
   if (!dots) return;
+  const movingHighlight = host !== "trDots";
   dots.classList.add("question-progress");
   let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
   if (dotNodes.length !== total) {
-    dots.innerHTML = `<span class="tr-active-glider" aria-hidden="true"></span>` + Array.from({ length: total }, (_, n) =>
+    dots.innerHTML = (movingHighlight ? `<span class="tr-active-glider" aria-hidden="true"></span>` : "") + Array.from({ length: total }, (_, n) =>
       `<span class="shdot" data-round="${n}" aria-label="Question ${n + 1}">` +
         `<span class="tr-dot-number">${n + 1}</span>` +
         `<span class="tr-dot-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path></path></svg><span class="tr-dot-custom"></span></span>` +
@@ -10548,44 +10547,26 @@ function paintQuestionProgress(host, total, current, results = []) {
       : `Question ${n + 1}${active ? ": current" : ""}`);
   });
   dots.dataset.current = String(current);
-  positionQuestionProgress(dots);
-  if (host === "trDots" && !dots.progressObserver && typeof ResizeObserver === "function") {
-    dots.progressObserver = new ResizeObserver(() => positionQuestionProgress(dots));
-    dots.progressObserver.observe(dots);
-  }
+  if (movingHighlight) positionQuestionProgress(dots);
 }
 function positionQuestionProgress(dots) {
   const current = Number(dots.dataset.current);
   const glider = dots.querySelector(".tr-active-glider"), activeDot = dots.querySelector(`.shdot[data-round="${current}"]`);
   if (glider && activeDot) {
-    // Layout offsets stay exact while numbers/marks animate, and a resize
-    // observer realigns Trophy's glider when its progress row wraps on mobile.
+    // Layout offsets stay exact while numbers/marks animate.
     const x = activeDot.offsetLeft, y = activeDot.offsetTop;
-    const oldX = Number.parseFloat(glider.style.getPropertyValue("--tr-dot-x"));
-    const oldY = Number.parseFloat(glider.style.getPropertyValue("--tr-dot-y"));
-    const wrap = dots.id === "trDots" && glider.classList.contains("ready") && oldY !== y;
-    if ((oldX !== x || oldY !== y) && glider.progressFade) {
-      glider.progressFade.cancel();
-      glider.progressFade = null;
-    }
-    if (!glider.classList.contains("ready") || wrap) {
+    if (!glider.classList.contains("ready")) {
       glider.style.transition = "none";
       glider.style.setProperty("--tr-dot-x", `${x}px`);
       glider.style.setProperty("--tr-dot-y", `${y}px`);
       void glider.offsetWidth;
       glider.style.transition = "";
       glider.classList.add("ready");
-      if (wrap && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        // Across rows, a short fade is clearer than a diagonal sweep over
-        // already-answered questions. Horizontal moves keep the CSS slide.
-        glider.progressFade = glider.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 180, easing: "ease-out" });
-      }
     } else {
       glider.style.setProperty("--tr-dot-x", `${x}px`);
       glider.style.setProperty("--tr-dot-y", `${y}px`);
     }
   } else if (glider) {
-    if (glider.progressFade) { glider.progressFade.cancel(); glider.progressFade = null; }
     glider.classList.remove("ready");
   }
 }
