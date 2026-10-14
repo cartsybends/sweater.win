@@ -6,12 +6,6 @@
 .team-mini-line { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0 15px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 #teamMiniQuestion { scroll-margin-top: 18px; }
 .team-mini #teamMiniDots { gap: 8px; margin: 0 auto 24px; width: fit-content; }
-.team-mini .question-progress .shdot { border-radius: 6px; transform: none; box-shadow: none; transition: background-color .18s ease, border-color .18s ease; }
-.team-mini .question-progress .shdot.now { color: var(--fg); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--panel)); }
-.team-mini .question-progress .tr-dot-number, .team-mini .question-progress .tr-dot-mark { transform: none; transition: opacity .18s ease; }
-.team-mini .question-progress .shdot:is(.ok, .bad) :is(.tr-dot-number, .tr-dot-mark) { transform: none; }
-.team-mini .question-progress .tr-dot-mark path { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; }
-.team-mini .question-progress .shdot::after { animation: none; }
 .team-mini h4 { margin: 0; color: var(--fg); font-size: clamp(22px, 3vw, 28px); font-weight: 750; letter-spacing: -.03em; line-height: 1.2; }
 .team-mini-eyebrow { margin: 0 0 7px; color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .07em; text-transform: uppercase; }
 .team-mini-avatar, .team-journey-player > img { display: grid; flex: 0 0 80px; width: 80px; height: 80px; place-items: center; border: 1px solid var(--line); border-radius: 14px; background: var(--cell); overflow: hidden; }
@@ -47,9 +41,9 @@
 .team-mini-actions .btn:disabled { opacity: .45; cursor: default; }
 .team-journey-direction { display: flex; justify-content: space-between; gap: 14px; margin: 0 0 10px; color: var(--muted); font-size: 11px; }
 .team-journey-board { display: grid; grid-template-columns: repeat(var(--stops), minmax(0, 1fr)); gap: 10px; }
-.team-journey-tile { position: relative; display: grid; grid-template-rows: 22px 58px 1fr; align-items: center; justify-items: center; gap: 10px; min-width: 0; min-height: 165px; padding: 12px 10px 16px; border: 1px solid var(--line); border-radius: 13px; background: var(--cell); color: var(--fg); font: inherit; cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.team-journey-tile { position: relative; display: grid; grid-template-rows: 22px 80px 1fr; align-items: center; justify-items: center; gap: 10px; min-width: 0; min-height: 187px; padding: 12px 10px 16px; border: 1px solid var(--line); border-radius: 13px; background: var(--cell); color: var(--fg); font: inherit; cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .team-journey-number { justify-self: start; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
-.team-journey-tile > img { display: block; width: 58px; height: 58px; object-fit: contain; pointer-events: none; }
+.team-journey-tile > img { display: block; width: 80px; height: 80px; max-width: 100%; object-fit: contain; pointer-events: none; }
 .team-journey-copy { display: grid; align-content: start; gap: 6px; min-width: 0; text-align: center; }
 .team-journey-copy b { font-size: 12px; font-weight: 650; line-height: 1.35; overflow-wrap: anywhere; }
 .team-journey-copy small { color: var(--muted); font-size: 10px; line-height: 1.4; }
@@ -77,8 +71,8 @@
   .team-clues li { padding: 13px 12px; gap: 10px; }
   .team-identity-choices { grid-template-columns: 1fr; gap: 8px; }
   .team-journey-board { grid-template-columns: 1fr; gap: 8px; }
-  .team-journey-tile { grid-template-columns: 22px 48px minmax(0, 1fr) 44px; grid-template-rows: auto; gap: 10px; min-height: 78px; padding: 12px; justify-items: start; }
-  .team-journey-tile > img { width: 48px; height: 48px; }
+  .team-journey-tile { grid-template-columns: 22px 64px minmax(0, 1fr) 44px; grid-template-rows: auto; gap: 10px; min-height: 90px; padding: 12px; justify-items: start; }
+  .team-journey-tile > img { width: 64px; height: 64px; }
   .team-journey-copy { text-align: left; }
   .team-journey-copy b { font-size: 13px; }
   .team-journey-grip { position: static; width: 44px; height: 44px; }
@@ -88,8 +82,8 @@
   .team-mini-settings label { width: 100%; }
   .team-mini h4 { font-size: 21px; }
   .team-mini-actions .btn { flex: 1 1 auto; }
-  .team-journey-tile { grid-template-columns: 19px 40px minmax(0, 1fr) 44px; gap: 7px; padding: 10px; }
-  .team-journey-tile > img { width: 40px; height: 40px; }
+  .team-journey-tile { grid-template-columns: 19px 56px minmax(0, 1fr) 44px; gap: 7px; padding: 10px; }
+  .team-journey-tile > img { width: 56px; height: 56px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .team-mini *, .team-journey-ghost { animation: none !important; transition: none !important; }

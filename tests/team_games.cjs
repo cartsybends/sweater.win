@@ -94,4 +94,52 @@ test('team arrow controls cannot answer a hidden Higher or Lower round', () => {
   hidden = false; listener(event('ArrowUp')); listener(event('ArrowDown')); assert.equal(guessed,2);
   listener({...event('ArrowDown'),target:{tagName:'SELECT'}}); assert.equal(guessed,2);
 });
+test('Teams Higher/Lower finishes its number reveal before advancing and cancels stale runs', () => {
+  const source = fs.readFileSync('build_sweater.py', 'utf8');
+  const section = (start, end) => source.slice(source.indexOf(start), source.indexOf(end, source.indexOf(start)));
+  const elements = new Map(), values = new Map(), timers = new Map(), frames = [], events = [];
+  let clock = 0, token = 0, reduced = false;
+  const $ = id => {
+    if (!elements.has(id)) elements.set(id, {textContent: '', innerHTML: '', offsetWidth: 1,
+      classList: {values: new Set(), add(x) {this.values.add(x);}, remove(x) {this.values.delete(x);}},
+      querySelector() {
+        const count = this.innerHTML.match(/data-count="(\d+)"/);
+        this.count = count ? {dataset: {count: count[1]}, textContent: count[1]} : null;
+        return this.count;
+      },
+      querySelectorAll() {return this.buttons = this.innerHTML.includes('data-pick=') ? ['H','L'].map(pick => ({dataset: {pick}})) : [];},
+    });
+    return elements.get(id);
+  };
+  const players = [20,10,30].map(v => ({id:v,v,y:2000,name:`Player ${v}`,pos:'C'}));
+  const r = vm.createContext({$,console,Math,Number,String,Set,teamMiniCleanup() {},
+    historyForTeam: () => ({skaters:players}), teamHLPlayers: () => players,
+    TEAM_HL_STATS: {points:{name:'Points',type:'high',label:'points',up:'Higher',down:'Lower'}},
+    store: {get:key=>values.get(key),set:(key,value)=>values.set(key,value)},
+    shuffled: arr=>arr.slice(), pick: arr=>arr[0], esc:String, teamFullName:()=> 'Vancouver Canucks',
+    teamHistHeadshot:()=>'',logo:()=>'',seasonText:String,teamModeNoData(){},
+    teamModeShell() {elements.clear();},paintHotStreak:(id,value)=>{$(id).textContent=String(value);},
+    matchMedia:()=>({matches:reduced}),performance:{now:()=>clock},requestAnimationFrame:fn=>frames.push(fn),
+    setTimeout:(fn,delay)=>{const id=++token;timers.set(id,{fn,delay});return id;},clearTimeout:id=>timers.delete(id),
+    SweaterAnalytics:{context:()=> 'test',step:(...args)=>events.push(args),completeRound(){}},
+  });
+  vm.runInContext(section('function countUp(el)', '// ======================= more games:'),r);
+  vm.runInContext(section('function startTeamHigher(t)', 'function openTeamMode('),r);
+  const start = () => vm.runInContext('startTeamHigher("VAN")',r);
+  const answer = () => {const button=$('teamHLB').buttons.find(b=>b.dataset.pick==='L');button.onclick();return button;};
+  start();const old=answer();old.onclick();assert.equal(events.length,1,'One answer during the reveal');
+  assert.equal($('teamHLB').count.textContent,0);assert.equal(timers.size,1);
+  clock=300;frames.shift()(clock);assert(Number($('teamHLB').count.textContent)>0&&Number($('teamHLB').count.textContent)<10);
+  clock=600;frames.shift()(clock);assert.equal($('teamHLB').count.textContent,10);
+  const next=[...timers.values()][0];assert.equal(next.delay,1100);timers.clear();next.fn();
+  assert.equal($('teamHLStreak').textContent,'1');assert($('teamHLA').innerHTML.includes('Player 10'));
+  assert($('teamHLPair').classList.values.has('slide'));
+  start();answer();const stale=[...timers.values()][0].fn;
+  start();assert.equal(timers.size,0);const markup=$('teamHLB').innerHTML;
+  stale();assert.equal($('teamHLB').innerHTML,markup);assert.equal($('teamHLStreak').textContent,'0');
+  answer();const leaving=[...timers.values()][0].fn;vm.runInContext('teamMiniCleanup()',r);
+  assert.equal(timers.size,0);const held=$('teamHLB').innerHTML;leaving();assert.equal($('teamHLB').innerHTML,held);
+  reduced=true;start();answer();assert.equal($('teamHLB').count.textContent,'10');
+  const quiet=[...timers.values()][0];timers.clear();quiet.fn();assert(!$('teamHLPair').classList.values.has('slide'));
+});
 console.log(`${checks} team game checks passed.`);

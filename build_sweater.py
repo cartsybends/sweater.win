@@ -279,12 +279,27 @@ TEMPLATE = r'''<!DOCTYPE html>
   .jystop { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 104px; padding: 10px 12px;
             border-radius: 10px; background: var(--cell); color: var(--cell-fg); text-align: center; animation: rowin .35s ease both; }
   .jystop img { width: 42px; height: 42px; }
+  /* Logo sources have different clear space. Match their visible longest edge
+     to 64% of each mode's image box, without changing the artwork or layout. */
+  img[src^="https://assets.nhle.com/logos/nhl/svg/"] { object-fit: contain; scale: var(--crest-scale, 1); }
+  img:is([src*="/logos/nhl/svg/BOS_"], [src*="/logos/nhl/svg/BUF_"], [src*="/logos/nhl/svg/PIT_"], [src*="/logos/nhl/svg/STL_"], [src*="/logos/nhl/svg/VGK_"]) { --crest-scale: 1.103; }
+  img:is([src*="/logos/nhl/svg/FLA_"], [src*="/logos/nhl/svg/NJD_"], [src*="/logos/nhl/svg/NYI_"], [src*="/logos/nhl/svg/SEA_"]) { --crest-scale: 1.143; }
+  img:is([src*="/logos/nhl/svg/DET_"], [src*="/logos/nhl/svg/UTA_"]) { --crest-scale: .889; }
+  img:is([src*="/logos/nhl/svg/OTT_"], [src*="/logos/nhl/svg/CAR_"], [src*="/logos/nhl/svg/DAL_"], [src*="/logos/nhl/svg/MIN_"]) { --crest-scale: .914; }
+  img[src*="/logos/nhl/svg/MTL_"] { --crest-scale: .928; }
+  img:is([src*="/logos/nhl/svg/TBL_"], [src*="/logos/nhl/svg/TOR_"], [src*="/logos/nhl/svg/PHI_"], [src*="/logos/nhl/svg/CHI_"], [src*="/logos/nhl/svg/COL_"], [src*="/logos/nhl/svg/WPG_"], [src*="/logos/nhl/svg/ANA_"], [src*="/logos/nhl/svg/EDM_"], [src*="/logos/nhl/svg/VAN_"]) { --crest-scale: 1.067; }
+  img[src*="/logos/nhl/svg/CBJ_"] { --crest-scale: 1.016; }
+  img[src*="/logos/nhl/svg/NYR_"] { --crest-scale: 1.231; }
+  img[src*="/logos/nhl/svg/WSH_"] { --crest-scale: .853; }
+  img[src*="/logos/nhl/svg/NSH_"] { --crest-scale: .970; }
+  img[src*="/logos/nhl/svg/CGY_"] { --crest-scale: 1.123; }
+  img[src*="/logos/nhl/svg/LAK_"] { --crest-scale: .842; }
+  img[src*="/logos/nhl/svg/SJS_"] { --crest-scale: .955; }
+  img[src^="https://thumb.wikimedia.org/wikipedia/"][src$=".svg.png"] { object-fit: contain; scale: .64; }
   .jystop b { font-size: 14px; }
   .jystop small { font-size: 12px; opacity: .75; font-variant-numeric: tabular-nums; }
   .jyarrow { color: var(--muted); font-size: 18px; }
   .chips.hints { margin: 0 0 10px; }
-  .chip.hintchip { background: var(--near); color: var(--near-fg); display: inline-flex; align-items: center; gap: 4px; animation: rowin .35s ease both; }
-  .hintchip img { width: 20px; height: 20px; }
   /* Blur — frosted portrait reveal */
   .blcard {
     width: min(360px, 100%); margin: 5px auto 12px; overflow: hidden;
@@ -405,7 +420,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shake { animation: shake .35s ease; }
   @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
   @media (prefers-reduced-motion: reduce) {
-    .shake, .jystop, .hintchip, .blclue, #blWrong > .blmiss { animation: none; }
+    .shake, .jystop, .blclue, #blWrong > .blmiss { animation: none; }
     .blphoto > img, .blfrost span, .blmeter i { transition: none; }
   }
 
@@ -419,51 +434,17 @@ TEMPLATE = r'''<!DOCTYPE html>
   .phstat { padding: 10px 7px; border-radius: 11px; background: var(--cell); color: var(--cell-fg); text-align: center; }
   .phstat b { display: block; font-size: 20px; line-height: 1.05; font-variant-numeric: tabular-nums; }
   .phstat small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
-  .phclues { width: min(560px,100%); margin: 8px auto 12px; display: grid; gap: 7px; }
-  .phclue { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px;
-            background: color-mix(in srgb, var(--panel) 90%, transparent); animation: phcluein .32s cubic-bezier(.2,.8,.2,1) both; }
-  .phclue img { width: 34px; height: 34px; flex: none; object-fit: contain; background: #fff; border-radius: 7px; padding: 2px; }
-  .phclue small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .075em; text-transform: uppercase; }
-  .phclue b { display: block; margin-top: 1px; font-size: 14px; }
-  .phclue.final { border-color: color-mix(in srgb, var(--near) 54%, var(--line)); background: color-mix(in srgb, var(--near) 15%, var(--panel)); }
-  #phWrong.phwrong {
-    width: min(560px,100%); margin: 10px auto 0; display: flex; flex-direction: column; gap: 6px;
-  }
-  #phWrong > .phmiss {
-    box-sizing: border-box; width: 100%; flex: 0 0 auto; display: flex; align-items: center; gap: 9px;
-    min-height: 42px; padding: 8px 10px; border: 1px solid rgba(239,68,68,.34); border-radius: 10px;
-    background: rgba(239,68,68,.075);
-  }
-  #phWrong > .phmiss.phmiss-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
-  #phWrong > .phmiss .x {
-    display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
-    color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
-  }
-  #phWrong > .phmiss .who {
-    display: block; min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    color: var(--fg); font-size: 14px; font-weight: 700; line-height: 1.25;
-  }
-  .phmatch { flex: none; padding: 3px 7px; border-radius: 999px; background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850; }
   @keyframes phwrongin {
     0% { opacity: 0; transform: translateX(-8px) scale(.99); }
     55% { opacity: 1; transform: translateX(2px); }
     100% { opacity: 1; transform: none; }
   }
-  .phreveal { width: min(560px,100%); margin: 12px auto 5px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center;
-              padding: 13px 14px; border: 1px solid color-mix(in srgb, var(--hit) 50%, var(--line)); border-radius: 15px;
-              background: color-mix(in srgb, var(--hit) 10%, var(--panel)); animation: phcluein .36s cubic-bezier(.2,.85,.25,1.08) both; }
-  .phreveal > img { width: 56px; height: 56px; object-fit: cover; border-radius: 50%; background: var(--cream); }
-  .phreveal small { display: block; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
-  .phreveal b { display: block; margin-top: 2px; font-size: 18px; }
-  .phreveal span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
-  @keyframes phcluein { from { opacity: 0; transform: translateY(-4px) scale(.985); } to { opacity: 1; transform: none; } }
   @media (max-width: 520px) {
     .phrun { padding: 12px; }
     .phstats { gap: 5px; }
     .phstat { padding: 9px 4px; }
     .phstat b { font-size: 17px; }
   }
-  @media (prefers-reduced-motion: reduce) { .phclue, .phmiss, .phreveal { animation: none; } }
 
   /* draft day */
   .drinputs { margin-bottom: 8px; }
@@ -1786,41 +1767,42 @@ TEMPLATE = r'''<!DOCTYPE html>
     from { opacity: 0; transform: translateY(-6px); background: color-mix(in srgb, var(--link) 12%, var(--panel)); }
     to { opacity: 1; transform: none; }
   }
-  .slclues {
-    display: flex; flex-wrap: wrap; gap: 7px; min-height: 0; padding: 0 13px 12px;
-  }
-  .slclue {
-    display: inline-flex; align-items: center; gap: 6px; min-height: 31px; padding: 5px 9px;
+  /* Player-search modes share clues, missed guesses, and the answer-first layout. */
+  .player-clues { width: min(560px,100%); margin: 8px auto 12px; display: flex; flex-wrap: wrap; gap: 7px; }
+  .slclues { width: auto; margin: 0; padding: 0 13px 12px; }
+  .player-clue {
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: 100%; min-height: 31px; padding: 5px 9px;
     border: 1px solid var(--line); border-radius: 999px;
-    background: color-mix(in srgb, var(--panel) 80%, var(--cell)); font-size: 11px;
+    background: color-mix(in srgb, var(--panel) 80%, var(--cell)); color: var(--fg); font-size: 11px;
     animation: slcluein .28s ease both;
   }
-  .slclue img { width: 20px; height: 20px; object-fit: contain; }
-  .slclue small { color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; }
-  .slclue b { font-size: 11px; }
+  .player-clue img { width: 20px; height: 20px; object-fit: contain; flex: none; }
+  .player-clue small { color: var(--muted); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; }
+  .player-clue b { color: var(--fg); font-size: 11px; overflow-wrap: anywhere; }
   @keyframes slcluein { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
 
-  #view-statline .search { width: min(560px,100%); margin-top: 3px; }
-  #slWrong.slwrong {
+  :is(#view-statline, #view-journey, #view-playoff) .search { width: min(560px,100%); margin-top: 3px; }
+  .player-misses {
     width: min(560px,100%); margin: 10px auto 0; display: flex; flex-direction: column; gap: 6px;
   }
-  #slWrong > .slmiss {
+  .player-misses > .player-miss {
     box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 10px;
     border: 1px solid rgba(239,68,68,.32); border-radius: 10px; background: rgba(239,68,68,.07);
   }
-  #slWrong > .slmiss.slmiss-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
-  #slWrong > .slmiss .x {
+  .player-misses > .player-miss.is-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
+  .player-misses > .player-miss .x {
     display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
     color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
   }
-  #slWrong > .slmiss .who {
+  .player-misses > .player-miss .who {
     min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     color: var(--fg); font-size: 14px; font-weight: 700;
   }
-  .slmatch {
+  .player-match {
     flex: none; padding: 3px 7px; border-radius: 999px;
     background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850;
   }
+  .player-matches { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; max-width: 45%; }
   #view-statline #slLeft { margin-top: 8px; }
   @media (max-width: 520px) {
     .slcareer { border-radius: 14px; }
@@ -1831,7 +1813,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .slclues { padding-left: 10px; padding-right: 10px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .sltable tr.slrow-new td, .slclue, #slWrong > .slmiss { animation: none; }
+    .sltable tr.slrow-new td, .player-clue, .player-misses > .player-miss { animation: none; }
   }
 
   /* stats: guess the team */
@@ -2849,8 +2831,24 @@ TEMPLATE = r'''<!DOCTYPE html>
   .question-progress .shdot.bad::after { border-color: color-mix(in srgb, #c94a43 45%, transparent); animation: trophy-dot-ring .46s cubic-bezier(.2,.7,.2,1) both; }
   .question-progress .shdot.neutral::after { border-color: color-mix(in srgb, var(--near) 45%, transparent); animation: trophy-dot-ring .46s cubic-bezier(.2,.7,.2,1) both; }
   :root[data-theme="dark"] .question-progress .shdot.bad { color: #ee7168; }
+  .question-progress.square-progress { --question-error: #bb3948; --question-success: #14753d; gap: 8px; }
+  :root[data-theme="dark"] .square-progress { --question-error: #f27c85; --question-success: #79dda0; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .square-progress { --question-error: #f27c85; --question-success: #79dda0; }
+  }
+  .question-progress.square-progress .shdot { border-radius: 6px; color: var(--muted); transform: none; box-shadow: none; transition: color .18s ease, background-color .18s ease, border-color .18s ease; }
+  .question-progress.square-progress .shdot.now { transform: none; color: var(--fg); background: color-mix(in srgb, var(--accent) 13%, var(--panel)); border-color: var(--accent); box-shadow: none; }
+  .question-progress.square-progress .shdot.ok { color: var(--question-success); box-shadow: none; }
+  .question-progress.square-progress .shdot.bad { color: var(--question-error); background: color-mix(in srgb, var(--question-error) 9%, var(--panel)); border-color: color-mix(in srgb, var(--question-error) 62%, var(--line)); box-shadow: none; }
+  .question-progress.square-progress .shdot.neutral { transform: none; color: var(--fg); box-shadow: none; }
+  .question-progress.square-progress .tr-dot-number, .question-progress.square-progress .tr-dot-mark { transform: none; transition: opacity .18s ease; }
+  .question-progress.square-progress .shdot:is(.ok, .bad, .neutral) :is(.tr-dot-number, .tr-dot-mark) { transform: none; }
+  .question-progress.square-progress .tr-dot-mark path { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; }
+  .question-progress.square-progress .shdot::after { display: none; animation: none; }
+  .setup-change .shdots.square-progress { animation: none; }
   @media (prefers-reduced-motion: reduce) {
     .question-progress .shdot, .question-progress .tr-dot-number, .question-progress .tr-dot-mark, .question-progress .tr-dot-mark path, .question-progress .tr-active-glider { transition: none; }
+    .question-progress.square-progress :is(.shdot, .tr-dot-number, .tr-dot-mark) { transition: none; }
     .question-progress .shdot::after { animation: none !important; }
   }
   #view-truths .twlist .shopt { width: 100%; min-height: 72px; padding: 16px 18px 16px 48px; border-radius: 13px; text-align: left; }
@@ -2876,15 +2874,6 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy .tr-roundline { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
   #view-trophy .tr-roundline b { display: inline-block; margin-left: 3px; color: var(--fg); font-weight: 650; }
   #view-trophy #trDots { position: relative; width: fit-content; max-width: min(100%, 352px); margin: 0 auto 24px; gap: 8px; }
-  #view-trophy #trDots .shdot { border-radius: 6px; color: var(--muted); transform: none; box-shadow: none; transition: color .18s ease, background-color .18s ease, border-color .18s ease; }
-  #view-trophy #trDots .shdot.now { transform: none; color: var(--fg); background: color-mix(in srgb, var(--accent) 13%, var(--panel)); border-color: var(--accent); box-shadow: none; }
-  #view-trophy #trDots .shdot.ok { color: var(--tr-success-ink); box-shadow: none; }
-  #view-trophy #trDots .shdot.bad { color: var(--tr-error); background: color-mix(in srgb, var(--tr-error) 9%, var(--panel)); border-color: color-mix(in srgb, var(--tr-error) 62%, var(--line)); box-shadow: none; }
-  #view-trophy #trDots .tr-dot-number, #view-trophy #trDots .tr-dot-mark { transform: none; transition: opacity .18s ease; }
-  #view-trophy #trDots .shdot:is(.ok, .bad) :is(.tr-dot-number, .tr-dot-mark) { transform: none; }
-  #view-trophy #trDots .tr-dot-mark path { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; }
-  #view-trophy #trDots .shdot::after { animation: none; }
-  #view-trophy.setup-change .shdots { animation: none; }
   #view-trophy #trQ { width: 100%; max-width: none; min-height: 138px; margin: 0 0 20px; padding: 4px 6px 14px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   #view-trophy .trophy-prompt { display: block; font-size: 13px; font-weight: 500; color: var(--muted); }
   #view-trophy .trophy-heading { display: flex; align-items: center; gap: 16px; width: fit-content; max-width: 100%; min-height: 84px; margin: 10px auto 14px; }
@@ -3321,7 +3310,7 @@ TEMPLATE = r'''<!DOCTYPE html>
           <tbody id="slRows"></tbody>
         </table>
       </div>
-      <div class="slclues" id="slClues"></div>
+      <div class="slclues player-clues" id="slClues"></div>
     </div>
     <div class="search narrow">
       <input id="slGuess" autocomplete="off" role="combobox" aria-expanded="false"
@@ -3329,7 +3318,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <ul class="list" id="slOpts" role="listbox" hidden></ul>
     </div>
     <p class="hint" id="slLeft"></p>
-    <div class="slwrong" id="slWrong"></div>
+    <div class="player-misses" id="slWrong"></div>
     <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
   </section>
 
@@ -3407,17 +3396,17 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="view" id="view-journey" hidden>
     <p class="intro">Whose NHL career path is this?</p>
+    <div class="slot"></div>
     <div class="jypath" id="jyPath"></div>
     <p class="hint" id="jySeasonNote" hidden>Teams can share a season when a player moves midseason.</p>
-    <div class="chips hints" id="jyHints"></div>
+    <div class="player-clues" id="jyHints"></div>
     <div class="search narrow">
       <input id="jyGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="jyOpts" aria-label="Player name" placeholder="Guess 1 of 6">
       <ul class="list" id="jyOpts" role="listbox" hidden></ul>
     </div>
-    <div class="slot"></div>
     <p class="nodata" hidden>This game needs career stats. Rebuild the site to load them.</p>
     <p class="hint" id="jyLeft"></p>
-    <ul class="wrong" id="jyWrong"></ul>
+    <div class="player-misses" id="jyWrong"></div>
   </section>
 
   <section class="view" id="view-blur" hidden>
@@ -3753,16 +3742,15 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   <section class="view" id="view-playoff" hidden>
     <p class="intro" id="phIntro">Name the player from one postseason run.</p>
+    <div class="slot"></div>
     <div class="phrun" id="phRun"></div>
-    <div class="phclues" id="phClues"></div>
+    <div class="player-clues" id="phClues"></div>
     <div class="search narrow">
       <input id="phGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="phOpts" aria-label="Player name" placeholder="Guess 1 of 6">
       <ul class="list" id="phOpts" role="listbox" hidden></ul>
     </div>
     <p class="hint" id="phLeft"></p>
-    <div class="phwrong" id="phWrong"></div>
-    <div class="phreveal" id="phReveal" hidden></div>
-    <div class="slot"></div>
+    <div class="player-misses" id="phWrong"></div>
     <p class="nodata" hidden>This game needs playoff stats. Rebuild the site to load them.</p>
   </section>
 
@@ -4086,7 +4074,7 @@ const FALLBACK = "data:image/svg+xml," + encodeURIComponent(
 // ======================= helpers =======================
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-// One stroke-based icon family keeps navigation and game identities consistent.
+// One icon family keeps navigation and game identities consistent.
 const UI_ICONS = {
   chart: '<path d="M5 20V13M12 20V4M19 20V9"/>',
   trophy: '<path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4M12 13v6m-4 2h8m-6-2h4"/>',
@@ -4094,6 +4082,7 @@ const UI_ICONS = {
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 2M12 16h.01"/>',
   star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
   locker: '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M4 18h16M8 5h8m-6 3-3 2 1.5 2 1.5-1v5h4v-5l1.5 1 1.5-2-3-2h-4Z"/>',
+  mystery: '<g fill="currentColor" stroke="none"><circle cx="12" cy="5" r="3"/><path d="M4 22v-3a8 8 0 0 1 16 0v3Z"/></g><path stroke="var(--bg)" stroke-width="1.5" d="M10 15a2 2 0 1 1 3.2 1.6c-.8.5-1.2.8-1.2 1.4M12 20h.01"/>',
   brush: '<path d="m14 12 6-6a2.1 2.1 0 0 0-3-3l-6 6 3 3ZM11 9l-2 3 3 3 2-3M9 12c-4 0-2 6-6 7 5 2 10-1 9-4"/>',
   stick: '<path d="m17 3-7 14H4a2 2 0 0 0 0 4h8L21 3m-6 4 4 2"/>',
   route: '<circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h9a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h9"/>',
@@ -4112,7 +4101,7 @@ const UI_ICONS = {
   people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
-const MODE_ICONS = { classic: "stick", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
+const MODE_ICONS = { classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
   edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.overtime = "clock";
 UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
@@ -4318,19 +4307,16 @@ const G = {
       }).join("");
 
       const clues = [];
-      if (wrong >= 2 || st.over) clues.push(`<span class="slclue"><small>Position</small><b>${esc(posName(t))}</b></span>`);
-      if (wrong >= 3 || st.over) clues.push(`<span class="slclue"><small>${t.pos === "G" ? "Catches" : "Shoots"}</small><b>${esc(t.shoots || "?")}</b></span>`);
-      if (wrong >= 4 || st.over) clues.push(`<span class="slclue"><img src="${logo(t.team)}" alt="" onerror="this.remove()"><small>Current team</small><b>${esc(TEAM_NAMES[t.team] || t.team)}</b></span>`);
-      if (wrong >= 5 || st.over) clues.push(`<span class="slclue"><small>Player detail</small><b>${esc(countryName(t.nation))}${t.number ? ` · #${t.number}` : ""}</b></span>`);
+      if (wrong >= 2 || st.over) clues.push(playerClue("Position", posName(t)));
+      if (wrong >= 3 || st.over) clues.push(playerClue(t.pos === "G" ? "Catches" : "Shoots", t.shoots || "?"));
+      if (wrong >= 4 || st.over) clues.push(playerClue("Current team", TEAM_NAMES[t.team] || t.team, t.team));
+      if (wrong >= 5 || st.over) clues.push(playerClue("Player detail", `${countryName(t.nation)}${t.number ? ` · #${t.number}` : ""}`));
       $("slClues").innerHTML = clues.join("");
 
-      $("slWrong").innerHTML = wrongIds.slice().reverse().map((id, i) => {
-        const p = BYID.get(id);
-        if (!p) return "";
+      paintPlayerMisses("slWrong", t, st.guesses, p => {
         const m = slGuessMatches(t, p);
-        return `<div class="slmiss${i === 0 ? " slmiss-new" : ""}"><span class="x" aria-hidden="true">×</span><span class="who">${esc(p.name)}</span>` +
-          `${m.samePos ? '<span class="slmatch">Same position</span>' : ""}${m.sameEra ? '<span class="slmatch">Same era</span>' : ""}</div>`;
-      }).join("");
+        return [m.samePos && "Same position", m.sameEra && "Same era"].filter(Boolean);
+      });
 
       if (st.over) {
         $("slLeft").textContent = "";
@@ -4595,7 +4581,7 @@ function makeHL(stat) {
       const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
       $("hlA").innerHTML = this.card(t.seq[i], "a", true, "");
       $("hlB").innerHTML = this.card(t.seq[i + 1], "b", st.over, st.over ? (lastOk ? "ok" : "bad") : "");
-      if (slide) { $("hlPair").classList.remove("slide"); void $("hlPair").offsetWidth; $("hlPair").classList.add("slide"); }
+      if (slide) animateHLPair($("hlPair"));
     },
     squares(t, x, i) { return this.correct(t, i, x) ? "🟩" : "🟥"; }
   };
@@ -4614,6 +4600,13 @@ function countUp(el) {
   })(t0);
 }
 
+function animateHLPair(pair) {
+  pair.classList.remove("slide");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  void pair.offsetWidth;
+  pair.classList.add("slide");
+}
+
 // ======================= more games: journey, blur, sweater number, roster =======================
 Object.assign(TEAM_NAMES, {
   ARI: "Arizona Coyotes", PHX: "Phoenix Coyotes", ATL: "Atlanta Thrashers", MNS: "Minnesota North Stars",
@@ -4626,17 +4619,18 @@ const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", 
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
 const teamName = t => TEAM_NAMES[t] || t;
 
-function addWrong(listId, p) {
-  const li = document.createElement("li");
-  li.className = "newrow";
-  li.innerHTML = `<span class="x">✕</span><span></span><small>${esc(p.team)} · ${esc(p.pos)}</small>`;
-  li.children[1].textContent = p.name;
-  $(listId).prepend(li);
+function playerClue(label, value, team = "") {
+  return `<span class="player-clue">${team ? `<img src="${logo(team)}" alt="" onerror="this.remove()">` : ""}<small>${esc(label)}</small><b>${esc(value)}</b></span>`;
 }
-function hintChips(elId, hints, wrong, over) {
-  $(elId).innerHTML = over ? "" : hints.filter(h => wrong >= h.at).map(h => `<span class="chip hintchip">${h.html}</span>`).join("");
-  const next = hints.find(h => wrong < h.at);
-  return over || !next ? "" : ` Next hint after ${next.at - wrong} more wrong ${next.at - wrong === 1 ? "guess" : "guesses"}.`;
+function paintPlayerMisses(host, target, guesses, matches) {
+  const el = $(host), previous = el.firstElementChild?.dataset.player;
+  el.innerHTML = guesses.filter(id => id !== target.id).slice().reverse().map((id, i) => {
+    const p = BYID.get(id);
+    if (!p) return "";
+    const tags = matches(p);
+    return `<div class="player-miss${i === 0 && String(id) !== previous ? " is-new" : ""}" data-player="${p.id}"><span class="x" aria-hidden="true">×</span><span class="who" title="${esc(p.name)}">${esc(p.name)}</span>` +
+      `${tags.length ? `<span class="player-matches">${tags.map(label => `<span class="player-match">${esc(label)}</span>`).join("")}</span>` : ""}</div>`;
+  }).join("");
 }
 
 // ---- Journey: guess the player from his career path ----
@@ -4687,17 +4681,22 @@ G.journey = {
   guess(t, id) {
     const p = BYID.get(id);
     if (!p) return null;
-    if (p.id !== t.id) addWrong("jyWrong", p);
     return p.id === t.id;
   },
   render(t, st) {
     const wrong = st.guesses.filter(id => id !== t.id).length;
-    const next = hintChips("jyHints", [
-      { at: 2, html: `Position: <b>${posName(t)}</b>` },
-      { at: 4, html: `Born in <b>${esc(t.nation)}</b>` },
-      { at: 5, html: `Wears <b>#${t.number}</b> now` },
-    ], wrong, st.over);
-    $("jyLeft").textContent = st.over ? "" : `${this.max - st.guesses.length} tries left.${next}`;
+    const hints = [
+      { at: 2, label: "Position", value: posName(t) },
+      { at: 4, label: "Born in", value: countryName(t.nation) },
+      { at: 5, label: "Current number", value: `#${t.number}` },
+    ];
+    $("jyHints").innerHTML = hints.filter(h => st.over || wrong >= h.at).map(h => playerClue(h.label, h.value)).join("");
+    paintPlayerMisses("jyWrong", t, st.guesses, p => {
+      const m = slGuessMatches(t, p);
+      return [m.samePos && "Same position", m.sameEra && "Same era"].filter(Boolean);
+    });
+    const next = hints.find(h => wrong < h.at), left = this.max - st.guesses.length;
+    $("jyLeft").textContent = st.over ? "" : `${left} ${left === 1 ? "try" : "tries"} left${next ? ` · next hint after ${next.at - wrong} more ${next.at - wrong === 1 ? "miss" : "misses"}` : ""}`;
   },
   squares: (t, id) => id === t.id ? "🟩" : "⬛"
 };
@@ -6781,7 +6780,6 @@ G.playoff = {
   reset() {
     $("phWrong").innerHTML = "";
     $("phClues").innerHTML = "";
-    $("phReveal").hidden = true;
   },
   guess(t, id) {
     return BYID.has(id) ? id === t.p.id : null;
@@ -6793,33 +6791,22 @@ G.playoff = {
       <div class="phstats">${heads.map((h, i) => `<div class="phstat"><b>${esc(String(cells[i]))}</b><small>${esc(h)}</small></div>`).join("")}</div>`;
 
     const clues = [];
-    if (wrong >= 1 || st.over) clues.push(`<div class="phclue"><div><small>Position</small><b>${esc(posName(p))}</b></div></div>`);
-    if (wrong >= 2 || st.over) clues.push(`<div class="phclue"><div><small>Run result</small><b>${esc(poFinishLabel(r))}</b></div></div>`);
+    if (wrong >= 1 || st.over) clues.push(playerClue("Position", posName(p)));
+    if (wrong >= 2 || st.over) clues.push(playerClue("Run result", poFinishLabel(r)));
     if (wrong >= 3 || st.over) {
       const team = r.teams[0];
-      clues.push(`<div class="phclue"><img src="${logo(team)}" alt="" onerror="this.remove()"><div><small>Team that postseason</small><b>${esc(poFullTeamName(team))}</b></div></div>`);
+      clues.push(playerClue("Team that postseason", poFullTeamName(team), team));
     }
     if (wrong >= 4 || st.over) {
       const bits = [p.number ? `Current #${p.number}` : "", countryName(p.nation), poRunOrdinal(p, r)].filter(Boolean).join(" · ");
-      clues.push(`<div class="phclue final"><div><small>Final scouting clue</small><b>${esc(bits)}</b></div></div>`);
+      clues.push(playerClue("Player detail", bits));
     }
     $("phClues").innerHTML = clues.join("");
 
-    $("phWrong").innerHTML = wrongIds.slice().reverse().map((id, i) => {
-      const g = BYID.get(id);
-      if (!g) return "";
+    paintPlayerMisses("phWrong", p, st.guesses, g => {
       const m = poGuessMatches(t, g);
-      return `<div class="phmiss${i === 0 ? " phmiss-new" : ""}"><span class="x" aria-hidden="true">×</span><span class="who">${esc(g.name)}</span>
-        ${m.sameTeam ? '<span class="phmatch">Same team</span>' : ""}${m.samePos ? '<span class="phmatch">Same position</span>' : ""}</div>`;
-    }).join("");
-
-    const reveal = $("phReveal");
-    reveal.hidden = !st.over;
-    if (st.over) {
-      const team = r.teams[0], line = heads.map((h, i) => `${h} ${cells[i]}`).join(" · ");
-      reveal.innerHTML = `<img src="${p.headshot || FALLBACK}" alt="" onerror="this.src='${FALLBACK}'"><div><small>Playoff run revealed</small>
-        <b>${esc(p.name)}</b><span>${esc(seasonLabel(r.y))} · ${esc(poFullTeamName(team))}<br>${esc(line)}</span></div>`;
-    }
+      return [m.sameTeam && "Same team", m.samePos && "Same position"].filter(Boolean);
+    });
 
     const left = this.max - st.guesses.length;
     const next = wrong === 0 ? "position" : wrong === 1 ? "run result" : wrong === 2 ? "team" : wrong === 3 ? "number, country and career context" : "";
@@ -10534,8 +10521,9 @@ function paintOptions(host, round, html, grade) {
 function paintQuestionProgress(host, total, current, results = []) {
   const dots = $(host);
   if (!dots) return;
-  const movingHighlight = !["trDots", "teamMiniDots"].includes(host);
+  const movingHighlight = !["trDots", "twDots", "shDots", "teamBestDots", "teamMiniDots"].includes(host);
   dots.classList.add("question-progress");
+  dots.classList.toggle("square-progress", !movingHighlight);
   let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
   if (dotNodes.length !== total) {
     dots.innerHTML = (movingHighlight ? `<span class="tr-active-glider" aria-hidden="true"></span>` : "") + Array.from({ length: total }, (_, n) =>
@@ -11310,12 +11298,15 @@ function teamHLPlayers(h, stat){
   }).filter(Boolean);
 }
 function startTeamHigher(t){
+  teamMiniCleanup();
   const h=historyForTeam(t);if(!h.skaters.length)return teamModeNoData(t,"higher");
   const statKey=`sweater-team-hl-stat-${t}`;let stat=String(store.get(statKey)||"points");if(!TEAM_HL_STATS[stat])stat="points";
   const info=TEAM_HL_STATS[stat],pool=teamHLPlayers(h,stat);if(pool.length<3)return teamModeNoData(t,"higher");
   const analyticsRound=globalThis.SweaterAnalytics?.context("team_higher","unlimited",`${t}:${stat}`,true);
   let analyticsMoves=0;
-  let seq=shuffled(pool).slice(0,2),streak=0,over=false;const bestKey=`sweater-team-hl-best-${t}-${stat}`;
+  let seq=shuffled(pool).slice(0,2),streak=0,over=false,pending=false,active=true,timer=null;
+  teamMiniCleanup=()=>{active=false;clearTimeout(timer);};
+  const bestKey=`sweater-team-hl-best-${t}-${stat}`;
   const options=Object.entries(TEAM_HL_STATS).map(([v,x])=>`<option value="${v}"${v===stat?' selected':''}>${x.name}</option>`).join("");
   const intro=info.type==="teamCareer"
     ? `Who played more <b>regular-season games for ${esc(teamFullName(t))}</b>?`
@@ -11325,7 +11316,7 @@ function startTeamHigher(t){
     const unit=info.type==="teamCareer"?`regular-season games with ${esc(teamFullName(t))}`:`career-high ${info.label}`;
     const sub=info.type==="teamCareer"?`across his ${esc(teamFullName(t))} career`:`in ${seasonText(p.y)}`;
     const prompt=info.type==="teamCareer"?`career games with ${esc(teamFullName(t))}:`:`career-high ${info.label}:`;
-    return `<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b>${p.v}</b></p><p class="hlunit">${unit}</p><p class="hlyr">${sub}</p>`:`<p class="hlunit">${prompt}</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info.up}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info.down}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
+    return `<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b data-count="${p.v}">${p.v}</b></p><p class="hlunit">${unit}</p><p class="hlyr">${sub}</p>`:`<p class="hlunit">${prompt}</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info.up}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info.down}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
   };
   const nextPlayer=()=>{
     const used=new Set(seq.map(p=>p.id));
@@ -11334,13 +11325,18 @@ function startTeamHigher(t){
     return pick(options.length?options:pool);
   };
   const draw=(animateGain=false)=>{
+    if(!active)return;
     paintHotStreak("teamHLStreak", streak, animateGain);$("teamHLBest").textContent=Math.max(store.get(bestKey)||0,streak);
     $("teamHLA").innerHTML=card(seq[0],true,"");$("teamHLB").innerHTML=card(seq[1],over,over?"bad":"");
+    if(animateGain)animateHLPair($("teamHLPair"));
     if(!over)$("teamHLB").querySelectorAll(".teamHLBtn").forEach(btn=>btn.onclick=()=>{
+      if(!active||over||pending)return;
+      pending=true;
       const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;
       globalThis.SweaterAnalytics?.step?.(++analyticsMoves,ok,analyticsRound);
       $("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");
-      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);setTimeout(()=>{const next=nextPlayer();seq=[seq[1],next];draw(true);},850);}else{over=true;globalThis.SweaterAnalytics?.completeRound(null,{token:analyticsRound,attempts:analyticsMoves,score:streak});}
+      countUp($("teamHLB").querySelector("[data-count]"));
+      if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);timer=setTimeout(()=>{if(!active)return;const next=nextPlayer();seq=[seq[1],next];pending=false;draw(true);},1100);}else{over=true;globalThis.SweaterAnalytics?.completeRound(null,{token:analyticsRound,attempts:analyticsMoves,score:streak});}
     });
   };
   draw();
