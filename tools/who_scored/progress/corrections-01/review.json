@@ -5842,10 +5842,10 @@
           540
         ],
         "scoring_play_end_frame": 55,
-        "identity_verification": "Coleman20 confirmed on white Calgary jersey in the scoring replay and following closeup. White20 travels from the right boards behind Jets44 then shoots the empty-net goal; foreground Jets27 and referees retained.",
+        "identity_verification": "Coleman No. 20 is confirmed in the red Calgary jersey at the net front against Colorado. He finishes in front of Scott Wedgewood, with Colorado No. 49 (Girard) alongside him; the scorer stays covered through the goal and follow-through.",
         "source_verification": "Official NHL scoring attribution and visual scorer jersey checked; raw source checksum pinned to the reviewed extraction."
       },
-      "edit_sha256": "e56509e5ec3023e5c0b6dd89033442da49a7837062fac79ebe29139581e13062",
+      "edit_sha256": "b5f61fba2e729b7294c015576f8c618cc5000307a8cb7c0ea3ceb0216d730b87",
       "source_sha256": "c2d34afa344aa634eba653ab5bb7aa26bd5e2d197f004cd8bd17c9dd527d7b59",
       "assets": {
         "masked": "goal-79-masked-v2.mp4",
@@ -5857,12 +5857,12 @@
         "reveal": "7c0372dde8c3297b5b485d1ca7c9e915221fa3c406af5abb5a70894ef189b250",
         "poster": "587650a27bd0293cc45912e5ad0fdf23f5270a0567fd366e27dfbd12fb9b62fd"
       },
-      "motion": "Empty-net wrist shot",
+      "motion": "Net-front wrist shot",
       "reviews": {
         "official_identity": {
           "passed": true,
           "jersey": 20,
-          "note": "Coleman20 confirmed on white Calgary jersey in the scoring replay and following closeup. White20 travels from the right boards behind Jets44 then shoots the empty-net goal; foreground Jets27 and referees retained."
+          "note": "Coleman No. 20 is confirmed in the red Calgary jersey at the net front against Colorado. He finishes in front of Scott Wedgewood, with Colorado No. 49 (Girard) alongside him; the scorer stays covered through the goal and follow-through."
         },
         "silhouette_coverage": {
           "passed": true,

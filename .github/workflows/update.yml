@@ -16,6 +16,9 @@ on:
       - "static/shootout/**"
       - "tests/shootout.cjs"
       - "tests/home_challenges.cjs"
+      - "tests/frontend_regressions.cjs"
+      - "tests/current_team_refresh.py"
+      - "tests/who_scored_batches.py"
       - ".github/workflows/update.yml"
 
 permissions:
@@ -54,6 +57,7 @@ jobs:
         run: |
           node tests/who_scored.cjs
           python tests/who_scored_schedule.py
+          python tests/who_scored_batches.py
           python tools/who_scored/validate.py
 
       - name: Check Shootout animation and round flow
@@ -61,6 +65,11 @@ jobs:
 
       - name: Check random home challenges and weekly progress
         run: node tests/home_challenges.cjs
+
+      - name: Check frontend regression cases and player refresh persistence
+        run: |
+          node tests/frontend_regressions.cjs
+          python tests/current_team_refresh.py
 
       - name: Validate generated JavaScript
         shell: bash

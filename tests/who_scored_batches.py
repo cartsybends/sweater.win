@@ -153,6 +153,38 @@ class SourceQueueTests(unittest.TestCase):
         self.assertFalse({by_id[ident]['pid'] for ident in new_ids} & {clip['pid'] for clip in baseline})
 
 
+class PublishedCorrectionTests(unittest.TestCase):
+    def test_published_metadata_and_assets_match_completed_correction_reviews(self):
+        media = TOOLS.parents[1] / 'static/who-scored'
+        folder = TOOLS / 'progress/corrections-01'
+        clips = json.loads((media / 'clips.json').read_text())
+        proposed, records = corrections.verify_corrections(folder, media, clips, inspect=False)
+        self.assertEqual(clips, proposed)
+        sources = {row['id']: row for row in json.loads((media / 'sources.json').read_text())}
+        for record in records:
+            with self.subTest(clip=record['id']):
+                source = sources[record['id']]
+                self.assertEqual(source, {**record['source'], 'exported_sha256': record['asset_sha256'],
+                                         'review_record': str((folder / 'review.json').relative_to(TOOLS.parents[1]))})
+                edit = json.loads((folder / f"{record['id']}-edit.json").read_text())
+                if 'identity_verification' in edit:
+                    self.assertEqual(source['identity_verification'], edit['identity_verification'])
+                self.assertEqual(source['identity_verification'], record['reviews']['official_identity']['note'])
+
+    def test_coleman_metadata_describes_the_replacement_colorado_goal(self):
+        media = TOOLS.parents[1] / 'static/who-scored'
+        clip = next(row for row in json.loads((media / 'clips.json').read_text()) if row['id'] == 'goal-79')
+        source = next(row for row in json.loads((media / 'sources.json').read_text()) if row['id'] == 'goal-79')
+        # Cached official game 2024021052, event 834: Coleman wrist shot, both goalies present (1551).
+        self.assertEqual((source['game_id'], source['official_event_id'], source['source_video_id']),
+                         (2024021052, 834, '6370064078112'))
+        self.assertNotIn('empty-net', clip['motion'].lower())
+        self.assertIn('wrist shot', clip['motion'].lower())
+        self.assertIn('red Calgary jersey', source['identity_verification'])
+        self.assertIn('Colorado', source['identity_verification'])
+        self.assertNotIn('Jets', source['identity_verification'])
+
+
 class CorrectionGateTests(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory()

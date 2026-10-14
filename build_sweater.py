@@ -4112,9 +4112,10 @@ Object.entries({ statsBtn: "chart", archiveBtn: "calendar", helpBtn: "help", pro
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 const ageOf = bd => {
-  const b = new Date(bd), n = new Date();
-  let a = n.getFullYear() - b.getFullYear();
-  if (n.getMonth() < b.getMonth() || (n.getMonth() === b.getMonth() && n.getDate() < b.getDate())) a--;
+  const [birthYear, birthMonth, birthDay] = bd.split("-").map(Number);
+  const [year, month, day] = dayKey().split("-").map(Number);
+  let a = year - birthYear;
+  if (month < birthMonth || (month === birthMonth && day < birthDay)) a--;
   return a;
 };
 const store = {
@@ -10026,7 +10027,7 @@ function finish(won, fresh) {
   $("banner").classList.remove("pop");
   tick();
   $("banner").style.display = "block";
-  if (mode !== "unlimited" && (fresh || !historyGet(game, st.day))) {
+  if (mode !== "unlimited" && ((mode === "daily" && fresh) || !historyGet(game, st.day))) {
     historySet(game, st.day, isScored(game) ? { s: g.score(st.target, st.guesses), w: won } : { n, w: won });
   }
   let unlocked = [];
@@ -11410,8 +11411,11 @@ function openGame(id, push = true) {
     return;
   }
   if (push) rememberHubScroll();
-  if (id === "hl") id = game.startsWith("hl_") ? game : (G[store.get("sweater-hl-game")] ? store.get("sweater-hl-game") : "hl_points");
-  if (!G[id]) return showHub(push);
+  if (id === "hl") {
+    const saved = store.get("sweater-hl-game");
+    id = HL_IDS.includes(game) ? game : HL_IDS.includes(saved) ? saved : "hl_points";
+  }
+  if (!Object.hasOwn(G, id)) return showHub(push);
   if (id.startsWith("hl_")) store.set("sweater-hl-game", id);
   rememberGame(id);
   if (push && location.hash !== `#${id}`) history.pushState(null, "", `#${id}`);
@@ -11426,7 +11430,9 @@ function openGame(id, push = true) {
 }
 
 function route() {
-  const id = decodeURIComponent(location.hash.slice(1));
+  let id;
+  try { id = decodeURIComponent(location.hash.slice(1)); }
+  catch { showHub(false); return; }
   if (id === "goalie") {
     history.replaceState(null, "", location.pathname + location.search);
     showHub(false);
@@ -11434,13 +11440,13 @@ function route() {
   }
   if (id === "teams" || id.startsWith("team-")) {
     const team = id.startsWith("team-") ? id.slice(5).toUpperCase() : "";
-    openTeams(TEAMS[team] ? team : "", false); return;
+    openTeams(Object.hasOwn(TEAMS, team) ? team : "", false); return;
   }
   if (id === "party" || id.startsWith("party-")) {
     if ($("view-party").hidden) openParty(id.slice(6).toUpperCase(), false);
     return;
   }
-  if (id && (G[id] || id === "hl")) {
+  if (id && (Object.hasOwn(G, id) || id === "hl")) {
     if (!onHub && id === game) return;
     openGame(id, false);
   } else {
@@ -11457,7 +11463,8 @@ $("homeLink").onclick = e => { e.preventDefault(); showHub(); };
 
 // game pickers inside the stats, leaderboard and archive windows
 function gameOptions(selected) {
-  return HUB.map(sec => `<optgroup label="${sec.title}">${sec.games.map(([id]) => id === "hl"
+  const sections = [...HUB, { title: "NHL EDGE", games: EDGE_GAMES.filter(x => !x.maintenance).map(x => [x.id]) }];
+  return sections.map(sec => `<optgroup label="${sec.title}">${sec.games.map(([id]) => id === "hl"
     ? HL_IDS.map(h => `<option value="${h}"${h === selected ? " selected" : ""}>Higher or Lower · ${HL_STATS[G[h].stat].name}</option>`).join("")
     : `<option value="${id}"${id === selected ? " selected" : ""}>${esc(G[id].title)}</option>`).join("")}</optgroup>`).join("");
 }
@@ -11566,12 +11573,20 @@ async function partyHostAction(action) {
   catch (e) { toast(e.status ? e.message : "Couldn't reach the server"); }
 }
 async function partyAnswer(choice) {
-  const st = party.state;
-  if (!st || st.status !== "question" || party.picked !== null && party.picked !== undefined) return;
+  const session = party, st = session?.state;
+  if (!st || st.status !== "question" || st.you || party.picked != null || partyNow() >= st.endsAt) return;
   party.picked = choice;
   partyRender();
-  try { await api("/api/party/answer", { code: party.code, pid: party.pid, key: party.key, qi: st.qi, choice }); }
-  catch (e) { toast(e.status ? e.message : "Couldn't send your answer"); }
+  try { await api("/api/party/answer", { code: session.code, pid: session.pid, key: session.key, qi: st.qi, choice }); }
+  catch (e) {
+    if (party !== session || party.state?.qi !== st.qi) return;
+    const retryable = !e.status || e.status >= 500 || e.status === 408 || e.status === 429;
+    if (retryable && party.state.status === "question" && !party.state.you && partyNow() < party.state.endsAt) {
+      party.picked = null;
+      if (!$("view-party").hidden) partyRender();
+    }
+    toast(e.status ? e.message : "Couldn't send your answer. Try again.");
+  }
 }
 function partyLeave() {
   store.set("sweater-party", null);

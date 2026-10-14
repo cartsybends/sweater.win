@@ -119,21 +119,22 @@ def apply(players, live, label):
         if not now:
             continue
 
-        old = player.get("team")
-        if old != now["team"]:
-            print(
-                f"  Current-team correction ({label}): "
-                f"{player.get('name', pid)}: {old} -> {now['team']}"
-            )
-            player["team"] = now["team"]
-            changed += 1
-
+        updates = {"team": now["team"]}
         if now.get("number") is not None:
-            player["number"] = now["number"]
+            updates["number"] = now["number"]
         if now.get("pos"):
-            player["pos"] = now["pos"]
+            updates["pos"] = now["pos"]
         if now.get("headshot"):
-            player["headshot"] = now["headshot"]
+            updates["headshot"] = now["headshot"]
+
+        fields = [key for key, value in updates.items() if player.get(key) != value]
+        if fields:
+            player.update(updates)
+            changed += 1
+            print(
+                f"  Current-player correction ({label}): "
+                f"{player.get('name', pid)}: {', '.join(fields)}"
+            )
 
     return changed
 
