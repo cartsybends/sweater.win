@@ -2886,7 +2886,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-trophy.setup-change .shdots { animation: none; }
   #view-trophy #trQ { width: 100%; max-width: none; min-height: 138px; margin: 0 0 20px; padding: 4px 6px 14px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
   #view-trophy .trophy-prompt { display: block; font-size: 13px; font-weight: 500; color: var(--muted); }
-  #view-trophy .trophy-title { display: block; max-width: 24ch; margin: 9px auto 14px; font-size: clamp(24px, 3.5vw, 32px); font-weight: 750; line-height: 1.18; letter-spacing: -.035em; text-wrap: balance; }
+  #view-trophy .trophy-heading { display: flex; align-items: center; gap: 16px; width: fit-content; max-width: 100%; min-height: 84px; margin: 10px auto 14px; }
+  #view-trophy .trophy-photo { flex: 0 0 56px; width: 56px; height: 84px; object-fit: contain; border-radius: 6px; background: #050505; opacity: .92; }
+  :root[data-theme="dark"] #view-trophy .trophy-photo { mix-blend-mode: screen; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) #view-trophy .trophy-photo { mix-blend-mode: screen; }
+  }
+  #view-trophy .trophy-title { display: block; min-width: 0; max-width: 24ch; margin: 0; font-size: clamp(24px, 3.5vw, 32px); font-weight: 750; line-height: 1.18; letter-spacing: -.035em; text-align: left; text-wrap: balance; }
   #view-trophy .trophy-season { display: inline-block; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--cell) 45%, transparent); color: var(--fg); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
   #view-trophy #trOpts { width: 100%; max-width: none; gap: 10px; }
   #view-trophy .shopt { display: flex; align-items: center; gap: 12px; isolation: isolate; min-height: 82px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--fg); text-align: left; box-shadow: none; animation: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: border-color .3s ease, transform .16s ease, opacity .3s ease; }
@@ -2935,6 +2941,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     #view-trophy .shopt { min-height: 72px; padding: 14px 16px; }
     #view-trophy .trlogo { flex-basis: 56px; width: 56px; height: 56px; }
     #view-trophy #trQ { min-height: 128px; margin-bottom: 16px; padding-bottom: 8px; }
+    #view-trophy .trophy-heading { gap: 12px; min-height: 72px; }
+    #view-trophy .trophy-photo { flex-basis: 48px; width: 48px; height: 72px; }
     #view-trophy .tr-footer { min-height: 78px; gap: 10px; }
   }
   @media (max-width: 440px) {
@@ -3979,6 +3987,7 @@ const DAILY = /*__DAILY_ALL__*/{};   // game -> { "YYYY-MM-DD" (Eastern) -> puzz
 const DAILY_HL = /*__DAILY_HL__*/{};
 const CUP_ROWS = /*__CUPS__*/[];   // [year, champion, runner-up, Conn Smythe winner, Conn Smythe team]
 const TROPHY_WINNERS = /*__TROPHIES__*/[];   // [trophy, season start year, winner, team at the time]
+const TROPHY_IMAGES = /*__TROPHY_IMAGES__*/{};
 const START = /*__START_ALL__*/{};   // game -> date of Daily #1
 
 // abbr: [conference, division]
@@ -6933,7 +6942,12 @@ G.trophy = {
       n < i ? { status: this.right(t, st.guesses[n], n) ? "ok" : "bad", mark: this.right(t, st.guesses[n], n) ? "check" : "x" } : null
     ));
     const round = `${this.tid(t)}#${roundIndex}`, newRound = $("trOpts").dataset.round !== round;
-    if (newRound) $("trQ").innerHTML = `<span class="trophy-prompt">Who won the</span><strong class="trophy-title">${esc(r.t)}</strong><span class="trophy-season">${seasonLabel(r.y)}</span>`;
+    if (newRound) {
+      const photo = TROPHY_IMAGES[r.t];
+      $("trQ").innerHTML = `<span class="trophy-prompt">Who won the</span><span class="trophy-heading">` +
+        `${photo ? `<img class="trophy-photo" src="${esc(photo)}" alt="" width="56" height="84" decoding="async" onerror="this.remove()">` : ""}` +
+        `<strong class="trophy-title">${esc(r.t)}</strong></span><span class="trophy-season">${seasonLabel(r.y)}</span>`;
+    }
     // Answering keeps the same four buttons and only changes their classes, so
     // the colours can transition. Rebuilding the markup here would hand the
     // browser fresh nodes that snap straight to their graded state.
@@ -11726,7 +11740,8 @@ const HELP = {
   cups: `<p>A complete grid from 1980–81 through the latest Final, with three squares per season: the Stanley Cup winner, the runner-up and the Conn Smythe winner. Press Start, then type names for 10 minutes.</p>
     <p>One name fills every square it belongs in, and a team nickname or a surname is enough when only one answer matches it.</p>`,
   trophy: `<p>Choose all trophies or one specific trophy, then pick 5, 10, 15 or 20 questions. Each right answer is worth 2 points.</p>
-    <p>It covers winners from 1980 onwards, retired players included, and the wrong answers are nearby-era winners of the same trophy.</p>`,
+    <p>It covers winners from 1980 onwards, retired players included, and the wrong answers are nearby-era winners of the same trophy.</p>
+    <p>Trophy photos: <a href="https://records.nhl.com/awards/trophies" target="_blank" rel="noopener noreferrer">NHL Records</a>.</p>`,
   mroster: `<p>One player from a mystery team is shown, and you pick the team. Each wrong guess reveals another teammate, up to six. 4 tries, and yellow means the right team is in that division.</p>`,
   truths: `<p>You see a player and three statements about him. Two are true and one isn't. Tap the false one. Five rounds, 2 points each.</p>`,
   hlt: `<p>Two teams go head to head on their current rosters: average age, average height, total career goals, total career NHL games, or players born outside Canada and the USA.</p>
@@ -13543,6 +13558,26 @@ def goal_clip_year_range(clips, sources=None):
     return str(first) if first == last else f"{first}–{last}"
 
 
+def load_trophy_images():
+    """Use a verified local photo for every award in Trophy Case."""
+    root = HERE / "static" / "trophies"
+    rows = json.loads((root / "images.json").read_text(encoding="utf-8"))
+    images = {row["name"]: row["file"] for row in rows}
+    if len(images) != len(rows) or set(images) != set(TROPHY_CORE):
+        raise ValueError("Trophy photos must cover every Trophy Case award exactly once")
+    for name in images.values():
+        if Path(name).name != name or not name.endswith(".jpg") or not (root / name).is_file():
+            raise ValueError(f"Missing or invalid trophy photo: {name}")
+    return images
+
+
+def copy_trophy_images(out_dir, images):
+    destination = out_dir / "trophies"
+    destination.mkdir(parents=True, exist_ok=True)
+    for name in images.values():
+        shutil.copy2(HERE / "static" / "trophies" / name, destination / name)
+
+
 def copy_goal_media(out_dir, clips):
     destination = out_dir / "who-scored"
     destination.mkdir(parents=True, exist_ok=True)
@@ -14100,9 +14135,10 @@ def main():
     if site and not site.endswith("/"):
         site += "/"
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+    trophy_images = load_trophy_images()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json"])).hexdigest()[:12],
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
         "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),
@@ -14119,6 +14155,7 @@ def main():
         "/*__DAILY_HL__*/{}": esc(games["hl"][1]),
         "/*__CUPS__*/[]": esc([list(r) for r in CUP_HISTORY]),
         "/*__TROPHIES__*/[]": esc([list(r) for r in trophy_entries(embedded, AWARD_HISTORY)]),
+        "/*__TROPHY_IMAGES__*/{}": esc({name: f"trophies/{file}" for name, file in trophy_images.items()}),
         "/*__SITE__*/": site,
         "/*__API__*/": args.api_url.strip(),
         "/*__BUILT__*/": f"{build_stamp} · builder v{VERSION}",
@@ -14130,6 +14167,7 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
     copy_goal_media(out.parent, goal_clips)
+    copy_trophy_images(out.parent, trophy_images)
     og = HERE / "sweater-trivia-preview.png"
     if og.exists() and out.parent != HERE:
         shutil.copy(og, out.parent / "sweater-trivia-preview.png")

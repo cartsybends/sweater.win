@@ -14,6 +14,7 @@ on:
       - "make_preview_shell.py"
       - "static/who-scored/**"
       - "static/shootout/**"
+      - "static/trophies/**"
       - "tests/shootout.cjs"
       - "tests/home_challenges.cjs"
       - "tests/frontend_regressions.cjs"

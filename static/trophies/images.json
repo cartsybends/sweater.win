@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Art Ross Trophy",
+    "file": "art-ross.jpg",
+    "nhl_id": 16,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Art-Ross-Trophy@2x.jpg",
+    "sha256": "75d4693a2dd377502542f4a3c1ce660293f6712183538f6efffbbbfde1804040"
+  },
+  {
+    "name": "Calder Memorial Trophy",
+    "file": "calder-memorial.jpg",
+    "nhl_id": 4,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Calder-Memorial-Trophy@2x.jpg",
+    "sha256": "706b3f2151cce0490d7b83b528d25cd4b9346897b122af91ba54dc8de0ba874f"
+  },
+  {
+    "name": "Conn Smythe Trophy",
+    "file": "conn-smythe.jpg",
+    "nhl_id": 7,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Conn-Smythe-Trophy@2x.jpg",
+    "sha256": "f22272632ff285e78f181d39831d70d862397d301c6dbfb4cf59d2cd6fa88e79"
+  },
+  {
+    "name": "Frank J. Selke Trophy",
+    "file": "frank-j-selke.jpg",
+    "nhl_id": 17,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Frank-J-Selke-Trophy@2x.jpg",
+    "sha256": "88cea6c59dde77d49f88355923cbf8f713d82aa01e1ffe69503fea2ad22a53e4"
+  },
+  {
+    "name": "Hart Memorial Trophy",
+    "file": "hart-memorial.jpg",
+    "nhl_id": 8,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Hart-Memorial-Trophy@2x.jpg",
+    "sha256": "2975fe8d7c8aa0772abce9aacc424e757229759792b5f4587f5bef98405f0cb1"
+  },
+  {
+    "name": "James Norris Memorial Trophy",
+    "file": "james-norris.jpg",
+    "nhl_id": 11,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/James-Norris-Memorial-Trophy@2x.jpg",
+    "sha256": "93158a263e8cbff4d7ffe7c4d676511c4eb57724412cfb0bdce9378fc1c4b900"
+  },
+  {
+    "name": "Lady Byng Memorial Trophy",
+    "file": "lady-byng.jpg",
+    "nhl_id": 3,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Lady-Byng-Memorial-Trophy@2x.jpg",
+    "sha256": "0e3792d043721b94031471581f31724169de841d6f0f7bf98957ab7c8c0d3d6c"
+  },
+  {
+    "name": "Maurice Richard Trophy",
+    "file": "maurice-richard.jpg",
+    "nhl_id": 15,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Maurice-Richard-Trophy@2x.jpg",
+    "sha256": "b0cd276619777b791f4d30b363b7611ece0e58f4934e1aef287f97c51ee3e2a4"
+  },
+  {
+    "name": "Ted Lindsay Award",
+    "file": "ted-lindsay.jpg",
+    "nhl_id": 13,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Ted-Lindsay-Award@2x.jpg",
+    "sha256": "d47acf80b1df45020f56760dc95a723741b61fb9c96c0e9029a6298a3803de5e"
+  },
+  {
+    "name": "Vezina Trophy",
+    "file": "vezina.jpg",
+    "nhl_id": 18,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Vezina-Trophy@2x.jpg",
+    "sha256": "cc9181c0fc9d8640f529230bdaa19e035e1a7da16a2439a402156695b723fbbd"
+  }
+]
