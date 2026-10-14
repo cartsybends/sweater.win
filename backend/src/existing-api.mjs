@@ -5,8 +5,13 @@
 //   GET  /api/leaderboard  ?game=<any key in GAMES>&period=today|week|all&uid=...
 //   GET  /api/health
 
+import { COMMUNITY_MODEL } from '../../static/community-games/model.mjs';
+
 const PICK6 = [10, 8, 6, 4, 2, 1];
 const GAMES = {
+  grid: { days: 'grid_days', custom: 'community' },
+  benchboss: { days: 'benchboss_days', custom: 'community' },
+  teammatetrail: { days: 'teammatetrail_days', custom: 'community' },
   classic:  { days: "days",          max: 8 },
   statline: { days: "statline_days", max: 8 },
   team:     { days: "team_days",     max: 5 },
@@ -565,7 +570,12 @@ function scoreConnections(groups, guesses) {
 }
 
 
-function scoreGame(game, answer, guesses, schedule) {
+export function scoreGame(game, answer, guesses, schedule) {
+  if (GAMES[game].custom === 'community') {
+    const data=schedule.community,target=data?.[game]?.find(p=>p.id===answer?.id);
+    if(!target)throw httpError(503,"Today's puzzle data is missing");
+    try{return COMMUNITY_MODEL.result(game,target,guesses,data);}catch(e){throw httpError(400,e.message);}
+  }
   if (GAMES[game].stat) return scoreHigherLower(game, answer, guesses, schedule);
   if (GAMES[game].roster) return scoreRoster(answer, guesses);
   if (GAMES[game].mapGame) return scoreMap(schedule.players?.[String(answer)], guesses);

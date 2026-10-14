@@ -296,6 +296,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   img[src*="/logos/nhl/svg/LAK_"] { --crest-scale: .842; }
   img[src*="/logos/nhl/svg/SJS_"] { --crest-scale: .955; }
   img[src^="https://thumb.wikimedia.org/wikipedia/"][src$=".svg.png"] { object-fit: contain; scale: .64; }
+  img[src*="Hartford_Whalers_1992.svg"] { translate: -.128% -.384%; }
+  img:is([src*="California_Golden_Seals_Logo.svg"], [src*="Oakland_Seals_Logo.svg"]) { translate: 0 .192%; }
   .jystop b { font-size: 14px; }
   .jystop small { font-size: 12px; opacity: .75; font-variant-numeric: tabular-nums; }
   .jyarrow { color: var(--muted); font-size: 18px; }
@@ -737,6 +739,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   /* shootout */
   /*__SHOOTOUT_CSS__*/
   /*__TEAM_GAMES_CSS__*/
+  /*__COMMUNITY_GAMES_CSS__*/
 
   /* NHL EDGE hub + games */
   .edgehome { margin: 20px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 18px;
@@ -1390,8 +1393,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   .team-best-actions .btn { margin: 0; }
   .teammodepanel .shdot.ok { color: var(--hit); border-color: var(--hit); background: transparent; box-shadow: inset 0 0 0 1px var(--hit); }
   .teammodepanel .shdot.bad { color: #c0392b; border-color: #c0392b; background: transparent; box-shadow: inset 0 0 0 1px #c0392b; }
-  .team-mystery-logo { display: inline-grid; width: 42px; height: 42px; margin-right: 7px; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--fg) 7%, transparent); vertical-align: -14px; overflow: hidden; }
-  .ttcard .pmeta .team-mystery-logo img { width: 100%; height: 100%; max-width: none; max-height: none; border-radius: 0; background: transparent; object-fit: contain; transform: scale(1.72); transform-origin: center; }
+  .team-logo-badge { display: inline-grid; flex: none; width: 40px; height: 40px; place-items: center; border-radius: 50%; background: var(--cream); overflow: hidden; }
+  .team-logo-badge img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; border-radius: 0; background: transparent; transform: none; }
+  .ttcard .pmeta.tmeta { display: flex; align-items: center; gap: 8px; }
+  .ttcard .pmeta.tmeta > span:not(.team-logo-badge) { min-width: 0; flex: 1; }
   .teammodepanel .team-hl-statrow { width: auto; margin: 6px 0 12px; justify-content: center; gap: 10px; }
   .teammodepanel .team-hl-statrow .pickstat { font-size: 14px; gap: 8px; font-weight: 400; }
   .teammodepanel .team-hl-statrow .pickstat select { min-height: 0; margin-left: 0; padding: 7px 10px; font-size: 15px; font-weight: 400; background: var(--bg); }
@@ -1818,7 +1823,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   /* stats: guess the team */
   .ttcard { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 4px 0; }
-  .ttcard img { width: 96px; height: 96px; border-radius: 50%; background: var(--cream); object-fit: cover; }
+  .ttcard > img { width: 96px; height: 96px; border-radius: 50%; background: var(--cream); object-fit: cover; }
   .ttcard .pname { margin: 0; }
   .ttcard .nationflag { display: inline-block; width: 24px; height: 18px; margin-left: 3px; border: 0; border-radius: 3px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--fg) 12%, transparent); object-fit: cover; vertical-align: -4px; }
   .ttcard .nationcode { margin-left: 3px; font-weight: 700; }
@@ -2010,7 +2015,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .divs { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .teambtn { font-size: 13px; padding: 6px 8px; gap: 6px; }
     .teambtn img { width: 22px; height: 22px; }
-    .ttcard img { width: 76px; height: 76px; }
+    .ttcard > img { width: 76px; height: 76px; }
     .hltlogo { width: 62px; height: 62px; }
     .twline { font-size: 14px; padding: 12px; gap: 10px; }
     .sebtn { font-size: 13px; padding: 8px 11px; }
@@ -3265,6 +3270,48 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div id="hubSections" hidden></div>
   </section>
 
+  <section class="view community-view" id="view-grid" hidden>
+    <div class="cg-stage">
+      <p class="cg-intro">Find a player for each team-and-clue connection. Use each player once. Nine squares, twelve guesses.</p>
+      <div class="cg-line"><b id="cgGridScore"></b><span id="cgGridTries"></span></div>
+      <div class="cg-grid" id="cgGrid" aria-label="Sweater Grid connections"></div>
+      <div id="cgGridSearch"><p class="cg-prompt" id="cgGridPrompt"></p><div class="search"><input id="cgGridGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cgGridOpts" aria-label="Player for selected square" placeholder="Search for a player"><ul class="list" id="cgGridOpts" role="listbox" hidden></ul></div></div>
+      <p class="cg-feedback" id="cgGridFeedback" role="status" aria-live="polite"></p>
+      <div class="cg-actions"><button class="btn ghost" type="button" id="cgGridReveal">Reveal remaining squares</button></div>
+      <p class="cg-source">Team appearances through 2025–26. Franchise moves count as separate clubs. Career clues use NHL records from October 2026. Short-stint bonuses reward connections with fewer games played.</p>
+    </div><div class="slot"></div><p class="nodata" hidden>Grid puzzles are temporarily unavailable.</p>
+  </section>
+
+  <section class="view community-view" id="view-benchboss" hidden>
+    <div class="cg-stage">
+      <p class="cg-intro">Draft three forwards, two defensemen, and a goalie with 100 credits. Find the best value, then lock your lineup to reveal the season stats.</p>
+      <div class="cg-line"><b id="cgBossYear"></b><span><b id="cgBossBudget"></b><span id="cgBossRemaining"></span></span></div>
+      <div class="cg-budget" aria-hidden="true"><i id="cgBossBudgetBar"></i></div>
+      <div class="cg-lineup" id="cgBossLineup" aria-label="Your six-player lineup"></div>
+      <div class="cg-position-tabs" role="group" aria-label="Market position"><button type="button" data-boss-position="F">Forwards</button><button type="button" data-boss-position="D">Defense</button><button type="button" data-boss-position="G">Goalies</button></div>
+      <div class="cg-market" id="cgBossMarket" aria-label="Player market"></div>
+      <p class="cg-feedback" id="cgBossFeedback" role="status" aria-live="polite"></p>
+      <div class="cg-actions"><button class="btn" type="button" id="cgBossLock">Lock lineup</button><button class="btn ghost" type="button" id="cgBossReveal">Reveal best lineup</button></div>
+      <p class="cg-source">Skaters: 2 points per goal + 1 per assist. Goalies: 3 points per win. Full NHL regular-season totals, including trades. Credits are game currency.</p>
+      <div class="cg-optimal" id="cgBossOptimal" hidden></div>
+    </div><div class="slot"></div><p class="nodata" hidden>Player markets are temporarily unavailable.</p>
+  </section>
+
+  <section class="view community-view" id="view-teammatetrail" hidden>
+    <div class="cg-stage">
+      <p class="cg-intro">Connect two players through their teammates. Choose a familiar face or search the available teammates. Three trails, with up to 10 points each.</p>
+      <div class="cg-line"><span id="cgTrailRound"></span><b id="cgTrailScore"></b></div>
+      <div class="shdots" id="cgTrailDots" aria-label="Trail results"></div>
+      <div class="cg-trail-goal" id="cgTrailGoal"></div>
+      <div class="cg-trail-path" id="cgTrailPath" aria-label="Your teammate connections"></div>
+      <p class="cg-prompt" id="cgTrailPrompt"></p><div class="cg-trail-choices" id="cgTrailChoices"></div>
+      <div id="cgTrailSearch"><div class="search" style="margin-top:12px"><input id="cgTrailGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cgTrailOpts" aria-label="Search available teammates" placeholder="Search more teammates"><ul class="list" id="cgTrailOpts" role="listbox" hidden></ul></div></div>
+      <p class="cg-feedback" id="cgTrailFeedback" role="status" aria-live="polite"></p>
+      <div class="cg-actions"><button class="btn ghost" type="button" id="cgTrailUndo">Undo step</button><button class="btn ghost" type="button" id="cgTrailHint">First-link hint</button><button class="btn ghost" type="button" id="cgTrailReveal">Reveal this trail</button><button class="btn" type="button" id="cgTrailNext" hidden>Next trail</button></div>
+      <p class="cg-source">Every offered link has verified overlap in NHL regular-season appearances. The team and season appear beneath each connection.</p>
+    </div><div class="slot"></div><p class="nodata" hidden>Teammate trails are temporarily unavailable.</p>
+  </section>
+
   <section class="view" id="view-classic" hidden>
     <div class="optrow" id="classicOpts">
       <button class="linkbtn" id="silBtn" type="button">Show silhouette</button>
@@ -4033,6 +4080,7 @@ const HISTORIC_LOGOS = Object.freeze({
   CLE: "https://thumb.wikimedia.org/wikipedia/en/thumb/7/7b/Cleveland_Barons_%28NHL%29_logo.svg/250px-Cleveland_Barons_%28NHL%29_logo.svg.png",
 });
 const logo = t => HISTORIC_LOGOS[t] || `https://assets.nhle.com/logos/nhl/svg/${t}_light.svg`;
+const teamLogoBadge = t => `<span class="team-logo-badge"><img src="${logo(t)}" alt="${esc(teamName(t))}" onerror="this.remove()"></span>`;
 // Navy/royal crests need a little more lift on the contrast theme's black surfaces.
 const BLUE_LOGO_TEAMS = new Set(["ATL", "BUF", "CBJ", "COL", "EDM", "HFD", "MTL", "NYI", "NYR", "QUE", "SEA", "STL", "TBL", "TOR", "UTA", "VAN", "WPG"]);
 const logoToneClass = t => BLUE_LOGO_TEAMS.has(t) ? " logo-blue" : "";
@@ -4103,7 +4151,7 @@ const UI_ICONS = {
   people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
-const MODE_ICONS = { classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
+const MODE_ICONS = { grid: "grid", benchboss: "draft", teammatetrail: "route", classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
   edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.overtime = "clock";
 UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
@@ -6677,7 +6725,7 @@ G.season = {
     $("seImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
     $("seImg").src = t.p.headshot || FALLBACK;
     $("seName").textContent = t.p.name;
-    $("seMeta").innerHTML = `<img src="${logo(t.p.team)}" alt="" onerror="this.remove()"> ${esc(teamName(t.p.team))} · ${posName(t.p)}`;
+    $("seMeta").innerHTML = `${teamLogoBadge(t.p.team)}<span>${esc(teamName(t.p.team))} · ${posName(t.p)}</span>`;
     const row = seasonsOf(t.p).find(r => r.y === t.y);
     $("seStats").innerHTML = statHeads(t.p).map((h, i) => `<span class="chip"><b>${statCells(t.p, row)[i]}</b> ${h}</span>`).join("");
   },
@@ -9790,6 +9838,9 @@ $("wsVideo").addEventListener("error", () => {
 ["play","pause","ended","timeupdate","waiting"].forEach(name => $("wsVideo").addEventListener(name,wsVideoState));
 document.addEventListener("visibilitychange", () => { if (document.hidden) $("wsVideo").pause(); });
 
+/*__COMMUNITY_MODEL__*/
+/*__COMMUNITY_GAMES__*/
+
 /*__MODE_ANALYTICS__*/
 
 // ======================= game engine =======================
@@ -10273,6 +10324,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
     found.forEach((p, i) => {
       const li = document.createElement("li");
       li.role = "option"; li.id = `${listId}-${i}`;
+      li.dataset.player = String(p.id);
       li.setAttribute("aria-selected", i === idx);
       li.innerHTML = `<span></span><small>${esc(metaFn(p))}</small>`;
       li.firstChild.textContent = p.name;
@@ -10298,7 +10350,9 @@ const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
                   makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
                   makeSearch("phGuess", "phOpts"),
                   makeSearch("wsGuess", "wsOpts", id => id, () => [...BYID.values()].filter(p => p.pos !== "G").sort((a,b) => a.name.localeCompare(b.name))),
-                  makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p))];
+                  makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p)),
+                  makeSearch("cgGridGuess", "cgGridOpts", id => id, () => cgSearchPlayers('grid'), p => cgSearchChoose('grid',p), cgSearchMeta),
+                  makeSearch("cgTrailGuess", "cgTrailOpts", id => id, () => cgSearchPlayers('teammatetrail'), p => cgSearchChoose('teammatetrail',p), cgSearchMeta)];
 // kept for easy testing from the console
 function submit(p) { if (p) doGuess(p.id); }
 
@@ -10523,7 +10577,7 @@ function paintOptions(host, round, html, grade) {
 function paintQuestionProgress(host, total, current, results = []) {
   const dots = $(host);
   if (!dots) return;
-  const movingHighlight = !["trDots", "twDots", "shDots", "teamBestDots", "teamMiniDots"].includes(host);
+  const movingHighlight = !["trDots", "twDots", "shDots", "teamBestDots", "teamMiniDots", "cgTrailDots"].includes(host);
   dots.classList.add("question-progress");
   dots.classList.toggle("square-progress", !movingHighlight);
   let dotNodes = Array.from(dots.querySelectorAll(".shdot"));
@@ -10722,6 +10776,9 @@ const LB_RULES = {
   ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
+  grid: "Sweater Grid: 10 points per connection, plus a 3–5 point short-stint bonus. Nine squares, twelve guesses, one use per player.",
+  benchboss: "Bench Boss: up to 10 points based on your lineup's season score compared with the best legal lineup. A score of at least 90% is a win.",
+  teammatetrail: "Teammate Trail: 10 points for each shortest route, or 6 with an extra link, Undo or a hint. Three trails, up to 30 points.",
   statline: "Stat Line: 8 points for 1 guess down to 1 for 8, plus 2 for every season still locked when you get it (up to +10).",
   team: "Guess the team: 10 points on the first try, 6 on the second, 3 on the third, 2 on the fourth, 1 on the fifth.",
 };
@@ -10895,6 +10952,9 @@ const HUB = [
     ["truths", "🔍", "Two true, one false. Spot the fib."],
     ["roster", "⏱️", "Name as much of a team's roster as you can in 60 seconds."],
     ["conn", "🧩", "Sort 16 players into 4 hidden groups."],
+    ["grid", "🧩", "Nine squares. Find the players who connect teams and clues."],
+    ["teammatetrail", "🧭", "Connect two players through real NHL teammates."],
+    ["benchboss", "📋", "Draft the best six-player lineup with 100 credits."],
   ]},
   { title: "Arcade", copy: "Quick rounds, fast decisions and a little competition.", tone: "red", games: [
     ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
@@ -10917,6 +10977,9 @@ EDGE_GAMES.forEach(x => { CARD[x.id] = { icon: "📡", tone: "blue" }; });
 /* Short, repeatable labels make the game library scannable before a player
    has to read a description. They also power the shelf, Locker, and results. */
 const MODE_META = Object.freeze({
+  grid: {type:"Connections",time:"2–4 min",difficulty:"Medium",fact:"Each square accepts multiple players; short-stint connections earn extra points.",next:"teammatetrail"},
+  benchboss: {type:"Lineup strategy",time:"2–4 min",difficulty:"Medium",fact:"Your lineup scores from a completed NHL season, and every market has a verified best lineup.",next:"roster"},
+  teammatetrail: {type:"Teammates",time:"2–4 min",difficulty:"Medium",fact:"Every link is supported by overlapping NHL appearances, including trade seasons.",next:"grid"},
   classic:  { type: "Deduction", time: "3–5 min", difficulty: "Medium", fact: "Read the board: team, position, age and more all narrow the field.", next: "statline" },
   statline: { type: "Stats", time: "2–4 min", difficulty: "Hard", fact: "Each miss reveals another carefully chosen season and more of the player’s career fingerprint.", next: "playoff" },
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
@@ -11706,6 +11769,9 @@ function partyRender(message = "") {
 
 // ======================= help window =======================
 const HELP = {
+  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Each player can be used once; a wrong answer costs a guess.</p><p>Each correct connection earns 10 points. A short-stint bonus adds 5 points for up to 100 qualifying team games, or 3 for 101–250. Team connections count the combined games for both clubs. All squares have multiple valid answers. Revealing the grid ends the run.</p><p>Club appearances are frozen through 2025–26; predecessor franchises count separately. Country means birth country. Career games and Hall of Fame clues use the October 2026 NHL snapshot.</p>`,
+  benchboss: `<p>Build a lineup with three forwards, two defensemen, and one goalie using 100 game credits. Select a position tab to browse its market; tap a selected player or lineup slot to remove them.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Season statistics reveal when you lock the six-player lineup. Your result is scored out of 10 against the exact best legal lineup; at least 90% of that season score counts as a win. A reveal ends the round with zero points.</p><p>All markets use completed seasons from 2005–06 through 2024–25. Positions and totals belong to the displayed season, including all clubs after a trade. Credits are game currency.</p>`,
+  teammatetrail: `<p>Connect each starting player to the target through NHL teammates. Choose one of the offered players, or search more verified teammates of your current player. Reaching someone who also played with the target completes the trail.</p><p>There are three trails. A shortest route on your first attempt earns 10 points; an extra connecting player, Undo, or the first-link hint caps that trail at 6. A hint locks in the first connecting player. Reveal gives zero for that trail; use Next trail to continue.</p><p>Each offered link is backed by overlapping NHL regular-season appearances. Matching only a club and season is insufficient; trade-season links must have guaranteed overlap. The club and season are shown on each connection.</p>`,
   classic: `<p>Guess the player in 8 tries. Each guess shows how he compares on team, conference, division, position, shooting hand, age, birth country and number.</p>
     <p>Yellow on <b>team</b> means the answer used to play there. Yellow on <b>age</b> or <b>#</b> means within 2, and the arrow points toward the answer.</p>
     <p>Stuck? <b>Show silhouette</b>. <b>Hard mode</b> hides it and locks once you guess.</p>`,
@@ -13575,6 +13641,36 @@ def load_team_careers():
     return [p for p in players if 3 <= len(p["stints"]) <= 10]
 
 
+def load_community_data():
+    data = json.loads((HERE / "static/community-games/data.json").read_text(encoding="utf-8"))
+    if data.get("version") != 1 or any(len(data.get(mode, [])) < 30 for mode in ("grid", "benchboss", "teammatetrail")):
+        raise ValueError("Incomplete community puzzle bank")
+    ids = {p[0] for p in data["players"]}
+    if len(ids) != len(data["players"]):
+        raise ValueError("Duplicate community player records")
+    for a, b, team, year, ga, gb in data["links"]:
+        if a not in ids or b not in ids or a >= b or team not in TEAMS or not 1967 <= year <= data["team_cutoff"] or not 0 < ga <= 84 or not 0 < gb <= 84 or ga + gb < 89:
+            raise ValueError("A teammate link lacks guaranteed NHL overlap")
+    return data
+
+
+def plan_community_days(saved, bank, today, mode):
+    by_id = {p["id"]: p for p in bank}
+    if len(by_id) != len(bank):
+        raise ValueError("Duplicate community puzzle IDs")
+    days = dict(saved)
+    if any(not isinstance(v, dict) or v.get("id") not in by_id for v in days.values()):
+        raise ValueError(f"A published {mode} puzzle is missing from its immutable bank")
+    for offset in range(AHEAD + 1):
+        day = (today + timedelta(days=offset)).isoformat()
+        if day in days:
+            continue
+        used = {v["id"] for date_key, v in days.items() if abs((date.fromisoformat(date_key) - date.fromisoformat(day)).days) < len(bank)}
+        options = sorted(set(by_id) - used) or sorted(by_id)
+        days[day] = {"id": random.Random(f"sweater-{mode}-{day}").choice(options)}
+    return dict(sorted(days.items()))
+
+
 def load_trophy_images():
     """Use a verified local photo for every award in Trophy Case."""
     root = HERE / "static" / "trophies"
@@ -13765,6 +13861,14 @@ def update_schedule(players, today, roster_players, goal_clips=None):
             elif i in archive:
                 # Older Roster Recall days were stored in the shared player archive.
                 roster_archive[i] = archive[i]
+    community = load_community_data()
+    new["community"] = community
+    for g in ("grid", "benchboss", "teammatetrail"):
+        days = plan_community_days(sched.get(f"{g}_days", {}), community[g], today, g)
+        new[f"{g}_days"] = days
+        new[f"{g}_start"] = sched.get(f"{g}_start") or today.isoformat()
+        result[g] = (new[f"{g}_start"], {k: v for k, v in days.items() if first <= k <= last})
+
     new["players"] = {str(k): v for k, v in sorted(archive.items())}
     new["roster_players"] = {str(k): v for k, v in sorted(roster_archive.items())}
     SCHEDULE.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -14155,11 +14259,14 @@ def main():
     trophy_images = load_trophy_images()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css"])).hexdigest()[:12],
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_GAMES_CSS__*/": (HERE / "static" / "team-games" / "styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_GAMES__*/": (HERE / "static" / "team-games" / "games.js").read_text(encoding="utf-8"),
+        "/*__COMMUNITY_MODEL__*/": (HERE / "static/community-games/model.mjs").read_text(encoding="utf-8").replace("export const COMMUNITY_MODEL", "const COMMUNITY_MODEL"),
+        "/*__COMMUNITY_GAMES__*/": (HERE / "static/community-games/games.js").read_text(encoding="utf-8").replace("/*__COMMUNITY_DATA__*/{}", esc(load_community_data())),
+        "/*__COMMUNITY_GAMES_CSS__*/": (HERE / "static/community-games/styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_CAREERS__*/[]": esc(load_team_careers()),
         "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_ANIMATION__*/": (HERE / "static" / "shootout" / "animation.js").read_text(encoding="utf-8"),

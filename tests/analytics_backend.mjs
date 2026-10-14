@@ -65,4 +65,7 @@ r=await call('/api/health');assert.equal(r.status,200);assert.equal((await r.jso
 r=await call('/api/leaderboard?game=unsupported');assert.equal(r.status,400,'Existing endpoint behavior preserved');
 new vm.Script(dashboard.match(/<script[^>]*>([\s\S]*?)<\/script>/)[1]);
 new vm.Script(loginPage('').match(/<script[^>]*>([\s\S]*?)<\/script>/)[1]);
+for(const mode of ['grid','benchboss','teammatetrail'])assert.equal((await call('/api/analytics/collect',event('mode_open',{mode}))).status,200,'New game events are accepted');
+r=await call('/api/analytics/report?days=1',undefined,{cookie:sessionCookie});const newModes=(await r.json()).modes;
+for(const [id,label] of [['grid','Sweater Grid'],['benchboss','Bench Boss'],['teammatetrail','Teammate Trail']])assert(newModes.some(m=>m.mode===id&&m.label===label),'New game has its own analytics label');
 console.log('Analytics backend: real SQLite queries, protected reports, login, tamper rejection, CSRF/origin checks, deduplication, ranges/cohorts, rate limits, retention, existing API routing and dashboard JS passed.');

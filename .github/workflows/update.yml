@@ -16,6 +16,9 @@ on:
       - "static/shootout/**"
       - "static/trophies/**"
       - "static/team-games/**"
+      - "static/community-games/**"
+      - "tools/community_games/**"
+      - "tests/community_games*"
       - "tools/team_games/**"
       - "tests/team_games.cjs"
       - "tests/team_careers.py"
@@ -46,6 +49,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
 
       - name: Refresh verified Team Journey careers
         run: python tools/team_games/update_careers.py
@@ -83,6 +90,11 @@ jobs:
         run: |
           node tests/team_games.cjs
           python tests/team_careers.py
+
+      - name: Check Grid, Bench Boss, and Teammate Trail
+        run: |
+          node tests/community_games.mjs
+          python -B tests/community_games_data.py
 
       - name: Validate generated JavaScript
         shell: bash
