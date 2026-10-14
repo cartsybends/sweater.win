@@ -3223,7 +3223,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="hubhead">
       <p class="hubdate" id="hubDate"></p>
       <h1 class="hubtitle">Welcome to Sweater</h1>
-      <p class="hubsubtitle">Daily NHL trivia.</p>
+      <p class="hubsubtitle">Daily NHL trivia</p>
       <div class="hubmeter" aria-hidden="true"><i id="hubBar"></i></div>
       <p class="hubprogress"><span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
