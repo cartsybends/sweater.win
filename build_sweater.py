@@ -2735,7 +2735,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-hub { max-width: 960px; }
   #view-hub .hubhead { padding: 0 0 20px; margin-bottom: 20px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; box-shadow: none; }
   #view-hub .hubhead::before, #view-hub .hubhead::after { display: none; }
-  #view-hub .hubtitle { margin: 6px 0 14px; font-size: 28px; color: var(--fg); }
+  #view-hub .hubtitle { margin: 6px 0 5px; font-size: 28px; color: var(--fg); }
+  #view-hub .hubsubtitle { margin: 0 0 16px; color: var(--muted); font-size: 14px; line-height: 1.5; }
   #view-hub .hubdate { color: var(--muted); font-size: 12px; }
   #view-hub .hubprogress, #view-hub .hubnext { color: var(--muted); font-size: 13px; font-weight: 500; text-shadow: none; }
   #view-hub .hubnext b { color: var(--fg); }
@@ -3221,7 +3222,8 @@ TEMPLATE = r'''<!DOCTYPE html>
   <section class="view" id="view-hub">
     <div class="hubhead">
       <p class="hubdate" id="hubDate"></p>
-      <h1 class="hubtitle">Today's games</h1>
+      <h1 class="hubtitle">Welcome to Sweater.</h1>
+      <p class="hubsubtitle">Daily NHL trivia.</p>
       <div class="hubmeter" aria-hidden="true"><i id="hubBar"></i></div>
       <p class="hubprogress"><span class="hubnext">New puzzles in <b id="hubNext">--:--:--</b></span></p>
     </div>
