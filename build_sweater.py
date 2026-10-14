@@ -9843,23 +9843,40 @@ function progressSummary() {
   const historic = entries.filter(x => ["trophy", "cups", "playoff"].includes(x.game)).length;
   return { entries, xp, wins, days, historic, level: Math.floor(xp / 500) + 1, intoLevel: xp % 500 };
 }
-const WEEKLY_THEMES = [
-  { icon: "⌛", title: "History Night", copy: "Complete three hockey-history dailies this week.", games: ["trophy", "cups", "playoff"] },
-  { icon: "✦", title: "All-Rounder", copy: "Play one player, one detail, and one speed challenge.", games: ["classic", "trophy", "shoot"] },
-  { icon: "⚡", title: "Fast Hands", copy: "Take on three quick-thinking dailies this week.", games: ["hl", "rank", "puck"] },
-  { icon: "🗺", title: "Hockey IQ", copy: "Go from birthplace to draft day to a mystery season.", games: ["map", "draft", "season"] },
-];
+const WEEKLY_CHALLENGE_KEY = "sweater-weekly-challenge-v1";
+function weeklyStart() {
+  const day = dayKey(), weekday = (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
+  return shiftDay(day, -weekday);
+}
+function weeklyChallengePools() {
+  const section = title => HUB.find(s => s.title === title).games.map(([id]) => id);
+  return [section("Name the player"), section("Know the details"),
+    [...section("Arcade"), "hl", "rank", "hlt", "roster", "edgerush"]];
+}
+function completedThisWeek(id, entries = historyEntries()) {
+  const first = weeklyStart(), last = dayKey();
+  return entries.some(x => (id === "hl" ? x.game.startsWith("hl_") : x.game === id) && x.day >= first && x.day <= last);
+}
 function activeWeeklyTheme() {
-  const start = new Date("2024-01-01T12:00:00Z");
-  const now = new Date(`${dayKey()}T12:00:00Z`);
-  return WEEKLY_THEMES[Math.floor((now - start) / 604800000) % WEEKLY_THEMES.length];
+  const week = weeklyStart(), saved = store.get(WEEKLY_CHALLENGE_KEY), entries = historyEntries();
+  const games = weeklyChallengePools().map((ids, i) => {
+    const previous = saved?.week === week && Array.isArray(saved.games) ? saved.games[i] : null;
+    if (ids.includes(previous) && (gameIsReady(previous) || completedThisWeek(previous, entries))) return previous;
+    // Preserve already completed categories when introducing this week's picks.
+    const completed = ids.filter(id => completedThisWeek(id, entries));
+    return pick(completed.length ? completed : ids.filter(gameIsReady)) || null;
+  });
+  if (saved?.week !== week || !Array.isArray(saved.games) || games.some((id, i) => id !== saved.games[i])) {
+    store.set(WEEKLY_CHALLENGE_KEY, { week, games });
+  }
+  return { icon: "✦", title: "All-Rounder", copy: "Three random picks: one player game, one detail game, and one speed challenge.", games };
+}
+function weeklyDoneGames(theme = activeWeeklyTheme()) {
+  const entries = historyEntries();
+  return theme.games.filter(id => id && completedThisWeek(id, entries));
 }
 function weeklyProgress(theme = activeWeeklyTheme()) {
-  const day = dayKey();
-  const weekday = (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
-  const days = Array.from({ length: weekday + 1 }, (_, i) => shiftDay(day, -i));
-  const entries = historyEntries();
-  return theme.games.filter(g => entries.some(x => (g === "hl" ? x.game.startsWith("hl_") : x.game === g) && days.includes(x.day))).length;
+  return weeklyDoneGames(theme).length;
 }
 function achievementList() {
   const p = progressSummary();
@@ -9883,17 +9900,29 @@ function awardProgression() {
   }
   return unlocked;
 }
-function challengeCard({ id, label, title, copy, count, action, locker = false }) {
+function challengeCard({ challenge, label, title, copy, count, action, locker = false }) {
   const progress = Math.min(count, 3);
-  return `<button type="button" class="challengecard ${locker ? "lockerchallenge" : "hubfeature quest"}" ${locker ? "data-locker-open" : "data-open"}="${id}" aria-label="${esc(`${label}: ${title}. ${progress} of 3 complete. ${action}`)}">
+  return `<button type="button" class="challengecard ${locker ? "lockerchallenge" : "hubfeature quest"}" data-challenge="${challenge}" aria-label="${esc(`${label}: ${title}. ${progress} of 3 complete. ${action}`)}">
     <span class="challengehead"><span class="featureeyebrow">${esc(label)}</span><span class="questprogress" aria-hidden="true">${progress}/3</span></span>
     <b class="featuretitle">${esc(title)}</b><p class="featurecopy">${esc(copy)}</p>
     <span class="questaction">${esc(action)}<span aria-hidden="true">→</span></span>
   </button>`;
 }
-function nextDailyChallenge(fallback = "classic") {
-  const ids = [...new Set(["classic", "trophy", "shoot", ...HUB.flatMap(section => section.games.map(([id]) => id))])];
-  return ids.find(id => !["done", "missed"].includes(hubStatus(id)[0]) && gameIsReady(id)) || fallback;
+function randomDailyChallenge() {
+  const ids = hubIds().filter(gameIsReady);
+  const unfinished = ids.filter(id => !["done", "missed"].includes(hubStatus(id)[0]));
+  return pick(unfinished.length ? unfinished : ids);
+}
+function openChallenge(kind) {
+  const theme = kind === "weekly" ? activeWeeklyTheme() : null;
+  const completed = theme ? weeklyDoneGames(theme) : [];
+  const id = theme?.games.find(id => id && !completed.includes(id) && gameIsReady(id)) || randomDailyChallenge();
+  if (!id) return;
+  if (["done", "missed"].includes(hubStatus(id)[0])) {
+    mode = "unlimited";
+    store.set("sweater-mode", mode);
+    openGame(id);
+  } else openDailyChallenge(id);
 }
 function openDailyChallenge(id) {
   mode = "daily";
@@ -9908,10 +9937,8 @@ function renderPlayerProfile() {
   $("achievementGrid").innerHTML = achievements.map(a => `<div class="achievement${a.on ? "" : " locked"}"><i aria-hidden="true">${a.icon}</i><span><b>${a.title}</b><small>${a.copy}</small><em class="achievementstate">${a.on ? "Unlocked" : "To unlock"}</em></span></div>`).join("");
   $("lockerAchievementCount").textContent = `${earned} of ${achievements.length} unlocked`;
   const theme = activeWeeklyTheme(), completed = weeklyDoneGames(theme);
-  const dailyGame = nextDailyChallenge();
-  const weeklyGame = theme.games.find(id => !completed.includes(id) && gameIsReady(id)) || dailyGame;
-  $("lockerChallenges").innerHTML = challengeCard({ id: dailyGame, label: "Daily challenge", title: "Daily Hat Trick", copy: "Finish any three daily games today to earn your Hat Trick badge.", count: todayDone, action: todayDone >= 3 ? "Play another daily" : "Play a daily", locker: true }) +
-    challengeCard({ id: weeklyGame, label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completed.length, action: completed.length >= 3 ? "Keep playing" : "Play the next challenge", locker: true });
+  $("lockerChallenges").innerHTML = challengeCard({ challenge: "daily", label: "Daily challenge", title: "Daily Hat Trick", copy: "Finish any three daily games today to earn your Hat Trick badge.", count: todayDone, action: "Pick me a random game", locker: true }) +
+    challengeCard({ challenge: "weekly", label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completed.length, action: completed.length >= 3 ? "Keep playing" : "Play the next challenge", locker: true });
   const gameRows = ids => ids.slice(0, 3).map(id => {
     const meta = modeMeta(id);
     return `<button type="button" class="lockerrow" data-locker-open="${id}"><i aria-hidden="true">${modeIcon(id)}</i><span><b>${esc(cardTitle(id))}</b><small>${esc(meta.type)}</small></span><em aria-hidden="true">›</em></button>`;
@@ -10450,10 +10477,10 @@ $("profileModal").addEventListener("click", e => {
     requestAnimationFrame(() => $("hubSections").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
     return;
   }
-  const b = e.target.closest("[data-locker-open]");
-  if (!b) return;
+  const b = e.target.closest("[data-challenge], [data-locker-open]");
+  if (!b || b.disabled) return;
   closeModals();
-  if (b.classList.contains("challengecard")) openDailyChallenge(b.dataset.lockerOpen);
+  if (b.dataset.challenge) openChallenge(b.dataset.challenge);
   else openGame(b.dataset.lockerOpen);
 });
 document.querySelectorAll("[data-welcome-open]").forEach(b => b.onclick = () => {
@@ -10982,12 +11009,6 @@ const LIBRARY_FILTERS = [
   ["all", "All games"], ["favourites", "Favourites"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
 ];
 const librarySection = { player: "Name the player", details: "Know the details", puzzles: "Streaks and puzzles", arcade: "Arcade" };
-function weeklyDoneGames(theme = activeWeeklyTheme()) {
-  const day = dayKey(), weekday = (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
-  const days = Array.from({ length: weekday + 1 }, (_, i) => shiftDay(day, -i));
-  const entries = historyEntries();
-  return theme.games.filter(g => entries.some(x => (g === "hl" ? x.game.startsWith("hl_") : x.game === g) && days.includes(x.day)));
-}
 function renderHub() {
   const allCards = HUB.flatMap(sec => sec.games);
   const going = allCards.find(([id]) => hubStatus(id)[0] === "going");
@@ -10998,17 +11019,15 @@ function renderHub() {
   const primaryIcon = (CARD[primary] || {}).icon || "🏒";
   const primaryCopy = going ? "Your current run is waiting—pick up where you left off." : HUB.flatMap(s => s.games).find(([id]) => id === primary)?.[2] || "Your next daily puzzle is ready.";
   const hatTrickCount = dailyEntries(dayKey()).length;
-  const quickGame = nextDailyChallenge(primary);
   const theme = activeWeeklyTheme(), completedThemeGames = weeklyDoneGames(theme);
-  const weeklyGame = theme.games.find(id => !completedThemeGames.includes(id) && gameIsReady(id)) || primary;
   $("hubFeatures").innerHTML = `<button type="button" class="hubfeature primary" data-open="${primary}">
       <p class="featureeyebrow">${going ? "Continue playing" : "Today's featured game"}</p>
       <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${modeIcon(primary)}</span>${esc(cardTitle(primary))}</h2>
       <p class="featurecopy">${esc(primaryCopy)}</p>
       <span class="featurefooter"><span>${primaryState[0] === "done" ? "Daily complete" : primaryState[0] === "going" ? "In progress" : "New daily puzzle"}</span><b>${going ? "Resume" : "Play"} →</b></span>
     </button><div class="queststack">
-      ${challengeCard({ id: quickGame, label: "Daily challenge", title: "Play any 3 dailies", copy: "Build your daily routine and earn a Hat Trick badge.", count: hatTrickCount, action: hatTrickCount >= 3 ? "Play another daily" : "Play a daily" })}
-      ${challengeCard({ id: weeklyGame, label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completedThemeGames.length, action: completedThemeGames.length >= 3 ? "Keep playing" : "Play the next challenge" })}
+      ${challengeCard({ challenge: "daily", label: "Daily challenge", title: "Play any 3 dailies", copy: "Build your daily routine and earn a Hat Trick badge.", count: hatTrickCount, action: "Pick me a random game" })}
+      ${challengeCard({ challenge: "weekly", label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completedThemeGames.length, action: completedThemeGames.length >= 3 ? "Keep playing" : "Play the next challenge" })}
     </div>`;
   const favourites = favouriteIds(), recents = recentIds();
   $("hubShelf").hidden = true;
@@ -11072,9 +11091,9 @@ $("view-hub").addEventListener("click", e => {
     renderHub();
     return;
   }
-  const b = e.target.closest("[data-open]");
+  const b = e.target.closest("[data-challenge], [data-open]");
   if (!b || b.disabled) return;
-  if (b.classList.contains("challengecard")) openDailyChallenge(b.dataset.open);
+  if (b.dataset.challenge) openChallenge(b.dataset.challenge);
   else if (b.dataset.open === "party") openParty("");
   else if (b.dataset.open === "teams") openTeams();
   else openGame(b.dataset.open);

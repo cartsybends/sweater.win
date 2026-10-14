@@ -15,6 +15,7 @@ on:
       - "static/who-scored/**"
       - "static/shootout/**"
       - "tests/shootout.cjs"
+      - "tests/home_challenges.cjs"
       - ".github/workflows/update.yml"
 
 permissions:
@@ -57,6 +58,9 @@ jobs:
 
       - name: Check Shootout animation and round flow
         run: node tests/shootout.cjs
+
+      - name: Check random home challenges and weekly progress
+        run: node tests/home_challenges.cjs
 
       - name: Validate generated JavaScript
         shell: bash
