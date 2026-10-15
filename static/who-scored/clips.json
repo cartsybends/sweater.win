@@ -709,5 +709,365 @@
     "poster": "goal-79-v2.jpg",
     "motion": "Net-front wrist shot",
     "source": "https://nhl.com/video/col-cgy-coleman-scores-goal-against-scott-wedgewood-6370064078112"
+  },
+  {
+    "id": "goal-80",
+    "pid": 8483431,
+    "masked": "goal-80-masked-v1.mp4",
+    "reveal": "goal-80-original-v1.mp4",
+    "poster": "goal-80-v1.jpg",
+    "motion": "Net-front tip-in",
+    "source": "https://nhl.com/video/uta-cgy-cooley-scores-ppg-against-dan-vladar-6366639278112"
+  },
+  {
+    "id": "goal-81",
+    "pid": 8482074,
+    "masked": "goal-81-masked-v1.mp4",
+    "reveal": "goal-81-original-v1.mp4",
+    "poster": "goal-81-v1.jpg",
+    "motion": "Drive and falling wrist shot",
+    "source": "https://nhl.com/video/uta-cgy-zary-scores-goal-against-karel-vejmelka-6366639572112"
+  },
+  {
+    "id": "goal-82",
+    "pid": 8481167,
+    "masked": "goal-82-masked-v1.mp4",
+    "reveal": "goal-82-original-v1.mp4",
+    "poster": "goal-82-v1.jpg",
+    "motion": "Point one-timer",
+    "source": "https://nhl.com/video/uta-cgy-pachal-scores-goal-against-karel-vejmelka-6366638709112"
+  },
+  {
+    "id": "goal-83",
+    "pid": 8479343,
+    "masked": "goal-83-masked-v1.mp4",
+    "reveal": "goal-83-original-v1.mp4",
+    "poster": "goal-83-v1.jpg",
+    "motion": "Slot rebound finish",
+    "source": "https://nhl.com/video/uta-cgy-keller-scores-goal-against-dan-vladar-6366640867112"
+  },
+  {
+    "id": "goal-84",
+    "pid": 8478831,
+    "masked": "goal-84-masked-v1.mp4",
+    "reveal": "goal-84-original-v1.mp4",
+    "poster": "goal-84-v1.jpg",
+    "motion": "Left-circle wrist shot",
+    "source": "https://nhl.com/video/uta-det-stenlund-scores-goal-against-alex-lyon-6369704406112"
+  },
+  {
+    "id": "goal-85",
+    "pid": 8482159,
+    "masked": "goal-85-masked-v1.mp4",
+    "reveal": "goal-85-original-v1.mp4",
+    "poster": "goal-85-v1.jpg",
+    "motion": "Right-wing rush, wrist-shot finish past Hildeby, and both arms raised along the right boards.",
+    "source": "https://nhl.com/video/phi-tor-foerster-scores-goal-against-dennis-hildeby-6366719545112"
+  },
+  {
+    "id": "goal-86",
+    "pid": 8475913,
+    "masked": "goal-86-masked-v1.mp4",
+    "reveal": "goal-86-original-v1.mp4",
+    "poster": "goal-86-v1.jpg",
+    "motion": "Net-front finish",
+    "source": "https://nhl.com/video/mark-stone-with-a-goal-vs-philadelphia-flyers-6366640101112"
+  },
+  {
+    "id": "goal-87",
+    "pid": 8479980,
+    "masked": "goal-87-masked-v1.mp4",
+    "reveal": "goal-87-original-v1.mp4",
+    "poster": "goal-87-v1.jpg",
+    "motion": "Wraparound",
+    "source": "https://nhl.com/video/phi-vgk-hague-scores-goal-against-aleksei-kolosov-6366640873112"
+  },
+  {
+    "id": "goal-88",
+    "pid": 8481604,
+    "masked": "goal-88-masked-v1.mp4",
+    "reveal": "goal-88-original-v1.mp4",
+    "poster": "goal-88-v1.jpg",
+    "motion": "Left-circle wrist shot",
+    "source": "https://nhl.com/video/phi-vgk-dorofeyev-scores-goal-against-aleksei-kolosov-6366641974112"
+  },
+  {
+    "id": "goal-89",
+    "pid": 8482125,
+    "masked": "goal-89-masked-v1.mp4",
+    "reveal": "goal-89-original-v1.mp4",
+    "poster": "goal-89-v1.jpg",
+    "motion": "Right-circle wrist shot",
+    "source": "https://nhl.com/video/phi-vgk-holtz-scores-goal-against-aleksei-kolosov-6366642576112"
+  },
+  {
+    "id": "goal-90",
+    "pid": 8478439,
+    "masked": "goal-90-masked-v1.mp4",
+    "reveal": "goal-90-original-v1.mp4",
+    "poster": "goal-90-v1.jpg",
+    "motion": "Konecny takes the right-circle pass, fires past Samsonov and raises his gloves while skating around the right boards.",
+    "source": "https://nhl.com/video/phi-vgk-konecny-scores-ppg-against-ilya-samsonov-6366641619112"
+  },
+  {
+    "id": "goal-91",
+    "pid": 8476905,
+    "masked": "goal-91-masked-v1.mp4",
+    "reveal": "goal-91-original-v1.mp4",
+    "poster": "goal-91-v1.jpg",
+    "motion": "Board-side wrist shot followed through the goal and Demko reaction as Stephenson skates out of the left edge.",
+    "source": "https://nhl.com/video/van-sea-stephenson-scores-goal-against-thatcher-demko-6366639652112"
+  },
+  {
+    "id": "goal-92",
+    "pid": 8484136,
+    "masked": "goal-92-masked-v1.mp4",
+    "reveal": "goal-92-original-v1.mp4",
+    "poster": "goal-92-v1.jpg",
+    "motion": "Sasson finishes at the crease, lands in front of Grubauer, and raises both gloves beside the net.",
+    "source": "https://nhl.com/video/van-sea-sasson-scores-goal-against-philipp-grubauer-6366640356112"
+  },
+  {
+    "id": "goal-93",
+    "pid": 8478856,
+    "masked": "goal-93-masked-v1.mp4",
+    "reveal": "goal-93-original-v1.mp4",
+    "poster": "goal-93-v1.jpg",
+    "motion": "Garland carries into a breakaway, dekes around Grubauer, scores, and raises his glove along the right boards.",
+    "source": "https://nhl.com/video/van-sea-garland-scores-goal-against-philipp-grubauer-6366640789112"
+  },
+  {
+    "id": "goal-94",
+    "pid": 8474574,
+    "masked": "goal-94-masked-v1.mp4",
+    "reveal": "goal-94-original-v1.mp4",
+    "poster": "goal-94-v1.jpg",
+    "motion": "Myers receives at the far left, shoots through traffic, then turns along the left boards as the goal and full reaction remain in view.",
+    "source": "https://nhl.com/video/van-sea-myers-scores-goal-against-philipp-grubauer-6366641533112"
+  },
+  {
+    "id": "goal-95",
+    "pid": 8482665,
+    "masked": "goal-95-masked-v1.mp4",
+    "reveal": "goal-95-original-v1.mp4",
+    "poster": "goal-95-v1.jpg",
+    "motion": "Beniers receives in the slot, scores through the net-front traffic and raises his stick and gloves for the celebration.",
+    "source": "https://nhl.com/video/van-sea-beniers-scores-goal-against-kevin-lankinen-6366641540112"
+  },
+  {
+    "id": "goal-96",
+    "pid": 8478407,
+    "masked": "goal-96-masked-v1.mp4",
+    "reveal": "goal-96-original-v1.mp4",
+    "poster": "goal-96-v1.jpg",
+    "motion": "Dunn receives at the blue line, pulls in the puck, shoots through traffic and the camera follows the puck into the net.",
+    "source": "https://nhl.com/video/van-sea-dunn-scores-goal-against-kevin-lankinen-6366642615112"
+  },
+  {
+    "id": "goal-97",
+    "pid": 8475726,
+    "masked": "goal-97-masked-v1.mp4",
+    "reveal": "goal-97-original-v1.mp4",
+    "poster": "goal-97-v1.jpg",
+    "motion": "Toffoli carries from the blue line, shoots while pressured by Hagel, drops to a knee as the puck scores, then stands and celebrates.",
+    "source": "https://nhl.com/video/tbl-sjs-toffoli-scores-goal-against-andrei-vasilevskiy-6366641555112"
+  },
+  {
+    "id": "goal-98",
+    "pid": 8479983,
+    "masked": "goal-98-masked-v1.mp4",
+    "reveal": "goal-98-original-v1.mp4",
+    "poster": "goal-98-v1.jpg",
+    "motion": "Ferraro drives the central slot, shoots past Vasilevskiy, then turns toward the right boards with his arm raised.",
+    "source": "https://nhl.com/video/mario-ferraro-with-a-goal-vs-tampa-bay-lightning-6366641898112"
+  },
+  {
+    "id": "goal-99",
+    "pid": 8478519,
+    "masked": "goal-99-masked-v1.mp4",
+    "reveal": "goal-99-original-v1.mp4",
+    "poster": "goal-99-v1.jpg",
+    "motion": "Cirelli receives Hagel’s pass in the slot, scores with a wrist shot and skates toward the camera with both gloves raised.",
+    "source": "https://nhl.com/video/tbl-sjs-cirelli-scores-goal-against-yaroslav-askarov-6366641911112"
+  },
+  {
+    "id": "goal-100",
+    "pid": 8478055,
+    "masked": "goal-100-masked-v1.mp4",
+    "reveal": "goal-100-original-v1.mp4",
+    "poster": "goal-100-v1.jpg",
+    "motion": "Forsling receives the puck at the point, scores with a wrist shot and skates out of frame as the goal is celebrated.",
+    "source": "https://nhl.com/video/pit-fla-forsling-scores-goal-against-tristan-jarry-6366668712112"
+  },
+  {
+    "id": "goal-101",
+    "pid": 8476483,
+    "masked": "goal-101-masked-v1.mp4",
+    "reveal": "goal-101-original-v1.mp4",
+    "poster": "goal-101-v1.jpg",
+    "motion": "Pittsburgh 67 takes the slot one-timer on one knee, scores, then rises with his stick raised while the Florida defender remains down; full goal and celebration follow-through retained.",
+    "source": "https://nhl.com/video/pit-fla-rakell-scores-ppg-against-spencer-knight-6366671824112"
+  },
+  {
+    "id": "goal-102",
+    "pid": 8477479,
+    "masked": "goal-102-masked-v1.mp4",
+    "reveal": "goal-102-original-v1.mp4",
+    "poster": "goal-102-v1.jpg",
+    "motion": "Bertuzzi receives the pass at the right circle, shoots past Montembeault and celebrates with both arms raised.",
+    "source": "https://nhl.com/video/mtl-chi-bertuzzi-scores-ppg-against-samuel-montembeault-6366671452112"
+  },
+  {
+    "id": "goal-103",
+    "pid": 8473422,
+    "masked": "goal-103-masked-v1.mp4",
+    "reveal": "goal-103-original-v1.mp4",
+    "poster": "goal-103-v1.jpg",
+    "motion": "Foligno moves from the right crease into the slot, deflects the point shot, then raises his stick as the goal is celebrated.",
+    "source": "https://nhl.com/video/mtl-chi-foligno-scores-goal-against-samuel-montembeault-6366671998112"
+  },
+  {
+    "id": "goal-104",
+    "pid": 8482476,
+    "masked": "goal-104-masked-v1.mp4",
+    "reveal": "goal-104-original-v1.mp4",
+    "poster": "goal-104-v1.jpg",
+    "motion": "Montreal 51 finishes at the left crease, then raises his glove and stick before backing into Chicago 17; the goal and reaction remain in the uninterrupted behind-net replay.",
+    "source": "https://nhl.com/video/mtl-chi-heineman-scores-ppg-against-arvid-soderblom-6366672526112"
+  },
+  {
+    "id": "goal-105",
+    "pid": 8475170,
+    "masked": "goal-105-masked-v1.mp4",
+    "reveal": "goal-105-original-v1.mp4",
+    "poster": "goal-105-v1.jpg",
+    "motion": "Schenn carries in on the breakaway, scores past the goalie and drops to a knee through the finish.",
+    "source": "https://nhl.com/video/ott-stl-schenn-scores-goal-against-anton-forsberg-6366670690112"
+  },
+  {
+    "id": "goal-106",
+    "pid": 8476454,
+    "masked": "goal-106-masked-v1.mp4",
+    "reveal": "goal-106-original-v1.mp4",
+    "poster": "goal-106-v1.jpg",
+    "motion": "Edmonton 93 takes the right-circle one-timer, scores, then skates around the net to raise his glove toward Hyman 18; the full shot, goal and high-five follow-through are retained.",
+    "source": "https://nhl.com/video/ana-edm-nugent-hopkins-scores-goal-against-lukas-dostal-6366673272112"
+  },
+  {
+    "id": "goal-107",
+    "pid": 8477498,
+    "masked": "goal-107-masked-v1.mp4",
+    "reveal": "goal-107-original-v1.mp4",
+    "poster": "goal-107-v1.jpg",
+    "motion": "Edmonton 25 sets and releases the right-circle wrist shot; the camera follows the shot into the net and keeps the goalie reaction after the scorer leaves the frame.",
+    "source": "https://nhl.com/video/ana-edm-nurse-scores-goal-against-lukas-dostal-6366672035112"
+  },
+  {
+    "id": "goal-108",
+    "pid": 8481517,
+    "masked": "goal-108-masked-v1.mp4",
+    "reveal": "goal-108-original-v1.mp4",
+    "poster": "goal-108-v1.jpg",
+    "motion": "Anaheim 20 carries on the rush, releases the shot from the slot and turns beside the Edmonton net as the goal goes in; the continuous side replay retains the goal and follow-through.",
+    "source": "https://nhl.com/video/ana-edm-leason-scores-goal-against-stuart-skinner-6366673983112"
+  },
+  {
+    "id": "goal-109",
+    "pid": 8481605,
+    "masked": "goal-109-masked-v1.mp4",
+    "reveal": "goal-109-original-v1.mp4",
+    "poster": "goal-109-v1.jpg",
+    "motion": "Anaheim 2 winds up for the point shot, releases it toward the Edmonton net and keeps the full scoring finish and crease reaction in the same overhead replay.",
+    "source": "https://nhl.com/video/ana-edm-lacombe-scores-goal-against-stuart-skinner-6366672945112"
+  },
+  {
+    "id": "goal-110",
+    "pid": 8474564,
+    "masked": "goal-110-masked-v1.mp4",
+    "reveal": "goal-110-original-v1.mp4",
+    "poster": "goal-110-v1.jpg",
+    "motion": "Right-circle shot followed by the goal and raised-stick reaction",
+    "source": "https://nhl.com/video/nsh-van-stamkos-scores-goal-against-kevin-lankinen-6366674707112"
+  },
+  {
+    "id": "goal-111",
+    "pid": 8476925,
+    "masked": "goal-111-masked-v1.mp4",
+    "reveal": "goal-111-original-v1.mp4",
+    "poster": "goal-111-v1.jpg",
+    "motion": "Nashville 10 carries through the neutral zone into the right circle and scores past the retreating empty-net defenders, with the puck entering the net and the ensuing reaction retained.",
+    "source": "https://nhl.com/video/nsh-van-sissons-scores-empty-net-goal-6366676001112"
+  },
+  {
+    "id": "goal-112",
+    "pid": 8475184,
+    "masked": "goal-112-masked-v1.mp4",
+    "reveal": "goal-112-original-v1.mp4",
+    "poster": "goal-112-v1.jpg",
+    "motion": "Slot shot with full goal and net reaction after Kreider exits left",
+    "source": "https://nhl.com/video/nyr-wsh-kreider-scores-goal-against-logan-thompson-6366686517112"
+  },
+  {
+    "id": "goal-113",
+    "pid": 8478440,
+    "masked": "goal-113-masked-v1.mp4",
+    "reveal": "goal-113-original-v1.mp4",
+    "poster": "goal-113-v1.jpg",
+    "motion": "Two crease rebound attempts followed by the goal and raised-glove reaction",
+    "source": "https://nhl.com/video/nyr-wsh-strome-scores-ppg-against-jonathan-quick-6366687531112"
+  },
+  {
+    "id": "goal-114",
+    "pid": 8474189,
+    "masked": "goal-114-masked-v1.mp4",
+    "reveal": "goal-114-original-v1.mp4",
+    "poster": "goal-114-v1.jpg",
+    "motion": "Slot tip-in followed by the full goal and two-arm celebration",
+    "source": "https://nhl.com/video/nyr-wsh-eller-scores-goal-against-jonathan-quick-6366688037112"
+  },
+  {
+    "id": "goal-115",
+    "pid": 8478233,
+    "masked": "goal-115-masked-v1.mp4",
+    "reveal": "goal-115-original-v1.mp4",
+    "poster": "goal-115-v1.jpg",
+    "motion": "Slot wrist shot followed by the full goal and follow-through toward the crease",
+    "source": "https://nhl.com/video/nyr-wsh-mangiapane-scores-goal-against-jonathan-quick-6366688249112"
+  },
+  {
+    "id": "goal-116",
+    "pid": 8475842,
+    "masked": "goal-116-masked-v1.mp4",
+    "reveal": "goal-116-original-v1.mp4",
+    "poster": "goal-116-v1.jpg",
+    "motion": "Slot shot with full scoring finish and follow-through to the right boards",
+    "source": "https://nhl.com/video/nyr-wsh-carrick-scores-goal-against-logan-thompson-6366688277112"
+  },
+  {
+    "id": "goal-117",
+    "pid": 8481580,
+    "masked": "goal-117-masked-v1.mp4",
+    "reveal": "goal-117-original-v1.mp4",
+    "poster": "goal-117-v1.jpg",
+    "motion": "Right-slot shot with the full goal and stick-raised celebration",
+    "source": "https://nhl.com/video/nyr-wsh-mcmichael-scores-goal-against-jonathan-quick-6366688665112"
+  },
+  {
+    "id": "goal-118",
+    "pid": 8480078,
+    "masked": "goal-118-masked-v1.mp4",
+    "reveal": "goal-118-original-v1.mp4",
+    "poster": "goal-118-v1.jpg",
+    "motion": "Continuous carry, close-range shot and goal, then the natural turn behind the net.",
+    "source": "https://nhl.com/video/nyr-wsh-chytil-scores-goal-against-logan-thompson-6366690049112"
+  },
+  {
+    "id": "goal-119",
+    "pid": 8481656,
+    "masked": "goal-119-masked-v1.mp4",
+    "reveal": "goal-119-original-v1.mp4",
+    "poster": "goal-119-v1.jpg",
+    "motion": "Rush to the net, close-range finish, and full two-arm celebration",
+    "source": "https://nhl.com/video/nyr-wsh-protas-scores-goal-against-jonathan-quick-6366690247112"
   }
 ]

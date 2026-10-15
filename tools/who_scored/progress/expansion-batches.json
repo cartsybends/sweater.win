@@ -2,7 +2,7 @@
   "batch_size": 40,
   "target_new_players": 240,
   "starting_library_size": 39,
-  "verified_playable_additions": 40,
+  "verified_playable_additions": 80,
   "batches": [
     {
       "batch": 1,
@@ -143,7 +143,7 @@
         "goal-118",
         "goal-119"
       ],
-      "status": "visual_reviews_in_progress",
+      "status": "staged_awaiting_github_and_live_verification",
       "approved_clips": [
         "goal-80",
         "goal-81",
@@ -182,7 +182,9 @@
         "goal-114",
         "goal-115",
         "goal-116",
-        "goal-117"
+        "goal-117",
+        "goal-118",
+        "goal-119"
       ],
       "verified_source_originals": 40
     },

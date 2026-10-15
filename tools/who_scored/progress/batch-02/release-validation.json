@@ -1,0 +1,568 @@
+{
+  "batch": 2,
+  "status": "local_validation_passed_pending_publication",
+  "checked_at": "2026-10-15T11:19:03.545539+00:00",
+  "library_size": 119,
+  "new_unique_scorers": 40,
+  "media_files": 120,
+  "checks": {
+    "three_review_batch_gate": "passed",
+    "full_library_media_decode": "passed",
+    "game_regressions": "passed",
+    "schedule_tests": 4,
+    "pipeline_and_batch_tests": 19,
+    "generated_site_and_javascript": "passed",
+    "locked_schedule_assignments_preserved": 5,
+    "other_modes_schedules_unchanged": true
+  },
+  "browser_media": {
+    "library": 119,
+    "newPlayers": 40,
+    "decoded": 80,
+    "played": 80,
+    "samples": [
+      {
+        "id": "goal-80",
+        "kind": "masked",
+        "duration": 4.458333,
+        "ended": true
+      },
+      {
+        "id": "goal-80",
+        "kind": "reveal",
+        "duration": 4.458333,
+        "ended": true
+      },
+      {
+        "id": "goal-81",
+        "kind": "masked",
+        "duration": 4.791667,
+        "ended": true
+      },
+      {
+        "id": "goal-81",
+        "kind": "reveal",
+        "duration": 4.791667,
+        "ended": true
+      },
+      {
+        "id": "goal-82",
+        "kind": "masked",
+        "duration": 4,
+        "ended": true
+      },
+      {
+        "id": "goal-82",
+        "kind": "reveal",
+        "duration": 4,
+        "ended": true
+      },
+      {
+        "id": "goal-83",
+        "kind": "masked",
+        "duration": 3.416667,
+        "ended": true
+      },
+      {
+        "id": "goal-83",
+        "kind": "reveal",
+        "duration": 3.416667,
+        "ended": true
+      },
+      {
+        "id": "goal-84",
+        "kind": "masked",
+        "duration": 3.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-84",
+        "kind": "reveal",
+        "duration": 3.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-85",
+        "kind": "masked",
+        "duration": 4.291667,
+        "ended": true
+      },
+      {
+        "id": "goal-85",
+        "kind": "reveal",
+        "duration": 4.291667,
+        "ended": true
+      },
+      {
+        "id": "goal-86",
+        "kind": "masked",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-86",
+        "kind": "reveal",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-87",
+        "kind": "masked",
+        "duration": 5,
+        "ended": true
+      },
+      {
+        "id": "goal-87",
+        "kind": "reveal",
+        "duration": 5,
+        "ended": true
+      },
+      {
+        "id": "goal-88",
+        "kind": "masked",
+        "duration": 3.166667,
+        "ended": true
+      },
+      {
+        "id": "goal-88",
+        "kind": "reveal",
+        "duration": 3.166667,
+        "ended": true
+      },
+      {
+        "id": "goal-89",
+        "kind": "masked",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-89",
+        "kind": "reveal",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-90",
+        "kind": "masked",
+        "duration": 4.041667,
+        "ended": true
+      },
+      {
+        "id": "goal-90",
+        "kind": "reveal",
+        "duration": 4.041667,
+        "ended": true
+      },
+      {
+        "id": "goal-91",
+        "kind": "masked",
+        "duration": 3.833333,
+        "ended": true
+      },
+      {
+        "id": "goal-91",
+        "kind": "reveal",
+        "duration": 3.833333,
+        "ended": true
+      },
+      {
+        "id": "goal-92",
+        "kind": "masked",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-92",
+        "kind": "reveal",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-93",
+        "kind": "masked",
+        "duration": 4.083333,
+        "ended": true
+      },
+      {
+        "id": "goal-93",
+        "kind": "reveal",
+        "duration": 4.083333,
+        "ended": true
+      },
+      {
+        "id": "goal-94",
+        "kind": "masked",
+        "duration": 4.291667,
+        "ended": true
+      },
+      {
+        "id": "goal-94",
+        "kind": "reveal",
+        "duration": 4.291667,
+        "ended": true
+      },
+      {
+        "id": "goal-95",
+        "kind": "masked",
+        "duration": 3.916667,
+        "ended": true
+      },
+      {
+        "id": "goal-95",
+        "kind": "reveal",
+        "duration": 3.916667,
+        "ended": true
+      },
+      {
+        "id": "goal-96",
+        "kind": "masked",
+        "duration": 4.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-96",
+        "kind": "reveal",
+        "duration": 4.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-97",
+        "kind": "masked",
+        "duration": 5.416667,
+        "ended": true
+      },
+      {
+        "id": "goal-97",
+        "kind": "reveal",
+        "duration": 5.416667,
+        "ended": true
+      },
+      {
+        "id": "goal-98",
+        "kind": "masked",
+        "duration": 4.083333,
+        "ended": true
+      },
+      {
+        "id": "goal-98",
+        "kind": "reveal",
+        "duration": 4.083333,
+        "ended": true
+      },
+      {
+        "id": "goal-99",
+        "kind": "masked",
+        "duration": 4.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-99",
+        "kind": "reveal",
+        "duration": 4.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-100",
+        "kind": "masked",
+        "duration": 2.958333,
+        "ended": true
+      },
+      {
+        "id": "goal-100",
+        "kind": "reveal",
+        "duration": 2.958333,
+        "ended": true
+      },
+      {
+        "id": "goal-101",
+        "kind": "masked",
+        "duration": 4.166667,
+        "ended": true
+      },
+      {
+        "id": "goal-101",
+        "kind": "reveal",
+        "duration": 4.166667,
+        "ended": true
+      },
+      {
+        "id": "goal-102",
+        "kind": "masked",
+        "duration": 3.416667,
+        "ended": true
+      },
+      {
+        "id": "goal-102",
+        "kind": "reveal",
+        "duration": 3.416667,
+        "ended": true
+      },
+      {
+        "id": "goal-103",
+        "kind": "masked",
+        "duration": 3.458333,
+        "ended": true
+      },
+      {
+        "id": "goal-103",
+        "kind": "reveal",
+        "duration": 3.458333,
+        "ended": true
+      },
+      {
+        "id": "goal-104",
+        "kind": "masked",
+        "duration": 3.208333,
+        "ended": true
+      },
+      {
+        "id": "goal-104",
+        "kind": "reveal",
+        "duration": 3.208333,
+        "ended": true
+      },
+      {
+        "id": "goal-105",
+        "kind": "masked",
+        "duration": 4.083333,
+        "ended": true
+      },
+      {
+        "id": "goal-105",
+        "kind": "reveal",
+        "duration": 4.083333,
+        "ended": true
+      },
+      {
+        "id": "goal-106",
+        "kind": "masked",
+        "duration": 3.958333,
+        "ended": true
+      },
+      {
+        "id": "goal-106",
+        "kind": "reveal",
+        "duration": 3.958333,
+        "ended": true
+      },
+      {
+        "id": "goal-107",
+        "kind": "masked",
+        "duration": 2.166667,
+        "ended": true
+      },
+      {
+        "id": "goal-107",
+        "kind": "reveal",
+        "duration": 2.166667,
+        "ended": true
+      },
+      {
+        "id": "goal-108",
+        "kind": "masked",
+        "duration": 3.666667,
+        "ended": true
+      },
+      {
+        "id": "goal-108",
+        "kind": "reveal",
+        "duration": 3.666667,
+        "ended": true
+      },
+      {
+        "id": "goal-109",
+        "kind": "masked",
+        "duration": 2.708333,
+        "ended": true
+      },
+      {
+        "id": "goal-109",
+        "kind": "reveal",
+        "duration": 2.708333,
+        "ended": true
+      },
+      {
+        "id": "goal-110",
+        "kind": "masked",
+        "duration": 2.833333,
+        "ended": true
+      },
+      {
+        "id": "goal-110",
+        "kind": "reveal",
+        "duration": 2.833333,
+        "ended": true
+      },
+      {
+        "id": "goal-111",
+        "kind": "masked",
+        "duration": 3.833333,
+        "ended": true
+      },
+      {
+        "id": "goal-111",
+        "kind": "reveal",
+        "duration": 3.833333,
+        "ended": true
+      },
+      {
+        "id": "goal-112",
+        "kind": "masked",
+        "duration": 3.666667,
+        "ended": true
+      },
+      {
+        "id": "goal-112",
+        "kind": "reveal",
+        "duration": 3.666667,
+        "ended": true
+      },
+      {
+        "id": "goal-113",
+        "kind": "masked",
+        "duration": 3.916667,
+        "ended": true
+      },
+      {
+        "id": "goal-113",
+        "kind": "reveal",
+        "duration": 3.916667,
+        "ended": true
+      },
+      {
+        "id": "goal-114",
+        "kind": "masked",
+        "duration": 3.75,
+        "ended": true
+      },
+      {
+        "id": "goal-114",
+        "kind": "reveal",
+        "duration": 3.75,
+        "ended": true
+      },
+      {
+        "id": "goal-115",
+        "kind": "masked",
+        "duration": 3.25,
+        "ended": true
+      },
+      {
+        "id": "goal-115",
+        "kind": "reveal",
+        "duration": 3.25,
+        "ended": true
+      },
+      {
+        "id": "goal-116",
+        "kind": "masked",
+        "duration": 3.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-116",
+        "kind": "reveal",
+        "duration": 3.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-117",
+        "kind": "masked",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-117",
+        "kind": "reveal",
+        "duration": 3.583333,
+        "ended": true
+      },
+      {
+        "id": "goal-118",
+        "kind": "masked",
+        "duration": 3.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-118",
+        "kind": "reveal",
+        "duration": 3.333333,
+        "ended": true
+      },
+      {
+        "id": "goal-119",
+        "kind": "masked",
+        "duration": 5.25,
+        "ended": true
+      },
+      {
+        "id": "goal-119",
+        "kind": "reveal",
+        "duration": 5.25,
+        "ended": true
+      }
+    ],
+    "engine": "Chromium",
+    "viewport": 390,
+    "playbackRate": 4,
+    "javascriptErrors": []
+  },
+  "daily_browser": [
+    {
+      "engine": "chromium",
+      "width": 1280,
+      "theme": "dark",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": true,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "theme": "dark",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": true,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "width": 320,
+      "theme": "light",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": true,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "theme": "dark",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": false,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "theme": "light",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": false,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    }
+  ],
+  "review_sha256": "a9da019b34f96bccd2fcbfe6c4083d84414a8e0a0b5ba8b2654520cebdafe3d4"
+}
