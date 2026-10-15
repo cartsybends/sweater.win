@@ -190,8 +190,10 @@ class PublishedCorrectionTests(unittest.TestCase):
         media = TOOLS.parents[1] / 'static/who-scored'
         folder = TOOLS / 'progress/corrections-01'
         clips = json.loads((media / 'clips.json').read_text())
-        proposed, records = corrections.verify_corrections(folder, media, clips, inspect=False)
-        self.assertEqual(clips, proposed)
+        baseline_ids = {clip['id'] for clip in json.loads((folder / 'clips-before.json').read_text())}
+        corrected_clips = [clip for clip in clips if clip['id'] in baseline_ids]
+        proposed, records = corrections.verify_corrections(folder, media, corrected_clips, inspect=False)
+        self.assertEqual(corrected_clips, proposed)
         sources = {row['id']: row for row in json.loads((media / 'sources.json').read_text())}
         for record in records:
             with self.subTest(clip=record['id']):
@@ -202,6 +204,40 @@ class PublishedCorrectionTests(unittest.TestCase):
                 if 'identity_verification' in edit:
                     self.assertEqual(source['identity_verification'], edit['identity_verification'])
                 self.assertEqual(source['identity_verification'], record['reviews']['official_identity']['note'])
+
+    def test_published_expansions_match_complete_reviewed_batches(self):
+        media = TOOLS.parents[1] / 'static/who-scored'
+        progress = TOOLS / 'progress'
+        clips = json.loads((media / 'clips.json').read_text())
+        registry = json.loads((progress / 'expansion-batches.json').read_text())
+        by_id = {clip['id']: clip for clip in clips}
+        self.assertEqual(len(by_id), len(clips))
+        baseline_ids = {clip['id'] for clip in json.loads(
+            (progress / 'corrections-01/clips-before.json').read_text())}
+        additions = set(by_id) - baseline_ids
+        verified = set()
+        for row in registry['batches']:
+            active = set(row['ids']) & additions
+            if not active:
+                continue
+            self.assertEqual(active, set(row['ids']), 'Playable expansions must contain the entire batch')
+            folder = progress / f"batch-{row['batch']:02d}"
+            records = json.loads((folder / 'review.json').read_text())['reviewed_clips']
+            previous = [clip for clip in clips if clip['id'] not in active]
+            batch.verify_batch(row, records,
+                               json.loads((progress / 'expansion-candidates.json').read_text()),
+                               previous, media,
+                               json.loads((progress / f"batch-{row['batch']:02d}-source-audit.json").read_text()),
+                               folder)
+            for record in records:
+                source = next(source for source in json.loads(
+                    (progress / f"batch-{row['batch']:02d}-source-audit.json").read_text())['sources']
+                              if source['id'] == record['id'])
+                self.assertEqual(by_id[record['id']], {
+                    'id': record['id'], 'pid': record['pid'], **record['assets'],
+                    'motion': record['motion'], 'source': source['source']})
+            verified.update(active)
+        self.assertEqual(verified, additions)
 
     def test_coleman_metadata_describes_the_replacement_colorado_goal(self):
         media = TOOLS.parents[1] / 'static/who-scored'

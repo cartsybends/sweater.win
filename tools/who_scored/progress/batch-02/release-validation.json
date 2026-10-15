@@ -10,10 +10,11 @@
     "full_library_media_decode": "passed",
     "game_regressions": "passed",
     "schedule_tests": 4,
-    "pipeline_and_batch_tests": 19,
+    "pipeline_and_batch_tests": 20,
     "generated_site_and_javascript": "passed",
     "locked_schedule_assignments_preserved": 5,
-    "other_modes_schedules_unchanged": true
+    "other_modes_schedules_unchanged": true,
+    "published_corrections_and_expansions": "All prior corrected clips unchanged; new playable assets match the complete40 reviewed batch."
   },
   "browser_media": {
     "library": 119,
