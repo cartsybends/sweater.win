@@ -2339,6 +2339,7 @@
     8481186,
     8482742,
     8482768,
+    8484149,
     8484258,
     8486171
    ]
@@ -137540,7 +137541,17 @@
    "https://api.nhle.com/stats/rest/en/skater/summary",
    "https://api.nhle.com/stats/rest/en/goalie/summary",
    "https://api.nhle.com/stats/rest/en/skater/bios",
-   "https://api.nhle.com/stats/rest/en/goalie/bios"
+   "https://api.nhle.com/stats/rest/en/goalie/bios",
+   "https://en.wikipedia.org/wiki/Hart_Memorial_Trophy",
+   "https://en.wikipedia.org/wiki/Vezina_Trophy",
+   "https://en.wikipedia.org/wiki/James_Norris_Memorial_Trophy",
+   "https://en.wikipedia.org/wiki/Calder_Memorial_Trophy",
+   "https://en.wikipedia.org/wiki/Art_Ross_Trophy",
+   "https://en.wikipedia.org/wiki/Maurice_Richard_Trophy",
+   "https://en.wikipedia.org/wiki/Conn_Smythe_Trophy",
+   "https://en.wikipedia.org/wiki/Frank_J._Selke_Trophy",
+   "https://en.wikipedia.org/wiki/Lady_Byng_Memorial_Trophy",
+   "https://en.wikipedia.org/wiki/Ted_Lindsay_Award"
   ],
   "players": [
    [
@@ -266435,6 +266446,1062 @@
      {
       "kind": "position",
       "value": "D"
+     }
+    ]
+   },
+   {
+    "id": "grid-120",
+    "rows": [
+     "CHI",
+     "MTL",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "ANA"
+     },
+     {
+      "kind": "team",
+      "value": "BUF"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-121",
+    "rows": [
+     "NYR",
+     "TOR",
+     "BOS"
+    ],
+    "cols": [
+     {
+      "kind": "country",
+      "value": "SWE"
+     },
+     {
+      "kind": "team",
+      "value": "CBJ"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-122",
+    "rows": [
+     "STL",
+     "DET",
+     "BOS"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "NYI"
+     },
+     {
+      "kind": "team",
+      "value": "TBL"
+     }
+    ]
+   },
+   {
+    "id": "grid-123",
+    "rows": [
+     "BOS",
+     "TOR",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "WSH"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "position",
+      "value": "D"
+     }
+    ]
+   },
+   {
+    "id": "grid-124",
+    "rows": [
+     "STL",
+     "NYR",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "country",
+      "value": "SWE"
+     },
+     {
+      "kind": "team",
+      "value": "CAR"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-125",
+    "rows": [
+     "NYR",
+     "BOS",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "NJD"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "position",
+      "value": "G"
+     }
+    ]
+   },
+   {
+    "id": "grid-126",
+    "rows": [
+     "TOR",
+     "CHI",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "NYI"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "OTT"
+     }
+    ]
+   },
+   {
+    "id": "grid-127",
+    "rows": [
+     "MTL",
+     "NYR",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "ANA"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "country",
+      "value": "CAN"
+     }
+    ]
+   },
+   {
+    "id": "grid-128",
+    "rows": [
+     "STL",
+     "NYR",
+     "DET"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "NSH"
+     },
+     {
+      "kind": "team",
+      "value": "DAL"
+     }
+    ]
+   },
+   {
+    "id": "grid-129",
+    "rows": [
+     "MTL",
+     "CHI",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "LAK"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     },
+     {
+      "kind": "games",
+      "value": 1000
+     }
+    ]
+   },
+   {
+    "id": "grid-130",
+    "rows": [
+     "TOR",
+     "BOS",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "country",
+      "value": "USA"
+     },
+     {
+      "kind": "position",
+      "value": "G"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-131",
+    "rows": [
+     "MTL",
+     "DET",
+     "STL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CAR"
+     },
+     {
+      "kind": "team",
+      "value": "BUF"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-132",
+    "rows": [
+     "CHI",
+     "NYR",
+     "STL"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "PIT"
+     },
+     {
+      "kind": "team",
+      "value": "LAK"
+     }
+    ]
+   },
+   {
+    "id": "grid-133",
+    "rows": [
+     "BOS",
+     "CHI",
+     "DET"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "games",
+      "value": 1000
+     },
+     {
+      "kind": "team",
+      "value": "EDM"
+     }
+    ]
+   },
+   {
+    "id": "grid-134",
+    "rows": [
+     "TOR",
+     "MTL",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CAR"
+     },
+     {
+      "kind": "country",
+      "value": "USA"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-135",
+    "rows": [
+     "TOR",
+     "DET",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CBJ"
+     },
+     {
+      "kind": "team",
+      "value": "FLA"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-136",
+    "rows": [
+     "BOS",
+     "CHI",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CAR"
+     },
+     {
+      "kind": "position",
+      "value": "F"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-137",
+    "rows": [
+     "DET",
+     "BOS",
+     "STL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "MIN"
+     },
+     {
+      "kind": "games",
+      "value": 1000
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-138",
+    "rows": [
+     "CHI",
+     "NYR",
+     "STL"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "BOS"
+     },
+     {
+      "kind": "team",
+      "value": "VAN"
+     }
+    ]
+   },
+   {
+    "id": "grid-139",
+    "rows": [
+     "BOS",
+     "NYR",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "VAN"
+     },
+     {
+      "kind": "team",
+      "value": "CGY"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-140",
+    "rows": [
+     "NYR",
+     "BOS",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CBJ"
+     },
+     {
+      "kind": "team",
+      "value": "MIN"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-141",
+    "rows": [
+     "TOR",
+     "DET",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "MIN"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "CHI"
+     }
+    ]
+   },
+   {
+    "id": "grid-142",
+    "rows": [
+     "DET",
+     "CHI",
+     "BOS"
+    ],
+    "cols": [
+     {
+      "kind": "position",
+      "value": "D"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "LAK"
+     }
+    ]
+   },
+   {
+    "id": "grid-143",
+    "rows": [
+     "TOR",
+     "NYR",
+     "BOS"
+    ],
+    "cols": [
+     {
+      "kind": "position",
+      "value": "F"
+     },
+     {
+      "kind": "team",
+      "value": "ANA"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-144",
+    "rows": [
+     "BOS",
+     "TOR",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CAR"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "PIT"
+     }
+    ]
+   },
+   {
+    "id": "grid-145",
+    "rows": [
+     "BOS",
+     "NYR",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "games",
+      "value": 1000
+     },
+     {
+      "kind": "team",
+      "value": "MTL"
+     }
+    ]
+   },
+   {
+    "id": "grid-146",
+    "rows": [
+     "BOS",
+     "STL",
+     "DET"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "PHI"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "TBL"
+     }
+    ]
+   },
+   {
+    "id": "grid-147",
+    "rows": [
+     "STL",
+     "NYR",
+     "DET"
+    ],
+    "cols": [
+     {
+      "kind": "games",
+      "value": 1000
+     },
+     {
+      "kind": "team",
+      "value": "WSH"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-148",
+    "rows": [
+     "CHI",
+     "MTL",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CGY"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "DET"
+     }
+    ]
+   },
+   {
+    "id": "grid-149",
+    "rows": [
+     "DET",
+     "CHI",
+     "STL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "MIN"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "country",
+      "value": "USA"
+     }
+    ]
+   },
+   {
+    "id": "grid-150",
+    "rows": [
+     "DET",
+     "BOS",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "MIN"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "CAR"
+     }
+    ]
+   },
+   {
+    "id": "grid-151",
+    "rows": [
+     "CHI",
+     "BOS",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "country",
+      "value": "CAN"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "WSH"
+     }
+    ]
+   },
+   {
+    "id": "grid-152",
+    "rows": [
+     "TOR",
+     "CHI",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "NJD"
+     },
+     {
+      "kind": "position",
+      "value": "F"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-153",
+    "rows": [
+     "TOR",
+     "STL",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "COL"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "LAK"
+     }
+    ]
+   },
+   {
+    "id": "grid-154",
+    "rows": [
+     "NYR",
+     "CHI",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "BOS"
+     },
+     {
+      "kind": "team",
+      "value": "DET"
+     }
+    ]
+   },
+   {
+    "id": "grid-155",
+    "rows": [
+     "MTL",
+     "NYR",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "EDM"
+     },
+     {
+      "kind": "team",
+      "value": "TOR"
+     }
+    ]
+   },
+   {
+    "id": "grid-156",
+    "rows": [
+     "NYR",
+     "CHI",
+     "STL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "TOR"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "PHI"
+     }
+    ]
+   },
+   {
+    "id": "grid-157",
+    "rows": [
+     "TOR",
+     "BOS",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "WSH"
+     },
+     {
+      "kind": "team",
+      "value": "PHI"
+     },
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-158",
+    "rows": [
+     "CHI",
+     "MTL",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Vezina Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "BOS"
+     },
+     {
+      "kind": "team",
+      "value": "FLA"
+     }
+    ]
+   },
+   {
+    "id": "grid-159",
+    "rows": [
+     "BOS",
+     "MTL",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "DAL"
+     },
+     {
+      "kind": "team",
+      "value": "MIN"
+     }
+    ]
+   },
+   {
+    "id": "grid-160",
+    "rows": [
+     "MTL",
+     "DET",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "CAR"
+     },
+     {
+      "kind": "position",
+      "value": "D"
+     }
+    ]
+   },
+   {
+    "id": "grid-161",
+    "rows": [
+     "NYR",
+     "CHI",
+     "TOR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "TBL"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "PIT"
+     }
+    ]
+   },
+   {
+    "id": "grid-162",
+    "rows": [
+     "BOS",
+     "NYR",
+     "CHI"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "EDM"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "FLA"
+     }
+    ]
+   },
+   {
+    "id": "grid-163",
+    "rows": [
+     "NYR",
+     "CHI",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "DAL"
+     },
+     {
+      "kind": "team",
+      "value": "BOS"
+     }
+    ]
+   },
+   {
+    "id": "grid-164",
+    "rows": [
+     "BOS",
+     "CHI",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "SJS"
+     },
+     {
+      "kind": "country",
+      "value": "FIN"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-165",
+    "rows": [
+     "BOS",
+     "CHI",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "CGY"
+     },
+     {
+      "kind": "team",
+      "value": "TOR"
+     },
+     {
+      "kind": "trophy",
+      "value": "Hart Memorial Trophy"
+     }
+    ]
+   },
+   {
+    "id": "grid-166",
+    "rows": [
+     "NYR",
+     "BOS",
+     "MTL"
+    ],
+    "cols": [
+     {
+      "kind": "position",
+      "value": "D"
+     },
+     {
+      "kind": "trophy",
+      "value": "Calder Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "FLA"
+     }
+    ]
+   },
+   {
+    "id": "grid-167",
+    "rows": [
+     "TOR",
+     "STL",
+     "NYR"
+    ],
+    "cols": [
+     {
+      "kind": "team",
+      "value": "PHI"
+     },
+     {
+      "kind": "trophy",
+      "value": "Lady Byng Memorial Trophy"
+     },
+     {
+      "kind": "team",
+      "value": "NSH"
      }
     ]
    }
@@ -788202,101 +789269,1524 @@
   "bios_sha256": {
    "skater": "6c4bda2137148915f13ddacf269637c25909137b70568895accef5b47dc5bd03",
    "goalie": "9d8a37e184563e19eff8902883f231ddd4730da47f58a3ea2a889a6978c7a97f"
-  }
+  },
+  "awards": {
+   "8447271": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8445517": [
+    "Art Ross Trophy"
+   ],
+   "8447500": [
+    "Art Ross Trophy"
+   ],
+   "8448000": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8446579": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8445408": [
+    "Art Ross Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8447886": [
+    "Art Ross Trophy"
+   ],
+   "8448108": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449602": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8446722": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8450070": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "James Norris Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8448624": [
+    "Art Ross Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8451965": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8446430": [
+    "Art Ross Trophy",
+    "Lady Byng Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8447400": [
+    "Art Ross Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8448782": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8448208": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8462042": [
+    "Art Ross Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8458520": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8466378": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8466138": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8471675": [
+    "Art Ross Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8471214": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8471215": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8467876": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy"
+   ],
+   "8467875": [
+    "Art Ross Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8473994": [
+    "Art Ross Trophy"
+   ],
+   "8474141": [
+    "Art Ross Trophy",
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8478402": [
+    "Art Ross Trophy",
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8476453": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8477934": [
+    "Art Ross Trophy",
+    "Hart Memorial Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8449308": [
+    "Calder Memorial Trophy"
+   ],
+   "8445099": [
+    "Calder Memorial Trophy"
+   ],
+   "8448946": [
+    "Calder Memorial Trophy"
+   ],
+   "8450007": [
+    "Calder Memorial Trophy"
+   ],
+   "8444954": [
+    "Calder Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445838": [
+    "Calder Memorial Trophy"
+   ],
+   "8449836": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8447535": [
+    "Calder Memorial Trophy"
+   ],
+   "8448239": [
+    "Calder Memorial Trophy"
+   ],
+   "8449363": [
+    "Calder Memorial Trophy"
+   ],
+   "8449183": [
+    "Calder Memorial Trophy"
+   ],
+   "8445105": [
+    "Calder Memorial Trophy"
+   ],
+   "8450029": [
+    "Calder Memorial Trophy"
+   ],
+   "8447326": [
+    "Calder Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8447831": [
+    "Calder Memorial Trophy"
+   ],
+   "8447769": [
+    "Calder Memorial Trophy"
+   ],
+   "8447526": [
+    "Calder Memorial Trophy"
+   ],
+   "8449977": [
+    "Calder Memorial Trophy"
+   ],
+   "8450111": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8450152": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8446784": [
+    "Calder Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8447502": [
+    "Calder Memorial Trophy"
+   ],
+   "8449988": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8448299": [
+    "Calder Memorial Trophy"
+   ],
+   "8449044": [
+    "Calder Memorial Trophy"
+   ],
+   "8444996": [
+    "Calder Memorial Trophy"
+   ],
+   "8446749": [
+    "Calder Memorial Trophy"
+   ],
+   "8448468": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448464": [
+    "Calder Memorial Trophy"
+   ],
+   "8445945": [
+    "Calder Memorial Trophy"
+   ],
+   "8447325": [
+    "Calder Memorial Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8449859": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy"
+   ],
+   "8448966": [
+    "Calder Memorial Trophy"
+   ],
+   "8448671": [
+    "Calder Memorial Trophy"
+   ],
+   "8447352": [
+    "Calder Memorial Trophy"
+   ],
+   "8446720": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8450308": [
+    "Calder Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8446490": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8452232": [
+    "Calder Memorial Trophy"
+   ],
+   "8450505": [
+    "Calder Memorial Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8452150": [
+    "Calder Memorial Trophy"
+   ],
+   "8450474": [
+    "Calder Memorial Trophy"
+   ],
+   "8445611": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8451476": [
+    "Calder Memorial Trophy"
+   ],
+   "8445621": [
+    "Calder Memorial Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8451689": [
+    "Calder Memorial Trophy"
+   ],
+   "8447685": [
+    "Calder Memorial Trophy"
+   ],
+   "8448703": [
+    "Calder Memorial Trophy"
+   ],
+   "8445275": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8451804": [
+    "Calder Memorial Trophy"
+   ],
+   "8450941": [
+    "Calder Memorial Trophy"
+   ],
+   "8449893": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy"
+   ],
+   "8448769": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8449163": [
+    "Calder Memorial Trophy"
+   ],
+   "8445386": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8455738": [
+    "Calder Memorial Trophy",
+    "Maurice Richard Trophy"
+   ],
+   "8457981": [
+    "Calder Memorial Trophy",
+    "Maurice Richard Trophy"
+   ],
+   "8455710": [
+    "Calder Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8460621": [
+    "Calder Memorial Trophy"
+   ],
+   "8462032": [
+    "Calder Memorial Trophy"
+   ],
+   "8466035": [
+    "Calder Memorial Trophy"
+   ],
+   "8460562": [
+    "Calder Memorial Trophy"
+   ],
+   "8467351": [
+    "Calder Memorial Trophy"
+   ],
+   "8460705": [
+    "Calder Memorial Trophy"
+   ],
+   "8468482": [
+    "Calder Memorial Trophy"
+   ],
+   "8467890": [
+    "Calder Memorial Trophy"
+   ],
+   "8467453": [
+    "Calder Memorial Trophy"
+   ],
+   "8473461": [
+    "Calder Memorial Trophy"
+   ],
+   "8474574": [
+    "Calder Memorial Trophy"
+   ],
+   "8475784": [
+    "Calder Memorial Trophy"
+   ],
+   "8476455": [
+    "Calder Memorial Trophy"
+   ],
+   "8476456": [
+    "Calder Memorial Trophy"
+   ],
+   "8477492": [
+    "Calder Memorial Trophy",
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8477932": [
+    "Calder Memorial Trophy"
+   ],
+   "8478550": [
+    "Calder Memorial Trophy"
+   ],
+   "8479318": [
+    "Calder Memorial Trophy",
+    "Hart Memorial Trophy",
+    "Maurice Richard Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8478445": [
+    "Calder Memorial Trophy"
+   ],
+   "8480012": [
+    "Calder Memorial Trophy"
+   ],
+   "8480069": [
+    "Calder Memorial Trophy",
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8478864": [
+    "Calder Memorial Trophy"
+   ],
+   "8481542": [
+    "Calder Memorial Trophy"
+   ],
+   "8482665": [
+    "Calder Memorial Trophy"
+   ],
+   "8484144": [
+    "Calder Memorial Trophy"
+   ],
+   "8483457": [
+    "Calder Memorial Trophy"
+   ],
+   "8485366": [
+    "Calder Memorial Trophy"
+   ],
+   "8451150": [
+    "Conn Smythe Trophy"
+   ],
+   "8446200": [
+    "Conn Smythe Trophy"
+   ],
+   "8450178": [
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8448729": [
+    "Conn Smythe Trophy"
+   ],
+   "8450936": [
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8446998": [
+    "Conn Smythe Trophy",
+    "Frank J. Selke Trophy"
+   ],
+   "8447296": [
+    "Conn Smythe Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8451525": [
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8449573": [
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8451033": [
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8447775": [
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8448960": [
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8450651": [
+    "Conn Smythe Trophy"
+   ],
+   "8448772": [
+    "Conn Smythe Trophy"
+   ],
+   "8451101": [
+    "Conn Smythe Trophy",
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8452217": [
+    "Conn Smythe Trophy"
+   ],
+   "8452578": [
+    "Conn Smythe Trophy",
+    "Frank J. Selke Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8451715": [
+    "Conn Smythe Trophy"
+   ],
+   "8457063": [
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8462044": [
+    "Conn Smythe Trophy"
+   ],
+   "8467389": [
+    "Conn Smythe Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8470320": [
+    "Conn Smythe Trophy"
+   ],
+   "8458517": [
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8468083": [
+    "Conn Smythe Trophy"
+   ],
+   "8473604": [
+    "Conn Smythe Trophy",
+    "Frank J. Selke Trophy"
+   ],
+   "8460703": [
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8471734": [
+    "Conn Smythe Trophy"
+   ],
+   "8468508": [
+    "Conn Smythe Trophy"
+   ],
+   "8470281": [
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8475158": [
+    "Conn Smythe Trophy",
+    "Frank J. Selke Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8475167": [
+    "Conn Smythe Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8476883": [
+    "Conn Smythe Trophy",
+    "Vezina Trophy"
+   ],
+   "8476539": [
+    "Conn Smythe Trophy"
+   ],
+   "8477935": [
+    "Conn Smythe Trophy"
+   ],
+   "8473533": [
+    "Conn Smythe Trophy"
+   ],
+   "8448411": [
+    "Frank J. Selke Trophy"
+   ],
+   "8446098": [
+    "Frank J. Selke Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8448254": [
+    "Frank J. Selke Trophy"
+   ],
+   "8450640": [
+    "Frank J. Selke Trophy"
+   ],
+   "8449773": [
+    "Frank J. Selke Trophy"
+   ],
+   "8450512": [
+    "Frank J. Selke Trophy"
+   ],
+   "8446036": [
+    "Frank J. Selke Trophy"
+   ],
+   "8449535": [
+    "Frank J. Selke Trophy"
+   ],
+   "8447345": [
+    "Frank J. Selke Trophy"
+   ],
+   "8447206": [
+    "Frank J. Selke Trophy"
+   ],
+   "8446788": [
+    "Frank J. Selke Trophy",
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8446951": [
+    "Frank J. Selke Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8458976": [
+    "Frank J. Selke Trophy"
+   ],
+   "8459024": [
+    "Frank J. Selke Trophy"
+   ],
+   "8466371": [
+    "Frank J. Selke Trophy"
+   ],
+   "8446485": [
+    "Frank J. Selke Trophy"
+   ],
+   "8445735": [
+    "Frank J. Selke Trophy"
+   ],
+   "8467514": [
+    "Frank J. Selke Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8470616": [
+    "Frank J. Selke Trophy"
+   ],
+   "8470638": [
+    "Frank J. Selke Trophy"
+   ],
+   "8471685": [
+    "Frank J. Selke Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8476461": [
+    "Frank J. Selke Trophy"
+   ],
+   "8477493": [
+    "Frank J. Selke Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8480018": [
+    "Frank J. Selke Trophy"
+   ],
+   "8448011": [
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445255": [
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449189": [
+    "Hart Memorial Trophy"
+   ],
+   "8446564": [
+    "Hart Memorial Trophy"
+   ],
+   "8447888": [
+    "Hart Memorial Trophy"
+   ],
+   "8450153": [
+    "Hart Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8449024": [
+    "Hart Memorial Trophy"
+   ],
+   "8447110": [
+    "Hart Memorial Trophy"
+   ],
+   "8449038": [
+    "Hart Memorial Trophy"
+   ],
+   "8445098": [
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8446612": [
+    "Hart Memorial Trophy"
+   ],
+   "8445754": [
+    "Hart Memorial Trophy"
+   ],
+   "8444931": [
+    "Hart Memorial Trophy"
+   ],
+   "8448187": [
+    "Hart Memorial Trophy"
+   ],
+   "8445063": [
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448321": [
+    "Hart Memorial Trophy"
+   ],
+   "8448042": [
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8444857": [
+    "Hart Memorial Trophy"
+   ],
+   "8450096": [
+    "Hart Memorial Trophy"
+   ],
+   "8448931": [
+    "Hart Memorial Trophy"
+   ],
+   "8450108": [
+    "Hart Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8447166": [
+    "Hart Memorial Trophy"
+   ],
+   "8445032": [
+    "Hart Memorial Trophy"
+   ],
+   "8450066": [
+    "Hart Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8448091": [
+    "Hart Memorial Trophy",
+    "Lady Byng Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8458515": [
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8447687": [
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award",
+    "Vezina Trophy"
+   ],
+   "8459424": [
+    "Hart Memorial Trophy",
+    "James Norris Memorial Trophy"
+   ],
+   "8460535": [
+    "Hart Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8470621": [
+    "Hart Memorial Trophy",
+    "Maurice Richard Trophy"
+   ],
+   "8471679": [
+    "Hart Memorial Trophy",
+    "Ted Lindsay Award",
+    "Vezina Trophy"
+   ],
+   "8475791": [
+    "Hart Memorial Trophy"
+   ],
+   "8476945": [
+    "Hart Memorial Trophy",
+    "Vezina Trophy"
+   ],
+   "8447149": [
+    "James Norris Memorial Trophy",
+    "Lady Byng Memorial Trophy"
+   ],
+   "8446728": [
+    "James Norris Memorial Trophy"
+   ],
+   "8447101": [
+    "James Norris Memorial Trophy"
+   ],
+   "8448152": [
+    "James Norris Memorial Trophy"
+   ],
+   "8446926": [
+    "James Norris Memorial Trophy"
+   ],
+   "8445938": [
+    "James Norris Memorial Trophy"
+   ],
+   "8452489": [
+    "James Norris Memorial Trophy"
+   ],
+   "8448651": [
+    "James Norris Memorial Trophy"
+   ],
+   "8446117": [
+    "James Norris Memorial Trophy"
+   ],
+   "8446053": [
+    "James Norris Memorial Trophy"
+   ],
+   "8445550": [
+    "James Norris Memorial Trophy"
+   ],
+   "8465009": [
+    "James Norris Memorial Trophy"
+   ],
+   "8474578": [
+    "James Norris Memorial Trophy"
+   ],
+   "8474056": [
+    "James Norris Memorial Trophy"
+   ],
+   "8474563": [
+    "James Norris Memorial Trophy"
+   ],
+   "8470613": [
+    "James Norris Memorial Trophy"
+   ],
+   "8470966": [
+    "James Norris Memorial Trophy"
+   ],
+   "8474600": [
+    "James Norris Memorial Trophy"
+   ],
+   "8479323": [
+    "James Norris Memorial Trophy"
+   ],
+   "8480800": [
+    "James Norris Memorial Trophy"
+   ],
+   "8478460": [
+    "James Norris Memorial Trophy"
+   ],
+   "8445134": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448197": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448440": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445026": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445950": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449068": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445034": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8447902": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448235": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449084": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448305": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8446760": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445865": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8447792": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449385": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8446623": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8445240": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8450646": [
+    "Lady Byng Memorial Trophy",
+    "Ted Lindsay Award"
+   ],
+   "8448991": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448420": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449587": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8448569": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449743": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449796": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8451991": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8459426": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8459648": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8449654": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8466285": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8470201": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8476346": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8476448": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8476958": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8478398": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8481540": [
+    "Lady Byng Memorial Trophy"
+   ],
+   "8460577": [
+    "Maurice Richard Trophy"
+   ],
+   "8470041": [
+    "Maurice Richard Trophy"
+   ],
+   "8467357": [
+    "Maurice Richard Trophy"
+   ],
+   "8467329": [
+    "Maurice Richard Trophy"
+   ],
+   "8474564": [
+    "Maurice Richard Trophy"
+   ],
+   "8448865": [
+    "Ted Lindsay Award"
+   ],
+   "8458530": [
+    "Ted Lindsay Award"
+   ],
+   "8449987": [
+    "Vezina Trophy"
+   ],
+   "8450127": [
+    "Vezina Trophy"
+   ],
+   "8449966": [
+    "Vezina Trophy"
+   ],
+   "8449850": [
+    "Vezina Trophy"
+   ],
+   "8450115": [
+    "Vezina Trophy"
+   ],
+   "8450009": [
+    "Vezina Trophy"
+   ],
+   "8449837": [
+    "Vezina Trophy"
+   ],
+   "8450047": [
+    "Vezina Trophy"
+   ],
+   "8449910": [
+    "Vezina Trophy"
+   ],
+   "8450019": [
+    "Vezina Trophy"
+   ],
+   "8449835": [
+    "Vezina Trophy"
+   ],
+   "8449995": [
+    "Vezina Trophy"
+   ],
+   "8449866": [
+    "Vezina Trophy"
+   ],
+   "8452122": [
+    "Vezina Trophy"
+   ],
+   "8449979": [
+    "Vezina Trophy"
+   ],
+   "8450138": [
+    "Vezina Trophy"
+   ],
+   "8451528": [
+    "Vezina Trophy"
+   ],
+   "8448700": [
+    "Vezina Trophy"
+   ],
+   "8446597": [
+    "Vezina Trophy"
+   ],
+   "8451143": [
+    "Vezina Trophy"
+   ],
+   "8447755": [
+    "Vezina Trophy"
+   ],
+   "8451308": [
+    "Vezina Trophy"
+   ],
+   "8450343": [
+    "Vezina Trophy"
+   ],
+   "8448853": [
+    "Vezina Trophy"
+   ],
+   "8452157": [
+    "Vezina Trophy"
+   ],
+   "8446991": [
+    "Vezina Trophy"
+   ],
+   "8458968": [
+    "Vezina Trophy"
+   ],
+   "8448535": [
+    "Vezina Trophy"
+   ],
+   "8462147": [
+    "Vezina Trophy"
+   ],
+   "8468011": [
+    "Vezina Trophy"
+   ],
+   "8468685": [
+    "Vezina Trophy"
+   ],
+   "8475683": [
+    "Vezina Trophy"
+   ],
+   "8471695": [
+    "Vezina Trophy"
+   ],
+   "8474651": [
+    "Vezina Trophy"
+   ],
+   "8471469": [
+    "Vezina Trophy"
+   ],
+   "8470594": [
+    "Vezina Trophy"
+   ],
+   "8478048": [
+    "Vezina Trophy"
+   ],
+   "8476999": [
+    "Vezina Trophy"
+   ]
+  },
+  "awards_sha256": "50d3c870d3e01a8de2894decfddd2f4e27d12bdda743c8a48ac28e495195b4b2"
  },
+ "grid_features": 2,
  "grid_days": {
   "2026-10-14": {
    "id": "grid-119"
   },
   "2026-10-15": {
-   "id": "grid-103"
+   "id": "grid-120",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-16": {
-   "id": "grid-056"
+   "id": "grid-056",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-17": {
-   "id": "grid-068"
+   "id": "grid-068",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-18": {
-   "id": "grid-060"
+   "id": "grid-121",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-19": {
-   "id": "grid-110"
+   "id": "grid-110",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-20": {
-   "id": "grid-008"
+   "id": "grid-008",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-21": {
-   "id": "grid-021"
+   "id": "grid-122",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-22": {
-   "id": "grid-014"
+   "id": "grid-014",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-23": {
-   "id": "grid-034"
+   "id": "grid-034",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-24": {
-   "id": "grid-117"
+   "id": "grid-123",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-25": {
-   "id": "grid-005"
+   "id": "grid-005",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-26": {
-   "id": "grid-112"
+   "id": "grid-112",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-27": {
-   "id": "grid-013"
+   "id": "grid-124",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-28": {
-   "id": "grid-024"
+   "id": "grid-024",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-29": {
-   "id": "grid-114"
+   "id": "grid-114",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-30": {
-   "id": "grid-104"
+   "id": "grid-125",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-10-31": {
-   "id": "grid-101"
+   "id": "grid-101",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-01": {
-   "id": "grid-111"
+   "id": "grid-111",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-02": {
-   "id": "grid-002"
+   "id": "grid-126",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-03": {
-   "id": "grid-075"
+   "id": "grid-075",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-04": {
-   "id": "grid-065"
+   "id": "grid-065",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-05": {
-   "id": "grid-089"
+   "id": "grid-127",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-06": {
-   "id": "grid-102"
+   "id": "grid-102",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-07": {
-   "id": "grid-004"
+   "id": "grid-004",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-08": {
-   "id": "grid-061"
+   "id": "grid-128",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-09": {
-   "id": "grid-082"
+   "id": "grid-082",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-10": {
-   "id": "grid-006"
+   "id": "grid-006",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-11": {
-   "id": "grid-091"
+   "id": "grid-129",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-12": {
-   "id": "grid-096"
+   "id": "grid-096",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   },
   "2026-11-13": {
-   "id": "grid-031"
+   "id": "grid-031",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   }
  },
  "grid_start": "2026-10-14",
@@ -809982,12 +812472,12 @@
     [
      2026,
      "COL",
-     2,
-     0,
-     2,
-     2,
-     2,
-     -2
+     6,
+     3,
+     3,
+     6,
+     4,
+     2
     ]
    ],
    "draft": [
@@ -859345,12 +861835,12 @@
     [
      2026,
      "COL",
+     4,
+     0,
+     1,
+     1,
      2,
-     0,
-     0,
-     0,
-     2,
-     1
+     2
     ]
    ],
    "draft": [
@@ -908159,6 +910649,16 @@
      5,
      21,
      3
+    ],
+    [
+     2026,
+     "COL",
+     3,
+     0,
+     1,
+     1,
+     7,
+     -1
     ]
    ],
    "draft": [
@@ -908749,12 +911249,12 @@
     [
      2026,
      "COL",
+     6,
+     1,
      2,
-     0,
-     0,
-     0,
-     0,
-     1
+     3,
+     21,
+     5
     ]
    ],
    "draft": [
@@ -917894,6 +920394,15 @@
      2.43,
      0.908,
      1
+    ],
+    [
+     2026,
+     "MTL",
+     3,
+     2,
+     1.91,
+     0.906,
+     1
     ]
    ],
    "draft": [
@@ -923703,11 +926212,11 @@
     [
      2026,
      "PHI",
-     4,
+     8,
+     1,
      0,
-     0,
-     0,
-     2,
+     1,
+     14,
      -2
     ]
    ],
@@ -939204,43 +941713,7 @@
    "ht": 68,
    "bc": "Fort Myers",
    "bs": "FL",
-   "wt": 173,
-   "bp": [
-    26.62,
-    -81.84,
-    "Fort Myers, FL, USA"
-   ],
-   "past": [
-    "CBJ"
-   ],
-   "car": [
-    [
-     2023,
-     "CBJ",
-     1,
-     0,
-     0,
-     0,
-     0,
-     0
-    ],
-    [
-     2025,
-     "COL",
-     56,
-     6,
-     7,
-     13,
-     8,
-     2
-    ]
-   ],
-   "draft": [
-    2023,
-    2,
-    34,
-    "CBJ"
-   ]
+   "wt": 173
   },
   "8484150": {
    "id": 8484150,
