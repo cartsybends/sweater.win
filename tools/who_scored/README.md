@@ -31,6 +31,12 @@ Reviewed prompts select only the credited scorer.
 `tracking_image_size` optionally selects 1024 instead of the default 512 when
 small hands or helmet edges need more detail; CPU tracking takes longer. Changing
 the resolution invalidates the tracking signature and requires retracking.
+For small players in wide shots, `tracking_crop_size` can track a square around
+the interpolated centers of the reviewed anchor boxes (for example, 384 pixels).
+The pipeline restores each matte to its original full-frame coordinates before
+rendering. Positive prompts outside that square are rejected. Check the complete
+scene in every review frame for limbs outside the tracking window and preserve
+foreground occluders. Changing this option also requires retracking.
 Explicit per-frame polygons, ellipses and lines fix occlusion gaps. `allow_empty` is permitted only after a
 verified exit from the camera. `export_frames` shortens a reviewed source sequence
 without reusing any frames beyond the cap. Goal 35's corrections are also supported

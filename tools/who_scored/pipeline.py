@@ -32,7 +32,62 @@ def tracking_signature(edit):
     values={k:edit.get(k) for k in keys}
     if 'tracking_image_size' in edit:
         values['tracking_image_size']=edit['tracking_image_size']
+    if 'tracking_crop_size' in edit:
+        values['tracking_crop_size']=edit['tracking_crop_size']
     return hashlib.sha256(json.dumps(values,sort_keys=True).encode()).hexdigest()
+
+def tracking_crops(edit, count):
+    """Follow manually identified scorer boxes for tracking, keeping exports full frame.
+
+    A generous square around interpolated anchor centers gives small players enough
+    model pixels. Every restored mask still needs the normal full-scene review.
+    Off-screen padding keeps the coordinate transform identical at rink edges.
+    """
+    size=edit.get('tracking_crop_size')
+    if size is None:return None
+    if type(size) is not int or not 256<=size<=960:
+        raise ValueError('Tracking crop size must be an integer between 256 and 960')
+    anchors=sorted(edit['anchors'],key=lambda a:a['frame'])
+    if not anchors or len({a['frame'] for a in anchors})!=len(anchors):
+        raise ValueError('Cropped tracking requires distinct anchor frames')
+    centers=[]
+    for a in anchors:
+        if not 0<=a['frame']<count or 'box' not in a:
+            raise ValueError('Cropped tracking requires a scorer box on every anchor')
+        x0,y0,x1,y1=a['box']
+        if x1<=x0 or y1<=y0 or max(x1-x0,y1-y0)>size-32:
+            raise ValueError('Tracking crop must leave room around the scorer box')
+        centers.append((a['frame'],(x0+x1)/2,(y0+y1)/2))
+    crops=[];right=0
+    for frame in range(count):
+        while right<len(centers)-1 and centers[right][0]<frame:right+=1
+        after=centers[right];before=centers[max(0,right-1)]
+        t=max(0,min(1,(frame-before[0])/(after[0]-before[0]))) if after[0]!=before[0] else 0
+        cx=before[1]+(after[1]-before[1])*t;cy=before[2]+(after[2]-before[2])*t
+        crops.append((round(cx-size/2),round(cy-size/2),size))
+    return crops
+
+def cropped_prompt(anchor, crop):
+    x,y,size=crop;points=[];labels=[]
+    for point,label in zip(anchor['points'],anchor.get('labels',[1]*len(anchor['points']))):
+        px,py=point[0]-x,point[1]-y
+        if not (0<=px<size and 0<=py<size):
+            if label:raise ValueError('Positive scorer prompt is outside its tracking crop')
+            continue
+        points.append([px,py]);labels.append(label)
+    if not any(labels):raise ValueError('Tracking crop needs a positive scorer prompt')
+    result={'points':points,'labels':labels}
+    if 'box' in anchor:
+        x0,y0,x1,y1=anchor['box']
+        result['box']=[max(0,x0-x),max(0,y0-y),min(size-1,x1-x),min(size-1,y1-y)]
+    return result
+
+def restore_tracking_mask(mask, crop):
+    from PIL import Image
+    x,y,size=crop
+    if mask.size!=(size,size):raise ValueError('Tracking mask dimensions disagree with crop')
+    restored=Image.new('L',(960,540));restored.paste(mask,(x,y))
+    return restored
 
 def prepare(path, edit):
     from PIL import Image, ImageDraw
@@ -80,14 +135,22 @@ def track(path,edit,args):
         hydra_overrides_extra=[f'++model.image_size={image_size}','++model.fill_hole_area=0',
                               f'++model.max_cond_frames_in_attn={max_conditioning}'])
     count=frame_count(edit,full_window=True);start=time.time()
+    crops=tracking_crops(edit,count);tracking_frames=work/'frames'
+    if crops:
+        tracking_frames=work/'tracking-frames';tracking_frames.mkdir(exist_ok=True)
+        for i,(x,y,size) in enumerate(crops):
+            with Image.open(work/'frames'/f'{i:05d}.jpg') as frame:
+                frame.crop((x,y,x+size,y+size)).save(tracking_frames/f'{i:05d}.jpg',quality=95)
+        (work/'tracking-crops.json').write_text(json.dumps(crops)+'\n')
     for name in ['mask-stats.json','tracking-complete.json']:(work/name).unlink(missing_ok=True)
     with torch.inference_mode():
-        state=predictor.init_state(str(work/'frames'),offload_video_to_cpu=True,offload_state_to_cpu=True)
+        state=predictor.init_state(str(tracking_frames),offload_video_to_cpu=True,offload_state_to_cpu=True)
         for a in edit['anchors']:
             assert 0<=a['frame']<count
-            kw=dict(frame_idx=a['frame'],obj_id=1,points=np.array(a['points'],dtype=np.float32),
-                labels=np.array(a.get('labels',[1]*len(a['points'])),dtype=np.int32))
-            if 'box' in a:kw['box']=np.array(a['box'],dtype=np.float32)
+            prompt=cropped_prompt(a,crops[a['frame']]) if crops else a
+            kw=dict(frame_idx=a['frame'],obj_id=1,points=np.array(prompt['points'],dtype=np.float32),
+                labels=np.array(prompt.get('labels',[1]*len(prompt['points'])),dtype=np.int32))
+            if 'box' in prompt:kw['box']=np.array(prompt['box'],dtype=np.float32)
             predictor.add_new_points_or_box(state,**kw)
         seed=edit.get('seed',edit['anchors'][0]['frame']);assert 0<=seed<count
         records={}
@@ -98,6 +161,8 @@ def track(path,edit,args):
             limit=seed if reverse else last_visible-seed
             for i,ids,logits in predictor.propagate_in_video(state,start_frame_idx=seed,reverse=reverse,max_frame_num_to_track=limit):
                 mask=logits[0,0].cpu().numpy()>0
+                if crops:
+                    mask=np.asarray(restore_tracking_mask(Image.fromarray(mask.astype(np.uint8)*255),crops[i]))>0
                 # Empty frames are permitted only after a manually verified exit.
                 if i in edit.get('allow_empty',[]):mask[:]=False
                 Image.fromarray(mask.astype(np.uint8)*255).save(out/f'{i:05d}.png')

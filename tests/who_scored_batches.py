@@ -17,6 +17,38 @@ import corrections
 
 
 class BatchGateTests(unittest.TestCase):
+    def test_tracking_crop_keeps_small_scorer_pixels_in_full_scene(self):
+        from PIL import Image
+        edit={'tracking_crop_size':384,'anchors':[
+            {'frame':0,'box':[0,10,60,90],'points':[[10,30],[800,400]],'labels':[1,0]},
+            {'frame':2,'box':[880,400,960,540],'points':[[940,500]]}]}
+        crops=pipeline.tracking_crops(edit,3)
+        self.assertEqual(crops,[(-162,-142,384),(283,68,384),(728,278,384)])
+        for frame,(px,py) in [(0,(10,30)),(1,(475,260)),(2,(940,500))]:
+            x,y,size=crops[frame];mask=Image.new('L',(size,size))
+            mask.putpixel((px-x,py-y),255)
+            restored=pipeline.restore_tracking_mask(mask,crops[frame])
+            self.assertEqual(restored.size,(960,540))
+            self.assertEqual(restored.getbbox(),(px,py,px+1,py+1))
+        prompt=pipeline.cropped_prompt(edit['anchors'][0],crops[0])
+        self.assertEqual(prompt['points'],[[172,172]])
+        self.assertEqual(prompt['labels'],[1])
+        self.assertEqual(prompt['box'],[162,152,222,232])
+        # Padding outside the source must not shift the visible part inward.
+        padded=Image.new('L',(384,384),255)
+        self.assertEqual(pipeline.restore_tracking_mask(padded,crops[0]).getbbox(),(0,0,222,242))
+
+    def test_tracking_crop_cannot_silently_drop_scorer_prompts(self):
+        with self.assertRaisesRegex(ValueError,'Positive scorer'):
+            pipeline.cropped_prompt({'points':[[500,400]],'labels':[1]},(0,0,384))
+        with self.assertRaisesRegex(ValueError,'room around'):
+            pipeline.tracking_crops({'tracking_crop_size':384,'anchors':[
+                {'frame':0,'box':[0,0,383,100]}]},1)
+        with self.assertRaisesRegex(ValueError,'positive scorer'):
+            pipeline.cropped_prompt({'points':[[20,20]],'labels':[0]},(0,0,384))
+        self.assertNotEqual(pipeline.tracking_signature({'id':'goal-83'}),
+                            pipeline.tracking_signature({'id':'goal-83','tracking_crop_size':384}))
+
     def test_export_cap_cannot_remove_the_reviewed_scoring_finish(self):
         edit={'duration':3.0,'scoring_play_end_frame':60}
         self.assertEqual(pipeline.frame_count(edit),72)
