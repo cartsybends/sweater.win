@@ -1,0 +1,196 @@
+{
+  "id": "goal-84",
+  "pid": 8478831,
+  "player": "Kevin Stenlund",
+  "original": "/workspace/who-scored-expansion/originals/goal-84-6369704406112.mp4",
+  "source_sha256": "3a3e3701b55307a36f810ae0465dc99b5d522ad11dbc3678465a50f168fc9bf7",
+  "start": 31.0,
+  "duration": 3.35,
+  "anchors": [
+    {
+      "frame": 12,
+      "box": [
+        0,
+        163,
+        66,
+        310
+      ],
+      "points": [
+        [
+          48,
+          183
+        ],
+        [
+          17,
+          200
+        ],
+        [
+          39,
+          249
+        ],
+        [
+          15,
+          285
+        ]
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        85,
+        112,
+        192,
+        269
+      ],
+      "points": [
+        [
+          175,
+          130
+        ],
+        [
+          153,
+          165
+        ],
+        [
+          118,
+          203
+        ],
+        [
+          111,
+          247
+        ],
+        [
+          156,
+          227
+        ],
+        [
+          103,
+          94
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        300,
+        200,
+        400,
+        414
+      ],
+      "points": [
+        [
+          379,
+          219
+        ],
+        [
+          347,
+          260
+        ],
+        [
+          318,
+          301
+        ],
+        [
+          322,
+          377
+        ],
+        [
+          350,
+          399
+        ],
+        [
+          272,
+          214
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 79,
+      "box": [
+        425,
+        206,
+        556,
+        453
+      ],
+      "points": [
+        [
+          502,
+          231
+        ],
+        [
+          494,
+          282
+        ],
+        [
+          463,
+          282
+        ],
+        [
+          535,
+          280
+        ],
+        [
+          491,
+          354
+        ],
+        [
+          465,
+          420
+        ],
+        [
+          487,
+          440
+        ],
+        [
+          586,
+          327
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 77,
+  "supersedes_draft_window": {
+    "start": 7,
+    "duration": 6.3
+  },
+  "seed": 24,
+  "allow_empty": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "identity_verification": "Stenlund 82 takes the shot from the left circle in the continuous replay, then skates toward the net and raises both gloves. Utah 53 screens at the net and is not the scorer. First eight frames precede his entry from the left edge."
+}

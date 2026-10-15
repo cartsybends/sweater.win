@@ -1,0 +1,137 @@
+{
+  "id": "goal-86",
+  "pid": 8475913,
+  "player": "Mark Stone",
+  "original": "/workspace/who-scored-expansion/originals/goal-86-6366640101112.mp4",
+  "source_sha256": "69a8b18ff4b86ab3ded9ffa2df99451ea555443a9fcf4e2e663895c592db491c",
+  "start": 12.0,
+  "duration": 3.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        858,
+        250,
+        938,
+        355
+      ],
+      "points": [
+        [
+          894,
+          301
+        ],
+        [
+          882,
+          276
+        ],
+        [
+          911,
+          251
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        693,
+        280,
+        784,
+        374
+      ],
+      "points": [
+        [
+          738,
+          325
+        ],
+        [
+          726,
+          300
+        ],
+        [
+          778,
+          318
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        553,
+        253,
+        629,
+        369
+      ],
+      "points": [
+        [
+          589,
+          308
+        ],
+        [
+          589,
+          282
+        ],
+        [
+          607,
+          268
+        ],
+        [
+          583,
+          354
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 85,
+      "box": [
+        485,
+        201,
+        547,
+        378
+      ],
+      "points": [
+        [
+          514,
+          262
+        ],
+        [
+          517,
+          218
+        ],
+        [
+          592,
+          257
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 83,
+  "supersedes_draft_window": {
+    "start": 33.5,
+    "duration": 4.8
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Stone 61 screens at the right side of the crease and finishes Eichel 9\u2019s pass/shot, then raises both gloves. Visible 61 on shoulder and back confirms the continuous broadcast tracking. Laczynski 65 is a separate Vegas skater left of the crease and remains visible."
+}

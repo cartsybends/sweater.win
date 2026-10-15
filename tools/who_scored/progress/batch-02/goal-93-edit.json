@@ -1,0 +1,191 @@
+{
+  "id": "goal-93",
+  "pid": 8478856,
+  "player": "Conor Garland",
+  "original": "/workspace/who-scored-expansion/originals/goal-93-6366640789112.mp4",
+  "source_sha256": "01a3b5d677aa0f65a65bd121f43cb43a213a08128c9319fc163e0e2f9ab840b3",
+  "start": 38.0,
+  "duration": 4.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        414,
+        92,
+        641,
+        495
+      ],
+      "points": [
+        [
+          532,
+          235
+        ],
+        [
+          576,
+          134
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 9,
+      "box": [
+        317,
+        119,
+        599,
+        446
+      ],
+      "points": [
+        [
+          469,
+          241
+        ],
+        [
+          527,
+          158
+        ],
+        [
+          570,
+          321
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        340,
+        116,
+        578,
+        440
+      ],
+      "points": [
+        [
+          448,
+          236
+        ],
+        [
+          516,
+          153
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 58,
+      "box": [
+        226,
+        133,
+        490,
+        448
+      ],
+      "points": [
+        [
+          357,
+          261
+        ],
+        [
+          440,
+          168
+        ],
+        [
+          419,
+          310
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        414,
+        165,
+        647,
+        491
+      ],
+      "points": [
+        [
+          522,
+          293
+        ],
+        [
+          583,
+          211
+        ],
+        [
+          651,
+          350
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 97,
+      "box": [
+        443,
+        225,
+        747,
+        520
+      ],
+      "points": [
+        [
+          549,
+          356
+        ],
+        [
+          535,
+          274
+        ],
+        [
+          628,
+          261
+        ],
+        [
+          628,
+          337
+        ],
+        [
+          516,
+          263
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 95,
+  "hide_original_regions": [
+    [
+      56,
+      30,
+      51,
+      53
+    ]
+  ],
+  "identity_verification": "GARLAND 8 is readable on the solo Canuck carrying through center. Follow his uninterrupted breakaway approach, deke around Grubauer 31 and raised-glove reaction beside the right boards. Keep Grubauer, the net and foreground glass supports visible."
+}

@@ -1,0 +1,184 @@
+{
+  "id": "goal-89",
+  "pid": 8482125,
+  "player": "Alexander Holtz",
+  "original": "/workspace/who-scored-expansion/originals/goal-89-6366642576112.mp4",
+  "source_sha256": "7d75fb78ee73af20081d0676df288cb8949eab83f651ce60f9d08a1a768b31aa",
+  "start": 36.65,
+  "duration": 3.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        669,
+        105,
+        864,
+        437
+      ],
+      "points": [
+        [
+          760,
+          211
+        ],
+        [
+          731,
+          127
+        ],
+        [
+          694,
+          217
+        ],
+        [
+          695,
+          264
+        ],
+        [
+          422,
+          341
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        515,
+        164,
+        701,
+        502
+      ],
+      "points": [
+        [
+          638,
+          260
+        ],
+        [
+          668,
+          189
+        ],
+        [
+          572,
+          248
+        ],
+        [
+          660,
+          152
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        502,
+        318,
+        694,
+        540
+      ],
+      "points": [
+        [
+          608,
+          430
+        ],
+        [
+          612,
+          348
+        ],
+        [
+          530,
+          431
+        ],
+        [
+          685,
+          365
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        630,
+        458,
+        800,
+        540
+      ],
+      "points": [
+        [
+          719,
+          486
+        ],
+        [
+          713,
+          522
+        ],
+        [
+          821,
+          456
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 85,
+      "box": [
+        449,
+        382,
+        646,
+        540
+      ],
+      "points": [
+        [
+          591,
+          415
+        ],
+        [
+          564,
+          483
+        ],
+        [
+          478,
+          490
+        ],
+        [
+          746,
+          475
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 83,
+  "supersedes_draft_window": {
+    "start": 36.4,
+    "duration": 3.85
+  },
+  "identity_verification": "Holtz 26 carries on the right of Rondbjerg 46, releases the wrist shot and remains in view as the camera follows the puck into the net. HOLTZ 26 is readable on his back and helmet; do not mask Rondbjerg 46 or Philadelphia 9 in front. The window starts after the replay dissolve and includes the goal and goalie reaction."
+}

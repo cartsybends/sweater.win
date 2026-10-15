@@ -1,0 +1,170 @@
+{
+  "id": "goal-85",
+  "pid": 8482159,
+  "player": "Tyson Foerster",
+  "original": "/workspace/who-scored-expansion/originals/goal-85-6366719545112.mp4",
+  "source_sha256": "666b5cc830f323a46cc0db2ba990cf1b82d20f042128ce9f7a394765621f2555",
+  "start": 10.5,
+  "duration": 4.3,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        340,
+        325,
+        440,
+        445
+      ],
+      "points": [
+        [
+          387,
+          373
+        ],
+        [
+          407,
+          347
+        ],
+        [
+          584,
+          280
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        405,
+        290,
+        510,
+        427
+      ],
+      "points": [
+        [
+          464,
+          344
+        ],
+        [
+          475,
+          320
+        ],
+        [
+          526,
+          279
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        550,
+        250,
+        665,
+        407
+      ],
+      "points": [
+        [
+          614,
+          300
+        ],
+        [
+          632,
+          269
+        ],
+        [
+          510,
+          264
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        799,
+        145,
+        960,
+        353
+      ],
+      "points": [
+        [
+          887,
+          241
+        ],
+        [
+          902,
+          198
+        ],
+        [
+          820,
+          214
+        ],
+        [
+          927,
+          180
+        ],
+        [
+          555,
+          225
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 102,
+      "box": [
+        584,
+        57,
+        728,
+        216
+      ],
+      "points": [
+        [
+          678,
+          125
+        ],
+        [
+          674,
+          76
+        ],
+        [
+          535,
+          120
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 100,
+  "supersedes_draft_window": {
+    "start": 32.0,
+    "duration": 4.8
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Foerster 71 carries down the near/right wing, shoots past Hildeby and celebrates at the right boards. FOERSTER 71 is readable on his back. Cates 27 is the left-wing teammate, while Toronto 64 is the defender in front before release. This replaces the crowded Vegas rebound draft with the clear Toronto rush and a full goal/celebration."
+}

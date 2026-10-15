@@ -1,0 +1,230 @@
+{
+  "id": "goal-95",
+  "pid": 8482665,
+  "player": "Matty Beniers",
+  "original": "/workspace/who-scored-expansion/originals/goal-95-6366641540112.mp4",
+  "source_sha256": "3f9bcdb3c4c7dbbb23d7b9fa97b6f1019b4ab6d394a7f9ef7730fd0591048600",
+  "start": 29.4,
+  "duration": 3.9,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        102,
+        174,
+        237,
+        399
+      ],
+      "points": [
+        [
+          173,
+          212
+        ],
+        [
+          156,
+          290
+        ],
+        [
+          210,
+          324
+        ],
+        [
+          79,
+          239
+        ],
+        [
+          475,
+          269
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        273,
+        150,
+        432,
+        390
+      ],
+      "points": [
+        [
+          369,
+          205
+        ],
+        [
+          354,
+          284
+        ],
+        [
+          403,
+          299
+        ],
+        [
+          260,
+          211
+        ],
+        [
+          510,
+          227
+        ],
+        [
+          585,
+          254
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        92,
+        62,
+        206,
+        402
+      ],
+      "points": [
+        [
+          145,
+          251
+        ],
+        [
+          158,
+          177
+        ],
+        [
+          118,
+          88
+        ],
+        [
+          289,
+          270
+        ],
+        [
+          210,
+          153
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        227,
+        79,
+        388,
+        454
+      ],
+      "points": [
+        [
+          309,
+          165
+        ],
+        [
+          324,
+          270
+        ],
+        [
+          247,
+          134
+        ],
+        [
+          371,
+          255
+        ],
+        [
+          461,
+          251
+        ],
+        [
+          585,
+          215
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 93,
+      "box": [
+        280,
+        109,
+        463,
+        540
+      ],
+      "points": [
+        [
+          389,
+          180
+        ],
+        [
+          380,
+          317
+        ],
+        [
+          307,
+          131
+        ],
+        [
+          448,
+          243
+        ],
+        [
+          329,
+          468
+        ],
+        [
+          577,
+          160
+        ],
+        [
+          193,
+          205
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 91,
+  "supersedes_draft_window": {
+    "start": 29.1,
+    "duration": 5.7
+  },
+  "identity_verification": "Beniers 10 drives through the slot, receives the puck and scores past Lankinen before raising his stick and arms. His 10 back is readable during the turn immediately after the finish, then his face follows continuously into celebration. Kakko 84 at the crease is a separate teammate. Vancouver 53 and Soucy 7 cross in front and remain visible; do not mask their faces, jerseys or hands.",
+  "tracking_crop_size": 512
+}

@@ -1,0 +1,218 @@
+{
+  "id": "goal-82",
+  "pid": 8481167,
+  "player": "Brayden Pachal",
+  "original": "/workspace/who-scored-expansion/originals/goal-82-6366638709112.mp4",
+  "source_sha256": "87ebe6a0777010755a033b73434938871509575d4db9513cc1fdf89bae77f159",
+  "start": 27.75,
+  "duration": 4,
+  "anchors": [
+    {
+      "frame": 12,
+      "box": [
+        255,
+        330,
+        485,
+        540
+      ],
+      "points": [
+        [
+          357,
+          350
+        ],
+        [
+          350,
+          410
+        ],
+        [
+          299,
+          400
+        ],
+        [
+          405,
+          423
+        ],
+        [
+          365,
+          497
+        ],
+        [
+          451,
+          525
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        593,
+        241,
+        793,
+        495
+      ],
+      "points": [
+        [
+          681,
+          263
+        ],
+        [
+          666,
+          300
+        ],
+        [
+          626,
+          308
+        ],
+        [
+          714,
+          324
+        ],
+        [
+          637,
+          406
+        ],
+        [
+          609,
+          461
+        ],
+        [
+          736,
+          435
+        ],
+        [
+          772,
+          475
+        ]
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        552,
+        0,
+        816,
+        410
+      ],
+      "points": [
+        [
+          710,
+          81
+        ],
+        [
+          702,
+          139
+        ],
+        [
+          679,
+          187
+        ],
+        [
+          748,
+          191
+        ],
+        [
+          749,
+          105
+        ],
+        [
+          783,
+          25
+        ],
+        [
+          650,
+          271
+        ],
+        [
+          584,
+          387
+        ],
+        [
+          695,
+          388
+        ],
+        [
+          643,
+          103
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 95,
+      "box": [
+        627,
+        83,
+        825,
+        425
+      ],
+      "points": [
+        [
+          699,
+          118
+        ],
+        [
+          688,
+          167
+        ],
+        [
+          719,
+          215
+        ],
+        [
+          757,
+          189
+        ],
+        [
+          669,
+          280
+        ],
+        [
+          724,
+          339
+        ],
+        [
+          791,
+          417
+        ],
+        [
+          574,
+          143
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "hide_rects": [
+    [
+      56,
+      30,
+      51,
+      53
+    ]
+  ],
+  "seed": 12,
+  "scoring_play_end_frame": 89,
+  "identity_verification": "Calgary 94 Pachal is the trailing point shooter entering from the lower-left edge. Jersey and name are clear through the one-timer and raised-arm celebration. Other Calgary skaters and Utah 82 are kept visible."
+}

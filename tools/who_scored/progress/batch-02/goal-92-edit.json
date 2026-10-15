@@ -1,0 +1,341 @@
+{
+  "id": "goal-92",
+  "pid": 8484136,
+  "player": "Max Sasson",
+  "original": "/workspace/who-scored-expansion/originals/goal-92-6366640356112.mp4",
+  "source_sha256": "34d3b05c9f64b109ce96821e3fde8f729a02fd37bb78ac530d288ebeb03e8d0c",
+  "start": 38.1,
+  "duration": 3.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        416,
+        80,
+        612,
+        449
+      ],
+      "points": [
+        [
+          510,
+          176
+        ],
+        [
+          545,
+          117
+        ],
+        [
+          686,
+          320
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        403,
+        146,
+        617,
+        447
+      ],
+      "points": [
+        [
+          533,
+          267
+        ],
+        [
+          579,
+          178
+        ],
+        [
+          743,
+          330
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        360,
+        132,
+        525,
+        447
+      ],
+      "points": [
+        [
+          442,
+          230
+        ],
+        [
+          474,
+          165
+        ],
+        [
+          378,
+          268
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        260,
+        112,
+        526,
+        449
+      ],
+      "points": [
+        [
+          397,
+          233
+        ],
+        [
+          399,
+          143
+        ],
+        [
+          295,
+          207
+        ],
+        [
+          478,
+          232
+        ],
+        [
+          451,
+          278
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        246,
+        77,
+        455,
+        448
+      ],
+      "points": [
+        [
+          352,
+          231
+        ],
+        [
+          354,
+          113
+        ],
+        [
+          270,
+          146
+        ],
+        [
+          412,
+          208
+        ],
+        [
+          411,
+          232
+        ],
+        [
+          433,
+          171
+        ],
+        [
+          666,
+          350
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 85,
+      "box": [
+        214,
+        64,
+        405,
+        447
+      ],
+      "points": [
+        [
+          302,
+          229
+        ],
+        [
+          305,
+          91
+        ],
+        [
+          249,
+          143
+        ],
+        [
+          372,
+          196
+        ],
+        [
+          390,
+          195
+        ],
+        [
+          415,
+          147
+        ],
+        [
+          651,
+          298
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 83,
+  "supersedes_draft_window": {
+    "start": 37.85,
+    "duration": 3.85
+  },
+  "hide_original_regions": [
+    [
+      56,
+      30,
+      51,
+      53
+    ]
+  ],
+  "identity_verification": "SASSON 63 is readable on the near Canuck at the crease. Follow that same body through the net-front deflection, landing and both raised gloves. Seattle goalie Grubauer 31 and defender Borgen 3 behind Sasson stay visible. Start after the broadcast dissolve; preserve the whole net-front finish and celebration.",
+  "tracking_crop_size": 512,
+  "manual_clear_polygons": {
+    "0": [
+      [
+        [
+          585,
+          240
+        ],
+        [
+          590,
+          240
+        ],
+        [
+          590,
+          248
+        ],
+        [
+          585,
+          248
+        ]
+      ],
+      [
+        [
+          558,
+          268
+        ],
+        [
+          560,
+          268
+        ],
+        [
+          560,
+          272
+        ],
+        [
+          558,
+          272
+        ]
+      ],
+      [
+        [
+          577,
+          269
+        ],
+        [
+          593,
+          269
+        ],
+        [
+          593,
+          285
+        ],
+        [
+          577,
+          285
+        ]
+      ],
+      [
+        [
+          574,
+          281
+        ],
+        [
+          576,
+          281
+        ],
+        [
+          576,
+          283
+        ],
+        [
+          574,
+          283
+        ]
+      ],
+      [
+        [
+          578,
+          296
+        ],
+        [
+          581,
+          296
+        ],
+        [
+          581,
+          299
+        ],
+        [
+          578,
+          299
+        ]
+      ]
+    ]
+  },
+  "manual_patch_note": "Clear only inspected detached matte flecks within the light-teal Grubauer cuff at the opening overlap. Preserve the foreground goalie cuff; this does not clear the scorer body or the blue scorer gloves. Cropped tracking handles the full scorer, including both raised gloves."
+}

@@ -1,0 +1,220 @@
+{
+  "id": "goal-94",
+  "pid": 8474574,
+  "player": "Tyler Myers",
+  "original": "/workspace/who-scored-expansion/originals/goal-94-6366641533112.mp4",
+  "source_sha256": "cdc6e512b596a68cf56edf1e19264ec5c2081b05e57f020b812d076915be58ba",
+  "start": 28.1,
+  "duration": 4.3,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        327,
+        24,
+        390,
+        94
+      ],
+      "points": [
+        [
+          356,
+          58
+        ],
+        [
+          360,
+          39
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        462,
+        104,
+        508,
+        168
+      ],
+      "points": [
+        [
+          488,
+          133
+        ],
+        [
+          484,
+          115
+        ],
+        [
+          531,
+          168
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        394,
+        79,
+        440,
+        141
+      ],
+      "points": [
+        [
+          417,
+          105
+        ],
+        [
+          429,
+          153
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        237,
+        49,
+        283,
+        128
+      ],
+      "points": [
+        [
+          258,
+          84
+        ],
+        [
+          252,
+          63
+        ],
+        [
+          222,
+          102
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        111,
+        30,
+        159,
+        138
+      ],
+      "points": [
+        [
+          134,
+          80
+        ],
+        [
+          131,
+          44
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        36,
+        44,
+        101,
+        134
+      ],
+      "points": [
+        [
+          65,
+          102
+        ],
+        [
+          62,
+          123
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        122,
+        40,
+        174,
+        115
+      ],
+      "points": [
+        [
+          151,
+          78
+        ],
+        [
+          147,
+          52
+        ],
+        [
+          278,
+          114
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 102,
+      "box": [
+        434,
+        122,
+        486,
+        223
+      ],
+      "points": [
+        [
+          462,
+          164
+        ],
+        [
+          463,
+          132
+        ],
+        [
+          453,
+          237
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 100,
+  "tracking_crop_size": 384,
+  "identity_verification": "MYERS 57 is readable on the same scorer after he turns along the left boards and again in the final frame. Follow the far-left receiver through his shot, drift left behind the Seattle defender, and return along the boards. The Canuck raising both gloves through the slot is Soucy 7, not the scorer; Miller 9 stays at the crease. Preserve every other player, goalie and net."
+}

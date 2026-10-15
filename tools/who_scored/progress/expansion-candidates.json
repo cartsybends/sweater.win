@@ -1673,6 +1673,19 @@
           "source_video_id": "6366640719112",
           "discrete_video_id": "6366642066112",
           "goal_modifier": "empty-net"
+        },
+        {
+          "game_id": 2024020988,
+          "date": "2025-03-06",
+          "period": 3,
+          "time_in_period": "02:55",
+          "player": "Kevin Stenlund",
+          "official_goal_scorer": "Kevin Stenlund",
+          "team": "UTA",
+          "source": "https://nhl.com/video/uta-det-stenlund-scores-goal-against-alex-lyon-6369704406112",
+          "source_video_id": "6369704406112",
+          "discrete_video_id": "6369703811112",
+          "goal_modifier": "none"
         }
       ]
     },

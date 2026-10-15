@@ -1,0 +1,222 @@
+{
+  "id": "goal-80",
+  "pid": 8483431,
+  "player": "Logan Cooley",
+  "original": "/workspace/who-scored-expansion/originals/goal-80-6366639278112.mp4",
+  "source_sha256": "1c82ee5725c5d8daed4ebf2956da5c86b724ffbe40d89ae45b0fc136779f4957",
+  "start": 28.5,
+  "duration": 4.45,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        322,
+        231,
+        410,
+        370
+      ],
+      "points": [
+        [
+          336,
+          247
+        ],
+        [
+          347,
+          275
+        ],
+        [
+          326,
+          283
+        ],
+        [
+          369,
+          279
+        ],
+        [
+          345,
+          330
+        ],
+        [
+          329,
+          354
+        ],
+        [
+          394,
+          348
+        ],
+        [
+          452,
+          304
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 52,
+      "box": [
+        239,
+        239,
+        373,
+        373
+      ],
+      "points": [
+        [
+          314,
+          257
+        ],
+        [
+          311,
+          283
+        ],
+        [
+          293,
+          308
+        ],
+        [
+          351,
+          302
+        ],
+        [
+          280,
+          337
+        ],
+        [
+          246,
+          365
+        ],
+        [
+          339,
+          362
+        ],
+        [
+          518,
+          280
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 88,
+      "box": [
+        345,
+        220,
+        408,
+        375
+      ],
+      "points": [
+        [
+          368,
+          234
+        ],
+        [
+          377,
+          271
+        ],
+        [
+          394,
+          286
+        ],
+        [
+          360,
+          296
+        ],
+        [
+          366,
+          326
+        ],
+        [
+          365,
+          365
+        ],
+        [
+          519,
+          264
+        ],
+        [
+          338,
+          164
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 106,
+      "box": [
+        403,
+        173,
+        464,
+        307
+      ],
+      "points": [
+        [
+          434,
+          186
+        ],
+        [
+          428,
+          217
+        ],
+        [
+          416,
+          224
+        ],
+        [
+          449,
+          218
+        ],
+        [
+          431,
+          257
+        ],
+        [
+          427,
+          282
+        ],
+        [
+          520,
+          222
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "max_cond_frames_in_attn": 2,
+  "version": "v1",
+  "scoring_play_end_frame": 100,
+  "identity_verification": "Utah 92 is Logan Cooley, confirmed by the official scorer/highlight and visible 92 throughout this continuous behind-net replay. Follows his net-front tip and goalie reaction, with the puck going into the net."
+}

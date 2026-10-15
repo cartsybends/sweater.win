@@ -1,0 +1,201 @@
+{
+  "id": "goal-90",
+  "pid": 8478439,
+  "player": "Travis Konecny",
+  "original": "/workspace/who-scored-expansion/originals/goal-90-6366641619112.mp4",
+  "source_sha256": "d4a09e28156f63a38326adf725d517a346cf3a25df86bf1175e550588ddf1f06",
+  "start": 36.0,
+  "duration": 4.05,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        698,
+        83,
+        772,
+        151
+      ],
+      "points": [
+        [
+          734,
+          120
+        ],
+        [
+          738,
+          105
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        575,
+        92,
+        635,
+        164
+      ],
+      "points": [
+        [
+          610,
+          125
+        ],
+        [
+          617,
+          109
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        683,
+        102,
+        748,
+        189
+      ],
+      "points": [
+        [
+          718,
+          145
+        ],
+        [
+          720,
+          119
+        ],
+        [
+          637,
+          161
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        804,
+        98,
+        864,
+        202
+      ],
+      "points": [
+        [
+          838,
+          150
+        ],
+        [
+          843,
+          121
+        ],
+        [
+          714,
+          149
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        910,
+        103,
+        960,
+        220
+      ],
+      "points": [
+        [
+          944,
+          157
+        ],
+        [
+          954,
+          128
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        759,
+        72,
+        806,
+        149
+      ],
+      "points": [
+        [
+          784,
+          113
+        ],
+        [
+          780,
+          87
+        ],
+        [
+          680,
+          111
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 96,
+      "box": [
+        738,
+        38,
+        801,
+        125
+      ],
+      "points": [
+        [
+          763,
+          82
+        ],
+        [
+          768,
+          56
+        ],
+        [
+          736,
+          126
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 94,
+  "supersedes_draft_window": {
+    "start": 43.15,
+    "duration": 4.7
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Konecny 11 is the far/right-circle Flyer taking the pass and wrist shot. Follow the same 11 around the right boards with both gloves raised after the goal. Farabee 86 at the crease and Tippett 74 in the slot stay visible. This continuous behind-net angle replaces the draft with the abrupt goalie zoom, retaining approach, release, goal and two seconds of natural reaction."
+}

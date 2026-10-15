@@ -1,0 +1,161 @@
+{
+  "id": "goal-91",
+  "pid": 8476905,
+  "player": "Chandler Stephenson",
+  "original": "/workspace/who-scored-expansion/originals/goal-91-6366639652112.mp4",
+  "source_sha256": "66c37c55504bb155a9cc0ed448108cfd12a4aab01ddbd8baa031925bbd8af334",
+  "start": 32.0,
+  "duration": 3.85,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        566,
+        221,
+        728,
+        407
+      ],
+      "points": [
+        [
+          649,
+          295
+        ],
+        [
+          630,
+          243
+        ],
+        [
+          859,
+          191
+        ],
+        [
+          182,
+          184
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        499,
+        263,
+        633,
+        507
+      ],
+      "points": [
+        [
+          563,
+          333
+        ],
+        [
+          534,
+          286
+        ],
+        [
+          713,
+          321
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        316,
+        348,
+        470,
+        540
+      ],
+      "points": [
+        [
+          396,
+          457
+        ],
+        [
+          374,
+          378
+        ],
+        [
+          584,
+          467
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        0,
+        320,
+        211,
+        540
+      ],
+      "points": [
+        [
+          141,
+          436
+        ],
+        [
+          128,
+          350
+        ],
+        [
+          390,
+          422
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        0,
+        379,
+        45,
+        530
+      ],
+      "points": [
+        [
+          12,
+          447
+        ],
+        [
+          288,
+          407
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 89,
+  "identity_verification": "Stephenson 9 receives near the boards, shoots and continues toward the left foreground as Demko 35 reacts to the goal. STEPHENSON 9 stays visible on his back; Desharnais 73 pursues and must remain uncovered. The scorer leaves the left edge late while the goal reaction continues.",
+  "allow_empty": [
+    88,
+    89,
+    90,
+    91
+  ]
+}

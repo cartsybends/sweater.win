@@ -1,0 +1,133 @@
+{
+  "id": "goal-88",
+  "pid": 8481604,
+  "player": "Pavel Dorofeyev",
+  "original": "/workspace/who-scored-expansion/originals/goal-88-6366641974112.mp4",
+  "source_sha256": "375bee091f434da327932fdc5fe918735601c3575885419b5e38922326b6313d",
+  "start": 36.25,
+  "duration": 3.15,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        25,
+        137,
+        100,
+        239
+      ],
+      "points": [
+        [
+          63,
+          182
+        ],
+        [
+          61,
+          156
+        ],
+        [
+          168,
+          241
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        225,
+        127,
+        285,
+        199
+      ],
+      "points": [
+        [
+          255,
+          164
+        ],
+        [
+          257,
+          142
+        ],
+        [
+          403,
+          266
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        228,
+        65,
+        282,
+        145
+      ],
+      "points": [
+        [
+          253,
+          99
+        ],
+        [
+          253,
+          81
+        ],
+        [
+          326,
+          141
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 75,
+      "box": [
+        163,
+        93,
+        259,
+        209
+      ],
+      "points": [
+        [
+          220,
+          145
+        ],
+        [
+          210,
+          111
+        ],
+        [
+          187,
+          142
+        ],
+        [
+          309,
+          139
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 73,
+  "tracking_crop_size": 384,
+  "identity_verification": "Dorofeyev 16 is the far-left circle skater in this behind-net replay; enlarged shoulder numerals verify 16. Karlsson 71 is in the right slot and Hertl 48 screens the goalie. Follows Dorofeyev receiving the pass on the left and shooting through the screen, then turning after the goal. Do not mask Karlsson 71, whose arms also rise on the right."
+}

@@ -143,8 +143,25 @@
         "goal-118",
         "goal-119"
       ],
-      "status": "sources_collected_awaiting_visual_reviews",
-      "approved_clips": [],
+      "status": "visual_reviews_in_progress",
+      "approved_clips": [
+        "goal-80",
+        "goal-81",
+        "goal-82",
+        "goal-83",
+        "goal-84",
+        "goal-85",
+        "goal-86",
+        "goal-87",
+        "goal-88",
+        "goal-89",
+        "goal-90",
+        "goal-91",
+        "goal-92",
+        "goal-93",
+        "goal-94",
+        "goal-95"
+      ],
       "verified_source_originals": 40
     },
     {
@@ -191,8 +208,9 @@
         "goal-158",
         "goal-159"
       ],
-      "status": "queued",
-      "approved_clips": []
+      "status": "sources_collected_awaiting_visual_reviews",
+      "approved_clips": [],
+      "verified_source_originals": 40
     },
     {
       "batch": 4,

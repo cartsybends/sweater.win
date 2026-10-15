@@ -1,0 +1,384 @@
+{
+  "id": "goal-83",
+  "pid": 8479343,
+  "player": "Clayton Keller",
+  "original": "/workspace/who-scored-expansion/originals/goal-83-6366640867112.mp4",
+  "source_sha256": "c91c66ffdf92a91b8c80488673874a4fc0cbd9d73ad70d9a98636dabbd368f34",
+  "start": 35.0,
+  "duration": 3.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        343,
+        101,
+        398,
+        166
+      ],
+      "points": [
+        [
+          365,
+          113
+        ],
+        [
+          367,
+          130
+        ],
+        [
+          368,
+          143
+        ],
+        [
+          358,
+          156
+        ],
+        [
+          381,
+          154
+        ],
+        [
+          477,
+          164
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        374,
+        104,
+        420,
+        168
+      ],
+      "points": [
+        [
+          394,
+          117
+        ],
+        [
+          392,
+          135
+        ],
+        [
+          398,
+          148
+        ],
+        [
+          384,
+          157
+        ],
+        [
+          407,
+          157
+        ],
+        [
+          427,
+          177
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        487,
+        76,
+        540,
+        151
+      ],
+      "points": [
+        [
+          505,
+          88
+        ],
+        [
+          510,
+          109
+        ],
+        [
+          500,
+          120
+        ],
+        [
+          520,
+          129
+        ],
+        [
+          501,
+          145
+        ],
+        [
+          533,
+          144
+        ],
+        [
+          466,
+          157
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        627,
+        111,
+        694,
+        223
+      ],
+      "points": [
+        [
+          655,
+          125
+        ],
+        [
+          664,
+          156
+        ],
+        [
+          651,
+          177
+        ],
+        [
+          687,
+          208
+        ],
+        [
+          637,
+          198
+        ],
+        [
+          550,
+          197
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        736,
+        174,
+        816,
+        310
+      ],
+      "points": [
+        [
+          782,
+          187
+        ],
+        [
+          788,
+          219
+        ],
+        [
+          749,
+          218
+        ],
+        [
+          782,
+          251
+        ],
+        [
+          780,
+          297
+        ],
+        [
+          748,
+          274
+        ],
+        [
+          676,
+          238
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        670,
+        199,
+        741,
+        309
+      ],
+      "points": [
+        [
+          695,
+          213
+        ],
+        [
+          714,
+          238
+        ],
+        [
+          675,
+          248
+        ],
+        [
+          720,
+          265
+        ],
+        [
+          736,
+          289
+        ],
+        [
+          686,
+          283
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        590,
+        173,
+        650,
+        259
+      ],
+      "points": [
+        [
+          617,
+          184
+        ],
+        [
+          615,
+          204
+        ],
+        [
+          601,
+          205
+        ],
+        [
+          634,
+          211
+        ],
+        [
+          617,
+          235
+        ],
+        [
+          622,
+          270
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 81,
+      "box": [
+        558,
+        147,
+        635,
+        233
+      ],
+      "points": [
+        [
+          595,
+          164
+        ],
+        [
+          592,
+          180
+        ],
+        [
+          573,
+          185
+        ],
+        [
+          616,
+          187
+        ],
+        [
+          595,
+          208
+        ],
+        [
+          598,
+          243
+        ],
+        [
+          876,
+          210
+        ],
+        [
+          524,
+          195
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 79,
+  "supersedes_draft_window": {
+    "start": 12.5,
+    "duration": 5.5
+  },
+  "identity_verification": "Keller 9 is the Utah skater above Hayton 27 in the slot at the start. Follows his move to the right of the crease and the rebound finish, then his raised-glove reaction behind Andersson 4. Hayton 27 is screened by Bahl 7; Schmaltz 8 raises his stick farther to the right and remains visible. Maatta 2 takes the initial point shot.",
+  "tracking_crop_size": 384
+}
