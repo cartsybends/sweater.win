@@ -1,0 +1,202 @@
+{
+  "id": "goal-144",
+  "pid": 8475158,
+  "player": "Ryan O'Reilly",
+  "original": "/workspace/who-scored-expansion/originals/goal-144-6366699310112.mp4",
+  "source_sha256": "d56f1c32da89d87b16c82e430144470c11ea8799267d9410308f3cdf428fe394",
+  "start": 28.7,
+  "duration": 2.6,
+  "anchors": [
+    {
+      "frame": 4,
+      "box": [
+        945,
+        0,
+        960,
+        35
+      ],
+      "points": [
+        [
+          955,
+          10
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        900,
+        45,
+        960,
+        230
+      ],
+      "points": [
+        [
+          953,
+          112
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 16,
+      "box": [
+        730,
+        195,
+        845,
+        390
+      ],
+      "points": [
+        [
+          784,
+          260
+        ],
+        [
+          787,
+          212
+        ],
+        [
+          788,
+          150
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        585,
+        290,
+        700,
+        450
+      ],
+      "points": [
+        [
+          649,
+          365
+        ],
+        [
+          645,
+          308
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        535,
+        265,
+        665,
+        470
+      ],
+      "points": [
+        [
+          608,
+          347
+        ],
+        [
+          629,
+          283
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 57,
+      "box": [
+        535,
+        245,
+        685,
+        500
+      ],
+      "points": [
+        [
+          628,
+          337
+        ],
+        [
+          649,
+          268
+        ],
+        [
+          642,
+          411
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 61,
+      "box": [
+        535,
+        245,
+        685,
+        500
+      ],
+      "points": [
+        [
+          628,
+          337
+        ],
+        [
+          649,
+          268
+        ],
+        [
+          548,
+          368
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 59,
+  "supersedes_draft_window": {
+    "start": 24.2,
+    "duration": 3.2
+  },
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    0,
+    1,
+    2
+  ],
+  "identity_verification": "Use the second Jan4 OReilly powerplay goal, official event719 at11:37, source6366699310112. Clearly readable OREILLY90 jersey identifies the right-post recipient, distinct from Forsberg9 passing and Marchessault81 left of the crease. Continuous28.7-31.3 replay retains the incoming pass, full wrist-shot goal and stick-up reaction before the next camera transition. Initial blurred right-edge scorer boot enters at3, clearly visible4; empty0-2 only. Preserve Calgary goalie32, defender4 and21 crossing in front of90 at the end.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 3,
+      "ellipse": [
+        958,
+        2,
+        3,
+        5
+      ]
+    }
+  ]
+}

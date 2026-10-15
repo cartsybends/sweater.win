@@ -1,0 +1,274 @@
+{
+  "id": "goal-148",
+  "pid": 8478403,
+  "player": "Jack Eichel",
+  "original": "/workspace/who-scored-expansion/originals/goal-148-6366701472112.mp4",
+  "source_sha256": "4e80be32fc28a76faed165350140497ffbe03f9ac6c1aa9c8b4fa2756fd7080c",
+  "start": 30.2,
+  "duration": 3.0,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        205,
+        140,
+        270,
+        215
+      ],
+      "points": [
+        [
+          235,
+          181
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        345,
+        60,
+        425,
+        150
+      ],
+      "points": [
+        [
+          386,
+          98
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 27,
+      "box": [
+        365,
+        78,
+        435,
+        150
+      ],
+      "points": [
+        [
+          400,
+          99
+        ],
+        [
+          393,
+          81
+        ],
+        [
+          413,
+          76
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        380,
+        65,
+        470,
+        160
+      ],
+      "points": [
+        [
+          422,
+          111
+        ],
+        [
+          426,
+          90
+        ],
+        [
+          442,
+          77
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        295,
+        70,
+        385,
+        200
+      ],
+      "points": [
+        [
+          346,
+          137
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 53,
+      "box": [
+        210,
+        70,
+        325,
+        240
+      ],
+      "points": [
+        [
+          272,
+          145
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        0,
+        180,
+        145,
+        330
+      ],
+      "points": [
+        [
+          53,
+          241
+        ],
+        [
+          105,
+          193
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 62,
+      "box": [
+        0,
+        200,
+        85,
+        350
+      ],
+      "points": [
+        [
+          15,
+          259
+        ],
+        [
+          8,
+          333
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 69,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer Jack Eichel, Vegas 9, snap shot in the left circle. Follow the puck carrier through the shot and raised-arms reaction to his exit at the LEFT edge. Vegas defenseman McNabb 3 is the other gold player on the right and must remain unmasked.",
+  "allow_empty": [
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71
+  ],
+  "mask_patch_ellipses": [
+    {
+      "frame": 62,
+      "ellipse": [
+        28,
+        365,
+        20,
+        31
+      ]
+    },
+    {
+      "frame": 62,
+      "ellipse": [
+        28,
+        397,
+        13,
+        17
+      ]
+    }
+  ],
+  "manual_fill_polygons": {
+    "63": [
+      [
+        [
+          0,
+          318
+        ],
+        [
+          7,
+          333
+        ],
+        [
+          8,
+          364
+        ],
+        [
+          6,
+          391
+        ],
+        [
+          12,
+          407
+        ],
+        [
+          8,
+          429
+        ],
+        [
+          0,
+          439
+        ]
+      ]
+    ],
+    "62": [
+      [
+        [
+          0,
+          300
+        ],
+        [
+          12,
+          300
+        ],
+        [
+          12,
+          380
+        ],
+        [
+          0,
+          380
+        ]
+      ]
+    ]
+  }
+}

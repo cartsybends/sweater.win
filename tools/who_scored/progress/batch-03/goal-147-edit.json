@@ -1,0 +1,242 @@
+{
+  "id": "goal-147",
+  "pid": 8479550,
+  "player": "Tanner Laczynski",
+  "original": "/workspace/who-scored-expansion/originals/goal-147-6366698402112.mp4",
+  "source_sha256": "3352823c0c3f1756a1f9adacbc48e7c128c09f1a7e6f05d54faeb141078deebf",
+  "start": 38.2,
+  "duration": 3.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        465,
+        300,
+        640,
+        540
+      ],
+      "points": [
+        [
+          548,
+          405
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        550,
+        285,
+        735,
+        540
+      ],
+      "points": [
+        [
+          643,
+          381
+        ],
+        [
+          559,
+          235
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        235,
+        245,
+        490,
+        530
+      ],
+      "points": [
+        [
+          350,
+          338
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        85,
+        170,
+        375,
+        425
+      ],
+      "points": [
+        [
+          222,
+          275
+        ],
+        [
+          103,
+          300
+        ],
+        [
+          138,
+          326
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        110,
+        170,
+        380,
+        435
+      ],
+      "points": [
+        [
+          223,
+          283
+        ],
+        [
+          340,
+          386
+        ],
+        [
+          242,
+          348
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        115,
+        170,
+        355,
+        435
+      ],
+      "points": [
+        [
+          223,
+          283
+        ],
+        [
+          317,
+          383
+        ],
+        [
+          245,
+          340
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 88,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Tanner Laczynski, Vegas 28. Read LACZYNSKI 28 on foreground back as he redirects the play and drops to a knee in celebration. Vegas 21 behind him is distinct and remains unmasked.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 81,
+      "ellipse": [
+        232,
+        326,
+        19,
+        31
+      ]
+    },
+    {
+      "frame": 82,
+      "ellipse": [
+        233,
+        327,
+        19,
+        31
+      ]
+    },
+    {
+      "frame": 83,
+      "ellipse": [
+        235,
+        327,
+        19,
+        31
+      ]
+    },
+    {
+      "frame": 84,
+      "ellipse": [
+        238,
+        326,
+        19,
+        31
+      ]
+    },
+    {
+      "frame": 85,
+      "ellipse": [
+        240,
+        326,
+        19,
+        31
+      ]
+    },
+    {
+      "frame": 86,
+      "ellipse": [
+        241,
+        325,
+        14,
+        31
+      ]
+    },
+    {
+      "frame": 87,
+      "ellipse": [
+        244,
+        323,
+        14,
+        31
+      ]
+    },
+    {
+      "frame": 88,
+      "ellipse": [
+        246,
+        322,
+        14,
+        31
+      ]
+    },
+    {
+      "frame": 89,
+      "ellipse": [
+        247,
+        322,
+        14,
+        31
+      ]
+    }
+  ]
+}

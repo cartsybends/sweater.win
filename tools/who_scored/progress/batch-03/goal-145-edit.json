@@ -1,0 +1,362 @@
+{
+  "id": "goal-145",
+  "pid": 8474150,
+  "player": "Mikael Backlund",
+  "original": "/workspace/who-scored-expansion/originals/goal-145-6366699121112.mp4",
+  "source_sha256": "99f9cd3e66dfffddb75816b5fef7ec3b83ad540e27506491a7c96b898c5882c5",
+  "start": 33.6,
+  "duration": 3.9,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        640,
+        220,
+        810,
+        490
+      ],
+      "points": [
+        [
+          699,
+          326
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        420,
+        180,
+        565,
+        395
+      ],
+      "points": [
+        [
+          495,
+          285
+        ],
+        [
+          597,
+          277
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        535,
+        160,
+        680,
+        440
+      ],
+      "points": [
+        [
+          612,
+          275
+        ],
+        [
+          658,
+          375
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        550,
+        140,
+        785,
+        450
+      ],
+      "points": [
+        [
+          628,
+          236
+        ],
+        [
+          566,
+          145
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 42,
+      "box": [
+        330,
+        145,
+        590,
+        475
+      ],
+      "points": [
+        [
+          443,
+          269
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        50,
+        200,
+        280,
+        490
+      ],
+      "points": [
+        [
+          208,
+          312
+        ],
+        [
+          185,
+          226
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        195,
+        100,
+        390,
+        450
+      ],
+      "points": [
+        [
+          323,
+          250
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 93,
+      "box": [
+        440,
+        100,
+        605,
+        445
+      ],
+      "points": [
+        [
+          524,
+          200
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 91,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer, BACKLUND11 jersey and continuous33.6-37.5 replay identify Calgary11 who wins the puck on the right boards, carries into the slot, shoots and raises both arms after the completed goal. Preserve Coronato27 on the boards, Bahl7 crossing foreground24 and Nashville defenders/goalie. Follow11 at the left of the crease48 back to the raised-arms centre72.",
+  "manual_fill_polygons": {
+    "36": [
+      [
+        [
+          631,
+          338
+        ],
+        [
+          647,
+          336
+        ],
+        [
+          654,
+          350
+        ],
+        [
+          651,
+          366
+        ],
+        [
+          637,
+          368
+        ],
+        [
+          632,
+          353
+        ]
+      ]
+    ],
+    "42": [
+      [
+        [
+          504,
+          219
+        ],
+        [
+          515,
+          224
+        ],
+        [
+          525,
+          234
+        ],
+        [
+          534,
+          239
+        ],
+        [
+          538,
+          250
+        ],
+        [
+          529,
+          256
+        ],
+        [
+          514,
+          254
+        ],
+        [
+          505,
+          245
+        ]
+      ]
+    ]
+  },
+  "manual_clear_polygons": {
+    "42": [
+      [
+        [
+          335,
+          316
+        ],
+        [
+          400,
+          316
+        ],
+        [
+          400,
+          350
+        ],
+        [
+          335,
+          350
+        ]
+      ],
+      [
+        [
+          505,
+          280
+        ],
+        [
+          615,
+          280
+        ],
+        [
+          615,
+          365
+        ],
+        [
+          505,
+          365
+        ]
+      ]
+    ],
+    "0": [
+      [
+        [
+          754,
+          224
+        ],
+        [
+          778,
+          224
+        ],
+        [
+          778,
+          248
+        ],
+        [
+          754,
+          248
+        ]
+      ],
+      [
+        [
+          746,
+          294
+        ],
+        [
+          770,
+          294
+        ],
+        [
+          770,
+          335
+        ],
+        [
+          746,
+          335
+        ]
+      ],
+      [
+        [
+          640,
+          190
+        ],
+        [
+          715,
+          190
+        ],
+        [
+          715,
+          235
+        ],
+        [
+          640,
+          235
+        ]
+      ]
+    ],
+    "1": [
+      [
+        [
+          640,
+          190
+        ],
+        [
+          715,
+          190
+        ],
+        [
+          715,
+          235
+        ],
+        [
+          640,
+          235
+        ]
+      ]
+    ]
+  }
+}

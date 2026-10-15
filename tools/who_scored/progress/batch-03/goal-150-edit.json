@@ -1,0 +1,186 @@
+{
+  "id": "goal-150",
+  "pid": 8475768,
+  "player": "Jaden Schwartz",
+  "original": "/workspace/who-scored-expansion/originals/goal-150-6366700891112.mp4",
+  "source_sha256": "bf6db2660c472812c980619a9ecefe00d871ffcdee0984ab5918f75ade5d9607",
+  "start": 28.0,
+  "duration": 4.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        810,
+        380,
+        960,
+        535
+      ],
+      "points": [
+        [
+          903,
+          452
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        735,
+        215,
+        835,
+        315
+      ],
+      "points": [
+        [
+          792,
+          264
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        680,
+        145,
+        780,
+        300
+      ],
+      "points": [
+        [
+          732,
+          219
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        560,
+        145,
+        670,
+        270
+      ],
+      "points": [
+        [
+          614,
+          198
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 100,
+      "box": [
+        455,
+        100,
+        540,
+        260
+      ],
+      "points": [
+        [
+          495,
+          165
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 98,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer Jaden Schwartz, Seattle 17. SCHWARTZ 17 visible at the opening right boards; follow his carry into the right circle, shot, goal and raised-stick reaction through his glide left. Seattle 10 and 84 and Edmonton players remain separate.",
+  "manual_clear_polygons": {
+    "48": [
+      [
+        [
+          685,
+          270
+        ],
+        [
+          735,
+          270
+        ],
+        [
+          735,
+          335
+        ],
+        [
+          685,
+          335
+        ]
+      ]
+    ],
+    "72": [
+      [
+        [
+          500,
+          110
+        ],
+        [
+          596,
+          110
+        ],
+        [
+          596,
+          277
+        ],
+        [
+          500,
+          277
+        ]
+      ],
+      [
+        [
+          590,
+          110
+        ],
+        [
+          605,
+          110
+        ],
+        [
+          605,
+          160
+        ],
+        [
+          590,
+          160
+        ]
+      ]
+    ],
+    "76": [
+      [
+        [
+          490,
+          120
+        ],
+        [
+          580,
+          120
+        ],
+        [
+          580,
+          235
+        ],
+        [
+          490,
+          235
+        ]
+      ]
+    ]
+  }
+}

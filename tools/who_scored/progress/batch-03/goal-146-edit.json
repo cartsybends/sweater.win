@@ -1,0 +1,181 @@
+{
+  "id": "goal-146",
+  "pid": 8482768,
+  "player": "Fedor Svechkov",
+  "original": "/workspace/who-scored-expansion/originals/goal-146-6367609274112.mp4",
+  "source_sha256": "8b1a2bac7b6f9079942b8bf67f741d6c3aacb5e8718ebd7cd7174a5b703afcdd",
+  "start": 11.2,
+  "duration": 3.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        530,
+        305,
+        600,
+        405
+      ],
+      "points": [
+        [
+          565,
+          344
+        ],
+        [
+          551,
+          321
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        375,
+        300,
+        440,
+        400
+      ],
+      "points": [
+        [
+          405,
+          335
+        ],
+        [
+          389,
+          293
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        155,
+        280,
+        235,
+        365
+      ],
+      "points": [
+        [
+          197,
+          325
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 51,
+      "box": [
+        105,
+        275,
+        205,
+        395
+      ],
+      "points": [
+        [
+          152,
+          330
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 54,
+      "box": [
+        50,
+        315,
+        160,
+        410
+      ],
+      "points": [
+        [
+          103,
+          370
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        0,
+        380,
+        70,
+        448
+      ],
+      "points": [
+        [
+          12,
+          407
+        ],
+        [
+          48,
+          432
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 63,
+      "box": [
+        0,
+        447,
+        20,
+        480
+      ],
+      "points": [
+        [
+          5,
+          458
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 71,
+  "supersedes_draft_window": {
+    "start": 31.1,
+    "duration": 4.2
+  },
+  "tracking_crop_size": 384,
+  "hide_rects": [
+    [
+      0,
+      460,
+      960,
+      80
+    ]
+  ],
+  "identity_verification": "Official scorer Fedor Svechkov, Nashville 40. Clearly read 40 on his back through the shot and raised-arms knee slide. He exits LEFT, with his final glove at frame 63; the two Nashville skaters remaining by the net are other players and must stay unmasked. Broadcast PP-unit player names are hidden in the silhouette version.",
+  "allow_empty": [
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73
+  ]
+}
