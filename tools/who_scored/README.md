@@ -45,10 +45,13 @@ python tools/who_scored/validate.py --decode
 python build_sweater.py --quiet --out site/index.html --site-url https://sweater.win/
 ```
 
-Unlimited completes a 79-player shuffle bag without repeats. Expanding the Daily
-pool replaces only unlocked future assignments and preserves past, today and
-tomorrow. The builder retains every clip's scorer in the embedded player data,
-including players available only from the schedule archive.
+Who Scored is daily-only: one shared scheduled goal each day, unlocking at
+midnight Eastern. Today's progress and finished result survive refreshes.
+Unlimited and archive entry paths cannot unlock another goal; replay, slow
+motion and the original reveal remain available for today's clip.
+Expanding the Daily pool replaces only unlocked future assignments and preserves
+past, today and tomorrow. The builder retains every clip's scorer in the embedded
+player data, including players available only from the schedule archive.
 
 The setup screen derives the footage year range from the active clips' official
 game dates and explains that players may have changed teams. Use game dates for

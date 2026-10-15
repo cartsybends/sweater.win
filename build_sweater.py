@@ -3198,6 +3198,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   :root[data-theme="dark"] :is(.romsg.bad, .hlscore .urgent b, .team-mode-msg.bad, .hint .bad, .wrong .x, .lberr, .ot-time.urgent) {
     color: #ff9391;
   }
+  body.daily-only .navactions :is(.switch, #archiveBtn) { display: none; }
 </style>
 </head>
 <body class="hubmode">
@@ -3393,10 +3394,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div class="ws-mark" id="wsMark" aria-hidden="true"></div>
       <h2>Recognize the move?</h2>
       <p>The scorer is a black silhouette. Watch the goal, trust your hockey eye, and find the player in six guesses.</p>
-      <div class="ws-modes" role="group" aria-label="Choose your game">
-        <button type="button" data-ws-mode="daily" aria-pressed="true"><b>Daily goal</b><small>One goal. Same challenge for everyone.</small></button>
-        <button type="button" data-ws-mode="unlimited" aria-pressed="false"><b>Keep them coming</b><small>A rotating mix of different scorers.</small></button>
-      </div>
+      <p class="ws-pool">One daily goal. The same challenge for everyone, with a new goal at midnight Eastern.</p>
       <p class="ws-era" id="wsEra"><strong>Goals from <!--__GOAL_YEARS__--></strong>Players may have changed teams since these clips were filmed.</p>
       <button type="button" class="ws-primary" id="wsStart">Watch today's goal</button>
       <small class="ws-pool" id="wsPool"></small>
@@ -3435,7 +3433,6 @@ TEMPLATE = r'''<!DOCTYPE html>
         <div class="slot"></div>
         <div class="ws-finish-actions" id="wsFinishActions" hidden>
           <button type="button" id="wsOriginal" aria-pressed="false" hidden>Watch original</button>
-          <button type="button" class="ws-primary" id="wsContinue" hidden>More goals · Unlimited</button>
         </div>
         <div class="ws-history" id="wsHistory" hidden><small>Your guesses</small><ol class="ws-guesses" id="wsWrong"></ol></div>
         <a class="ws-source" id="wsSource" target="_blank" rel="noopener" hidden>Full highlight on NHL.com ↗</a>
@@ -6425,6 +6422,8 @@ window.addEventListener("pagehide",()=>{if(overtimeRun)endArcade("overtime",true
 
 // finish a running arcade game if the player leaves it
 function leaveGame(g) {
+  document.body.classList.remove("daily-only");
+  $("unlimited").disabled = false;
   if (["benchboss", "teammatetrail"].includes(g)) cgCleanup();
   if (g === "whoscored") $("wsVideo").pause();
   if (g === "edgerush") edgeRushCancelAnimation();
@@ -9669,23 +9668,8 @@ G.edgebuild={
 };
 $("ebChoices").addEventListener("click",e=>{const b=e.target.closest("[data-eb]");if(b&&!G.edgebuild.pending)doGuess(b.dataset.eb);});
 
-// ---- Who Scored? A reviewed video library, with a persistent shuffle bag. ----
+// ---- Who Scored? One reviewed goal per day. ----
 const WS_CLIPS = /*__GOAL_CLIPS__*/[].map(c => ({ ...c, p: BYID.get(c.pid) })).filter(c => c.p);
-const WS_BYID = new Map(WS_CLIPS.map(c => [c.id, c]));
-const WS_DECK_KEY = "sweater-goal-rotation-v1";
-function wsRandom() {
-  const signature = WS_CLIPS.map(c => c.id).join("|");
-  let deck = store.get(WS_DECK_KEY);
-  if (!deck || deck.signature !== signature || !Array.isArray(deck.queue)) deck = { signature, queue: [], last: null };
-  deck.queue = [...new Set(deck.queue.filter(id => WS_BYID.has(id)))];
-  if (!deck.queue.length) deck.queue = shuffled(WS_CLIPS.map(c => c.id));
-  const last = deck.last || S.whoscored?.target?.id;
-  if (deck.queue.length > 1 && deck.queue[0] === last) [deck.queue[0], deck.queue[1]] = [deck.queue[1], deck.queue[0]];
-  const id = deck.queue.shift();
-  deck.last = id;
-  store.set(WS_DECK_KEY, deck);
-  return WS_BYID.get(id);
-}
 function wsMedia(t, original = false) { return `who-scored/${original ? t.reveal : t.masked}`; }
 function wsVideoState() {
   const g = G.whoscored, v = $("wsVideo");
@@ -9730,17 +9714,17 @@ function wsLoadVideo(t, original = false, play = false) {
 }
 G.whoscored = {
   title: "Who Scored?", share: "Sweater Who Scored?", view: "view-whoscored", max: 6, next: "Next goal",
-  quietFinish: true, localOnly: true, persistUnlimited: true, orderedRotation: true,
+  quietFinish: true, localOnly: true, dailyOnly: true,
   cheers: ["You know that move! 🏒", "What a read! 🎯", "Found the finish! 🥅", "Nice eye! 👀", "Got there! 🙌", "Buzzer beater! 🚨"],
   pool: () => WS_CLIPS,
   daily(k) {
     const scheduled = WS_CLIPS.find(c => c.pid === DAILY.whoscored[k]);
     return scheduled || WS_CLIPS[hash(`sweater-goal-${k}`) % WS_CLIPS.length];
   },
-  random: wsRandom, tid: t => t.id, player: t => t.p, meta: t => t.motion,
+  tid: t => t.id, player: t => t.p, meta: t => t.motion,
   isWin: (t, id) => id === t.pid,
   reset(t) {
-    this.started = !!this.advance; this.autoPlay = !!this.advance; this.advance = false;
+    this.started = false; this.autoPlay = false;
     this.ready = false; this.failed = false; this.original = false; this.slow = false; this.file = ""; this.guessCount = 0;
     const v = $("wsVideo"); v.pause(); v.removeAttribute("src"); v.load(); v.playbackRate = 1;
     v.poster = `who-scored/${t.poster}`;
@@ -9762,10 +9746,9 @@ G.whoscored = {
     $("wsQuestionCopy").hidden = st.over;
     $("wsGuessing").hidden = st.over;
     $("wsFinishActions").hidden = !st.over;
-    $("wsPool").textContent = `${WS_CLIPS.length} scorers in rotation · Unlimited replays · No timer`;
-    document.querySelectorAll("[data-ws-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.wsMode === mode));
-    $("wsStart").textContent = mode === "unlimited" ? "Watch the next goal" : mode === "archive" ? "Watch this goal" : "Watch today's goal";
-    $("wsRoundLabel").textContent = this.original ? "Original goal" : st.over ? "Scorer revealed" : mode === "unlimited" ? "Mystery goal · Unlimited" : mode === "archive" ? "Mystery goal · Archive" : "Today's mystery goal";
+    $("wsPool").textContent = "One goal per day · Unlimited replays · No timer";
+    $("wsStart").textContent = "Watch today's goal";
+    $("wsRoundLabel").textContent = this.original ? "Original goal" : st.over ? "Scorer revealed" : "Today's mystery goal";
     $("wsLeft").textContent = st.over ? st.guesses.includes(t.pid) ? `Solved in ${st.guesses.length}` : "Scorer revealed" : `Guess ${st.guesses.length + 1} of ${this.max}`;
     $("wsAttempts").innerHTML = Array.from({length:this.max},(_,i) => `<i class="${st.guesses[i] === t.pid ? "hit" : i < st.guesses.length ? "used" : !st.over && i === st.guesses.length ? "active" : ""}"></i>`).join("");
     $("wsAttempts").setAttribute("aria-label", `${st.guesses.length} of ${this.max} guesses used`);
@@ -9789,8 +9772,6 @@ G.whoscored = {
     $("wsSlow").textContent = this.slow ? "0.5×" : "1×";
     $("wsSource").hidden = !st.over;
     if (st.over) $("wsSource").href = t.source;
-    $("wsContinue").hidden = !st.over;
-    $("wsContinue").textContent = mode === "unlimited" ? "Next goal →" : "More goals · Unlimited";
     $("wsGuess").disabled = st.over || !this.started || !this.ready;
     if (this.started && !this.file) wsLoadVideo(t, false, this.autoPlay);
   },
@@ -9803,11 +9784,6 @@ $("wsStart").onclick = () => {
   if (!st.over) globalThis.SweaterAnalytics?.beginRound();
   g.started = true; g.autoPlay = true; g.render(st.target, st);
 };
-document.querySelectorAll("[data-ws-mode]").forEach(b => b.onclick = () => {
-  if (game !== "whoscored" || mode === b.dataset.wsMode) return;
-  mode = b.dataset.wsMode; store.set("sweater-mode", mode);
-  if (mode === "daily") loadDaily(); else loadUnlimited();
-});
 $("wsWatch").onclick = () => wsPlay($("wsVideo").ended);
 $("wsReplay").onclick = () => wsPlay(true);
 $("wsPause").onclick = () => $("wsVideo").paused ? wsPlay() : $("wsVideo").pause();
@@ -9821,9 +9797,6 @@ $("wsOriginal").onclick = () => {
   const st = S.whoscored, g = G.whoscored;
   if (game !== "whoscored" || !st.over) return;
   wsLoadVideo(st.target,!g.original,true); g.render(st.target,st);
-};
-$("wsContinue").onclick = () => {
-  mode = "unlimited"; store.set("sweater-mode",mode); G.whoscored.advance = true; loadUnlimited(true);
 };
 $("wsVideo").addEventListener("loadeddata", () => {
   const g = G.whoscored, st = S.whoscored;
@@ -10126,6 +10099,7 @@ function restoreFrom(saved, t) {
 
 function loadDaily() {
   const st = S[game], g = G[game];
+  if (g.dailyOnly) mode = "daily";
   if (!g.pool().length) return noData();
   st.day = dayKey();
   const t = g.daily(st.day);
@@ -10134,6 +10108,7 @@ function loadDaily() {
 }
 
 function archiveDays(g) {
+  if (G[g]?.dailyOnly) return [];
   const today = dayKey();
   if (g.startsWith("hl_")) {
     return Object.keys(DAILY_HL).filter(k => k < today && (DAILY_HL[k][G[g].stat] || []).length > 1).sort().reverse();
@@ -10143,6 +10118,7 @@ function archiveDays(g) {
 
 function loadArchive(day) {
   const st = S[game], g = G[game];
+  if (g.dailyOnly) return loadDaily();
   if (!g.pool().length) return noData();
   if (!archiveDays(game).includes(day)) {
     toast("That day isn't in this game's archive");
@@ -10156,6 +10132,7 @@ function loadArchive(day) {
 
 function loadUnlimited(forceNew = false) {
   const st = S[game], g = G[game];
+  if (g.dailyOnly) return loadDaily();
   if (!g.pool().length) return noData();
   if (!forceNew && st.target && st.mode === "unlimited") return startGame(st.target, st.guesses.slice(), st.opts);
   if (!forceNew && g.persistUnlimited) {
@@ -10169,6 +10146,7 @@ function loadUnlimited(forceNew = false) {
 }
 
 function loadCurrent() {
+  if (G[game].dailyOnly) return loadDaily();
   if (mode === "archive") return loadArchive(archiveDay);
   if (mode === "unlimited") return loadUnlimited();
   return loadDaily();
@@ -10189,7 +10167,7 @@ const niceDay = k => { const [y, m, d] = k.split("-").map(Number);
 function updateLabels() {
   const st = S[game], g = G[game];
   const text = !st.target ? "Not available yet"
-    : st.over ? (mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
+    : st.over ? (g.dailyOnly ? "Done for today. A new goal unlocks at midnight Eastern." : mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
   for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "phGuess", "wsGuess"]) {
@@ -10200,6 +10178,7 @@ function updateLabels() {
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
     : mode === "archive" ? `Archive · #${dailyNumber(game, archiveDay)}` : "Unlimited play";
   $("unlimited").checked = mode === "unlimited";
+  $("unlimited").disabled = !onHub && !!g.dailyOnly;
   $("archBar").hidden = mode !== "archive" || onHub;
   if (mode === "archive") $("archText").textContent = `Archive · #${dailyNumber(game, archiveDay)} · ${niceDay(archiveDay)}`;
 }
@@ -10227,9 +10206,13 @@ function changeOption(key, value) {
 $("hardMode").addEventListener("change", e => changeOption("hard", e.target.checked));
 
 function setGame(g) {
+  const leavingDailyOnly = !!G[game].dailyOnly;
   if (g !== game) globalThis.SweaterAnalytics?.leave();
   if (g !== game) leaveGame(game);
   game = g;
+  if (G[g].dailyOnly) mode = "daily";
+  else if (leavingDailyOnly) mode = store.get("sweater-mode") === "unlimited" ? "unlimited" : "daily";
+  document.body.classList.toggle("daily-only", !!G[g].dailyOnly);
   store.set("sweater-game", g);
   new Set(GAME_IDS.map(id => G[id].view)).forEach(v => { $(v).hidden = v !== G[g].view; });
   document.querySelectorAll(".nodata").forEach(n => n.hidden = true);
@@ -10248,12 +10231,14 @@ function setGame(g) {
 // ---- archive picker ----
 let archiveGame = null;
 function openArchive() {
+  if (G[game].dailyOnly) return;
   renderArchive(game);
   openModal("archiveModal");
 }
 function renderArchive(game) {
+  if (G[game].dailyOnly) return;
   archiveGame = game;
-  $("arGameSel").innerHTML = gameOptions(game);
+  $("arGameSel").innerHTML = gameOptions(game, true);
   const g = G[game], days = archiveDays(game);
   const status = d => {
     const h = historyGet(game, d);
@@ -10682,13 +10667,13 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) tick
 
 // ======================= switches =======================
 $("unlimited").addEventListener("change", e => {
+  if (!onHub && G[game].dailyOnly) { e.target.checked = false; return loadDaily(); }
   if (game === "goalie" || game === "overtime") leaveGame(game);
   mode = e.target.checked ? "unlimited" : "daily";
   store.set("sweater-mode", mode);
   if (mode === "daily") loadDaily(); else loadUnlimited(true);
 });
 $("again").onclick = () => {
-  if (game === "whoscored") G.whoscored.advance = true;
   return mode === "archive" ? openArchive() : loadUnlimited(true);
 };
 
@@ -11457,6 +11442,7 @@ function showHub(push = true) {
   if (typeof teamMiniCleanup === "function") teamMiniCleanup();
   globalThis.SweaterAnalytics?.hub?.();
   const returningToHub = !onHub;
+  if (G[game].dailyOnly) mode = store.get("sweater-mode") === "unlimited" ? "unlimited" : "daily";
   leaveGame(game);
   closeParty();
   onHub = true;
@@ -11533,9 +11519,9 @@ $("backHub").onclick = () => showHub();
 $("homeLink").onclick = e => { e.preventDefault(); showHub(); };
 
 // game pickers inside the stats, leaderboard and archive windows
-function gameOptions(selected) {
+function gameOptions(selected, archiveOnly = false) {
   const sections = [...HUB, { title: "NHL EDGE", games: EDGE_GAMES.filter(x => !x.maintenance).map(x => [x.id]) }];
-  return sections.map(sec => `<optgroup label="${sec.title}">${sec.games.map(([id]) => id === "hl"
+  return sections.map(sec => `<optgroup label="${sec.title}">${sec.games.filter(([id]) => !archiveOnly || !G[id]?.dailyOnly).map(([id]) => id === "hl"
     ? HL_IDS.map(h => `<option value="${h}"${h === selected ? " selected" : ""}>Higher or Lower · ${HL_STATS[G[h].stat].name}</option>`).join("")
     : `<option value="${id}"${id === selected ? " selected" : ""}>${esc(G[id].title)}</option>`).join("")}</optgroup>`).join("");
 }
@@ -11795,7 +11781,7 @@ const HELP = {
     <p>Before your first guess, choose whether his oldest or newest seasons appear first. After 4 misses you'll see his current team.</p>`,
   journey: `<p>Name the player from the teams he's played for, in order, with seasons and games. 6 tries.</p>
     <p>Hints appear after 2, 4 and 5 misses: position, birth country, then sweater number.</p>`,
-  whoscored: `<p>Watch a short goal with the scorer rendered as a black silhouette. Name the player in 6 guesses using the search box. Replays and 0.5× slow motion are unlimited.</p><p>After 2 misses you learn their handedness; after 4, their birth country. At the end, switch between the silhouette and the original clip.</p><p>Daily gives everyone the same goal. Unlimited cycles through the clip library without repeating a scorer until the rotation is complete, and saves your current goal when you refresh.</p>`,
+  whoscored: `<p>One goal per day, with the same challenge for everyone. A new goal unlocks at midnight Eastern. Name the silhouetted scorer in 6 guesses using the search box. Your progress and completed result are saved for the day.</p><p>Replays of today's clip and 0.5× slow motion are unlimited. After 2 misses you learn their handedness; after 4, their birth country. At the end, switch between the silhouette and the original clip.</p>`,
   blur: `<p>Name the player from a blurry photo. Every miss sharpens it. 6 tries, with hints after 3 and 5 misses.</p>`,
   team: `<p>You see a player and one season of his stats. Pick the team he played for that season. 5 tries.</p>
     <p>Yellow means the right team is in the same division.</p>`,

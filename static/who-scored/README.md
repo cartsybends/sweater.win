@@ -1,6 +1,6 @@
 # Who Scored? clip library
 
-Thirty-nine distinct scorers are available in this mode. Each round uses one camera angle,
+Seventy-nine distinct scorers supply the daily goal library. Each round uses one camera angle,
 a solid black matte on the scorer, a matching original reveal, a masked poster,
 and no audio. Score graphics and on-ice player-name tickers are removed where present.
 `sources.json` records the original NHL.com highlight, source-file checksum and edit timing.
@@ -26,7 +26,10 @@ To add a scorer:
    before publishing.
 
 The builder validates and copies every referenced asset. Daily assignments are persisted
-in `schedule.json`, with a no-repeat window based on the library size. Unlimited uses a
-browser-local shuffle bag and saves its current goal, guesses and remaining rotation.
-Adding players expands the pool without rewriting past or locked daily assignments.
+in `schedule.json`, with a no-repeat window based on the library size. Adding players
+expands the pool without rewriting past or locked daily assignments.
+Who Scored offers one goal per day, shared by everyone, with a new goal at
+midnight Eastern. Refreshes restore today's progress or completed result.
+There are no Unlimited or archive rounds. Replays and slow motion of today's
+clip remain unlimited, and its original becomes available after the answer.
 NHL.com source links appear only after the answer is revealed.

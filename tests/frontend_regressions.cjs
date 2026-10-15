@@ -112,13 +112,16 @@ function runtime(extra = {}) {
     const r = runtime({esc: String, HL_STATS: {points: {name: 'Points'}, goals: {name: 'Goals'}}});
     r.run(part('const HUB = [', '/* Short, repeatable labels'));
     r.run('var G=Object.fromEntries(HUB.flatMap(s=>s.games.filter(([id])=>id!=="hl").map(([id])=>[id,{title:id}])).concat(EDGE_GAMES.map(x=>[x.id,{title:x.title}]),HL_IDS.map((id,i)=>[id,{stat:i?"goals":"points"}])));');
-    r.run(part('function gameOptions(selected)', '$("hlStatSel").innerHTML'));
+    r.run(part('function gameOptions(', '$("hlStatSel").innerHTML'));
     for (const id of ['edgerush', 'edgespeed', 'edgeshot', 'edgebuild', 'classic', 'hl_goals']) {
       const html = r.run(`gameOptions(${JSON.stringify(id)})`);
       assert(html.includes(`value="${id}" selected`));
       assert.equal((html.match(/ selected/g) || []).length, 1);
       assert(html.includes('label="NHL EDGE"')); assert(!html.includes('value="edgemap"'));
     }
+    r.run('G.whoscored.dailyOnly=true');
+    assert(r.run('gameOptions("whoscored")').includes('value="whoscored" selected'));
+    assert(!r.run('gameOptions("classic",true)').includes('value="whoscored"'));
   });
 
   function partyRuntime(status = 503) {
