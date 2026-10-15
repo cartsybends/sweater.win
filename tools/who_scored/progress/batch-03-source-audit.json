@@ -386,22 +386,22 @@
       "id": "goal-138",
       "pid": 8479671,
       "player": "Mathieu Olivier",
-      "game_id": 2024020625,
-      "date": "2025-01-04",
-      "period": 3,
-      "time_in_period": "18:59",
+      "game_id": 2024020924,
+      "date": "2025-02-25",
+      "period": 1,
+      "time_in_period": "04:37",
       "team": "CBJ",
-      "source": "https://nhl.com/video/stl-cbj-olivier-scores-empty-net-goal-6366698167112",
-      "source_video_id": "6366698167112",
-      "official_event_id": 1161,
+      "source": "https://nhl.com/video/dal-cbj-olivier-scores-goal-against-jake-oettinger-6369320836112",
+      "source_video_id": "6369320836112",
+      "official_event_id": 151,
       "jersey": 24,
-      "source_sha256": "d698e0d4a14283fd2095f6c94581ae5d603f176e9b7c0a591d071e733034f713",
-      "media_title": "STL@CBJ: Olivier scores empty-net goal",
+      "source_sha256": "ebd58792e40b01b83d96becec06d8250486adeed3b16785ddb15e9c723920bc8",
+      "media_title": "DAL@CBJ: Olivier scores goal against Jake Oettinger",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 40.46
+      "duration": 42.248345
     },
     {
       "id": "goal-139",
@@ -427,7 +427,7 @@
     {
       "id": "goal-140",
       "pid": 8480840,
-      "player": "Oskar B\u00e4ck",
+      "player": "Oskar Bäck",
       "game_id": 2024020628,
       "date": "2025-01-04",
       "period": 2,
@@ -438,7 +438,7 @@
       "official_event_id": 760,
       "jersey": 10,
       "source_sha256": "9db76c0b6619a6403bbe4b878296625accad800c5d3ad5aaf157d219886fe892",
-      "media_title": "UTA@DAL: B\u00e4ck scores goal against Karel Vejmelka",
+      "media_title": "UTA@DAL: Bäck scores goal against Karel Vejmelka",
       "dimensions": [
         1280,
         720

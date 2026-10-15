@@ -1,0 +1,257 @@
+{
+  "id": "goal-133",
+  "pid": 8480893,
+  "player": "Kirill Marchenko",
+  "original": "/workspace/who-scored-expansion/originals/goal-133-6366697334112.mp4",
+  "source_sha256": "c36146279057490c6beb269a968591cd55dd0d7e4351036a69ed2608534f303c",
+  "start": 39.5,
+  "duration": 4.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        270,
+        0,
+        405,
+        140
+      ],
+      "points": [
+        [
+          333,
+          20
+        ],
+        [
+          302,
+          74
+        ],
+        [
+          354,
+          35
+        ],
+        [
+          319,
+          58
+        ],
+        [
+          295,
+          114
+        ],
+        [
+          382,
+          100
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        235,
+        70,
+        370,
+        240
+      ],
+      "points": [
+        [
+          300,
+          91
+        ],
+        [
+          301,
+          132
+        ],
+        [
+          339,
+          141
+        ],
+        [
+          333,
+          111
+        ],
+        [
+          303,
+          159
+        ],
+        [
+          250,
+          219
+        ],
+        [
+          337,
+          210
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        60,
+        85,
+        215,
+        275
+      ],
+      "points": [
+        [
+          151,
+          104
+        ],
+        [
+          147,
+          151
+        ],
+        [
+          175,
+          146
+        ],
+        [
+          148,
+          182
+        ],
+        [
+          93,
+          250
+        ],
+        [
+          183,
+          237
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 56,
+      "box": [
+        0,
+        70,
+        75,
+        240
+      ],
+      "points": [
+        [
+          25,
+          89
+        ],
+        [
+          25,
+          126
+        ],
+        [
+          48,
+          140
+        ],
+        [
+          29,
+          172
+        ],
+        [
+          61,
+          226
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 58,
+      "box": [
+        0,
+        120,
+        38,
+        240
+      ],
+      "points": [
+        [
+          2,
+          132
+        ],
+        [
+          2,
+          201
+        ],
+        [
+          12,
+          224
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 95,
+  "allow_empty": [
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97
+  ],
+  "tracking_crop_size": 384,
+  "identity_verification": "Official event and visible86 chest/sleeve jersey identify Kirill Marchenko. Continuous wide angle shows his left-circle shot, full goal and net/goalie reaction. He leaves the camera to the left after58, including final glove/calf/boot edge fragments; preserve Monahan23 in the central slot and Voronkov10 beside the goal after86 exits. No switch to either teammate."
+}

@@ -1,0 +1,256 @@
+{
+  "id": "goal-131",
+  "pid": 8481557,
+  "player": "Matt Boldy",
+  "original": "/workspace/who-scored-expansion/originals/goal-131-6366696483112.mp4",
+  "source_sha256": "d12703393a5b5e13c50da6a84eedda95f853eea19ff36ed97922923d0c84b3c6",
+  "start": 28.0,
+  "duration": 3.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        430,
+        150,
+        605,
+        430
+      ],
+      "points": [
+        [
+          520,
+          179
+        ],
+        [
+          496,
+          237
+        ],
+        [
+          535,
+          265
+        ],
+        [
+          570,
+          259
+        ],
+        [
+          480,
+          302
+        ],
+        [
+          466,
+          383
+        ],
+        [
+          526,
+          400
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        140,
+        145,
+        415,
+        397
+      ],
+      "points": [
+        [
+          350,
+          180
+        ],
+        [
+          306,
+          235
+        ],
+        [
+          344,
+          268
+        ],
+        [
+          380,
+          288
+        ],
+        [
+          287,
+          277
+        ],
+        [
+          170,
+          342
+        ],
+        [
+          306,
+          365
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        115,
+        175,
+        385,
+        480
+      ],
+      "points": [
+        [
+          257,
+          211
+        ],
+        [
+          244,
+          269
+        ],
+        [
+          318,
+          278
+        ],
+        [
+          350,
+          294
+        ],
+        [
+          244,
+          353
+        ],
+        [
+          157,
+          422
+        ],
+        [
+          318,
+          454
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        40,
+        20,
+        270,
+        350
+      ],
+      "points": [
+        [
+          148,
+          52
+        ],
+        [
+          156,
+          128
+        ],
+        [
+          66,
+          157
+        ],
+        [
+          247,
+          161
+        ],
+        [
+          186,
+          216
+        ],
+        [
+          204,
+          311
+        ],
+        [
+          238,
+          322
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        265,
+        45,
+        575,
+        355
+      ],
+      "points": [
+        [
+          359,
+          97
+        ],
+        [
+          393,
+          170
+        ],
+        [
+          300,
+          221
+        ],
+        [
+          459,
+          235
+        ],
+        [
+          532,
+          321
+        ],
+        [
+          415,
+          248
+        ],
+        [
+          415,
+          319
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 88,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official goal attribution and visible BOLDY12 jersey verify Matt Boldy. Continuous side replay shows the breakaway carry, shot, puck in goal and natural raised-arm celebration. Preserve Kochetkov52 and the Hurricanes skater crossing in front at the end; Boldy12 remains visible and must stay fully covered, including his raised arm and both boots."
+}

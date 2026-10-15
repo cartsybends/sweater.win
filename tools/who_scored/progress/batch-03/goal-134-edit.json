@@ -1,0 +1,251 @@
+{
+  "id": "goal-134",
+  "pid": 8479385,
+  "player": "Jordan Kyrou",
+  "original": "/workspace/who-scored-expansion/originals/goal-134-6366697338112.mp4",
+  "source_sha256": "01e23a9628dd4d04bf82ac25c90be8f40f708e849aef66a43cf66a0eb1393197",
+  "start": 27.2,
+  "duration": 4.0,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        0,
+        205,
+        45,
+        390
+      ],
+      "points": [
+        [
+          2,
+          223
+        ],
+        [
+          10,
+          256
+        ],
+        [
+          18,
+          289
+        ],
+        [
+          2,
+          302
+        ],
+        [
+          4,
+          369
+        ],
+        [
+          80,
+          285
+        ],
+        [
+          100,
+          285
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        0,
+        210,
+        100,
+        385
+      ],
+      "points": [
+        [
+          60,
+          226
+        ],
+        [
+          38,
+          268
+        ],
+        [
+          35,
+          304
+        ],
+        [
+          80,
+          300
+        ],
+        [
+          40,
+          361
+        ],
+        [
+          10,
+          271
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        210,
+        210,
+        300,
+        380
+      ],
+      "points": [
+        [
+          265,
+          228
+        ],
+        [
+          251,
+          267
+        ],
+        [
+          225,
+          253
+        ],
+        [
+          232,
+          264
+        ],
+        [
+          248,
+          300
+        ],
+        [
+          231,
+          355
+        ],
+        [
+          265,
+          355
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        395,
+        190,
+        485,
+        380
+      ],
+      "points": [
+        [
+          440,
+          215
+        ],
+        [
+          445,
+          261
+        ],
+        [
+          426,
+          255
+        ],
+        [
+          447,
+          293
+        ],
+        [
+          438,
+          355
+        ],
+        [
+          462,
+          348
+        ],
+        [
+          415,
+          333
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 95,
+      "box": [
+        375,
+        185,
+        485,
+        380
+      ],
+      "points": [
+        [
+          429,
+          219
+        ],
+        [
+          433,
+          263
+        ],
+        [
+          416,
+          244
+        ],
+        [
+          428,
+          299
+        ],
+        [
+          416,
+          356
+        ],
+        [
+          445,
+          359
+        ],
+        [
+          479,
+          252
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 93,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer and visible KYROU25 jersey verify Jordan Kyrou. Continuous wide ice-level replay shows his slot receive, shot, complete goal/net reaction and celebration. He begins partially offscreen on the left, becomes fully visible and stays in view. Preserve goalie90, Columbus92 and nearby skaters, especially the defender crossing behind his legs at72. This wide angle includes the net that the tighter alternate shot angle omitted."
+}
