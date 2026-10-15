@@ -1,0 +1,200 @@
+{
+  "id": "goal-138",
+  "pid": 8479671,
+  "player": "Mathieu Olivier",
+  "original": "/workspace/who-scored-expansion/originals/goal-138-6369320836112.mp4",
+  "source_sha256": "ebd58792e40b01b83d96becec06d8250486adeed3b16785ddb15e9c723920bc8",
+  "start": 39.05,
+  "duration": 2.65,
+  "anchors": [
+    {
+      "frame": 8,
+      "box": [
+        0,
+        330,
+        30,
+        390
+      ],
+      "points": [
+        [
+          7,
+          351
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 16,
+      "box": [
+        105,
+        235,
+        230,
+        425
+      ],
+      "points": [
+        [
+          189,
+          263
+        ],
+        [
+          160,
+          299
+        ],
+        [
+          202,
+          337
+        ],
+        [
+          173,
+          354
+        ],
+        [
+          153,
+          390
+        ],
+        [
+          169,
+          414
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 32,
+      "box": [
+        510,
+        175,
+        625,
+        400
+      ],
+      "points": [
+        [
+          582,
+          215
+        ],
+        [
+          555,
+          249
+        ],
+        [
+          553,
+          295
+        ],
+        [
+          554,
+          368
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        885,
+        110,
+        960,
+        340
+      ],
+      "points": [
+        [
+          936,
+          139
+        ],
+        [
+          927,
+          187
+        ],
+        [
+          915,
+          235
+        ],
+        [
+          911,
+          251
+        ],
+        [
+          892,
+          310
+        ],
+        [
+          922,
+          284
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 54,
+      "box": [
+        925,
+        145,
+        960,
+        305
+      ],
+      "points": [
+        [
+          958,
+          159
+        ],
+        [
+          954,
+          272
+        ],
+        [
+          935,
+          233
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 61,
+  "tracking_crop_size": 512,
+  "allow_empty": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "identity_verification": "Official scorer Mathieu Olivier and visible Columbus24 jersey identify the slot carrier. Alternate official non-empty-net goal versus Oettinger. Continuous close ice-level carry, shot and goal with natural net reaction; he enters as a glove fragment8 and exits after54. Preserve Dallas20 during his carry, Dallas3 on exit, goalie29 and Columbus21 at the far post, who remains visible after24 exits."
+}

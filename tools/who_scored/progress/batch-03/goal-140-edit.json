@@ -1,0 +1,201 @@
+{
+  "id": "goal-140",
+  "pid": 8480840,
+  "player": "Oskar B\u00e4ck",
+  "original": "/workspace/who-scored-expansion/originals/goal-140-6366697556112.mp4",
+  "source_sha256": "9db76c0b6619a6403bbe4b878296625accad800c5d3ad5aaf157d219886fe892",
+  "start": 35.9,
+  "duration": 3.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        890,
+        325,
+        960,
+        500
+      ],
+      "points": [
+        [
+          938,
+          354
+        ],
+        [
+          951,
+          393
+        ],
+        [
+          914,
+          433
+        ],
+        [
+          952,
+          455
+        ],
+        [
+          907,
+          479
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        650,
+        120,
+        770,
+        280
+      ],
+      "points": [
+        [
+          684,
+          144
+        ],
+        [
+          716,
+          179
+        ],
+        [
+          744,
+          145
+        ],
+        [
+          685,
+          216
+        ],
+        [
+          713,
+          213
+        ],
+        [
+          674,
+          261
+        ],
+        [
+          730,
+          243
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        580,
+        5,
+        670,
+        180
+      ],
+      "points": [
+        [
+          615,
+          26
+        ],
+        [
+          626,
+          67
+        ],
+        [
+          610,
+          119
+        ],
+        [
+          657,
+          113
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        500,
+        105,
+        600,
+        325
+      ],
+      "points": [
+        [
+          533,
+          136
+        ],
+        [
+          533,
+          185
+        ],
+        [
+          519,
+          255
+        ],
+        [
+          559,
+          230
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        480,
+        165,
+        550,
+        340
+      ],
+      "points": [
+        [
+          519,
+          188
+        ],
+        [
+          519,
+          228
+        ],
+        [
+          516,
+          275
+        ],
+        [
+          496,
+          325
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 88,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer and visible BACK10 jersey identify Oskar Back at the crease. Continuous35.9-39.7 replay shows the incoming point shot, net-front finish, full goal and celebration. Mask10 starting partially offscreen right; preserve his green teammates and white Utah4/67, goalie70 and foreground net."
+}

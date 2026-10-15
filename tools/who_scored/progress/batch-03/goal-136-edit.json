@@ -1,0 +1,302 @@
+{
+  "id": "goal-136",
+  "pid": 8475764,
+  "player": "Cam Fowler",
+  "original": "/workspace/who-scored-expansion/originals/goal-136-6366697059112.mp4",
+  "source_sha256": "879700b16f001f13d5fc9abce6c6d0e8b7406f4db8df9731044897b97454014c",
+  "start": 27.2,
+  "duration": 4.0,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        855,
+        285,
+        960,
+        475
+      ],
+      "points": [
+        [
+          927,
+          308
+        ],
+        [
+          918,
+          341
+        ],
+        [
+          877,
+          336
+        ],
+        [
+          914,
+          385
+        ],
+        [
+          945,
+          437
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        780,
+        225,
+        915,
+        415
+      ],
+      "points": [
+        [
+          845,
+          247
+        ],
+        [
+          847,
+          284
+        ],
+        [
+          882,
+          309
+        ],
+        [
+          834,
+          330
+        ],
+        [
+          798,
+          389
+        ],
+        [
+          897,
+          398
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        775,
+        160,
+        935,
+        395
+      ],
+      "points": [
+        [
+          825,
+          215
+        ],
+        [
+          849,
+          261
+        ],
+        [
+          882,
+          250
+        ],
+        [
+          843,
+          300
+        ],
+        [
+          797,
+          372
+        ],
+        [
+          909,
+          364
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        795,
+        60,
+        960,
+        360
+      ],
+      "points": [
+        [
+          831,
+          139
+        ],
+        [
+          850,
+          194
+        ],
+        [
+          893,
+          193
+        ],
+        [
+          864,
+          250
+        ],
+        [
+          807,
+          319
+        ],
+        [
+          920,
+          313
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        875,
+        50,
+        960,
+        290
+      ],
+      "points": [
+        [
+          932,
+          107
+        ],
+        [
+          942,
+          157
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 75,
+      "box": [
+        940,
+        90,
+        960,
+        155
+      ],
+      "points": [
+        [
+          957,
+          136
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 93,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer and FOWLER17 jersey identify Cam Fowler in the right circle. Continuous receive and shot with the net, goal and reaction shown. His final visible jersey fragment leaves at frame75; no scorer visible76 onward. Preserve Holloway81 at the crease, Kyrou25 and Columbus goalie90, including the foreground skater crossing in front of Fowler during his exit.",
+  "allow_empty": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95
+  ],
+  "manual_fill_polygons": {
+    "75": [
+      [
+        [
+          959,
+          35
+        ],
+        [
+          953,
+          42
+        ],
+        [
+          950,
+          51
+        ],
+        [
+          948,
+          58
+        ],
+        [
+          953,
+          67
+        ],
+        [
+          959,
+          69
+        ]
+      ],
+      [
+        [
+          959,
+          68
+        ],
+        [
+          950,
+          75
+        ],
+        [
+          943,
+          90
+        ],
+        [
+          942,
+          112
+        ],
+        [
+          946,
+          127
+        ],
+        [
+          959,
+          133
+        ]
+      ]
+    ]
+  }
+}

@@ -1,0 +1,350 @@
+{
+  "id": "goal-137",
+  "pid": 8476892,
+  "player": "Colton Parayko",
+  "original": "/workspace/who-scored-expansion/originals/goal-137-6366697768112.mp4",
+  "source_sha256": "07268d5f06c89d6fedae59daa7d3a1d5024c1bec4238162e8bf84b0cade095c1",
+  "start": 38.3,
+  "duration": 3.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        820,
+        200,
+        950,
+        350
+      ],
+      "points": [
+        [
+          873,
+          241
+        ],
+        [
+          846,
+          267
+        ],
+        [
+          930,
+          275
+        ],
+        [
+          879,
+          268
+        ],
+        [
+          853,
+          331
+        ],
+        [
+          917,
+          333
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        610,
+        205,
+        685,
+        330
+      ],
+      "points": [
+        [
+          652,
+          227
+        ],
+        [
+          650,
+          256
+        ],
+        [
+          627,
+          309
+        ],
+        [
+          671,
+          303
+        ],
+        [
+          605,
+          183
+        ],
+        [
+          595,
+          209
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 32,
+      "box": [
+        605,
+        210,
+        690,
+        315
+      ],
+      "points": [
+        [
+          648,
+          239
+        ],
+        [
+          649,
+          265
+        ],
+        [
+          641,
+          310
+        ],
+        [
+          670,
+          293
+        ],
+        [
+          660,
+          181
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 40,
+      "box": [
+        660,
+        205,
+        735,
+        325
+      ],
+      "points": [
+        [
+          700,
+          230
+        ],
+        [
+          704,
+          249
+        ],
+        [
+          678,
+          306
+        ],
+        [
+          703,
+          174
+        ],
+        [
+          702,
+          204
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        695,
+        195,
+        765,
+        320
+      ],
+      "points": [
+        [
+          734,
+          225
+        ],
+        [
+          735,
+          255
+        ],
+        [
+          715,
+          301
+        ],
+        [
+          715,
+          235
+        ],
+        [
+          754,
+          178
+        ],
+        [
+          770,
+          210
+        ],
+        [
+          761,
+          289
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        725,
+        155,
+        805,
+        320
+      ],
+      "points": [
+        [
+          770,
+          196
+        ],
+        [
+          761,
+          220
+        ],
+        [
+          744,
+          233
+        ],
+        [
+          763,
+          260
+        ],
+        [
+          740,
+          300
+        ],
+        [
+          746,
+          287
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        740,
+        160,
+        835,
+        320
+      ],
+      "points": [
+        [
+          790,
+          188
+        ],
+        [
+          784,
+          217
+        ],
+        [
+          819,
+          237
+        ],
+        [
+          784,
+          252
+        ],
+        [
+          762,
+          301
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 85,
+      "box": [
+        808,
+        170,
+        925,
+        310
+      ],
+      "points": [
+        [
+          866,
+          192
+        ],
+        [
+          847,
+          220
+        ],
+        [
+          878,
+          208
+        ],
+        [
+          846,
+          262
+        ],
+        [
+          824,
+          300
+        ],
+        [
+          864,
+          300
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 83,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer and visible PARAYKO55 jersey identify the white Blues carrier. Continuous ice-level shot, full goal and celebration through41.9s. At23-59 scorer55 bends forward in the foreground; the upright white skater behind him is Saad20 and remains unmasked. Later55 turns and celebrates left of20. Preserve Columbus skaters and goalie."
+}

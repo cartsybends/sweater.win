@@ -1,0 +1,301 @@
+{
+  "id": "goal-135",
+  "pid": 8484166,
+  "player": "Adam Fantilli",
+  "original": "/workspace/who-scored-expansion/originals/goal-135-6366697746112.mp4",
+  "source_sha256": "c46dcc4f3143ae10796907752768726ce036331c4db2acf39c769b68dec0d4fe",
+  "start": 28.5,
+  "duration": 3.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        245,
+        120,
+        435,
+        375
+      ],
+      "points": [
+        [
+          410,
+          145
+        ],
+        [
+          375,
+          211
+        ],
+        [
+          325,
+          252
+        ],
+        [
+          275,
+          335
+        ],
+        [
+          320,
+          356
+        ],
+        [
+          308,
+          204
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        200,
+        125,
+        465,
+        395
+      ],
+      "points": [
+        [
+          408,
+          147
+        ],
+        [
+          365,
+          214
+        ],
+        [
+          450,
+          296
+        ],
+        [
+          336,
+          277
+        ],
+        [
+          220,
+          373
+        ],
+        [
+          380,
+          380
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 44,
+      "box": [
+        0,
+        145,
+        315,
+        395
+      ],
+      "points": [
+        [
+          270,
+          175
+        ],
+        [
+          272,
+          194
+        ],
+        [
+          200,
+          218
+        ],
+        [
+          135,
+          247
+        ],
+        [
+          40,
+          312
+        ],
+        [
+          218,
+          370
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        0,
+        130,
+        195,
+        395
+      ],
+      "points": [
+        [
+          158,
+          170
+        ],
+        [
+          100,
+          219
+        ],
+        [
+          149,
+          260
+        ],
+        [
+          80,
+          263
+        ],
+        [
+          22,
+          324
+        ],
+        [
+          125,
+          339
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        450,
+        105,
+        605,
+        400
+      ],
+      "points": [
+        [
+          489,
+          155
+        ],
+        [
+          505,
+          205
+        ],
+        [
+          547,
+          151
+        ],
+        [
+          487,
+          183
+        ],
+        [
+          507,
+          279
+        ],
+        [
+          550,
+          373
+        ],
+        [
+          576,
+          379
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        465,
+        105,
+        705,
+        420
+      ],
+      "points": [
+        [
+          547,
+          186
+        ],
+        [
+          583,
+          251
+        ],
+        [
+          590,
+          140
+        ],
+        [
+          494,
+          232
+        ],
+        [
+          612,
+          310
+        ],
+        [
+          673,
+          399
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 88,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Adam Fantilli and visible FANTILLI19 jersey identify the Columbus carrier. Continuous ice-level carry, shot, goal and raised-arm celebration, ending before the next camera transition. Preserve Saros and Nashville55, net posts and foreground players.",
+  "manual_fill_polygons": {
+    "0": [
+      [
+        [
+          303,
+          190
+        ],
+        [
+          320,
+          190
+        ],
+        [
+          320,
+          203
+        ],
+        [
+          303,
+          203
+        ]
+      ]
+    ]
+  }
+}

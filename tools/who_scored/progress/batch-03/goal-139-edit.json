@@ -1,0 +1,328 @@
+{
+  "id": "goal-139",
+  "pid": 8481711,
+  "player": "Matias Maccelli",
+  "original": "/workspace/who-scored-expansion/originals/goal-139-6366697530112.mp4",
+  "source_sha256": "6e2fc44770657860e31dccddbbad827c65bb95bef9003136902b3d2ce8396011",
+  "start": 33.15,
+  "duration": 3.2,
+  "anchors": [
+    {
+      "frame": 49,
+      "box": [
+        900,
+        130,
+        960,
+        280
+      ],
+      "points": [
+        [
+          954,
+          230
+        ],
+        [
+          955,
+          255
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 50,
+      "box": [
+        790,
+        135,
+        960,
+        285
+      ],
+      "points": [
+        [
+          875,
+          205
+        ],
+        [
+          872,
+          231
+        ],
+        [
+          825,
+          160
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 56,
+      "box": [
+        415,
+        215,
+        550,
+        335
+      ],
+      "points": [
+        [
+          484,
+          240
+        ],
+        [
+          501,
+          265
+        ],
+        [
+          434,
+          287
+        ],
+        [
+          511,
+          295
+        ],
+        [
+          501,
+          318
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 64,
+      "box": [
+        400,
+        200,
+        560,
+        365
+      ],
+      "points": [
+        [
+          465,
+          222
+        ],
+        [
+          500,
+          268
+        ],
+        [
+          435,
+          235
+        ],
+        [
+          507,
+          245
+        ],
+        [
+          491,
+          301
+        ],
+        [
+          417,
+          338
+        ],
+        [
+          540,
+          340
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        410,
+        125,
+        680,
+        460
+      ],
+      "points": [
+        [
+          570,
+          188
+        ],
+        [
+          548,
+          250
+        ],
+        [
+          463,
+          145
+        ],
+        [
+          652,
+          175
+        ],
+        [
+          520,
+          330
+        ],
+        [
+          440,
+          415
+        ],
+        [
+          520,
+          400
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 74,
+  "tracking_crop_size": 512,
+  "allow_empty": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48
+  ],
+  "identity_verification": "Official scorer and visible Maccelli63 jersey identify the Utah recipient on the right. The unmasked slot passer is another Utah player;63 enters on the right at49, receives, drops to a knee for the finish, then raises both arms after the complete goal. Preserve Oettinger29, green defenders, netting and foreground glass supports; end36.35s before the next crossfade.",
+  "manual_clear_polygons": {
+    "76": [
+      [
+        [
+          463,
+          259
+        ],
+        [
+          473,
+          259
+        ],
+        [
+          473,
+          291
+        ],
+        [
+          463,
+          291
+        ]
+      ],
+      [
+        [
+          484,
+          286
+        ],
+        [
+          489,
+          286
+        ],
+        [
+          489,
+          292
+        ],
+        [
+          484,
+          292
+        ]
+      ],
+      [
+        [
+          598,
+          201
+        ],
+        [
+          599,
+          201
+        ],
+        [
+          599,
+          202
+        ],
+        [
+          598,
+          202
+        ]
+      ],
+      [
+        [
+          606,
+          241
+        ],
+        [
+          607,
+          241
+        ],
+        [
+          607,
+          243
+        ],
+        [
+          606,
+          243
+        ]
+      ]
+    ]
+  }
+}
