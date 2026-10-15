@@ -1,0 +1,369 @@
+{
+  "id": "goal-123",
+  "pid": 8477504,
+  "player": "Josh Morrissey",
+  "original": "/workspace/who-scored-expansion/originals/goal-123-6366793439112.mp4",
+  "source_sha256": "7566667db420b7ccda68217ffcff5b6e9721c44c59fb83b234d861aa72cb47a2",
+  "start": 39.0,
+  "duration": 4.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        430,
+        145,
+        560,
+        332
+      ],
+      "points": [
+        [
+          457,
+          170
+        ],
+        [
+          482,
+          215
+        ],
+        [
+          456,
+          237
+        ],
+        [
+          490,
+          181
+        ],
+        [
+          490,
+          252
+        ],
+        [
+          489,
+          316
+        ],
+        [
+          539,
+          289
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        460,
+        225,
+        645,
+        383
+      ],
+      "points": [
+        [
+          488,
+          249
+        ],
+        [
+          521,
+          289
+        ],
+        [
+          482,
+          284
+        ],
+        [
+          542,
+          321
+        ],
+        [
+          515,
+          358
+        ],
+        [
+          625,
+          361
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        580,
+        340,
+        750,
+        505
+      ],
+      "points": [
+        [
+          610,
+          367
+        ],
+        [
+          648,
+          422
+        ],
+        [
+          620,
+          404
+        ],
+        [
+          687,
+          371
+        ],
+        [
+          655,
+          448
+        ],
+        [
+          650,
+          478
+        ],
+        [
+          730,
+          478
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        640,
+        400,
+        780,
+        540
+      ],
+      "points": [
+        [
+          680,
+          434
+        ],
+        [
+          718,
+          493
+        ],
+        [
+          665,
+          468
+        ],
+        [
+          740,
+          432
+        ],
+        [
+          736,
+          530
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 68,
+      "box": [
+        660,
+        440,
+        820,
+        540
+      ],
+      "points": [
+        [
+          715,
+          475
+        ],
+        [
+          755,
+          517
+        ],
+        [
+          777,
+          479
+        ],
+        [
+          724,
+          526
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        700,
+        490,
+        850,
+        540
+      ],
+      "points": [
+        [
+          765,
+          521
+        ],
+        [
+          805,
+          538
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        765,
+        520,
+        830,
+        540
+      ],
+      "points": [
+        [
+          791,
+          538
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 107,
+  "supersedes_draft_window": {
+    "start": 32.0,
+    "duration": 4.3
+  },
+  "tracking_crop_size": 512,
+  "allow_empty": [
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+  ],
+  "identity_verification": "Official goal and 44 jersey identify Josh Morrissey. Continuous frontal alternate replay shows his carry, wrist shot, goal and natural net/goalie reaction. Morrissey exits below frame after 77; preserve Iafallo9 and all net-front skaters, who are different players. Only the departing 44 is masked; no mask after verified full exit at78.",
+  "manual_fill_polygons": {
+    "77": [
+      [
+        [
+          791,
+          538
+        ],
+        [
+          806,
+          538
+        ],
+        [
+          809,
+          539
+        ],
+        [
+          788,
+          539
+        ]
+      ]
+    ]
+  },
+  "manual_clear_polygons": {
+    "72": [
+      [
+        [
+          700,
+          522
+        ],
+        [
+          735,
+          522
+        ],
+        [
+          735,
+          539
+        ],
+        [
+          700,
+          539
+        ]
+      ]
+    ],
+    "76": [
+      [
+        [
+          810,
+          515
+        ],
+        [
+          850,
+          515
+        ],
+        [
+          850,
+          539
+        ],
+        [
+          810,
+          539
+        ]
+      ]
+    ]
+  }
+}

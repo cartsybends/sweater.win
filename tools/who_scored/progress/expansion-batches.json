@@ -240,7 +240,13 @@
       ],
       "status": "visual_reviews_in_progress",
       "approved_clips": [
-        "goal-120"
+        "goal-120",
+        "goal-121",
+        "goal-122",
+        "goal-123",
+        "goal-124",
+        "goal-125",
+        "goal-126"
       ],
       "verified_source_originals": 40
     },

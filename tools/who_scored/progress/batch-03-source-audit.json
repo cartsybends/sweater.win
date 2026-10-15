@@ -71,22 +71,22 @@
       "id": "goal-123",
       "pid": 8477504,
       "player": "Josh Morrissey",
-      "game_id": 2024020621,
-      "date": "2025-01-04",
-      "period": 2,
-      "time_in_period": "05:48",
+      "game_id": 2024020647,
+      "date": "2025-01-07",
+      "period": 1,
+      "time_in_period": "06:46",
       "team": "WPG",
-      "source": "https://nhl.com/video/det-wpg-morrissey-scores-goal-against-alex-lyon-6366697021112",
-      "source_video_id": "6366697021112",
-      "official_event_id": 565,
+      "source": "https://nhl.com/video/nsh-wpg-morrissey-scores-goal-against-juuse-saros-6366793439112",
+      "source_video_id": "6366793439112",
+      "official_event_id": 142,
       "jersey": 44,
-      "source_sha256": "92be6963efb2af8b43b91c764aa456e9ad173953577825fb501275fe0a349bfb",
-      "media_title": "Morrissey fires in a one-timer",
+      "source_sha256": "7566667db420b7ccda68217ffcff5b6e9721c44c59fb83b234d861aa72cb47a2",
+      "media_title": "Morrissey picks the corner",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 43.826667
+      "duration": 47.728345
     },
     {
       "id": "goal-124",
@@ -427,7 +427,7 @@
     {
       "id": "goal-140",
       "pid": 8480840,
-      "player": "Oskar Bäck",
+      "player": "Oskar B\u00e4ck",
       "game_id": 2024020628,
       "date": "2025-01-04",
       "period": 2,
@@ -438,7 +438,7 @@
       "official_event_id": 760,
       "jersey": 10,
       "source_sha256": "9db76c0b6619a6403bbe4b878296625accad800c5d3ad5aaf157d219886fe892",
-      "media_title": "UTA@DAL: Bäck scores goal against Karel Vejmelka",
+      "media_title": "UTA@DAL: B\u00e4ck scores goal against Karel Vejmelka",
       "dimensions": [
         1280,
         720

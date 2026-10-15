@@ -1,0 +1,213 @@
+{
+  "id": "goal-124",
+  "pid": 8477940,
+  "player": "Nikolaj Ehlers",
+  "original": "/workspace/who-scored-expansion/originals/goal-124-6366698346112.mp4",
+  "source_sha256": "09312cc23e5a126f09142db9cd2daa275ff5c275e9f4f030a9c5dfc2abbb73d3",
+  "start": 43.1,
+  "duration": 3.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        385,
+        100,
+        525,
+        360
+      ],
+      "points": [
+        [
+          474,
+          125
+        ],
+        [
+          444,
+          191
+        ],
+        [
+          498,
+          218
+        ],
+        [
+          469,
+          244
+        ],
+        [
+          407,
+          337
+        ],
+        [
+          512,
+          337
+        ],
+        [
+          695,
+          397
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        460,
+        115,
+        620,
+        374
+      ],
+      "points": [
+        [
+          530,
+          145
+        ],
+        [
+          516,
+          204
+        ],
+        [
+          595,
+          223
+        ],
+        [
+          565,
+          243
+        ],
+        [
+          488,
+          337
+        ],
+        [
+          598,
+          350
+        ],
+        [
+          810,
+          397
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        610,
+        105,
+        765,
+        350
+      ],
+      "points": [
+        [
+          665,
+          130
+        ],
+        [
+          676,
+          188
+        ],
+        [
+          628,
+          247
+        ],
+        [
+          737,
+          197
+        ],
+        [
+          682,
+          318
+        ],
+        [
+          743,
+          332
+        ],
+        [
+          328,
+          241
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        505,
+        0,
+        675,
+        295
+      ],
+      "points": [
+        [
+          599,
+          47
+        ],
+        [
+          602,
+          125
+        ],
+        [
+          523,
+          47
+        ],
+        [
+          600,
+          177
+        ],
+        [
+          572,
+          220
+        ],
+        [
+          642,
+          245
+        ],
+        [
+          542,
+          252
+        ],
+        [
+          638,
+          191
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 74,
+  "tracking_crop_size": 384,
+  "identity_verification": "Jets27 is Nikolaj Ehlers, corroborated by official attribution, EHLERS27 jersey and helmet27. This continuous frontal replay includes his shot, full goal and raised-arm celebration. Jets62 at the crease and Detroit defenders and goalie remain visible."
+}

@@ -1,0 +1,294 @@
+{
+  "id": "goal-125",
+  "pid": 8476931,
+  "player": "Jake McCabe",
+  "original": "/workspace/who-scored-expansion/originals/goal-125-6366694944112.mp4",
+  "source_sha256": "19d45170379924d30c34098d30f3697efd81d47cf30e88ea7581fdf7652f55fb",
+  "start": 25.6,
+  "duration": 3.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        645,
+        255,
+        825,
+        435
+      ],
+      "points": [
+        [
+          690,
+          282
+        ],
+        [
+          707,
+          315
+        ],
+        [
+          670,
+          351
+        ],
+        [
+          727,
+          362
+        ],
+        [
+          720,
+          405
+        ],
+        [
+          797,
+          402
+        ],
+        [
+          670,
+          240
+        ],
+        [
+          661,
+          262
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        530,
+        290,
+        640,
+        443
+      ],
+      "points": [
+        [
+          568,
+          309
+        ],
+        [
+          579,
+          340
+        ],
+        [
+          558,
+          376
+        ],
+        [
+          606,
+          330
+        ],
+        [
+          554,
+          424
+        ],
+        [
+          622,
+          415
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        60,
+        245,
+        420,
+        470
+      ],
+      "points": [
+        [
+          126,
+          277
+        ],
+        [
+          152,
+          321
+        ],
+        [
+          220,
+          295
+        ],
+        [
+          196,
+          359
+        ],
+        [
+          190,
+          444
+        ],
+        [
+          127,
+          394
+        ],
+        [
+          317,
+          391
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 54,
+      "box": [
+        0,
+        250,
+        110,
+        480
+      ],
+      "points": [
+        [
+          10,
+          340
+        ],
+        [
+          10,
+          430
+        ],
+        [
+          88,
+          429
+        ],
+        [
+          130,
+          380
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 88,
+  "supersedes_draft_window": {
+    "start": 31.0,
+    "duration": 4.4
+  },
+  "tracking_crop_size": 512,
+  "allow_empty": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90
+  ],
+  "identity_verification": "Toronto22 is Jake McCabe, corroborated by official goal attribution and MCCABE22 jersey. Follow22 continuously from the carry through his wrist shot and follow-through; he exits the left edge after55. Toronto34 Matthews in the later close foreground remains visible, along with16 near the net and Bruins defenders.",
+  "manual_clear_polygons": {
+    "1": [
+      [
+        [
+          695,
+          234
+        ],
+        [
+          712,
+          234
+        ],
+        [
+          714,
+          261
+        ],
+        [
+          748,
+          269
+        ],
+        [
+          752,
+          281
+        ],
+        [
+          746,
+          288
+        ],
+        [
+          712,
+          285
+        ],
+        [
+          696,
+          278
+        ],
+        [
+          690,
+          260
+        ]
+      ],
+      [
+        [
+          728,
+          276
+        ],
+        [
+          743,
+          276
+        ],
+        [
+          743,
+          295
+        ],
+        [
+          728,
+          295
+        ]
+      ]
+    ]
+  }
+}
