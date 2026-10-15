@@ -1,0 +1,166 @@
+{
+  "id": "goal-107",
+  "pid": 8477498,
+  "player": "Darnell Nurse",
+  "original": "/workspace/who-scored-expansion/originals/goal-107-6366672035112.mp4",
+  "source_sha256": "ffe2527e9656721a84d4c2419ffe26f388cc618bf0d8efb646c4edfd43a99bbc",
+  "start": 42.3,
+  "duration": 2.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        665,
+        106,
+        749,
+        283
+      ],
+      "points": [
+        [
+          690,
+          124
+        ],
+        [
+          711,
+          173
+        ],
+        [
+          697,
+          226
+        ],
+        [
+          718,
+          266
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 16,
+      "box": [
+        788,
+        137,
+        960,
+        302
+      ],
+      "points": [
+        [
+          861,
+          152
+        ],
+        [
+          878,
+          192
+        ],
+        [
+          813,
+          192
+        ],
+        [
+          830,
+          279
+        ],
+        [
+          950,
+          286
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        932,
+        211,
+        960,
+        240
+      ],
+      "points": [
+        [
+          949,
+          225
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 25,
+      "box": [
+        951,
+        216,
+        960,
+        243
+      ],
+      "points": [
+        [
+          958,
+          232
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 49,
+  "supersedes_draft_window": {
+    "start": 41.85,
+    "duration": 3.65
+  },
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "identity_verification": "Official goal scorer Darnell Nurse, Edmonton 25. The source close view before this replay confirms 25; the chosen uninterrupted replay follows his right-circle wrist shot through the scoring finish and goalie reaction. Nurse exits at the right edge after frame 25, and the export ends before a later corner collision enters the replay. McDavid 97 at the crease remains visible.",
+  "export_frames": 52
+}

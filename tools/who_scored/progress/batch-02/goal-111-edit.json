@@ -1,0 +1,212 @@
+{
+  "id": "goal-111",
+  "pid": 8476925,
+  "player": "Colton Sissons",
+  "original": "/workspace/who-scored-expansion/originals/goal-111-6366676001112.mp4",
+  "source_sha256": "99e2db3ed87ac99ac4eeca598fad5743657dda62e5e67143b4a6bda7fe9bea7e",
+  "start": 31.5,
+  "duration": 3.85,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        540,
+        170,
+        610,
+        260
+      ],
+      "points": [
+        [
+          595,
+          179
+        ],
+        [
+          575,
+          199
+        ],
+        [
+          600,
+          224
+        ],
+        [
+          557,
+          236
+        ],
+        [
+          579,
+          252
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        588,
+        187,
+        674,
+        310
+      ],
+      "points": [
+        [
+          642,
+          197
+        ],
+        [
+          636,
+          230
+        ],
+        [
+          660,
+          263
+        ],
+        [
+          592,
+          294
+        ],
+        [
+          666,
+          302
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        710,
+        207,
+        805,
+        360
+      ],
+      "points": [
+        [
+          776,
+          213
+        ],
+        [
+          765,
+          248
+        ],
+        [
+          790,
+          297
+        ],
+        [
+          719,
+          350
+        ],
+        [
+          769,
+          344
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        790,
+        199,
+        900,
+        370
+      ],
+      "points": [
+        [
+          844,
+          210
+        ],
+        [
+          844,
+          244
+        ],
+        [
+          809,
+          240
+        ],
+        [
+          821,
+          344
+        ],
+        [
+          880,
+          355
+        ],
+        [
+          837,
+          285
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        950,
+        267,
+        960,
+        290
+      ],
+      "points": [
+        [
+          958,
+          281
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 89,
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91
+  ],
+  "identity_verification": "Official scorer Colton Sissons, Nashville 10. The source close portrait and the clear Sissons 10 back number during this continuous rush replay confirm identity. He carries into the right circle and beats the retreating defenders into the empty net. His final partial glove exits after frame 72; Nashville 14 later entering at the left is a teammate and remains unmasked."
+}

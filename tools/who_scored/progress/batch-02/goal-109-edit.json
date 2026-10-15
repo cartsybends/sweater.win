@@ -1,0 +1,180 @@
+{
+  "id": "goal-109",
+  "pid": 8481605,
+  "player": "Jackson LaCombe",
+  "original": "/workspace/who-scored-expansion/originals/goal-109-6366672945112.mp4",
+  "source_sha256": "1011cf6c8cdc64d25b75f174bbd81d2eea3f228622b550a8c02361e221f92ed6",
+  "start": 35.05,
+  "duration": 2.7,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        439,
+        455,
+        535,
+        540
+      ],
+      "points": [
+        [
+          480,
+          473
+        ],
+        [
+          480,
+          497
+        ],
+        [
+          523,
+          470
+        ],
+        [
+          477,
+          524
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        474,
+        333,
+        538,
+        422
+      ],
+      "points": [
+        [
+          489,
+          346
+        ],
+        [
+          503,
+          373
+        ],
+        [
+          518,
+          354
+        ],
+        [
+          486,
+          416
+        ],
+        [
+          533,
+          400
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        443,
+        389,
+        507,
+        485
+      ],
+      "points": [
+        [
+          464,
+          410
+        ],
+        [
+          476,
+          430
+        ],
+        [
+          496,
+          420
+        ],
+        [
+          498,
+          468
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        365,
+        510,
+        402,
+        540
+      ],
+      "points": [
+        [
+          380,
+          523
+        ],
+        [
+          390,
+          537
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 51,
+      "box": [
+        340,
+        534,
+        370,
+        540
+      ],
+      "points": [
+        [
+          354,
+          539
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 62,
+  "supersedes_draft_window": {
+    "start": 40.8,
+    "duration": 4.0
+  },
+  "tracking_crop_size": 256,
+  "allow_empty": [
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64
+  ],
+  "identity_verification": "Official goal scorer Jackson LaCombe, Anaheim 2. The large back number 2 is clear during his point-shot windup and release in the selected overhead replay. The continuous scene then follows the goal and reaction; LaCombe exits below frame after the last partial helmet at 51. The slot skaters and Edmonton goalie remain visible."
+}

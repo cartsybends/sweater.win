@@ -1,0 +1,264 @@
+{
+  "id": "goal-110",
+  "pid": 8474564,
+  "player": "Steven Stamkos",
+  "original": "/workspace/who-scored-expansion/originals/goal-110-6366674707112.mp4",
+  "source_sha256": "67f272a4d38ed256b18179b1d5f2a0d51009842fd9426da3571386d283f3e17e",
+  "start": 43.45,
+  "duration": 2.85,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        680,
+        170,
+        735,
+        238
+      ],
+      "points": [
+        [
+          704,
+          177
+        ],
+        [
+          717,
+          198
+        ],
+        [
+          696,
+          225
+        ],
+        [
+          705,
+          231
+        ],
+        [
+          687,
+          211
+        ],
+        [
+          720,
+          203
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        791,
+        143,
+        860,
+        225
+      ],
+      "points": [
+        [
+          829,
+          149
+        ],
+        [
+          830,
+          168
+        ],
+        [
+          808,
+          185
+        ],
+        [
+          843,
+          218
+        ],
+        [
+          799,
+          198
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        756,
+        140,
+        835,
+        225
+      ],
+      "points": [
+        [
+          807,
+          146
+        ],
+        [
+          809,
+          170
+        ],
+        [
+          764,
+          178
+        ],
+        [
+          815,
+          186
+        ],
+        [
+          784,
+          218
+        ],
+        [
+          799,
+          195
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        710,
+        105,
+        766,
+        230
+      ],
+      "points": [
+        [
+          743,
+          151
+        ],
+        [
+          743,
+          177
+        ],
+        [
+          744,
+          114
+        ],
+        [
+          758,
+          216
+        ],
+        [
+          748,
+          199
+        ],
+        [
+          718,
+          222
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 67,
+      "box": [
+        440,
+        207,
+        513,
+        302
+      ],
+      "points": [
+        [
+          475,
+          218
+        ],
+        [
+          478,
+          249
+        ],
+        [
+          451,
+          258
+        ],
+        [
+          470,
+          268
+        ],
+        [
+          490,
+          281
+        ],
+        [
+          483,
+          316
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 65,
+  "tracking_crop_size": 256,
+  "identity_verification": "Official goal scorer Steven Stamkos, Nashville 91. Source close views show STAMKOS 91. In this behind-net replay he receives the pass at the right circle, scores and raises his stick before skating toward the crease. Forsberg 9 at the left crease is a teammate and stays visible; Vancouver 43 crosses in front during the final reaction.",
+  "manual_fill_polygons": {
+    "65": [
+      [
+        [
+          500,
+          271
+        ],
+        [
+          509,
+          274
+        ],
+        [
+          511,
+          290
+        ],
+        [
+          510,
+          302
+        ],
+        [
+          506,
+          308
+        ],
+        [
+          498,
+          306
+        ],
+        [
+          497,
+          299
+        ],
+        [
+          497,
+          287
+        ]
+      ]
+    ]
+  }
+}

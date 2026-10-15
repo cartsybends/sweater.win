@@ -1,0 +1,243 @@
+{
+  "id": "goal-112",
+  "pid": 8475184,
+  "player": "Chris Kreider",
+  "original": "/workspace/who-scored-expansion/originals/goal-112-6366686517112.mp4",
+  "source_sha256": "f4a07b17e9cbdf7fc8a2a02ee3ec874dbcb8ff73fbab12ef71d04e38073d79a5",
+  "start": 46.15,
+  "duration": 3.65,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        165,
+        420,
+        320,
+        540
+      ],
+      "points": [
+        [
+          245,
+          439
+        ],
+        [
+          240,
+          480
+        ],
+        [
+          302,
+          520
+        ],
+        [
+          285,
+          518
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        335,
+        274,
+        480,
+        408
+      ],
+      "points": [
+        [
+          388,
+          286
+        ],
+        [
+          383,
+          319
+        ],
+        [
+          431,
+          328
+        ],
+        [
+          425,
+          396
+        ],
+        [
+          468,
+          397
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        75,
+        238,
+        215,
+        400
+      ],
+      "points": [
+        [
+          117,
+          252
+        ],
+        [
+          135,
+          290
+        ],
+        [
+          165,
+          316
+        ],
+        [
+          141,
+          389
+        ],
+        [
+          193,
+          389
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 55,
+      "box": [
+        0,
+        330,
+        35,
+        405
+      ],
+      "points": [
+        [
+          4,
+          343
+        ],
+        [
+          8,
+          371
+        ],
+        [
+          21,
+          396
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 85,
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87
+  ],
+  "identity_verification": "Official scorer Chris Kreider, Rangers 20. The selected replay clearly shows KREIDER 20 receiving the return feed and shooting from the slot, then skating out to the left. He remains the foreground/left player through his last visible leg and skate at 55 and exits fully at 56. Zibanejad 93 stays at the right crease throughout the follow-through and must remain visible; he is not the scorer silhouette.",
+  "manual_fill_polygons": {
+    "55": [
+      [
+        [
+          0,
+          318
+        ],
+        [
+          5,
+          320
+        ],
+        [
+          6,
+          338
+        ],
+        [
+          4,
+          355
+        ],
+        [
+          0,
+          355
+        ]
+      ],
+      [
+        [
+          0,
+          300
+        ],
+        [
+          6,
+          301
+        ],
+        [
+          9,
+          306
+        ],
+        [
+          10,
+          316
+        ],
+        [
+          7,
+          324
+        ],
+        [
+          2,
+          328
+        ],
+        [
+          0,
+          328
+        ]
+      ]
+    ]
+  }
+}

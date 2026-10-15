@@ -1,0 +1,269 @@
+{
+  "id": "goal-104",
+  "pid": 8482476,
+  "player": "Emil Heineman",
+  "original": "/workspace/who-scored-expansion/originals/goal-104-6366672526112.mp4",
+  "source_sha256": "78f6f92201a8a01b11f1e0bb0f28b5f174d4586285b2207a4cbf5b9c136e5741",
+  "start": 30.75,
+  "duration": 3.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        233,
+        235,
+        353,
+        366
+      ],
+      "points": [
+        [
+          280,
+          289
+        ],
+        [
+          270,
+          246
+        ],
+        [
+          245,
+          289
+        ],
+        [
+          310,
+          301
+        ],
+        [
+          298,
+          187
+        ],
+        [
+          453,
+          243
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 29,
+      "box": [
+        250,
+        210,
+        351,
+        386
+      ],
+      "points": [
+        [
+          310,
+          251
+        ],
+        [
+          311,
+          223
+        ],
+        [
+          327,
+          337
+        ],
+        [
+          327,
+          375
+        ],
+        [
+          265,
+          264
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        246,
+        216,
+        351,
+        382
+      ],
+      "points": [
+        [
+          323,
+          286
+        ],
+        [
+          322,
+          229
+        ],
+        [
+          263,
+          280
+        ],
+        [
+          337,
+          289
+        ],
+        [
+          372,
+          191
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 52,
+      "box": [
+        267,
+        183,
+        351,
+        365
+      ],
+      "points": [
+        [
+          299,
+          252
+        ],
+        [
+          296,
+          211
+        ],
+        [
+          316,
+          278
+        ],
+        [
+          320,
+          356
+        ],
+        [
+          336,
+          216
+        ],
+        [
+          334,
+          194
+        ],
+        [
+          324,
+          291
+        ],
+        [
+          336,
+          293
+        ],
+        [
+          349,
+          236
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 68,
+      "box": [
+        277,
+        172,
+        345,
+        337
+      ],
+      "points": [
+        [
+          303,
+          236
+        ],
+        [
+          302,
+          185
+        ],
+        [
+          300,
+          306
+        ],
+        [
+          292,
+          321
+        ],
+        [
+          329,
+          312
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        278,
+        177,
+        339,
+        347
+      ],
+      "points": [
+        [
+          308,
+          265
+        ],
+        [
+          305,
+          193
+        ],
+        [
+          302,
+          227
+        ],
+        [
+          367,
+          244
+        ],
+        [
+          356,
+          199
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 74,
+  "tracking_crop_size": 256,
+  "identity_verification": "Official highlight and scoring event identify Montreal 51 as Emil Heineman. Visible 51 shoots from the left crease and raises his glove after the goal; Chicago 17 remains visible when overlapping him at the end."
+}
