@@ -7,7 +7,7 @@ function runtime(storage=new Map()){
  const unavailable=new Set(),finished=new Set();
  const math=Object.create(Math);math.random=()=>random;
  const context=vm.createContext({Math:math,Date,Array,Set,Map,JSON,Number,String,console,HL_POOL:[1,2],HL_STATS:{points:{}},
-  dayKey:()=>day,mode:'unlimited',esc:String,openGame:id=>{opened=id;},
+  dayKey:()=>day,mode:'unlimited',esc:String,openGame:id=>{opened=id;},KEYS:{benchboss:{daily:'sweater-benchboss-daily'}},archiveGet:()=>null,
   hubStatus:id=>[finished.has(id)?'done':'',''],
   store:{get:key=>storage.has(key)?JSON.parse(storage.get(key)):null,set:(key,value)=>storage.set(key,JSON.stringify(value))},
  });
@@ -64,4 +64,10 @@ test('finished libraries open an unlimited round; empty libraries never open a b
 test('both challenge card variants expose the new action and accessible progress',()=>{
  const r=runtime();for(const locker of [false,true]){const html=r.run(`challengeCard({challenge:"daily",label:"Daily challenge",title:"Hat Trick",copy:"Finish three dailies.",count:4,action:"Pick me a random game",locker:${locker}})`);assert(html.includes('data-challenge="daily"'));assert(html.includes('Pick me a random game'));assert(html.includes('3 of 3 complete'));assert(!html.includes('data-open='));}
 });
-console.log(`${checks} challenge checks passed: random library/category draws, weekly persistence, progression, readiness, routing and accessibility.`);
+test('forfeited Bench Boss runs give no XP, badges, or daily/weekly challenge credit',()=>{
+ const r=runtime();r.history({'classic:2026-10-13':{w:true,n:1},'shoot:2026-10-13':{w:false,s:4},'benchboss:2026-10-13':{w:false,s:0,forfeit:true}});
+ assert.equal(r.run('xpFor({s:0,w:false,forfeit:true})'),0);assert.equal(r.run('dailyEntries(dayKey()).length'),2);assert.equal(r.run('progressSummary().entries.length'),2);assert.equal(r.run('achievementList().find(x=>x.id==="hat-trick").on'),false);assert.equal(r.run('completedThisWeek("benchboss")'),false);
+ r.history({'benchboss:2026-10-13':{w:false,s:0}});r.storage.set('sweater-benchboss-daily',JSON.stringify({date:'2026-10-13',guesses:['END']}));assert.equal(r.run('progressSummary().xp'),0,'Legacy reveals lose their accidental XP on reload');
+ r.history({'benchboss:2026-10-13':{w:true,s:10}});r.run('archiveGet = () => ({guesses:["END"]})');assert.equal(r.run('progressSummary().xp'),75,'An archive forfeit cannot erase a completed daily win');
+});
+console.log(`${checks} challenge checks passed: random library/category draws, weekly persistence, progression, forfeits, readiness, routing and accessibility.`);

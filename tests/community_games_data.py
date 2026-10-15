@@ -11,10 +11,11 @@ ROOT=Path(__file__).resolve().parents[1]
 def role(pos):
     return pos if pos in ('D','G') else 'F'
 
-def qualifies(p, clue):
+def qualifies(p, clue, awards):
     kind,value=clue['kind'],clue['value']
     return {'team':lambda:p[8].get(value,0)>0,'country':lambda:p[3]==value,
-            'position':lambda:role(p[2])==value,'games':lambda:p[4]>=value,'hall':lambda:p[5]}[kind]()
+            'position':lambda:role(p[2])==value,'games':lambda:p[4]>=value,'hall':lambda:p[5],
+            'trophy':lambda:value in awards.get(str(p[0]),[])}[kind]()
 
 
 class CommunityData(unittest.TestCase):
@@ -44,12 +45,12 @@ class CommunityData(unittest.TestCase):
             self.assertTrue(all(gp>0 for gp in p[8].values()))
 
     def test_all_grid_squares_have_nine_real_candidates(self):
-        self.assertEqual(len(self.data['grid']),120)
+        self.assertGreaterEqual(len(self.data['grid']),168)
         for puzzle in self.data['grid']:
             self.assertEqual(len(set(puzzle['rows'])),3)
             for team in puzzle['rows']:
                 for clue in puzzle['cols']:
-                    candidates=[p for p in self.players.values() if p[8].get(team,0)>0 and qualifies(p,clue)]
+                    candidates=[p for p in self.players.values() if p[8].get(team,0)>0 and qualifies(p,clue,self.data.get('awards',{}))]
                     self.assertGreaterEqual(len(candidates),9,(puzzle['id'],team,clue))
 
     def test_each_teammate_link_has_guaranteed_shared_games(self):
@@ -60,6 +61,29 @@ class CommunityData(unittest.TestCase):
             self.assertEqual(self.appearances[(team,year,b)],gb)
             self.assertGreaterEqual(ga+gb-84,5)
             self.assertTrue(0<ga<=84 and 0<gb<=84)
+
+    def test_trophy_membership_matches_verified_winner_snapshot(self):
+        path=ROOT/'tools/community_games/award_winners.json'
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),self.data['awards_sha256'])
+        source=json.loads(path.read_text());expected={}
+        self.assertGreaterEqual(source['cross_checked_existing_seasons'],432)
+        for title,year,pid,name in source['rows']:
+            self.assertIn(pid,self.players);self.assertTrue(1923<=year<=2025)
+            self.assertTrue(16<=year+1-self.players[pid][9]<=55,(year,name))
+            expected.setdefault(str(pid),set()).add(title)
+        self.assertEqual({pid:sorted(titles) for pid,titles in expected.items()},self.data['awards'])
+        self.assertEqual(sum(any(c['kind']=='trophy' for c in p['cols']) for p in self.data['grid']),48)
+        old_goalie=next(p for p in self.players.values() if p[1]=='Michel Larocque' and p[9]==1952)
+        newer_goalie=next(p for p in self.players.values() if p[1]=='Michel Larocque' and p[9]==1976)
+        self.assertIn('Vezina Trophy',self.data['awards'][str(old_goalie[0])])
+        self.assertNotIn('Vezina Trophy',self.data['awards'].get(str(newer_goalie[0]),[]))
+        self.assertIn('Vezina Trophy',self.data['awards']['8450138'],'Joint winners such as Gilles Villemure must qualify')
+
+    def test_original_puzzles_are_unchanged(self):
+        original=json.loads((ROOT/'tools/community_games/original_bank_hashes.json').read_text())
+        for mode in ('players','benchboss','teammatetrail','grid'):
+            row=original[mode];raw=json.dumps(self.data[mode][:row['count']],ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),row['sha256'])
 
     def test_all_trails_have_unique_pairs_and_valid_proof_paths(self):
         links={tuple(row[:2]) for row in self.data['links']};seen=set()
@@ -116,6 +140,17 @@ class CommunityData(unittest.TestCase):
             self.assertEqual(len({p['id'] for p in planned.values()}),len(planned))
             self.assertEqual(planned,app.plan_community_days(planned,bank,today,mode))
             with self.assertRaises(ValueError):app.plan_community_days(published,bank[1:],today,mode)
+
+    def test_rarity_snapshots_validate_sample_size_and_freeze_counts(self):
+        spec=importlib.util.spec_from_file_location('sweater_rarity',ROOT/'build_sweater.py')
+        app=importlib.util.module_from_spec(spec);spec.loader.exec_module(app)
+        t=self.data['grid'][0];key='teams:'+':'.join(sorted((t['rows'][0],t['cols'][0]['value'])))
+        counts={'8478403':99,'8475791':1};pop={'criteria':{key:{'total':100,'counts':counts}}}
+        snapshot=app.grid_rarity_snapshot(t,pop)
+        self.assertEqual(snapshot[0],{'total':100,'counts':counts})
+        counts['8478403']=1;self.assertEqual(snapshot[0]['counts']['8478403'],99)
+        self.assertIsNone(app.grid_rarity_snapshot(t,pop)[0])
+        self.assertTrue(all(row is None for row in app.grid_rarity_snapshot(t,{'criteria':{key:{'total':99,'counts':{'8478403':99}}}})))
 
 
 if __name__=='__main__':unittest.main()

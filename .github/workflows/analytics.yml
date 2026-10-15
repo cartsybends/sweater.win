@@ -5,6 +5,7 @@ on:
       - "backend/**"
       - "static/community-games/model.mjs"
       - "tests/community_games.mjs"
+      - "tests/grid_popularity.mjs"
       - "analytics/**"
       - "tests/analytics*"
       - "tests/helpers/analytics_runtime.mjs"
@@ -15,6 +16,7 @@ on:
       - "backend/**"
       - "static/community-games/model.mjs"
       - "tests/community_games.mjs"
+      - "tests/grid_popularity.mjs"
       - "analytics/**"
       - "tests/analytics*"
       - "tests/helpers/analytics_runtime.mjs"
@@ -33,6 +35,7 @@ jobs:
       - run: npm ci --prefix backend --no-audit --no-fund
       - run: node tests/analytics_backend.mjs
       - run: node tests/community_games.mjs
+      - run: node tests/grid_popularity.mjs
       - run: node tests/analytics_login.mjs
       - run: node tests/analytics_client.mjs
       - run: node tests/analytics_client_v2.mjs

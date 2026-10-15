@@ -1,6 +1,7 @@
-// Anonymous product analytics. No names, answers, player IDs, typed input, full URLs or error text.
+// Anonymous usage diagnostics contain no typed input or answer content. Grid
+// popularity separately submits verified public player IDs, respecting opt-out.
 (() => {
-  const noop={view(){},hub(){},context(){},beginRound(){},step(){},completeRound(){},leave(){},share(){},interaction(){},team(){}};
+  const noop={view(){},hub(){},context(){},beginRound(){},step(){},completeRound(){},gridAnswers(){},leave(){},share(){},interaction(){},team(){}};
   globalThis.SweaterAnalytics=noop;
   if(!API_ON||!['sweater.win','www.sweater.win'].includes(location.hostname)||navigator.globalPrivacyControl||navigator.doNotTrack==='1'||!globalThis.crypto?.randomUUID)return;
   const UUID=/^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i,storageKey='sweater-usage-session-v1',optoutKey='sweater-analytics-optout';
@@ -92,10 +93,17 @@
     const score=Number.isFinite(details.score)&&Math.abs(details.score)<=1000000?details.score:undefined;
     event('round_complete',{round:round.id,won:typeof won==='boolean'?won:null,step:index,elapsed_ms:Math.round(round.active_ms||0),...(score!==undefined?{score}:{})});
   }
+  function gridAnswers(puzzle,guesses,variant,day){
+    if(enabled!==true||!['daily','unlimited'].includes(variant))return;
+    if(navigator.globalPrivacyControl||navigator.doNotTrack==='1')return;
+    try{if(localStorage.getItem(optoutKey)==='1')return;}catch{}
+    const body={visitor:visitor.id,puzzle,guesses,variant,day};
+    fetch(API+'/api/grid/answers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),credentials:'omit',keepalive:true}).catch(()=>{});
+  }
   function leave(){engagement();exitRound();previous=current?.mode||previous;current=round=null;roundKey=null;}
   const interaction=(action,extra={})=>{const {mode:target,...fields}=extra;event('interaction',{action,...fields,...(target?{from_mode:target}:{})},current||{mode:'hub',variant:'hub'});};
   const safe=fn=>(...args)=>{try{return fn(...args);}catch{}};
-  globalThis.SweaterAnalytics=Object.fromEntries(Object.entries({view,hub:()=>view('hub','hub'),context,beginRound,step,completeRound,leave,share:mode=>event('share',{},mode?{mode,variant:current?.variant||'daily'}:current),interaction,team:team=>interaction('team_select',{team})}).map(([k,fn])=>[k,safe(fn)]));
+  globalThis.SweaterAnalytics=Object.fromEntries(Object.entries({view,hub:()=>view('hub','hub'),context,beginRound,step,completeRound,gridAnswers,leave,share:mode=>event('share',{},mode?{mode,variant:current?.variant||'daily'}:current),interaction,team:team=>interaction('team_select',{team})}).map(([k,fn])=>[k,safe(fn)]));
   for(const name of ['pointerdown','keydown','scroll','touchstart','pointermove'])document.addEventListener(name,()=>{tick();lastInteraction=performance.now();},{passive:true});
   let lcp,cls,windowShift=0,windowStart=0,windowEnd=0,performanceSent=false;
   try{if(globalThis.PerformanceObserver){
@@ -148,6 +156,8 @@
       if(local&&/^\/who-scored\/goal-\d{2,3}-(?:(?:masked|original)-v[1-9]\d*\.mp4|v[1-9]\d*\.jpg)$/.test(url.pathname)){
         details.resource=url.pathname.endsWith('.mp4')?'goal_video':'goal_poster';details.asset=url.pathname.split('/').pop();
       }else if(url.hostname==='assets.nhle.com')details.resource=/\/(mugs|headshots)\//.test(url.pathname)?'headshot':/\/logos\//.test(url.pathname)?'team_logo':details.resource;
+      else if(local&&/^\/team-logos\/[A-Z]{3}\.svg$/.test(url.pathname))details.resource='team_logo';
+      else if(local&&/^\/grid-flags\/(ca|us|se|fi)\.svg$/.test(url.pathname))details.resource='country_flag';
       else if(url.hostname==='flagcdn.com')details.resource='country_flag';
       else if(local&&url.pathname==='/sweater-icon.svg')details.resource='site_icon';
       if(tag==='link'&&target.rel==='manifest')details.resource='manifest';

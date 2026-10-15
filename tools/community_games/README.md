@@ -29,12 +29,43 @@ paths in this graph.
 
 Grid squares each have at least nine candidates, so eight distinct answers can
 never leave the final square without an unused valid player. Short-stint bonuses
-come from qualifying club GP, rather than invented answer-popularity figures.
+come from qualifying club GP while answer-popularity samples are still small.
+
+`award_winners.json` contains 749 historical winner records, cross-checked
+against all 432 records in the site's existing trophy history. The 48 appended
+Grid boards use Hart, Vezina, Calder, and Lady Byng clues. A winner can qualify
+for a team they played for at any point; they need not have won the trophy with
+that club. `expand_grid.py` appends new IDs and keeps earlier puzzles intact.
+Shared Vezina awards include every recipient, and same-name players are
+disambiguated by their careers rather than a name-only match.
+`original_bank_hashes.json` protects the originally published definitions and
+player snapshot in CI without relying on a full Git history checkout.
+
+Grid popularity is collected separately from usage diagnostics. It records only
+server-validated correct answers from finished daily/unlimited runs. Revealed
+solutions, wrong guesses, and archive replays are excluded. A keyed hash replaces
+the anonymous browser ID; one browser contributes at most one answer to each
+canonical intersection during the 365-day retention window. Requests have
+origin, size, and rate limits, and respect analytics opt-out, DNT, and GPC.
+
+An intersection needs 100 anonymous answers before popularity affects bonuses:
+at most 1% chosen earns +5, at most 5% +3, at most 10% +2, below 20% +1,
+and 20% or more +0. Correct answers always earn the base 10 points. Until then,
+the original short-stint bonuses apply. Upcoming daily references store their
+own immutable rarity snapshot; unlimited runs persist theirs in saved options.
+New samples affect future puzzles, rather than changing scores mid-game or in
+archives. The website build refreshes `grid_popularity.json` from the public
+aggregate endpoint and retains the previous snapshot during outages.
+
+The 32 local crests and four flags are unmodified vector source files. Their
+manifests include original URLs and SHA-256 checksums, verified during builds.
+CSS adjusts their painted dimensions rather than rasterizing scaled thumbnails.
 
 Run the checks from the repository root:
 
 ```sh
 node tests/community_games.mjs
+node tests/grid_popularity.mjs
 python -B tests/community_games_data.py
 ```
 

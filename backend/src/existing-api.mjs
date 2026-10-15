@@ -133,7 +133,7 @@ async function verifyPlayer(env, body) {
   if (row.secret_hash !== await sha256(body.secret)) throw httpError(403, "Not allowed");
 }
 
-async function loadSchedule(env) {
+export async function loadSchedule(env) {
   if (scheduleCache.data && Date.now() - scheduleCache.at < SCHEDULE_TTL_MS) return scheduleCache.data;
   const res = await fetch(env.SCHEDULE_URL, { cf: { cacheTtl: 300 } });
   if (!res.ok) throw httpError(503, "Couldn't load today's puzzles");
@@ -572,7 +572,7 @@ function scoreConnections(groups, guesses) {
 
 export function scoreGame(game, answer, guesses, schedule) {
   if (GAMES[game].custom === 'community') {
-    const data=schedule.community,target=data?.[game]?.find(p=>p.id===answer?.id);
+    const data=schedule.community,base=data?.[game]?.find(p=>p.id===answer?.id),target=base&&{...base,...(game==='grid'&&Array.isArray(answer.rarity)?{rarity:answer.rarity}:{})};
     if(!target)throw httpError(503,"Today's puzzle data is missing");
     try{return COMMUNITY_MODEL.result(game,target,guesses,data);}catch(e){throw httpError(400,e.message);}
   }

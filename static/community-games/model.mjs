@@ -4,7 +4,7 @@ export const COMMUNITY_MODEL = (() => {
   const group = pos => pos === 'G' ? 'G' : pos === 'D' ? 'D' : 'F';
   function index(data) {
     if (cache.has(data)) return cache.get(data);
-    const players = new Map(data.players.map(r => [r[0], {id:r[0],name:r[1],pos:r[2],nation:r[3],gp:r[4],hall:r[5],first:r[6],last:r[7],teams:r[8],birthYear:r[9]}]));
+    const players = new Map(data.players.map(r => [r[0], {id:r[0],name:r[1],pos:r[2],nation:r[3],gp:r[4],hall:r[5],first:r[6],last:r[7],teams:r[8],birthYear:r[9],awards:data.awards?.[r[0]]||[]} ]));
     const result = {players,links:null,neighbors:null,grids:new WeakMap()}; cache.set(data,result); return result;
   }
   function graph(data) {
@@ -23,6 +23,7 @@ export const COMMUNITY_MODEL = (() => {
     if(clue.kind==='position')return group(p.pos)===clue.value;
     if(clue.kind==='games')return p.gp>=clue.value;
     if(clue.kind==='hall')return p.hall;
+    if(clue.kind==='trophy')return p.awards.includes(clue.value);
     return false;
   }
   function candidates(target,data) {
@@ -30,7 +31,10 @@ export const COMMUNITY_MODEL = (() => {
     if(!idx.grids.has(target))idx.grids.set(target,target.rows.flatMap(team=>target.cols.map(clue=>[...idx.players.values()].filter(p=>p.teams[team]>0&&qualifies(p,clue)).map(p=>p.id))));
     return idx.grids.get(target);
   }
+  function criterion(target,cell){const team=target.rows[Math.floor(cell/3)],clue=target.cols[cell%3];return clue.kind==='team'?'teams:'+ [team,clue.value].sort().join(':'):`${team}:${clue.kind}:${clue.value}`;}
+  function raritySnapshot(target,popularity){return Array.from({length:9},(_,cell)=>{const row=popularity?.criteria?.[criterion(target,cell)];if(!row||!Number.isInteger(row.total)||row.total<100||!row.counts)return null;const counts=Object.fromEntries(Object.entries(row.counts).filter(([id,n])=>/^\d{7}$/.test(id)&&Number.isInteger(n)&&n>0&&n<=row.total));if(Object.values(counts).reduce((n,c)=>n+c,0)!==row.total)return null;return {total:row.total,counts};});}
   function bonus(target,cell,p) {
+    const rarity=target.rarity?.[cell];if(rarity&&rarity.total>=100){const n=rarity.counts[p.id]||0,total=rarity.total;return n*100<=total?5:n*20<=total?3:n*10<=total?2:n*5<total?1:0;}
     const clue=target.cols[cell%3],gp=p.teams[target.rows[Math.floor(cell/3)]]+(clue.kind==='team'?p.teams[clue.value]:0);
     return gp<=100?5:gp<=250?3:0;
   }
@@ -60,7 +64,7 @@ export const COMMUNITY_MODEL = (() => {
     if(!Array.isArray(ids)||new Set(ids).size!==ids.length)throw Error('Use each player once');
     for(const id of ids){const card=cards.get(id),p=idx.players.get(id);if(!card||!p)throw Error('Choose players from this market');counts[group(card[8])]++;cost+=card[1];points+=card[2];}
     if(counts.F>3||counts.D>2||counts.G>1)throw Error('Fill three forward, two defense, and one goalie slot');
-    if(cost>target.budget)throw Error('That lineup is over the credit budget');
+    if(cost>target.budget)throw Error('That lineup is over the draft budget');
     return {cost,points,counts,complete:ids.length===6};
   }
   function boss(target,guesses,data){
@@ -105,5 +109,5 @@ export const COMMUNITY_MODEL = (() => {
     if(!state.over)throw Error('Finish the game before submitting');
     return {won:state.won,tries:guesses.length,points:state.score};
   }
-  return {group,index,qualifies,candidates,bonus,grid,fillGrid,draft,boss,link,teammates,shortest,trail,result};
+  return {group,index,qualifies,candidates,criterion,raritySnapshot,bonus,grid,fillGrid,draft,boss,link,teammates,shortest,trail,result};
 })();

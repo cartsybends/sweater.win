@@ -1,0 +1,19 @@
+{
+  "commit": "571af5c2e02713177ae45c00e1f4b776eaaedc95",
+  "players": {
+    "count": 8280,
+    "sha256": "a7a5e20b946e9a089731bda9fcc703a6420c3e39b269fbf7a53420b11025f425"
+  },
+  "grid": {
+    "count": 120,
+    "sha256": "613a7c76ba5a79e71e0262bb49a63482b5695aa46e3245671fdf4b711abf2558"
+  },
+  "benchboss": {
+    "count": 120,
+    "sha256": "1bb30da946c538ad30fce9c77c36f86f0c1761c42c50455dbbb0a95c0267d706"
+  },
+  "teammatetrail": {
+    "count": 120,
+    "sha256": "30841d031800969b2b4818657dd765e5b263db95e5231a1d00d57b9565d1df93"
+  }
+}

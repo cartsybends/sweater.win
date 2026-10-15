@@ -19,6 +19,8 @@ on:
       - "static/community-games/**"
       - "tools/community_games/**"
       - "tests/community_games*"
+      - "tests/grid_popularity.mjs"
+      - "grid_popularity.json"
       - "tools/team_games/**"
       - "tests/team_games.cjs"
       - "tests/team_careers.py"
@@ -94,6 +96,7 @@ jobs:
       - name: Check Grid, Bench Boss, and Teammate Trail
         run: |
           node tests/community_games.mjs
+          node tests/grid_popularity.mjs
           python -B tests/community_games_data.py
 
       - name: Validate generated JavaScript
@@ -137,6 +140,7 @@ jobs:
 
           cache_files=(
             schedule.json
+            grid_popularity.json
             career_cache.json
             team_history_cache.json
             current_rosters.json

@@ -1,0 +1,26 @@
+[
+  {
+    "country": "ca",
+    "file": "ca.svg",
+    "source": "https://flagcdn.com/ca.svg",
+    "sha256": "3cd6c2b9fe12bc0617ef4374b570ad87920bae757a95b104384fc301352c6942"
+  },
+  {
+    "country": "us",
+    "file": "us.svg",
+    "source": "https://flagcdn.com/us.svg",
+    "sha256": "e1792c011daad918fdbd99a21f7f46fd71018ffd052af5a7d7faf9954d593e31"
+  },
+  {
+    "country": "se",
+    "file": "se.svg",
+    "source": "https://flagcdn.com/se.svg",
+    "sha256": "426348d99d9cace2df6eaa6d6766d5a5ac21bb65a504a4ed974486cf96156b8f"
+  },
+  {
+    "country": "fi",
+    "file": "fi.svg",
+    "source": "https://flagcdn.com/fi.svg",
+    "sha256": "5d1ab833fc8f13fd2474b99286d063f2bcd4332cf859063841788f908656aa14"
+  }
+]

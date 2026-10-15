@@ -82,6 +82,16 @@ storage can create a new visitor. Devices and browsers can obscure their categor
 Recent activity means signals received in the last two minutes, not an exact
 online headcount. Country is derived from Cloudflare's country field, not saved IPs.
 
+Sweater Grid's answer-popularity feature uses separate `/api/grid/answers` and
+`/api/grid/popularity` endpoints. Only valid, correctly filled squares from
+finished Daily or Unlimited runs contribute; revealed example solutions and
+Archive replays do not. It stores public NHL player IDs and canonical clues,
+with one keyed anonymous-browser vote per clue intersection, and removes votes
+after 365 days. Opt-out, Do Not Track, and Global Privacy Control apply. The
+public endpoint contains aggregate counts only, without browser identities.
+At least 100 answers are required before rarity changes bonuses, and daily
+puzzles and saved unlimited runs freeze their scoring snapshots.
+
 The Browser errors table groups the same issue by release and code location or
 asset, and lists affected sessions first. Start with recurring reports in the
 current release. Resource failures can come from a missing file, a failed decode,

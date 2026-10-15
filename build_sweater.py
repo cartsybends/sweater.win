@@ -3278,23 +3278,24 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div id="cgGridSearch"><p class="cg-prompt" id="cgGridPrompt"></p><div class="search"><input id="cgGridGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cgGridOpts" aria-label="Player for selected square" placeholder="Search for a player"><ul class="list" id="cgGridOpts" role="listbox" hidden></ul></div></div>
       <p class="cg-feedback" id="cgGridFeedback" role="status" aria-live="polite"></p>
       <div class="cg-actions"><button class="btn ghost" type="button" id="cgGridReveal">Reveal remaining squares</button></div>
-      <p class="cg-source">Team appearances through 2025–26. Franchise moves count as separate clubs. Career clues use NHL records from October 2026. Short-stint bonuses reward connections with fewer games played.</p>
+      <p class="cg-source" id="cgGridSource"></p>
     </div><div class="slot"></div><p class="nodata" hidden>Grid puzzles are temporarily unavailable.</p>
   </section>
 
   <section class="view community-view" id="view-benchboss" hidden>
     <div class="cg-stage">
-      <p class="cg-intro">Draft three forwards, two defensemen, and a goalie with 100 credits. Find the best value, then lock your lineup to reveal the season stats.</p>
-      <div class="cg-line"><b id="cgBossYear"></b><span><b id="cgBossBudget"></b><span id="cgBossRemaining"></span></span></div>
-      <div class="cg-budget" aria-hidden="true"><i id="cgBossBudgetBar"></i></div>
+      <header class="cg-season-header"><span class="cg-eyebrow">Build your lineup for</span><h2 id="cgBossYear"></h2><p>Every player is scored using this season’s NHL stats.</p></header>
+      <p class="cg-intro">Choose three forwards, two defensemen, and one goalie. Stay within your $100 draft budget, then lock your lineup.</p>
+      <div class="cg-budget-panel"><div class="cg-budget-copy"><span>Draft budget</span><b>$<span id="cgBossSpent">0</span><span class="cg-budget-cap"> / $100</span></b><span id="cgBossRemaining"></span></div><div class="cg-budget" id="cgBossBudget" role="progressbar" aria-label="Draft budget spent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="cgBossBudgetBar"></i></div><p class="cg-budget-status" id="cgBossBudgetStatus" role="status" aria-live="polite"></p></div>
       <div class="cg-lineup" id="cgBossLineup" aria-label="Your six-player lineup"></div>
       <div class="cg-position-tabs" role="group" aria-label="Market position"><button type="button" data-boss-position="F">Forwards</button><button type="button" data-boss-position="D">Defense</button><button type="button" data-boss-position="G">Goalies</button></div>
       <div class="cg-market" id="cgBossMarket" aria-label="Player market"></div>
       <p class="cg-feedback" id="cgBossFeedback" role="status" aria-live="polite"></p>
       <div class="cg-actions"><button class="btn" type="button" id="cgBossLock">Lock lineup</button><button class="btn ghost" type="button" id="cgBossReveal">Reveal best lineup</button></div>
-      <p class="cg-source">Skaters: 2 points per goal + 1 per assist. Goalies: 3 points per win. Full NHL regular-season totals, including trades. Credits are game currency.</p>
+      <p class="cg-source">Skaters: 2 points per goal + 1 per assist. Goalies: 3 points per win. Full NHL regular-season totals, including trades. Team badges show their club that season; photos may show a later jersey.</p>
       <div class="cg-optimal" id="cgBossOptimal" hidden></div>
     </div><div class="slot"></div><p class="nodata" hidden>Player markets are temporarily unavailable.</p>
+    <dialog class="cg-confirm" id="cgBossForfeit" aria-labelledby="cgBossForfeitTitle"><h2 id="cgBossForfeitTitle">Forfeit this lineup?</h2><p>Revealing the best lineup ends this run with <b>0 points and no XP</b>. It won’t count toward daily challenges.</p><div class="cg-actions"><button class="btn ghost" type="button" id="cgBossKeep">Keep drafting</button><button class="btn" type="button" id="cgBossConfirm">Forfeit &amp; reveal</button></div></dialog>
   </section>
 
   <section class="view community-view" id="view-teammatetrail" hidden>
@@ -6424,6 +6425,7 @@ window.addEventListener("pagehide",()=>{if(overtimeRun)endArcade("overtime",true
 
 // finish a running arcade game if the player leaves it
 function leaveGame(g) {
+  if (["benchboss", "teammatetrail"].includes(g)) cgCleanup();
   if (g === "whoscored") $("wsVideo").pause();
   if (g === "edgerush") edgeRushCancelAnimation();
   if (g === "overtime" && overtimeRun) endArcade("overtime",true);
@@ -9889,12 +9891,15 @@ const shiftDay = (key, days) => {
 };
 const historyEntries = () => Object.entries(store.get(HISTORY_KEY) || {}).map(([key, result]) => {
   const at = key.lastIndexOf(":");
-  return { game: key.slice(0, at), day: key.slice(at + 1), ...result };
+  const game = key.slice(0, at), day = key.slice(at + 1);
+  const saved = game === "benchboss" ? store.get(KEYS.benchboss.daily) : null;
+  const revealed = game === "benchboss" && result.s === 0 && !result.w && [saved?.date === day ? saved : null, archiveGet(game, day)].some(r => r?.guesses?.length === 1 && r.guesses[0] === "END");
+  return { game, day, ...result, ...(revealed ? { forfeit: true } : {}) };
 }).filter(x => x.game && /^\d{4}-\d{2}-\d{2}$/.test(x.day));
-const dailyEntries = day => historyEntries().filter(x => x.day === day);
-const xpFor = x => x.s != null ? 45 + Math.min(80, Math.round(Number(x.s) || 0) * 3) : (x.w ? 100 : 35);
+const dailyEntries = day => historyEntries().filter(x => x.day === day && !x.forfeit);
+const xpFor = x => x.forfeit ? 0 : x.s != null ? 45 + Math.min(80, Math.round(Number(x.s) || 0) * 3) : (x.w ? 100 : 35);
 function progressSummary() {
-  const entries = historyEntries();
+  const entries = historyEntries().filter(x => !x.forfeit);
   const xp = entries.reduce((total, x) => total + xpFor(x), 0);
   const wins = entries.filter(x => x.w).length;
   const days = [...new Set(entries.map(x => x.day))];
@@ -9913,7 +9918,7 @@ function weeklyChallengePools() {
 }
 function completedThisWeek(id, entries = historyEntries()) {
   const first = weeklyStart(), last = dayKey();
-  return entries.some(x => (id === "hl" ? x.game.startsWith("hl_") : x.game === id) && x.day >= first && x.day <= last);
+  return entries.some(x => !x.forfeit && (id === "hl" ? x.game.startsWith("hl_") : x.game === id) && x.day >= first && x.day <= last);
 }
 function activeWeeklyTheme() {
   const week = weeklyStart(), saved = store.get(WEEKLY_CHALLENGE_KEY), entries = historyEntries();
@@ -10022,6 +10027,7 @@ function startGame(t, restore = [], opts, analyticsNew = false) {
   if (game === "shoot") shootSettle(true);
   const st = S[game], g = G[game];
   Object.assign(st, { target: t, guesses: [], over: false, mode, opts: opts || prefOpts(game) });
+  if (g.prepareTarget) st.target = t = g.prepareTarget(t, st.opts, restore);
   globalThis.SweaterAnalytics?.context(game, mode, `${mode === "unlimited" ? "" : st.day}:${g.tid(t)}`, analyticsNew);
   hideBanner();
   $("resultRecap").hidden = true;
@@ -10066,6 +10072,7 @@ function doGuess(x, fresh = true) {
 
 function finish(won, fresh) {
   const st = S[game], g = G[game], p = g.player(st.target), n = st.guesses.length;
+  const forfeited = !!g.forfeited?.(st.target, st.guesses);
   st.over = true;
   $(g.view).querySelector(".slot").appendChild($("banner"));
   $("reveal").src = (p && p.headshot) || FALLBACK;
@@ -10085,12 +10092,12 @@ function finish(won, fresh) {
   tick();
   $("banner").style.display = "block";
   if (mode !== "unlimited" && ((mode === "daily" && fresh) || !historyGet(game, st.day))) {
-    historySet(game, st.day, isScored(game) ? { s: g.score(st.target, st.guesses), w: won } : { n, w: won });
+    historySet(game, st.day, { ...(isScored(game) ? { s: g.score(st.target, st.guesses), w: won } : { n, w: won }), ...(forfeited ? { forfeit: true } : {}) });
   }
   let unlocked = [];
   if (mode === "daily" && fresh) {
     recordResult(won);
-    unlocked = awardProgression();
+    if (!forfeited) unlocked = awardProgression();
   }
   renderResultRecap(unlocked);
   if (fresh) {
@@ -10328,7 +10335,16 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
       li.setAttribute("aria-selected", i === idx);
       li.innerHTML = `<span></span><small>${esc(metaFn(p))}</small>`;
       li.firstChild.textContent = p.name;
-      li.onmousedown = e => { e.preventDefault(); choose(p); };
+      let chosen = false, touchStart = null, touchMoved = false;
+      const select = () => { if (!chosen) { chosen = true; choose(p); } };
+      li.onpointerdown = e => { e.preventDefault(); touchMoved = false; };
+      li.onpointercancel = () => { touchStart = null; touchMoved = true; };
+      li.ontouchstart = e => { const t = e.changedTouches[0]; touchStart = { x: t.clientX, y: t.clientY }; touchMoved = false; };
+      li.ontouchmove = e => { const t = e.changedTouches[0]; if (touchStart && Math.hypot(t.clientX - touchStart.x, t.clientY - touchStart.y) >= 10) touchMoved = true; };
+      li.ontouchcancel = () => { touchStart = null; touchMoved = true; };
+      li.ontouchend = e => { if (e.cancelable) e.preventDefault(); if (!touchMoved) select(); touchStart = null; };
+      li.onmousedown = e => { e.preventDefault(); };
+      li.onclick = e => { e.preventDefault(); if (!touchMoved) select(); };
       ul.appendChild(li);
     });
     ul.hidden = found.length === 0;
@@ -10776,7 +10792,7 @@ const LB_RULES = {
   ...Object.fromEntries(Object.entries(HL_STATS).map(([s, i]) =>
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
-  grid: "Sweater Grid: 10 points per connection, plus a 3–5 point short-stint bonus. Nine squares, twelve guesses, one use per player.",
+  grid: "Sweater Grid: 10 points per connection, plus up to 5 bonus points for less popular answers when enough samples exist. Short-stint bonuses apply before then. Nine squares, twelve guesses, one use per player.",
   benchboss: "Bench Boss: up to 10 points based on your lineup's season score compared with the best legal lineup. A score of at least 90% is a win.",
   teammatetrail: "Teammate Trail: 10 points for each shortest route, or 6 with an extra link, Undo or a hint. Three trails, up to 30 points.",
   statline: "Stat Line: 8 points for 1 guess down to 1 for 8, plus 2 for every season still locked when you get it (up to +10).",
@@ -10954,7 +10970,7 @@ const HUB = [
     ["conn", "🧩", "Sort 16 players into 4 hidden groups."],
     ["grid", "🧩", "Nine squares. Find the players who connect teams and clues."],
     ["teammatetrail", "🧭", "Connect two players through real NHL teammates."],
-    ["benchboss", "📋", "Draft the best six-player lineup with 100 credits."],
+    ["benchboss", "📋", "Draft the best six-player lineup with a $100 budget."],
   ]},
   { title: "Arcade", copy: "Quick rounds, fast decisions and a little competition.", tone: "red", games: [
     ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
@@ -10977,7 +10993,7 @@ EDGE_GAMES.forEach(x => { CARD[x.id] = { icon: "📡", tone: "blue" }; });
 /* Short, repeatable labels make the game library scannable before a player
    has to read a description. They also power the shelf, Locker, and results. */
 const MODE_META = Object.freeze({
-  grid: {type:"Connections",time:"2–4 min",difficulty:"Medium",fact:"Each square accepts multiple players; short-stint connections earn extra points.",next:"teammatetrail"},
+  grid: {type:"Connections",time:"2–4 min",difficulty:"Medium",fact:"Each square accepts multiple players. Niche connections can earn bigger bonuses.",next:"teammatetrail"},
   benchboss: {type:"Lineup strategy",time:"2–4 min",difficulty:"Medium",fact:"Your lineup scores from a completed NHL season, and every market has a verified best lineup.",next:"roster"},
   teammatetrail: {type:"Teammates",time:"2–4 min",difficulty:"Medium",fact:"Every link is supported by overlapping NHL appearances, including trade seasons.",next:"grid"},
   classic:  { type: "Deduction", time: "3–5 min", difficulty: "Medium", fact: "Read the board: team, position, age and more all narrow the field.", next: "statline" },
@@ -11769,9 +11785,9 @@ function partyRender(message = "") {
 
 // ======================= help window =======================
 const HELP = {
-  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Each player can be used once; a wrong answer costs a guess.</p><p>Each correct connection earns 10 points. A short-stint bonus adds 5 points for up to 100 qualifying team games, or 3 for 101–250. Team connections count the combined games for both clubs. All squares have multiple valid answers. Revealing the grid ends the run.</p><p>Club appearances are frozen through 2025–26; predecessor franchises count separately. Country means birth country. Career games and Hall of Fame clues use the October 2026 NHL snapshot.</p>`,
-  benchboss: `<p>Build a lineup with three forwards, two defensemen, and one goalie using 100 game credits. Select a position tab to browse its market; tap a selected player or lineup slot to remove them.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Season statistics reveal when you lock the six-player lineup. Your result is scored out of 10 against the exact best legal lineup; at least 90% of that season score counts as a win. A reveal ends the round with zero points.</p><p>All markets use completed seasons from 2005–06 through 2024–25. Positions and totals belong to the displayed season, including all clubs after a trade. Credits are game currency.</p>`,
-  teammatetrail: `<p>Connect each starting player to the target through NHL teammates. Choose one of the offered players, or search more verified teammates of your current player. Reaching someone who also played with the target completes the trail.</p><p>There are three trails. A shortest route on your first attempt earns 10 points; an extra connecting player, Undo, or the first-link hint caps that trail at 6. A hint locks in the first connecting player. Reveal gives zero for that trail; use Next trail to continue.</p><p>Each offered link is backed by overlapping NHL regular-season appearances. Matching only a club and season is insufficient; trade-season links must have guaranteed overlap. The club and season are shown on each connection.</p>`,
+  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues require a career win, even if it happened on another team. Club appearances are frozen through 2025–26, with predecessor franchises separate. Revealing ends the run; revealed example answers never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
+  benchboss: `<p>Build a lineup for the season shown at the top, with three forwards, two defensemen, and one goalie within a $100 draft budget. Select a position tab to browse; tap a selected card or lineup slot to remove it. Team badges identify the player’s club that season, even when their photo shows a later jersey.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Statistics reveal when you lock all six slots. Your score is out of 10 against the best legal lineup; at least 90% of that season score is a win.</p><p>Revealing the best lineup forfeits the run with zero points and no XP or daily challenge progress. Daily and archive reveals require confirmation. Markets use completed seasons from 2005–06 through 2024–25, including all clubs after a trade. The draft budget is fictional.</p>`,
+  teammatetrail: `<p>Build a trail from Start to Finish through real NHL teammates. Drag a card by its grip into the highlighted stop, tap any offered card, or search other available teammates. The target joins automatically when your last connecting player was their teammate.</p><p>Each stop shows the club and season that connect it to the previous player. There are three trails. A shortest route on your first attempt earns 10 points; one extra teammate, Undo, or a first-link hint caps that trail at 6. Reveal gives zero for that trail; use Next trail to continue.</p><p>A hint locks the first teammate in place. Every offered link has verified overlapping NHL regular-season appearances, including trade seasons.</p>`,
   classic: `<p>Guess the player in 8 tries. Each guess shows how he compares on team, conference, division, position, shooting hand, age, birth country and number.</p>
     <p>Yellow on <b>team</b> means the answer used to play there. Yellow on <b>age</b> or <b>#</b> means within 2, and the arrow points toward the answer.</p>
     <p>Stuck? <b>Show silhouette</b>. <b>Hard mode</b> hides it and locks once you guess.</p>`,
@@ -13691,6 +13707,32 @@ def copy_trophy_images(out_dir, images):
         shutil.copy2(HERE / "static" / "trophies" / name, destination / name)
 
 
+def copy_community_logos(out_dir):
+    source = HERE / "static/community-games"
+    rows = json.loads((source / "logos.json").read_text())
+    if {r["team"] for r in rows} != set(TEAMS) or len(rows) != len(TEAMS):
+        raise ValueError("Community crests must cover all 32 NHL clubs")
+    destination = out_dir / "team-logos"
+    destination.mkdir(parents=True, exist_ok=True)
+    for r in rows:
+        if r["file"] != r["team"] + ".svg":
+            raise ValueError("Invalid community crest filename")
+        path = source / "logos" / r["file"]
+        if hashlib.sha256(path.read_bytes()).hexdigest() != r["sha256"]:
+            raise ValueError("A community crest differs from its official vector source")
+        shutil.copy2(path, destination / r["file"])
+    flags = json.loads((source / "flags.json").read_text())
+    if {r["country"] for r in flags} != {"ca", "us", "se", "fi"} or len(flags) != 4:
+        raise ValueError("Grid flags must cover its four birth-country clues")
+    destination = out_dir / "grid-flags"
+    destination.mkdir(parents=True, exist_ok=True)
+    for r in flags:
+        path = source / "flags" / r["file"]
+        if r["file"] != r["country"] + ".svg" or hashlib.sha256(path.read_bytes()).hexdigest() != r["sha256"]:
+            raise ValueError("Invalid Grid flag source")
+        shutil.copy2(path, destination / r["file"])
+
+
 def copy_goal_media(out_dir, clips):
     destination = out_dir / "who-scored"
     destination.mkdir(parents=True, exist_ok=True)
@@ -13754,7 +13796,40 @@ def goal_days_for_library(sched, clip_ids, today):
     return days
 
 
-def update_schedule(players, today, roster_players, goal_clips=None):
+def load_grid_popularity(api_url):
+    path = HERE / "grid_popularity.json"
+    try:
+        data = json.loads(path.read_text())
+    except (OSError, ValueError):
+        data = {"criteria": {}}
+    if api_url:
+        try:
+            fresh = get_json(api_url.rstrip("/") + "/api/grid/popularity")
+            if isinstance(fresh.get("criteria"), dict) and fresh.get("collecting") is True:
+                data = fresh
+        except Exception:
+            pass  # A collection outage must not change existing puzzle scoring.
+    path.write_text(json.dumps(data, separators=(",", ":")) + "\n")
+    return data
+
+
+def grid_rarity_snapshot(puzzle, popularity):
+    result = []
+    for cell in range(9):
+        team, clue = puzzle["rows"][cell // 3], puzzle["cols"][cell % 3]
+        value = str(clue["value"]).lower() if isinstance(clue["value"], bool) else str(clue["value"])
+        key = "teams:" + ":".join(sorted((team, value))) if clue["kind"] == "team" else f"{team}:{clue['kind']}:{value}"
+        row = popularity.get("criteria", {}).get(key)
+        if (not isinstance(row, dict) or not isinstance(row.get("total"), int) or row["total"] < 100
+                or not isinstance(row.get("counts"), dict)):
+            result.append(None)
+            continue
+        counts = {pid: n for pid, n in row["counts"].items() if re.fullmatch(r"\d{7}", pid) and isinstance(n, int) and 0 < n <= row["total"]}
+        result.append({"total": row["total"], "counts": counts} if sum(counts.values()) == row["total"] else None)
+    return result
+
+
+def update_schedule(players, today, roster_players, goal_clips=None, grid_popularity=None):
     """Keep a fixed day-by-day list of puzzles for each game. Past days and tomorrow never change."""
     try:
         sched = json.loads(SCHEDULE.read_text(encoding="utf-8"))
@@ -13865,6 +13940,19 @@ def update_schedule(players, today, roster_players, goal_clips=None):
     new["community"] = community
     for g in ("grid", "benchboss", "teammatetrail"):
         days = plan_community_days(sched.get(f"{g}_days", {}), community[g], today, g)
+        if g == "grid":
+            by_id = {p["id"]: p for p in community[g]}
+            # Introduce trophy boards into upcoming days, while preserving
+            # today's run, previous days, and all existing puzzle definitions.
+            if sched.get("grid_features", 1) < 2:
+                trophy_boards = [p for p in community[g] if any(c["kind"] == "trophy" for c in p["cols"])]
+                for i, key in enumerate(k for k in sorted(days) if k > today.isoformat()):
+                    if i % 3 == 0 and trophy_boards:
+                        days[key] = {"id": trophy_boards[(i // 3) % len(trophy_boards)]["id"]}
+            for key, ref in days.items():
+                if key > today.isoformat() and "rarity" not in ref:
+                    ref["rarity"] = grid_rarity_snapshot(by_id[ref["id"]], grid_popularity or {})
+            new["grid_features"] = 2
         new[f"{g}_days"] = days
         new[f"{g}_start"] = sched.get(f"{g}_start") or today.isoformat()
         result[g] = (new[f"{g}_start"], {k: v for k, v in days.items() if first <= k <= last})
@@ -14246,7 +14334,8 @@ def main():
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
     goal_clips = load_goal_clips()
-    games, extras, roster_extras = update_schedule(players, today, roster_players, goal_clips)
+    grid_popularity = load_grid_popularity(args.api_url)
+    games, extras, roster_extras = update_schedule(players, today, roster_players, goal_clips, grid_popularity)
     embedded = players + extras
     roster_embedded = list({p["id"]: p for p in roster_players + roster_extras}.values())
     for g, (start, window) in games.items():
@@ -14259,13 +14348,13 @@ def main():
     trophy_images = load_trophy_images()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json"])).hexdigest()[:12],
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_GAMES_CSS__*/": (HERE / "static" / "team-games" / "styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_GAMES__*/": (HERE / "static" / "team-games" / "games.js").read_text(encoding="utf-8"),
         "/*__COMMUNITY_MODEL__*/": (HERE / "static/community-games/model.mjs").read_text(encoding="utf-8").replace("export const COMMUNITY_MODEL", "const COMMUNITY_MODEL"),
-        "/*__COMMUNITY_GAMES__*/": (HERE / "static/community-games/games.js").read_text(encoding="utf-8").replace("/*__COMMUNITY_DATA__*/{}", esc(load_community_data())),
+        "/*__COMMUNITY_GAMES__*/": (HERE / "static/community-games/games.js").read_text(encoding="utf-8").replace("/*__COMMUNITY_DATA__*/{}", esc(load_community_data())).replace("/*__GRID_POPULARITY__*/{}", esc(grid_popularity)),
         "/*__COMMUNITY_GAMES_CSS__*/": (HERE / "static/community-games/styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_CAREERS__*/[]": esc(load_team_careers()),
         "<!--__SHOOTOUT_SCENE__-->": (HERE / "static" / "shootout" / "scene.svg").read_text(encoding="utf-8"),
@@ -14295,6 +14384,7 @@ def main():
     out.write_text(html, encoding="utf-8")
     copy_goal_media(out.parent, goal_clips)
     copy_trophy_images(out.parent, trophy_images)
+    copy_community_logos(out.parent)
     og = HERE / "sweater-trivia-preview.png"
     if og.exists() and out.parent != HERE:
         shutil.copy(og, out.parent / "sweater-trivia-preview.png")

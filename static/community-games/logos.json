@@ -1,0 +1,194 @@
+[
+  {
+    "team": "ANA",
+    "file": "ANA.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/ANA_light.svg",
+    "sha256": "a21be1c53858393a8b8b1e32fb602e797a2845e060b8afe33cece8c4c2b98b9c"
+  },
+  {
+    "team": "BOS",
+    "file": "BOS.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/BOS_light.svg",
+    "sha256": "80c05e3678d3a8d2b56d46d320a2877963935677c55ec9618e506cd20e15c7e4"
+  },
+  {
+    "team": "BUF",
+    "file": "BUF.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/BUF_light.svg",
+    "sha256": "a18563d8be078c5d353f699a922f3d70cbdced5f745c1e127e5cb1914eff26d5"
+  },
+  {
+    "team": "CAR",
+    "file": "CAR.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/CAR_light.svg",
+    "sha256": "4d1d152f939d73b9d3c756860dcab5fc0c04a70014999ea35bccc30189ad36a7"
+  },
+  {
+    "team": "CBJ",
+    "file": "CBJ.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/CBJ_light.svg",
+    "sha256": "3e9328f0bc9ff2e0a40aa1957746c1acf52ad84ecdf33b3d86966d3116a0c587"
+  },
+  {
+    "team": "CGY",
+    "file": "CGY.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/CGY_light.svg",
+    "sha256": "6c7d437480888d242ffff8d6f44cc82f824e0a610589b629c84b6d8617864cdb"
+  },
+  {
+    "team": "CHI",
+    "file": "CHI.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/CHI_light.svg",
+    "sha256": "004c62e1715baa972087061079c39288202bed6ff6e1229d01058c44282b14da"
+  },
+  {
+    "team": "COL",
+    "file": "COL.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/COL_light.svg",
+    "sha256": "cabc6c42f3f33a7810c0786dffcccb352c6814d83e483f745a7b07e2fe497550"
+  },
+  {
+    "team": "DAL",
+    "file": "DAL.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/DAL_light.svg",
+    "sha256": "bc35eb8219eed641b3ad3f219ba531bc15645e170cd087fd6d46378f6a2c8c7e"
+  },
+  {
+    "team": "DET",
+    "file": "DET.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/DET_light.svg",
+    "sha256": "df86a9617b9d0ee31e59e6abf7c9966c2285e3414c0cca65437ad7616f9aa6fb"
+  },
+  {
+    "team": "EDM",
+    "file": "EDM.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/EDM_light.svg",
+    "sha256": "655f783dbbda6588dc56bda566a5624a1cc76d2a348f87919c5e20e658c49ed8"
+  },
+  {
+    "team": "FLA",
+    "file": "FLA.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/FLA_light.svg",
+    "sha256": "39714a28508546a725f5545cae6442eee833d18dfbf7ace217fdc6b9f65620ae"
+  },
+  {
+    "team": "LAK",
+    "file": "LAK.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/LAK_light.svg",
+    "sha256": "8516b2daf79eba139ff08686a34d0ddedf907a284c1866f7b9d8a4a6057981b9"
+  },
+  {
+    "team": "MIN",
+    "file": "MIN.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/MIN_light.svg",
+    "sha256": "8dbf8805f61f5e204a810247ba03b7249ca7ea7c99ae5fa8fa1eed7b998edcbd"
+  },
+  {
+    "team": "MTL",
+    "file": "MTL.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/MTL_light.svg",
+    "sha256": "c2b4b2f292330455e72a61b212e5303fc8923d775e13e734e2da3106dc5a8d7c"
+  },
+  {
+    "team": "NJD",
+    "file": "NJD.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/NJD_light.svg",
+    "sha256": "1c92a9d394394eea75f10e41ea5e86357dc9d3eb473642335300cb74cfe6dfcd"
+  },
+  {
+    "team": "NSH",
+    "file": "NSH.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/NSH_light.svg",
+    "sha256": "658322599492f3c8642117518b4b34ff2fb6ea11dce04c1a97bfb2fff4f9e3ac"
+  },
+  {
+    "team": "NYI",
+    "file": "NYI.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/NYI_light.svg",
+    "sha256": "567fa7ec2c4764d07a98ce16bf005b9f91cb5ed46126d32fe28f5f0158d7582c"
+  },
+  {
+    "team": "NYR",
+    "file": "NYR.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/NYR_light.svg",
+    "sha256": "365fc8449f0fe659eeb330c5f219416b1d3fced3ce407b359a1d403d5752ec38"
+  },
+  {
+    "team": "OTT",
+    "file": "OTT.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/OTT_light.svg",
+    "sha256": "5ecf44459f3ac9da1532400a297bed585d923de85d2fba384d9d4ed352c188b7"
+  },
+  {
+    "team": "PHI",
+    "file": "PHI.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/PHI_light.svg",
+    "sha256": "d7b20decbf0abd1bd5c8370a8ebdc27bd227159781d03fb9134d61f48cc9c4c9"
+  },
+  {
+    "team": "PIT",
+    "file": "PIT.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/PIT_light.svg",
+    "sha256": "37364eb8353ece2739fa975e73cbff23573a10c4df6b9d8146efd7fc24920658"
+  },
+  {
+    "team": "SEA",
+    "file": "SEA.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/SEA_light.svg",
+    "sha256": "941ee0182c890a3bc0b8c4b71fe9ce98ef291d008280bfe4ed77b7715d6325d6"
+  },
+  {
+    "team": "SJS",
+    "file": "SJS.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/SJS_light.svg",
+    "sha256": "f4c34d5b4a461391a8d9443450f3c89257457e8ecc9dc1b9584093259ebe4302"
+  },
+  {
+    "team": "STL",
+    "file": "STL.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/STL_light.svg",
+    "sha256": "3a61c2a870cedab47508bc46b567f572e69cf8f2173aef13eee17c87bd07c44f"
+  },
+  {
+    "team": "TBL",
+    "file": "TBL.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/TBL_light.svg",
+    "sha256": "53a7a4b173cadfb1eb0d4aedd02a5d10761b05bdf08dc3528c7b01f9d1dbebf4"
+  },
+  {
+    "team": "TOR",
+    "file": "TOR.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/TOR_light.svg",
+    "sha256": "e8b95e832feac68796de8f3535bae6584663829a71d3f9554371cde49afb0d52"
+  },
+  {
+    "team": "UTA",
+    "file": "UTA.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/UTA_light.svg",
+    "sha256": "c3435090b06ed74d93c7ac9f8fe53c862eeb5cb8976a3125d06a84e2202bf527"
+  },
+  {
+    "team": "VAN",
+    "file": "VAN.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/VAN_light.svg",
+    "sha256": "457ecbe473be717dfea17ec870a19c4df35de3232ac4cb484106c30a33d67b3e"
+  },
+  {
+    "team": "VGK",
+    "file": "VGK.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/VGK_light.svg",
+    "sha256": "b02d15ccfa2510e7696a4d0533fc3f676c6e53ca2c7745e1a1a67fcbc4ff93cf"
+  },
+  {
+    "team": "WPG",
+    "file": "WPG.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/WPG_light.svg",
+    "sha256": "07f44caeba5bffba89c916f96ecba717a3c267fd0ec6bf0581019e69863f822c"
+  },
+  {
+    "team": "WSH",
+    "file": "WSH.svg",
+    "source": "https://assets.nhle.com/logos/nhl/svg/WSH_light.svg",
+    "sha256": "3da9c31ff8ddd0c5670c2bf787d4fec27159e0b975ad0f29a8bc6d02e351f322"
+  }
+]
