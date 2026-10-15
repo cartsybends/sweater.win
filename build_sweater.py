@@ -11785,7 +11785,7 @@ function partyRender(message = "") {
 
 // ======================= help window =======================
 const HELP = {
-  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues require a career win, even if it happened on another team. Club appearances are frozen through 2025–26, with predecessor franchises separate. Revealing ends the run; revealed example answers never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
+  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues, including Stanley Cup winner, require a career win as a player, even if it happened on another team. A 30+ goals clue requires at least 30 goals in one NHL regular season; traded players' goals count across all their teams that season. Club appearances, Cup wins, and goal seasons are frozen through 2025–26, with predecessor franchises separate. Trophy photos come from NHL Records.</p><p>Revealing ends the run. Muted cards show valid examples, since each square accepts multiple players. Revealed examples never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
   benchboss: `<p>Build a lineup for the season shown at the top, with three forwards, two defensemen, and one goalie within a $100 draft budget. Select a position tab to browse; tap a selected card or lineup slot to remove it. Team badges identify the player’s club that season, even when their photo shows a later jersey.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Statistics reveal when you lock all six slots. Your score is out of 10 against the best legal lineup; at least 90% of that season score is a win.</p><p>Revealing the best lineup forfeits the run with zero points and no XP or daily challenge progress. Daily and archive reveals require confirmation. Markets use completed seasons from 2005–06 through 2024–25, including all clubs after a trade. The draft budget is fictional.</p>`,
   teammatetrail: `<p>Build a trail from Start to Finish through real NHL teammates. Drag a card by its grip into the highlighted stop, tap any offered card, or search other available teammates. The target joins automatically when your last connecting player was their teammate.</p><p>Each stop shows the club and season that connect it to the previous player. There are three trails. A shortest route on your first attempt earns 10 points; one extra teammate, Undo, or a first-link hint caps that trail at 6. Reveal gives zero for that trail; use Next trail to continue.</p><p>A hint locks the first teammate in place. Every offered link has verified overlapping NHL regular-season appearances, including trade seasons.</p>`,
   classic: `<p>Guess the player in 8 tries. Each guess shows how he compares on team, conference, division, position, shooting hand, age, birth country and number.</p>
@@ -13688,15 +13688,18 @@ def plan_community_days(saved, bank, today, mode):
 
 
 def load_trophy_images():
-    """Use a verified local photo for every award in Trophy Case."""
+    """Use local NHL photos for Trophy Case and Grid's Stanley Cup clue."""
     root = HERE / "static" / "trophies"
     rows = json.loads((root / "images.json").read_text(encoding="utf-8"))
     images = {row["name"]: row["file"] for row in rows}
-    if len(images) != len(rows) or set(images) != set(TROPHY_CORE):
-        raise ValueError("Trophy photos must cover every Trophy Case award exactly once")
+    if len(images) != len(rows) or set(images) != set(TROPHY_CORE) | {"Stanley Cup"}:
+        raise ValueError("Trophy photos must cover every Trophy Case award and the Stanley Cup exactly once")
     for name in images.values():
         if Path(name).name != name or not name.endswith(".jpg") or not (root / name).is_file():
             raise ValueError(f"Missing or invalid trophy photo: {name}")
+    for row in rows:
+        if hashlib.sha256((root / row["file"]).read_bytes()).hexdigest() != row["sha256"]:
+            raise ValueError(f"Trophy photo differs from its recorded source: {row['name']}")
     return images
 
 
@@ -13942,17 +13945,17 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
         days = plan_community_days(sched.get(f"{g}_days", {}), community[g], today, g)
         if g == "grid":
             by_id = {p["id"]: p for p in community[g]}
-            # Introduce trophy boards into upcoming days, while preserving
+            # Introduce new clue boards into upcoming days, while preserving
             # today's run, previous days, and all existing puzzle definitions.
-            if sched.get("grid_features", 1) < 2:
-                trophy_boards = [p for p in community[g] if any(c["kind"] == "trophy" for c in p["cols"])]
+            if sched.get("grid_features", 1) < 3:
+                feature_boards = [p for p in community[g] if any(c["kind"] == "season_goals" or c == {"kind": "trophy", "value": "Stanley Cup"} for c in p["cols"])]
                 for i, key in enumerate(k for k in sorted(days) if k > today.isoformat()):
-                    if i % 3 == 0 and trophy_boards:
-                        days[key] = {"id": trophy_boards[(i // 3) % len(trophy_boards)]["id"]}
+                    if i % 3 == 0 and feature_boards:
+                        days[key] = {"id": feature_boards[(i // 3) % len(feature_boards)]["id"]}
             for key, ref in days.items():
                 if key > today.isoformat() and "rarity" not in ref:
                     ref["rarity"] = grid_rarity_snapshot(by_id[ref["id"]], grid_popularity or {})
-            new["grid_features"] = 2
+            new["grid_features"] = 3
         new[f"{g}_days"] = days
         new[f"{g}_start"] = sched.get(f"{g}_start") or today.isoformat()
         result[g] = (new[f"{g}_start"], {k: v for k, v in days.items() if first <= k <= last})

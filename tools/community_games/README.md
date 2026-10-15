@@ -41,6 +41,19 @@ disambiguated by their careers rather than a name-only match.
 `original_bank_hashes.json` protects the originally published definitions and
 player snapshot in CI without relying on a full Git history checkout.
 
+`grid_achievements.json` adds official NHL Stanley Cup winner records and
+complete player-season summaries from 1917–18 through 2025–26. Cup membership
+uses individual WINNER records, supplemented by the NHL's explicitly engraved
+player lists for recent seasons; sharing a roster with champions is insufficient.
+Player award responses independently cross-check recent champions and negative
+cases such as Roberto Luongo's executive wins. The 30-goal clue counts one NHL
+regular season across all clubs, including trades and predecessor franchises.
+Compact evidence rows and original response checksums are retained. Goal totals
+are independently compared with the 20 complete league-season snapshots.
+`expand_achievements.py --input-dir ...` appends 48 new IDs using these clues;
+each new square still has at least nine valid answers. All 168 earlier Grid
+definitions and the original player catalog remain protected and unchanged.
+
 Grid popularity is collected separately from usage diagnostics. It records only
 server-validated correct answers from finished daily/unlimited runs. Revealed
 solutions, wrong guesses, and archive replays are excluded. A keyed hash replaces

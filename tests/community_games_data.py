@@ -11,11 +11,12 @@ ROOT=Path(__file__).resolve().parents[1]
 def role(pos):
     return pos if pos in ('D','G') else 'F'
 
-def qualifies(p, clue, awards):
+def qualifies(p, clue, data):
     kind,value=clue['kind'],clue['value']
     return {'team':lambda:p[8].get(value,0)>0,'country':lambda:p[3]==value,
             'position':lambda:role(p[2])==value,'games':lambda:p[4]>=value,'hall':lambda:p[5],
-            'trophy':lambda:value in awards.get(str(p[0]),[])}[kind]()
+            'trophy':lambda:p[0] in data['cup_winners'] if value=='Stanley Cup' else value in data.get('awards',{}).get(str(p[0]),[]),
+            'season_goals':lambda:data['season_goals'].get(str(p[0]),0)>=value}[kind]()
 
 
 class CommunityData(unittest.TestCase):
@@ -50,7 +51,7 @@ class CommunityData(unittest.TestCase):
             self.assertEqual(len(set(puzzle['rows'])),3)
             for team in puzzle['rows']:
                 for clue in puzzle['cols']:
-                    candidates=[p for p in self.players.values() if p[8].get(team,0)>0 and qualifies(p,clue,self.data.get('awards',{}))]
+                    candidates=[p for p in self.players.values() if p[8].get(team,0)>0 and qualifies(p,clue,self.data)]
                     self.assertGreaterEqual(len(candidates),9,(puzzle['id'],team,clue))
 
     def test_each_teammate_link_has_guaranteed_shared_games(self):
@@ -72,12 +73,46 @@ class CommunityData(unittest.TestCase):
             self.assertTrue(16<=year+1-self.players[pid][9]<=55,(year,name))
             expected.setdefault(str(pid),set()).add(title)
         self.assertEqual({pid:sorted(titles) for pid,titles in expected.items()},self.data['awards'])
-        self.assertEqual(sum(any(c['kind']=='trophy' for c in p['cols']) for p in self.data['grid']),48)
+        self.assertEqual(sum(any(c['kind']=='trophy' and c['value']!='Stanley Cup' for c in p['cols']) for p in self.data['grid']),48)
         old_goalie=next(p for p in self.players.values() if p[1]=='Michel Larocque' and p[9]==1952)
         newer_goalie=next(p for p in self.players.values() if p[1]=='Michel Larocque' and p[9]==1976)
         self.assertIn('Vezina Trophy',self.data['awards'][str(old_goalie[0])])
         self.assertNotIn('Vezina Trophy',self.data['awards'].get(str(newer_goalie[0]),[]))
         self.assertIn('Vezina Trophy',self.data['awards']['8450138'],'Joint winners such as Gilles Villemure must qualify')
+
+    def test_cup_and_single_season_goal_memberships_match_nhl_sources(self):
+        path=ROOT/'tools/community_games/grid_achievements.json'
+        source=json.loads(path.read_text())
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),self.data['achievements_sha256'])
+        self.assertEqual(source['through'],self.data['team_cutoff'])
+        seasons={r[0] for r in source['cup_rows']}
+        self.assertEqual(seasons,{int(f'{y}{y+1}') for y in range(1917,source['through']+1) if y not in (1918,2004)})
+        winners={r[1] for r in source['cup_rows']}
+        self.assertEqual(sorted(winners & set(self.players)),self.data['cup_winners'])
+        self.assertGreaterEqual(len(source['cup_crosschecks']),50)
+        for check in source['cup_crosschecks']:
+            self.assertEqual(sorted(r[0] for r in source['cup_rows'] if r[1]==check['id']),check['seasons'])
+            self.assertRegex(check['sha256'],r'^[0-9a-f]{64}$')
+        self.assertNotIn(8466141,winners,'Luongo winning as an executive must not count as a player win')
+        self.assertNotIn(8466138,winners,'Being a runner-up or playing for a winning franchise is insufficient')
+        self.assertIn(8477495,winners,'Seth Jones won with Florida in 2025')
+        peak={};seen=set()
+        for pid,season,goals,teams in source['season_goal_rows']:
+            self.assertNotIn((pid,season),seen);seen.add((pid,season))
+            self.assertGreaterEqual(goals,30);self.assertTrue(19171918<=season<=20252026)
+            if pid in self.players:peak[str(pid)]=max(peak.get(str(pid),0),goals)
+            year=season//10000
+            if 2005<=year<=2024:self.assertEqual(self.stats[year,pid][3],goals)
+        for (year,pid),r in self.stats.items():
+            if r[1]!='G' and r[3]>=30:self.assertIn((pid,int(f'{year}{year+1}')),seen)
+        self.assertEqual(peak,self.data['season_goals'])
+        # Eaves only reached 30 by combining Dallas and Anaheim in 2016–17.
+        self.assertIn([8470622,20162017,32,'DAL,ANA'],source['season_goal_rows'])
+        self.assertEqual(peak['8470622'],32)
+        added=self.data['grid'][168:]
+        self.assertGreaterEqual(len(added),48)
+        for clue in ({'kind':'trophy','value':'Stanley Cup'},{'kind':'season_goals','value':30}):
+            self.assertGreaterEqual(sum(clue in t['cols'] for t in added),24)
 
     def test_original_puzzles_are_unchanged(self):
         original=json.loads((ROOT/'tools/community_games/original_bank_hashes.json').read_text())

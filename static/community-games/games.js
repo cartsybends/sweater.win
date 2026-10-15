@@ -43,7 +43,7 @@ for(const [id,title,next] of [['grid','Sweater Grid','Next grid'],['benchboss','
 }
 
 const CG_TROPHY_SHORT={'Hart Memorial Trophy':'Hart','Vezina Trophy':'Vezina','Calder Memorial Trophy':'Calder','Lady Byng Memorial Trophy':'Lady Byng'};
-function cgClueLabel(clue){return clue.kind==='team'?teamName(clue.value):clue.kind==='country'?`Born in ${countryName(clue.value)}`:clue.kind==='trophy'?`${CG_TROPHY_SHORT[clue.value]||clue.value} winner`:clue.kind==='position'?{F:'Forward',D:'Defenseman',G:'Goalie'}[clue.value]:clue.kind==='games'?`${clue.value.toLocaleString()}+ career GP`:'Hall of Famer';}
+function cgClueLabel(clue){return clue.kind==='team'?teamName(clue.value):clue.kind==='country'?`Born in ${countryName(clue.value)}`:clue.kind==='trophy'?`${CG_TROPHY_SHORT[clue.value]||clue.value} winner`:clue.kind==='season_goals'?`${clue.value}+ goals in a season`:clue.kind==='position'?{F:'Forward',D:'Defenseman',G:'Goalie'}[clue.value]:clue.kind==='games'?`${clue.value.toLocaleString()}+ career games`:'Hall of Famer';}
 function cgClue(clue){
   const label=cgClueLabel(clue),art=clue.kind==='team'?`<span class="cg-crest cg-grid-crest">${cgTeam(clue.value)}</span>`:clue.kind==='country'?`<img class="cg-country-flag" src="grid-flags/${COUNTRY_ALPHA2[clue.value].toLowerCase()}.svg" alt="${esc(countryName(clue.value))} flag">`:clue.kind==='trophy'?`<img class="cg-trophy-photo" src="${TROPHY_IMAGES[clue.value]}" alt="${esc(clue.value)}">`:'';
   return `${art}<b title="${esc(clue.kind==='trophy'?clue.value:label)}">${esc(label)}</b>`;
@@ -55,21 +55,22 @@ function renderSweaterGrid(t,st){
   $('cgGrid').innerHTML='<div class="cg-corner" aria-hidden="true"></div>'+t.cols.map(c=>`<div class="cg-grid-heading${c.kind==='team'?' cg-team-heading':''}">${cgClue(c)}</div>`).join('')+t.rows.map((team,row)=>
     `<div class="cg-grid-heading cg-team-heading">${cgClue({kind:'team',value:team})}</div>`+t.cols.map((clue,col)=>{
       const cell=row*3+col,id=display[cell],p=id&&cgPlayer(id),filled=state.cells[cell]!==null;
-      return `<button type="button" class="cg-square${filled?' is-filled':id?' is-revealed':''}${cgCell===cell&&!st.over?' is-active':''}" data-grid-cell="${cell}" aria-label="${esc(`${teamName(team)} · ${cgClue(clue).replace(/<[^>]*>/g,'')} ${p?': '+p.name:': choose a player'}`)}" aria-pressed="${cgCell===cell&&!st.over}"${filled||st.over?' disabled':''}>${p?cgPhoto(id)+`<b>${esc(p.name)}</b>${filled?`<small>+${10+COMMUNITY_MODEL.bonus(t,cell,p)}</small>`:'<small>One possible answer</small>'}`:'<span aria-hidden="true">+</span><small>Choose player</small>'}</button>`;
+      return `<button type="button" class="cg-square${filled?' is-filled':id?' is-revealed':''}${cgCell===cell&&!st.over?' is-active':''}" data-grid-cell="${cell}" aria-label="${esc(`${teamName(team)} · ${cgClueLabel(clue)} ${p?': '+p.name:': choose a player'}`)}" aria-pressed="${cgCell===cell&&!st.over}"${filled||st.over?' disabled':''}>${p?cgPhoto(id)+`<b>${esc(p.name)}</b>${filled?`<small>+${10+COMMUNITY_MODEL.bonus(t,cell,p)}</small>`:'<small>Valid example</small>'}`:'<span aria-hidden="true">+</span><small>Choose player</small>'}</button>`;
     }).join('')).join('');
   $('cgGridScore').textContent=`${state.used.size} / 9 filled · ${state.score} points`;
   $('cgGridTries').textContent=st.over?'':`${12-state.tried.size} guesses left`;
   $('cgGridSearch').hidden=st.over;
   $('cgGridGuess').disabled=st.over;
   $('cgGridPrompt').textContent=st.over?'':`${teamName(t.rows[Math.floor(cgCell/3)])} · ${cgClueLabel(t.cols[cgCell%3])}`;
-  $('cgGridSource').textContent='Club appearances through 2025–26; predecessor clubs are separate. Trophy clues mean a career win, not necessarily with that club. Less popular answers earn bigger bonuses once enough games have been played. Until then, short team stints earn bonuses.';
+  $('cgGridSource').textContent='Club appearances through 2025–26; predecessor clubs are separate. Trophy wins and 30-goal regular seasons can be with any NHL team. A traded player’s goals count across all teams that season. Less popular answers earn bigger bonuses once enough games have been played. Until then, short team stints earn bonuses.';
   const last=state.last;
-  $('cgGridFeedback').textContent=st.over?'Highlighted answers are yours; muted cards show other valid connections.':last?last.correct?`${cgPlayer(last.id).name} fits. +${10+COMMUNITY_MODEL.bonus(t,last.cell,cgPlayer(last.id))} points.`:`${cgPlayer(last.id).name} doesn’t match that square. Try another connection.`:'Select a square, then search for a player.';
+  $('cgGridFeedback').textContent=st.over?state.won?'All nine connections found. Every square accepts multiple players.':'Each square accepts multiple players. Muted cards show valid examples; highlighted answers are yours.':last?last.correct?`${cgPlayer(last.id).name} fits. +${10+COMMUNITY_MODEL.bonus(t,last.cell,cgPlayer(last.id))} points.`:`${cgPlayer(last.id).name} doesn’t match that square. Try another connection.`:'Select a square, then search for a player.';
   $('cgGridReveal').hidden=st.over;
   cgFitGridLabels();
 }
-function cgFitGridLabels(){for(const label of $('cgGrid').querySelectorAll('.cg-grid-heading b')){if(!label.closest('.cg-grid-heading').querySelector('.cg-team-art'))continue;label.style.fontSize='';const maximum=parseFloat(getComputedStyle(label).fontSize);let size=maximum;while(label.scrollWidth>label.clientWidth+.5&&size>7){size-=.25;label.style.fontSize=size+'px';}}}
+function cgFitGridLabels(){for(const label of $('cgGrid').querySelectorAll('.cg-grid-heading b')){label.style.fontSize='';const maximum=parseFloat(getComputedStyle(label).fontSize);let size=maximum;while(label.scrollWidth>label.clientWidth+.5&&size>7){size-=.25;label.style.fontSize=size+'px';}}}
 window.addEventListener('resize',()=>{if(game==='grid')cgFitGridLabels();});
+document.fonts?.ready.then(()=>{if(game==='grid')cgFitGridLabels();});
 $('cgGrid').addEventListener('click',e=>{const b=e.target.closest('[data-grid-cell]');if(!b||b.disabled||game!=='grid')return;cgCell=Number(b.dataset.gridCell);renderSweaterGrid(S.grid.target,S.grid);$('cgGridGuess').value='';$('cgGridGuess').focus();});
 $('cgGridReveal').onclick=()=>{if(game==='grid')doGuess('END');};
 

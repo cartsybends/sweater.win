@@ -68,5 +68,12 @@
     "nhl_id": 18,
     "source": "https://records.nhl.com/site/asset/public/images/trophy/Vezina-Trophy@2x.jpg",
     "sha256": "cc9181c0fc9d8640f529230bdaa19e035e1a7da16a2439a402156695b723fbbd"
+  },
+  {
+    "name": "Stanley Cup",
+    "file": "stanley-cup.jpg",
+    "nhl_id": 1,
+    "source": "https://records.nhl.com/site/asset/public/images/trophy/Stanley-Cup@2x.jpg",
+    "sha256": "7b56eb5f037242ec4979ca8acd1c8ab9b78857288fd634fbd09af859ff66ca75"
   }
 ]

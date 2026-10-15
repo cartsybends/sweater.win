@@ -31,6 +31,21 @@ test('Grid rejects duplicate players, repeated attempts, filled squares and unfi
   assert.equal(M.grid(t,exhausted,data).over,true);assert.equal(M.grid(t,exhausted,data).won,false);
   const ended=M.result('grid',t,[`0:${solution[0]}`,'END'],data);assert.equal(ended.won,false);assert(ended.points>=10);
 });
+test('new clues count career Cup wins and complete NHL regular seasons, including trades',()=>{
+  const player=id=>M.index(data).players.get(id),cup={kind:'trophy',value:'Stanley Cup'},goals={kind:'season_goals',value:30};
+  assert.equal(M.qualifies(player(8478403),cup),true,'Eichel qualifies with Buffalo after winning in Vegas');
+  assert.equal(M.qualifies(player(8466141),cup),false,'Luongo did not win as a player');
+  assert.equal(M.qualifies(player(8466138),cup),false,'Thornton was a finalist, not a winner');
+  assert.equal(M.qualifies(player(8470622),goals),true,'Eaves scored 32 across two teams');
+  assert.equal(M.qualifies(player(8466141),goals),false,'Goalie career GP cannot become goals');
+  const t=data.grid.find(t=>t.cols.some(c=>c.kind==='season_goals'));
+  const valid=M.candidates(t,data),solution=M.fillGrid(t,M.grid(t,[],data),data);
+  const col=t.cols.findIndex(c=>c.kind==='season_goals'),wrong=data.players.find(p=>p[8][t.rows[0]]&&!valid[col].includes(p[0]))[0];
+  const log=[`${col}:${wrong}`,...solution.map((id,i)=>`${i}:${id}`)];
+  assert.equal(M.grid(t,log,data).last.correct,true);
+  assert.equal(M.grid(t,log,data).tried.size,10);
+  assert.deepEqual(scoreGame('grid',{id:t.id},log,schedule),M.result('grid',t,log,data));
+});
 test('all Bench Boss best lineups use season positions, six unique players, and at most 100 credits',()=>{
   for(const t of data.benchboss){
     const draft=M.draft(t,t.optimal,data);assert.equal(draft.complete,true);assert(draft.cost<=100);

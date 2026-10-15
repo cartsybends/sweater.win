@@ -4,7 +4,8 @@ export const COMMUNITY_MODEL = (() => {
   const group = pos => pos === 'G' ? 'G' : pos === 'D' ? 'D' : 'F';
   function index(data) {
     if (cache.has(data)) return cache.get(data);
-    const players = new Map(data.players.map(r => [r[0], {id:r[0],name:r[1],pos:r[2],nation:r[3],gp:r[4],hall:r[5],first:r[6],last:r[7],teams:r[8],birthYear:r[9],awards:data.awards?.[r[0]]||[]} ]));
+    const cups = new Set(data.cup_winners||[]);
+    const players = new Map(data.players.map(r => [r[0], {id:r[0],name:r[1],pos:r[2],nation:r[3],gp:r[4],hall:r[5],first:r[6],last:r[7],teams:r[8],birthYear:r[9],awards:data.awards?.[r[0]]||[],cup:cups.has(r[0]),seasonGoals:data.season_goals?.[r[0]]||0} ]));
     const result = {players,links:null,neighbors:null,grids:new WeakMap()}; cache.set(data,result); return result;
   }
   function graph(data) {
@@ -23,7 +24,8 @@ export const COMMUNITY_MODEL = (() => {
     if(clue.kind==='position')return group(p.pos)===clue.value;
     if(clue.kind==='games')return p.gp>=clue.value;
     if(clue.kind==='hall')return p.hall;
-    if(clue.kind==='trophy')return p.awards.includes(clue.value);
+    if(clue.kind==='trophy')return clue.value==='Stanley Cup'?p.cup:p.awards.includes(clue.value);
+    if(clue.kind==='season_goals')return p.seasonGoals>=clue.value;
     return false;
   }
   function candidates(target,data) {
