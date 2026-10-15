@@ -1,0 +1,192 @@
+{
+  "id": "goal-143",
+  "pid": 8479998,
+  "player": "Mikey Anderson",
+  "original": "/workspace/who-scored-expansion/originals/goal-143-6366697666112.mp4",
+  "source_sha256": "ff6fa54f267843adc5f914ae602e047a0d9a7a246adfa1fff84024b1dd597514",
+  "start": 29.9,
+  "duration": 4.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        175,
+        130,
+        320,
+        295
+      ],
+      "points": [
+        [
+          259,
+          190
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        115,
+        113,
+        335,
+        265
+      ],
+      "points": [
+        [
+          211,
+          174
+        ],
+        [
+          266,
+          150
+        ],
+        [
+          251,
+          169
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 32,
+      "box": [
+        0,
+        110,
+        65,
+        280
+      ],
+      "points": [
+        [
+          10,
+          126
+        ],
+        [
+          10,
+          148
+        ],
+        [
+          46,
+          161
+        ],
+        [
+          7,
+          252
+        ],
+        [
+          42,
+          135
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 33,
+      "box": [
+        0,
+        130,
+        35,
+        185
+      ],
+      "points": [
+        [
+          8,
+          158
+        ],
+        [
+          10,
+          133
+        ]
+      ],
+      "labels": [
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 98,
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "identity_verification": "Official scorer Mikey Anderson and Kings44 identify the isolated point shooter at left. Continuous29.9-34.1 replay retains the point shot, full net finish and reaction. Last scorer glove exits the left boundary at33; allow empty34-100 while the camera follows the puck to the net. Preserve Kopitar11 who enters that left region later, other netfront Kings, Tampa goalie88 and defenders."
+}
