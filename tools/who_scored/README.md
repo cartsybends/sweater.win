@@ -110,8 +110,9 @@ the library to 159 scorers. Its deployment evidence is in
 `progress/batch-03/live-verification.json`. Batches 4–6 contain the remaining 120
 planned additions.
 
-The extra scorer, John Carlson, is reviewed separately under `progress/bonus-160/`
-to reach exactly 160 without consuming any part of the next forty-player batch.
+The extra scorer, John Carlson, is published and verified live, bringing the
+library to exactly 160. His review and deployment evidence are under
+`progress/bonus-160/`. This uses a spare candidate from outside the planned batches.
 `standalone.py` enforces the same official-source, every-frame visual-review and
 immutable-media checks as the full batch gate. Its local staging command is:
 

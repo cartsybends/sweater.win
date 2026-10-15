@@ -442,8 +442,14 @@
         "goal-295"
       ],
       "target_library_size": 160,
-      "status": "staged_awaiting_github_and_live_verification",
-      "request": "Add one additional scorer to reach exactly 160 without changing the complete forty-player batches."
+      "status": "published_live_verified",
+      "request": "Add one additional scorer to reach exactly 160 without changing the complete forty-player batches.",
+      "release_commit": "df733b50e7a5c487e1f576e49041a0ada6ece10c",
+      "workflow_run": "https://github.com/cartsybends/sweater.win/actions/runs/38779624254",
+      "live_url": "https://sweater.win/",
+      "live_library_size": 160,
+      "verified_at": "2026-10-15T17:45:53.932107+00:00",
+      "live_verification_record": "tools/who_scored/progress/bonus-160/live-verification.json"
     }
   ]
 }

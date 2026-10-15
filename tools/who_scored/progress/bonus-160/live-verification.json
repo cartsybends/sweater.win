@@ -1,0 +1,39 @@
+{
+  "release": "bonus-160",
+  "status": "published_live_verified",
+  "release_commit": "df733b50e7a5c487e1f576e49041a0ada6ece10c",
+  "workflow_run": "https://github.com/cartsybends/sweater.win/actions/runs/38779624254",
+  "live_url": "https://sweater.win/",
+  "verified_at": "2026-10-15T17:45:53.932107+00:00",
+  "live_library_size": 160,
+  "new_unique_players": 1,
+  "manifest_matches_github_release": true,
+  "verified_assets": [
+    {
+      "file": "goal-295-masked-v1.mp4",
+      "sha256": "ab6094e6437e5137ce4da3c1dd374c463011e3b68714e51a1ddfd1253d0feb41",
+      "bytes": 1072650
+    },
+    {
+      "file": "goal-295-original-v1.mp4",
+      "sha256": "9493f7e579ba3dc4dcb9cb53f66775b756025d3ca3d30de1065452b8164853ee",
+      "bytes": 1103009
+    },
+    {
+      "file": "goal-295-v1.jpg",
+      "sha256": "24f2aec433b40e75c8efe216d105a5f6f3b816c3080d1e7bfa3e3f0625c44221",
+      "bytes": 85815
+    }
+  ],
+  "live_app_sha256": "e09254584271232120a13e91df3485e2c71870eff35db48ac0503d06448020b5",
+  "locked_schedule_assignments_preserved": 5,
+  "daily_only_present": true,
+  "browser_check": {
+    "method": "TLS-fetched deployed app served locally with production writes intercepted; media bytes match every remote asset SHA256.",
+    "live_resolved_library_size": 160,
+    "new_players_present": 1,
+    "new_video_streams_decoded": 2,
+    "javascript_errors": [],
+    "local_continuous_video_streams_played": 2
+  }
+}
