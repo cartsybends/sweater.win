@@ -1,0 +1,249 @@
+{
+  "id": "goal-102",
+  "pid": 8477479,
+  "player": "Tyler Bertuzzi",
+  "original": "/workspace/who-scored-expansion/originals/goal-102-6366671452112.mp4",
+  "source_sha256": "e2bad684e9a8311da3b6990d33dde9ad6c4adfb48eb1ee3554188c0f7e4d7d41",
+  "start": 33.4,
+  "duration": 3.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        855,
+        193,
+        960,
+        319
+      ],
+      "points": [
+        [
+          934,
+          251
+        ],
+        [
+          925,
+          202
+        ],
+        [
+          917,
+          215
+        ],
+        [
+          894,
+          231
+        ],
+        [
+          872,
+          267
+        ],
+        [
+          884,
+          260
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 6,
+      "box": [
+        849,
+        184,
+        960,
+        313
+      ],
+      "points": [
+        [
+          929,
+          243
+        ],
+        [
+          927,
+          194
+        ],
+        [
+          918,
+          207
+        ],
+        [
+          890,
+          225
+        ],
+        [
+          865,
+          256
+        ],
+        [
+          885,
+          245
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        825,
+        204,
+        912,
+        309
+      ],
+      "points": [
+        [
+          868,
+          252
+        ],
+        [
+          886,
+          218
+        ],
+        [
+          838,
+          228
+        ],
+        [
+          688,
+          140
+        ],
+        [
+          525,
+          244
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        651,
+        202,
+        735,
+        305
+      ],
+      "points": [
+        [
+          699,
+          251
+        ],
+        [
+          704,
+          216
+        ],
+        [
+          674,
+          227
+        ],
+        [
+          622,
+          191
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        630,
+        187,
+        713,
+        303
+      ],
+      "points": [
+        [
+          679,
+          244
+        ],
+        [
+          685,
+          202
+        ],
+        [
+          639,
+          238
+        ],
+        [
+          585,
+          184
+        ],
+        [
+          598,
+          234
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 81,
+      "box": [
+        559,
+        202,
+        694,
+        356
+      ],
+      "points": [
+        [
+          632,
+          284
+        ],
+        [
+          637,
+          236
+        ],
+        [
+          575,
+          217
+        ],
+        [
+          681,
+          244
+        ],
+        [
+          538,
+          210
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 79,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official highlight and scoring event identify Chicago 59 as Tyler Bertuzzi. Visible 59 on the right circle receives the pass, finishes past Montembeault and raises both gloves, while Foligno 17 stays visible by the crease."
+}

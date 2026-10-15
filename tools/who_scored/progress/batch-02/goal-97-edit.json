@@ -1,0 +1,239 @@
+{
+  "id": "goal-97",
+  "pid": 8475726,
+  "player": "Tyler Toffoli",
+  "original": "/workspace/who-scored-expansion/originals/goal-97-6366641555112.mp4",
+  "source_sha256": "0adb8bbe2c9d65819867cfdf9c68e438feb169ed0e67424c19be502521727b22",
+  "start": 42.25,
+  "duration": 5.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        276,
+        105,
+        536,
+        468
+      ],
+      "points": [
+        [
+          430,
+          215
+        ],
+        [
+          487,
+          147
+        ],
+        [
+          506,
+          310
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        251,
+        138,
+        449,
+        451
+      ],
+      "points": [
+        [
+          331,
+          247
+        ],
+        [
+          372,
+          173
+        ],
+        [
+          276,
+          232
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        377,
+        180,
+        565,
+        466
+      ],
+      "points": [
+        [
+          465,
+          279
+        ],
+        [
+          512,
+          210
+        ],
+        [
+          509,
+          354
+        ],
+        [
+          220,
+          282
+        ],
+        [
+          838,
+          375
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        286,
+        153,
+        468,
+        430
+      ],
+      "points": [
+        [
+          375,
+          275
+        ],
+        [
+          408,
+          184
+        ],
+        [
+          433,
+          258
+        ],
+        [
+          279,
+          209
+        ],
+        [
+          292,
+          278
+        ],
+        [
+          734,
+          300
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 108,
+      "box": [
+        385,
+        142,
+        566,
+        457
+      ],
+      "points": [
+        [
+          476,
+          251
+        ],
+        [
+          493,
+          173
+        ],
+        [
+          531,
+          319
+        ],
+        [
+          308,
+          165
+        ],
+        [
+          352,
+          236
+        ],
+        [
+          569,
+          327
+        ],
+        [
+          650,
+          110
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 129,
+      "box": [
+        418,
+        123,
+        676,
+        540
+      ],
+      "points": [
+        [
+          561,
+          290
+        ],
+        [
+          596,
+          164
+        ],
+        [
+          496,
+          197
+        ],
+        [
+          755,
+          311
+        ],
+        [
+          849,
+          174
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 127,
+  "identity_verification": "TOFFOLI 73 is readable from the approach through the full scoring finish and celebration. Follow 73 as he shoots, drops to a knee under pressure from Hagel 38, then stands and raises his left glove. Kovalenko 15 in front of the net is a separate teammate; Hagel 38, Cirelli 71, the other Tampa defenders and Vasilevskiy remain visible.",
+  "tracking_crop_size": 512
+}

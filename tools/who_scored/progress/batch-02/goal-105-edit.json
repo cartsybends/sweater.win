@@ -1,0 +1,229 @@
+{
+  "id": "goal-105",
+  "pid": 8475170,
+  "player": "Brayden Schenn",
+  "original": "/workspace/who-scored-expansion/originals/goal-105-6366670690112.mp4",
+  "source_sha256": "397573f59d2f1382d2f606898c3e5e82e1d94025e0791940d561cd4e53ebe637",
+  "start": 37.5,
+  "duration": 4.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        202,
+        84,
+        450,
+        454
+      ],
+      "points": [
+        [
+          318,
+          232
+        ],
+        [
+          408,
+          111
+        ],
+        [
+          414,
+          142
+        ],
+        [
+          422,
+          278
+        ],
+        [
+          395,
+          257
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        188,
+        121,
+        431,
+        438
+      ],
+      "points": [
+        [
+          270,
+          255
+        ],
+        [
+          340,
+          143
+        ],
+        [
+          345,
+          177
+        ],
+        [
+          408,
+          239
+        ],
+        [
+          344,
+          283
+        ],
+        [
+          586,
+          209
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        209,
+        105,
+        449,
+        394
+      ],
+      "points": [
+        [
+          297,
+          265
+        ],
+        [
+          373,
+          127
+        ],
+        [
+          422,
+          192
+        ],
+        [
+          378,
+          287
+        ],
+        [
+          500,
+          201
+        ],
+        [
+          545,
+          274
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 97,
+      "box": [
+        261,
+        173,
+        509,
+        483
+      ],
+      "points": [
+        [
+          368,
+          330
+        ],
+        [
+          441,
+          200
+        ],
+        [
+          444,
+          228
+        ],
+        [
+          478,
+          280
+        ],
+        [
+          482,
+          365
+        ],
+        [
+          564,
+          387
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 95,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official highlight and scoring event identify St. Louis 10 as Brayden Schenn. Visible 10 carries on the breakaway, beats the goalie and drops to a knee through the finish.",
+  "manual_clear_polygons": {
+    "97": [
+      [
+        [
+          270,
+          351
+        ],
+        [
+          307,
+          351
+        ],
+        [
+          315,
+          365
+        ],
+        [
+          320,
+          377
+        ],
+        [
+          326,
+          394
+        ],
+        [
+          334,
+          405
+        ],
+        [
+          331,
+          417
+        ],
+        [
+          318,
+          424
+        ],
+        [
+          297,
+          412
+        ],
+        [
+          280,
+          407
+        ]
+      ]
+    ]
+  }
+}

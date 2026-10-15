@@ -1,0 +1,247 @@
+{
+  "id": "goal-98",
+  "pid": 8479983,
+  "player": "Mario Ferraro",
+  "original": "/workspace/who-scored-expansion/originals/goal-98-6366641898112.mp4",
+  "source_sha256": "b36f0a2010376755486677076067c8d08468fd14be356af9effaeceb2d209fad",
+  "start": 30.1,
+  "duration": 4.1,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        433,
+        172,
+        484,
+        236
+      ],
+      "points": [
+        [
+          457,
+          201
+        ],
+        [
+          458,
+          185
+        ],
+        [
+          482,
+          225
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        438,
+        129,
+        487,
+        196
+      ],
+      "points": [
+        [
+          458,
+          159
+        ],
+        [
+          463,
+          143
+        ],
+        [
+          532,
+          155
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        411,
+        135,
+        477,
+        214
+      ],
+      "points": [
+        [
+          444,
+          172
+        ],
+        [
+          452,
+          150
+        ],
+        [
+          235,
+          219
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        438,
+        111,
+        507,
+        206
+      ],
+      "points": [
+        [
+          477,
+          151
+        ],
+        [
+          482,
+          130
+        ],
+        [
+          347,
+          183
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        486,
+        100,
+        592,
+        201
+      ],
+      "points": [
+        [
+          548,
+          145
+        ],
+        [
+          550,
+          116
+        ],
+        [
+          448,
+          163
+        ],
+        [
+          630,
+          203
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        559,
+        99,
+        693,
+        225
+      ],
+      "points": [
+        [
+          622,
+          158
+        ],
+        [
+          650,
+          124
+        ],
+        [
+          666,
+          153
+        ],
+        [
+          660,
+          191
+        ],
+        [
+          523,
+          174
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 97,
+      "box": [
+        674,
+        84,
+        802,
+        259
+      ],
+      "points": [
+        [
+          739,
+          161
+        ],
+        [
+          761,
+          114
+        ],
+        [
+          753,
+          99
+        ],
+        [
+          764,
+          158
+        ],
+        [
+          675,
+          139
+        ],
+        [
+          551,
+          132
+        ],
+        [
+          479,
+          199
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 95,
+  "tracking_crop_size": 384,
+  "identity_verification": "Ferraro 38 is the Shark driving down the central slot, behind the left net-front Zetterlund 20 and inside the right-circle Kostin 10. Follow his same body from receiving the return pass through his shot and rightward raised-arm celebration. The 38 shoulder/back is visible as he turns and celebrates. Do not mask Zetterlund 20 or Kostin 10, the passer/other celebrators; Vasilevskiy 88 and Tampa defenders remain visible."
+}

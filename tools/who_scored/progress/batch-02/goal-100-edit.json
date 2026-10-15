@@ -1,0 +1,276 @@
+{
+  "id": "goal-100",
+  "pid": 8478055,
+  "player": "Gustav Forsling",
+  "original": "/workspace/who-scored-expansion/originals/goal-100-6366668712112.mp4",
+  "source_sha256": "02854e3e91b18780b3437b2c52e1d5bf0df483844513edcb090c67469fcb8622",
+  "start": 8.35,
+  "duration": 2.95,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        94,
+        428,
+        185,
+        539
+      ],
+      "points": [
+        [
+          130,
+          481
+        ],
+        [
+          121,
+          440
+        ],
+        [
+          143,
+          473
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 18,
+      "box": [
+        327,
+        371,
+        425,
+        467
+      ],
+      "points": [
+        [
+          381,
+          410
+        ],
+        [
+          363,
+          382
+        ],
+        [
+          351,
+          410
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        310,
+        358,
+        388,
+        457
+      ],
+      "points": [
+        [
+          358,
+          412
+        ],
+        [
+          355,
+          366
+        ],
+        [
+          317,
+          418
+        ],
+        [
+          473,
+          326
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        128,
+        340,
+        231,
+        487
+      ],
+      "points": [
+        [
+          182,
+          410
+        ],
+        [
+          170,
+          347
+        ],
+        [
+          145,
+          371
+        ],
+        [
+          328,
+          393
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 54,
+      "box": [
+        0,
+        373,
+        60,
+        483
+      ],
+      "points": [
+        [
+          10,
+          422
+        ],
+        [
+          17,
+          461
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 55,
+      "box": [
+        0,
+        412,
+        26,
+        461
+      ],
+      "points": [
+        [
+          4,
+          434
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 68,
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70
+  ],
+  "manual_clear_polygons": {
+    "0": [
+      [
+        [
+          115,
+          435
+        ],
+        [
+          139,
+          435
+        ],
+        [
+          139,
+          461
+        ],
+        [
+          115,
+          461
+        ]
+      ]
+    ],
+    "48": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          300,
+          0
+        ],
+        [
+          300,
+          358
+        ],
+        [
+          0,
+          358
+        ]
+      ]
+    ]
+  },
+  "manual_fill_polygons": {
+    "48": [
+      [
+        [
+          165,
+          362
+        ],
+        [
+          176,
+          364
+        ],
+        [
+          180,
+          369
+        ],
+        [
+          178,
+          376
+        ],
+        [
+          171,
+          380
+        ],
+        [
+          159,
+          377
+        ],
+        [
+          154,
+          373
+        ],
+        [
+          156,
+          367
+        ]
+      ]
+    ]
+  },
+  "identity_verification": "Official highlight and scoring event identify Florida 42 as Gustav Forsling. His visible 42 receives the puck at the point, shoots and then exits left after frame 55. Rodrigues 17 and Reinhart 13 remain visible at the crease."
+}

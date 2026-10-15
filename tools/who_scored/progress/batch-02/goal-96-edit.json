@@ -1,0 +1,239 @@
+{
+  "id": "goal-96",
+  "pid": 8478407,
+  "player": "Vince Dunn",
+  "original": "/workspace/who-scored-expansion/originals/goal-96-6366642615112.mp4",
+  "source_sha256": "71ae0fd457a60b1ce340c83480c6696af54e469916aaf3ea57f72b545b1065de",
+  "start": 38.9,
+  "duration": 4.35,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        307,
+        370,
+        523,
+        540
+      ],
+      "points": [
+        [
+          387,
+          471
+        ],
+        [
+          335,
+          404
+        ],
+        [
+          486,
+          394
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        393,
+        184,
+        643,
+        473
+      ],
+      "points": [
+        [
+          487,
+          281
+        ],
+        [
+          423,
+          219
+        ],
+        [
+          459,
+          331
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        581,
+        152,
+        825,
+        428
+      ],
+      "points": [
+        [
+          682,
+          253
+        ],
+        [
+          623,
+          192
+        ],
+        [
+          641,
+          332
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        658,
+        130,
+        939,
+        371
+      ],
+      "points": [
+        [
+          768,
+          210
+        ],
+        [
+          697,
+          168
+        ],
+        [
+          681,
+          210
+        ],
+        [
+          910,
+          241
+        ],
+        [
+          866,
+          400
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        900,
+        288,
+        960,
+        410
+      ],
+      "points": [
+        [
+          953,
+          324
+        ],
+        [
+          935,
+          367
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 50,
+      "box": [
+        934,
+        315,
+        960,
+        404
+      ],
+      "points": [
+        [
+          956,
+          378
+        ],
+        [
+          958,
+          339
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 101,
+  "identity_verification": "DUNN 29 is readable on the Kraken shooter receiving at the blue line. Follow his pull-in wrist shot and full shooting follow-through; he leaves the right edge after the last visible helmet/glove in frame 50. Frames 51-103 show no visible scorer body while the camera follows the puck into the net and the goal reaction. Wright 51 in the slot and Bjorkstrand 22 near the net are different players and must stay visible.",
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103
+  ]
+}

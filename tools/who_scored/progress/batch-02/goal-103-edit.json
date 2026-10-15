@@ -1,0 +1,204 @@
+{
+  "id": "goal-103",
+  "pid": 8473422,
+  "player": "Nick Foligno",
+  "original": "/workspace/who-scored-expansion/originals/goal-103-6366671998112.mp4",
+  "source_sha256": "dd011eb0cbf3f143cf8a43eaa28af84b42f46310a19634b76dadd3bbe9e66bea",
+  "start": 25.35,
+  "duration": 3.45,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        649,
+        377,
+        706,
+        465
+      ],
+      "points": [
+        [
+          678,
+          415
+        ],
+        [
+          676,
+          393
+        ],
+        [
+          695,
+          438
+        ],
+        [
+          662,
+          385
+        ],
+        [
+          561,
+          424
+        ],
+        [
+          695,
+          452
+        ],
+        [
+          690,
+          441
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        592,
+        244,
+        665,
+        333
+      ],
+      "points": [
+        [
+          625,
+          281
+        ],
+        [
+          624,
+          251
+        ],
+        [
+          643,
+          322
+        ],
+        [
+          583,
+          331
+        ],
+        [
+          538,
+          189
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 82,
+      "box": [
+        588,
+        85,
+        639,
+        170
+      ],
+      "points": [
+        [
+          614,
+          132
+        ],
+        [
+          614,
+          97
+        ],
+        [
+          627,
+          118
+        ],
+        [
+          590,
+          147
+        ],
+        [
+          543,
+          135
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 80,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official highlight and scoring event identify Chicago 17 as Nick Foligno. Visible 17 starts at the right crease, moves into the slot for the deflection, then raises his stick. Teammate 16 and Montreal 77 remain visible.",
+  "manual_fill_polygons": {
+    "0": [
+      [
+        [
+          693,
+          451
+        ],
+        [
+          705,
+          450
+        ],
+        [
+          710,
+          471
+        ],
+        [
+          718,
+          474
+        ],
+        [
+          721,
+          480
+        ],
+        [
+          713,
+          488
+        ],
+        [
+          705,
+          486
+        ],
+        [
+          701,
+          479
+        ],
+        [
+          696,
+          476
+        ]
+      ],
+      [
+        [
+          703,
+          408
+        ],
+        [
+          711,
+          407
+        ],
+        [
+          712,
+          412
+        ],
+        [
+          706,
+          419
+        ],
+        [
+          701,
+          418
+        ]
+      ]
+    ]
+  }
+}
