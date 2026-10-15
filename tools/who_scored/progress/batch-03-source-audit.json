@@ -427,7 +427,7 @@
     {
       "id": "goal-140",
       "pid": 8480840,
-      "player": "Oskar Bäck",
+      "player": "Oskar B\u00e4ck",
       "game_id": 2024020628,
       "date": "2025-01-04",
       "period": 2,
@@ -438,7 +438,7 @@
       "official_event_id": 760,
       "jersey": 10,
       "source_sha256": "9db76c0b6619a6403bbe4b878296625accad800c5d3ad5aaf157d219886fe892",
-      "media_title": "UTA@DAL: Bäck scores goal against Karel Vejmelka",
+      "media_title": "UTA@DAL: B\u00e4ck scores goal against Karel Vejmelka",
       "dimensions": [
         1280,
         720
@@ -515,19 +515,19 @@
       "game_id": 2024020627,
       "date": "2025-01-04",
       "period": 2,
-      "time_in_period": "04:21",
+      "time_in_period": "11:37",
       "team": "NSH",
-      "source": "https://nhl.com/video/nsh-cgy-o-reilly-scores-ppg-against-dustin-wolf-6366700165112",
-      "source_video_id": "6366700165112",
-      "official_event_id": 574,
+      "source": "https://nhl.com/video/nsh-cgy-o-reilly-scores-ppg-against-dustin-wolf-6366699310112",
+      "source_video_id": "6366699310112",
+      "official_event_id": 719,
       "jersey": 90,
-      "source_sha256": "d0b5024b77291544eafda9fd88e142f8347fc219987a7546f1837f56d825ebc9",
-      "media_title": "O'Reilly backhands PPG",
+      "source_sha256": "d56f1c32da89d87b16c82e430144470c11ea8799267d9410308f3cdf428fe394",
+      "media_title": "O'Reilly nets second PPG",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 35.838345
+      "duration": 39.623333
     },
     {
       "id": "goal-145",
@@ -554,22 +554,22 @@
       "id": "goal-146",
       "pid": 8482768,
       "player": "Fedor Svechkov",
-      "game_id": 2024020627,
-      "date": "2025-01-04",
+      "game_id": 2024020771,
+      "date": "2025-01-23",
       "period": 3,
-      "time_in_period": "09:19",
+      "time_in_period": "08:16",
       "team": "NSH",
-      "source": "https://nhl.com/video/nsh-cgy-svechkov-scores-goal-against-dustin-wolf-6366700904112",
-      "source_video_id": "6366700904112",
-      "official_event_id": 1001,
+      "source": "https://nhl.com/video/fedor-svechkov-with-a-goal-vs-san-jose-sharks-6367609274112",
+      "source_video_id": "6367609274112",
+      "official_event_id": 978,
       "jersey": 40,
-      "source_sha256": "98a06def192b6e81260f019752908e5b9cb39aff843461dbaa3371d0da5a5cfb",
-      "media_title": "NSH@CGY: Svechkov scores goal against Dustin Wolf",
+      "source_sha256": "8b1a2bac7b6f9079942b8bf67f741d6c3aacb5e8718ebd7cd7174a5b703afcdd",
+      "media_title": "Svechkov grabs the lead",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 7.325011
+      "duration": 44.731678
     },
     {
       "id": "goal-147",
