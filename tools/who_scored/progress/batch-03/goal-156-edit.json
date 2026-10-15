@@ -1,0 +1,301 @@
+{
+  "id": "goal-156",
+  "pid": 8477506,
+  "player": "Ryan Pulock",
+  "original": "/workspace/who-scored-expansion/originals/goal-156-6366718763112.mp4",
+  "source_sha256": "e7a1cafd1ea22aea153168d0d826cc8346e7b1a8c1932e94e9bf047526d0b8da",
+  "start": 36.65,
+  "duration": 6.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        225,
+        170,
+        335,
+        390
+      ],
+      "points": [
+        [
+          281,
+          250
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        280,
+        215,
+        435,
+        405
+      ],
+      "points": [
+        [
+          370,
+          280
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        335,
+        205,
+        445,
+        445
+      ],
+      "points": [
+        [
+          395,
+          285
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        170,
+        260,
+        370,
+        460
+      ],
+      "points": [
+        [
+          260,
+          340
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 42,
+      "box": [
+        0,
+        350,
+        175,
+        540
+      ],
+      "points": [
+        [
+          80,
+          420
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 47,
+      "box": [
+        0,
+        390,
+        50,
+        540
+      ],
+      "points": [
+        [
+          5,
+          470
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 146,
+  "supersedes_draft_window": {
+    "start": 36.25,
+    "duration": 6.65
+  },
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Ryan Pulock, Islanders 6, shooting from the point. PULOCK and 6 are visible during the wind-up. The replay retains his entire shot, the puck reaching the net and the aftermath. Pulock exits the left edge at frames 47\u201348; the later net-front skaters are Lee 27 and Romanov 28, not Pulock, and remain visible.",
+  "allow_empty": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148
+  ],
+  "manual_clear_polygons": {
+    "48": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          959,
+          0
+        ],
+        [
+          959,
+          539
+        ],
+        [
+          0,
+          539
+        ]
+      ]
+    ]
+  },
+  "manual_fill_polygons": {
+    "48": [
+      [
+        [
+          0,
+          443
+        ],
+        [
+          15,
+          444
+        ],
+        [
+          22,
+          454
+        ],
+        [
+          17,
+          473
+        ],
+        [
+          9,
+          484
+        ],
+        [
+          12,
+          511
+        ],
+        [
+          11,
+          539
+        ],
+        [
+          0,
+          539
+        ]
+      ]
+    ]
+  },
+  "mask_patch_ellipses": [
+    {
+      "frame": 24,
+      "ellipse": [
+        423,
+        329,
+        11,
+        18
+      ]
+    }
+  ]
+}

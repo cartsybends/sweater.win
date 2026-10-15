@@ -427,7 +427,7 @@
     {
       "id": "goal-140",
       "pid": 8480840,
-      "player": "Oskar B\u00e4ck",
+      "player": "Oskar Bäck",
       "game_id": 2024020628,
       "date": "2025-01-04",
       "period": 2,
@@ -438,7 +438,7 @@
       "official_event_id": 760,
       "jersey": 10,
       "source_sha256": "9db76c0b6619a6403bbe4b878296625accad800c5d3ad5aaf157d219886fe892",
-      "media_title": "UTA@DAL: B\u00e4ck scores goal against Karel Vejmelka",
+      "media_title": "UTA@DAL: Bäck scores goal against Karel Vejmelka",
       "dimensions": [
         1280,
         720
@@ -827,22 +827,22 @@
       "id": "goal-159",
       "pid": 8478047,
       "player": "Michael Bunting",
-      "game_id": 2024020634,
-      "date": "2025-01-05",
-      "period": 1,
-      "time_in_period": "05:08",
+      "game_id": 2024020769,
+      "date": "2025-01-23",
+      "period": 2,
+      "time_in_period": "05:32",
       "team": "PIT",
-      "source": "https://nhl.com/video/pit-car-bunting-scores-goal-against-dustin-tokarski-6366718729112",
-      "source_video_id": "6366718729112",
-      "official_event_id": 215,
+      "source": "https://nhl.com/video/pit-ana-bunting-scores-goal-against-john-gibson-6367606439112",
+      "source_video_id": "6367606439112",
+      "official_event_id": 157,
       "jersey": 8,
-      "source_sha256": "8ad91652613297ea61427c2a80e4ff8acf7b108935910a6e402b8aa4e9e1d23c",
-      "media_title": "Bunting doubles the lead",
+      "source_sha256": "9e98b4d5412e1f01a4fee4930e8860db4673ba32befcf8b2e4713498ab90d29d",
+      "media_title": "PIT@ANA: Bunting scores goal against John Gibson",
       "dimensions": [
         1280,
         720
       ],
-      "duration": 45.196667
+      "duration": 49.816667
     }
   ]
 }

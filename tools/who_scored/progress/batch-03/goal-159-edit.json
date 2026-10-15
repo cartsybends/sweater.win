@@ -1,0 +1,191 @@
+{
+  "id": "goal-159",
+  "pid": 8478047,
+  "player": "Michael Bunting",
+  "original": "/workspace/who-scored-expansion/originals/goal-159-6367606439112.mp4",
+  "source_sha256": "9e98b4d5412e1f01a4fee4930e8860db4673ba32befcf8b2e4713498ab90d29d",
+  "start": 38.4,
+  "duration": 3.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        620,
+        245,
+        770,
+        455
+      ],
+      "points": [
+        [
+          700,
+          330
+        ],
+        [
+          671,
+          274
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        900,
+        270,
+        960,
+        475
+      ],
+      "points": [
+        [
+          944,
+          345
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        830,
+        215,
+        960,
+        445
+      ],
+      "points": [
+        [
+          913,
+          290
+        ],
+        [
+          892,
+          244
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        675,
+        205,
+        870,
+        420
+      ],
+      "points": [
+        [
+          765,
+          285
+        ],
+        [
+          745,
+          232
+        ],
+        [
+          835,
+          240
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        645,
+        180,
+        850,
+        425
+      ],
+      "points": [
+        [
+          755,
+          265
+        ],
+        [
+          740,
+          210
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 81,
+      "box": [
+        650,
+        170,
+        870,
+        440
+      ],
+      "points": [
+        [
+          775,
+          275
+        ],
+        [
+          765,
+          195
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 79,
+  "supersedes_draft_window": {
+    "start": 41.7,
+    "duration": 3.2
+  },
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Michael Bunting, Penguins 8, against Anaheim on January 23. BUNTING and 8 are readable on his back during the right-post scoring finish and reaction. Follow 8 at the right of the crease throughout; Rakell 67 and Rust 17 stay visible. This alternate replay preserves the scoring finish and natural aftermath.",
+  "manual_clear_polygons": {
+    "0": [
+      [
+        [
+          748,
+          330
+        ],
+        [
+          800,
+          330
+        ],
+        [
+          800,
+          390
+        ],
+        [
+          748,
+          390
+        ]
+      ]
+    ]
+  },
+  "mask_patch_ellipses": [
+    {
+      "frame": 0,
+      "ellipse": [
+        739,
+        280,
+        7,
+        9
+      ]
+    }
+  ]
+}

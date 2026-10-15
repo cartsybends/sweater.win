@@ -1,0 +1,132 @@
+{
+  "id": "goal-157",
+  "pid": 8475314,
+  "player": "Anders Lee",
+  "original": "/workspace/who-scored-expansion/originals/goal-157-6366718384112.mp4",
+  "source_sha256": "0dff7779c902874e81e1d4bcc8409e9cd416a801370a7979713b803265411e40",
+  "start": 24.8,
+  "duration": 4.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        350,
+        240,
+        535,
+        455
+      ],
+      "points": [
+        [
+          452,
+          310
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        350,
+        205,
+        535,
+        405
+      ],
+      "points": [
+        [
+          445,
+          275
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        450,
+        415,
+        585,
+        540
+      ],
+      "points": [
+        [
+          515,
+          485
+        ],
+        [
+          483,
+          445
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        220,
+        310,
+        350,
+        540
+      ],
+      "points": [
+        [
+          286,
+          400
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 105,
+      "box": [
+        80,
+        200,
+        400,
+        540
+      ],
+      "points": [
+        [
+          205,
+          385
+        ],
+        [
+          236,
+          304
+        ],
+        [
+          365,
+          244
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 103,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Anders Lee, Islanders 27. LEE and 27 are visible as he carries on the near boards, shoots from the left circle and raises his arm after the goal. Track 27 continuously through the camera pan; Barzal 13 and Dobson 8 are separate skaters.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 105,
+      "ellipse": [
+        209,
+        342,
+        18,
+        7
+      ]
+    }
+  ]
+}

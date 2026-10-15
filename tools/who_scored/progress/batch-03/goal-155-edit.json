@@ -1,0 +1,310 @@
+{
+  "id": "goal-155",
+  "pid": 8477500,
+  "player": "Bo Horvat",
+  "original": "/workspace/who-scored-expansion/originals/goal-155-6366718439112.mp4",
+  "source_sha256": "f68272c9ee683ed769fc22a85364ef8fc1bff3ccea16f120a8caac84f49e7bd2",
+  "start": 38.3,
+  "duration": 4.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        720,
+        210,
+        815,
+        310
+      ],
+      "points": [
+        [
+          770,
+          255
+        ],
+        [
+          770,
+          237
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        640,
+        190,
+        730,
+        290
+      ],
+      "points": [
+        [
+          686,
+          230
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        600,
+        100,
+        720,
+        220
+      ],
+      "points": [
+        [
+          673,
+          150
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        685,
+        55,
+        800,
+        200
+      ],
+      "points": [
+        [
+          745,
+          120
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 84,
+      "box": [
+        725,
+        20,
+        860,
+        160
+      ],
+      "points": [
+        [
+          805,
+          70
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 96,
+      "box": [
+        720,
+        0,
+        850,
+        125
+      ],
+      "points": [
+        [
+          791,
+          35
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 105,
+      "box": [
+        675,
+        0,
+        780,
+        115
+      ],
+      "points": [
+        [
+          715,
+          30
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 103,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer Bo Horvat, Islanders 14. Follow the right-side puck carrier 14 into the shot and around the right side of the net through the celebration, ending at the upper right edge. Pageau 44 on the left is a different player and stays visible. Verified 14 on the scorer at the end of the replay.",
+  "manual_clear_polygons": {
+    "48": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          959,
+          0
+        ],
+        [
+          959,
+          539
+        ],
+        [
+          0,
+          539
+        ]
+      ]
+    ],
+    "105": [
+      [
+        [
+          756,
+          60
+        ],
+        [
+          800,
+          60
+        ],
+        [
+          800,
+          135
+        ],
+        [
+          756,
+          135
+        ]
+      ]
+    ]
+  },
+  "manual_fill_polygons": {
+    "48": [
+      [
+        [
+          660,
+          130
+        ],
+        [
+          675,
+          129
+        ],
+        [
+          685,
+          120
+        ],
+        [
+          701,
+          123
+        ],
+        [
+          711,
+          138
+        ],
+        [
+          706,
+          154
+        ],
+        [
+          700,
+          166
+        ],
+        [
+          692,
+          181
+        ],
+        [
+          681,
+          190
+        ],
+        [
+          676,
+          201
+        ],
+        [
+          685,
+          206
+        ],
+        [
+          682,
+          213
+        ],
+        [
+          664,
+          210
+        ],
+        [
+          651,
+          202
+        ],
+        [
+          652,
+          191
+        ],
+        [
+          663,
+          177
+        ],
+        [
+          663,
+          167
+        ],
+        [
+          654,
+          170
+        ],
+        [
+          644,
+          180
+        ],
+        [
+          639,
+          192
+        ],
+        [
+          626,
+          193
+        ],
+        [
+          617,
+          188
+        ],
+        [
+          620,
+          177
+        ],
+        [
+          631,
+          165
+        ],
+        [
+          642,
+          148
+        ],
+        [
+          654,
+          144
+        ]
+      ]
+    ]
+  },
+  "mask_patch_ellipses": [
+    {
+      "frame": 105,
+      "ellipse": [
+        745,
+        92,
+        10,
+        9
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Reviewed Who Scored? expansion
 
-The manifest has 119 unique players: the original 9, 30 earlier additions and two
+The manifest has 159 unique players: the original 9, 30 earlier additions and three
 expansion batches of 40. Media are
 960x540, 24fps, silent H.264 with fast-start headers. Each masked video shares
 its frame count and camera angle with its reveal. Existing goal01..09 IDs and
@@ -104,7 +104,8 @@ GitHub and live-deployment verification separately from local staging.
 Batch 2 has also passed all 40 source, silhouette and encoded-media reviews. Its
 40 video pairs and posters are published and verified live, bringing the library
 to 119 scorers. Deployment evidence is in `progress/batch-02/live-verification.json`.
-Batches 3–6 contain the remaining 160 planned additions.
+Batch 3 has completed all 40 source, silhouette and encoded-media reviews and is
+staged for publication. Batches 4–6 contain the remaining 120 planned additions.
 
 Use the isolated SAM2 environment and store raw footage, API caches, models and
 working frames outside the checkout:

@@ -1,0 +1,333 @@
+{
+  "id": "goal-158",
+  "pid": 8479638,
+  "player": "Justin Brazeau",
+  "original": "/workspace/who-scored-expansion/originals/goal-158-6366718883112.mp4",
+  "source_sha256": "42de0805cf18b57c629afd4f3827578bf648d74c341fcce925e349881511f814",
+  "start": 48.8,
+  "duration": 3.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        225,
+        100,
+        420,
+        310
+      ],
+      "points": [
+        [
+          340,
+          190
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        390,
+        235,
+        550,
+        405
+      ],
+      "points": [
+        [
+          471,
+          315
+        ],
+        [
+          499,
+          261
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        335,
+        430,
+        465,
+        540
+      ],
+      "points": [
+        [
+          401,
+          518
+        ],
+        [
+          416,
+          458
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        445,
+        480,
+        560,
+        540
+      ],
+      "points": [
+        [
+          495,
+          515
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 51,
+      "box": [
+        465,
+        520,
+        510,
+        540
+      ],
+      "points": [
+        [
+          490,
+          535
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 54,
+      "box": [
+        345,
+        470,
+        565,
+        540
+      ],
+      "points": [
+        [
+          461,
+          505
+        ],
+        [
+          378,
+          515
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        335,
+        340,
+        590,
+        540
+      ],
+      "points": [
+        [
+          480,
+          450
+        ],
+        [
+          440,
+          370
+        ],
+        [
+          364,
+          395
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 81,
+      "box": [
+        245,
+        140,
+        775,
+        540
+      ],
+      "points": [
+        [
+          565,
+          350
+        ],
+        [
+          493,
+          200
+        ],
+        [
+          280,
+          224
+        ],
+        [
+          725,
+          465
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 79,
+  "supersedes_draft_window": {
+    "start": 11.7,
+    "duration": 3.9
+  },
+  "tracking_crop_size": 640,
+  "identity_verification": "Official scorer Justin Brazeau, Bruins 55, January 5 against the Islanders. The close replay follows 55 receiving and shooting from the slot, then continuing into the foreground. Jersey 55 is clear at 12 and the final reaction. Net-front Frederic 11 remains visible. Brazeau temporarily leaves the bottom edge after his goal, then the camera follows his own celebration back into view.",
+  "allow_empty": [
+    46,
+    47,
+    48,
+    49
+  ],
+  "manual_clear_polygons": {
+    "44": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          959,
+          0
+        ],
+        [
+          959,
+          539
+        ],
+        [
+          0,
+          539
+        ]
+      ]
+    ],
+    "45": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          959,
+          0
+        ],
+        [
+          959,
+          539
+        ],
+        [
+          0,
+          539
+        ]
+      ]
+    ],
+    "50": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          959,
+          0
+        ],
+        [
+          959,
+          539
+        ],
+        [
+          0,
+          539
+        ]
+      ]
+    ],
+    "0": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          326,
+          0
+        ],
+        [
+          326,
+          128
+        ],
+        [
+          323,
+          149
+        ],
+        [
+          318,
+          171
+        ],
+        [
+          300,
+          177
+        ],
+        [
+          0,
+          177
+        ]
+      ]
+    ]
+  },
+  "mask_patch_ellipses": [
+    {
+      "frame": 44,
+      "ellipse": [
+        511,
+        550,
+        14,
+        14
+      ]
+    },
+    {
+      "frame": 45,
+      "ellipse": [
+        511,
+        554,
+        15,
+        15
+      ]
+    },
+    {
+      "frame": 50,
+      "ellipse": [
+        493,
+        552,
+        14,
+        15
+      ]
+    }
+  ]
+}

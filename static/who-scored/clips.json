@@ -1069,5 +1069,365 @@
     "poster": "goal-119-v1.jpg",
     "motion": "Rush to the net, close-range finish, and full two-arm celebration",
     "source": "https://nhl.com/video/nyr-wsh-protas-scores-goal-against-jonathan-quick-6366690247112"
+  },
+  {
+    "id": "goal-120",
+    "pid": 8484801,
+    "masked": "goal-120-masked-v1.mp4",
+    "reveal": "goal-120-original-v1.mp4",
+    "poster": "goal-120-v1.jpg",
+    "motion": "Celebrini carries into the slot, fires past the goalie and turns after the goal.",
+    "source": "https://nhl.com/video/njd-sjs-celebrini-scores-goal-against-jacob-markstrom-6366693994112"
+  },
+  {
+    "id": "goal-121",
+    "pid": 8481032,
+    "masked": "goal-121-masked-v1.mp4",
+    "reveal": "goal-121-original-v1.mp4",
+    "poster": "goal-121-v1.jpg",
+    "motion": "Cotter carries toward the slot, scores at close range and raises both arms as he turns behind the net.",
+    "source": "https://nhl.com/video/njd-sjs-cotter-scores-goal-against-yaroslav-askarov-6366693523112"
+  },
+  {
+    "id": "goal-122",
+    "pid": 8476879,
+    "masked": "goal-122-masked-v1.mp4",
+    "reveal": "goal-122-original-v1.mp4",
+    "poster": "goal-122-v1.jpg",
+    "motion": "Ceci winds up and fires from the point; the camera follows the puck through the goal and the goalie reaction.",
+    "source": "https://nhl.com/video/njd-sjs-ceci-scores-goal-against-jacob-markstrom-6366693441112"
+  },
+  {
+    "id": "goal-123",
+    "pid": 8477504,
+    "masked": "goal-123-masked-v1.mp4",
+    "reveal": "goal-123-original-v1.mp4",
+    "poster": "goal-123-v1.jpg",
+    "motion": "Alternate official frontal replay clearly shows Morrissey44 carrying, shooting, complete goal and goalie/net reaction; he exits below screen after77, Iafallo9 stays visible and unmasked.",
+    "source": "https://nhl.com/video/nsh-wpg-morrissey-scores-goal-against-juuse-saros-6366793439112"
+  },
+  {
+    "id": "goal-124",
+    "pid": 8477940,
+    "masked": "goal-124-masked-v1.mp4",
+    "reveal": "goal-124-original-v1.mp4",
+    "poster": "goal-124-v1.jpg",
+    "motion": "Ehlers receives the pass in the slot, shoots past the goalie and raises his glove after the goal.",
+    "source": "https://nhl.com/video/det-wpg-ehlers-scores-goal-against-alex-lyon-6366698346112"
+  },
+  {
+    "id": "goal-125",
+    "pid": 8476931,
+    "masked": "goal-125-masked-v1.mp4",
+    "reveal": "goal-125-original-v1.mp4",
+    "poster": "goal-125-v1.jpg",
+    "motion": "Continuous side view includes McCabe22 carry, shot, full goal and natural reaction; exact scorer exit after55, with Marner16 and Matthews34 preserved.",
+    "source": "https://nhl.com/video/bos-tor-mccabe-scores-goal-against-jeremy-swayman-6366694944112"
+  },
+  {
+    "id": "goal-126",
+    "pid": 8482720,
+    "masked": "goal-126-masked-v1.mp4",
+    "reveal": "goal-126-original-v1.mp4",
+    "poster": "goal-126-v1.jpg",
+    "motion": "Continuous frontal shot, goal and goalie reaction; Knies23 skates behind Bruins91 and exits after63, including his trailing calf/skate at62/63.",
+    "source": "https://nhl.com/video/bos-tor-knies-scores-goal-against-jeremy-swayman-6366695578112"
+  },
+  {
+    "id": "goal-127",
+    "pid": 8479987,
+    "masked": "goal-127-masked-v1.mp4",
+    "reveal": "goal-127-original-v1.mp4",
+    "poster": "goal-127-v1.jpg",
+    "motion": "Geekie39 circles to the right of the crease, receives the setup, scores and reacts in one continuous behind-goal replay; the end includes the goalie and referee reaction.",
+    "source": "https://nhl.com/video/"
+  },
+  {
+    "id": "goal-128",
+    "pid": 8479365,
+    "masked": "goal-128-masked-v1.mp4",
+    "reveal": "goal-128-original-v1.mp4",
+    "poster": "goal-128-v1.jpg",
+    "motion": "Frederic11 receives in the slot, shoots, scores and raises his arm in celebration; continuous behind-goal cut includes full goal and natural aftermath.",
+    "source": "https://nhl.com/video/"
+  },
+  {
+    "id": "goal-129",
+    "pid": 8475692,
+    "masked": "goal-129-masked-v1.mp4",
+    "reveal": "goal-129-original-v1.mp4",
+    "poster": "goal-129-v1.jpg",
+    "motion": "Continuous wide view includes Zuccarello36 receiving, shooting, the actual goal and the net-front celebration; scorer entry7 and final glove/skate exit44 verified.",
+    "source": "https://nhl.com/video/min-car-zuccarello-scores-goal-against-pyotr-kochetkov-6366694754112"
+  },
+  {
+    "id": "goal-130",
+    "pid": 8478493,
+    "masked": "goal-130-masked-v1.mp4",
+    "reveal": "goal-130-original-v1.mp4",
+    "poster": "goal-130-v1.jpg",
+    "motion": "Behind-goal replay shows Eriksson Ek14 net-front finish, goal, full goalie reaction and raised-arm celebration; scorer remains visible through final cropped helmet frame90.",
+    "source": "https://nhl.com/video/min-car-eriksson-ek-scores-goal-against-pyotr-kochetkov-6366696368112"
+  },
+  {
+    "id": "goal-131",
+    "pid": 8481557,
+    "masked": "goal-131-masked-v1.mp4",
+    "reveal": "goal-131-original-v1.mp4",
+    "poster": "goal-131-v1.jpg",
+    "motion": "Boldy12 breakaway carry, shot and full goal followed by raised-arm celebration; continuous side replay includes puck in net and goalie aftermath.",
+    "source": "https://nhl.com/video/min-car-boldy-scores-goal-against-pyotr-kochetkov-6366696483112"
+  },
+  {
+    "id": "goal-132",
+    "pid": 8481716,
+    "masked": "goal-132-masked-v1.mp4",
+    "reveal": "goal-132-original-v1.mp4",
+    "poster": "goal-132-v1.jpg",
+    "motion": "Continuous overhead replay includes Voronkov10 setup, scoring touch, actual goal and Hofer30 reaction; final departing fragment94 is covered, verified full exit95.",
+    "source": "https://nhl.com/video/stl-cbj-voronkov-scores-goal-against-joel-hofer-6366694774112"
+  },
+  {
+    "id": "goal-133",
+    "pid": 8480893,
+    "masked": "goal-133-masked-v1.mp4",
+    "reveal": "goal-133-original-v1.mp4",
+    "poster": "goal-133-v1.jpg",
+    "motion": "Marchenko 86 receives in the high left circle, shoots, and exits the left edge after frame 58; the net, goal and reaction remain visible through frame 97.",
+    "source": "https://nhl.com/video/stl-cbj-marchenko-scores-ppg-against-joel-hofer-6366697334112"
+  },
+  {
+    "id": "goal-134",
+    "pid": 8479385,
+    "masked": "goal-134-masked-v1.mp4",
+    "reveal": "goal-134-original-v1.mp4",
+    "poster": "goal-134-v1.jpg",
+    "motion": "Kyrou 25 enters from the left, shoots into the visible net, and remains in frame through the goal and raised-arm reaction.",
+    "source": "https://nhl.com/video/stl-cbj-kyrou-scores-ppg-against-elvis-merzlikins-6366697338112"
+  },
+  {
+    "id": "goal-135",
+    "pid": 8484166,
+    "masked": "goal-135-masked-v1.mp4",
+    "reveal": "goal-135-original-v1.mp4",
+    "poster": "goal-135-v1.jpg",
+    "motion": "Fantilli19 carries into the slot, shoots, scores and raises both arms beside the net; the 3.8-second window ends on the celebration before a camera transition.",
+    "source": "https://nhl.com/video/stl-cbj-fantilli-scores-goal-against-joel-hofer-6366697746112"
+  },
+  {
+    "id": "goal-136",
+    "pid": 8475764,
+    "masked": "goal-136-masked-v1.mp4",
+    "reveal": "goal-136-original-v1.mp4",
+    "poster": "goal-136-v1.jpg",
+    "motion": "Fowler17 receives in the right circle, shoots and scores with the whole net visible; the four-second window retains the net reaction after he exits right following75.",
+    "source": "https://nhl.com/video/stl-cbj-fowler-scores-goal-against-elvis-merzlikins-6366697059112"
+  },
+  {
+    "id": "goal-137",
+    "pid": 8476892,
+    "masked": "goal-137-masked-v1.mp4",
+    "reveal": "goal-137-original-v1.mp4",
+    "poster": "goal-137-v1.jpg",
+    "motion": "Parayko55 shoots from the high slot, follows through bent forward and celebrates after the complete goal; the net remains visible throughout the 3.6-second replay.",
+    "source": "https://nhl.com/video/stl-cbj-parayko-scores-goal-against-elvis-merzlikins-6366697768112"
+  },
+  {
+    "id": "goal-138",
+    "pid": 8479671,
+    "masked": "goal-138-masked-v1.mp4",
+    "reveal": "goal-138-original-v1.mp4",
+    "poster": "goal-138-v1.jpg",
+    "motion": "Olivier24 enters from the left, carries through pressure, shoots and scores against Oettinger; the complete net reaction remains after he exits right following54.",
+    "source": "https://nhl.com/video/dal-cbj-olivier-scores-goal-against-jake-oettinger-6369320836112"
+  },
+  {
+    "id": "goal-139",
+    "pid": 8481711,
+    "masked": "goal-139-masked-v1.mp4",
+    "reveal": "goal-139-original-v1.mp4",
+    "poster": "goal-139-v1.jpg",
+    "motion": "The setup pass reaches Maccelli63 on the right; he drops to a knee for the finish and raises both arms after the full goal. End36.35s precedes the next crossfade.",
+    "source": "https://nhl.com/video/uta-dal-maccelli-scores-goal-against-jake-oettinger-6366697530112"
+  },
+  {
+    "id": "goal-140",
+    "pid": 8480840,
+    "masked": "goal-140-masked-v1.mp4",
+    "reveal": "goal-140-original-v1.mp4",
+    "poster": "goal-140-v1.jpg",
+    "motion": "Back10 starts at the right edge, moves into the crease for the point-shot finish, then celebrates after the goal with the net visible throughout.",
+    "source": "https://nhl.com/video/uta-dal-back-scores-goal-against-karel-vejmelka-6366697556112"
+  },
+  {
+    "id": "goal-141",
+    "pid": 8481581,
+    "masked": "goal-141-masked-v1.mp4",
+    "reveal": "goal-141-original-v1.mp4",
+    "poster": "goal-141-v1.jpg",
+    "motion": "Harley55 collects the rebound in the right circle, shoots past the goalie and jumps with a raised left arm after the complete goal.",
+    "source": "https://nhl.com/video/uta-dal-harley-scores-goal-against-karel-vejmelka-6366699869112"
+  },
+  {
+    "id": "goal-142",
+    "pid": 8475167,
+    "masked": "goal-142-masked-v1.mp4",
+    "reveal": "goal-142-original-v1.mp4",
+    "poster": "goal-142-v1.jpg",
+    "motion": "Hedman77 receives at the point, winds up for a slapshot and follows through as the continuous ice-level replay follows the puck through the full goal and net reaction.",
+    "source": "https://nhl.com/video/tbl-lak-hedman-scores-goal-against-darcy-kuemper-6366697448112"
+  },
+  {
+    "id": "goal-143",
+    "pid": 8479998,
+    "masked": "goal-143-masked-v1.mp4",
+    "reveal": "goal-143-original-v1.mp4",
+    "poster": "goal-143-v1.jpg",
+    "motion": "Kings44 receives at the left point, takes the slapshot and exits left on33; the continuous replay follows the puck through the full goal and goalie reaction through100.",
+    "source": "https://nhl.com/video/tbl-lak-anderson-scores-goal-against-andrei-vasilevskiy-6366697666112"
+  },
+  {
+    "id": "goal-144",
+    "pid": 8475158,
+    "masked": "goal-144-masked-v1.mp4",
+    "reveal": "goal-144-original-v1.mp4",
+    "poster": "goal-144-v1.jpg",
+    "motion": "OReilly arrives at the right post, receives the pass, scores and raises his stick; all 62 frames reviewed through the net-front reaction.",
+    "source": "https://nhl.com/video/nsh-cgy-o-reilly-scores-ppg-against-dustin-wolf-6366699310112"
+  },
+  {
+    "id": "goal-145",
+    "pid": 8474150,
+    "masked": "goal-145-masked-v1.mp4",
+    "reveal": "goal-145-original-v1.mp4",
+    "poster": "goal-145-v1.jpg",
+    "motion": "Continuous board recovery, slot shot, goal and raised-arm reaction; all 94 original, silhouette and full-scene frames inspected.",
+    "source": "https://nhl.com/video/nsh-cgy-backlund-scores-goal-against-justus-annunen-6366699121112"
+  },
+  {
+    "id": "goal-146",
+    "pid": 8482768,
+    "masked": "goal-146-masked-v1.mp4",
+    "reveal": "goal-146-original-v1.mp4",
+    "poster": "goal-146-v1.jpg",
+    "motion": "Full left-circle shot, goal, arms-out reaction and knee slide, followed through the scorers left-edge exit; all 74 frames inspected in all three review views.",
+    "source": "https://nhl.com/video/fedor-svechkov-with-a-goal-vs-san-jose-sharks-6367609274112"
+  },
+  {
+    "id": "goal-147",
+    "pid": 8479550,
+    "masked": "goal-147-masked-v1.mp4",
+    "reveal": "goal-147-original-v1.mp4",
+    "poster": "goal-147-v1.jpg",
+    "motion": "Laczynski 28 redirects the scoring play and drops to one knee in celebration; all 91 frames reviewed.",
+    "source": "https://nhl.com/video/buf-vgk-laczynski-scores-goal-against-james-reimer-6366698402112"
+  },
+  {
+    "id": "goal-148",
+    "pid": 8478403,
+    "masked": "goal-148-masked-v1.mp4",
+    "reveal": "goal-148-original-v1.mp4",
+    "poster": "goal-148-v1.jpg",
+    "motion": "Eichel snap shot, goal and full arms-raised celebration before his left-edge exit; all 72 frames reviewed.",
+    "source": "https://nhl.com/video/buf-vgk-eichel-scores-goal-against-james-reimer-6366701472112"
+  },
+  {
+    "id": "goal-149",
+    "pid": 8481617,
+    "masked": "goal-149-masked-v1.mp4",
+    "reveal": "goal-149-original-v1.mp4",
+    "poster": "goal-149-v1.jpg",
+    "motion": "Podkolzin 92 stays on the left boards, receives and shoots, then skates toward the foreground after the goal; the silhouette follows him through the natural reaction.",
+    "source": "https://nhl.com/video/edm-sea-podkolzin-scores-goal-against-philipp-grubauer-6366699739112"
+  },
+  {
+    "id": "goal-150",
+    "pid": 8475768,
+    "masked": "goal-150-masked-v1.mp4",
+    "reveal": "goal-150-original-v1.mp4",
+    "poster": "goal-150-v1.jpg",
+    "motion": "Schwartz 17 carries from the right boards into the circle, shoots, scores and glides away through the raised-stick reaction; all 101 frames inspected.",
+    "source": "https://nhl.com/video/edm-sea-schwartz-scores-goal-against-calvin-pickard-6366700891112"
+  },
+  {
+    "id": "goal-151",
+    "pid": 8478840,
+    "masked": "goal-151-masked-v1.mp4",
+    "reveal": "goal-151-original-v1.mp4",
+    "poster": "goal-151-v1.jpg",
+    "motion": "Borgen 17 receives at the point, takes the full wrist shot and celebrates the goal while gliding toward teammates; all 89 frames inspected.",
+    "source": "https://nhl.com/video/nyr-chi-borgen-scores-goal-against-arvid-soderblom-6366715498112"
+  },
+  {
+    "id": "goal-152",
+    "pid": 8476389,
+    "masked": "goal-152-masked-v1.mp4",
+    "reveal": "goal-152-original-v1.mp4",
+    "poster": "goal-152-v1.jpg",
+    "motion": "Trocheck 16 screens at the top of the crease, tips the shot in, and turns into his goal celebration while Soderblom 40 and Lafreniere 13 remain visible.",
+    "source": "https://nhl.com/video/nyr-chi-trocheck-scores-goal-against-arvid-soderblom-6366714953112"
+  },
+  {
+    "id": "goal-153",
+    "pid": 8482176,
+    "masked": "goal-153-masked-v1.mp4",
+    "reveal": "goal-153-original-v1.mp4",
+    "poster": "goal-153-v1.jpg",
+    "motion": "Kaiser 44 winds up in the slot, shoots through the Rangers, and skates toward the goal after scoring while Nazar 91 and Rangers 18 remain visible.",
+    "source": "https://nhl.com/video/nyr-chi-kaiser-scores-goal-against-louis-domingue-6366715181112"
+  },
+  {
+    "id": "goal-154",
+    "pid": 8481043,
+    "masked": "goal-154-masked-v1.mp4",
+    "reveal": "goal-154-original-v1.mp4",
+    "poster": "goal-154-v1.jpg",
+    "motion": "Koepke 45 controls the puck at the right post, stuffs the shot into the net, and raises his glove in celebration.",
+    "source": "https://nhl.com/video/nyi-bos-koepke-scores-goal-against-ilya-sorokin-6366717080112"
+  },
+  {
+    "id": "goal-155",
+    "pid": 8477500,
+    "masked": "goal-155-masked-v1.mp4",
+    "reveal": "goal-155-original-v1.mp4",
+    "poster": "goal-155-v1.jpg",
+    "motion": "Horvat 14 attacks on the right, releases his shot, and continues around the right boards after the goal while Pageau 44 remains visible on the left.",
+    "source": "https://nhl.com/video/nyi-bos-horvat-scores-goal-against-joonas-korpisalo-6366718439112"
+  },
+  {
+    "id": "goal-156",
+    "pid": 8477506,
+    "masked": "goal-156-masked-v1.mp4",
+    "reveal": "goal-156-original-v1.mp4",
+    "poster": "goal-156-v1.jpg",
+    "motion": "Pulock 6 winds up and shoots from the point; the camera follows the puck to the net and retains the goal reaction after he leaves the left edge.",
+    "source": "https://nhl.com/video/nyi-bos-pulock-scores-goal-against-joonas-korpisalo-6366718763112"
+  },
+  {
+    "id": "goal-157",
+    "pid": 8475314,
+    "masked": "goal-157-masked-v1.mp4",
+    "reveal": "goal-157-original-v1.mp4",
+    "poster": "goal-157-v1.jpg",
+    "motion": "Lee 27 carries along the near boards, snaps his shot from the left circle and raises his arm while skating past the net after scoring.",
+    "source": "https://nhl.com/video/anders-lee-with-a-goal-vs-boston-bruins-6366718384112"
+  },
+  {
+    "id": "goal-158",
+    "pid": 8479638,
+    "masked": "goal-158-masked-v1.mp4",
+    "reveal": "goal-158-original-v1.mp4",
+    "poster": "goal-158-v1.jpg",
+    "motion": "Brazeau 55 receives and shoots against the Islanders; the close replay includes the goal, his foreground skate and raised-glove celebration.",
+    "source": "https://nhl.com/video/nyi-bos-brazeau-scores-goal-against-ilya-sorokin-6366718883112"
+  },
+  {
+    "id": "goal-159",
+    "pid": 8478047,
+    "masked": "goal-159-masked-v1.mp4",
+    "reveal": "goal-159-original-v1.mp4",
+    "poster": "goal-159-v1.jpg",
+    "motion": "Bunting finishes at the right post against Anaheim; the replay includes his scoring touch and the full raised-arm reaction.",
+    "source": "https://nhl.com/video/pit-ana-bunting-scores-goal-against-john-gibson-6367606439112"
   }
 ]

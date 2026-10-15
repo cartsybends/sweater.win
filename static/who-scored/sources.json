@@ -3880,5 +3880,1085 @@
       "poster": "eecb73effb94c80b381709c4a7f075c1a9a5777c20aa41f619beb5c133060512"
     },
     "review_record": "tools/who_scored/progress/batch-02/review.json"
+  },
+  {
+    "id": "goal-120",
+    "pid": 8484801,
+    "player": "Macklin Celebrini",
+    "game_id": 2024020622,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "01:53",
+    "team": "SJS",
+    "source": "https://nhl.com/video/njd-sjs-celebrini-scores-goal-against-jacob-markstrom-6366693994112",
+    "source_video_id": "6366693994112",
+    "official_event_id": 800,
+    "jersey": 71,
+    "source_sha256": "12551bc4b5bdf20ef515d19a7c584284058fd12814c2642a34fbd5a2dcc6850b",
+    "media_title": "Celebrini goes five-hole",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 50.63,
+    "exported_sha256": {
+      "masked": "6ef2df77dd8a1cbcf47a1fb2f1508f22b154202218a037170fbe89912dd98f72",
+      "reveal": "f0d6d31f7f3d41f560a33f98aa1f14237a44788ddace4a8a5f68cc84395a6163",
+      "poster": "299d2eed025276f8bac90b0f1ff65271deba8d41ff940fda42914751ff547da2"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-121",
+    "pid": 8481032,
+    "player": "Paul Cotter",
+    "game_id": 2024020622,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "05:07",
+    "team": "NJD",
+    "source": "https://nhl.com/video/njd-sjs-cotter-scores-goal-against-yaroslav-askarov-6366693523112",
+    "source_video_id": "6366693523112",
+    "official_event_id": 841,
+    "jersey": 47,
+    "source_sha256": "3ecea248cc7354fc80da93daa426fe4d3ecca9e9f75219a1b73b7706cdf31b5b",
+    "media_title": "Cotter scores slick goal",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 38.555011,
+    "exported_sha256": {
+      "masked": "0ff2b3149ee6352601bfeffedb0e783ee4e96616f4f5c327dc035fd556e87696",
+      "reveal": "bbc6d5ac915942f58592414e55c1b6e3b0f66547afd0f2b26bc9f2747e51fc5c",
+      "poster": "cc41be8d7e5c0cd8b777c468f014497104fcf9cf619a55865023d6857bcc7451"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-122",
+    "pid": 8476879,
+    "player": "Cody Ceci",
+    "game_id": 2024020622,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "19:35",
+    "team": "SJS",
+    "source": "https://nhl.com/video/njd-sjs-ceci-scores-goal-against-jacob-markstrom-6366693441112",
+    "source_video_id": "6366693441112",
+    "official_event_id": 1132,
+    "jersey": 4,
+    "source_sha256": "39351d4cc089299aeba95529a92aa56b5b9291a84c2fd7bd6e84e592156c196f",
+    "media_title": "Ceci's late go-ahead goal",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 51.326667,
+    "exported_sha256": {
+      "masked": "e62122483a93026b9f5370ae0312be7914ebe4d2e9d66b5aaf13f623a7f06714",
+      "reveal": "1e11522112362369b209618b86d836561847e4dca5793df954d6183367646819",
+      "poster": "8ae80138af56343c40d75f7ab15a09a2274233d8c6576da43a46fbe5abc04c3e"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-123",
+    "pid": 8477504,
+    "player": "Josh Morrissey",
+    "game_id": 2024020647,
+    "date": "2025-01-07",
+    "period": 1,
+    "time_in_period": "06:46",
+    "team": "WPG",
+    "source": "https://nhl.com/video/nsh-wpg-morrissey-scores-goal-against-juuse-saros-6366793439112",
+    "source_video_id": "6366793439112",
+    "official_event_id": 142,
+    "jersey": 44,
+    "source_sha256": "7566667db420b7ccda68217ffcff5b6e9721c44c59fb83b234d861aa72cb47a2",
+    "media_title": "Morrissey picks the corner",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 47.728345,
+    "exported_sha256": {
+      "masked": "9b18bba222f25526a2b3281c728d1a2ecccc0db7ede5352eb865d3c8e8306a4f",
+      "reveal": "8f66e0dfdad75919b781f423bb1c2315c4b44d01763ca7c8ab1d9c1597756741",
+      "poster": "abef3802c7e95124f97d5beb14e27d039fe699c9ae28d6f84e1b9b31ed4faf1e"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-124",
+    "pid": 8477940,
+    "player": "Nikolaj Ehlers",
+    "game_id": 2024020621,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "16:45",
+    "team": "WPG",
+    "source": "https://nhl.com/video/det-wpg-ehlers-scores-goal-against-alex-lyon-6366698346112",
+    "source_video_id": "6366698346112",
+    "official_event_id": 1026,
+    "jersey": 27,
+    "source_sha256": "09312cc23e5a126f09142db9cd2daa275ff5c275e9f4f030a9c5dfc2abbb73d3",
+    "media_title": "DET@WPG: Ehlers scores goal against Alex Lyon",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 50.351678,
+    "exported_sha256": {
+      "masked": "b5660684772bd407b907770a4f0bfac8059bfff0a4cc662ee55b684f04605d9b",
+      "reveal": "dc4f1670d41e3345933a9587f17c60481e2770168ac9a39d7eeaf2368a6a5005",
+      "poster": "bc21986a550e1f26b2e60dbd916f79319917fa0b76c5b3bbb645a48b6bb24995"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-125",
+    "pid": 8476931,
+    "player": "Jake McCabe",
+    "game_id": 2024020623,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "03:29",
+    "team": "TOR",
+    "source": "https://nhl.com/video/bos-tor-mccabe-scores-goal-against-jeremy-swayman-6366694944112",
+    "source_video_id": "6366694944112",
+    "official_event_id": 104,
+    "jersey": 22,
+    "source_sha256": "19d45170379924d30c34098d30f3697efd81d47cf30e88ea7581fdf7652f55fb",
+    "media_title": "McCabe starts the scoring",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 36.095011,
+    "exported_sha256": {
+      "masked": "78377fe6a3add5f8d92fd0b490f9513a8d742302a5c86cf375a927e67064c868",
+      "reveal": "02132a6da121c616944537493c835257863a8d614c3029afdf6a494409c76867",
+      "poster": "2aab6e7fbeeaa8deec7c9f921b2fb16019c4f9d35275532d27307b62eeffac4b"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-126",
+    "pid": 8482720,
+    "player": "Matthew Knies",
+    "game_id": 2024020623,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "03:37",
+    "team": "TOR",
+    "source": "https://nhl.com/video/bos-tor-knies-scores-goal-against-jeremy-swayman-6366695578112",
+    "source_video_id": "6366695578112",
+    "official_event_id": 551,
+    "jersey": 23,
+    "source_sha256": "88319f655a71be6eeb3dfab9a28f42c76aef4d2ef30a841025a47571df8c1882",
+    "media_title": "Knies scores tip-in goal",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 37.905011,
+    "exported_sha256": {
+      "masked": "34a20c213cfe8b210b74913c20a055b1314cc9bf9cbcb0d1bfd95e47af1f2fe6",
+      "reveal": "5c64f964fe63fce750effa081f80f305c765ae828d02a67d0a0739e2d9eea8db",
+      "poster": "e207b81d8240a4a2268f5ffeefa8096c3368c7db0d981b622e0c7abee87100ca"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-127",
+    "pid": 8479987,
+    "player": "Morgan Geekie",
+    "game_id": 2024020623,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "03:49",
+    "team": "BOS",
+    "source": "https://nhl.com/video/",
+    "source_video_id": "6366696533112",
+    "official_event_id": 522,
+    "jersey": 39,
+    "source_sha256": "2face4de50934b4c34774b37ebe2c7003a02d6ff9f47e1040991a459af9afb69",
+    "media_title": "BOS@TOR: Geekie scores goal against Joseph Woll",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 32.96,
+    "exported_sha256": {
+      "masked": "9c090bd0b78a267ad32b1a4aafadc28562eb49a356e5005e72967e68d0de6d46",
+      "reveal": "7c830684251ce286c844e48565edf5d8f49ff05446ee9fc1d4504692a5bae9a0",
+      "poster": "e0ea79e730e0ed81c0e3304f0b5e5993be7405cda0d1dd5c69f35e13b593ce71"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-128",
+    "pid": 8479365,
+    "player": "Trent Frederic",
+    "game_id": 2024020623,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "18:44",
+    "team": "BOS",
+    "source": "https://nhl.com/video/",
+    "source_video_id": "6366697426112",
+    "official_event_id": 775,
+    "jersey": 11,
+    "source_sha256": "e0f2ac3e747f2397d9f6e5890e631c0fb98574f7e004ca2c98139d3ce3ff5759",
+    "media_title": "BOS@TOR: Frederic scores goal against Joseph Woll",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 41.11,
+    "exported_sha256": {
+      "masked": "1543731277209c8037fee5332a67eddae5d5cd6df5d64cfc767e1ffbb6880d78",
+      "reveal": "147571db8f36782a5370984be14c17f987a683abe55161fd8f4fd24d7b787ea3",
+      "poster": "dbee11058508068acfc255bb656eb3de799b18fbd63bb2fe2225ec6f4c3c00a6"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-129",
+    "pid": 8475692,
+    "player": "Mats Zuccarello",
+    "game_id": 2024020624,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "13:03",
+    "team": "MIN",
+    "source": "https://nhl.com/video/min-car-zuccarello-scores-goal-against-pyotr-kochetkov-6366694754112",
+    "source_video_id": "6366694754112",
+    "official_event_id": 351,
+    "jersey": 36,
+    "source_sha256": "5b6776d924c019614fe5a7a503719a17468c3389616d407f6e7ac82d7a0ce637",
+    "media_title": "Zuccarello strikes first",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 33.586667,
+    "exported_sha256": {
+      "masked": "7bfa25675764638ff721b7c0b123da469a4f774ebb082a4cf373648c07d46f20",
+      "reveal": "81891b43ebe754eae6180a5da08f69408345fc975bb76b4f7990f23eb6a4a08f",
+      "poster": "2c6afef0113ae02951360a374abeaf9e93ea0ee9105ca123895ac40354e5f482"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-130",
+    "pid": 8478493,
+    "player": "Joel Eriksson Ek",
+    "game_id": 2024020624,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "11:30",
+    "team": "MIN",
+    "source": "https://nhl.com/video/min-car-eriksson-ek-scores-goal-against-pyotr-kochetkov-6366696368112",
+    "source_video_id": "6366696368112",
+    "official_event_id": 68,
+    "jersey": 14,
+    "source_sha256": "bd16d724818b43630ba0c9023b13f1fec5a795ffaa7ec81ddcad4537251534f2",
+    "media_title": "Eriksson Ek tips in PPG",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 41.295011,
+    "exported_sha256": {
+      "masked": "2cf3356a634856159580d7be4a56bd8c20fffc3d1d5a28f1c5e9ac6346467c41",
+      "reveal": "36aea3aca29b4e679043df7ed0276089e9e9b931c72f20752019a8f97cb0e66a",
+      "poster": "30c19d703811a0614e896479e94bb3eee0d3b41536346e7cd37b18234b8f8424"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-131",
+    "pid": 8481557,
+    "player": "Matt Boldy",
+    "game_id": 2024020624,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "09:20",
+    "team": "MIN",
+    "source": "https://nhl.com/video/min-car-boldy-scores-goal-against-pyotr-kochetkov-6366696483112",
+    "source_video_id": "6366696483112",
+    "official_event_id": 901,
+    "jersey": 12,
+    "source_sha256": "d12703393a5b5e13c50da6a84eedda95f853eea19ff36ed97922923d0c84b3c6",
+    "media_title": "MIN@CAR: Boldy scores goal against Pyotr Kochetkov",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 41.11,
+    "exported_sha256": {
+      "masked": "b2a8c9b199a580a7e453a3f8959c7e0ae44382310800a35690dd60c4980ca178",
+      "reveal": "554fd2ca7b2bc8947253e46fae99511cb74f49ec9cb650917562a3011cf9699c",
+      "poster": "b958cb3c5fa9e0e8043599e53aa2366beb3e6ef941c67ee252a5377f2e56c1b1"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-132",
+    "pid": 8481716,
+    "player": "Dmitri Voronkov",
+    "game_id": 2024020625,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "19:01",
+    "team": "CBJ",
+    "source": "https://nhl.com/video/stl-cbj-voronkov-scores-goal-against-joel-hofer-6366694774112",
+    "source_video_id": "6366694774112",
+    "official_event_id": 65,
+    "jersey": 10,
+    "source_sha256": "0d8b7cd450ae01d8dc9fcfd919803efabf6befffc7477b691c1b7261477f1e1e",
+    "media_title": "Voronkov breaks the ice",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 49.701678,
+    "exported_sha256": {
+      "masked": "af1e306f7f209bb90c84fc434ec55c99c405e4eeccdc8cd104d97e08fb8c23c8",
+      "reveal": "aed8d54acca6f45b25b9c034794af077e3a8a64a006bc214eb5647de0b4639e3",
+      "poster": "7c8917b2a57378ef5701077ef23ac51e7a1ccb093d3c38661519ee53d5ad766d"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-133",
+    "pid": 8480893,
+    "player": "Kirill Marchenko",
+    "game_id": 2024020625,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "02:15",
+    "team": "CBJ",
+    "source": "https://nhl.com/video/stl-cbj-marchenko-scores-ppg-against-joel-hofer-6366697334112",
+    "source_video_id": "6366697334112",
+    "official_event_id": 519,
+    "jersey": 86,
+    "source_sha256": "c36146279057490c6beb269a968591cd55dd0d7e4351036a69ed2608534f303c",
+    "media_title": "Marchenko doubles lead with PPG",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 52.928345,
+    "exported_sha256": {
+      "masked": "7a50cde5a23f4f48e8b7da53a3fb62dec047e7001290c4422ce2d47370005d6f",
+      "reveal": "e53c9c77fdad8c238bff81d3865085edbc5574b292f25533f1553eecbf15e794",
+      "poster": "6308554a63f11ef40e9a6e1b9062688cedae4104c806ded6fe3b44c4dc786833"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-134",
+    "pid": 8479385,
+    "player": "Jordan Kyrou",
+    "game_id": 2024020625,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "04:54",
+    "team": "STL",
+    "source": "https://nhl.com/video/stl-cbj-kyrou-scores-ppg-against-elvis-merzlikins-6366697338112",
+    "source_video_id": "6366697338112",
+    "official_event_id": 939,
+    "jersey": 25,
+    "source_sha256": "01e23a9628dd4d04bf82ac25c90be8f40f708e849aef66a43cf66a0eb1393197",
+    "media_title": "Kyrou starts off Blues with PPG",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 40.111678,
+    "exported_sha256": {
+      "masked": "377fc690219512bb5d37c5be2414364ad444181d0c06c4a2dd5459f705ffc41f",
+      "reveal": "daf1ed77faa1bdefa50351fecedeba4998f0876779311fcc785d02a2068ae63c",
+      "poster": "43a46cd20be8d15d7d2b787692f087ca5ba25b81b60a44dcb7fe79eb37bf851c"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-135",
+    "pid": 8484166,
+    "player": "Adam Fantilli",
+    "game_id": 2024020625,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "05:25",
+    "team": "CBJ",
+    "source": "https://nhl.com/video/stl-cbj-fantilli-scores-goal-against-joel-hofer-6366697746112",
+    "source_video_id": "6366697746112",
+    "official_event_id": 946,
+    "jersey": 19,
+    "source_sha256": "c46dcc4f3143ae10796907752768726ce036331c4db2acf39c769b68dec0d4fe",
+    "media_title": "STL@CBJ: Fantilli scores goal against Joel Hofer",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 41.945011,
+    "exported_sha256": {
+      "masked": "74d8a18a6ef3346dee427db7365f330cc20b153e3d6e3055fbc5a8c41bdb613c",
+      "reveal": "e23f0f48653ad33688e430abd66bdb58b8b387c67570e3b1713182a305da99ee",
+      "poster": "20700e95acddad9e40dd162a4a424e595bec384a0636d6c0ca2924a3f307acfc"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-136",
+    "pid": 8475764,
+    "player": "Cam Fowler",
+    "game_id": 2024020625,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "06:55",
+    "team": "STL",
+    "source": "https://nhl.com/video/stl-cbj-fowler-scores-goal-against-elvis-merzlikins-6366697059112",
+    "source_video_id": "6366697059112",
+    "official_event_id": 966,
+    "jersey": 17,
+    "source_sha256": "879700b16f001f13d5fc9abce6c6d0e8b7406f4db8df9731044897b97454014c",
+    "media_title": "Fowler's 100th career goal",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 38.996667,
+    "exported_sha256": {
+      "masked": "129220c41a14f0b16f75817f8f5fbf9353bc879061d7f24217f90fb932e6197b",
+      "reveal": "8b39289830cc0585dba220ae08a7962c1cf02787436530b1ada1548cae7fc1fd",
+      "poster": "153fca686d9140af3e489bf5c74f0341bca548ebde14f782171d197edaca7cc9"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-137",
+    "pid": 8476892,
+    "player": "Colton Parayko",
+    "game_id": 2024020625,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "12:54",
+    "team": "STL",
+    "source": "https://nhl.com/video/stl-cbj-parayko-scores-goal-against-elvis-merzlikins-6366697768112",
+    "source_video_id": "6366697768112",
+    "official_event_id": 1030,
+    "jersey": 55,
+    "source_sha256": "07268d5f06c89d6fedae59daa7d3a1d5024c1bec4238162e8bf84b0cade095c1",
+    "media_title": "Parayko scores in his 700th NHL game",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 42.48,
+    "exported_sha256": {
+      "masked": "63ff2e2e921301e77dfb33c18d396df15d183959f9716622bf5f5013d6c569a0",
+      "reveal": "fd7258c729ae530d4a7a5e6f60a5df3d0c7c779c8e191b42e188f76995fba8d3",
+      "poster": "01fe80db3163bbde1a4f01e73699dc66c4864f84a8a265b16d11f625f0b09a96"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-138",
+    "pid": 8479671,
+    "player": "Mathieu Olivier",
+    "game_id": 2024020924,
+    "date": "2025-02-25",
+    "period": 1,
+    "time_in_period": "04:37",
+    "team": "CBJ",
+    "source": "https://nhl.com/video/dal-cbj-olivier-scores-goal-against-jake-oettinger-6369320836112",
+    "source_video_id": "6369320836112",
+    "official_event_id": 151,
+    "jersey": 24,
+    "source_sha256": "ebd58792e40b01b83d96becec06d8250486adeed3b16785ddb15e9c723920bc8",
+    "media_title": "DAL@CBJ: Olivier scores goal against Jake Oettinger",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 42.248345,
+    "exported_sha256": {
+      "masked": "4f3405c4794abb0b829ade18b1112bde0aae55fbc3fb386e81b2b0821068ac54",
+      "reveal": "0fbe953794aaf09beb541948946fadd93f13b35c87d21dfb4e00d944c5a60272",
+      "poster": "073a693b865cbe2cfbfef0b092d709f59107f91a3981f0b17bfc313314c05279"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-139",
+    "pid": 8481711,
+    "player": "Matias Maccelli",
+    "game_id": 2024020628,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "01:30",
+    "team": "UTA",
+    "source": "https://nhl.com/video/uta-dal-maccelli-scores-goal-against-jake-oettinger-6366697530112",
+    "source_video_id": "6366697530112",
+    "official_event_id": 499,
+    "jersey": 63,
+    "source_sha256": "6e2fc44770657860e31dccddbbad827c65bb95bef9003136902b3d2ce8396011",
+    "media_title": "Maccelli answers back",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 47.75,
+    "exported_sha256": {
+      "masked": "fad75518ffbd3ba00eae6fb710ce5d03b5b0b0e05ad04118e35112dc4d0e7834",
+      "reveal": "87038c041bf36f76ccf4779730f410762f78c57bca77a6e0a7006ad71130676a",
+      "poster": "02d31bc2153d5f414123102da2e69030bb1bfc56fcddedf04f05e417f98b05d7"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-140",
+    "pid": 8480840,
+    "player": "Oskar Bäck",
+    "game_id": 2024020628,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "10:30",
+    "team": "DAL",
+    "source": "https://nhl.com/video/uta-dal-back-scores-goal-against-karel-vejmelka-6366697556112",
+    "source_video_id": "6366697556112",
+    "official_event_id": 760,
+    "jersey": 10,
+    "source_sha256": "9db76c0b6619a6403bbe4b878296625accad800c5d3ad5aaf157d219886fe892",
+    "media_title": "UTA@DAL: Bäck scores goal against Karel Vejmelka",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 60.568345,
+    "exported_sha256": {
+      "masked": "b9dd03cffc681291d4881ded95b819c0a1d3023435be4b22c986135304c64b30",
+      "reveal": "32d6a40fdab968eb2f778285a95825fc7bc1b0134cee1f311c37f3bc2fc31feb",
+      "poster": "15a1396c03f98ed9544ac62a6b7126c0a71b13eb5a4353234942d66960b7b6e7"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-141",
+    "pid": 8481581,
+    "player": "Thomas Harley",
+    "game_id": 2024020628,
+    "date": "2025-01-04",
+    "period": 4,
+    "time_in_period": "03:01",
+    "team": "DAL",
+    "source": "https://nhl.com/video/uta-dal-harley-scores-goal-against-karel-vejmelka-6366699869112",
+    "source_video_id": "6366699869112",
+    "official_event_id": 1159,
+    "jersey": 55,
+    "source_sha256": "abc2d327482386d6ed7ae65bcd1bd9ef8e34d94893d4af9bd676e99aeb5d6d55",
+    "media_title": "Harley buries the OT winner",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 62.681678,
+    "exported_sha256": {
+      "masked": "7e4b8a6efba272682edb5b47e1a5186a8484a342e7bf1ca15b3583ca34e893fd",
+      "reveal": "f9c49dc063a23068b06f352ca5bedf4a2f3e1c37a1db845b1f11036d7c87a80e",
+      "poster": "6bb24b544271e6e68f48024357010957139ae7ad2d9da8fb3f22a97ef4f47ff5"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-142",
+    "pid": 8475167,
+    "player": "Victor Hedman",
+    "game_id": 2024020629,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "01:09",
+    "team": "TBL",
+    "source": "https://nhl.com/video/tbl-lak-hedman-scores-goal-against-darcy-kuemper-6366697448112",
+    "source_video_id": "6366697448112",
+    "official_event_id": 111,
+    "jersey": 77,
+    "source_sha256": "c9b7571261375e44c57c9b6c6a025b760d4d74eab46b521a8f897c531cb694f5",
+    "media_title": "Hedman breaks the ice",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 38.045011,
+    "exported_sha256": {
+      "masked": "fdd803b91c9efdda15d31fe79f97c3a0ec36f2447004bf12ddb87303b4cac7e4",
+      "reveal": "1f4fa37d842e1b341fc08f3bf07fc713fe7321e6a55c7c4212a98414bc64f53f",
+      "poster": "91c68fbe1004fcf5a8c8182b051d50060c0a9e7c3de1de9b355664a873e0b10e"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-143",
+    "pid": 8479998,
+    "player": "Mikey Anderson",
+    "game_id": 2024020629,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "07:58",
+    "team": "LAK",
+    "source": "https://nhl.com/video/tbl-lak-anderson-scores-goal-against-andrei-vasilevskiy-6366697666112",
+    "source_video_id": "6366697666112",
+    "official_event_id": 255,
+    "jersey": 44,
+    "source_sha256": "ff6fa54f267843adc5f914ae602e047a0d9a7a246adfa1fff84024b1dd597514",
+    "media_title": "Anderson scores from deep",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 35.026667,
+    "exported_sha256": {
+      "masked": "1a29d6fda22bc4240cc46b93312864e0f370ded060771b8c8985a8341ef45368",
+      "reveal": "8fe929f1d7e3ac28a4f8f7906f1a3fde786dd50ffdd6fa67ce50aab09e5baa0d",
+      "poster": "6cba9a331f61384c7128732851cabce70ab629fec074138bb2c4fd0b00ffd18c"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-144",
+    "pid": 8475158,
+    "player": "Ryan O'Reilly",
+    "game_id": 2024020627,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "11:37",
+    "team": "NSH",
+    "source": "https://nhl.com/video/nsh-cgy-o-reilly-scores-ppg-against-dustin-wolf-6366699310112",
+    "source_video_id": "6366699310112",
+    "official_event_id": 719,
+    "jersey": 90,
+    "source_sha256": "d56f1c32da89d87b16c82e430144470c11ea8799267d9410308f3cdf428fe394",
+    "media_title": "O'Reilly nets second PPG",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 39.623333,
+    "exported_sha256": {
+      "masked": "f3e707ceed53bd9ee51339c4a51998af154018d904529dd5ac7e294198a549bf",
+      "reveal": "118c78cce03aaa369dc4da8f5cf851a99783e82ff87577e4bab8cfff2bb01e18",
+      "poster": "b387cd69df47beecd689c13fc4a94a0b7015d288974e63b71318b19999f802e2"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-145",
+    "pid": 8474150,
+    "player": "Mikael Backlund",
+    "game_id": 2024020627,
+    "date": "2025-01-04",
+    "period": 2,
+    "time_in_period": "18:22",
+    "team": "CGY",
+    "source": "https://nhl.com/video/nsh-cgy-backlund-scores-goal-against-justus-annunen-6366699121112",
+    "source_video_id": "6366699121112",
+    "official_event_id": 801,
+    "jersey": 11,
+    "source_sha256": "99f9cd3e66dfffddb75816b5fef7ec3b83ad540e27506491a7c96b898c5882c5",
+    "media_title": "Backlund puts Flames on the board",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 49.468345,
+    "exported_sha256": {
+      "masked": "d95a7b818b1731400867e0bfba00c09049556dc9922453a0fed25ab7714bb023",
+      "reveal": "67a48c280fc728fb3673c132abf5d0b80ba584201447443cf41ad73ca0876d20",
+      "poster": "29a1a19635680f4156ce206ac17773a429bbdb320db1a0089c2f72e1bbb82075"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-146",
+    "pid": 8482768,
+    "player": "Fedor Svechkov",
+    "game_id": 2024020771,
+    "date": "2025-01-23",
+    "period": 3,
+    "time_in_period": "08:16",
+    "team": "NSH",
+    "source": "https://nhl.com/video/fedor-svechkov-with-a-goal-vs-san-jose-sharks-6367609274112",
+    "source_video_id": "6367609274112",
+    "official_event_id": 978,
+    "jersey": 40,
+    "source_sha256": "8b1a2bac7b6f9079942b8bf67f741d6c3aacb5e8718ebd7cd7174a5b703afcdd",
+    "media_title": "Svechkov grabs the lead",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 44.731678,
+    "exported_sha256": {
+      "masked": "94ab978e7d7cb155bb067fbeb4cc832014cdbbe41803eeb91d33bb2684e415f3",
+      "reveal": "ea9a929c9741860c215c9c0a6bb19481c70fd0f84bd5f1f234e239feb4e1b708",
+      "poster": "7d6d98ff23fad001f1edb9452b9cfb6ab167cbac4236e14df0fac227c64fb48d"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-147",
+    "pid": 8479550,
+    "player": "Tanner Laczynski",
+    "game_id": 2024020630,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "04:53",
+    "team": "VGK",
+    "source": "https://nhl.com/video/buf-vgk-laczynski-scores-goal-against-james-reimer-6366698402112",
+    "source_video_id": "6366698402112",
+    "official_event_id": 204,
+    "jersey": 28,
+    "source_sha256": "3352823c0c3f1756a1f9adacbc48e7c128c09f1a7e6f05d54faeb141078deebf",
+    "media_title": "Laczynski's first goal with Golden Knights",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 48.075011,
+    "exported_sha256": {
+      "masked": "7b386dbcb3f76751d85796359673fabe999393e2bd83ffaa08ebc3e77a694b84",
+      "reveal": "e01eaad0f44d188e703a71778d97a7a8d60ce3e0b81a11ca64e6713678274e28",
+      "poster": "7d46033f681c5c89196471592a768dcf5942b4a21a0ad897a80b15963bd2d09b"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-148",
+    "pid": 8478403,
+    "player": "Jack Eichel",
+    "game_id": 2024020630,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "07:44",
+    "team": "VGK",
+    "source": "https://nhl.com/video/buf-vgk-eichel-scores-goal-against-james-reimer-6366701472112",
+    "source_video_id": "6366701472112",
+    "official_event_id": 934,
+    "jersey": 9,
+    "source_sha256": "4e80be32fc28a76faed165350140497ffbe03f9ac6c1aa9c8b4fa2756fd7080c",
+    "media_title": "Eichel scores against former team",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 40.761678,
+    "exported_sha256": {
+      "masked": "acca3c68adb457f2d1f4b1250e5e4747dec556a36259fcf683e448c7b7ec540c",
+      "reveal": "1adfb81fbde76d10906808044784d1b9d3519d078f1bb95b232f208fff05c01d",
+      "poster": "70a27372da19f489865783c349a2a433016ff63fe0dc89c02a2a351db5dd24bc"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-149",
+    "pid": 8481617,
+    "player": "Vasily Podkolzin",
+    "game_id": 2024020631,
+    "date": "2025-01-04",
+    "period": 1,
+    "time_in_period": "00:57",
+    "team": "EDM",
+    "source": "https://nhl.com/video/edm-sea-podkolzin-scores-goal-against-philipp-grubauer-6366699739112",
+    "source_video_id": "6366699739112",
+    "official_event_id": 61,
+    "jersey": 92,
+    "source_sha256": "daed5bbacf1f0c19dc1022eebce5540248a13e24d5acaad198d5130046a83b2e",
+    "media_title": "Podkolzin buries one-timer",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 37.325011,
+    "exported_sha256": {
+      "masked": "355e700175d5a822f030d22e6d424378070cec0261420a20e29c755676d194c8",
+      "reveal": "cbc3d0b33b59d9981dc5dbd9a6201e9f70a6c5115eafefa723dc8acbebd9a884",
+      "poster": "4f4b18abfea738487b7ed338114231b79315f90235537357301de4cf4ae3b61b"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-150",
+    "pid": 8475768,
+    "player": "Jaden Schwartz",
+    "game_id": 2024020631,
+    "date": "2025-01-04",
+    "period": 3,
+    "time_in_period": "07:27",
+    "team": "SEA",
+    "source": "https://nhl.com/video/edm-sea-schwartz-scores-goal-against-calvin-pickard-6366700891112",
+    "source_video_id": "6366700891112",
+    "official_event_id": 857,
+    "jersey": 17,
+    "source_sha256": "bf6db2660c472812c980619a9ecefe00d871ffcdee0984ab5918f75ade5d9607",
+    "media_title": "EDM@SEA: Schwartz scores goal against Calvin Pickard",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 43.92,
+    "exported_sha256": {
+      "masked": "b25d11578b9e88484f85ec0ddfb1c525eede4ff36c434c968d362589732e4272",
+      "reveal": "5cc43ca47b5f534789f20a7d5784ab2d9088bbd14883dc8fe48a3c186a03759c",
+      "poster": "2163cc54621920a9b7781dba8f6645d573c4c65debd770b97c2ccf17bdea1c1f"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-151",
+    "pid": 8478840,
+    "player": "Will Borgen",
+    "game_id": 2024020632,
+    "date": "2025-01-05",
+    "period": 1,
+    "time_in_period": "18:22",
+    "team": "NYR",
+    "source": "https://nhl.com/video/nyr-chi-borgen-scores-goal-against-arvid-soderblom-6366715498112",
+    "source_video_id": "6366715498112",
+    "official_event_id": 471,
+    "jersey": 17,
+    "source_sha256": "be63eba0f1781c9aa3aac6c2cdf6a32b9962cde4991620642f084c2d150286ec",
+    "media_title": "NYR@CHI: Borgen scores goal against Arvid Soderblom",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 46.985011,
+    "exported_sha256": {
+      "masked": "1800a8852cb7587e6672f2fd3233f63161ece8f316e5bc2e59caf5974a0af31a",
+      "reveal": "2084272aa5b96874f6ad0f6323e57bca673da9490004576315afd32297bb70cc",
+      "poster": "e6a2fef25b206513ef081aa4afe3feccd4218d9ffcad0a51ad3a05d2d15844f7"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-152",
+    "pid": 8476389,
+    "player": "Vincent Trocheck",
+    "game_id": 2024020632,
+    "date": "2025-01-05",
+    "period": 2,
+    "time_in_period": "15:16",
+    "team": "NYR",
+    "source": "https://nhl.com/video/nyr-chi-trocheck-scores-goal-against-arvid-soderblom-6366714953112",
+    "source_video_id": "6366714953112",
+    "official_event_id": 666,
+    "jersey": 16,
+    "source_sha256": "944efcc0f0b0afdf90a0919b55b39fa374be1621a5947855a4dbb14966544c7a",
+    "media_title": "NYR@CHI: Trocheck scores goal against Arvid Soderblom",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 41.341678,
+    "exported_sha256": {
+      "masked": "a5639010fe879f3354a7d30d92d97cd13555a270a7923bda9674e90bc4692b9f",
+      "reveal": "f41a7fc5c8d50cb43f32aaaf5142376fe47569c85b941d0ad2476ef04974fa74",
+      "poster": "bc4c2aa7310fe47613b2af61e3615267958befec09b5853da6198d792add49ce"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-153",
+    "pid": 8482176,
+    "player": "Wyatt Kaiser",
+    "game_id": 2024020632,
+    "date": "2025-01-05",
+    "period": 2,
+    "time_in_period": "18:00",
+    "team": "CHI",
+    "source": "https://nhl.com/video/nyr-chi-kaiser-scores-goal-against-louis-domingue-6366715181112",
+    "source_video_id": "6366715181112",
+    "official_event_id": 699,
+    "jersey": 44,
+    "source_sha256": "1f4ccd3784477ff97ca8b0f11bc0f7f7ffe8c7a2611d8a2cf103dbdc2666a165",
+    "media_title": "Kaiser tallies first NHL goal",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 38.555011,
+    "exported_sha256": {
+      "masked": "1840931efa69a16220e23a4c88236edb0792af894f839d14e5848b7d5be63fa2",
+      "reveal": "80444ec6d2cd2d19c1481db020205272805282e4de6a19c04040ba4a2615e2ca",
+      "poster": "17f68fc52cd7a0d280fc20b3779b82646c3b076f758cf8d584e9641e90063731"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-154",
+    "pid": 8481043,
+    "player": "Cole Koepke",
+    "game_id": 2024020633,
+    "date": "2025-01-05",
+    "period": 1,
+    "time_in_period": "03:01",
+    "team": "BOS",
+    "source": "https://nhl.com/video/nyi-bos-koepke-scores-goal-against-ilya-sorokin-6366717080112",
+    "source_video_id": "6366717080112",
+    "official_event_id": 93,
+    "jersey": 45,
+    "source_sha256": "c57d8cdc2e89d1c75ded54df8308e58ff70555af86db947db9996e820eb45caf",
+    "media_title": "NYI@BOS: Koepke scores goal against Ilya Sorokin",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 46.335011,
+    "exported_sha256": {
+      "masked": "94fb1f0ea65294983e321320a0e544e2f69ce9d12c075b4704ef4dbc30aa8f73",
+      "reveal": "132e7a432878b59aca942ee5c067948b0707bca56ff13ed22bcad6ff3d09998c",
+      "poster": "f490a322225c73b92aa35271bbbb2eb8bf006f556516ba0d783f51783089f7a3"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-155",
+    "pid": 8477500,
+    "player": "Bo Horvat",
+    "game_id": 2024020633,
+    "date": "2025-01-05",
+    "period": 1,
+    "time_in_period": "03:22",
+    "team": "NYI",
+    "source": "https://nhl.com/video/nyi-bos-horvat-scores-goal-against-joonas-korpisalo-6366718439112",
+    "source_video_id": "6366718439112",
+    "official_event_id": 101,
+    "jersey": 14,
+    "source_sha256": "f68272c9ee683ed769fc22a85364ef8fc1bff3ccea16f120a8caac84f49e7bd2",
+    "media_title": "Horvat answers right back with SHG",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 51.001678,
+    "exported_sha256": {
+      "masked": "445ee11b702b09fbcfb7d0bbb84756c0ad54aacbf060e3d424350e9e47197dcc",
+      "reveal": "6e4873c9a5340110d551f4ab741b9f9ef04eec4acd0c59d010eb2b5d1acc2d1f",
+      "poster": "a0681c4e73a687c4511e5bb963d00e9d4ac5945508b65030cd9f774777f96ebf"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-156",
+    "pid": 8477506,
+    "player": "Ryan Pulock",
+    "game_id": 2024020633,
+    "date": "2025-01-05",
+    "period": 1,
+    "time_in_period": "05:33",
+    "team": "NYI",
+    "source": "https://nhl.com/video/nyi-bos-pulock-scores-goal-against-joonas-korpisalo-6366718763112",
+    "source_video_id": "6366718763112",
+    "official_event_id": 126,
+    "jersey": 6,
+    "source_sha256": "e7a1cafd1ea22aea153168d0d826cc8346e7b1a8c1932e94e9bf047526d0b8da",
+    "media_title": "NYI@BOS: Pulock scores goal against Joonas Korpisalo",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 49.678345,
+    "exported_sha256": {
+      "masked": "2e437452a92230bf3ee5d7a4197fa543aa0a7bcf455b0fc503019aa955695025",
+      "reveal": "64494e3c231adabe846d6c6d52c34ba60277fa2a3c5397b05f5a7c97f4565eaf",
+      "poster": "65ae41f77f036c0e69ac1df0f80c8ac93babc4f3660ef89af3c052ec51ff90d6"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-157",
+    "pid": 8475314,
+    "player": "Anders Lee",
+    "game_id": 2024020633,
+    "date": "2025-01-05",
+    "period": 2,
+    "time_in_period": "04:11",
+    "team": "NYI",
+    "source": "https://nhl.com/video/anders-lee-with-a-goal-vs-boston-bruins-6366718384112",
+    "source_video_id": "6366718384112",
+    "official_event_id": 587,
+    "jersey": 27,
+    "source_sha256": "0dff7779c902874e81e1d4bcc8409e9cd416a801370a7979713b803265411e40",
+    "media_title": "Lee goes top shelf",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 42.641678,
+    "exported_sha256": {
+      "masked": "280dc33506cd69d32863f0834cee7aa7cf2f7322ef4ab5c00a79d69a2419002a",
+      "reveal": "9ec12d1938da170f443c8e58d572aab438d691ce12c096d2c7fe3dce301ba863",
+      "poster": "7aecad8f4fd9c5147f5f81cb296526a096d44d7074afbd7b420dadae31ac463e"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-158",
+    "pid": 8479638,
+    "player": "Justin Brazeau",
+    "game_id": 2024020633,
+    "date": "2025-01-05",
+    "period": 2,
+    "time_in_period": "10:18",
+    "team": "BOS",
+    "source": "https://nhl.com/video/nyi-bos-brazeau-scores-goal-against-ilya-sorokin-6366718883112",
+    "source_video_id": "6366718883112",
+    "official_event_id": 715,
+    "jersey": 55,
+    "source_sha256": "42de0805cf18b57c629afd4f3827578bf648d74c341fcce925e349881511f814",
+    "media_title": "NYI@BOS: Brazeau scores goal against Ilya Sorokin",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 52.743333,
+    "exported_sha256": {
+      "masked": "606460fc35b6c34f08d033ddd9d1ce298c09c67e5bf33d5bc9439514cc991fe8",
+      "reveal": "2bf1df3aa4862dafb4724e5a1deaf40165cbc2305f565e14b444c1a678a80616",
+      "poster": "51c441301b7137b71a20fba8caf7820f906d5c50e4f3d12e27d6b2a04d6b8117"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-159",
+    "pid": 8478047,
+    "player": "Michael Bunting",
+    "game_id": 2024020769,
+    "date": "2025-01-23",
+    "period": 2,
+    "time_in_period": "05:32",
+    "team": "PIT",
+    "source": "https://nhl.com/video/pit-ana-bunting-scores-goal-against-john-gibson-6367606439112",
+    "source_video_id": "6367606439112",
+    "official_event_id": 157,
+    "jersey": 8,
+    "source_sha256": "9e98b4d5412e1f01a4fee4930e8860db4673ba32befcf8b2e4713498ab90d29d",
+    "media_title": "PIT@ANA: Bunting scores goal against John Gibson",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 49.816667,
+    "exported_sha256": {
+      "masked": "df0f76c4ac3bf6df7970f3f0f5bb5ba98ababf1f42245bb51caa65b6d37d9ef4",
+      "reveal": "9fe6b19d8a2074a11cabdba65b1647f2ab276116d22aeb08e07869f6268b35e0",
+      "poster": "e4b3b23101d6390da3bb0459de0b9f2c7c855c93c2f2c91285102224882adfe1"
+    },
+    "review_record": "tools/who_scored/progress/batch-03/review.json"
   }
 ]

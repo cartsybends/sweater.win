@@ -3665,6 +3665,19 @@
           "source_video_id": "6366698167112",
           "discrete_video_id": "6366698828112",
           "goal_modifier": "empty-net"
+        },
+        {
+          "game_id": 2024020924,
+          "date": "2025-02-25",
+          "period": 1,
+          "time_in_period": "04:37",
+          "player": "Mathieu Olivier",
+          "official_goal_scorer": "Mathieu Olivier",
+          "team": "CBJ",
+          "source": "https://nhl.com/video/dal-cbj-olivier-scores-goal-against-jake-oettinger-6369320836112",
+          "source_video_id": "6369320836112",
+          "discrete_video_id": "6369322200112",
+          "goal_modifier": "none"
         }
       ]
     },
@@ -3936,6 +3949,19 @@
           "source": "https://nhl.com/video/nsh-cgy-svechkov-scores-goal-against-dustin-wolf-6366700904112",
           "source_video_id": "6366700904112",
           "discrete_video_id": "6366702162112",
+          "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020771,
+          "date": "2025-01-23",
+          "period": 3,
+          "time_in_period": "08:16",
+          "player": "Fedor Svechkov",
+          "official_goal_scorer": "Fedor Svechkov",
+          "team": "NSH",
+          "source": "https://nhl.com/video/fedor-svechkov-with-a-goal-vs-san-jose-sharks-6367609274112",
+          "source_video_id": "6367609274112",
+          "discrete_video_id": "6367610071112",
           "goal_modifier": "none"
         }
       ]
@@ -4339,6 +4365,19 @@
           "source": "https://nhl.com/video/cbj-pit-bunting-scores-ppg-against-elvis-merzlikins-6366792243112",
           "source_video_id": "6366792243112",
           "discrete_video_id": "6366793790112",
+          "goal_modifier": "none"
+        },
+        {
+          "game_id": 2024020769,
+          "date": "2025-01-23",
+          "period": 2,
+          "time_in_period": "05:32",
+          "player": "Michael Bunting",
+          "official_goal_scorer": "Michael Bunting",
+          "team": "PIT",
+          "source": "https://nhl.com/video/pit-ana-bunting-scores-goal-against-john-gibson-6367606439112",
+          "source_video_id": "6367606439112",
+          "discrete_video_id": null,
           "goal_modifier": "none"
         }
       ]
