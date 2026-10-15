@@ -1,0 +1,180 @@
+{
+  "id": "goal-153",
+  "pid": 8482176,
+  "player": "Wyatt Kaiser",
+  "original": "/workspace/who-scored-expansion/originals/goal-153-6366715181112.mp4",
+  "source_sha256": "1f4ccd3784477ff97ca8b0f11bc0f7f7ffe8c7a2611d8a2cf103dbdc2666a165",
+  "start": 32.4,
+  "duration": 4.4,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        430,
+        205,
+        600,
+        425
+      ],
+      "points": [
+        [
+          508,
+          267
+        ],
+        [
+          467,
+          224
+        ],
+        [
+          478,
+          185
+        ],
+        [
+          435,
+          190
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        465,
+        140,
+        680,
+        460
+      ],
+      "points": [
+        [
+          551,
+          245
+        ],
+        [
+          536,
+          171
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 105,
+      "box": [
+        520,
+        145,
+        840,
+        540
+      ],
+      "points": [
+        [
+          652,
+          303
+        ],
+        [
+          636,
+          180
+        ],
+        [
+          620,
+          205
+        ],
+        [
+          557,
+          311
+        ],
+        [
+          500,
+          330
+        ],
+        [
+          535,
+          260
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 103,
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Wyatt Kaiser, Chicago 44. KAISER 44 is visible on his back through the carry, shot and goal reaction. Preserve Chicago 91, Rangers defenders and goaltender.",
+  "manual_clear_polygons": {
+    "0": [
+      [
+        [
+          430,
+          212
+        ],
+        [
+          449,
+          212
+        ],
+        [
+          449,
+          245
+        ],
+        [
+          430,
+          245
+        ]
+      ]
+    ],
+    "105": [
+      [
+        [
+          530,
+          335
+        ],
+        [
+          630,
+          335
+        ],
+        [
+          630,
+          365
+        ],
+        [
+          530,
+          365
+        ]
+      ]
+    ]
+  },
+  "mask_patch_ellipses": [
+    {
+      "frame": 105,
+      "ellipse": [
+        513,
+        310,
+        14,
+        26
+      ]
+    }
+  ],
+  "mask_patch_lines": [
+    {
+      "frame": 105,
+      "line": [
+        515,
+        310,
+        550,
+        310,
+        26
+      ]
+    }
+  ]
+}

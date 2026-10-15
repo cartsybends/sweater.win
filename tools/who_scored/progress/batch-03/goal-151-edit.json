@@ -1,0 +1,126 @@
+{
+  "id": "goal-151",
+  "pid": 8478840,
+  "player": "Will Borgen",
+  "original": "/workspace/who-scored-expansion/originals/goal-151-6366715498112.mp4",
+  "source_sha256": "be63eba0f1781c9aa3aac6c2cdf6a32b9962cde4991620642f084c2d150286ec",
+  "start": 13.5,
+  "duration": 3.7,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        15,
+        260,
+        90,
+        380
+      ],
+      "points": [
+        [
+          45,
+          305
+        ],
+        [
+          55,
+          282
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        240,
+        235,
+        345,
+        315
+      ],
+      "points": [
+        [
+          289,
+          275
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        275,
+        245,
+        365,
+        350
+      ],
+      "points": [
+        [
+          333,
+          292
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        270,
+        340,
+        400,
+        470
+      ],
+      "points": [
+        [
+          330,
+          395
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 88,
+      "box": [
+        130,
+        335,
+        245,
+        440
+      ],
+      "points": [
+        [
+          181,
+          388
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 86,
+  "supersedes_draft_window": {
+    "start": 42.9,
+    "duration": 3.9
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer Will Borgen, Rangers 17, unassisted wrist shot from the point/high slot. The main broadcast follows 17 from the lower left through his shot and arms-raised celebration, with 17 visible on his back. Keep net-front Rangers 26 and 93 separate.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 88,
+      "ellipse": [
+        195,
+        446,
+        10,
+        8
+      ]
+    }
+  ]
+}

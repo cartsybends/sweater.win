@@ -1,0 +1,603 @@
+{
+  "id": "goal-149",
+  "pid": 8481617,
+  "player": "Vasily Podkolzin",
+  "original": "/workspace/who-scored-expansion/originals/goal-149-6366699739112.mp4",
+  "source_sha256": "daed5bbacf1f0c19dc1022eebce5540248a13e24d5acaad198d5130046a83b2e",
+  "start": 29.2,
+  "duration": 3.05,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        145,
+        110,
+        255,
+        210
+      ],
+      "points": [
+        [
+          207,
+          150
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        130,
+        60,
+        225,
+        160
+      ],
+      "points": [
+        [
+          180,
+          105
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        150,
+        65,
+        240,
+        190
+      ],
+      "points": [
+        [
+          190,
+          120
+        ],
+        [
+          184,
+          108
+        ],
+        [
+          208,
+          87
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 38,
+      "box": [
+        225,
+        120,
+        345,
+        205
+      ],
+      "points": [
+        [
+          296,
+          159
+        ],
+        [
+          292,
+          127
+        ],
+        [
+          307,
+          108
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 40,
+      "box": [
+        240,
+        130,
+        350,
+        210
+      ],
+      "points": [
+        [
+          302,
+          170
+        ],
+        [
+          300,
+          141
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        235,
+        150,
+        335,
+        275
+      ],
+      "points": [
+        [
+          280,
+          220
+        ],
+        [
+          279,
+          177
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        170,
+        265,
+        325,
+        405
+      ],
+      "points": [
+        [
+          233,
+          319
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        350,
+        345,
+        500,
+        510
+      ],
+      "points": [
+        [
+          423,
+          406
+        ]
+      ],
+      "labels": [
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 70,
+  "supersedes_draft_window": {
+    "start": 29.2,
+    "duration": 3.3
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer Vasily Podkolzin, Edmonton 92. Follow the white-jersey attacker receiving the left-side pass, shooting and skating past the net. Jersey 92 verified in the source celebration. Full goal and follow-through retained through 32.2 seconds; end before boards obscure him, without switching to Seattle skaters.",
+  "mask_patch_ellipses": [
+    {
+      "frame": 20,
+      "ellipse": [
+        177,
+        108,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 21,
+      "ellipse": [
+        179,
+        108,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 22,
+      "ellipse": [
+        180,
+        108,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 23,
+      "ellipse": [
+        182,
+        107,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 24,
+      "ellipse": [
+        184,
+        107,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 25,
+      "ellipse": [
+        189,
+        109,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 26,
+      "ellipse": [
+        194,
+        110,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 27,
+      "ellipse": [
+        199,
+        112,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 28,
+      "ellipse": [
+        204,
+        114,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 29,
+      "ellipse": [
+        215,
+        113,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 30,
+      "ellipse": [
+        226,
+        112,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 31,
+      "ellipse": [
+        236,
+        111,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 32,
+      "ellipse": [
+        247,
+        110,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 33,
+      "ellipse": [
+        255,
+        112,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 34,
+      "ellipse": [
+        264,
+        115,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 35,
+      "ellipse": [
+        272,
+        118,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 36,
+      "ellipse": [
+        280,
+        120,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 37,
+      "ellipse": [
+        286,
+        124,
+        11,
+        13
+      ]
+    },
+    {
+      "frame": 38,
+      "ellipse": [
+        292,
+        128,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 39,
+      "ellipse": [
+        294,
+        134,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 40,
+      "ellipse": [
+        296,
+        139,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 41,
+      "ellipse": [
+        295,
+        146,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 42,
+      "ellipse": [
+        294,
+        154,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 43,
+      "ellipse": [
+        294,
+        162,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 44,
+      "ellipse": [
+        293,
+        169,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 45,
+      "ellipse": [
+        290,
+        173,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 46,
+      "ellipse": [
+        286,
+        176,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 47,
+      "ellipse": [
+        283,
+        180,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 48,
+      "ellipse": [
+        280,
+        184,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 49,
+      "ellipse": [
+        276,
+        190,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 50,
+      "ellipse": [
+        273,
+        197,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 51,
+      "ellipse": [
+        268,
+        203,
+        14,
+        17
+      ]
+    },
+    {
+      "frame": 52,
+      "ellipse": [
+        264,
+        209,
+        14,
+        17
+      ]
+    }
+  ],
+  "manual_fill_polygons": {
+    "47": [
+      [
+        [
+          316,
+          205
+        ],
+        [
+          328,
+          209
+        ],
+        [
+          340,
+          217
+        ],
+        [
+          350,
+          225
+        ],
+        [
+          360,
+          233
+        ],
+        [
+          365,
+          243
+        ],
+        [
+          363,
+          251
+        ],
+        [
+          350,
+          253
+        ],
+        [
+          347,
+          241
+        ],
+        [
+          336,
+          237
+        ],
+        [
+          327,
+          232
+        ]
+      ]
+    ],
+    "52": [
+      [
+        [
+          290,
+          245
+        ],
+        [
+          304,
+          245
+        ],
+        [
+          309,
+          258
+        ],
+        [
+          318,
+          267
+        ],
+        [
+          323,
+          278
+        ],
+        [
+          335,
+          280
+        ],
+        [
+          338,
+          292
+        ],
+        [
+          333,
+          300
+        ],
+        [
+          326,
+          299
+        ],
+        [
+          323,
+          292
+        ],
+        [
+          316,
+          286
+        ],
+        [
+          305,
+          282
+        ],
+        [
+          301,
+          270
+        ],
+        [
+          293,
+          263
+        ]
+      ]
+    ]
+  }
+}

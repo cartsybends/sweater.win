@@ -1,0 +1,154 @@
+{
+  "id": "goal-154",
+  "pid": 8481043,
+  "player": "Cole Koepke",
+  "original": "/workspace/who-scored-expansion/originals/goal-154-6366717080112.mp4",
+  "source_sha256": "c57d8cdc2e89d1c75ded54df8308e58ff70555af86db947db9996e820eb45caf",
+  "start": 35.2,
+  "duration": 3.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        410,
+        245,
+        515,
+        365
+      ],
+      "points": [
+        [
+          465,
+          300
+        ],
+        [
+          464,
+          270
+        ],
+        [
+          527,
+          285
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        380,
+        270,
+        510,
+        465
+      ],
+      "points": [
+        [
+          450,
+          360
+        ],
+        [
+          422,
+          298
+        ],
+        [
+          390,
+          350
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        410,
+        270,
+        550,
+        495
+      ],
+      "points": [
+        [
+          475,
+          342
+        ],
+        [
+          484,
+          294
+        ],
+        [
+          390,
+          355
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        385,
+        110,
+        610,
+        540
+      ],
+      "points": [
+        [
+          485,
+          300
+        ],
+        [
+          478,
+          210
+        ],
+        [
+          565,
+          140
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 74,
+  "supersedes_draft_window": {
+    "start": 34.4,
+    "duration": 4.0
+  },
+  "tracking_crop_size": 512,
+  "identity_verification": "Official scorer Cole Koepke, Boston 45. Follow the black-and-gold 45 at the right post through the shot, goal, and raised-arm celebration. Beecher 19 is the passer farther right and remains visible; Islanders 3 and goalie 30 remain separate. The revised window begins with Koepke already in possession before the scoring shot and keeps the full goal and reaction.",
+  "manual_clear_polygons": {
+    "76": [
+      [
+        [
+          414,
+          358
+        ],
+        [
+          436,
+          358
+        ],
+        [
+          436,
+          377
+        ],
+        [
+          414,
+          377
+        ]
+      ]
+    ]
+  }
+}
