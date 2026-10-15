@@ -15,6 +15,7 @@ Standard library only. Everything the game needs is inside this one file.
 """
 import argparse
 import hashlib
+import importlib.util
 import random
 import shutil
 import json
@@ -11771,7 +11772,7 @@ function partyRender(message = "") {
 
 // ======================= help window =======================
 const HELP = {
-  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues, including Stanley Cup winner, require a career win as a player, even if it happened on another team. A 30+ goals clue requires at least 30 goals in one NHL regular season; traded players' goals count across all their teams that season. Club appearances, Cup wins, and goal seasons are frozen through 2025–26, with predecessor franchises separate. Trophy photos come from NHL Records.</p><p>Revealing ends the run. Muted cards show valid examples, since each square accepts multiple players. Revealed examples never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
+  grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues, including Stanley Cup winner, require a career win as a player, even if it happened on another team. A 30+ goals clue requires at least 30 goals in one NHL regular season; traded players' goals count across all their teams that season. Team connections include played NHL regular-season games and refresh daily. Cup wins and 30-goal seasons cover completed seasons through 2025–26; predecessor franchises are separate. Trophy photos come from NHL Records.</p><p>Revealing ends the run. Muted cards show valid examples, since each square accepts multiple players. Revealed examples never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
   benchboss: `<p>Build a lineup for the season shown at the top, with three forwards, two defensemen, and one goalie within a $100 draft budget. Select a position tab to browse; tap a selected card or lineup slot to remove it. Team badges identify the player’s club that season, even when their photo shows a later jersey.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Statistics reveal when you lock all six slots. Your score is out of 10 against the best legal lineup; at least 90% of that season score is a win.</p><p>Revealing the best lineup forfeits the run with zero points and no XP or daily challenge progress. Daily and archive reveals require confirmation. Markets use completed seasons from 2005–06 through 2024–25, including all clubs after a trade. The draft budget is fictional.</p>`,
   teammatetrail: `<p>Build a trail from Start to Finish through real NHL teammates. Drag a card by its grip into the highlighted stop, tap any offered card, or search other available teammates. The target joins automatically when your last connecting player was their teammate.</p><p>Each stop shows the club and season that connect it to the previous player. There are three trails. A shortest route on your first attempt earns 10 points; one extra teammate, Undo, or a first-link hint caps that trail at 6. Reveal gives zero for that trail; use Next trail to continue.</p><p>A hint locks the first teammate in place. Every offered link has verified overlapping NHL regular-season appearances, including trade seasons.</p>`,
   classic: `<p>Guess the player in 8 tries. Each guess shows how he compares on team, conference, division, position, shooting hand, age, birth country and number.</p>
@@ -12305,6 +12306,7 @@ CURRENT_TEAMS = set(TEAMS)
 CACHE = HERE / "career_cache.json"
 CACHE_DAYS = 7
 TEAM_HISTORY_CACHE = HERE / "team_history_cache.json"
+GRID_CURRENT_CACHE = HERE / "grid_current_cache.json"
 TEAM_HISTORY_CACHE_DAYS = 7
 LINEUP_CACHE = HERE / "lineup_cache.json"
 
@@ -13653,7 +13655,10 @@ def load_community_data():
     for a, b, team, year, ga, gb in data["links"]:
         if a not in ids or b not in ids or a >= b or team not in TEAMS or not 1967 <= year <= data["team_cutoff"] or not 0 < ga <= 84 or not 0 < gb <= 84 or ga + gb < 89:
             raise ValueError("A teammate link lacks guaranteed NHL overlap")
-    return data
+    spec = importlib.util.spec_from_file_location("sweater_grid_refresh", Path(__file__).resolve().parent / "tools/community_games/refresh_grid.py")
+    refresh = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(refresh)
+    return refresh.attach_updates(data, json.loads(GRID_CURRENT_CACHE.read_text(encoding="utf-8")))
 
 
 def plan_community_days(saved, bank, today, mode):
@@ -14336,7 +14341,7 @@ def main():
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     trophy_images = load_trophy_images()
     fills = {
-        "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
+        "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
             ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),

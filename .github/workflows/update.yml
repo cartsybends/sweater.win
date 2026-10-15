@@ -59,6 +59,9 @@ jobs:
       - name: Refresh verified Team Journey careers
         run: python tools/team_games/update_careers.py
 
+      - name: Refresh verified Grid team appearances
+        run: python -B tools/community_games/refresh_grid.py
+
       - name: Build the game from NHL.com
         run: python build_sweater.py --quiet --out site/index.html --site-url "${{ vars.SITE_URL }}" --api-url "${{ vars.API_URL }}"
 
@@ -101,6 +104,7 @@ jobs:
           node tests/community_games.mjs
           node tests/grid_popularity.mjs
           python -B tests/community_games_data.py
+          python -B tests/community_games_refresh.py
 
       - name: Validate generated JavaScript
         shell: bash
@@ -144,6 +148,7 @@ jobs:
           cache_files=(
             schedule.json
             grid_popularity.json
+            grid_current_cache.json
             career_cache.json
             team_history_cache.json
             current_rosters.json

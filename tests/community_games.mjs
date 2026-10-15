@@ -6,6 +6,35 @@ const data=JSON.parse(fs.readFileSync('static/community-games/data.json','utf8')
 let checks=0;
 function test(name,fn){fn();checks++;console.log('PASS',name);}
 const schedule={community:data};
+test('current Grid accepts Nemec for Calgary/New Jersey and uses identical server facts',()=>{
+  const snapshot=JSON.parse(fs.readFileSync('grid_current_cache.json','utf8'));
+  const players=new Map(data.players.map(p=>[p[0],p]));for(const p of snapshot.players)players.set(p[0],p);
+  const current={...data,players:[...players.values()],grid_asof:snapshot.asof};
+  const target=data.grid.find(t=>t.rows.includes('CGY')&&t.cols.some(c=>c.kind==='team'&&c.value==='NJD'));
+  assert(target);
+  const cell=target.rows.indexOf('CGY')*3+target.cols.findIndex(c=>c.kind==='team'&&c.value==='NJD');
+  assert.equal(M.candidates(target,data)[cell].includes(8483495),false,'Reproduce the stale-bank rejection');
+  const state=M.grid(target,[`${cell}:8483495`],current);
+  assert.equal(state.last.correct,true);assert.equal(state.cells[cell],8483495);
+  const solution=M.fillGrid(target,state,current),log=[`${cell}:8483495`,...solution.flatMap((id,i)=>i===cell?[]:[`${i}:${id}`])];
+  assert.deepEqual(scoreGame('grid',{id:target.id},log,{community:current}),M.result('grid',target,log,current));
+  const player=M.index(current).players.get(8483495);
+  assert(player.teams.CGY>=6&&player.teams.NJD>=155);
+  const unplayed=data.players.flatMap(p=>Object.keys(p[8])).find(team=>!player.teams[team]);
+  assert.equal(M.qualifies(player,{kind:'team',value:unplayed}),false);
+  assert.equal(M.index(data).players.get(8483495).teams.CGY,undefined,'The checked-in historical bank is unchanged');
+  const rookie=snapshot.players.find(p=>!M.index(data).players.has(p[0]));assert(rookie);
+  const rookieTarget={rows:[Object.keys(rookie[8])[0]],cols:[{kind:'position',value:M.group(rookie[2])}]};
+  assert(M.candidates(rookieTarget,current)[0].includes(rookie[0]),'New NHL players enter Grid search and eligibility');
+  for(const market of data.benchboss){
+    const log=['LOCK:'+market.optimal.join(',')];
+    assert.deepEqual(M.result('benchboss',market,log,current),M.result('benchboss',market,log,data));
+  }
+  for(const trail of data.teammatetrail){
+    const log=trail.rounds.flatMap((q,i)=>[...q.solution.slice(1,-1).map(id=>'ADD:'+id),...(i<2?['NEXT']:[])]);
+    assert.deepEqual(M.result('teammatetrail',trail,log,current),M.result('teammatetrail',trail,log,data));
+  }
+});
 test('every Grid has nine candidates per square, accepts alternative answers, and can always complete',()=>{
   for(const target of data.grid){
     const valid=M.candidates(target,data);assert(valid.every(a=>a.length>=9));

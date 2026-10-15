@@ -62,7 +62,7 @@ function renderSweaterGrid(t,st){
   $('cgGridSearch').hidden=st.over;
   $('cgGridGuess').disabled=st.over;
   $('cgGridPrompt').textContent=st.over?'':`${teamName(t.rows[Math.floor(cgCell/3)])} · ${cgClueLabel(t.cols[cgCell%3])}`;
-  $('cgGridSource').textContent='Club appearances through 2025–26; predecessor clubs are separate. Trophy wins and 30-goal regular seasons can be with any NHL team. A traded player’s goals count across all teams that season. Less popular answers earn bigger bonuses once enough games have been played. Until then, short team stints earn bonuses.';
+  $('cgGridSource').textContent=`Team connections require a played NHL regular-season game. ${COMMUNITY_DATA.grid_asof?'Verified through '+COMMUNITY_DATA.grid_asof:'Club appearances through 2025–26'}; predecessor clubs are separate. Trophy wins and 30-goal regular seasons can be with any NHL team. A traded player’s goals count across all teams that season. Less popular answers earn bigger bonuses once enough games have been played. Until then, short team stints earn bonuses.`;
   const last=state.last;
   $('cgGridFeedback').textContent=st.over?state.won?'All nine connections found. Every square accepts multiple players.':'Each square accepts multiple players. Muted cards show valid examples; highlighted answers are yours.':last?last.correct?`${cgPlayer(last.id).name} fits. +${10+COMMUNITY_MODEL.bonus(t,last.cell,cgPlayer(last.id))} points.`:`${cgPlayer(last.id).name} doesn’t match that square. Try another connection.`:'Select a square, then search for a player.';
   $('cgGridReveal').hidden=st.over;

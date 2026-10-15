@@ -2,14 +2,24 @@
 
 `static/community-games/data.json` is an immutable puzzle bank. Normal builds
 schedule its IDs and embed the same rules/data used by the leaderboard worker.
-Keep published puzzle IDs and their answers unchanged so saved runs and archives
-continue to work. Add new puzzles with new IDs when expanding the bank.
+Keep published puzzle IDs, clues and historical records unchanged so saved runs
+and archives continue to work. Add new puzzles with new IDs when expanding the bank.
 
 Sources are the official NHL summary/bios APIs and `team_history_cache.json`.
 The bank records source hashes and its snapshot date. Player appearances cover
 current clubs through 2025–26; predecessor clubs are separate. Career GP, birth
 country/year, primary position, and Hall of Fame membership come from NHL bios.
 Dual-role emergency goalies use their primary record, without duplicating GP.
+
+Grid also uses `grid_current_cache.json`, refreshed before each daily deployment
+by `python -B tools/community_games/refresh_grid.py`. Official regular-season
+summaries extend club appearances beyond the historical cutoff; trade-season
+game logs verify the exact split between clubs. Current bios update career GP
+and supply rookies. A roster assignment alone never establishes eligibility.
+The cache records source URLs, response hashes and the verified date, and validates
+all additions before replacing the previous snapshot. Browser search, answer
+checking, server scoring and popularity validation use the same Grid catalog.
+Bench Boss markets and the verified Teammate Trail graph retain their original data.
 
 Bench Boss uses full league-wide totals, including retired franchises and trades,
 for completed seasons from 2005–06 through 2024–25. `season_totals.json` stores
