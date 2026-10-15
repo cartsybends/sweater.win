@@ -1,0 +1,305 @@
+{
+  "id": "goal-129",
+  "pid": 8475692,
+  "player": "Mats Zuccarello",
+  "original": "/workspace/who-scored-expansion/originals/goal-129-6366694754112.mp4",
+  "source_sha256": "5b6776d924c019614fe5a7a503719a17468c3389616d407f6e7ac82d7a0ce637",
+  "start": 23.25,
+  "duration": 2.65,
+  "anchors": [
+    {
+      "frame": 7,
+      "box": [
+        930,
+        100,
+        960,
+        210
+      ],
+      "points": [
+        [
+          959,
+          139
+        ],
+        [
+          951,
+          189
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 8,
+      "box": [
+        875,
+        100,
+        960,
+        220
+      ],
+      "points": [
+        [
+          916,
+          113
+        ],
+        [
+          930,
+          148
+        ],
+        [
+          897,
+          131
+        ],
+        [
+          936,
+          171
+        ],
+        [
+          899,
+          192
+        ],
+        [
+          954,
+          194
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 12,
+      "box": [
+        675,
+        100,
+        815,
+        225
+      ],
+      "points": [
+        [
+          742,
+          127
+        ],
+        [
+          745,
+          154
+        ],
+        [
+          695,
+          154
+        ],
+        [
+          742,
+          173
+        ],
+        [
+          706,
+          202
+        ],
+        [
+          792,
+          207
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        510,
+        135,
+        625,
+        258
+      ],
+      "points": [
+        [
+          578,
+          156
+        ],
+        [
+          583,
+          189
+        ],
+        [
+          553,
+          193
+        ],
+        [
+          592,
+          186
+        ],
+        [
+          568,
+          211
+        ],
+        [
+          536,
+          239
+        ],
+        [
+          557,
+          242
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 36,
+      "box": [
+        810,
+        190,
+        945,
+        345
+      ],
+      "points": [
+        [
+          885,
+          216
+        ],
+        [
+          886,
+          246
+        ],
+        [
+          868,
+          261
+        ],
+        [
+          916,
+          244
+        ],
+        [
+          876,
+          282
+        ],
+        [
+          835,
+          306
+        ],
+        [
+          885,
+          326
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 43,
+      "box": [
+        930,
+        230,
+        960,
+        350
+      ],
+      "points": [
+        [
+          951,
+          254
+        ],
+        [
+          956,
+          292
+        ],
+        [
+          952,
+          318
+        ],
+        [
+          948,
+          332
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 44,
+      "box": [
+        955,
+        240,
+        960,
+        350
+      ],
+      "points": [
+        [
+          959,
+          255
+        ],
+        [
+          959,
+          343
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 61,
+  "tracking_crop_size": 384,
+  "allow_empty": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "identity_verification": "Official goal attribution and visible36 jersey identify Mats Zuccarello. Continuous wide replay includes his receive, wrist shot, goal and reaction. He enters at7 on the right edge and exits after44; the glove and skate fragments at44 still belong to36. Preserve Wild23 in front and4 at the blue line, and all Hurricanes; no mask before entry0-6 or after exit45 onward."
+}

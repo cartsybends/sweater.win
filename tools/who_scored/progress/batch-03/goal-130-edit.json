@@ -1,0 +1,291 @@
+{
+  "id": "goal-130",
+  "pid": 8478493,
+  "player": "Joel Eriksson Ek",
+  "original": "/workspace/who-scored-expansion/originals/goal-130-6366696368112.mp4",
+  "source_sha256": "bd16d724818b43630ba0c9023b13f1fec5a795ffaa7ec81ddcad4537251534f2",
+  "start": 30.5,
+  "duration": 3.8,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        600,
+        180,
+        725,
+        370
+      ],
+      "points": [
+        [
+          668,
+          202
+        ],
+        [
+          672,
+          245
+        ],
+        [
+          621,
+          269
+        ],
+        [
+          650,
+          291
+        ],
+        [
+          640,
+          324
+        ],
+        [
+          629,
+          344
+        ],
+        [
+          703,
+          254
+        ],
+        [
+          734,
+          282
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        510,
+        180,
+        620,
+        365
+      ],
+      "points": [
+        [
+          555,
+          195
+        ],
+        [
+          561,
+          240
+        ],
+        [
+          524,
+          267
+        ],
+        [
+          600,
+          258
+        ],
+        [
+          554,
+          283
+        ],
+        [
+          533,
+          342
+        ],
+        [
+          595,
+          344
+        ],
+        [
+          605,
+          310
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        460,
+        185,
+        590,
+        365
+      ],
+      "points": [
+        [
+          518,
+          211
+        ],
+        [
+          520,
+          250
+        ],
+        [
+          495,
+          276
+        ],
+        [
+          570,
+          268
+        ],
+        [
+          510,
+          297
+        ],
+        [
+          480,
+          348
+        ],
+        [
+          560,
+          330
+        ],
+        [
+          560,
+          345
+        ],
+        [
+          556,
+          285
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        490,
+        0,
+        590,
+        160
+      ],
+      "points": [
+        [
+          531,
+          25
+        ],
+        [
+          542,
+          57
+        ],
+        [
+          518,
+          90
+        ],
+        [
+          547,
+          91
+        ],
+        [
+          561,
+          120
+        ],
+        [
+          565,
+          138
+        ],
+        [
+          505,
+          147
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 90,
+      "box": [
+        440,
+        0,
+        550,
+        165
+      ],
+      "points": [
+        [
+          467,
+          4
+        ],
+        [
+          471,
+          22
+        ],
+        [
+          489,
+          48
+        ],
+        [
+          463,
+          69
+        ],
+        [
+          507,
+          82
+        ],
+        [
+          467,
+          106
+        ],
+        [
+          520,
+          124
+        ],
+        [
+          527,
+          148
+        ],
+        [
+          435,
+          128
+        ],
+        [
+          466,
+          148
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 88,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official goal and the visible ERIKSSON EK14 jersey verify Joel Eriksson Ek. Continuous behind-goal replay includes his net-front redirect/finish, full goal, goalie reaction and raised-arm celebration. Preserve Kochetkov52, Slavin74 and other Wild skaters; goalie glove/pad passes in front of his right lower leg. He stays visible throughout, including helmet near top border at the end."
+}

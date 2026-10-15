@@ -1,0 +1,260 @@
+{
+  "id": "goal-128",
+  "pid": 8479365,
+  "player": "Trent Frederic",
+  "original": "/workspace/who-scored-expansion/originals/goal-128-6366697426112.mp4",
+  "source_sha256": "e0f2ac3e747f2397d9f6e5890e631c0fb98574f7e004ca2c98139d3ce3ff5759",
+  "start": 34.15,
+  "duration": 3.2,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        370,
+        140,
+        450,
+        230
+      ],
+      "points": [
+        [
+          399,
+          157
+        ],
+        [
+          406,
+          176
+        ],
+        [
+          414,
+          168
+        ],
+        [
+          408,
+          192
+        ],
+        [
+          391,
+          210
+        ],
+        [
+          411,
+          216
+        ],
+        [
+          366,
+          197
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        470,
+        130,
+        548,
+        200
+      ],
+      "points": [
+        [
+          493,
+          144
+        ],
+        [
+          504,
+          157
+        ],
+        [
+          501,
+          186
+        ],
+        [
+          532,
+          185
+        ],
+        [
+          482,
+          130
+        ],
+        [
+          545,
+          130
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        385,
+        130,
+        490,
+        245
+      ],
+      "points": [
+        [
+          452,
+          149
+        ],
+        [
+          435,
+          175
+        ],
+        [
+          462,
+          162
+        ],
+        [
+          457,
+          177
+        ],
+        [
+          435,
+          192
+        ],
+        [
+          442,
+          214
+        ],
+        [
+          421,
+          192
+        ],
+        [
+          411,
+          211
+        ],
+        [
+          396,
+          235
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        480,
+        130,
+        575,
+        292
+      ],
+      "points": [
+        [
+          518,
+          161
+        ],
+        [
+          515,
+          191
+        ],
+        [
+          515,
+          223
+        ],
+        [
+          521,
+          270
+        ],
+        [
+          543,
+          268
+        ],
+        [
+          545,
+          150
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 76,
+      "box": [
+        470,
+        150,
+        640,
+        390
+      ],
+      "points": [
+        [
+          533,
+          181
+        ],
+        [
+          548,
+          232
+        ],
+        [
+          558,
+          173
+        ],
+        [
+          492,
+          270
+        ],
+        [
+          574,
+          275
+        ],
+        [
+          570,
+          369
+        ],
+        [
+          614,
+          331
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 74,
+  "supersedes_draft_window": {
+    "start": 33.2,
+    "duration": 4.1
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Official goal attribution and visible FREDERIC11 jersey verify the scorer. Continuous behind-goal angle shows his receive, slot shot, goal and raised-arm celebration. Preserve Brazeau55 near the crease and McAvoy73; they are not the scorer. Frederic11 starts left/high in the slot and finishes celebrating to the right, visible throughout."
+}

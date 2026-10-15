@@ -1,0 +1,246 @@
+{
+  "id": "goal-127",
+  "pid": 8479987,
+  "player": "Morgan Geekie",
+  "original": "/workspace/who-scored-expansion/originals/goal-127-6366696533112.mp4",
+  "source_sha256": "2face4de50934b4c34774b37ebe2c7003a02d6ff9f47e1040991a459af9afb69",
+  "start": 22.1,
+  "duration": 3.5,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        405,
+        235,
+        525,
+        375
+      ],
+      "points": [
+        [
+          489,
+          253
+        ],
+        [
+          470,
+          303
+        ],
+        [
+          441,
+          315
+        ],
+        [
+          461,
+          333
+        ],
+        [
+          421,
+          350
+        ],
+        [
+          451,
+          256
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        585,
+        150,
+        685,
+        325
+      ],
+      "points": [
+        [
+          634,
+          179
+        ],
+        [
+          639,
+          221
+        ],
+        [
+          596,
+          218
+        ],
+        [
+          624,
+          253
+        ],
+        [
+          606,
+          276
+        ],
+        [
+          656,
+          280
+        ],
+        [
+          564,
+          210
+        ],
+        [
+          635,
+          298
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        685,
+        180,
+        800,
+        330
+      ],
+      "points": [
+        [
+          731,
+          208
+        ],
+        [
+          750,
+          235
+        ],
+        [
+          718,
+          260
+        ],
+        [
+          774,
+          241
+        ],
+        [
+          754,
+          257
+        ],
+        [
+          760,
+          306
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        560,
+        145,
+        680,
+        300
+      ],
+      "points": [
+        [
+          614,
+          179
+        ],
+        [
+          616,
+          212
+        ],
+        [
+          592,
+          214
+        ],
+        [
+          645,
+          226
+        ],
+        [
+          622,
+          241
+        ],
+        [
+          624,
+          281
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 83,
+      "box": [
+        455,
+        130,
+        610,
+        345
+      ],
+      "points": [
+        [
+          520,
+          160
+        ],
+        [
+          530,
+          207
+        ],
+        [
+          498,
+          222
+        ],
+        [
+          565,
+          220
+        ],
+        [
+          548,
+          250
+        ],
+        [
+          530,
+          290
+        ],
+        [
+          550,
+          281
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 81,
+  "tracking_crop_size": 384,
+  "identity_verification": "Official event and visible GEEKIE39 jersey identify Morgan Geekie. In this continuous behind-goal replay he circles from left of the net to the right, receives the setup, shoots and celebrates the goal. Preserve Lindholm18 in the slot, other Bruins, Leafs and Woll60. The scorer remains visible throughout; never swap to18 near the crease."
+}
