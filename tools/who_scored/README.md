@@ -102,7 +102,8 @@ has 40 corroborated source originals and completed reviews. Its 40 video pairs
 and posters are included in the playable manifest. The batch registry records
 GitHub and live-deployment verification separately from local staging.
 Batch 2 has also passed all 40 source, silhouette and encoded-media reviews. Its
-assets are staged for publication; deployment verification is recorded separately.
+40 video pairs and posters are published and verified live, bringing the library
+to 119 scorers. Deployment evidence is in `progress/batch-02/live-verification.json`.
 Batches 3–6 contain the remaining 160 planned additions.
 
 Use the isolated SAM2 environment and store raw footage, API caches, models and

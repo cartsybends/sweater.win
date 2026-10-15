@@ -1,6 +1,6 @@
 {
   "batch": 2,
-  "status": "local_validation_passed_pending_publication",
+  "status": "local_validation_passed",
   "checked_at": "2026-10-15T11:19:03.545539+00:00",
   "library_size": 119,
   "new_unique_scorers": 40,
