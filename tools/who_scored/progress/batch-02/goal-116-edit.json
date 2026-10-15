@@ -1,0 +1,307 @@
+{
+  "id": "goal-116",
+  "pid": 8475842,
+  "player": "Sam Carrick",
+  "original": "/workspace/who-scored-expansion/originals/goal-116-6366688277112.mp4",
+  "source_sha256": "0e8afd8e72ab82336122f67979edb24276e3c0e7673f0501f8b8b2aad10cd7eb",
+  "start": 34.0,
+  "duration": 3.35,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        458,
+        233,
+        542,
+        320
+      ],
+      "points": [
+        [
+          499,
+          245
+        ],
+        [
+          491,
+          269
+        ],
+        [
+          525,
+          279
+        ],
+        [
+          517,
+          293
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        425,
+        134,
+        491,
+        221
+      ],
+      "points": [
+        [
+          465,
+          150
+        ],
+        [
+          455,
+          174
+        ],
+        [
+          463,
+          191
+        ],
+        [
+          436,
+          196
+        ],
+        [
+          480,
+          208
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        510,
+        88,
+        607,
+        179
+      ],
+      "points": [
+        [
+          569,
+          103
+        ],
+        [
+          565,
+          127
+        ],
+        [
+          522,
+          121
+        ],
+        [
+          543,
+          138
+        ],
+        [
+          591,
+          121
+        ],
+        [
+          545,
+          153
+        ],
+        [
+          586,
+          167
+        ],
+        [
+          601,
+          90
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 68,
+      "box": [
+        632,
+        196,
+        712,
+        365
+      ],
+      "points": [
+        [
+          679,
+          212
+        ],
+        [
+          664,
+          259
+        ],
+        [
+          699,
+          268
+        ],
+        [
+          650,
+          280
+        ],
+        [
+          665,
+          334
+        ],
+        [
+          648,
+          353
+        ],
+        [
+          638,
+          204
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 79,
+      "box": [
+        600,
+        210,
+        678,
+        360
+      ],
+      "points": [
+        [
+          633,
+          224
+        ],
+        [
+          634,
+          264
+        ],
+        [
+          611,
+          277
+        ],
+        [
+          669,
+          267
+        ],
+        [
+          657,
+          348
+        ],
+        [
+          632,
+          326
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 77,
+  "tracking_crop_size": 256,
+  "identity_verification": "Rangers 39 is Sam Carrick, confirmed by the official scorer and visible CARRICK 39 jersey at the end of this continuous behind-net sequence. He moves into the slot, shoots, then continues past the net to the right boards. Other Rangers and Washington players remain visible.",
+  "manual_clear_polygons": {
+    "50": [
+      [
+        [
+          597,
+          181
+        ],
+        [
+          604,
+          181
+        ],
+        [
+          604,
+          189
+        ],
+        [
+          597,
+          189
+        ]
+      ]
+    ]
+  },
+  "manual_fill_polygons": {
+    "50": [
+      [
+        [
+          568,
+          187
+        ],
+        [
+          576,
+          188
+        ],
+        [
+          578,
+          195
+        ],
+        [
+          574,
+          203
+        ],
+        [
+          574,
+          212
+        ],
+        [
+          577,
+          218
+        ],
+        [
+          574,
+          224
+        ],
+        [
+          567,
+          222
+        ],
+        [
+          566,
+          214
+        ],
+        [
+          567,
+          206
+        ],
+        [
+          567,
+          199
+        ],
+        [
+          565,
+          195
+        ]
+      ]
+    ]
+  }
+}

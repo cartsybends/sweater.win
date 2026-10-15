@@ -1,0 +1,274 @@
+{
+  "id": "goal-115",
+  "pid": 8478233,
+  "player": "Andrew Mangiapane",
+  "original": "/workspace/who-scored-expansion/originals/goal-115-6366688249112.mp4",
+  "source_sha256": "396c4ecb7384e6715fef733b10fef150edb962f7ba7589146c1868bafdcf5828",
+  "start": 42.9,
+  "duration": 3.25,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        705,
+        76,
+        840,
+        202
+      ],
+      "points": [
+        [
+          749,
+          92
+        ],
+        [
+          766,
+          122
+        ],
+        [
+          718,
+          121
+        ],
+        [
+          802,
+          104
+        ],
+        [
+          813,
+          163
+        ],
+        [
+          775,
+          209
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        507,
+        110,
+        605,
+        221
+      ],
+      "points": [
+        [
+          530,
+          127
+        ],
+        [
+          548,
+          160
+        ],
+        [
+          517,
+          155
+        ],
+        [
+          542,
+          195
+        ],
+        [
+          545,
+          209
+        ],
+        [
+          602,
+          164
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        684,
+        55,
+        810,
+        205
+      ],
+      "points": [
+        [
+          719,
+          71
+        ],
+        [
+          749,
+          111
+        ],
+        [
+          701,
+          127
+        ],
+        [
+          738,
+          153
+        ],
+        [
+          745,
+          191
+        ],
+        [
+          793,
+          176
+        ],
+        [
+          759,
+          42
+        ],
+        [
+          819,
+          179
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 77,
+      "box": [
+        720,
+        0,
+        842,
+        200
+      ],
+      "points": [
+        [
+          789,
+          45
+        ],
+        [
+          803,
+          64
+        ],
+        [
+          797,
+          108
+        ],
+        [
+          785,
+          169
+        ],
+        [
+          830,
+          165
+        ],
+        [
+          733,
+          102
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 75,
+  "supersedes_draft_window": {
+    "start": 42.9,
+    "duration": 3.4
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Washington 88 is Andrew Mangiapane, confirmed by the official goal and visible MANGIAPANE 88 on his sleeve. Continuous scoring replay follows his shot from the slot through the goal and follow-through, separate from Duhaime 22 in front and Dowd 26 at the point.",
+  "manual_clear_polygons": {
+    "0": [
+      [
+        [
+          780,
+          109
+        ],
+        [
+          801,
+          108
+        ],
+        [
+          809,
+          115
+        ],
+        [
+          812,
+          132
+        ],
+        [
+          830,
+          134
+        ],
+        [
+          858,
+          139
+        ],
+        [
+          861,
+          212
+        ],
+        [
+          769,
+          212
+        ],
+        [
+          769,
+          166
+        ],
+        [
+          766,
+          145
+        ],
+        [
+          774,
+          134
+        ],
+        [
+          771,
+          120
+        ]
+      ],
+      [
+        [
+          680,
+          166
+        ],
+        [
+          880,
+          166
+        ],
+        [
+          880,
+          240
+        ],
+        [
+          680,
+          240
+        ]
+      ]
+    ]
+  }
+}

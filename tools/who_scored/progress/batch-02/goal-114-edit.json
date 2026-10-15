@@ -1,0 +1,283 @@
+{
+  "id": "goal-114",
+  "pid": 8474189,
+  "player": "Lars Eller",
+  "original": "/workspace/who-scored-expansion/originals/goal-114-6366688037112.mp4",
+  "source_sha256": "8a0a739860203f24feb9b9b56abe9325301a2c5d2839b3f70800df14d05d5d6d",
+  "start": 32.0,
+  "duration": 3.75,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        462,
+        155,
+        524,
+        249
+      ],
+      "points": [
+        [
+          498,
+          166
+        ],
+        [
+          495,
+          189
+        ],
+        [
+          517,
+          203
+        ],
+        [
+          474,
+          234
+        ],
+        [
+          511,
+          232
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        431,
+        155,
+        498,
+        287
+      ],
+      "points": [
+        [
+          477,
+          166
+        ],
+        [
+          465,
+          195
+        ],
+        [
+          480,
+          209
+        ],
+        [
+          468,
+          236
+        ],
+        [
+          490,
+          267
+        ],
+        [
+          378,
+          214
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        539,
+        119,
+        618,
+        247
+      ],
+      "points": [
+        [
+          557,
+          130
+        ],
+        [
+          577,
+          161
+        ],
+        [
+          553,
+          177
+        ],
+        [
+          600,
+          211
+        ],
+        [
+          558,
+          234
+        ],
+        [
+          366,
+          161
+        ],
+        [
+          429,
+          257
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 62,
+      "box": [
+        682,
+        44,
+        764,
+        255
+      ],
+      "points": [
+        [
+          730,
+          93
+        ],
+        [
+          731,
+          124
+        ],
+        [
+          692,
+          81
+        ],
+        [
+          708,
+          55
+        ],
+        [
+          703,
+          243
+        ],
+        [
+          663,
+          106
+        ],
+        [
+          665,
+          197
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 72,
+      "box": [
+        740,
+        60,
+        927,
+        302
+      ],
+      "points": [
+        [
+          805,
+          124
+        ],
+        [
+          792,
+          176
+        ],
+        [
+          766,
+          80
+        ],
+        [
+          776,
+          278
+        ],
+        [
+          855,
+          81
+        ],
+        [
+          846,
+          190
+        ],
+        [
+          848,
+          259
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 89,
+      "box": [
+        902,
+        186,
+        960,
+        331
+      ],
+      "points": [
+        [
+          954,
+          239
+        ],
+        [
+          945,
+          274
+        ],
+        [
+          916,
+          303
+        ],
+        [
+          915,
+          320
+        ],
+        [
+          949,
+          353
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 87,
+  "supersedes_draft_window": {
+    "start": 45.0,
+    "duration": 3.5
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Washington 20 is Lars Eller, identified by the official goal event and the ELLER 20 jersey during the continuous behind-net scoring replay. He moves from the right slot toward the crease, tips the shot, and celebrates on the right; Duhaime 15 on the left is not the scorer."
+}

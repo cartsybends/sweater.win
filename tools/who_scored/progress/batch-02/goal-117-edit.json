@@ -1,0 +1,173 @@
+{
+  "id": "goal-117",
+  "pid": 8481580,
+  "player": "Connor McMichael",
+  "original": "/workspace/who-scored-expansion/originals/goal-117-6366688665112.mp4",
+  "source_sha256": "6730282c22a73130d140272ac9fb95db68b8076ed2f3bc1c831b6f3c916d7f23",
+  "start": 37.1,
+  "duration": 3.6,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        571,
+        148,
+        618,
+        229
+      ],
+      "points": [
+        [
+          592,
+          157
+        ],
+        [
+          600,
+          178
+        ],
+        [
+          582,
+          195
+        ],
+        [
+          589,
+          222
+        ],
+        [
+          600,
+          213
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        606,
+        143,
+        655,
+        230
+      ],
+      "points": [
+        [
+          625,
+          155
+        ],
+        [
+          633,
+          175
+        ],
+        [
+          612,
+          194
+        ],
+        [
+          621,
+          220
+        ],
+        [
+          639,
+          208
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        507,
+        130,
+        569,
+        225
+      ],
+      "points": [
+        [
+          537,
+          141
+        ],
+        [
+          533,
+          166
+        ],
+        [
+          514,
+          162
+        ],
+        [
+          551,
+          193
+        ],
+        [
+          562,
+          216
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 85,
+      "box": [
+        416,
+        82,
+        489,
+        255
+      ],
+      "points": [
+        [
+          460,
+          98
+        ],
+        [
+          469,
+          145
+        ],
+        [
+          429,
+          100
+        ],
+        [
+          450,
+          157
+        ],
+        [
+          472,
+          240
+        ],
+        [
+          421,
+          174
+        ]
+      ],
+      "labels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 83,
+  "tracking_crop_size": 256,
+  "identity_verification": "Washington 24 is Connor McMichael, confirmed by the official goal event and visible 24 and McMICHAEL jersey in this continuous behind-net replay. He shoots from the right slot, then raises his stick and turns toward teammates after the goal. Net-front Mangiapane 88 is kept visible."
+}
