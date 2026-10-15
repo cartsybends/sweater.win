@@ -2,7 +2,7 @@
   "batch_size": 40,
   "target_new_players": 240,
   "starting_library_size": 39,
-  "verified_playable_additions": 120,
+  "verified_playable_additions": 121,
   "batches": [
     {
       "batch": 1,
@@ -238,7 +238,7 @@
         "goal-158",
         "goal-159"
       ],
-      "status": "staged_awaiting_github_and_live_verification",
+      "status": "published_live_verified",
       "approved_clips": [
         "goal-120",
         "goal-121",
@@ -281,7 +281,13 @@
         "goal-158",
         "goal-159"
       ],
-      "verified_source_originals": 40
+      "verified_source_originals": 40,
+      "release_commit": "537de315ccf4d89d508fc20e6af1360fe24edb50",
+      "workflow_run": "https://github.com/cartsybends/sweater.win/actions/runs/38777665015",
+      "live_url": "https://sweater.win/",
+      "live_library_size": 159,
+      "verified_at": "2026-10-15T17:34:29.468119+00:00",
+      "live_verification_record": "tools/who_scored/progress/batch-03/live-verification.json"
     },
     {
       "batch": 4,
@@ -425,5 +431,19 @@
       "approved_clips": []
     }
   ],
-  "published_live_additions": 40
+  "published_live_additions": 40,
+  "standalone_releases": [
+    {
+      "name": "bonus-160",
+      "ids": [
+        "goal-295"
+      ],
+      "approved_clips": [
+        "goal-295"
+      ],
+      "target_library_size": 160,
+      "status": "staged_awaiting_github_and_live_verification",
+      "request": "Add one additional scorer to reach exactly 160 without changing the complete forty-player batches."
+    }
+  ]
 }

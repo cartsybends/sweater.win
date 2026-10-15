@@ -1,0 +1,157 @@
+{
+  "id": "goal-295",
+  "pid": 8474590,
+  "player": "John Carlson",
+  "original": "/workspace/who-scored-expansion/originals/goal-295-6367102941112.mp4",
+  "source_sha256": "c82e7d588a0ecbca69159a39e9207c6710f26e87c181d3be587e7a2e9c70726b",
+  "start": 30.0,
+  "duration": 3.5,
+  "anchors": [
+    {
+      "frame": 0,
+      "box": [
+        520,
+        270,
+        625,
+        425
+      ],
+      "points": [
+        [
+          574,
+          325
+        ],
+        [
+          580,
+          295
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 24,
+      "box": [
+        600,
+        248,
+        685,
+        380
+      ],
+      "points": [
+        [
+          638,
+          295
+        ],
+        [
+          658,
+          264
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 48,
+      "box": [
+        640,
+        175,
+        735,
+        300
+      ],
+      "points": [
+        [
+          688,
+          225
+        ],
+        [
+          681,
+          194
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 60,
+      "box": [
+        620,
+        165,
+        750,
+        305
+      ],
+      "points": [
+        [
+          706,
+          220
+        ],
+        [
+          695,
+          185
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    },
+    {
+      "frame": 83,
+      "box": [
+        810,
+        155,
+        955,
+        325
+      ],
+      "points": [
+        [
+          868,
+          230
+        ],
+        [
+          880,
+          188
+        ]
+      ],
+      "labels": [
+        1,
+        1
+      ]
+    }
+  ],
+  "version": "v1",
+  "max_cond_frames_in_attn": 2,
+  "scoring_play_end_frame": 81,
+  "supersedes_draft_window": {
+    "start": 46.6,
+    "duration": 4.4
+  },
+  "tracking_crop_size": 384,
+  "identity_verification": "Official scorer John Carlson, Washington 74, against Anaheim. CARLSON 74 is readable during the slot carry and release. Follow 74 throughout this side replay; Ovechkin 8 stays above him, Wilson 43 at the net and Dubois 80 in the foreground remain visible. The shot, goal and natural raised-glove reaction are retained.",
+  "manual_clear_polygons": {
+    "83": [
+      [
+        [
+          820,
+          298
+        ],
+        [
+          848,
+          298
+        ],
+        [
+          848,
+          315
+        ],
+        [
+          820,
+          315
+        ]
+      ]
+    ]
+  }
+}

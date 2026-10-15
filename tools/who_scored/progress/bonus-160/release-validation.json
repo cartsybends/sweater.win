@@ -1,0 +1,102 @@
+{
+  "release": "bonus-160",
+  "status": "local_validation_passed",
+  "checked_at": "2026-10-15T17:42:17.368378+00:00",
+  "library_size": 160,
+  "new_unique_scorers": 1,
+  "media_files": 3,
+  "checks": {
+    "source_and_every_frame_review": "passed",
+    "complete_160_library_format": "passed",
+    "complete_media_decode": "All 159 unchanged preceding clips were decoded completely in batch-03 validation. Both extra streams also decoded completely and played to completion.",
+    "game_regressions": "passed",
+    "schedule_tests": 4,
+    "pipeline_and_release_tests": 23,
+    "generated_site_and_javascript": "passed",
+    "locked_schedule_assignments_preserved": 5,
+    "other_modes_schedules_unchanged": true,
+    "all_159_previous_clips_and_sources_unchanged": true
+  },
+  "browser_media": {
+    "library": 160,
+    "newPlayers": 1,
+    "decoded": 2,
+    "played": 2,
+    "samples": [
+      {
+        "id": "goal-295",
+        "kind": "masked",
+        "duration": 3.5,
+        "ended": true
+      },
+      {
+        "id": "goal-295",
+        "kind": "reveal",
+        "duration": 3.5,
+        "ended": true
+      }
+    ],
+    "engine": "Chromium",
+    "viewport": 390,
+    "playbackRate": 4,
+    "javascriptErrors": []
+  },
+  "daily_browser": [
+    {
+      "engine": "chromium",
+      "width": 1280,
+      "theme": "dark",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": true,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "theme": "dark",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": true,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "width": 320,
+      "theme": "light",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": true,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "theme": "dark",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": false,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "theme": "light",
+      "daily_only": true,
+      "completed_restore": true,
+      "masked_and_original_playback": false,
+      "decoded_first_frame_and_controls": true,
+      "other_modes_unlimited": true,
+      "errors": []
+    }
+  ],
+  "review_sha256": "1053e92a3fb27ffb6ec459b09a2baee9de8a08a8ac4b5c88d98ba0f65bd1faaf"
+}

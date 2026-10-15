@@ -1429,5 +1429,14 @@
     "poster": "goal-159-v1.jpg",
     "motion": "Bunting finishes at the right post against Anaheim; the replay includes his scoring touch and the full raised-arm reaction.",
     "source": "https://nhl.com/video/pit-ana-bunting-scores-goal-against-john-gibson-6367606439112"
+  },
+  {
+    "id": "goal-295",
+    "pid": 8474590,
+    "masked": "goal-295-masked-v1.mp4",
+    "reveal": "goal-295-original-v1.mp4",
+    "poster": "goal-295-v1.jpg",
+    "motion": "Carlson carries into the slot and snaps a shot past Gibson; the side replay includes the goal and his natural reaction.",
+    "source": "https://nhl.com/video/ana-wsh-carlson-scores-goal-against-john-gibson-6367102941112"
   }
 ]

@@ -4960,5 +4960,32 @@
       "poster": "e4b3b23101d6390da3bb0459de0b9f2c7c855c93c2f2c91285102224882adfe1"
     },
     "review_record": "tools/who_scored/progress/batch-03/review.json"
+  },
+  {
+    "id": "goal-295",
+    "pid": 8474590,
+    "player": "John Carlson",
+    "game_id": 2024020697,
+    "date": "2025-01-14",
+    "period": 1,
+    "time_in_period": "14:30",
+    "team": "WSH",
+    "source": "https://nhl.com/video/ana-wsh-carlson-scores-goal-against-john-gibson-6367102941112",
+    "source_video_id": "6367102941112",
+    "official_event_id": 375,
+    "jersey": 74,
+    "source_sha256": "c82e7d588a0ecbca69159a39e9207c6710f26e87c181d3be587e7a2e9c70726b",
+    "media_title": "ANA@WSH: Carlson scores goal against John Gibson",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "duration": 51.42,
+    "exported_sha256": {
+      "masked": "ab6094e6437e5137ce4da3c1dd374c463011e3b68714e51a1ddfd1253d0feb41",
+      "reveal": "9493f7e579ba3dc4dcb9cb53f66775b756025d3ca3d30de1065452b8164853ee",
+      "poster": "24f2aec433b40e75c8efe216d105a5f6f3b816c3080d1e7bfa3e3f0625c44221"
+    },
+    "review_record": "tools/who_scored/progress/bonus-160/review.json"
   }
 ]

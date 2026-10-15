@@ -1,7 +1,7 @@
 # Reviewed Who Scored? expansion
 
-The manifest has 159 unique players: the original 9, 30 earlier additions and three
-expansion batches of 40. Media are
+The manifest has 160 unique players: the original 9, 30 earlier additions, three
+expansion batches of 40 and one separately requested extra scorer. Media are
 960x540, 24fps, silent H.264 with fast-start headers. Each masked video shares
 its frame count and camera angle with its reveal. Existing goal01..09 IDs and
 corrected v2 media stay intact.
@@ -94,7 +94,8 @@ publish to GitHub and verify the live assets. Staging is not publication.
 
 ## Expansion: six batches of 40
 
-The new expansion targets **240 additional unique scorers**, for 279 total.
+The six planned expansion batches target **240 additional unique scorers**.
+With the separately requested extra scorer, completing them would reach 280 total.
 `progress/expansion-candidates.json` contains 268 distinct official scorer
 candidates with spare events. These are discovery records, not playable clips.
 `progress/expansion-batches.json` fixes six ordered groups of 40. The first batch
@@ -104,8 +105,19 @@ GitHub and live-deployment verification separately from local staging.
 Batch 2 has also passed all 40 source, silhouette and encoded-media reviews. Its
 40 video pairs and posters are published and verified live, bringing the library
 to 119 scorers. Deployment evidence is in `progress/batch-02/live-verification.json`.
-Batch 3 has completed all 40 source, silhouette and encoded-media reviews and is
-staged for publication. Batches 4–6 contain the remaining 120 planned additions.
+Batch 3 has also passed all 40 reviews and is published and verified live, bringing
+the library to 159 scorers. Its deployment evidence is in
+`progress/batch-03/live-verification.json`. Batches 4–6 contain the remaining 120
+planned additions.
+
+The extra scorer, John Carlson, is reviewed separately under `progress/bonus-160/`
+to reach exactly 160 without consuming any part of the next forty-player batch.
+`standalone.py` enforces the same official-source, every-frame visual-review and
+immutable-media checks as the full batch gate. Its local staging command is:
+
+```sh
+python tools/who_scored/standalone.py --exports /workspace/who-scored-expansion/batch-04/exports --stage
+```
 
 Use the isolated SAM2 environment and store raw footage, API caches, models and
 working frames outside the checkout:

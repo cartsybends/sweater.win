@@ -55,10 +55,29 @@ def verify_batch(batch, records, queue, existing, exports, audit, edits):
     pids = [record['pid'] for record in records]
     if len(set(pids)) != 40 or old_ids & set(ids) or old_pids & set(pids):
         raise ValueError('Every addition must be a distinct new scorer and clip ID')
+    return verify_records(records, queue, exports, audit, edits)
+
+
+def verify_standalone(release, records, queue, existing, exports, audit, edits, batches):
+    """An explicitly requested single addition never counts as a partial batch."""
+    ids = release['ids']
+    if len(ids) != 1 or len(records) != 1 or {r['id'] for r in records} != set(ids):
+        raise ValueError('A standalone release requires exactly one reviewed clip')
+    if set(release['approved_clips']) != set(ids):
+        raise ValueError('The standalone clip needs explicit review approval')
+    if set(ids) & {ident for row in batches for ident in row['ids']}:
+        raise ValueError('A standalone release cannot consume part of a planned batch')
+    if any(c['id'] in ids or c['pid'] == records[0]['pid'] for c in existing):
+        raise ValueError('The standalone addition must be a distinct new scorer and clip ID')
+    return verify_records(records, queue, exports, audit, edits)
+
+
+def verify_records(records, queue, exports, audit, edits):
+    """Apply identical source, visual-review and immutable-media checks."""
     by_id = {row['id']: row for row in queue['candidates']}
     sources = {source['id']: source for source in audit['sources']}
-    if set(sources) != set(ids):
-        raise ValueError('Official source audit must cover all 40 batch members')
+    if len(sources) != len(audit['sources']) or set(sources) != {r['id'] for r in records}:
+        raise ValueError('Official source audit must cover every release member exactly once')
     for record in records:
         ident = record['id']
         source = sources[ident]
@@ -119,7 +138,10 @@ def main(args):
     print(f'Batch {args.batch}: 40 new scorers, three review passes and immutable media verified.')
     if not args.stage:
         return
-    if len(existing) != registry['starting_library_size'] + (args.batch - 1) * 40:
+    standalone_ids = {ident for release in registry.get('standalone_releases', [])
+                      for ident in release['ids']}
+    active_standalones = standalone_ids & {clip['id'] for clip in existing}
+    if len(existing) != registry['starting_library_size'] + (args.batch - 1) * 40 + len(active_standalones):
         raise ValueError('Stage batches in order after preceding batches are complete')
     provenance = json.loads((media / 'sources.json').read_text())
     provenance_by_id = {source['id']: source for source in provenance}

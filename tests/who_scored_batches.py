@@ -105,6 +105,39 @@ class BatchGateTests(unittest.TestCase):
                 self.verify(self.records[:3])
             inspect.assert_not_called()
 
+    def standalone(self, records=None, existing=None, batches=None):
+        return batch.verify_standalone(
+            {'ids': ['goal-40'], 'approved_clips': ['goal-40']},
+            self.records[:1] if records is None else records, self.queue,
+            existing or [], self.root, {'sources': self.audit['sources'][:1]},
+            self.root, batches or [])
+
+    def test_standalone_uses_the_same_immutable_review_and_media_checks(self):
+        with patch.object(batch, 'inspect_media', return_value='0.083333') as inspect, patch.object(batch, 'inspect_poster'):
+            self.assertEqual(set(self.standalone()), {'goal-40'})
+            self.assertEqual(inspect.call_count, 2)
+        (self.root / 'goal-40-masked-v1.mp4').write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'Export changed'):
+            self.standalone()
+
+    def test_standalone_cannot_publish_a_partial_batch_or_duplicate_player(self):
+        for records in [[], self.records[:2]]:
+            with self.assertRaisesRegex(ValueError, 'exactly one'):
+                self.standalone(records=records)
+        with self.assertRaisesRegex(ValueError, 'planned batch'):
+            self.standalone(batches=[self.batch])
+        with self.assertRaisesRegex(ValueError, 'distinct new scorer'):
+            self.standalone(existing=[{'id': 'older-goal', 'pid': 1000}])
+
+    def test_standalone_requires_all_frames_and_all_three_reviews(self):
+        self.records[0]['reviews']['silhouette_coverage']['visually_reviewed_frames'] = [0]
+        with self.assertRaisesRegex(ValueError, 'every frame'):
+            self.standalone()
+        self.records[0]['reviews']['silhouette_coverage']['visually_reviewed_frames'] = [0, 1]
+        self.records[0]['reviews']['official_identity']['passed'] = False
+        with self.assertRaisesRegex(ValueError, 'All three'):
+            self.standalone()
+
     def test_duplicate_or_existing_scorer_is_rejected(self):
         self.records[-1]['pid'] = self.records[0]['pid']
         with self.assertRaisesRegex(ValueError, 'distinct new scorer'):
@@ -236,6 +269,28 @@ class PublishedCorrectionTests(unittest.TestCase):
                 self.assertEqual(by_id[record['id']], {
                     'id': record['id'], 'pid': record['pid'], **record['assets'],
                     'motion': record['motion'], 'source': source['source']})
+            verified.update(active)
+        for release in registry.get('standalone_releases', []):
+            active = set(release['ids']) & additions
+            if not active:
+                continue
+            self.assertEqual(active, set(release['ids']))
+            folder = progress / release['name']
+            records = json.loads((folder / 'review.json').read_text())['reviewed_clips']
+            sources = batch.verify_standalone(release, records,
+                json.loads((progress / 'expansion-candidates.json').read_text()),
+                [clip for clip in clips if clip['id'] not in active], media,
+                json.loads((folder / 'source-audit.json').read_text()), folder,
+                registry['batches'])
+            for record in records:
+                self.assertEqual(by_id[record['id']], {
+                    'id': record['id'], 'pid': record['pid'], **record['assets'],
+                    'motion': record['motion'], 'source': sources[record['id']]['source']})
+                source = next(s for s in json.loads((media / 'sources.json').read_text())
+                              if s['id'] == record['id'])
+                self.assertEqual(source, {**sources[record['id']],
+                    'exported_sha256': record['asset_sha256'],
+                    'review_record': str((folder / 'review.json').relative_to(TOOLS.parents[1]))})
             verified.update(active)
         self.assertEqual(verified, additions)
 
