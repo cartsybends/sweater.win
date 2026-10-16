@@ -258,6 +258,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-whoscored #banner .pname { font-size: 23px; letter-spacing: -.5px; }
   #view-whoscored #banner .pmeta { font-size: 12px; }
   #view-whoscored #banner .profile { padding: 7px 12px; font-size: 11px; background: var(--cell); color: var(--fg); }
+  #view-whoscored #banner .profile.ws-game-result { display: inline-flex; flex-direction: column; gap: 7px; max-width: 100%; padding: 14px 22px; border: 1px solid var(--sep); border-radius: 12px; line-height: 1.4; }
+  .ws-game-date { font-size: 12px; font-weight: 500; color: var(--label2); }
+  .ws-game-score { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ws-game-score b { font-size: 22px; }
+  .ws-game-link { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 500; }
   #view-whoscored #banner .countdown { font-size: 11px; color: var(--label2); }
   #view-whoscored .resultrecap { font-size: 11px; padding: 9px; }
   #view-whoscored .recapfact, #view-whoscored [data-result-next] { display: none; }
@@ -9672,6 +9677,16 @@ $("ebChoices").addEventListener("click",e=>{const b=e.target.closest("[data-eb]"
 // ---- Who Scored? One reviewed goal per day. ----
 const WS_CLIPS = /*__GOAL_CLIPS__*/[].map(c => ({ ...c, p: BYID.get(c.pid) })).filter(c => c.p);
 function wsMedia(t, original = false) { return `who-scored/${original ? t.reveal : t.masked}`; }
+function wsGameResult(t) {
+  const { id, date, away, home, finish } = t.game;
+  const played = new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  const final = finish === "REG" ? "Final" : `Final/${finish}`;
+  return {
+    href: `https://www.nhl.com/gamecenter/${id}/boxscore`,
+    label: `${played}: ${away.name} ${away.score}, ${home.name} ${home.score}. ${final}. View game stats on NHL.com (opens in a new tab).`,
+    html: `<span class="ws-game-date">${esc(played)}</span><span class="ws-game-score"><span>${esc(away.abbrev)} <b>${away.score}</b></span><span aria-hidden="true">–</span><span><b>${home.score}</b> ${esc(home.abbrev)}</span></span><span class="ws-game-link">${esc(final)} · View game stats <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 12 8-8M5 4h7v7"/></svg></span>`
+  };
+}
 function wsVideoState() {
   const g = G.whoscored, v = $("wsVideo");
   if (game !== "whoscored" || !g.started) return;
@@ -10057,7 +10072,18 @@ function finish(won, fresh) {
   $("cheer").textContent = text ? text.cheer : won ? g.cheers[n - 1] : (game === "team" ? "The answer was" : "The mystery player was");
   $("pname").textContent = p ? p.name : "";
   $("pmeta").textContent = g.meta(st.target);
-  if (p) $("profile").href = `https://www.nhl.com/player/${p.id}`;
+  const gameResult = game === "whoscored" ? wsGameResult(st.target) : null;
+  $("profile").classList.toggle("ws-game-result", !!gameResult);
+  if (gameResult) {
+    $("profile").href = gameResult.href;
+    $("profile").innerHTML = gameResult.html;
+    $("profile").setAttribute("aria-label", gameResult.label);
+  } else {
+    $("profile").textContent = "View profile on NHL.com";
+    $("profile").removeAttribute("aria-label");
+    if (p) $("profile").href = `https://www.nhl.com/player/${p.id}`;
+    else $("profile").removeAttribute("href");
+  }
   $("again").textContent = mode === "archive" ? "Pick another day" : g.next;
   $("again").hidden = mode === "daily";
   $("countdown").hidden = mode !== "daily";
@@ -13590,6 +13616,8 @@ def load_goal_clips():
     """Only reviewed, committed clips are eligible for the video game."""
     root = HERE / "static" / "who-scored"
     clips = json.loads((root / "clips.json").read_text(encoding="utf-8"))
+    sources = {s["id"]: s for s in json.loads((root / "sources.json").read_text(encoding="utf-8"))}
+    games = json.loads((root / "games.json").read_text(encoding="utf-8"))
     seen, players = set(), set()
     for clip in clips:
         if clip["id"] in seen or clip["pid"] in players:
@@ -13600,6 +13628,21 @@ def load_goal_clips():
             name = clip[kind]
             if Path(name).name != name or not name.endswith(suffix) or not (root / name).is_file():
                 raise ValueError(f"Missing or invalid Who Scored? {kind}: {name}")
+        source = sources.get(clip["id"], {})
+        game = games.get(str(source.get("game_id")))
+        if not game or game.get("id") != source.get("game_id") or game.get("date") != source.get("date"):
+            raise ValueError(f"Missing or mismatched Who Scored? game result for {clip['id']}")
+        try:
+            date.fromisoformat(game["date"])
+            valid_teams = all(re.fullmatch(r"[A-Z]{2,3}", game[side]["abbrev"])
+                              and game[side]["name"] and type(game[side]["score"]) is int
+                              and game[side]["score"] >= 0 for side in ("away", "home"))
+            valid_final = game["finish"] in ("REG", "OT", "SO") and game["away"]["score"] != game["home"]["score"]
+        except (KeyError, TypeError, ValueError):
+            valid_teams = valid_final = False
+        if not valid_teams or not valid_final:
+            raise ValueError(f"Invalid Who Scored? final score for {clip['id']}")
+        clip["game"] = game
     return clips
 
 
@@ -14342,7 +14385,7 @@ def main():
     trophy_images = load_trophy_images()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_GAMES_CSS__*/": (HERE / "static" / "team-games" / "styles.css").read_text(encoding="utf-8"),

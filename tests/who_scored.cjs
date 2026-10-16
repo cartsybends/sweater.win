@@ -1,7 +1,9 @@
 // Run from the repository root: node tests/who_scored.cjs
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const source = fs.readFileSync('build_sweater.py','utf8');
-const clips = JSON.parse(fs.readFileSync('static/who-scored/clips.json'));
+const sources = new Map(JSON.parse(fs.readFileSync('static/who-scored/sources.json')).map(s => [s.id, s]));
+const games = JSON.parse(fs.readFileSync('static/who-scored/games.json'));
+const clips = JSON.parse(fs.readFileSync('static/who-scored/clips.json')).map(c => ({...c, game: games[sources.get(c.id).game_id]}));
 const players = Object.values(JSON.parse(fs.readFileSync('schedule.json')).players);
 const storage = new Map(), elements = new Map();
 let day="2026-10-12";
@@ -9,7 +11,8 @@ class Element {
   constructor() {
     this.hidden=false; this.disabled=false; this.style={}; this.attrs={}; this.events={};
     this.paused=true; this.ended=false; this.currentTime=0; this.duration=4; this.dataset={};
-    this.classList={add(){},remove(){},toggle(){},contains(){return false;}};
+    const classes = new Set();
+    this.classList={add:c=>classes.add(c),remove:c=>classes.delete(c),toggle:(c,on)=>on ? classes.add(c) : classes.delete(c),contains:c=>classes.has(c)};
   }
   setAttribute(k,v){this.attrs[k]=String(v);}
   removeAttribute(k){delete this.attrs[k]; if(k==='src')this.src='';}
@@ -44,6 +47,7 @@ run('loadCurrent()');
 const target=run('S.whoscored.target');
 assert.equal(run('mode'),'daily');assert.equal(target.pid,clips[0].pid);
 assert.equal($('wsVideo').src,'');assert.equal($('wsSetup').hidden,false);assert.equal($('wsRound').hidden,true);
+assert.equal($('banner').style.display,'none');assert.equal($('wsSource').hidden,true);
 // A guess cannot be consumed before loading; the original stays gated.
 run(`doGuess(${target.pid})`);assert.equal(run('S.whoscored.guesses.length'),0);
 $('wsOriginal').onclick();assert.equal($('wsVideo').src,'');
@@ -62,11 +66,18 @@ $('wsVideo').events.loadeddata();run(`doGuess(${target.pid})`);
 assert.equal(run('S.whoscored.over'),true);assert.equal($('wsOriginal').hidden,false);
 assert.equal($('wsGuessing').hidden,true);assert.equal($('wsQuestionCopy').hidden,true);assert.equal($('wsFinishActions').hidden,false);
 assert($('wsWrong').innerHTML.includes('Correct'));assert(storage.has('sweater-daily-whoscored'));
+assert.equal($('profile').href,`https://www.nhl.com/gamecenter/${target.game.id}/boxscore`);
+assert($('profile').classList.contains('ws-game-result'));
+assert($('profile').innerHTML.includes('Dec 10, 2024'));
+assert($('profile').innerHTML.includes('TBL <b>1</b>'));
+assert($('profile').innerHTML.includes('<b>2</b> EDM'));
+assert($('profile').attrs['aria-label'].includes('Tampa Bay Lightning 1, Edmonton Oilers 2'));
 $('wsOriginal').onclick();assert.equal($('wsVideo').src,`who-scored/${target.reveal}`);
 $('wsSlow').onclick();assert.equal($('wsVideo').playbackRate,.5);
 $('wsOriginal').onclick();assert.equal($('wsVideo').src,`who-scored/${target.masked}`);
 for(const action of ['loadUnlimited(true)','mode="archive";loadArchive("2026-10-11")','S.whoscored.target=null; mode="unlimited"; loadCurrent()']){
  run(action);assert.equal(run('mode'),'daily');assert.equal(run('S.whoscored.target.id'),target.id);assert.equal(run('S.whoscored.over'),true);assert.equal(run('S.whoscored.guesses.length'),2);
+ assert.equal($('profile').href,`https://www.nhl.com/gamecenter/${target.game.id}/boxscore`);
 }
 assert.equal(run('archiveDays("whoscored").length'),0);
 // Midnight rollover is the only normal way to get a fresh goal.
@@ -76,13 +87,36 @@ day='2026-10-13';run('tick()');
 assert.equal(run('mode'),'daily');assert.equal(run('S.whoscored.target.pid'),clips[1].pid);
 assert.equal(run('S.whoscored.over'),false);assert.equal(run('S.whoscored.guesses.length'),0);
 assert.equal($('wsVideo').playbackRate,1);assert.equal($('wsOriginal').hidden,true);
+assert.equal($('banner').style.display,'none');assert.equal($('wsSource').hidden,true);
 $('wsStart').onclick();$('wsVideo').events.error();assert.equal($('wsGuess').disabled,true);assert.equal($('wsWatch').hidden,false);
 $('wsWatch').onclick();assert.equal(run('G.whoscored.failed'),false);$('wsVideo').events.loadeddata();
 // A completed loss is locked just like a completed win.
 for(const c of clips.filter(c=>c.pid!==clips[1].pid).slice(0,6))run(`doGuess(${c.pid})`);
 assert.equal(run('S.whoscored.over'),true);assert.equal(run('S.whoscored.guesses.length'),6);
+assert.equal($('profile').href,`https://www.nhl.com/gamecenter/${clips[1].game.id}/boxscore`);
+assert($('profile').innerHTML.includes('Sep 18, 2019'));
 run('S.whoscored.target=null; S.whoscored.mode=null; loadUnlimited(true)');
 assert.equal(run('S.whoscored.over'),true);assert.equal(run('S.whoscored.guesses.length'),6);
+// Dates describe the historical game consistently, even near timezone date boundaries.
+const originalTZ = process.env.TZ;
+try {
+ for (const tz of ['America/Vancouver','Pacific/Kiritimati','Pacific/Pago_Pago']) {
+  process.env.TZ=tz;
+  assert(run('wsGameResult(WS_CLIPS[0]).html').includes('Dec 10, 2024'));
+ }
+} finally {if(originalTZ===undefined)delete process.env.TZ;else process.env.TZ=originalTZ;}
+for(const c of clips){
+ const result=run(`wsGameResult(WS_CLIPS.find(c=>c.id===${JSON.stringify(c.id)}))`);
+ assert.equal(result.href,`https://www.nhl.com/gamecenter/${c.game.id}/boxscore`);
+ assert(result.label.includes(`${c.game.away.name} ${c.game.away.score}, ${c.game.home.name} ${c.game.home.score}`));
+ assert(result.html.includes(c.game.finish==='REG'?'Final ·':`Final/${c.game.finish} ·`));
+}
+// The shared results banner restores its normal player link in another game.
+run('G.fixture={view:"view-fixture",player:()=>BYID.get(WS_CLIPS[0].pid),meta:()=>"",cheers:[]}; S.fixture={target:{},guesses:[],day:dayKey()}; game="fixture"; finish(false,false)');
+assert.equal($('profile').textContent,'View profile on NHL.com');
+assert.equal($('profile').href,`https://www.nhl.com/player/${clips[0].pid}`);
+assert(!$('profile').classList.contains('ws-game-result'));
+assert.equal($('profile').attrs['aria-label'],undefined);
 assert.equal(new Set(clips.map(c=>c.pid)).size,clips.length);
 for(const c of clips){assert(ctx.BYID.has(c.pid));for(const k of ['masked','reveal','poster'])assert(!c[k].includes(ctx.BYID.get(c.pid).name.split(' ').at(-1).toLowerCase()));}
-console.log(`Who Scored?: ${clips.length} scorers; daily-only entry guards, resume, win/loss locks, midnight rollover, load/retry and replay/reveal passed.`);
+console.log(`Who Scored?: ${clips.length} scorers; daily-only guards, resume, win/loss game stats, timezone-safe dates, banner reuse, rollover and replay/reveal passed.`);

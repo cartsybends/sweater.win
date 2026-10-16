@@ -32,4 +32,15 @@ Who Scored offers one goal per day, shared by everyone, with a new goal at
 midnight Eastern. Refreshes restore today's progress or completed result.
 There are no Unlimited or archive rounds. Replays and slow motion of today's
 clip remain unlimited, and its original becomes available after the answer.
-NHL.com source links appear only after the answer is revealed.
+NHL.com source links appear only after the answer is revealed. The completed result
+replaces the player-profile button with the game's date, both teams and final score,
+linked to its NHL.com box score. Overtime and shootout results are labelled.
+
+Every source needs its original `game_id` and `date`. `games.json` stores the verified
+final result for each game, keyed by that ID: `id`, `date`, `away` and `home` (each
+with `abbrev`, `name`, `score`), and `finish` (`REG`, `OT`, or `SO`). Verify these
+against `https://api-web.nhle.com/v1/gamecenter/{game_id}/landing` after adding or
+replacing a highlight. Use `gameDate`, the final team scores, and
+`periodDescriptor.periodType` from a completed (`OFF` or `FINAL`) game. The builder
+joins this committed data to each clip and rejects missing or mismatched results;
+the browser does not need to fetch game details.

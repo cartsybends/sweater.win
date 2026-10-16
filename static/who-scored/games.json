@@ -1,0 +1,1232 @@
+{
+  "2019010028": {
+    "id": 2019010028,
+    "date": "2019-09-18",
+    "away": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2023020562": {
+    "id": 2023020562,
+    "date": "2023-12-30",
+    "away": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "WSH",
+      "name": "Washington Capitals",
+      "score": 2
+    },
+    "finish": "SO"
+  },
+  "2023021078": {
+    "id": 2023021078,
+    "date": "2024-03-17",
+    "away": {
+      "abbrev": "DET",
+      "name": "Detroit Red Wings",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "PIT",
+      "name": "Pittsburgh Penguins",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2023030243": {
+    "id": 2023030243,
+    "date": "2024-05-12",
+    "away": {
+      "abbrev": "VAN",
+      "name": "Vancouver Canucks",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020453": {
+    "id": 2024020453,
+    "date": "2024-12-10",
+    "away": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020470": {
+    "id": 2024020470,
+    "date": "2024-12-12",
+    "away": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 8
+    },
+    "home": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020602": {
+    "id": 2024020602,
+    "date": "2025-01-01",
+    "away": {
+      "abbrev": "NJD",
+      "name": "New Jersey Devils",
+      "score": 0
+    },
+    "home": {
+      "abbrev": "LAK",
+      "name": "Los Angeles Kings",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020603": {
+    "id": 2024020603,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "FLA",
+      "name": "Florida Panthers",
+      "score": 1
+    },
+    "finish": "REG"
+  },
+  "2024020604": {
+    "id": 2024020604,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "BOS",
+      "name": "Boston Bruins",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020605": {
+    "id": 2024020605,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "MIN",
+      "name": "Minnesota Wild",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "WSH",
+      "name": "Washington Capitals",
+      "score": 3
+    },
+    "finish": "SO"
+  },
+  "2024020606": {
+    "id": 2024020606,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "DET",
+      "name": "Detroit Red Wings",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2024020607": {
+    "id": 2024020607,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "NYI",
+      "name": "New York Islanders",
+      "score": 1
+    },
+    "finish": "REG"
+  },
+  "2024020608": {
+    "id": 2024020608,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "DAL",
+      "name": "Dallas Stars",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2024020609": {
+    "id": 2024020609,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "ANA",
+      "name": "Anaheim Ducks",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "WPG",
+      "name": "Winnipeg Jets",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020610": {
+    "id": 2024020610,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "BUF",
+      "name": "Buffalo Sabres",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "COL",
+      "name": "Colorado Avalanche",
+      "score": 6
+    },
+    "finish": "OT"
+  },
+  "2024020611": {
+    "id": 2024020611,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "UTA",
+      "name": "Utah Hockey Club",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020612": {
+    "id": 2024020612,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "PHI",
+      "name": "Philadelphia Flyers",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "VGK",
+      "name": "Vegas Golden Knights",
+      "score": 5
+    },
+    "finish": "REG"
+  },
+  "2024020613": {
+    "id": 2024020613,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "VAN",
+      "name": "Vancouver Canucks",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "SEA",
+      "name": "Seattle Kraken",
+      "score": 3
+    },
+    "finish": "SO"
+  },
+  "2024020614": {
+    "id": 2024020614,
+    "date": "2025-01-02",
+    "away": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "SJS",
+      "name": "San Jose Sharks",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020615": {
+    "id": 2024020615,
+    "date": "2025-01-03",
+    "away": {
+      "abbrev": "PIT",
+      "name": "Pittsburgh Penguins",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "FLA",
+      "name": "Florida Panthers",
+      "score": 3
+    },
+    "finish": "SO"
+  },
+  "2024020616": {
+    "id": 2024020616,
+    "date": "2025-01-03",
+    "away": {
+      "abbrev": "MTL",
+      "name": "Montréal Canadiens",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "CHI",
+      "name": "Chicago Blackhawks",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2024020617": {
+    "id": 2024020617,
+    "date": "2025-01-03",
+    "away": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 0
+    },
+    "home": {
+      "abbrev": "STL",
+      "name": "St. Louis Blues",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2024020618": {
+    "id": 2024020618,
+    "date": "2025-01-03",
+    "away": {
+      "abbrev": "ANA",
+      "name": "Anaheim Ducks",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020619": {
+    "id": 2024020619,
+    "date": "2025-01-03",
+    "away": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "VAN",
+      "name": "Vancouver Canucks",
+      "score": 0
+    },
+    "finish": "REG"
+  },
+  "2024020620": {
+    "id": 2024020620,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "WSH",
+      "name": "Washington Capitals",
+      "score": 7
+    },
+    "finish": "REG"
+  },
+  "2024020621": {
+    "id": 2024020621,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "DET",
+      "name": "Detroit Red Wings",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "WPG",
+      "name": "Winnipeg Jets",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020622": {
+    "id": 2024020622,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "NJD",
+      "name": "New Jersey Devils",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "SJS",
+      "name": "San Jose Sharks",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020623": {
+    "id": 2024020623,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "BOS",
+      "name": "Boston Bruins",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2024020624": {
+    "id": 2024020624,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "MIN",
+      "name": "Minnesota Wild",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 0
+    },
+    "finish": "REG"
+  },
+  "2024020625": {
+    "id": 2024020625,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "STL",
+      "name": "St. Louis Blues",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2024020627": {
+    "id": 2024020627,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 1
+    },
+    "finish": "REG"
+  },
+  "2024020628": {
+    "id": 2024020628,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "UTA",
+      "name": "Utah Hockey Club",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "DAL",
+      "name": "Dallas Stars",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020629": {
+    "id": 2024020629,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "LAK",
+      "name": "Los Angeles Kings",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020630": {
+    "id": 2024020630,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "BUF",
+      "name": "Buffalo Sabres",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "VGK",
+      "name": "Vegas Golden Knights",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020631": {
+    "id": 2024020631,
+    "date": "2025-01-04",
+    "away": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "SEA",
+      "name": "Seattle Kraken",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020632": {
+    "id": 2024020632,
+    "date": "2025-01-05",
+    "away": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 6
+    },
+    "home": {
+      "abbrev": "CHI",
+      "name": "Chicago Blackhawks",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020633": {
+    "id": 2024020633,
+    "date": "2025-01-05",
+    "away": {
+      "abbrev": "NYI",
+      "name": "New York Islanders",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "BOS",
+      "name": "Boston Bruins",
+      "score": 4
+    },
+    "finish": "OT"
+  },
+  "2024020635": {
+    "id": 2024020635,
+    "date": "2025-01-05",
+    "away": {
+      "abbrev": "PHI",
+      "name": "Philadelphia Flyers",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020643": {
+    "id": 2024020643,
+    "date": "2025-01-07",
+    "away": {
+      "abbrev": "DAL",
+      "name": "Dallas Stars",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 4
+    },
+    "finish": "OT"
+  },
+  "2024020647": {
+    "id": 2024020647,
+    "date": "2025-01-07",
+    "away": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "WPG",
+      "name": "Winnipeg Jets",
+      "score": 5
+    },
+    "finish": "REG"
+  },
+  "2024020656": {
+    "id": 2024020656,
+    "date": "2025-01-09",
+    "away": {
+      "abbrev": "NJD",
+      "name": "New Jersey Devils",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020697": {
+    "id": 2024020697,
+    "date": "2025-01-14",
+    "away": {
+      "abbrev": "ANA",
+      "name": "Anaheim Ducks",
+      "score": 0
+    },
+    "home": {
+      "abbrev": "WSH",
+      "name": "Washington Capitals",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020705": {
+    "id": 2024020705,
+    "date": "2025-01-15",
+    "away": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "BUF",
+      "name": "Buffalo Sabres",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2024020706": {
+    "id": 2024020706,
+    "date": "2025-01-15",
+    "away": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "MIN",
+      "name": "Minnesota Wild",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020741": {
+    "id": 2024020741,
+    "date": "2025-01-20",
+    "away": {
+      "abbrev": "MIN",
+      "name": "Minnesota Wild",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "COL",
+      "name": "Colorado Avalanche",
+      "score": 1
+    },
+    "finish": "REG"
+  },
+  "2024020769": {
+    "id": 2024020769,
+    "date": "2025-01-23",
+    "away": {
+      "abbrev": "PIT",
+      "name": "Pittsburgh Penguins",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "ANA",
+      "name": "Anaheim Ducks",
+      "score": 5
+    },
+    "finish": "REG"
+  },
+  "2024020771": {
+    "id": 2024020771,
+    "date": "2025-01-23",
+    "away": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 6
+    },
+    "home": {
+      "abbrev": "SJS",
+      "name": "San Jose Sharks",
+      "score": 5
+    },
+    "finish": "REG"
+  },
+  "2024020774": {
+    "id": 2024020774,
+    "date": "2025-01-24",
+    "away": {
+      "abbrev": "VGK",
+      "name": "Vegas Golden Knights",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "DAL",
+      "name": "Dallas Stars",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2024020779": {
+    "id": 2024020779,
+    "date": "2025-01-25",
+    "away": {
+      "abbrev": "NJD",
+      "name": "New Jersey Devils",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "MTL",
+      "name": "Montréal Canadiens",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020780": {
+    "id": 2024020780,
+    "date": "2025-01-25",
+    "away": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020782": {
+    "id": 2024020782,
+    "date": "2025-01-25",
+    "away": {
+      "abbrev": "LAK",
+      "name": "Los Angeles Kings",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020785": {
+    "id": 2024020785,
+    "date": "2025-01-25",
+    "away": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "NYI",
+      "name": "New York Islanders",
+      "score": 3
+    },
+    "finish": "OT"
+  },
+  "2024020788": {
+    "id": 2024020788,
+    "date": "2025-01-25",
+    "away": {
+      "abbrev": "FLA",
+      "name": "Florida Panthers",
+      "score": 7
+    },
+    "home": {
+      "abbrev": "SJS",
+      "name": "San Jose Sharks",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020790": {
+    "id": 2024020790,
+    "date": "2025-01-26",
+    "away": {
+      "abbrev": "UTA",
+      "name": "Utah Hockey Club",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020791": {
+    "id": 2024020791,
+    "date": "2025-01-26",
+    "away": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "WPG",
+      "name": "Winnipeg Jets",
+      "score": 5
+    },
+    "finish": "REG"
+  },
+  "2024020808": {
+    "id": 2024020808,
+    "date": "2025-01-29",
+    "away": {
+      "abbrev": "LAK",
+      "name": "Los Angeles Kings",
+      "score": 0
+    },
+    "home": {
+      "abbrev": "FLA",
+      "name": "Florida Panthers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020817": {
+    "id": 2024020817,
+    "date": "2025-01-30",
+    "away": {
+      "abbrev": "CHI",
+      "name": "Chicago Blackhawks",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020827": {
+    "id": 2024020827,
+    "date": "2025-02-01",
+    "away": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "BOS",
+      "name": "Boston Bruins",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2024020828": {
+    "id": 2024020828,
+    "date": "2025-02-01",
+    "away": {
+      "abbrev": "MIN",
+      "name": "Minnesota Wild",
+      "score": 0
+    },
+    "home": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2024020829": {
+    "id": 2024020829,
+    "date": "2025-02-01",
+    "away": {
+      "abbrev": "NYI",
+      "name": "New York Islanders",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 2
+    },
+    "finish": "OT"
+  },
+  "2024020831": {
+    "id": 2024020831,
+    "date": "2025-02-01",
+    "away": {
+      "abbrev": "WPG",
+      "name": "Winnipeg Jets",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "WSH",
+      "name": "Washington Capitals",
+      "score": 4
+    },
+    "finish": "OT"
+  },
+  "2024020833": {
+    "id": 2024020833,
+    "date": "2025-02-01",
+    "away": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020834": {
+    "id": 2024020834,
+    "date": "2025-02-01",
+    "away": {
+      "abbrev": "DET",
+      "name": "Detroit Red Wings",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 1
+    },
+    "finish": "REG"
+  },
+  "2024020846": {
+    "id": 2024020846,
+    "date": "2025-02-04",
+    "away": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "BUF",
+      "name": "Buffalo Sabres",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020859": {
+    "id": 2024020859,
+    "date": "2025-02-05",
+    "away": {
+      "abbrev": "BOS",
+      "name": "Boston Bruins",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020862": {
+    "id": 2024020862,
+    "date": "2025-02-06",
+    "away": {
+      "abbrev": "OTT",
+      "name": "Ottawa Senators",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 5
+    },
+    "finish": "REG"
+  },
+  "2024020881": {
+    "id": 2024020881,
+    "date": "2025-02-08",
+    "away": {
+      "abbrev": "PIT",
+      "name": "Pittsburgh Penguins",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "PHI",
+      "name": "Philadelphia Flyers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020882": {
+    "id": 2024020882,
+    "date": "2025-02-08",
+    "away": {
+      "abbrev": "NYR",
+      "name": "New York Rangers",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024020885": {
+    "id": 2024020885,
+    "date": "2025-02-08",
+    "away": {
+      "abbrev": "BUF",
+      "name": "Buffalo Sabres",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2024020924": {
+    "id": 2024020924,
+    "date": "2025-02-25",
+    "away": {
+      "abbrev": "DAL",
+      "name": "Dallas Stars",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2024020929": {
+    "id": 2024020929,
+    "date": "2025-02-25",
+    "away": {
+      "abbrev": "CHI",
+      "name": "Chicago Blackhawks",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "UTA",
+      "name": "Utah Hockey Club",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020988": {
+    "id": 2024020988,
+    "date": "2025-03-06",
+    "away": {
+      "abbrev": "UTA",
+      "name": "Utah Hockey Club",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "DET",
+      "name": "Detroit Red Wings",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2024020991": {
+    "id": 2024020991,
+    "date": "2025-03-06",
+    "away": {
+      "abbrev": "WPG",
+      "name": "Winnipeg Jets",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "PHI",
+      "name": "Philadelphia Flyers",
+      "score": 1
+    },
+    "finish": "REG"
+  },
+  "2024020992": {
+    "id": 2024020992,
+    "date": "2025-03-06",
+    "away": {
+      "abbrev": "BOS",
+      "name": "Boston Bruins",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2024021052": {
+    "id": 2024021052,
+    "date": "2025-03-14",
+    "away": {
+      "abbrev": "COL",
+      "name": "Colorado Avalanche",
+      "score": 4
+    },
+    "home": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 2
+    },
+    "finish": "REG"
+  },
+  "2025020025": {
+    "id": 2025020025,
+    "date": "2025-10-11",
+    "away": {
+      "abbrev": "TOR",
+      "name": "Toronto Maple Leafs",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "DET",
+      "name": "Detroit Red Wings",
+      "score": 6
+    },
+    "finish": "REG"
+  },
+  "2025020026": {
+    "id": 2025020026,
+    "date": "2025-10-11",
+    "away": {
+      "abbrev": "NJD",
+      "name": "New Jersey Devils",
+      "score": 5
+    },
+    "home": {
+      "abbrev": "TBL",
+      "name": "Tampa Bay Lightning",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2025020030": {
+    "id": 2025020030,
+    "date": "2025-10-11",
+    "away": {
+      "abbrev": "PHI",
+      "name": "Philadelphia Flyers",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "CAR",
+      "name": "Carolina Hurricanes",
+      "score": 4
+    },
+    "finish": "OT"
+  },
+  "2025020032": {
+    "id": 2025020032,
+    "date": "2025-10-11",
+    "away": {
+      "abbrev": "UTA",
+      "name": "Utah Mammoth",
+      "score": 3
+    },
+    "home": {
+      "abbrev": "NSH",
+      "name": "Nashville Predators",
+      "score": 2
+    },
+    "finish": "OT"
+  },
+  "2025020033": {
+    "id": 2025020033,
+    "date": "2025-10-11",
+    "away": {
+      "abbrev": "CBJ",
+      "name": "Columbus Blue Jackets",
+      "score": 7
+    },
+    "home": {
+      "abbrev": "MIN",
+      "name": "Minnesota Wild",
+      "score": 4
+    },
+    "finish": "REG"
+  },
+  "2025020035": {
+    "id": 2025020035,
+    "date": "2025-10-11",
+    "away": {
+      "abbrev": "VAN",
+      "name": "Vancouver Canucks",
+      "score": 1
+    },
+    "home": {
+      "abbrev": "EDM",
+      "name": "Edmonton Oilers",
+      "score": 3
+    },
+    "finish": "REG"
+  },
+  "2025020312": {
+    "id": 2025020312,
+    "date": "2025-11-18",
+    "away": {
+      "abbrev": "CGY",
+      "name": "Calgary Flames",
+      "score": 2
+    },
+    "home": {
+      "abbrev": "CHI",
+      "name": "Chicago Blackhawks",
+      "score": 5
+    },
+    "finish": "REG"
+  }
+}

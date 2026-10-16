@@ -12,6 +12,7 @@ function runtime(extra = {}) {
   const elements = new Map();
   const $ = id => {
     if (!elements.has(id)) elements.set(id, {hidden: false, style: {}, dataset: {},
+      removeAttribute() {},
       classList: {toggle() {}, add() {}, remove() {}}, querySelector() {return this;}, appendChild() {}});
     return elements.get(id);
   };

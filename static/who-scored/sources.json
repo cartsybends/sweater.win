@@ -8,7 +8,10 @@
     "edit_duration_seconds": 4.166667,
     "clip_year": 2024,
     "source_video_id": "6365907822112",
-    "year_verification": "Official NHL playback metadata content date"
+    "year_verification": "Official NHL playback metadata content date",
+    "game_id": 2024020453,
+    "date": "2024-12-10",
+    "game_verification": "Official NHL game scoring summary and original highlight matchup"
   },
   {
     "id": "goal-02",
@@ -84,7 +87,10 @@
     "edit_duration_seconds": 5.0,
     "clip_year": 2025,
     "source_video_id": "6367565833112",
-    "year_verification": "Official NHL playback metadata content date"
+    "year_verification": "Official NHL playback metadata content date",
+    "game_id": 2024020741,
+    "date": "2025-01-20",
+    "game_verification": "Official NHL game scoring summary and original highlight matchup"
   },
   {
     "id": "goal-08",
@@ -95,7 +101,10 @@
     "edit_duration_seconds": 4.75,
     "clip_year": 2024,
     "source_video_id": "6366233137112",
-    "year_verification": "Official NHL playback metadata content date"
+    "year_verification": "Official NHL playback metadata content date",
+    "game_id": 2024020470,
+    "date": "2024-12-12",
+    "game_verification": "Official NHL game scoring summary and original highlight matchup"
   },
   {
     "id": "goal-09",
@@ -106,7 +115,10 @@
     "edit_duration_seconds": 4.791666666666667,
     "clip_year": 2025,
     "source_video_id": "6368010340112",
-    "year_verification": "Official NHL playback metadata content date"
+    "year_verification": "Official NHL playback metadata content date",
+    "game_id": 2024020791,
+    "date": "2025-01-26",
+    "game_verification": "Official NHL game scoring summary and original highlight matchup"
   },
   {
     "id": "goal-10",
