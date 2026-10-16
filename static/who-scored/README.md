@@ -36,6 +36,10 @@ NHL.com source links appear only after the answer is revealed. The completed res
 replaces the player-profile button with the game's date, both teams and final score,
 linked to its NHL.com box score. Overtime and shootout results are labelled.
 
+Hints appear in rounded bubbles beneath the name field: position group (Forward
+or Defenseman) after two misses, then birth country after four. Specific forward
+positions stay hidden. Hints persist on refresh and disappear when the round ends.
+
 Every source needs its original `game_id` and `date`. `games.json` stores the verified
 final result for each game, keyed by that ID: `id`, `date`, `away` and `home` (each
 with `abbrev`, `name`, `score`), and `finish` (`REG`, `OT`, or `SO`). Verify these

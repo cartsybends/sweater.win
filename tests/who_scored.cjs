@@ -91,7 +91,25 @@ assert.equal($('banner').style.display,'none');assert.equal($('wsSource').hidden
 $('wsStart').onclick();$('wsVideo').events.error();assert.equal($('wsGuess').disabled,true);assert.equal($('wsWatch').hidden,false);
 $('wsWatch').onclick();assert.equal(run('G.whoscored.failed'),false);$('wsVideo').events.loadeddata();
 // A completed loss is locked just like a completed win.
-for(const c of clips.filter(c=>c.pid!==clips[1].pid).slice(0,6))run(`doGuess(${c.pid})`);
+for(const [i,c] of clips.filter(c=>c.pid!==clips[1].pid).slice(0,6).entries()){
+ run(`doGuess(${c.pid})`);
+ const misses=i+1;
+ assert.equal(($('wsFeedback').innerHTML.match(/class="ws-hint"/g)||[]).length,misses===6?0:misses>=4?2:misses>=2?1:0);
+ assert(!$('wsFeedback').innerHTML.includes('Shoots'));
+ if(misses===2){
+  assert($('wsFeedback').innerHTML.includes('<small>Position</small><strong>Forward</strong>'));
+  run('G.whoscored.render({...S.whoscored.target,p:{...S.whoscored.target.p,pos:"D"}},S.whoscored)');
+  assert($('wsFeedback').innerHTML.includes('<strong>Defenseman</strong>'));
+  run('G.whoscored.render(S.whoscored.target,S.whoscored)');
+ }
+ if(misses===4){
+  assert($('wsFeedback').innerHTML.includes(`<small>Born in</small><strong>${run('S.whoscored.target.p.nation')}</strong>`));
+  const hints=$('wsFeedback').innerHTML;
+  run('S.whoscored.target=null; S.whoscored.mode=null; loadCurrent()');
+  assert.equal(run('S.whoscored.guesses.length'),4);assert.equal($('wsFeedback').innerHTML,hints);
+  $('wsVideo').events.loadeddata();
+ }
+}
 assert.equal(run('S.whoscored.over'),true);assert.equal(run('S.whoscored.guesses.length'),6);
 assert.equal($('profile').href,`https://www.nhl.com/gamecenter/${clips[1].game.id}/boxscore`);
 assert($('profile').innerHTML.includes('Sep 18, 2019'));
@@ -119,4 +137,4 @@ assert(!$('profile').classList.contains('ws-game-result'));
 assert.equal($('profile').attrs['aria-label'],undefined);
 assert.equal(new Set(clips.map(c=>c.pid)).size,clips.length);
 for(const c of clips){assert(ctx.BYID.has(c.pid));for(const k of ['masked','reveal','poster'])assert(!c[k].includes(ctx.BYID.get(c.pid).name.split(' ').at(-1).toLowerCase()));}
-console.log(`Who Scored?: ${clips.length} scorers; daily-only guards, resume, win/loss game stats, timezone-safe dates, banner reuse, rollover and replay/reveal passed.`);
+console.log(`Who Scored?: ${clips.length} scorers; hint timing/bubbles/resume, daily-only guards, win/loss game stats, timezone-safe dates, banner reuse, rollover and replay/reveal passed.`);

@@ -229,7 +229,10 @@ TEMPLATE = r'''<!DOCTYPE html>
   #view-whoscored .search { max-width: none; margin: 0; }
   #view-whoscored .search input { min-height: 52px; padding: 14px; border-radius: 12px; border-color: var(--sep); font-size: 15px; background: var(--bg); }
   #view-whoscored .list { border-radius: 12px; max-height: 270px; }
-  .ws-feedback { min-height: 20px; margin: 12px 0 0; color: var(--fg); font-size: 12px; line-height: 1.6; }
+  .ws-feedback { display: flex; flex-wrap: wrap; gap: 8px; min-height: 20px; margin: 12px 0 0; color: var(--fg); font-size: 12px; line-height: 1.6; }
+  .ws-hint { display: inline-flex; flex-direction: column; gap: 3px; max-width: 100%; padding: 10px 16px; border: 1px solid color-mix(in srgb,var(--accent,var(--link)) 28%,var(--sep)); border-radius: 18px; background: color-mix(in srgb,var(--accent,var(--link)) 7%,var(--bg)); overflow-wrap: anywhere; }
+  .ws-hint small { color: var(--label2); font-size: 11px; font-weight: 600; line-height: 1.4; }
+  .ws-hint strong { color: var(--fg); font-size: 15px; font-weight: 650; line-height: 1.4; }
   .ws-attempts { display: flex; gap: 5px; }
   .ws-attempts i { flex: 1; height: 4px; border-radius: 4px; background: var(--cell); transition: background-color .2s ease; }
   .ws-attempts i.used { background: var(--label2); opacity: .45; }
@@ -3434,7 +3437,7 @@ TEMPLATE = r'''<!DOCTYPE html>
             <input id="wsGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="wsOpts" aria-label="Guess the goal scorer" placeholder="Type a player’s name…">
             <ul class="list" id="wsOpts" role="listbox" hidden></ul>
           </div>
-          <p class="ws-feedback" id="wsFeedback" role="status" aria-live="polite"></p>
+          <p class="ws-feedback" id="wsFeedback" role="status" aria-live="polite" aria-atomic="true"></p>
         </div>
         <div class="slot"></div>
         <div class="ws-finish-actions" id="wsFinishActions" hidden>
@@ -9770,9 +9773,11 @@ G.whoscored = {
     $("wsAttempts").setAttribute("aria-label", `${st.guesses.length} of ${this.max} guesses used`);
     const wrong = st.guesses.filter(id => id !== t.pid).length;
     const hints = [];
-    if (!st.over && wrong >= 2) hints.push(`Shoots ${t.p.shoots === "R" ? "right" : "left"}`);
-    if (!st.over && wrong >= 4) hints.push(`Born in ${countryName(t.p.nation)}`);
-    $("wsFeedback").textContent = st.over ? "" : hints.length ? hints.join(" · ") : wrong ? "Not quite. Take another look at the release." : "A last name works too.";
+    if (!st.over && wrong >= 2) hints.push({ label: "Position", value: t.p.pos === "D" ? "Defenseman" : "Forward" });
+    if (!st.over && wrong >= 4) hints.push({ label: "Born in", value: countryName(t.p.nation) });
+    $("wsFeedback").innerHTML = st.over ? "" : hints.length
+      ? hints.map(h => `<span class="ws-hint"><small>${esc(h.label)}</small><strong>${esc(h.value)}</strong></span>`).join("")
+      : esc(wrong ? "Not quite. Take another look at the release." : "A last name works too.");
     $("wsHistory").hidden = st.guesses.length === 0;
     const fresh = st.guesses.length > this.guessCount;
     $("wsWrong").innerHTML = st.guesses.map((id,i) => {
