@@ -37,7 +37,8 @@ replaces the player-profile button with the game's date, both teams and final sc
 linked to its NHL.com box score. Overtime and shootout results are labelled.
 
 Hints appear in rounded bubbles beneath the name field: position group (Forward
-or Defenseman) after two misses, then birth country after four. Specific forward
+or Defenseman) after two misses, then the birth-country flag after four. Hover,
+keyboard focus or tap the flag bubble to see the country name. Specific forward
 positions stay hidden. Hints persist on refresh and disappear when the round ends.
 
 Every source needs its original `game_id` and `date`. `games.json` stores the verified

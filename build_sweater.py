@@ -233,6 +233,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   .ws-hint { display: inline-flex; flex-direction: column; gap: 3px; max-width: 100%; padding: 10px 16px; border: 1px solid color-mix(in srgb,var(--accent,var(--link)) 28%,var(--sep)); border-radius: 18px; background: color-mix(in srgb,var(--accent,var(--link)) 7%,var(--bg)); overflow-wrap: anywhere; }
   .ws-hint small { color: var(--label2); font-size: 11px; font-weight: 600; line-height: 1.4; }
   .ws-hint strong { color: var(--fg); font-size: 15px; font-weight: 650; line-height: 1.4; }
+  .ws-country-hint { position: relative; align-items: flex-start; text-align: left; font-family: inherit; font-size: inherit; cursor: pointer; }
+  .ws-country-hint .nationflag { display: block; width: 28px; height: 21px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px color-mix(in srgb,var(--fg) 12%,transparent); }
+  .ws-country-name { display: none; position: absolute; z-index: 5; top: calc(100% + 7px); left: 0; width: max-content; max-width: min(180px,50vw); padding: 7px 10px; border-radius: 8px; background: var(--fg); color: var(--bg); font-size: 12px; font-weight: 600; line-height: 1.4; pointer-events: none; }
+  .ws-country-hint:hover .ws-country-name, .ws-country-hint:focus .ws-country-name { display: block; }
+  .ws-country-hint:focus-visible { outline: 2px solid var(--accent,var(--link)); outline-offset: 3px; }
   .ws-attempts { display: flex; gap: 5px; }
   .ws-attempts i { flex: 1; height: 4px; border-radius: 4px; background: var(--cell); transition: background-color .2s ease; }
   .ws-attempts i.used { background: var(--label2); opacity: .45; }
@@ -5133,11 +5138,11 @@ const COUNTRY_ALPHA2 = {
   HRV:"HR", SRB:"RS", BGR:"BG", ROU:"RO", ISR:"IL", IRL:"IE", MEX:"MX",
   VEN:"VE", KEN:"KE", GHA:"GH", HTI:"HT", THA:"TH"
 };
-const countryFlagHtml = c => {
-  const iso = COUNTRY_ALPHA2[c], name = countryName(c);
+const countryFlagHtml = (c, showTitle = true) => {
+  const iso = COUNTRY_ALPHA2[c], name = countryName(c), title = showTitle ? ` title="${esc(name)}"` : "";
   return iso
-    ? `<img class="nationflag" src="https://flagcdn.com/24x18/${iso.toLowerCase()}.png" srcset="https://flagcdn.com/48x36/${iso.toLowerCase()}.png 2x" width="24" height="18" alt="${esc(name)} flag" title="${esc(name)}">`
-    : `<span class="nationcode" title="${esc(name)}">${esc(c || "?")}</span>`;
+    ? `<img class="nationflag" src="https://flagcdn.com/24x18/${iso.toLowerCase()}.png" srcset="https://flagcdn.com/48x36/${iso.toLowerCase()}.png 2x" width="24" height="18" alt="${esc(name)} flag"${title}>`
+    : `<span class="nationcode"${title}>${esc(c || "?")}</span>`;
 };
 const ordinal = n => { const v = n % 100; return n + (v >= 11 && v <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[n % 10] || "th"); };
 function shuffled(arr, rnd = Math.random) {
@@ -9680,6 +9685,9 @@ $("ebChoices").addEventListener("click",e=>{const b=e.target.closest("[data-eb]"
 // ---- Who Scored? One reviewed goal per day. ----
 const WS_CLIPS = /*__GOAL_CLIPS__*/[].map(c => ({ ...c, p: BYID.get(c.pid) })).filter(c => c.p);
 function wsMedia(t, original = false) { return `who-scored/${original ? t.reveal : t.masked}`; }
+function wsCountryHint(nation) {
+  return `<button type="button" class="ws-hint ws-country-hint" aria-label="Birth country" aria-describedby="wsCountryName"><small>Born in</small><span aria-hidden="true">${countryFlagHtml(nation, false)}</span><span class="ws-country-name" id="wsCountryName" role="tooltip">${esc(countryName(nation))}</span></button>`;
+}
 function wsGameResult(t) {
   const { id, date, away, home, finish } = t.game;
   const played = new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -9774,9 +9782,9 @@ G.whoscored = {
     const wrong = st.guesses.filter(id => id !== t.pid).length;
     const hints = [];
     if (!st.over && wrong >= 2) hints.push({ label: "Position", value: t.p.pos === "D" ? "Defenseman" : "Forward" });
-    if (!st.over && wrong >= 4) hints.push({ label: "Born in", value: countryName(t.p.nation) });
+    if (!st.over && wrong >= 4) hints.push({ country: t.p.nation });
     $("wsFeedback").innerHTML = st.over ? "" : hints.length
-      ? hints.map(h => `<span class="ws-hint"><small>${esc(h.label)}</small><strong>${esc(h.value)}</strong></span>`).join("")
+      ? hints.map(h => h.country ? wsCountryHint(h.country) : `<span class="ws-hint"><small>${esc(h.label)}</small><strong>${esc(h.value)}</strong></span>`).join("")
       : esc(wrong ? "Not quite. Take another look at the release." : "A last name works too.");
     $("wsHistory").hidden = st.guesses.length === 0;
     const fresh = st.guesses.length > this.guessCount;
@@ -9799,6 +9807,7 @@ G.whoscored = {
   onFinish() { $("wsVideo").pause(); },
   squares: (t,id) => id === t.pid ? "🟩" : "⬛"
 };
+$("wsFeedback").addEventListener("click", e => { e.target.closest(".ws-country-hint")?.focus(); });
 $("wsStart").onclick = () => {
   const st = S.whoscored, g = G.whoscored;
   if (game !== "whoscored" || !st.target) return;
@@ -11813,7 +11822,7 @@ const HELP = {
     <p>Before your first guess, choose whether his oldest or newest seasons appear first. After 4 misses you'll see his current team.</p>`,
   journey: `<p>Name the player from the teams he's played for, in order, with seasons and games. 6 tries.</p>
     <p>Hints appear after 2, 4 and 5 misses: position, birth country, then sweater number.</p>`,
-  whoscored: `<p>One goal per day, with the same challenge for everyone. A new goal unlocks at midnight Eastern. Name the silhouetted scorer in 6 guesses using the search box. Your progress and completed result are saved for the day.</p><p>Replays of today's clip and 0.5× slow motion are unlimited. After 2 misses you learn their handedness; after 4, their birth country. At the end, switch between the silhouette and the original clip.</p>`,
+  whoscored: `<p>One goal per day, with the same challenge for everyone. A new goal unlocks at midnight Eastern. Name the silhouetted scorer in 6 guesses using the search box. Your progress and completed result are saved for the day.</p><p>Replays of today's clip and 0.5× slow motion are unlimited. After 2 misses, a hint bubble shows their position group: Forward or Defenseman. After 4, another shows their birth-country flag. Hover, focus or tap the flag to see the country name. At the end, switch between the silhouette and the original clip.</p>`,
   blur: `<p>Name the player from a blurry photo. Every miss sharpens it. 6 tries, with hints after 3 and 5 misses.</p>`,
   team: `<p>You see a player and one season of his stats. Pick the team he played for that season. 5 tries.</p>
     <p>Yellow means the right team is in the same division.</p>`,

@@ -28,7 +28,7 @@ const ctx = vm.createContext({console,Math,Map,Set,Date,Array,Number,String,JSON
   G:{}, BYID:new Map(players.map(p=>[p.id,p])), $, DAILY:{whoscored:{'2026-10-12':clips[0].pid}}, START:{whoscored:'2026-10-12'},
   store:{get:k=>storage.has(k)?JSON.parse(storage.get(k)):null,set:(k,v)=>storage.set(k,JSON.stringify(v))},
   document:{hidden:false,querySelectorAll:()=>[],addEventListener(){}},
-  uiIcon:()=>'<svg></svg>', esc:s=>String(s), countryName:s=>s, toast:()=>{}, addWrong:()=>{}, FALLBACK:'',
+  uiIcon:()=>'<svg></svg>', esc:s=>String(s), toast:()=>{}, addWrong:()=>{}, FALLBACK:'',
   renderOptions(){},updateLabels(){},tick(){},renderResultRecap(){},recordResult(){},awardProgression:()=>[],submitPending(){},confetti(){},
   archiveGet:()=>null, archiveSet(){}, historyGet:()=>null, historySet(){},
   dayKey:()=>day, secondsToEtMidnight:()=>3600, shortDay:k=>k, dailyNumber:()=>1, onHub:false, setTimeout:()=>0,
@@ -36,6 +36,7 @@ const ctx = vm.createContext({console,Math,Map,Set,Date,Array,Number,String,JSON
 const run=s=>vm.runInContext(s,ctx);
 function part(start,end){const a=source.indexOf(start),b=source.indexOf(end,a);assert(a>=0&&b>a);return source.slice(a,b);}
 run(part('function hash(str)','// ---- dates:'));
+run(part('const COUNTRY_NAMES =','const ordinal ='));
 run(part('function shuffled(arr','// ---- Draft Day:'));
 run(part('// ---- Who Scored?','// ======================= game engine').replace('/*__GOAL_CLIPS__*/[]',JSON.stringify(clips)));
 run(part('const GAME_IDS =','// ---- archive progress'));
@@ -94,7 +95,7 @@ $('wsWatch').onclick();assert.equal(run('G.whoscored.failed'),false);$('wsVideo'
 for(const [i,c] of clips.filter(c=>c.pid!==clips[1].pid).slice(0,6).entries()){
  run(`doGuess(${c.pid})`);
  const misses=i+1;
- assert.equal(($('wsFeedback').innerHTML.match(/class="ws-hint"/g)||[]).length,misses===6?0:misses>=4?2:misses>=2?1:0);
+ assert.equal(($('wsFeedback').innerHTML.match(/class="ws-hint(?:"| )/g)||[]).length,misses===6?0:misses>=4?2:misses>=2?1:0);
  assert(!$('wsFeedback').innerHTML.includes('Shoots'));
  if(misses===2){
   assert($('wsFeedback').innerHTML.includes('<small>Position</small><strong>Forward</strong>'));
@@ -103,7 +104,9 @@ for(const [i,c] of clips.filter(c=>c.pid!==clips[1].pid).slice(0,6).entries()){
   run('G.whoscored.render(S.whoscored.target,S.whoscored)');
  }
  if(misses===4){
-  assert($('wsFeedback').innerHTML.includes(`<small>Born in</small><strong>${run('S.whoscored.target.p.nation')}</strong>`));
+  assert($('wsFeedback').innerHTML.includes('class="nationflag"'));
+  assert($('wsFeedback').innerHTML.includes(`role="tooltip">${run('countryName(S.whoscored.target.p.nation)')}</span>`));
+  assert($('wsFeedback').innerHTML.includes('aria-describedby="wsCountryName"'));
   const hints=$('wsFeedback').innerHTML;
   run('S.whoscored.target=null; S.whoscored.mode=null; loadCurrent()');
   assert.equal(run('S.whoscored.guesses.length'),4);assert.equal($('wsFeedback').innerHTML,hints);
@@ -128,6 +131,8 @@ for(const c of clips){
  assert.equal(result.href,`https://www.nhl.com/gamecenter/${c.game.id}/boxscore`);
  assert(result.label.includes(`${c.game.away.name} ${c.game.away.score}, ${c.game.home.name} ${c.game.home.score}`));
  assert(result.html.includes(c.game.finish==='REG'?'Final ·':`Final/${c.game.finish} ·`));
+ const nation=ctx.BYID.get(c.pid).nation;
+ assert(run(`COUNTRY_ALPHA2[${JSON.stringify(nation)}]`),`A flag is available for ${nation}`);
 }
 // The shared results banner restores its normal player link in another game.
 run('G.fixture={view:"view-fixture",player:()=>BYID.get(WS_CLIPS[0].pid),meta:()=>"",cheers:[]}; S.fixture={target:{},guesses:[],day:dayKey()}; game="fixture"; finish(false,false)');
