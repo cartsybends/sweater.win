@@ -1712,6 +1712,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   .hlteam img { width: 20px; height: 20px; }
   .hlval { margin: 4px 0 0; line-height: 1; }
   .hlval b { font-size: 46px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .hlt-height { display: inline-block; height: 1.15em; overflow: hidden; vertical-align: bottom; white-space: nowrap; }
+  .hlt-height-track { display: block; }
+  .hlt-height-row { display: grid; grid-template-columns: 1ch .35em 2ch .45em; height: 1.15em; line-height: 1.15; }
+  .hlt-height-inches { text-align: right; }
+  .hlt-height-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .hlunit { margin: 4px 0 0; font-size: 14px; }
   .hlyr { margin: 4px 0 0; font-size: 13px; opacity: .7; }
   .hlbtns { display: flex; flex-direction: column; gap: 8px; width: min(200px, 100%); margin: 10px 0 2px; }
@@ -6598,6 +6603,27 @@ const HLT_METRICS = {
   games:  { name: "Career games",       unit: "career NHL games on the roster", up: "More", down: "Fewer", show: v => Math.round(v).toLocaleString() },
   abroad: { name: "Players from abroad", unit: "players born outside Canada and the USA", up: "More", down: "Fewer", show: v => String(Math.round(v)) },
 };
+function hltHeightRow(inches) {
+  return `<span class="hlt-height-row"><span>${Math.floor(inches / 12)}</span><span>′</span><span class="hlt-height-inches">${inches % 12}</span><span>″</span></span>`;
+}
+function hltHeightDisplay(value) {
+  const inches = Math.max(0, Math.round(value));
+  return `<b class="hlt-height" data-count="${value}"><span class="hlt-height-label">${HLT_METRICS.height.show(inches)}</span><span class="hlt-height-track" aria-hidden="true">${hltHeightRow(inches)}</span></b>`;
+}
+function animateHltHeight(el, duration) {
+  if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const track = el.querySelector(".hlt-height-track"), end = Math.max(0, Math.round(Number(el.dataset.count)));
+  const start = Math.max(0, end - 6);
+  if (!track?.animate || start === end) return;
+  // Roll only the last few inches. Fixed slots and a compositor transform avoid
+  // reflow and rapid text replacement as the inches pass through 9, 10 and 11.
+  track.innerHTML = Array.from({ length: end - start + 1 }, (_, i) => hltHeightRow(start + i)).join("");
+  const transform = `translateY(-${(end - start) * 1.15}em)`;
+  track.style.transform = transform;
+  track.animate([{ transform: "translateY(0)" }, { transform }], {
+    duration, easing: "ease-in-out"
+  });
+}
 function hltValue(team, metric) {
   const roster = PLAYERS.filter(p => p.team === team);
   if (!roster.length) return 0;
@@ -6680,7 +6706,7 @@ G.hlt = {
     return `<div class="hlcard ${state || ""}">
       <img class="hltlogo" src="${logo(team)}" alt="" onerror="this.style.visibility='hidden'">
       <p class="hlname">${esc(teamName(team))}</p>
-      ${reveal ? `<p class="hlval"><b data-count="${value}">${info.show(value)}</b></p><p class="hlunit">${esc(info.unit)}</p>`
+      ${reveal ? `<p class="hlval">${r[4] === "height" ? hltHeightDisplay(value) : `<b data-count="${value}">${info.show(value)}</b>`}</p><p class="hlunit">${esc(info.unit)}</p>`
         : `<p class="hlunit">${esc(info.name.toLowerCase())}:</p>
            <div class="hlbtns"><button class="btn hlbtn" type="button" data-hlt="H">▲ ${info.up}</button>
            <button class="btn hlbtn" type="button" data-hlt="L">▼ ${info.down}</button></div>
@@ -6696,7 +6722,9 @@ G.hlt = {
       this.pending = true;
       $("htB").innerHTML = this.card(t, i, "b", true, ok ? "ok" : "bad");
       const duration = t.rounds[i][4] === "height" ? 1200 : 600;
-      countUp($("htB").querySelector("[data-count]"), HLT_METRICS[t.rounds[i][4]].show, duration);
+      const value = $("htB").querySelector("[data-count]");
+      if (t.rounds[i][4] === "height") animateHltHeight(value, duration);
+      else countUp(value, HLT_METRICS[t.rounds[i][4]].show, duration);
       clearTimeout(this.timer);
       this.timer = setTimeout(() => { this.pending = false; if (game === "hlt") this.render(t, S.hlt, true); }, duration + (ok ? 500 : 800));
     }

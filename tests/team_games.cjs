@@ -142,14 +142,21 @@ test('Teams Higher/Lower finishes its number reveal before advancing and cancels
   reduced=true;start();answer();assert.equal($('teamHLB').count.textContent,'10');
   const quiet=[...timers.values()][0];timers.clear();quiet.fn();assert(!$('teamHLPair').classList.values.has('slide'));
 });
-test('Team versus Team counts up every stat before advancing, with formatted and reduced-motion results', () => {
+test('Team versus Team counts stats up and rolls heights without rapid text replacement or losing results', () => {
   const source=fs.readFileSync('build_sweater.py','utf8');
   const section=(start,end)=>source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start)));
   function runtime(reduced=false){
-    const elements=new Map(),timers=new Map(),frames=[];let clock=0,token=0;
+    const elements=new Map(),timers=new Map(),frames=[],animations=[];let clock=0,token=0;
     const $=id=>{
       if(!elements.has(id))elements.set(id,{textContent:'',offsetWidth:1,count:null,
-        set innerHTML(value){this.html=value;const m=value.match(/data-count="([\d.]+)">([^<]*)/);this.count=m?{dataset:{count:m[1]},textContent:m[2]}:null;},
+        set innerHTML(value){
+          this.html=value;const m=value.match(/data-count="([\d.]+)">/);
+          if(!m){this.count=null;return;}
+          const content=value.slice(m.index+m[0].length),label=content.match(/class="hlt-height-label">([^<]*)/);
+          const track={innerHTML:content,style:{},animate(keyframes,options){animations.push({keyframes,options});}};
+          this.count={dataset:{count:m[1]},textContent:label?label[1]:content.split('<')[0],track,
+            querySelector:selector=>selector==='.hlt-height-track'?track:null};
+        },
         get innerHTML(){return this.html||'';},querySelector(){return this.count;},addEventListener(){},
         classList:{values:new Set(),add(x){this.values.add(x);},remove(x){this.values.delete(x);}},
       });return elements.get(id);
@@ -161,10 +168,11 @@ test('Team versus Team counts up every stat before advancing, with formatted and
     });
     vm.runInContext(section('function countUp(', '// ======================= more games:'),r);
     vm.runInContext(section('// ---- Higher or Lower: Teams ----','// ---- Mystery Season ----'),r);
-    return {$,r,frames,timers,run:code=>vm.runInContext(code,r),frame:time=>{clock=time;frames.shift()(clock);}};
+    return {$,r,frames,timers,animations,run:code=>vm.runInContext(code,r),frame:time=>{clock=time;frames.shift()(clock);}};
   }
   const cases=[
-    ['age',31.4,'27.5','31.4'],['height',74.2,'5′5″','6′2″'],
+    ['age',31.4,'27.5','31.4'],['height',74.2,null,'6′2″'],
+    ['height',70.8,null,'5′11″'],['height',69.8,null,'5′10″'],['height',71.6,null,'6′0″'],
     ['goals',1234,(1080).toLocaleString(),(1234).toLocaleString()],
     ['games',12345,(10802).toLocaleString(),(12345).toLocaleString()],['abroad',8,'7','8'],
   ];
@@ -173,13 +181,25 @@ test('Team versus Team counts up every stat before advancing, with formatted and
     t.run('S.hlt={target,guesses:[],over:false};G.hlt.render(target,S.hlt)');
     const answer=won?'H':'L';assert.equal(t.run(`G.hlt.guess(target,"${answer}",true)`),won);
     t.run(`S.hlt.guesses.push("${answer}");S.hlt.over=${!won};G.hlt.render(target,S.hlt)`);
-    const count=t.$('htB').count;assert.notEqual(count,null);assert.notEqual(count.textContent,final);
+    const count=t.$('htB').count;assert.notEqual(count,null);
     const duration=metric==='height'?1200:600;
     if(metric==='height'){
-      t.frame(300);assert.notEqual(count.textContent,half);assert.notEqual(count.textContent,final);
+      assert.equal(count.textContent,final);assert.equal(t.frames.length,0);
+      assert.equal(t.animations.length,1);assert.equal(t.animations[0].options.duration,duration);
+      assert.equal(t.animations[0].keyframes[0].transform,'translateY(0)');
+      assert.equal(t.animations[0].keyframes[1].transform,count.track.style.transform);
+      const values=[...count.track.innerHTML.matchAll(/class="hlt-height-inches">(\d+)</g)].map(m=>Number(m[1]));
+      assert.equal(values.length,7);assert(values.every(n=>n>=0&&n<12));
+      assert.equal(values.at(-1),Math.round(value)%12);
+      const feet=[...count.track.innerHTML.matchAll(/class="hlt-height-row"><span>(\d+)</g)].map(m=>Number(m[1]));
+      const totals=values.map((n,i)=>feet[i]*12+n);
+      assert.equal(totals[0],Math.round(value)-6);assert.equal(totals.at(-1),Math.round(value));
+      assert(totals.every((n,i)=>i===0||n===totals[i-1]+1));
+    }else{
+      assert.notEqual(count.textContent,final);assert.equal(t.animations.length,0);
+      t.frame(duration/2);assert.equal(count.textContent,half,metric);assert.equal(t.$('htB').count,count);
+      t.frame(duration);assert.equal(count.textContent,final,metric);assert.equal(t.frames.length,0);
     }
-    t.frame(duration/2);assert.equal(count.textContent,half,metric);assert.equal(t.$('htB').count,count);
-    t.frame(duration);assert.equal(count.textContent,final,metric);assert.equal(t.frames.length,0);
     const timer=[...t.timers.values()][0];assert.equal(timer.delay,duration+(won?500:800));
     timer.fn();assert.equal(t.run('G.hlt.score(target,S.hlt.guesses)'),won?1:0);
     if(won)assert(t.$('htA').innerHTML.includes(`data-count="${value}"`));
@@ -191,6 +211,10 @@ test('Team versus Team counts up every stat before advancing, with formatted and
   quiet.run('G.hlt.reset()');assert.equal(quiet.timers.size,0);
   quiet.run('S.hlt.guesses=["H"];S.hlt.over=true;G.hlt.render(target,S.hlt,true)');
   assert(!quiet.$('htPair').classList.values.has('slide'));assert.equal(quiet.frames.length,0);
+  quiet.r.target={rounds:[['VAN',70,'BOS',71,'height']]};
+  quiet.run('S.hlt={target,guesses:[],over:false};G.hlt.guess(target,"H",true)');
+  assert.equal(quiet.$('htB').count.textContent,'5′11″');assert.equal(quiet.animations.length,0);
+  assert.equal((quiet.$('htB').count.track.innerHTML.match(/class="hlt-height-row"/g)||[]).length,1);
   const zero=runtime();zero.r.target={rounds:[['VAN',1,'BOS',0,'abroad']]};
   zero.run('S.hlt={target,guesses:[],over:false};G.hlt.guess(target,"L",true)');
   assert.equal(zero.$('htB').count.textContent,'0');assert.equal(zero.frames.length,0);
