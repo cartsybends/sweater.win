@@ -4651,13 +4651,13 @@ function makeHL(stat) {
 }
 Object.keys(HL_STATS).forEach(s => { G[`hl_${s}`] = makeHL(s); });
 
-function countUp(el, format = Math.round) {
+function countUp(el, format = Math.round, duration = 600) {
   if (!el) return;
   const end = Number(el.dataset.count);
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || end <= 0) return;
   const t0 = performance.now();
   (function step(t) {
-    const k = Math.min(1, (t - t0) / 600);
+    const k = Math.min(1, (t - t0) / duration);
     el.textContent = format(end * (1 - Math.pow(1 - k, 3)));
     if (k < 1) requestAnimationFrame(step);
   })(t0);
@@ -6695,9 +6695,10 @@ G.hlt = {
     if (fresh) {
       this.pending = true;
       $("htB").innerHTML = this.card(t, i, "b", true, ok ? "ok" : "bad");
-      countUp($("htB").querySelector("[data-count]"), HLT_METRICS[t.rounds[i][4]].show);
+      const duration = t.rounds[i][4] === "height" ? 1200 : 600;
+      countUp($("htB").querySelector("[data-count]"), HLT_METRICS[t.rounds[i][4]].show, duration);
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => { this.pending = false; if (game === "hlt") this.render(t, S.hlt, true); }, ok ? 1100 : 1400);
+      this.timer = setTimeout(() => { this.pending = false; if (game === "hlt") this.render(t, S.hlt, true); }, duration + (ok ? 500 : 800));
     }
     return ok;
   },

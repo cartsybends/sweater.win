@@ -174,9 +174,13 @@ test('Team versus Team counts up every stat before advancing, with formatted and
     const answer=won?'H':'L';assert.equal(t.run(`G.hlt.guess(target,"${answer}",true)`),won);
     t.run(`S.hlt.guesses.push("${answer}");S.hlt.over=${!won};G.hlt.render(target,S.hlt)`);
     const count=t.$('htB').count;assert.notEqual(count,null);assert.notEqual(count.textContent,final);
-    t.frame(300);assert.equal(count.textContent,half,metric);assert.equal(t.$('htB').count,count);
-    t.frame(600);assert.equal(count.textContent,final,metric);assert.equal(t.frames.length,0);
-    const timer=[...t.timers.values()][0];assert.equal(timer.delay,won?1100:1400);
+    const duration=metric==='height'?1200:600;
+    if(metric==='height'){
+      t.frame(300);assert.notEqual(count.textContent,half);assert.notEqual(count.textContent,final);
+    }
+    t.frame(duration/2);assert.equal(count.textContent,half,metric);assert.equal(t.$('htB').count,count);
+    t.frame(duration);assert.equal(count.textContent,final,metric);assert.equal(t.frames.length,0);
+    const timer=[...t.timers.values()][0];assert.equal(timer.delay,duration+(won?500:800));
     timer.fn();assert.equal(t.run('G.hlt.score(target,S.hlt.guesses)'),won?1:0);
     if(won)assert(t.$('htA').innerHTML.includes(`data-count="${value}"`));
     else assert.equal(t.$('htB').count.textContent,final);
