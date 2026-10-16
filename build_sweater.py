@@ -1942,12 +1942,14 @@ TEMPLATE = r'''<!DOCTYPE html>
   .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 4px; }
   .statgrid b { display: block; font-size: 32px; font-weight: 500; font-variant-numeric: tabular-nums; }
   .statgrid span { font-size: 12px; color: var(--muted); }
-  .distrow { display: flex; align-items: center; gap: 8px; margin: 5px 0; font-size: 14px; }
-  .distrow .k { width: 12px; text-align: right; }
-  .distrow .bar { background: var(--cell); color: var(--cell-fg); text-align: right; padding: 2px 8px;
-                  min-width: 26px; font-weight: 600; font-variant-numeric: tabular-nums;
+  .distrow { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr) var(--dist-count-width, 3ch); align-items: center; gap: 8px; margin: 5px 0; font-size: 14px; }
+  .distrow .k { text-align: right; }
+  .disttrack { height: 24px; overflow: hidden; border-radius: 4px; background: var(--cell); background: color-mix(in srgb, var(--fg) 8%, var(--panel)); }
+  .distrow .bar { height: 100%; border-radius: inherit; background: var(--muted); background: color-mix(in srgb, var(--fg) 55%, var(--panel));
                   transition: width .5s cubic-bezier(.2,.8,.2,1); }
-  .distrow .bar.today { background: var(--hit); color: var(--hit-fg); }
+  .distrow .bar.today { background: var(--hit); }
+  .distcount { min-width: 3ch; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) { .distrow .bar { transition: none; } }
   .statfoot { display: flex; align-items: center; justify-content: space-between; gap: 16px;
               margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
   .statfoot small { color: var(--muted); display: block; }
@@ -3911,7 +3913,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <div><b id="stMax">0</b><span id="stL4">Max streak</span></div>
     </div>
     <h3 id="distTitle">Guess distribution</h3>
-    <div id="dist"></div>
+    <div id="dist" role="list" aria-label="Daily wins by number of guesses"></div>
     <div class="statfoot">
       <div><small>Next player</small><b id="stNext">--:--:--</b></div>
       <button class="btn" id="shareBtn" type="button">Share</button>
@@ -10526,10 +10528,12 @@ function renderStats() {
   $("stStreak").textContent = streak;
   $("stMax").textContent = st.maxStreak;
   const most = Math.max(1, ...st.dist);
+  $("dist").style.setProperty("--dist-count-width", `${Math.max(3, String(most).length)}ch`);
   $("dist").innerHTML = st.dist.map((n, i) =>
-    `<div class="distrow"><span class="k">${i + 1}</span><div class="bar${st.lastDay === today && st.lastGuesses === i + 1 ? " today" : ""}" style="width:0">${n}</div></div>`).join("");
+    `<div class="distrow" role="listitem" aria-label="${i + 1} ${i ? "guesses" : "guess"}: ${n} ${n === 1 ? "win" : "wins"}"><span class="k" aria-hidden="true">${i + 1}</span><div class="disttrack" aria-hidden="true"><div class="bar${st.lastDay === today && st.lastGuesses === i + 1 ? " today" : ""}" style="width:0"></div></div><span class="distcount" aria-hidden="true">${n}</span></div>`).join("");
+  const bars = $("dist").querySelectorAll(".bar");
   requestAnimationFrame(() => requestAnimationFrame(() =>
-    $("dist").querySelectorAll(".bar").forEach((b, i) => b.style.width = `${Math.max(8, st.dist[i] / most * 100)}%`)));
+    bars.forEach((b, i) => b.style.width = `${st.dist[i] / most * 100}%`)));
   const saved = store.get(KEYS[game].daily);
   $("shareBtn").hidden = !(saved && saved.date === today && st.lastDay === today);
   renderStatsLb(game);

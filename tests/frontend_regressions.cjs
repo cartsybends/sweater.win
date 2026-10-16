@@ -21,6 +21,46 @@ function runtime(extra = {}) {
 }
 
 (async () => {
+  function statsRuntime() {
+    const frames=[],records=new Map(),today='2026-10-16';
+    const r=runtime({game:'classic',statsGame:null,
+      G:{classic:{max:8,title:'Classic'},statline:{max:6,title:'Stat Line'},shoot:{max:5,title:'Shootout',kind:'score'}},
+      KEYS:Object.fromEntries(['classic','statline','shoot'].map(g=>[g,{stats:g,daily:g+'-daily'}])),
+      store:{get:k=>records.get(k),set:(k,v)=>records.set(k,v)},
+      dayKey:()=>today,prevDayKey:()=> '2026-10-15',gameOptions:()=>'',gameTitle:g=>g,
+      isScored:g=>g==='shoot',renderStatsLb(){},requestAnimationFrame:fn=>frames.push(fn)});
+    const chart=r.$('dist');
+    chart.style.setProperty=(key,value)=>{chart.style[key]=value;};
+    Object.defineProperty(chart,'innerHTML',{get(){return this.html;},set(value){
+      this.html=value;this.bars=[...value.matchAll(/class="bar(?: today)?"/g)].map(()=>({style:{width:'0'}}));
+    }});
+    chart.querySelectorAll=()=>chart.bars;
+    r.run(part('const blankStats =', 'function shareUrl('));
+    return {...r,records,chart,flush(){while(frames.length)frames.shift()();}};
+  }
+  await test('stats bars scale to recorded wins, leave zeros empty and keep counts accessible',()=>{
+    const r=statsRuntime(),saved={played:7,wins:7,dist:[0,1,2,4,0,0,0,0],lastDay:'2026-10-16',lastGuesses:4};
+    r.records.set('classic',saved);r.run('renderStats()');r.flush();
+    assert.deepEqual(r.chart.bars.map(b=>b.style.width),['0%','25%','50%','100%','0%','0%','0%','0%']);
+    assert.match(r.chart.innerHTML,/aria-label="4 guesses: 4 wins"/);
+    assert.match(r.chart.innerHTML,/class="bar today"/);
+    assert.equal(r.chart.style['--dist-count-width'],'3ch');
+    assert.deepEqual(saved.dist,[0,1,2,4,0,0,0,0]);
+    r.records.set('classic',{played:4,wins:2,dist:[1,1,0,0,0,0,0,0]});r.run('renderStats()');r.flush();
+    assert.deepEqual(r.chart.bars.map(b=>b.style.width),['100%','100%','0%','0%','0%','0%','0%','0%']);
+  });
+  await test('empty stats and mode changes keep valid widths without stale animation writes',()=>{
+    const r=statsRuntime();r.run('renderStats()');r.flush();
+    assert(r.chart.bars.every(b=>b.style.width==='0%'));
+    r.records.set('classic',{dist:[1000,500,0,0,0,0,0,0]});r.run('renderStats()');const oldBars=r.chart.bars;
+    r.records.set('statline',{dist:[0,1,2,0,0,0]});r.run('statsGame="statline";renderStats()');r.flush();
+    assert.deepEqual(r.chart.bars.map(b=>b.style.width),['0%','50%','100%','0%','0%','0%']);
+    assert.equal(oldBars[0].style.width,'100%');
+    r.run('statsGame="shoot";renderStats()');assert.equal(r.chart.hidden,true);
+    r.run('statsGame="classic";renderStats()');r.flush();assert.equal(r.chart.hidden,false);
+    assert.equal(r.chart.style['--dist-count-width'],'4ch');
+    assert.deepEqual(r.chart.bars.slice(0,2).map(b=>b.style.width),['100%','50%']);
+  });
   await test('birthday ages follow the Eastern game calendar in every browser time zone', () => {
     const originalTZ = process.env.TZ;
     try {
