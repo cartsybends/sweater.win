@@ -27,9 +27,13 @@
 .team-identity-answer label { display: block; margin-bottom: 9px; color: var(--fg); font-size: 13px; font-weight: 600; }
 .team-identity-answer .search { max-width: none; margin: 0; }
 .team-identity-answer > p { margin: 9px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
-.team-identity-guesses { display: grid; gap: 7px; list-style: none; margin: 16px 0 0; padding: 0; }
-.team-identity-guesses li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); font-size: 12px; }
-.team-identity-guesses li > span:last-child { font-size: 17px; }
+.team-identity-misses { --identity-error: #bb3948; margin-top: 18px; }
+:root[data-theme="dark"] .team-identity-misses { --identity-error: #f27c85; }
+.team-identity-guesses-title { margin: 0 0 9px; color: var(--fg); font-size: 13px; font-weight: 700; }
+.team-identity-guesses { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.team-identity-guesses li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-color: color-mix(in srgb, var(--identity-error) 35%, var(--line)); border-radius: 10px; background: var(--cell); background: color-mix(in srgb, var(--identity-error) 5%, var(--panel)); color: var(--fg); font-size: 14px; }
+.team-identity-guesses strong { min-width: 0; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.team-identity-miss-mark { display: grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; border-radius: 7px; color: var(--identity-error); background: color-mix(in srgb, var(--identity-error) 10%, var(--panel)); }
 .team-mini-feedback { display: grid; gap: 5px; min-height: 48px; margin-top: 20px; color: var(--muted); font-size: 12px; line-height: 1.4; }
 .team-mini-feedback b { color: var(--fg); font-size: 13px; font-weight: 600; }
 .team-mini-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin-top: 13px; }
