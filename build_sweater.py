@@ -827,10 +827,11 @@ TEMPLATE = r'''<!DOCTYPE html>
   }
   /* Hardest Shot is the visual source of truth for every NHL EDGE player portrait. */
   .edge-speed-media { position: relative; display: block; width: 100%; height: 155px; overflow: hidden; background: var(--cream); }
+  /* Center the image box before applying each crest's optical scale. */
   .edge-duel-card .edge-team-watermark {
-    position: absolute; z-index: 0; left: 50%; top: 50%; width: 82%; height: 82%;
+    position: absolute; z-index: 0; inset: 0; margin: auto; width: 82%; height: 82%;
     object-fit: contain; object-position: center; background: transparent;
-    opacity: .10; filter: grayscale(1) saturate(.2); transform: translate(-50%, -48%) scale(1.06);
+    opacity: .10; filter: grayscale(1) saturate(.2); transform: scale(1.06);
     pointer-events: none;
   }
   /* Toronto and Tampa need a little extra ink because their marks contain
@@ -839,15 +840,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   .edge-duel-card .edge-team-watermark[data-team="TOR"] {
     width: 88%; height: 88%; opacity: .145;
     filter: grayscale(1) saturate(.15) contrast(1.24);
-    transform: translate(-50%, -48%) scale(1.07);
+    transform: scale(1.07);
   }
   .edge-duel-card .edge-team-watermark[data-team="TBL"] {
     width: 88%; height: 88%; opacity: .155;
     filter: grayscale(1) saturate(.12) contrast(1.34) brightness(.86);
-    transform: translate(-50%, -48%) scale(1.07);
+    transform: scale(1.07);
   }
   .edge-duel-card .edge-player-shot {
-    position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
+    position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
     background: transparent;
   }
   .edge-duel-card.speedtrap-card > b {
@@ -1303,7 +1304,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .edge-duel-card.speedtrap-card .edge-team-watermark { width: 82%; height: 66%; }
     .edge-duel-card.speedtrap-card .edge-team-watermark[data-team="TOR"],
     .edge-duel-card.speedtrap-card .edge-team-watermark[data-team="TBL"] { width: 88%; height: 72%; }
-    .edge-draft .edge-speed-media { width: 92px; height: 112px; grid-row: 1 / span 4; }
+    .edge-draft .edge-speed-media { width: 92px; height: auto; min-height: 118px; align-self: stretch; grid-row: 1 / span 4; }
     .edge-draft .edge-team-watermark { width: 82%; height: 66%; }
     .edge-draft .edge-team-watermark[data-team="TOR"],
     .edge-draft .edge-team-watermark[data-team="TBL"] { width: 88%; height: 72%; }
