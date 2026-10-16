@@ -169,6 +169,11 @@
   "team": "BUF",
   "number": 26
  },
+ "8478502": {
+  "name": "Dennis Gilbert",
+  "team": "BUF",
+  "number": 44
+ },
  "8476891": {
   "name": "Matt Grzelcyk",
   "team": "BUF",
@@ -343,6 +348,11 @@
   "name": "Garnet Hathaway",
   "team": "FLA",
   "number": 21
+ },
+ "8478147": {
+  "name": "Bokondji Imama",
+  "team": "FLA",
+  "number": 14
  },
  "8478043": {
   "name": "Sam Lafferty",
@@ -1754,6 +1764,11 @@
   "team": "WSH",
   "number": 42
  },
+ "8475718": {
+  "name": "Justin Holl",
+  "team": "WSH",
+  "number": 4
+ },
  "8484873": {
   "name": "Cole Hutson",
   "team": "WSH",
@@ -2844,6 +2859,11 @@
   "team": "CGY",
   "number": 22
  },
+ "8484234": {
+  "name": "Aydar Suniev",
+  "team": "CGY",
+  "number": 61
+ },
  "8484958": {
   "name": "Maxim Tsyplakov",
   "team": "CGY",
@@ -3319,6 +3339,11 @@
   "team": "SJS",
   "number": 21
  },
+ "8484152": {
+  "name": "Luca Cagnoni",
+  "team": "SJS",
+  "number": 42
+ },
  "8484806": {
   "name": "Sam Dickinson",
   "team": "SJS",
@@ -3408,11 +3433,6 @@
   "name": "Elias Pettersson",
   "team": "VAN",
   "number": 40
- },
- "8482691": {
-  "name": "Aatu Räty",
-  "team": "VAN",
-  "number": 54
  },
  "8482079": {
   "name": "Marco Rossi",
