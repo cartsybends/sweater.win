@@ -123,7 +123,7 @@ test('Teams Higher/Lower finishes its number reveal before advancing and cancels
     setTimeout:(fn,delay)=>{const id=++token;timers.set(id,{fn,delay});return id;},clearTimeout:id=>timers.delete(id),
     SweaterAnalytics:{context:()=> 'test',step:(...args)=>events.push(args),completeRound(){}},
   });
-  vm.runInContext(section('function countUp(el)', '// ======================= more games:'),r);
+  vm.runInContext(section('function countUp(', '// ======================= more games:'),r);
   vm.runInContext(section('function startTeamHigher(t)', 'function openTeamMode('),r);
   const start = () => vm.runInContext('startTeamHigher("VAN")',r);
   const answer = () => {const button=$('teamHLB').buttons.find(b=>b.dataset.pick==='L');button.onclick();return button;};
@@ -141,5 +141,58 @@ test('Teams Higher/Lower finishes its number reveal before advancing and cancels
   assert.equal(timers.size,0);const held=$('teamHLB').innerHTML;leaving();assert.equal($('teamHLB').innerHTML,held);
   reduced=true;start();answer();assert.equal($('teamHLB').count.textContent,'10');
   const quiet=[...timers.values()][0];timers.clear();quiet.fn();assert(!$('teamHLPair').classList.values.has('slide'));
+});
+test('Team versus Team counts up every stat before advancing, with formatted and reduced-motion results', () => {
+  const source=fs.readFileSync('build_sweater.py','utf8');
+  const section=(start,end)=>source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start)));
+  function runtime(reduced=false){
+    const elements=new Map(),timers=new Map(),frames=[];let clock=0,token=0;
+    const $=id=>{
+      if(!elements.has(id))elements.set(id,{textContent:'',offsetWidth:1,count:null,
+        set innerHTML(value){this.html=value;const m=value.match(/data-count="([\d.]+)">([^<]*)/);this.count=m?{dataset:{count:m[1]},textContent:m[2]}:null;},
+        get innerHTML(){return this.html||'';},querySelector(){return this.count;},addEventListener(){},
+        classList:{values:new Set(),add(x){this.values.add(x);},remove(x){this.values.delete(x);}},
+      });return elements.get(id);
+    };
+    const r=vm.createContext({$,G:{},S:{hlt:{}},HL_LEN:40,game:'hlt',Math,Number,String,console,
+      esc:String,teamName:String,logo:String,store:{get:()=>0},paintHotStreak(){},
+      performance:{now:()=>clock},matchMedia:()=>({matches:reduced}),requestAnimationFrame:fn=>frames.push(fn),
+      setTimeout:(fn,delay)=>{const id=++token;timers.set(id,{fn,delay});return id;},clearTimeout:id=>timers.delete(id),
+    });
+    vm.runInContext(section('function countUp(', '// ======================= more games:'),r);
+    vm.runInContext(section('// ---- Higher or Lower: Teams ----','// ---- Mystery Season ----'),r);
+    return {$,r,frames,timers,run:code=>vm.runInContext(code,r),frame:time=>{clock=time;frames.shift()(clock);}};
+  }
+  const cases=[
+    ['age',31.4,'27.5','31.4'],['height',74.2,'5′5″','6′2″'],
+    ['goals',1234,(1080).toLocaleString(),(1234).toLocaleString()],
+    ['games',12345,(10802).toLocaleString(),(12345).toLocaleString()],['abroad',8,'7','8'],
+  ];
+  for(const [metric,value,half,final] of cases)for(const won of [true,false]){
+    const t=runtime();t.r.target={rounds:[['VAN',value-1,'BOS',value,metric],['TOR',value,'MTL',value+1,metric]]};
+    t.run('S.hlt={target,guesses:[],over:false};G.hlt.render(target,S.hlt)');
+    const answer=won?'H':'L';assert.equal(t.run(`G.hlt.guess(target,"${answer}",true)`),won);
+    t.run(`S.hlt.guesses.push("${answer}");S.hlt.over=${!won};G.hlt.render(target,S.hlt)`);
+    const count=t.$('htB').count;assert.notEqual(count,null);assert.notEqual(count.textContent,final);
+    t.frame(300);assert.equal(count.textContent,half,metric);assert.equal(t.$('htB').count,count);
+    t.frame(600);assert.equal(count.textContent,final,metric);assert.equal(t.frames.length,0);
+    const timer=[...t.timers.values()][0];assert.equal(timer.delay,won?1100:1400);
+    timer.fn();assert.equal(t.run('G.hlt.score(target,S.hlt.guesses)'),won?1:0);
+    if(won)assert(t.$('htA').innerHTML.includes(`data-count="${value}"`));
+    else assert.equal(t.$('htB').count.textContent,final);
+  }
+  const quiet=runtime(true);quiet.r.target={rounds:[['VAN',30,'BOS',31.4,'age']]};
+  quiet.run('S.hlt={target,guesses:[],over:false};G.hlt.guess(target,"H",true)');
+  assert.equal(quiet.$('htB').count.textContent,'31.4');assert.equal(quiet.frames.length,0);
+  quiet.run('G.hlt.reset()');assert.equal(quiet.timers.size,0);
+  quiet.run('S.hlt.guesses=["H"];S.hlt.over=true;G.hlt.render(target,S.hlt,true)');
+  assert(!quiet.$('htPair').classList.values.has('slide'));assert.equal(quiet.frames.length,0);
+  const zero=runtime();zero.r.target={rounds:[['VAN',1,'BOS',0,'abroad']]};
+  zero.run('S.hlt={target,guesses:[],over:false};G.hlt.guess(target,"L",true)');
+  assert.equal(zero.$('htB').count.textContent,'0');assert.equal(zero.frames.length,0);
+  const leaving=runtime();leaving.r.target=quiet.r.target;
+  leaving.run('S.hlt={target,guesses:[],over:false};G.hlt.guess(target,"H",true)');
+  const markup=leaving.$('htB').innerHTML;leaving.run('game="classic"');[...leaving.timers.values()][0].fn();
+  assert.equal(leaving.$('htB').innerHTML,markup);
 });
 console.log(`${checks} team game checks passed.`);

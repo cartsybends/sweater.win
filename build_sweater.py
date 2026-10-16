@@ -4651,14 +4651,14 @@ function makeHL(stat) {
 }
 Object.keys(HL_STATS).forEach(s => { G[`hl_${s}`] = makeHL(s); });
 
-function countUp(el) {
+function countUp(el, format = Math.round) {
   if (!el) return;
   const end = Number(el.dataset.count);
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || end <= 0) return;
   const t0 = performance.now();
   (function step(t) {
     const k = Math.min(1, (t - t0) / 600);
-    el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+    el.textContent = format(end * (1 - Math.pow(1 - k, 3)));
     if (k < 1) requestAnimationFrame(step);
   })(t0);
 }
@@ -6593,10 +6593,10 @@ $("twNext").onclick = () => { G.truths.showing = false; G.truths.render(S.truths
 // ---- Higher or Lower: Teams ----
 const HLT_METRICS = {
   age:    { name: "Average age",        unit: "years on average",       up: "Older",  down: "Younger", show: v => v.toFixed(1) },
-  height: { name: "Average height",     unit: "tall on average",        up: "Taller", down: "Shorter", show: v => `${Math.floor(v / 12)}′${Math.round(v % 12)}″` },
-  goals:  { name: "Career goals",       unit: "career goals on the roster", up: "More", down: "Fewer", show: v => v.toLocaleString() },
-  games:  { name: "Career games",       unit: "career NHL games on the roster", up: "More", down: "Fewer", show: v => v.toLocaleString() },
-  abroad: { name: "Players from abroad", unit: "players born outside Canada and the USA", up: "More", down: "Fewer", show: v => String(v) },
+  height: { name: "Average height",     unit: "tall on average",        up: "Taller", down: "Shorter", show: v => `${Math.floor(Math.round(v) / 12)}′${Math.round(v) % 12}″` },
+  goals:  { name: "Career goals",       unit: "career goals on the roster", up: "More", down: "Fewer", show: v => Math.round(v).toLocaleString() },
+  games:  { name: "Career games",       unit: "career NHL games on the roster", up: "More", down: "Fewer", show: v => Math.round(v).toLocaleString() },
+  abroad: { name: "Players from abroad", unit: "players born outside Canada and the USA", up: "More", down: "Fewer", show: v => String(Math.round(v)) },
 };
 function hltValue(team, metric) {
   const roster = PLAYERS.filter(p => p.team === team);
@@ -6680,7 +6680,7 @@ G.hlt = {
     return `<div class="hlcard ${state || ""}">
       <img class="hltlogo" src="${logo(team)}" alt="" onerror="this.style.visibility='hidden'">
       <p class="hlname">${esc(teamName(team))}</p>
-      ${reveal ? `<p class="hlval"><b>${info.show(value)}</b></p><p class="hlunit">${esc(info.unit)}</p>`
+      ${reveal ? `<p class="hlval"><b data-count="${value}">${info.show(value)}</b></p><p class="hlunit">${esc(info.unit)}</p>`
         : `<p class="hlunit">${esc(info.name.toLowerCase())}:</p>
            <div class="hlbtns"><button class="btn hlbtn" type="button" data-hlt="H">▲ ${info.up}</button>
            <button class="btn hlbtn" type="button" data-hlt="L">▼ ${info.down}</button></div>
@@ -6695,6 +6695,7 @@ G.hlt = {
     if (fresh) {
       this.pending = true;
       $("htB").innerHTML = this.card(t, i, "b", true, ok ? "ok" : "bad");
+      countUp($("htB").querySelector("[data-count]"), HLT_METRICS[t.rounds[i][4]].show);
       clearTimeout(this.timer);
       this.timer = setTimeout(() => { this.pending = false; if (game === "hlt") this.render(t, S.hlt, true); }, ok ? 1100 : 1400);
     }
@@ -6711,7 +6712,7 @@ G.hlt = {
     const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
     $("htA").innerHTML = this.card(t, i, "a", true, "");
     $("htB").innerHTML = this.card(t, i, "b", st.over, st.over ? (lastOk ? "ok" : "bad") : "");
-    if (slide) { $("htPair").classList.remove("slide"); void $("htPair").offsetWidth; $("htPair").classList.add("slide"); }
+    if (slide) animateHLPair($("htPair"));
   },
   squares(t, x, i) { return this.correct(t, i, x) ? "🟩" : "🟥"; },
 };
