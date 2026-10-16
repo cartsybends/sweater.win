@@ -1,6 +1,5 @@
 // Team mini-games share a five-question run, but keep their answer models separate.
 const TEAM_GAME_MODEL = (() => {
-  const group = pos => pos === "G" ? "G" : pos === "D" ? "D" : "F";
   function identityPlayers(h) {
     const players = new Map([...h.byPlayer].map(([id, p]) => [id, {...p, rows: p.rows.slice()}]));
     for (const row of h.goalies) {
@@ -23,21 +22,13 @@ const TEAM_GAME_MODEL = (() => {
       .sort((a, b) => b.stints.filter(s => s.team === team).reduce((n, s) => n + s.gp, 0) -
         a.stints.filter(s => s.team === team).reduce((n, s) => n + s.gp, 0));
   }
-  function identityRound(player, players, shuffle) {
-    // Some alumni share a name (including both Elias Petterssons in VAN).
-    // Each visible answer must identify one choice unambiguously.
-    const byName = new Map(), targetName = player.name.trim().toLowerCase();
-    for (const p of players) {
-      const name = p.name.trim().toLowerCase();
-      if (p.id !== player.id && name !== targetName && !byName.has(name)) byName.set(name, p);
-    }
-    const others = [...byName.values()];
-    const similar = others.filter(p => group(p.pos) === group(player.pos) && p.first <= player.last + 5 && p.last >= player.first - 5);
-    const ordered = [...shuffle(similar), ...shuffle(others.filter(p => !similar.includes(p)))];
-    return {player, choices: shuffle([player, ...ordered.slice(0, 3)]), clue: 1, wrong: new Set(), over: false, won: false, points: 0};
+  function identityRound(player, players) {
+    // Keep the whole team's search pool available at every clue, including
+    // alumni with the same name. Answers are identified by NHL player ID.
+    return {player, candidates: new Map(players.map(p => [p.id, p])), clue: 1, wrong: new Set(), over: false, won: false, points: 0};
   }
   function answerIdentity(round, id) {
-    if (round.over || round.wrong.has(id) || !round.choices.some(p => p.id === id)) return null;
+    if (round.over || round.wrong.has(id) || !round.candidates.has(id)) return null;
     const correct = id === round.player.id;
     if (correct) {
       round.over = round.won = true;
@@ -100,6 +91,12 @@ function startTeamMiniGame(team, mode) {
   teamMiniCleanup();
   const h = historyForTeam(team), model = TEAM_GAME_MODEL;
   const players = mode === "identity" ? model.identityPlayers(h) : TEAM_CAREERS;
+  const identitySearch = {team, names: []};
+  if (mode === "identity") {
+    const names = new Map(h.names.map(p => [p.id, p]));
+    for (const p of h.goalies) if (!names.has(p.id)) names.set(p.id, {id: p.id, name: p.name, pos: "G"});
+    identitySearch.names = [...names.values()].sort((a, b) => a.name.localeCompare(b.name));
+  }
   const preference = `sweater-team-${mode}-difficulty`;
   const challenge = model.pool(players, mode, "challenge", team);
   let level = store.get(preference) === "challenge" && challenge.length >= 5 ? "challenge" : "classic";
@@ -111,7 +108,7 @@ function startTeamMiniGame(team, mode) {
   teamMiniCleanup = () => {active = false; dragCleanup();};
   const token = globalThis.SweaterAnalytics?.context(`team_${mode}`, "unlimited", `${team}:${mode}`, true);
   teamModeShell(team, mode, `<div class="team-mini" data-team-game="${mode}">
-    <div class="team-mini-settings"><p>${mode === "identity" ? "Five players. Follow the clues and choose a name." : "Five careers. Arrange the NHL teams from earliest to latest."}</p>
+    <div class="team-mini-settings"><p>${mode === "identity" ? "Five players. Follow the clues and search for each name. Three guesses per player." : "Five careers. Arrange the NHL teams from earliest to latest."}</p>
       <label>Difficulty<select id="teamMiniDifficulty"><option value="classic">Classic</option><option value="challenge"${challenge.length < 5 ? " disabled" : ""}>Challenge</option></select></label></div>
     <div class="team-mini-line"><span id="teamMiniQuestion"></span><span id="teamMiniScore"></span></div>
     <div class="shdots question-progress" id="teamMiniDots"></div><div id="teamMiniRound"></div></div>`);
@@ -149,7 +146,7 @@ function startTeamMiniGame(team, mode) {
   }
   function renderRound() {
     if (index >= total) return finish();
-    round = mode === "identity" ? model.identityRound(run[index], players, shuffled) : model.journeyRound(run[index], shuffled);
+    round = mode === "identity" ? model.identityRound(run[index], identitySearch.names) : model.journeyRound(run[index], shuffled);
     selected = -1; progress(); draw();
   }
   function drawIdentity() {
@@ -164,15 +161,18 @@ function startTeamMiniGame(team, mode) {
     ];
     $("teamMiniRound").innerHTML = `<div class="team-identity-heading"><div class="team-mini-avatar">${revealed ? teamMiniImage(teamMiniPortrait(p, team)) : '<span aria-hidden="true">?</span>'}</div><div><p class="team-mini-eyebrow">${round.over ? "Answer revealed" : `Clue ${round.clue} / 3`}</p><h4>${round.over ? esc(p.name) : "Who wore this sweater?"}</h4><p>${round.over ? esc(teamFullName(team)) : `${[10, 6, 3][round.clue - 1]} points available`}</p></div></div>
       <ol class="team-clues">${clues.map(([title, fact, note], i) => `<li${i >= round.clue && !round.over ? ' class="is-locked"' : ""}><span class="team-clue-number">${i + 1}</span><div><small>${esc(title)}</small><b>${i < round.clue || round.over ? esc(fact) : "Reveal the next clue"}</b>${i < round.clue || round.over ? `<span>${esc(note)}</span>` : ""}</div></li>`).join("")}</ol>
-      <div class="team-identity-choices">${round.choices.map(choice => `<button type="button" data-identity-choice="${choice.id}" class="team-identity-choice${round.over && choice.id === p.id ? " is-right" : round.wrong.has(choice.id) ? " is-wrong" : ""}"${round.over || round.wrong.has(choice.id) ? " disabled" : ""}>${esc(choice.name)}${round.over && choice.id === p.id ? '<span aria-label="correct answer">✓</span>' : round.wrong.has(choice.id) ? '<span aria-label="incorrect">×</span>' : ""}</button>`).join("")}</div>` +
-      footer(round.over ? round.won ? "Correct" : `It was ${p.name}` : round.wrong.size ? "Another clue unlocked" : "Choose a name when you're ready", round.over ? round.won ? `+${round.points} points` : "The full clues are shown above." : "Earlier answers earn more points.", round.over ? `<button type="button" class="btn" id="teamMiniNext">${index === total - 1 ? "See results" : "Next player"}</button>` : `<button type="button" class="btn ghost" id="teamIdentityClue"${round.clue === 3 ? " disabled" : ""}>Reveal next clue</button><button type="button" class="btn ghost" id="teamMiniReveal">Reveal answer</button>`);
-    $("teamMiniRound").querySelectorAll("[data-identity-choice]").forEach(button => button.onclick = () => {
+      ${round.over ? "" : `<div class="team-identity-answer"><label for="teamIdentityInput">Name the player</label>${teamSearchMarkup("teamIdentityInput", "teamIdentityOpts", "Type a player name")}<p>${3 - round.wrong.size} ${round.wrong.size === 2 ? "guess" : "guesses"} remaining · select a matching name</p></div>`}
+      ${round.wrong.size ? `<ul class="team-identity-guesses" aria-label="Incorrect guesses">${[...round.wrong].map(id => `<li><span>${esc(round.candidates.get(id).name)}</span><span aria-hidden="true">×</span></li>`).join("")}</ul>` : ""}` +
+      footer(round.over ? round.won ? "Correct" : `It was ${p.name}` : round.wrong.size ? "Try another player" : "Who do the clues point to?", round.over ? round.won ? `+${round.points} points` : "The full clues are shown above." : "Earlier answers earn more points.", round.over ? `<button type="button" class="btn" id="teamMiniNext">${index === total - 1 ? "See results" : "Next player"}</button>` : `<button type="button" class="btn ghost" id="teamIdentityClue"${round.clue === 3 ? " disabled" : ""}>Reveal next clue</button><button type="button" class="btn ghost" id="teamMiniReveal">Reveal answer</button>`);
+    if (round.over) return;
+    makeTeamSearch("teamIdentityInput", "teamIdentityOpts", identitySearch, player => {
       if (!active) return;
-      const correct = model.answerIdentity(round, Number(button.dataset.identityChoice));
+      const correct = model.answerIdentity(round, player.id);
       if (correct === null) return;
       step(correct); settled(); draw();
-    });
-    if (!round.over) $("teamIdentityClue").onclick = () => {if (round.clue >= 3) return; round.clue++; step(); draw();};
+      if (!round.over) $("teamIdentityInput").focus({preventScroll: true});
+    }, () => [...round.wrong]);
+    $("teamIdentityClue").onclick = () => {if (round.clue >= 3) return; round.clue++; step(); draw();};
   }
   function drawJourney() {
     const p = round.player, order = round.over ? p.stints.map((_, i) => i) : round.order;

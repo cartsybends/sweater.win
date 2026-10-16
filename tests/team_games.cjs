@@ -2,32 +2,40 @@ const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:a
 const ctx = vm.createContext({console});
 vm.runInContext(fs.readFileSync('static/team-games/games.js', 'utf8'), ctx);
 const model = vm.runInContext('TEAM_GAME_MODEL', ctx);
-const choices = [1, 2, 3, 4].map(id => ({id, name: `Player ${id}`, pos: 'C', first: 2000, last: 2010}));
+const candidates = Array.from({length: 12}, (_, i) => ({id: i + 1, name: `Player ${i + 1}`, pos: 'C', first: 2000, last: 2010}));
 const shuffle = arr => arr.slice().reverse();
 let checks = 0;
 function test(name, fn) {fn(); checks++; console.log('PASS', name);}
-test('four different names, no repeated guesses, earlier correct answers score more', () => {
+test('search accepts the full team pool, rejects invalid or repeated guesses, and scores by clue', () => {
   for (let wrong = 0; wrong < 3; wrong++) {
-    const r = model.identityRound(choices[0], choices, shuffle);
-    assert.equal(new Set(r.choices.map(p => p.id)).size, 4);
+    const r = model.identityRound(candidates[0], candidates);
+    assert.equal(r.candidates.size, 12);
     assert.equal(model.answerIdentity(r, 999), null);
+    assert.equal(r.wrong.size, 0); assert.equal(r.clue, 1);
     for (let i = 0; i < wrong; i++) {
-      assert.equal(model.answerIdentity(r, choices[i + 1].id), false);
-      assert.equal(model.answerIdentity(r, choices[i + 1].id), null);
+      assert.equal(model.answerIdentity(r, candidates[i + 5].id), false);
+      assert.equal(model.answerIdentity(r, candidates[i + 5].id), null);
+      assert.equal(r.wrong.size, i + 1); assert.equal(r.candidates.size, 12);
     }
     assert.equal(model.answerIdentity(r, 1), true);
     assert.equal(r.points, [10, 6, 3][wrong]); assert.equal(r.over, true);
     assert.equal(model.answerIdentity(r, 2), null);
   }
-  const r = model.identityRound(choices[0], choices, shuffle);
-  for (const id of [2, 3, 4]) model.answerIdentity(r, id);
+  const r = model.identityRound(candidates[0], candidates);
+  for (const id of [7, 10, 12]) model.answerIdentity(r, id);
   assert.equal(r.over, true); assert.equal(r.won, false); assert.equal(r.points, 0);
+  assert.equal(model.answerIdentity(r, 1), null);
+  const hinted = model.identityRound(candidates[0], candidates);
+  hinted.clue = 3;
+  assert.equal(model.answerIdentity(hinted, 1), true); assert.equal(hinted.points, 3);
 });
 const p = {id: 7, name: 'Return visits', stints: ['NYI', 'FLA', 'VAN', 'FLA'].map(team => ({team, gp: 100}))};
-test('players with the same name never create ambiguous answer buttons', () => {
-  const duplicates = [...choices, {...choices[0],id:8}, {...choices[1],id:9}];
-  const r = model.identityRound(choices[0], duplicates, shuffle);
-  assert.equal(r.choices.length,4);assert.equal(new Set(r.choices.map(p=>p.name.toLowerCase())).size,4);
+test('search keeps namesakes distinct by player ID instead of removing valid alumni', () => {
+  const namesake = {...candidates[0], id: 99, pos: 'D'};
+  const r = model.identityRound(candidates[0], [...candidates, namesake]);
+  assert.equal(r.candidates.get(99).name, r.player.name);
+  assert.equal(model.answerIdentity(r, 99), false);
+  assert.equal(model.answerIdentity(r, 1), true); assert.equal(r.points, 6);
 });
 test('journeys never start solved, and identical return tiles are interchangeable', () => {
   const r = model.journeyRound(p, arr => arr);
@@ -52,7 +60,7 @@ test('three failed checks reveal the career with zero points', () => {
   for (let i = 0; i < 3; i++) assert.equal(model.checkJourney(r), false);
   assert.equal(r.over, true); assert.equal(r.points, 0); assert.equal(r.won, false);
 });
-test('every team has five Classic journeys and four-choice identity questions, including goalies', () => {
+test('every team has five Classic journeys and searchable identity answers, including goalies', () => {
   const history = JSON.parse(fs.readFileSync('team_history_cache.json', 'utf8')).teams;
   const careers = JSON.parse(fs.readFileSync('team_careers.json', 'utf8')).players;
   for (const [team, raw] of Object.entries(history)) {
@@ -63,13 +71,14 @@ test('every team has five Classic journeys and four-choice identity questions, i
     }
     const goalies = raw.g.map(r => ({id:r[0],name:r[1],y:r[2],gp:r[3],wins:r[4]}));
     const players = model.identityPlayers({byPlayer,goalies});
+    const searchable = [...new Map([...byPlayer.values(), ...goalies.map(p=>({...p,pos:'G'}))].map(p=>[p.id,p])).values()];
     const pool = model.pool(players, 'identity', 'classic', team);
     assert(pool.length >= 5, team); assert(players.some(p => p.pos === 'G'), team);
     for (const player of pool) {
-      const r = model.identityRound(player, players, shuffle);
-      assert.equal(r.choices.length, 4); assert.equal(new Set(r.choices.map(p => p.id)).size, 4);
-      assert.equal(new Set(r.choices.map(p => p.name.toLowerCase())).size, 4);
-      assert(r.choices.every(p => byPlayer.has(p.id) || goalies.some(g => g.id === p.id)));
+      const r = model.identityRound(player, searchable);
+      assert(r.candidates.size > 4, team); assert.equal(r.candidates.size, searchable.length);
+      assert.equal(model.answerIdentity(r, player.id), true, `${team}: ${player.name}`);
+      assert.equal(r.points, 10);
       assert(player.rows.includes(player.peak));
     }
     const paths = model.pool(careers, 'journey', 'classic', team); assert(paths.length >= 5, team);

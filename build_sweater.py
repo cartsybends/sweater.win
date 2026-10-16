@@ -11267,7 +11267,7 @@ function renderTeamHub(t) {
     ${teamHero(name, `Team trivia from ${first} onward · current players and familiar alumni`, t)}
     <div class="teammodes">
       <button class="teammode" type="button" data-team-mode="best"><em>Play now</em><b>Best Of</b><small>Choose an era and category, then name each season's five leaders.</small></button>
-      <button class="teammode" type="button" data-team-mode="identity"><em>Play now</em><b>Who Am I?</b><small>Five ${esc(name)} players. Follow the clues and choose from four names.</small></button>
+      <button class="teammode" type="button" data-team-mode="identity"><em>Play now</em><b>Who Am I?</b><small>Five ${esc(name)} players. Follow the clues and search for each name.</small></button>
       <button class="teammode" type="button" data-team-mode="higher"><em>Play now</em><b>Higher or Lower</b><small>Same streak game, using career highs from players who wore this sweater.</small></button>
       <button class="teammode" type="button" data-team-mode="journey"><em>Play now</em><b>Team Journey</b><small>Five familiar alumni. Arrange their NHL teams in career order.</small></button>
     </div><div id="teamModePanel"></div>`;

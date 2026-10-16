@@ -24,13 +24,12 @@
 .team-clues li > div > span { color: var(--muted); font-size: 11px; line-height: 1.4; }
 .team-clues .is-locked { background: transparent; }
 .team-clues .is-locked b { color: var(--muted); font-size: 12px; font-weight: 400; }
-.team-identity-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.team-identity-choice { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 58px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); color: var(--fg); font: inherit; font-size: 14px; font-weight: 600; text-align: left; cursor: pointer; }
-.team-identity-choice:hover:not(:disabled) { border-color: var(--accent); }
-.team-identity-choice.is-right { border-color: var(--hit); background: color-mix(in srgb, var(--hit) 9%, var(--panel)); }
-.team-identity-choice.is-wrong { opacity: .55; }
-.team-identity-choice:disabled { cursor: default; }
-.team-identity-choice span { flex-shrink: 0; font-size: 18px; }
+.team-identity-answer label { display: block; margin-bottom: 9px; color: var(--fg); font-size: 13px; font-weight: 600; }
+.team-identity-answer .search { max-width: none; margin: 0; }
+.team-identity-answer > p { margin: 9px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.team-identity-guesses { display: grid; gap: 7px; list-style: none; margin: 16px 0 0; padding: 0; }
+.team-identity-guesses li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); font-size: 12px; }
+.team-identity-guesses li > span:last-child { font-size: 17px; }
 .team-mini-feedback { display: grid; gap: 5px; min-height: 48px; margin-top: 20px; color: var(--muted); font-size: 12px; line-height: 1.4; }
 .team-mini-feedback b { color: var(--fg); font-size: 13px; font-weight: 600; }
 .team-mini-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin-top: 13px; }
@@ -69,7 +68,6 @@
   .team-mini-avatar, .team-journey-player > img { flex-basis: 64px; width: 64px; height: 64px; border-radius: 12px; }
   .team-identity-heading, .team-journey-player { gap: 13px; }
   .team-clues li { padding: 13px 12px; gap: 10px; }
-  .team-identity-choices { grid-template-columns: 1fr; gap: 8px; }
   .team-journey-board { grid-template-columns: 1fr; gap: 8px; }
   .team-journey-tile { grid-template-columns: 22px 64px minmax(0, 1fr) 44px; grid-template-rows: auto; gap: 10px; min-height: 90px; padding: 12px; justify-items: start; }
   .team-journey-tile > img { width: 64px; height: 64px; }
