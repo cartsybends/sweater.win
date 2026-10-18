@@ -224,7 +224,8 @@
   "2026-11-13": 8478109,
   "2026-11-14": 8480830,
   "2026-11-15": 8484999,
-  "2026-11-16": 8476458
+  "2026-11-16": 8476458,
+  "2026-11-17": 8481043
  },
  "start": "2026-09-15",
  "statline_days": {
@@ -290,7 +291,8 @@
   "2026-11-13": 8477951,
   "2026-11-14": 8480834,
   "2026-11-15": 8484197,
-  "2026-11-16": 8478434
+  "2026-11-16": 8478434,
+  "2026-11-17": 8476932
  },
  "statline_start": "2026-09-15",
  "team_days": {
@@ -545,6 +547,10 @@
   "2026-11-16": [
    8476878,
    2013
+  ],
+  "2026-11-17": [
+   8477511,
+   2021
   ]
  },
  "team_start": "2026-09-15",
@@ -611,7 +617,8 @@
   "2026-11-13": 8480003,
   "2026-11-14": 8475462,
   "2026-11-15": 8474596,
-  "2026-11-16": 8470613
+  "2026-11-16": 8470613,
+  "2026-11-17": 8474578
  },
  "journey_start": "2026-09-15",
  "blur_days": {
@@ -677,7 +684,8 @@
   "2026-11-13": 8479353,
   "2026-11-14": 8483710,
   "2026-11-15": 8484210,
-  "2026-11-16": 8479442
+  "2026-11-16": 8479442,
+  "2026-11-17": 8482703
  },
  "blur_start": "2026-09-15",
  "number_days": {
@@ -743,7 +751,8 @@
   "2026-11-13": 8475166,
   "2026-11-14": 8482105,
   "2026-11-15": 8482445,
-  "2026-11-16": 8478882
+  "2026-11-16": 8478882,
+  "2026-11-17": 8470621
  },
  "number_start": "2026-09-15",
  "draft_days": {
@@ -808,7 +817,8 @@
   "2026-11-13": 8475752,
   "2026-11-14": 8479981,
   "2026-11-15": 8480003,
-  "2026-11-16": 8476931
+  "2026-11-16": 8476931,
+  "2026-11-17": 8476952
  },
  "draft_start": "2026-09-16",
  "map_days": {
@@ -872,8 +882,9 @@
   "2026-11-12": 8478840,
   "2026-11-13": 8482110,
   "2026-11-14": 8477450,
-  "2026-11-15": 8484509,
-  "2026-11-16": 8484938
+  "2026-11-15": 8484387,
+  "2026-11-16": 8484938,
+  "2026-11-17": 8484262
  },
  "map_start": "2026-09-16",
  "roster_days": {
@@ -1890,6 +1901,7 @@
     8482733,
     8482745,
     8482784,
+    8483463,
     8483516,
     8484164,
     8484188,
@@ -1986,7 +1998,6 @@
     8482703,
     8483455,
     8483512,
-    8484509,
     8486161
    ]
   },
@@ -2052,6 +2063,7 @@
    "team": "DAL",
    "ids": [
     8473994,
+    8474102,
     8474574,
     8475168,
     8475794,
@@ -2192,7 +2204,6 @@
     8479394,
     8479639,
     8481534,
-    8481572,
     8483553,
     8483890,
     8484803
@@ -2692,6 +2703,38 @@
     8483771,
     8484304
    ]
+  },
+  "2026-11-17": {
+   "team": "STL",
+   "ids": [
+    8475764,
+    8476412,
+    8476892,
+    8477402,
+    8477527,
+    8478443,
+    8479346,
+    8480023,
+    8480281,
+    8480459,
+    8480981,
+    8481006,
+    8481013,
+    8481580,
+    8481598,
+    8482077,
+    8482089,
+    8482111,
+    8482121,
+    8482733,
+    8482745,
+    8482784,
+    8483463,
+    8483516,
+    8484164,
+    8484188,
+    8484790
+   ]
   }
  },
  "roster_start": "2026-09-15",
@@ -2731,7 +2774,8 @@
   "2026-11-13": 8481580,
   "2026-11-14": 8478407,
   "2026-11-15": 8476459,
-  "2026-11-16": 8478440
+  "2026-11-16": 8478440,
+  "2026-11-17": 8475692
  },
  "whoscored_start": "2026-10-12",
  "rank_days": {
@@ -3343,6 +3387,16 @@
     8482679,
     8477949,
     8479371
+   ]
+  },
+  "2026-11-17": {
+   "stat": "age",
+   "ids": [
+    8474586,
+    8482142,
+    8480839,
+    8478178,
+    8480950
    ]
   }
  },
@@ -5417,42 +5471,42 @@
    "key": "FLA",
    "label": "Plays for Florida",
    "ids": [
-    8479314,
-    8478443,
-    8480355,
-    8477476,
-    8477498,
-    8475179,
-    8479981,
-    8475462,
-    8475913,
-    8484262,
-    8481033,
-    8482745,
-    8479525,
-    8479351,
-    8484873,
-    8481606,
-    8477497,
-    8483669,
-    8484144,
-    8482062,
-    8477933,
     8474189,
-    8480891,
-    8481711,
-    8482655,
-    8479372,
-    8484304,
-    8475848,
+    8484164,
+    8481692,
+    8482702,
+    8483676,
+    8477903,
+    8475179,
+    8478859,
+    8477476,
+    8478854,
     8480185,
+    8480188,
+    8479318,
+    8479406,
+    8477810,
+    8483506,
+    8477478,
+    8475842,
+    8478421,
+    8475462,
+    8474593,
+    8481563,
+    8479398,
+    8485414,
+    8484304,
+    8481605,
+    8479314,
     8477935,
-    8484509,
+    8482245,
     8477409,
-    8479576,
+    8484386,
+    8477446,
     8477495,
     8477932,
-    8477940
+    8479353,
+    8475810
    ]
   },
   "2026-11-05": {
@@ -5460,42 +5514,42 @@
    "key": "EDM",
    "label": "Plays for Edmonton",
    "ids": [
-    8474568,
-    8484203,
-    8484783,
-    8483512,
-    8480208,
-    8485391,
-    8480049,
-    8482703,
-    8476624,
+    8474567,
+    8484186,
+    8484759,
+    8483455,
+    8480192,
+    8484984,
+    8480043,
+    8482166,
+    8476539,
     8477934,
-    8480355,
-    8480990,
+    8480313,
+    8480950,
     8480831,
-    8482765,
+    8482747,
     8478013,
     8477953,
     8480834,
     8478402,
-    8482821,
-    8475188,
-    8484240,
-    8476853,
-    8475831,
-    8481617,
+    8482803,
+    8475184,
+    8484223,
+    8476826,
+    8475810,
+    8480842,
     8475883,
-    8474593,
-    8483425,
-    8482758,
-    8478831,
-    8484509,
+    8474590,
+    8483395,
+    8482745,
+    8478569,
+    8483512,
     8476454,
-    8481024,
-    8484221,
-    8478472,
-    8479323,
-    8477365
+    8481013,
+    8484197,
+    8477450,
+    8479318,
+    8477346
    ]
   },
   "2026-11-06": {
@@ -5969,6 +6023,49 @@
     8476448,
     8478439,
     8481546
+   ]
+  },
+  "2026-11-17": {
+   "kind": "nation",
+   "key": "SWE",
+   "label": "Born in Sweden",
+   "ids": [
+    8480002,
+    8480003,
+    8476372,
+    8480840,
+    8477365,
+    8479619,
+    8470613,
+    8478397,
+    8477402,
+    8482661,
+    8480878,
+    8477940,
+    8476883,
+    8476448,
+    8480012,
+    8480208,
+    8483499,
+    8477416,
+    8479406,
+    8482175,
+    8474189,
+    8481732,
+    8476853,
+    8477426,
+    8480014,
+    8478055,
+    8482072,
+    8478020,
+    8478502,
+    8480188,
+    8478414,
+    8481030,
+    8475455,
+    8478454,
+    8475218,
+    8476312
    ]
   }
  },
@@ -10634,6 +10731,85 @@
      "keep": [
       0,
       4
+     ]
+    }
+   ]
+  },
+  "2026-11-17": {
+   "rounds": [
+    {
+     "q": "What's the most goals Jake Guentzel has scored in one NHL season?",
+     "o": [
+      "41",
+      "39",
+      "45",
+      "49"
+     ],
+     "a": 0,
+     "kind": "bestGoals",
+     "keep": [
+      3,
+      4
+     ]
+    },
+    {
+     "q": "Which city was Dawson Mercer born in?",
+     "o": [
+      "Turku, Finland",
+      "Carbonear, NL, Canada",
+      "Pickering, ON, Canada",
+      "Pittsburgh, PA, USA"
+     ],
+     "a": 1,
+     "kind": "city",
+     "keep": [
+      0,
+      1
+     ]
+    },
+    {
+     "q": "Which of these players was born in Czechia?",
+     "o": [
+      "Sam Lafferty",
+      "Charlie McAvoy",
+      "Bradly Nadeau",
+      "Dan Vladar"
+     ],
+     "a": 3,
+     "kind": "bornIn",
+     "keep": [
+      1,
+      2
+     ]
+    },
+    {
+     "q": "Which of these players is the youngest?",
+     "o": [
+      "Darnell Nurse",
+      "Jeff Malott",
+      "Kevin Korchinski",
+      "Casey Cizikas"
+     ],
+     "a": 2,
+     "kind": "youngest",
+     "keep": [
+      0,
+      3
+     ]
+    },
+    {
+     "q": "Which of these players is a goalie?",
+     "o": [
+      "Mikko Rantanen",
+      "Colton Sissons",
+      "Jordan Binnington",
+      "Martin Pospisil"
+     ],
+     "a": 2,
+     "kind": "goalie",
+     "keep": [
+      0,
+      3
      ]
     }
    ]
@@ -74672,6 +74848,1110 @@
      "kind": "trophy"
     }
    ]
+  },
+  "2026-11-17": {
+   "rounds": [
+    {
+     "q": "Which of these players was born in Canada?",
+     "o": [
+      "Quinn Hughes",
+      "Tyson Hinds",
+      "Mats Zuccarello",
+      "Sandis Vilmanis"
+     ],
+     "a": 1,
+     "kind": "bornIn"
+    },
+    {
+     "q": "Which of these players is a defenceman?",
+     "o": [
+      "Fedor Svechkov",
+      "Calum Ritchie",
+      "Zach Metsa",
+      "Paul Cotter"
+     ],
+     "a": 2,
+     "kind": "defence"
+    },
+    {
+     "q": "Which team does Ivan Miroshnichenko play for?",
+     "o": [
+      "Nashville",
+      "Washington",
+      "NY Rangers",
+      "Buffalo"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Which of these players is the youngest?",
+     "o": [
+      "Jonathan Huberdeau",
+      "Colin Blackwell",
+      "Mason Appleton",
+      "Jack McBain"
+     ],
+     "a": 3,
+     "kind": "youngest"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 1984–85?",
+     "o": [
+      "Sergei Fedorov",
+      "Brett Hull",
+      "Mark Messier",
+      "Wayne Gretzky"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What year was Taylor Raddysh drafted?",
+     "o": [
+      "2017",
+      "2013",
+      "2020",
+      "2016"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What's the most goals Matt Boldy has scored in one NHL season?",
+     "o": [
+      "48",
+      "42",
+      "44",
+      "40"
+     ],
+     "a": 1,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which team drafted Will Smith?",
+     "o": [
+      "Philadelphia",
+      "Florida",
+      "San Jose",
+      "Colorado"
+     ],
+     "a": 2,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which of these players is the tallest?",
+     "o": [
+      "Alex Tuch",
+      "Niko Mikkola",
+      "Pyotr Kochetkov",
+      "Morgan Rielly"
+     ],
+     "a": 1,
+     "kind": "tallest"
+    },
+    {
+     "q": "Who won the Conn Smythe Trophy in 2022–23?",
+     "o": [
+      "Tim Thomas",
+      "Cale Makar",
+      "Jonathan Marchessault",
+      "Justin Williams"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players is a goalie?",
+     "o": [
+      "Pavel Zacha",
+      "Ville Husso",
+      "Connor Brown",
+      "Taylor Ward"
+     ],
+     "a": 1,
+     "kind": "goalie"
+    },
+    {
+     "q": "Which of these players is the oldest?",
+     "o": [
+      "Philip Broberg",
+      "Carson Soucy",
+      "Blake Coleman",
+      "Kevin Fiala"
+     ],
+     "a": 2,
+     "kind": "oldest"
+    },
+    {
+     "q": "What number does Tyler Tucker wear?",
+     "o": [
+      "#47",
+      "#92",
+      "#75",
+      "#5"
+     ],
+     "a": 2,
+     "kind": "number"
+    },
+    {
+     "q": "How tall is Sam Dickinson?",
+     "o": [
+      "6′1″",
+      "5′11″",
+      "6′3″",
+      "6′4″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the Maurice Richard Trophy in 2017–18?",
+     "o": [
+      "Steven Stamkos",
+      "Alexander Ovechkin",
+      "Vincent Lecavalier",
+      "Jonathan Cheechoo"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players wears #7?",
+     "o": [
+      "David Pastrnak",
+      "Cole Koepke",
+      "Jordan Eberle",
+      "Mattias Ekholm"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "Which city was Philipp Grubauer born in?",
+     "o": [
+      "Kiiminki, Finland",
+      "Ypsilanti, MI, USA",
+      "Dardenne Prairie, MO, USA",
+      "Rosenheim, Germany"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "What position does Jason Dickinson play?",
+     "o": [
+      "Right wing",
+      "Left wing",
+      "Goalie",
+      "Centre"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "Which of these players has the most career NHL games?",
+     "o": [
+      "Sergei Bobrovsky",
+      "Simon Benoit",
+      "Jackson LaCombe",
+      "Jared McCann"
+     ],
+     "a": 0,
+     "kind": "mostGames"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2013–14?",
+     "o": [
+      "Taylor Hall",
+      "Auston Matthews",
+      "Connor Hellebuyck",
+      "Sidney Crosby"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players has the most career points?",
+     "o": [
+      "Igor Chernyshov",
+      "Ryan Shea",
+      "Teddy Blueger",
+      "Jordan Martinook"
+     ],
+     "a": 3,
+     "kind": "mostPoints"
+    },
+    {
+     "q": "Which of these players has the most career goals?",
+     "o": [
+      "Dmitri Voronkov",
+      "Darnell Nurse",
+      "Noah Ostlund",
+      "Elias Pettersson"
+     ],
+     "a": 3,
+     "kind": "mostGoals"
+    },
+    {
+     "q": "Which country was Igor Shesterkin born in?",
+     "o": [
+      "Austria",
+      "Latvia",
+      "Denmark",
+      "Russia"
+     ],
+     "a": 3,
+     "kind": "nation"
+    },
+    {
+     "q": "In which round was Filip Chytil drafted?",
+     "o": [
+      "Round 7",
+      "Round 1",
+      "Round 4",
+      "Round 5"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 1995–96?",
+     "o": [
+      "Paul Kariya",
+      "Mats Näslund",
+      "Pierre Turgeon",
+      "Pavol Demitra"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Sam Bennett played?",
+     "o": [
+      "17",
+      "13",
+      "12",
+      "11"
+     ],
+     "a": 1,
+     "kind": "seasons"
+    },
+    {
+     "q": "What year was Nikolaj Ehlers drafted?",
+     "o": [
+      "2016",
+      "2012",
+      "2011",
+      "2014"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What position does Andrei Vasilevskiy play?",
+     "o": [
+      "Goalie",
+      "Centre",
+      "Right wing",
+      "Left wing"
+     ],
+     "a": 0,
+     "kind": "position"
+    },
+    {
+     "q": "What position does Oskar Bäck play?",
+     "o": [
+      "Defence",
+      "Right wing",
+      "Left wing",
+      "Centre"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 2013–14?",
+     "o": [
+      "Mark Giordano",
+      "Duncan Keith",
+      "Cale Makar",
+      "Roman Josi"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is Dustin Wolf?",
+     "o": [
+      "6′0″",
+      "6′1″",
+      "5′8″",
+      "6′3″"
+     ],
+     "a": 0,
+     "kind": "height"
+    },
+    {
+     "q": "What's the most goals Zayne Parekh has scored in one NHL season?",
+     "o": [
+      "4",
+      "8",
+      "6",
+      "0"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which team does Josh Anderson play for?",
+     "o": [
+      "Anaheim",
+      "St. Louis",
+      "Winnipeg",
+      "Montréal"
+     ],
+     "a": 3,
+     "kind": "team"
+    },
+    {
+     "q": "In which round was Kyle Connor drafted?",
+     "o": [
+      "Round 3",
+      "Round 4",
+      "Round 2",
+      "Round 1"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Frank J. Selke Trophy in 2001–02?",
+     "o": [
+      "Steve Yzerman",
+      "Kris Draper",
+      "Michael Peca",
+      "John Madden"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which country was Bowen Byram born in?",
+     "o": [
+      "Canada",
+      "Norway",
+      "Russia",
+      "Belarus"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "What number does Kasperi Kapanen wear?",
+     "o": [
+      "#5",
+      "#92",
+      "#48",
+      "#42"
+     ],
+     "a": 3,
+     "kind": "number"
+    },
+    {
+     "q": "What year was Ridly Greig drafted?",
+     "o": [
+      "2020",
+      "2024",
+      "2022",
+      "2016"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What year was Wyatt Johnston drafted?",
+     "o": [
+      "2018",
+      "2025",
+      "2021",
+      "2022"
+     ],
+     "a": 2,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2017–18?",
+     "o": [
+      "Mathew Barzal",
+      "Jonathan Huberdeau",
+      "Patrick Kane",
+      "Tyler Myers"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was Mark Stone drafted?",
+     "o": [
+      "Round 1",
+      "Round 6",
+      "Round 5",
+      "Round 7"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "How tall is Roope Hintz?",
+     "o": [
+      "6′2″",
+      "6′6″",
+      "6′3″",
+      "6′5″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "What position does Braden Schneider play?",
+     "o": [
+      "Left wing",
+      "Right wing",
+      "Centre",
+      "Defence"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "How tall is Yaroslav Askarov?",
+     "o": [
+      "6′2″",
+      "6′3″",
+      "6′4″",
+      "6′7″"
+     ],
+     "a": 1,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2011–12?",
+     "o": [
+      "Leon Draisaitl",
+      "Corey Perry",
+      "Evgeni Malkin",
+      "Connor McDavid"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Cole Caufield born in?",
+     "o": [
+      "Pittsburgh, PA, USA",
+      "Mosinee, WI, USA",
+      "Sarpsborg, Norway",
+      "Los Gatos, CA, USA"
+     ],
+     "a": 1,
+     "kind": "city"
+    },
+    {
+     "q": "How tall is Clayton Keller?",
+     "o": [
+      "5′7″",
+      "5′9″",
+      "6′0″",
+      "5′10″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "What year was Erik Karlsson drafted?",
+     "o": [
+      "2004",
+      "2007",
+      "2008",
+      "2011"
+     ],
+     "a": 2,
+     "kind": "draftYear"
+    },
+    {
+     "q": "In which round was Dominic Toninato drafted?",
+     "o": [
+      "Round 5",
+      "Round 7",
+      "Round 6",
+      "Round 4"
+     ],
+     "a": 0,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Conn Smythe Trophy in 2008–09?",
+     "o": [
+      "Ryan O'Reilly",
+      "Joe Nieuwendyk",
+      "Brad Richards",
+      "Evgeni Malkin"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team does Charlie McAvoy play for?",
+     "o": [
+      "Florida",
+      "Boston",
+      "NY Islanders",
+      "Vegas"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "How tall is Isak Rosen?",
+     "o": [
+      "5′9″",
+      "6′1″",
+      "6′0″",
+      "6′2″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "In which round was Michael McCarron drafted?",
+     "o": [
+      "Round 4",
+      "Round 1",
+      "Round 7",
+      "Round 6"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which country was Erik Haula born in?",
+     "o": [
+      "France",
+      "Canada",
+      "Finland",
+      "Australia"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2001–02?",
+     "o": [
+      "Joe Sakic",
+      "Jaromír Jágr",
+      "Jose Theodore",
+      "Eric Lindros"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which city was Joonas Korpisalo born in?",
+     "o": [
+      "Holland, MI, USA",
+      "North Chelmsford, MA, USA",
+      "Bellmawr, NJ, USA",
+      "Pori, Finland"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "How tall is Scott Mayfield?",
+     "o": [
+      "6′5″",
+      "6′6″",
+      "6′7″",
+      "6′2″"
+     ],
+     "a": 0,
+     "kind": "height"
+    },
+    {
+     "q": "Which country was Sean Kuraly born in?",
+     "o": [
+      "Switzerland",
+      "Sweden",
+      "USA",
+      "Germany"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "What position does Sam Carrick play?",
+     "o": [
+      "Right wing",
+      "Defence",
+      "Left wing",
+      "Centre"
+     ],
+     "a": 3,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 2024–25?",
+     "o": [
+      "Leon Draisaitl",
+      "Nikita Kucherov",
+      "Connor McDavid",
+      "Sidney Crosby"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players wears #14?",
+     "o": [
+      "Esa Lindell",
+      "Dmitry Kulikov",
+      "Nick Suzuki",
+      "Tyson Foerster"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "Which team does Nikita Zadorov play for?",
+     "o": [
+      "Ottawa",
+      "Boston",
+      "Buffalo",
+      "Pittsburgh"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "How many NHL seasons has Nate Danielson played?",
+     "o": [
+      "3",
+      "6",
+      "4",
+      "2"
+     ],
+     "a": 3,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which of these players wears #53?",
+     "o": [
+      "Dan Vladar",
+      "Isaac Howard",
+      "Nick Jensen",
+      "Phillip Danault"
+     ],
+     "a": 1,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2000–01?",
+     "o": [
+      "Evgeni Nabokov",
+      "Patrick Kane",
+      "Dany Heatley",
+      "Gabriel Landeskog"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which country was Chris Tanev born in?",
+     "o": [
+      "Canada",
+      "Norway",
+      "Denmark",
+      "Latvia"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "Which of these players was born in Slovakia?",
+     "o": [
+      "Nikita Grebenkin",
+      "Sam Lafferty",
+      "Jamie Drysdale",
+      "Juraj Slafkovský"
+     ],
+     "a": 3,
+     "kind": "bornIn"
+    },
+    {
+     "q": "What year was Cody Glass drafted?",
+     "o": [
+      "2017",
+      "2019",
+      "2016",
+      "2021"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "How tall is William Karlsson?",
+     "o": [
+      "6′3″",
+      "6′4″",
+      "5′10″",
+      "6′0″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 1986–87?",
+     "o": [
+      "Dominik Hašek",
+      "Jim Carey",
+      "Ron Hextall",
+      "Billy Smith"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Matthew Schaefer has scored in one NHL season?",
+     "o": [
+      "23",
+      "29",
+      "15",
+      "31"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which city was Arber Xhekaj born in?",
+     "o": [
+      "Hamilton, ON, Canada",
+      "Scarborough, ON, Canada",
+      "Moorhead, MN, USA",
+      "Tonka Bay, MN, USA"
+     ],
+     "a": 0,
+     "kind": "city"
+    },
+    {
+     "q": "How tall is Josh Mahura?",
+     "o": [
+      "6′4″",
+      "6′3″",
+      "5′10″",
+      "6′0″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "Which country was Josh Morrissey born in?",
+     "o": [
+      "Germany",
+      "Slovakia",
+      "Canada",
+      "Finland"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 2023–24?",
+     "o": [
+      "Connor Hellebuyck",
+      "Tuukka Rask",
+      "Henrik Lundqvist",
+      "Braden Holtby"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was Chandler Stephenson drafted?",
+     "o": [
+      "Round 2",
+      "Round 6",
+      "Round 3",
+      "Round 5"
+     ],
+     "a": 2,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which country was Ty Dellandrea born in?",
+     "o": [
+      "Finland",
+      "Czechia",
+      "Slovakia",
+      "Canada"
+     ],
+     "a": 3,
+     "kind": "nation"
+    },
+    {
+     "q": "What's the most goals Lane Hutson has scored in one NHL season?",
+     "o": [
+      "6",
+      "12",
+      "16",
+      "20"
+     ],
+     "a": 1,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which city was Elias Pettersson born in?",
+     "o": [
+      "Belleville, ON, Canada",
+      "Saint-Jerome, QC, Canada",
+      "Huntsville, AL, USA",
+      "Vasteras, Sweden"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 1982–83?",
+     "o": [
+      "Peter Šťastný",
+      "Pavel Bure",
+      "Martin Brodeur",
+      "Steve Larmer"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Mikhail Sergachev play?",
+     "o": [
+      "Defence",
+      "Centre",
+      "Right wing",
+      "Left wing"
+     ],
+     "a": 0,
+     "kind": "position"
+    },
+    {
+     "q": "Which city was Filip Hronek born in?",
+     "o": [
+      "Marsta, Sweden",
+      "Tonka Bay, MN, USA",
+      "Plessisville, QC, Canada",
+      "Hradec Kralove, Czechia"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "What number does John Tavares wear?",
+     "o": [
+      "#14",
+      "#23",
+      "#33",
+      "#91"
+     ],
+     "a": 3,
+     "kind": "number"
+    },
+    {
+     "q": "Which city was Mikey Anderson born in?",
+     "o": [
+      "East Amherst, NY, USA",
+      "Baudette, MN, USA",
+      "Tyumen, Russia",
+      "Roseville, MN, USA"
+     ],
+     "a": 3,
+     "kind": "city"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2012–13?",
+     "o": [
+      "Nathan MacKinnon",
+      "Aaron Ekblad",
+      "Jonathan Huberdeau",
+      "Auston Matthews"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Luca Cagnoni has scored in one NHL season?",
+     "o": [
+      "5",
+      "7",
+      "1",
+      "9"
+     ],
+     "a": 2,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "How many NHL seasons has Alexey Toropchenko played?",
+     "o": [
+      "6",
+      "2",
+      "3",
+      "10"
+     ],
+     "a": 0,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which country was Vladislav Namestnikov born in?",
+     "o": [
+      "Russia",
+      "Finland",
+      "Switzerland",
+      "Denmark"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "What position does Ryan Poehling play?",
+     "o": [
+      "Defence",
+      "Left wing",
+      "Centre",
+      "Goalie"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2013–14?",
+     "o": [
+      "Nathan MacKinnon",
+      "Moritz Seider",
+      "Dany Heatley",
+      "Gabriel Landeskog"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Kirill Kaprizov play?",
+     "o": [
+      "Right wing",
+      "Centre",
+      "Left wing",
+      "Goalie"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "What number does Alexander Kerfoot wear?",
+     "o": [
+      "#14",
+      "#43",
+      "#48",
+      "#17"
+     ],
+     "a": 0,
+     "kind": "number"
+    },
+    {
+     "q": "Which country was Nick Blankenburg born in?",
+     "o": [
+      "Norway",
+      "USA",
+      "Sweden",
+      "Austria"
+     ],
+     "a": 1,
+     "kind": "nation"
+    },
+    {
+     "q": "What's the most goals Aliaksei Protas has scored in one NHL season?",
+     "o": [
+      "28",
+      "24",
+      "22",
+      "30"
+     ],
+     "a": 3,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 1981–82?",
+     "o": [
+      "Jaromír Jágr",
+      "Wayne Gretzky",
+      "Mario Lemieux",
+      "Jarome Iginla"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was Thomas Chabot drafted?",
+     "o": [
+      "Round 1",
+      "Round 6",
+      "Round 2",
+      "Round 7"
+     ],
+     "a": 0,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which city was Keegan Kolesar born in?",
+     "o": [
+      "Boden, Sweden",
+      "Caledonia, ON, Canada",
+      "Brandon, MB, Canada",
+      "Yorkton, SK, Canada"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "Which city was Brandon Hagel born in?",
+     "o": [
+      "Herning, Denmark",
+      "Saskatoon, SK, Canada",
+      "Penza, Russia",
+      "Etobicoke, ON, Canada"
+     ],
+     "a": 1,
+     "kind": "city"
+    },
+    {
+     "q": "What's the most goals Miles Wood has scored in one NHL season?",
+     "o": [
+      "17",
+      "23",
+      "19",
+      "21"
+     ],
+     "a": 2,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the Ted Lindsay Award in 2000–01?",
+     "o": [
+      "Steve Yzerman",
+      "Sergei Fedorov",
+      "Eric Lindros",
+      "Joe Sakic"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    }
+   ]
   }
  },
  "overtime_start": "2026-09-20",
@@ -77683,6 +78963,60 @@
      ],
      "f": 0,
      "c": "Was born in the USA"
+    }
+   ]
+  },
+  "2026-11-17": {
+   "rounds": [
+    {
+     "p": 8484911,
+     "s": [
+      "Once scored 21 goals in a season",
+      "Is 5′10″ tall",
+      "Has played 4 NHL seasons"
+     ],
+     "f": 1,
+     "c": "Is 6′1″ tall"
+    },
+    {
+     "p": 8481546,
+     "s": [
+      "Once scored 10 goals in a season",
+      "Plays for Philadelphia",
+      "Has played 5 NHL seasons"
+     ],
+     "f": 2,
+     "c": "Has played 7 NHL seasons"
+    },
+    {
+     "p": 8483471,
+     "s": [
+      "Is a centre",
+      "Has played 4 NHL seasons",
+      "Was drafted in 2025"
+     ],
+     "f": 2,
+     "c": "Was drafted in 2022"
+    },
+    {
+     "p": 8484158,
+     "s": [
+      "Was drafted in 2023",
+      "Wears #62",
+      "Was born in Canada"
+     ],
+     "f": 1,
+     "c": "Wears #53"
+    },
+    {
+     "p": 8476869,
+     "s": [
+      "Was born in the USA",
+      "Wears #76",
+      "Was drafted in 2016"
+     ],
+     "f": 2,
+     "c": "Was drafted in 2012"
     }
    ]
   }
@@ -91048,6 +92382,290 @@
      "height"
     ]
    ]
+  },
+  "2026-11-17": {
+   "rounds": [
+    [
+     "ANA",
+     6,
+     "SJS",
+     4,
+     "abroad"
+    ],
+    [
+     "BUF",
+     1098,
+     "VAN",
+     1563,
+     "goals"
+    ],
+    [
+     "COL",
+     73.0,
+     "EDM",
+     73.8,
+     "height"
+    ],
+    [
+     "NJD",
+     29.5,
+     "OTT",
+     28.0,
+     "age"
+    ],
+    [
+     "PHI",
+     5,
+     "MTL",
+     6,
+     "abroad"
+    ],
+    [
+     "SJS",
+     7848,
+     "NYR",
+     8324,
+     "games"
+    ],
+    [
+     "VAN",
+     11,
+     "WSH",
+     6,
+     "abroad"
+    ],
+    [
+     "DAL",
+     30.1,
+     "OTT",
+     28.0,
+     "age"
+    ],
+    [
+     "NJD",
+     73.6,
+     "STL",
+     74.1,
+     "height"
+    ],
+    [
+     "NYR",
+     27.1,
+     "VGK",
+     30.1,
+     "age"
+    ],
+    [
+     "OTT",
+     73.7,
+     "SEA",
+     73.0,
+     "height"
+    ],
+    [
+     "CAR",
+     30.1,
+     "MIN",
+     30.4,
+     "age"
+    ],
+    [
+     "STL",
+     1361,
+     "TOR",
+     2846,
+     "goals"
+    ],
+    [
+     "VGK",
+     30.1,
+     "NJD",
+     29.5,
+     "age"
+    ],
+    [
+     "COL",
+     12214,
+     "SJS",
+     7848,
+     "games"
+    ],
+    [
+     "DAL",
+     30.1,
+     "MTL",
+     26.6,
+     "age"
+    ],
+    [
+     "CAR",
+     2337,
+     "BUF",
+     1098,
+     "goals"
+    ],
+    [
+     "LAK",
+     13427,
+     "NYI",
+     10930,
+     "games"
+    ],
+    [
+     "VAN",
+     27.4,
+     "CGY",
+     27.2,
+     "age"
+    ],
+    [
+     "STL",
+     7657,
+     "FLA",
+     13311,
+     "games"
+    ],
+    [
+     "ANA",
+     74.1,
+     "PHI",
+     73.5,
+     "height"
+    ],
+    [
+     "MIN",
+     12095,
+     "VGK",
+     10381,
+     "games"
+    ],
+    [
+     "CBJ",
+     4,
+     "CAR",
+     5,
+     "abroad"
+    ],
+    [
+     "ANA",
+     5799,
+     "PHI",
+     8383,
+     "games"
+    ],
+    [
+     "STL",
+     27.2,
+     "OTT",
+     28.0,
+     "age"
+    ],
+    [
+     "PIT",
+     2626,
+     "NJD",
+     2087,
+     "goals"
+    ],
+    [
+     "DAL",
+     74.2,
+     "TBL",
+     74.0,
+     "height"
+    ],
+    [
+     "NYR",
+     8324,
+     "SEA",
+     8729,
+     "games"
+    ],
+    [
+     "FLA",
+     74.1,
+     "WPG",
+     73.9,
+     "height"
+    ],
+    [
+     "CAR",
+     5,
+     "OTT",
+     9,
+     "abroad"
+    ],
+    [
+     "MIN",
+     2151,
+     "PHI",
+     1499,
+     "goals"
+    ],
+    [
+     "MTL",
+     26.6,
+     "BUF",
+     26.9,
+     "age"
+    ],
+    [
+     "CAR",
+     11861,
+     "NYI",
+     10930,
+     "games"
+    ],
+    [
+     "CGY",
+     27.2,
+     "PIT",
+     29.6,
+     "age"
+    ],
+    [
+     "CBJ",
+     4,
+     "NYR",
+     10,
+     "abroad"
+    ],
+    [
+     "COL",
+     73.0,
+     "UTA",
+     73.4,
+     "height"
+    ],
+    [
+     "NYI",
+     6,
+     "PIT",
+     8,
+     "abroad"
+    ],
+    [
+     "BUF",
+     26.9,
+     "NSH",
+     29.4,
+     "age"
+    ],
+    [
+     "DAL",
+     12765,
+     "COL",
+     12214,
+     "games"
+    ],
+    [
+     "PHI",
+     1499,
+     "NJD",
+     2087,
+     "goals"
+    ]
+   ]
   }
  },
  "hlt_start": "2026-09-18",
@@ -91291,6 +92909,10 @@
   "2026-11-16": {
    "id": 8478831,
    "y": 2018
+  },
+  "2026-11-17": {
+   "id": 8474568,
+   "y": 2012
   }
  },
  "season_start": "2026-09-18",
@@ -91486,6 +93108,10 @@
   "2026-11-16": {
    "id": 8477406,
    "y": 2020
+  },
+  "2026-11-17": {
+   "id": 8481524,
+   "y": 2021
   }
  },
  "playoff_start": "2026-09-18",
@@ -107734,6 +109360,350 @@
      "a": 1
     }
    ]
+  },
+  "2026-11-17": {
+   "rounds": [
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 2005,
+     "names": [
+      "Alexander Ovechkin",
+      "Daniel Alfredsson",
+      "Scott Gomez",
+      "Andrew Raycroft"
+     ],
+     "teams": [
+      "WSH",
+      "OTT",
+      "NJD",
+      "BOS"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2014,
+     "names": [
+      "Rod Brind'Amour",
+      "Ryan Kesler",
+      "Jonathan Toews",
+      "Patrice Bergeron"
+     ],
+     "teams": [
+      "CAR",
+      "VAN",
+      "CHI",
+      "BOS"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2016,
+     "names": [
+      "Connor Hellebuyck",
+      "Connor McDavid",
+      "Nikita Kucherov",
+      "Taylor Hall"
+     ],
+     "teams": [
+      "WPG",
+      "EDM",
+      "TBL",
+      "NJD"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 1987,
+     "names": [
+      "Billy Smith",
+      "Brian Leetch",
+      "Wayne Gretzky",
+      "Mark Messier"
+     ],
+     "teams": [
+      "NYI",
+      "NYR",
+      "EDM",
+      "EDM"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2008,
+     "names": [
+      "Alexander Ovechkin",
+      "Steven Stamkos",
+      "Jonathan Cheechoo",
+      "Pavel Bure"
+     ],
+     "teams": [
+      "WSH",
+      "TBL",
+      "SJS",
+      "FLA"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 1995,
+     "names": [
+      "Jim Carey",
+      "Pelle Lindbergh",
+      "José Théodore",
+      "Martin Brodeur"
+     ],
+     "teams": [
+      "WSH",
+      "PHI",
+      "MTL",
+      "NJD"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1992,
+     "names": [
+      "Pavol Demitra",
+      "Paul Kariya",
+      "Mike Bossy",
+      "Pierre Turgeon"
+     ],
+     "teams": [
+      "STL",
+      "ANA",
+      "NYI",
+      "NYI"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2000,
+     "names": [
+      "Jonathan Toews",
+      "John Madden",
+      "Ron Francis",
+      "Rod Brind'Amour"
+     ],
+     "teams": [
+      "CHI",
+      "NJD",
+      "PIT",
+      "CAR"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 1994,
+     "names": [
+      "Sergei Fedorov",
+      "Eric Lindros",
+      "Mario Lemieux",
+      "Martin St. Louis"
+     ],
+     "teams": [
+      "DET",
+      "PHI",
+      "PIT",
+      "TBL"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2016,
+     "names": [
+      "Steven Stamkos",
+      "Vincent Lecavalier",
+      "Leon Draisaitl",
+      "Sidney Crosby"
+     ],
+     "teams": [
+      "TBL",
+      "TBL",
+      "EDM",
+      "PIT"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2015,
+     "names": [
+      "Nikita Kucherov",
+      "Martin St. Louis",
+      "Evgeni Malkin",
+      "Patrick Kane"
+     ],
+     "teams": [
+      "TBL",
+      "TBL",
+      "PIT",
+      "CHI"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 1993,
+     "names": [
+      "Steve Yzerman",
+      "Billy Smith",
+      "Brian Leetch",
+      "Ron Hextall"
+     ],
+     "teams": [
+      "DET",
+      "NYI",
+      "NYR",
+      "PHI"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 1989,
+     "names": [
+      "Ron Francis",
+      "Jere Lehtinen",
+      "Guy Carbonneau",
+      "Rick Meagher"
+     ],
+     "teams": [
+      "PIT",
+      "DAL",
+      "MTL",
+      "STL"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2025,
+     "names": [
+      "Nathan MacKinnon",
+      "Sidney Crosby",
+      "Auston Matthews",
+      "Connor McDavid"
+     ],
+     "teams": [
+      "COL",
+      "PIT",
+      "TOR",
+      "EDM"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 2009,
+     "names": [
+      "Ryan Miller",
+      "Henrik Lundqvist",
+      "Connor Hellebuyck",
+      "Sergei Bobrovsky"
+     ],
+     "teams": [
+      "BUF",
+      "NYR",
+      "WPG",
+      "CBJ"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Maurice Richard Trophy",
+     "y": 2019,
+     "names": [
+      "Nathan MacKinnon",
+      "Corey Perry",
+      "Steven Stamkos",
+      "Alexander Ovechkin"
+     ],
+     "teams": [
+      "COL",
+      "ANA",
+      "TBL",
+      "WSH"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Art Ross Trophy",
+     "y": 2012,
+     "names": [
+      "Nikita Kucherov",
+      "Jamie Benn",
+      "Joe Thornton",
+      "Martin St. Louis"
+     ],
+     "teams": [
+      "TBL",
+      "DAL",
+      "BOS",
+      "TBL"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Art Ross Trophy",
+     "y": 1983,
+     "names": [
+      "Wayne Gretzky",
+      "Martin St. Louis",
+      "Jarome Iginla",
+      "Jaromír Jágr"
+     ],
+     "teams": [
+      "EDM",
+      "TBL",
+      "CGY",
+      "PIT"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 1985,
+     "names": [
+      "John Vanbiesbrouck",
+      "Dominik Hašek",
+      "Grant Fuhr",
+      "Jim Carey"
+     ],
+     "teams": [
+      "NYR",
+      "BUF",
+      "EDM",
+      "WSH"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1999,
+     "names": [
+      "Pavel Datsyuk",
+      "Pavol Demitra",
+      "Martin St. Louis",
+      "Ron Francis"
+     ],
+     "teams": [
+      "DET",
+      "STL",
+      "TBL",
+      "PIT"
+     ],
+     "a": 1
+    }
+   ]
   }
  },
  "trophy_start": "2026-09-18",
@@ -108396,6 +110366,17 @@
     8484806,
     8480848,
     8475200
+   ]
+  },
+  "2026-11-17": {
+   "team": "FLA",
+   "ids": [
+    8477932,
+    8477495,
+    8475179,
+    8479981,
+    8477933,
+    8481033
    ]
   }
  },
@@ -121510,6 +123491,326 @@
     ]
    ],
    "mvp": true
+  },
+  "2026-11-17": {
+   "rows": [
+    [
+     1980,
+     "New York Islanders",
+     "Minnesota North Stars",
+     "Butch Goring",
+     "NYI"
+    ],
+    [
+     1981,
+     "New York Islanders",
+     "Vancouver Canucks",
+     "Mike Bossy",
+     "NYI"
+    ],
+    [
+     1982,
+     "New York Islanders",
+     "Edmonton Oilers",
+     "Billy Smith",
+     "NYI"
+    ],
+    [
+     1983,
+     "Edmonton Oilers",
+     "New York Islanders",
+     "Mark Messier",
+     "EDM"
+    ],
+    [
+     1984,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1985,
+     "Montreal Canadiens",
+     "Calgary Flames",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1986,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Ron Hextall",
+     "PHI"
+    ],
+    [
+     1987,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1988,
+     "Calgary Flames",
+     "Montreal Canadiens",
+     "Al MacInnis",
+     "CGY"
+    ],
+    [
+     1989,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Bill Ranford",
+     "EDM"
+    ],
+    [
+     1990,
+     "Pittsburgh Penguins",
+     "Minnesota North Stars",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1991,
+     "Pittsburgh Penguins",
+     "Chicago Blackhawks",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1992,
+     "Montreal Canadiens",
+     "Los Angeles Kings",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1993,
+     "New York Rangers",
+     "Vancouver Canucks",
+     "Brian Leetch",
+     "NYR"
+    ],
+    [
+     1994,
+     "New Jersey Devils",
+     "Detroit Red Wings",
+     "Claude Lemieux",
+     "NJD"
+    ],
+    [
+     1995,
+     "Colorado Avalanche",
+     "Florida Panthers",
+     "Joe Sakic",
+     "COL"
+    ],
+    [
+     1996,
+     "Detroit Red Wings",
+     "Philadelphia Flyers",
+     "Mike Vernon",
+     "DET"
+    ],
+    [
+     1997,
+     "Detroit Red Wings",
+     "Washington Capitals",
+     "Steve Yzerman",
+     "DET"
+    ],
+    [
+     1998,
+     "Dallas Stars",
+     "Buffalo Sabres",
+     "Joe Nieuwendyk",
+     "DAL"
+    ],
+    [
+     1999,
+     "New Jersey Devils",
+     "Dallas Stars",
+     "Scott Stevens",
+     "NJD"
+    ],
+    [
+     2000,
+     "Colorado Avalanche",
+     "New Jersey Devils",
+     "Patrick Roy",
+     "COL"
+    ],
+    [
+     2001,
+     "Detroit Red Wings",
+     "Carolina Hurricanes",
+     "Nicklas Lidstrom",
+     "DET"
+    ],
+    [
+     2002,
+     "New Jersey Devils",
+     "Mighty Ducks of Anaheim",
+     "Jean-Sebastien Giguere",
+     "ANA"
+    ],
+    [
+     2003,
+     "Tampa Bay Lightning",
+     "Calgary Flames",
+     "Brad Richards",
+     "TBL"
+    ],
+    [
+     2005,
+     "Carolina Hurricanes",
+     "Edmonton Oilers",
+     "Cam Ward",
+     "CAR"
+    ],
+    [
+     2006,
+     "Anaheim Ducks",
+     "Ottawa Senators",
+     "Scott Niedermayer",
+     "ANA"
+    ],
+    [
+     2007,
+     "Detroit Red Wings",
+     "Pittsburgh Penguins",
+     "Henrik Zetterberg",
+     "DET"
+    ],
+    [
+     2008,
+     "Pittsburgh Penguins",
+     "Detroit Red Wings",
+     "Evgeni Malkin",
+     "PIT"
+    ],
+    [
+     2009,
+     "Chicago Blackhawks",
+     "Philadelphia Flyers",
+     "Jonathan Toews",
+     "CHI"
+    ],
+    [
+     2010,
+     "Boston Bruins",
+     "Vancouver Canucks",
+     "Tim Thomas",
+     "BOS"
+    ],
+    [
+     2011,
+     "Los Angeles Kings",
+     "New Jersey Devils",
+     "Jonathan Quick",
+     "LAK"
+    ],
+    [
+     2012,
+     "Chicago Blackhawks",
+     "Boston Bruins",
+     "Patrick Kane",
+     "CHI"
+    ],
+    [
+     2013,
+     "Los Angeles Kings",
+     "New York Rangers",
+     "Justin Williams",
+     "LAK"
+    ],
+    [
+     2014,
+     "Chicago Blackhawks",
+     "Tampa Bay Lightning",
+     "Duncan Keith",
+     "CHI"
+    ],
+    [
+     2015,
+     "Pittsburgh Penguins",
+     "San Jose Sharks",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2016,
+     "Pittsburgh Penguins",
+     "Nashville Predators",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2017,
+     "Washington Capitals",
+     "Vegas Golden Knights",
+     "Alexander Ovechkin",
+     "WSH"
+    ],
+    [
+     2018,
+     "St. Louis Blues",
+     "Boston Bruins",
+     "Ryan O'Reilly",
+     "STL"
+    ],
+    [
+     2019,
+     "Tampa Bay Lightning",
+     "Dallas Stars",
+     "Victor Hedman",
+     "TBL"
+    ],
+    [
+     2020,
+     "Tampa Bay Lightning",
+     "Montreal Canadiens",
+     "Andrei Vasilevskiy",
+     "TBL"
+    ],
+    [
+     2021,
+     "Colorado Avalanche",
+     "Tampa Bay Lightning",
+     "Cale Makar",
+     "COL"
+    ],
+    [
+     2022,
+     "Vegas Golden Knights",
+     "Florida Panthers",
+     "Jonathan Marchessault",
+     "VGK"
+    ],
+    [
+     2023,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Connor McDavid",
+     "EDM"
+    ],
+    [
+     2024,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Sam Bennett",
+     "FLA"
+    ],
+    [
+     2025,
+     "Carolina Hurricanes",
+     "Vegas Golden Knights",
+     "Jordan Staal",
+     "CAR"
+    ]
+   ],
+   "mvp": true
   }
  },
  "cups_start": "2026-09-18",
@@ -123235,30 +125536,30 @@
     ]
    },
    {
-    "label": "Born in Switzerland",
+    "label": "Born in Belarus",
     "ids": [
-     8475799,
-     8478414,
-     8481033,
-     8482655
+     8481068,
+     8481656,
+     8484783,
+     8484999
     ]
    },
    {
-    "label": "Wears #81",
+    "label": "Wears #84",
     "ids": [
-     8478398,
-     8481721,
-     8484509,
-     8485414
+     8470613,
+     8479661,
+     8481554,
+     8481726
     ]
    },
    {
     "label": "Drafted in 2011",
     "ids": [
-     8476312,
-     8476331,
-     8476393,
-     8476469
+     8476292,
+     8476392,
+     8476468,
+     8476473
     ]
    }
   ],
@@ -123342,16 +125643,16 @@
    {
     "label": "Plays for New Jersey",
     "ids": [
-     8477488,
      8478414,
-     8481559,
-     8482110
+     8478542,
+     8480192,
+     8482146
     ]
    },
    {
     "label": "Goalies",
     "ids": [
-     8479312,
+     8479361,
      8480947,
      8481519,
      8483710
@@ -123361,9 +125662,9 @@
     "label": "Wears #81",
     "ids": [
      8478398,
+     8478416,
      8478874,
-     8484509,
-     8485414
+     8482077
     ]
    },
    {
@@ -123371,8 +125672,8 @@
     "ids": [
      8480434,
      8480803,
-     8481013,
-     8481068
+     8480995,
+     8481043
     ]
    }
   ],
@@ -123742,16 +126043,16 @@
     "ids": [
      8476292,
      8478398,
-     8478416,
-     8484509
+     8478874,
+     8485414
     ]
    },
    {
     "label": "Born in 1995",
     "ids": [
-     8477492,
      8477500,
      8477967,
+     8478048,
      8480748
     ]
    }
@@ -123867,6 +126168,44 @@
      8479378,
      8479400,
      8480280
+    ]
+   }
+  ],
+  "2026-11-17": [
+   {
+    "label": "Plays for Columbus",
+    "ids": [
+     8478046,
+     8481161,
+     8482720,
+     8482982
+    ]
+   },
+   {
+    "label": "Born in Russia",
+    "ids": [
+     8471215,
+     8477402,
+     8481611,
+     8483490
+    ]
+   },
+   {
+    "label": "Wears #21",
+    "ids": [
+     8475151,
+     8476393,
+     8476872,
+     8478472
+    ]
+   },
+   {
+    "label": "Drafted in 2017",
+    "ids": [
+     8479999,
+     8480012,
+     8480015,
+     8480043
     ]
    }
   ]
@@ -145669,6 +148008,352 @@
     8479351,
     8480074,
     8481161
+   ]
+  },
+  "2026-11-17": {
+   "goals": [
+    8478402,
+    8480208,
+    8476952,
+    8480834,
+    8482745,
+    8481186,
+    8480893,
+    8477964,
+    8482730,
+    8477955,
+    8479351,
+    8475287,
+    8482142,
+    8479325,
+    8478450,
+    8481481,
+    8478454,
+    8478366,
+    8481716,
+    8480865,
+    8482146,
+    8480281,
+    8482259,
+    8471214,
+    8476882,
+    8482113,
+    8479985,
+    8484801,
+    8474564,
+    8478460,
+    8478013,
+    8480839,
+    8481598,
+    8475314,
+    8480043,
+    8482768,
+    8476854,
+    8480009,
+    8475170,
+    8481656,
+    8474567
+   ],
+   "assists": [
+    8477416,
+    8477527,
+    8484321,
+    8481540,
+    8482124,
+    8475754,
+    8482146,
+    8479371,
+    8479992,
+    8484304,
+    8483515,
+    8476429,
+    8479368,
+    8481032,
+    8474013,
+    8479542,
+    8478458,
+    8481028,
+    8476891,
+    8482705,
+    8475810,
+    8477903,
+    8476389,
+    8482095,
+    8480074,
+    8482720,
+    8482476,
+    8478046,
+    8481607,
+    8479987,
+    8483431,
+    8479359,
+    8477479,
+    8476448,
+    8478569,
+    8478498,
+    8477987,
+    8480064,
+    8475235,
+    8479323,
+    8476874
+   ],
+   "points": [
+    8479337,
+    8478042,
+    8478498,
+    8478864,
+    8477429,
+    8482671,
+    8482122,
+    8484801,
+    8480326,
+    8480036,
+    8483431,
+    8481789,
+    8483457,
+    8476931,
+    8476393,
+    8477488,
+    8482713,
+    8475179,
+    8480727,
+    8473419,
+    8479980,
+    8475171,
+    8476441,
+    8480835,
+    8480014,
+    8481641,
+    8477451,
+    8478407,
+    8481068,
+    8481477,
+    8480865,
+    8482511,
+    8476869,
+    8476967,
+    8480748,
+    8474568,
+    8478493,
+    8477500,
+    8479353,
+    8479977,
+    8481598
+   ],
+   "pim": [
+    8480800,
+    8477015,
+    8478468,
+    8484911,
+    8477406,
+    8482055,
+    8482803,
+    8481553,
+    8481711,
+    8476480,
+    8473419,
+    8476467,
+    8481593,
+    8478840,
+    8481580,
+    8477845,
+    8482245,
+    8478454,
+    8476931,
+    8476483,
+    8481056,
+    8480839,
+    8479576,
+    8478233,
+    8478502,
+    8476873,
+    8477447,
+    8475798,
+    8481523,
+    8481568,
+    8478831,
+    8482126,
+    8482159,
+    8475810,
+    8480893,
+    8471724,
+    8483565,
+    8476474,
+    8471675,
+    8484227,
+    8479351
+   ],
+   "gp": [
+    8476372,
+    8478472,
+    8478046,
+    8479520,
+    8480855,
+    8484321,
+    8481580,
+    8482720,
+    8481024,
+    8484153,
+    8476854,
+    8478458,
+    8481606,
+    8476869,
+    8481617,
+    8480014,
+    8479323,
+    8477960,
+    8481605,
+    8480068,
+    8484144,
+    8475790,
+    8478438,
+    8477940,
+    8479542,
+    8480995,
+    8479980,
+    8476278,
+    8477369,
+    8476453,
+    8482713,
+    8474716,
+    8480879,
+    8481596,
+    8475279,
+    8480003,
+    8481533,
+    8476539,
+    8474600,
+    8482705,
+    8480797
+   ],
+   "height": [
+    8479982,
+    8476292,
+    8481726,
+    8474567,
+    8479705,
+    8474141,
+    8479359,
+    8482126,
+    8482745,
+    8480829,
+    8476624,
+    8473422,
+    8480246,
+    8478507,
+    8471214,
+    8482702,
+    8484911,
+    8481028,
+    8481598,
+    8477220,
+    8479987,
+    8480817,
+    8481641,
+    8477416,
+    8480855,
+    8481553,
+    8476927,
+    8480281,
+    8475752,
+    8476958,
+    8475726,
+    8476483,
+    8482110,
+    8477946,
+    8480835,
+    8478975,
+    8481607,
+    8481563,
+    8476432,
+    8477950,
+    8478970
+   ],
+   "weight": [
+    8479371,
+    8481161,
+    8477940,
+    8481559,
+    8482122,
+    8477426,
+    8480068,
+    8482148,
+    8476372,
+    8480990,
+    8478010,
+    8482073,
+    8476429,
+    8479705,
+    8478397,
+    8476454,
+    8475287,
+    8479983,
+    8480980,
+    8475168,
+    8481605,
+    8480839,
+    8480796,
+    8481568,
+    8477998,
+    8481024,
+    8478178,
+    8480860,
+    8479390,
+    8477429,
+    8481711,
+    8480188,
+    8477495,
+    8478416,
+    8480021,
+    8478851,
+    8476902,
+    8479671,
+    8476880,
+    8482665,
+    8482176
+   ],
+   "age": [
+    8476389,
+    8482476,
+    8479385,
+    8477416,
+    8479371,
+    8478136,
+    8476331,
+    8482097,
+    8479345,
+    8477938,
+    8482176,
+    8470621,
+    8480434,
+    8471214,
+    8481553,
+    8477426,
+    8477507,
+    8476826,
+    8480064,
+    8482737,
+    8481581,
+    8477956,
+    8482259,
+    8478975,
+    8480891,
+    8476624,
+    8475794,
+    8475158,
+    8482073,
+    8477500,
+    8482157,
+    8479661,
+    8481006,
+    8475842,
+    8477501,
+    8480074,
+    8477409,
+    8475768,
+    8477960,
+    8484136,
+    8480797
    ]
   }
  },
@@ -229778,7 +232463,7 @@
     "Corey Perry",
     "R",
     "CAN",
-    1468,
+    1469,
     false,
     2005,
     2026,
@@ -229788,7 +232473,7 @@
      "CHI": 16,
      "DAL": 57,
      "ANA": 988,
-     "LAK": 54,
+     "LAK": 55,
      "EDM": 119
     },
     1985
@@ -231655,12 +234340,12 @@
     "Alex Ovechkin",
     "L",
     "RUS",
-    1580,
+    1581,
     false,
     2005,
     2026,
     {
-     "WSH": 1580
+     "WSH": 1581
     },
     1985
    ],
@@ -231669,12 +234354,12 @@
     "Evgeni Malkin",
     "C",
     "RUS",
-    1277,
+    1278,
     false,
     2006,
     2026,
     {
-     "PIT": 1277
+     "PIT": 1278
     },
     1986
    ],
@@ -233790,12 +236475,12 @@
     "Sidney Crosby",
     "C",
     "CAN",
-    1428,
+    1429,
     false,
     2005,
     2026,
     {
-     "PIT": 1428
+     "PIT": 1429
     },
     1987
    ],
@@ -234431,12 +237116,12 @@
     "Kris Letang",
     "D",
     "CAN",
-    1243,
+    1244,
     false,
     2006,
     2026,
     {
-     "PIT": 1243
+     "PIT": 1244
     },
     1987
    ],
@@ -236490,13 +239175,13 @@
     "Claude Giroux",
     "R",
     "CAN",
-    1353,
+    1354,
     false,
     2007,
     2026,
     {
      "FLA": 18,
-     "OTT": 335,
+     "OTT": 336,
      "PHI": 1000
     },
     1988
@@ -237905,12 +240590,12 @@
     "Jamie Benn",
     "L",
     "CAN",
-    1259,
+    1260,
     false,
     2009,
     2026,
     {
-     "DAL": 1259
+     "DAL": 1260
     },
     1989
    ],
@@ -238063,7 +240748,7 @@
     "Ian Cole",
     "D",
     "USA",
-    998,
+    999,
     false,
     2010,
     2026,
@@ -238077,7 +240762,7 @@
      "UTA": 164,
      "STL": 167,
      "VAN": 78,
-     "CHI": 8
+     "CHI": 9
     },
     1989
    ],
@@ -238941,14 +241626,14 @@
     "Patrick Kane",
     "R",
     "USA",
-    1377,
+    1378,
     false,
     2007,
     2026,
     {
      "DET": 189,
      "NYR": 19,
-     "CHI": 1169
+     "CHI": 1170
     },
     1988
    ],
@@ -239035,12 +241720,12 @@
     "Ryan McDonagh",
     "D",
     "USA",
-    1065,
+    1066,
     false,
     2010,
     2026,
     {
-     "TBL": 404,
+     "TBL": 405,
      "NYR": 516,
      "NSH": 145
     },
@@ -239249,7 +241934,7 @@
     "Lars Eller",
     "C",
     "DNK",
-    1192,
+    1193,
     false,
     2009,
     2026,
@@ -239260,7 +241945,7 @@
      "PIT": 99,
      "COL": 24,
      "STL": 7,
-     "FLA": 8
+     "FLA": 9
     },
     1989
    ],
@@ -239777,12 +242462,12 @@
     "Drew Doughty",
     "D",
     "CAN",
-    1284,
+    1285,
     false,
     2008,
     2026,
     {
-     "LAK": 1284
+     "LAK": 1285
     },
     1989
    ],
@@ -239791,13 +242476,13 @@
     "Steven Stamkos",
     "C",
     "CAN",
-    1253,
+    1254,
     false,
     2008,
     2026,
     {
      "TBL": 1082,
-     "NSH": 171
+     "NSH": 172
     },
     1990
    ],
@@ -239937,13 +242622,13 @@
     "Tyler Myers",
     "D",
     "USA",
-    1146,
+    1147,
     false,
     2009,
     2026,
     {
      "BUF": 365,
-     "DAL": 23,
+     "DAL": 24,
      "WPG": 270,
      "VAN": 488
     },
@@ -240000,13 +242685,13 @@
     "Erik Karlsson",
     "D",
     "SWE",
-    1167,
+    1168,
     false,
     2009,
     2026,
     {
      "OTT": 627,
-     "PIT": 247,
+     "PIT": 248,
      "SJS": 293
     },
     1990
@@ -240100,13 +242785,13 @@
     "Jordan Eberle",
     "R",
     "CAN",
-    1148,
+    1149,
     false,
     2010,
     2026,
     {
      "NYI": 272,
-     "SEA": 369,
+     "SEA": 370,
      "EDM": 507
     },
     1990
@@ -240162,14 +242847,14 @@
     "John Carlson",
     "D",
     "USA",
-    1166,
+    1167,
     false,
     2009,
     2026,
     {
      "WSH": 1143,
      "ANA": 16,
-     "TBL": 7
+     "TBL": 8
     },
     1990
    ],
@@ -240206,12 +242891,12 @@
     "Jacob Markstrom",
     "G",
     "SWE",
-    583,
+    584,
     false,
     2010,
     2026,
     {
-     "FLA": 48,
+     "FLA": 49,
      "NJD": 93,
      "CGY": 213,
      "VAN": 229
@@ -240237,13 +242922,13 @@
     "Jake Allen",
     "G",
     "CAN",
-    501,
+    502,
     false,
     2012,
     2026,
     {
      "MTL": 127,
-     "NJD": 85,
+     "NJD": 86,
      "STL": 289
     },
     1990
@@ -240284,12 +242969,12 @@
     "Roman Josi",
     "D",
     "CHE",
-    1037,
+    1038,
     false,
     2011,
     2026,
     {
-     "NSH": 1037
+     "NSH": 1038
     },
     1990
    ],
@@ -241958,13 +244643,13 @@
     "Kyle Palmieri",
     "C",
     "USA",
-    932,
+    933,
     false,
     2010,
     2026,
     {
      "NJD": 397,
-     "NYI": 337,
+     "NYI": 338,
      "ANA": 198
     },
     1991
@@ -242049,7 +244734,7 @@
     "Ryan O'Reilly",
     "C",
     "CAN",
-    1240,
+    1241,
     false,
     2009,
     2026,
@@ -242057,7 +244742,7 @@
      "BUF": 224,
      "TOR": 13,
      "COL": 427,
-     "NSH": 249,
+     "NSH": 250,
      "STL": 327
     },
     1991
@@ -242189,12 +244874,12 @@
     "Victor Hedman",
     "D",
     "SWE",
-    1171,
+    1172,
     false,
     2009,
     2026,
     {
-     "TBL": 1171
+     "TBL": 1172
     },
     1990
    ],
@@ -242239,12 +244924,12 @@
     "Brayden Schenn",
     "C",
     "CAN",
-    1109,
+    1110,
     false,
     2009,
     2026,
     {
-     "NYI": 26,
+     "NYI": 27,
      "PHI": 424,
      "STL": 650,
      "LAK": 9
@@ -242256,13 +244941,13 @@
     "Oliver Ekman-Larsson",
     "D",
     "SWE",
-    1145,
+    1146,
     false,
     2021,
     2026,
     {
      "FLA": 80,
-     "TOR": 163,
+     "TOR": 164,
      "VAN": 133
     },
     1991
@@ -242382,12 +245067,12 @@
     "Dmitry Kulikov",
     "D",
     "RUS",
-    1045,
+    1046,
     false,
     2009,
     2026,
     {
-     "FLA": 633,
+     "FLA": 634,
      "BUF": 47,
      "NJD": 38,
      "PIT": 6,
@@ -242466,14 +245151,14 @@
     "Chris Kreider",
     "L",
     "USA",
-    965,
+    966,
     false,
     2012,
     2026,
     {
      "NYR": 883,
      "ANA": 75,
-     "MTL": 7
+     "MTL": 8
     },
     1991
    ],
@@ -242514,14 +245199,14 @@
     "Brayden McNabb",
     "D",
     "CAN",
-    894,
+    895,
     false,
     2011,
     2026,
     {
      "BUF": 37,
      "LAK": 201,
-     "VGK": 656
+     "VGK": 657
     },
     1991
    ],
@@ -242693,7 +245378,7 @@
     "Dmitry Orlov",
     "D",
     "RUS",
-    956,
+    957,
     false,
     2011,
     2026,
@@ -242701,7 +245386,7 @@
      "BOS": 23,
      "CAR": 158,
      "WSH": 686,
-     "SJS": 89
+     "SJS": 90
     },
     1991
    ],
@@ -242758,7 +245443,7 @@
     "Brian Dumoulin",
     "D",
     "USA",
-    793,
+    794,
     false,
     2013,
     2026,
@@ -242767,7 +245452,7 @@
      "PIT": 546,
      "ANA": 61,
      "SEA": 80,
-     "LAK": 87
+     "LAK": 88
     },
     1991
    ],
@@ -242859,13 +245544,13 @@
     "Mattias Ekholm",
     "D",
     "SWE",
-    973,
+    974,
     false,
     2011,
     2026,
     {
      "NSH": 719,
-     "EDM": 254
+     "EDM": 255
     },
     1990
    ],
@@ -242986,12 +245671,12 @@
     "Casey Cizikas",
     "C",
     "CAN",
-    985,
+    986,
     false,
     2011,
     2026,
     {
-     "NYI": 985
+     "NYI": 986
     },
     1991
    ],
@@ -243160,13 +245845,13 @@
     "Garrett Wilson",
     "L",
     "CAN",
-    88,
+    89,
     false,
     2013,
     2026,
     {
      "FLA": 34,
-     "PHI": 4,
+     "PHI": 5,
      "PIT": 50
     },
     1991
@@ -243344,14 +246029,14 @@
     "Ben Chiarot",
     "D",
     "CAN",
-    812,
+    813,
     false,
     2013,
     2026,
     {
      "FLA": 20,
      "MTL": 164,
-     "DET": 323,
+     "DET": 324,
      "WPG": 305
     },
     1991
@@ -243377,7 +246062,7 @@
     "Erik Haula",
     "L",
     "FIN",
-    845,
+    846,
     false,
     2013,
     2026,
@@ -243389,7 +246074,7 @@
      "MIN": 266,
      "NSH": 132,
      "VGK": 91,
-     "LAK": 5
+     "LAK": 6
     },
     1991
    ],
@@ -243556,13 +246241,13 @@
     "Anders Lee",
     "L",
     "USA",
-    931,
+    932,
     false,
     2012,
     2026,
     {
      "NYI": 923,
-     "UTA": 8
+     "UTA": 9
     },
     1990
    ],
@@ -243676,14 +246361,14 @@
     "Nic Dowd",
     "C",
     "USA",
-    666,
+    667,
     false,
     2015,
     2026,
     {
      "WSH": 506,
      "LAK": 91,
-     "VGK": 29,
+     "VGK": 30,
      "VAN": 40
     },
     1990
@@ -243752,13 +246437,13 @@
     "Justin Dowling",
     "C",
     "CAN",
-    155,
+    156,
     false,
     2016,
     2026,
     {
      "NJD": 54,
-     "NYR": 3,
+     "NYR": 4,
      "DAL": 76,
      "VAN": 22
     },
@@ -244256,7 +246941,7 @@
     "Sergei Bobrovsky",
     "G",
     "RUS",
-    811,
+    812,
     false,
     2010,
     2026,
@@ -244264,7 +246949,7 @@
      "FLA": 349,
      "CBJ": 374,
      "PHI": 83,
-     "TOR": 5
+     "TOR": 6
     },
     1988
    ],
@@ -244374,7 +247059,7 @@
     "Justin Holl",
     "D",
     "USA",
-    407,
+    408,
     false,
     2017,
     2026,
@@ -244382,7 +247067,7 @@
      "DET": 111,
      "TOR": 285,
      "STL": 9,
-     "WSH": 2
+     "WSH": 3
     },
     1992
    ],
@@ -244436,7 +247121,7 @@
     "Tyler Toffoli",
     "C",
     "CAN",
-    976,
+    977,
     false,
     2012,
     2026,
@@ -244446,7 +247131,7 @@
      "WPG": 18,
      "CGY": 119,
      "LAK": 515,
-     "SJS": 164,
+     "SJS": 165,
      "VAN": 10
     },
     1992
@@ -244642,13 +247327,13 @@
     "Charlie Coyle",
     "C",
     "USA",
-    1037,
+    1038,
     false,
     2012,
     2026,
     {
      "BOS": 452,
-     "CBJ": 87,
+     "CBJ": 88,
      "COL": 19,
      "MIN": 479
     },
@@ -244744,12 +247429,12 @@
     "Justin Faulk",
     "D",
     "USA",
-    1065,
+    1066,
     false,
     2011,
     2026,
     {
-     "DET": 24,
+     "DET": 25,
      "CAR": 559,
      "STL": 482
     },
@@ -244922,12 +247607,12 @@
     "Cam Fowler",
     "D",
     "CAN",
-    1131,
+    1132,
     false,
     2010,
     2026,
     {
-     "STL": 140,
+     "STL": 141,
      "ANA": 991
     },
     1991
@@ -245146,13 +247831,13 @@
     "Zach Hyman",
     "L",
     "CAN",
-    712,
+    713,
     false,
     2015,
     2026,
     {
      "TOR": 345,
-     "EDM": 367
+     "EDM": 368
     },
     1992
    ],
@@ -245193,14 +247878,14 @@
     "Erik Gudbranson",
     "D",
     "CAN",
-    847,
+    848,
     false,
     2011,
     2026,
     {
      "FLA": 309,
      "OTT": 36,
-     "CBJ": 206,
+     "CBJ": 207,
      "PIT": 26,
      "NSH": 9,
      "ANA": 44,
@@ -245267,13 +247952,13 @@
     "Tyler Seguin",
     "C",
     "CAN",
-    1023,
+    1024,
     false,
     2010,
     2026,
     {
      "BOS": 203,
-     "DAL": 820
+     "DAL": 821
     },
     1992
    ],
@@ -245352,7 +248037,7 @@
     "Nino Niederreiter",
     "R",
     "CHE",
-    1034,
+    1035,
     false,
     2010,
     2026,
@@ -245360,7 +248045,7 @@
      "CAR": 234,
      "NYI": 64,
      "MIN": 434,
-     "WPG": 246,
+     "WPG": 247,
      "NSH": 56
     },
     1992
@@ -245435,12 +248120,12 @@
     "Bryan Rust",
     "R",
     "USA",
-    715,
+    716,
     false,
     2014,
     2026,
     {
-     "PIT": 715
+     "PIT": 716
     },
     1992
    ],
@@ -245710,13 +248395,13 @@
     "Brendan Gallagher",
     "R",
     "CAN",
-    919,
+    920,
     false,
     2012,
     2026,
     {
      "MTL": 911,
-     "VAN": 8
+     "VAN": 9
     },
     1992
    ],
@@ -245951,13 +248636,13 @@
     "Mark Stone",
     "R",
     "CAN",
-    775,
+    776,
     false,
     2012,
     2026,
     {
      "OTT": 366,
-     "VGK": 409
+     "VGK": 410
     },
     1992
    ],
@@ -246526,7 +249211,7 @@
     "Colin Blackwell",
     "C",
     "USA",
-    373,
+    374,
     false,
     2018,
     2026,
@@ -246534,7 +249219,7 @@
      "TOR": 19,
      "NYR": 47,
      "CHI": 97,
-     "DAL": 138,
+     "DAL": 139,
      "NSH": 33,
      "SEA": 39
     },
@@ -246624,14 +249309,14 @@
     "Ondrej Palat",
     "L",
     "CZE",
-    912,
+    913,
     false,
     2012,
     2026,
     {
      "TBL": 628,
      "NJD": 248,
-     "NYI": 36
+     "NYI": 37
     },
     1991
    ],
@@ -246869,13 +249554,13 @@
     "Dylan DeMelo",
     "D",
     "CAN",
-    725,
+    726,
     false,
     2015,
     2026,
     {
      "OTT": 126,
-     "WPG": 466,
+     "WPG": 467,
      "SJS": 133
     },
     1993
@@ -246913,7 +249598,7 @@
     "Anton Forsberg",
     "G",
     "SWE",
-    228,
+    229,
     false,
     2014,
     2026,
@@ -246922,7 +249607,7 @@
      "CAR": 3,
      "CBJ": 10,
      "CHI": 35,
-     "LAK": 38
+     "LAK": 39
     },
     1992
    ],
@@ -247083,12 +249768,12 @@
     "Nick Seeler",
     "D",
     "USA",
-    462,
+    463,
     false,
     2017,
     2026,
     {
-     "PHI": 357,
+     "PHI": 358,
      "CHI": 6,
      "MIN": 99
     },
@@ -247099,12 +249784,12 @@
     "Sean Kuraly",
     "C",
     "USA",
-    647,
+    648,
     false,
     2016,
     2026,
     {
-     "BOS": 355,
+     "BOS": 356,
      "CBJ": 292
     },
     1993
@@ -247186,7 +249871,7 @@
     "Vincent Trocheck",
     "C",
     "USA",
-    876,
+    877,
     false,
     2013,
     2026,
@@ -247194,7 +249879,7 @@
      "FLA": 420,
      "CAR": 135,
      "NYR": 313,
-     "UTA": 8
+     "UTA": 9
     },
     1993
    ],
@@ -247235,12 +249920,12 @@
     "Adam Lowry",
     "C",
     "USA",
-    852,
+    853,
     false,
     2014,
     2026,
     {
-     "WPG": 852
+     "WPG": 853
     },
     1993
    ],
@@ -247249,14 +249934,14 @@
     "Nick Cousins",
     "C",
     "CAN",
-    731,
+    732,
     false,
     2014,
     2026,
     {
      "FLA": 148,
      "MTL": 58,
-     "OTT": 139,
+     "OTT": 140,
      "PHI": 107,
      "NSH": 120,
      "VGK": 7
@@ -247475,12 +250160,12 @@
     "Jordan Binnington",
     "G",
     "CAN",
-    379,
+    380,
     false,
     2015,
     2026,
     {
-     "STL": 379
+     "STL": 380
     },
     1993
    ],
@@ -247546,13 +250231,13 @@
     "Jean-Gabriel Pageau",
     "C",
     "CAN",
-    878,
+    879,
     false,
     2012,
     2026,
     {
      "OTT": 428,
-     "NYI": 450
+     "NYI": 451
     },
     1992
    ],
@@ -247561,7 +250246,7 @@
     "Mike Reilly",
     "D",
     "USA",
-    466,
+    467,
     false,
     2015,
     2026,
@@ -247570,7 +250255,7 @@
      "MTL": 90,
      "BOS": 95,
      "OTT": 70,
-     "CAR": 48,
+     "CAR": 49,
      "NYI": 77,
      "MIN": 84
     },
@@ -247708,13 +250393,13 @@
     "Boone Jenner",
     "C",
     "CAN",
-    815,
+    816,
     false,
     2013,
     2026,
     {
      "CBJ": 808,
-     "WSH": 7
+     "WSH": 8
     },
     1993
    ],
@@ -247741,12 +250426,12 @@
     "John Gibson",
     "G",
     "USA",
-    568,
+    569,
     false,
     2013,
     2026,
     {
-     "DET": 62,
+     "DET": 63,
      "ANA": 506
     },
     1993
@@ -247851,7 +250536,7 @@
     "Joel Edmundson",
     "D",
     "CAN",
-    690,
+    691,
     false,
     2015,
     2026,
@@ -247861,7 +250546,7 @@
      "TOR": 9,
      "WSH": 44,
      "STL": 269,
-     "LAK": 160
+     "LAK": 161
     },
     1993
    ],
@@ -247944,14 +250629,14 @@
     "William Karlsson",
     "C",
     "SWE",
-    761,
+    762,
     false,
     2014,
     2026,
     {
      "CBJ": 165,
      "ANA": 18,
-     "VGK": 578
+     "VGK": 579
     },
     1993
    ],
@@ -248021,12 +250706,12 @@
     "Nikita Kucherov",
     "R",
     "RUS",
-    886,
+    887,
     false,
     2013,
     2026,
     {
-     "TBL": 886
+     "TBL": 887
     },
     1993
    ],
@@ -248078,13 +250763,13 @@
     "Adam Larsson",
     "D",
     "SWE",
-    1020,
+    1021,
     false,
     2011,
     2026,
     {
      "NJD": 274,
-     "SEA": 417,
+     "SEA": 418,
      "EDM": 329
     },
     1992
@@ -248112,13 +250797,13 @@
     "Mika Zibanejad",
     "C",
     "SWE",
-    1020,
+    1021,
     false,
     2011,
     2026,
     {
      "OTT": 281,
-     "NYR": 739
+     "NYR": 740
     },
     1993
    ],
@@ -248127,12 +250812,12 @@
     "Mark Scheifele",
     "C",
     "CAN",
-    968,
+    969,
     false,
     2011,
     2026,
     {
-     "WPG": 968
+     "WPG": 969
     },
     1993
    ],
@@ -248141,12 +250826,12 @@
     "Sean Couturier",
     "C",
     "USA",
-    961,
+    962,
     false,
     2011,
     2026,
     {
-     "PHI": 961
+     "PHI": 962
     },
     1992
    ],
@@ -248155,14 +250840,14 @@
     "Dougie Hamilton",
     "D",
     "CAN",
-    919,
+    920,
     false,
     2012,
     2026,
     {
      "BOS": 178,
      "CAR": 184,
-     "NJD": 312,
+     "NJD": 313,
      "CGY": 245
     },
     1993
@@ -248232,7 +250917,7 @@
     "Jamie Oleksiak",
     "D",
     "CAN",
-    766,
+    767,
     false,
     2012,
     2026,
@@ -248240,7 +250925,7 @@
      "PIT": 83,
      "DAL": 286,
      "SEA": 389,
-     "VAN": 8
+     "VAN": 9
     },
     1992
    ],
@@ -248249,13 +250934,13 @@
     "J.T. Miller",
     "C",
     "USA",
-    948,
+    949,
     false,
     2012,
     2026,
     {
      "TBL": 94,
-     "NYR": 450,
+     "NYR": 451,
      "VAN": 404
     },
     1993
@@ -248265,7 +250950,7 @@
     "Joel Armia",
     "R",
     "FIN",
-    658,
+    659,
     false,
     2014,
     2026,
@@ -248273,7 +250958,7 @@
      "BUF": 1,
      "MTL": 406,
      "WPG": 179,
-     "LAK": 72
+     "LAK": 73
     },
     1993
    ],
@@ -248328,13 +251013,13 @@
     "Connor Murphy",
     "D",
     "USA",
-    832,
+    833,
     false,
     2017,
     2026,
     {
      "CHI": 547,
-     "EDM": 27
+     "EDM": 28
     },
     1993
    ],
@@ -248343,14 +251028,14 @@
     "Stefan Noesen",
     "R",
     "USA",
-    486,
+    487,
     false,
     2014,
     2026,
     {
      "CAR": 161,
      "TOR": 1,
-     "NJD": 265,
+     "NJD": 266,
      "PIT": 6,
      "ANA": 14,
      "SJS": 39
@@ -248408,12 +251093,12 @@
     "Phillip Danault",
     "C",
     "CAN",
-    793,
+    794,
     false,
     2014,
     2026,
     {
-     "MTL": 412,
+     "MTL": 413,
      "CHI": 32,
      "LAK": 349
     },
@@ -248459,12 +251144,12 @@
     "Rickard Rakell",
     "R",
     "SWE",
-    870,
+    871,
     false,
     2012,
     2026,
     {
-     "PIT": 320,
+     "PIT": 321,
      "ANA": 550
     },
     1993
@@ -248598,7 +251283,7 @@
     "Jonathan Marchessault",
     "R",
     "CAN",
-    785,
+    786,
     false,
     2012,
     2026,
@@ -248606,7 +251291,7 @@
      "FLA": 75,
      "TBL": 47,
      "CBJ": 2,
-     "NSH": 147,
+     "NSH": 148,
      "VGK": 514
     },
     1990
@@ -248675,14 +251360,14 @@
     "Barclay Goodrow",
     "C",
     "CAN",
-    738,
+    739,
     false,
     2014,
     2026,
     {
      "TBL": 63,
      "NYR": 241,
-     "SJS": 434
+     "SJS": 435
     },
     1993
    ],
@@ -249106,12 +251791,12 @@
     "Morgan Rielly",
     "D",
     "CAN",
-    959,
+    960,
     false,
     2013,
     2026,
     {
-     "TOR": 959
+     "TOR": 960
     },
     1994
    ],
@@ -249120,12 +251805,12 @@
     "Hampus Lindholm",
     "D",
     "SWE",
-    837,
+    838,
     false,
     2013,
     2026,
     {
-     "BOS": 255,
+     "BOS": 256,
      "ANA": 582
     },
     1994
@@ -249248,14 +251933,14 @@
     "Brady Skjei",
     "D",
     "USA",
-    780,
+    781,
     false,
     2015,
     2026,
     {
      "CAR": 302,
      "NYR": 307,
-     "NSH": 171
+     "NSH": 172
     },
     1994
    ],
@@ -249302,14 +251987,14 @@
     "Scott Laughton",
     "C",
     "CAN",
-    750,
+    751,
     false,
     2012,
     2026,
     {
      "TOR": 63,
      "PHI": 661,
-     "LAK": 26
+     "LAK": 27
     },
     1994
    ],
@@ -249318,13 +252003,13 @@
     "Mark Jankowski",
     "L",
     "CAN",
-    490,
+    491,
     false,
     2016,
     2026,
     {
      "BUF": 19,
-     "CAR": 95,
+     "CAR": 96,
      "PIT": 45,
      "NSH": 123,
      "CGY": 208
@@ -249404,13 +252089,13 @@
     "Zemgus Girgensons",
     "C",
     "LVA",
-    851,
+    852,
     false,
     2013,
     2026,
     {
      "BUF": 688,
-     "TBL": 163
+     "TBL": 164
     },
     1994
    ],
@@ -249419,7 +252104,7 @@
     "Cody Ceci",
     "D",
     "CAN",
-    958,
+    959,
     false,
     2013,
     2026,
@@ -249428,7 +252113,7 @@
      "TOR": 56,
      "PIT": 53,
      "DAL": 31,
-     "LAK": 87,
+     "LAK": 88,
      "EDM": 237,
      "SJS": 54
     },
@@ -249439,12 +252124,12 @@
     "Tom Wilson",
     "R",
     "CAN",
-    914,
+    915,
     false,
     2013,
     2026,
     {
-     "WSH": 914
+     "WSH": 915
     },
     1994
    ],
@@ -249453,13 +252138,13 @@
     "Tomas Hertl",
     "C",
     "CZE",
-    882,
+    883,
     false,
     2013,
     2026,
     {
      "SJS": 712,
-     "VGK": 170
+     "VGK": 171
     },
     1993
    ],
@@ -249468,13 +252153,13 @@
     "Teuvo Teravainen",
     "C",
     "FIN",
-    833,
+    834,
     false,
     2013,
     2026,
     {
      "CAR": 555,
-     "CHI": 278
+     "CHI": 279
     },
     1994
    ],
@@ -249517,7 +252202,7 @@
     "Jacob Trouba",
     "D",
     "USA",
-    913,
+    914,
     false,
     2013,
     2026,
@@ -249525,7 +252210,7 @@
      "NYR": 364,
      "WPG": 408,
      "ANA": 134,
-     "SJS": 7
+     "SJS": 8
     },
     1994
    ],
@@ -249550,12 +252235,12 @@
     "Filip Forsberg",
     "L",
     "SWE",
-    869,
+    870,
     false,
     2012,
     2026,
     {
-     "NSH": 869
+     "NSH": 870
     },
     1994
    ],
@@ -249580,12 +252265,12 @@
     "Radek Faksa",
     "C",
     "CZE",
-    773,
+    774,
     false,
     2015,
     2026,
     {
-     "DAL": 703,
+     "DAL": 704,
      "STL": 70
     },
     1994
@@ -249627,12 +252312,12 @@
     "Colton Parayko",
     "D",
     "CAN",
-    807,
+    808,
     false,
     2015,
     2026,
     {
-     "STL": 807
+     "STL": 808
     },
     1993
    ],
@@ -249693,12 +252378,12 @@
     "Esa Lindell",
     "D",
     "FIN",
-    773,
+    774,
     false,
     2015,
     2026,
     {
-     "DAL": 773
+     "DAL": 774
     },
     1994
    ],
@@ -249740,13 +252425,13 @@
     "Chandler Stephenson",
     "C",
     "CAN",
-    661,
+    662,
     false,
     2015,
     2026,
     {
      "WSH": 168,
-     "SEA": 166,
+     "SEA": 167,
      "VGK": 327
     },
     1994
@@ -249756,13 +252441,13 @@
     "Shayne Gostisbehere",
     "D",
     "USA",
-    752,
+    753,
     false,
     2014,
     2026,
     {
      "DET": 81,
-     "CAR": 156,
+     "CAR": 157,
      "PHI": 381
     },
     1993
@@ -249867,12 +252552,12 @@
     "Adam Pelech",
     "D",
     "CAN",
-    649,
+    650,
     false,
     2015,
     2026,
     {
-     "NYI": 649
+     "NYI": 650
     },
     1994
    ],
@@ -249918,12 +252603,12 @@
     "Jordan Martinook",
     "L",
     "CAN",
-    805,
+    806,
     false,
     2018,
     2026,
     {
-     "CAR": 558
+     "CAR": 559
     },
     1992
    ],
@@ -249946,12 +252631,12 @@
     "Damon Severson",
     "D",
     "CAN",
-    858,
+    859,
     false,
     2014,
     2026,
     {
-     "CBJ": 211,
+     "CBJ": 212,
      "NJD": 647
     },
     1994
@@ -249977,14 +252662,14 @@
     "Colton Sissons",
     "C",
     "CAN",
-    764,
+    765,
     false,
     2013,
     2026,
     {
      "NSH": 690,
      "VGK": 66,
-     "TOR": 8
+     "TOR": 9
     },
     1993
    ],
@@ -249993,7 +252678,7 @@
     "Teddy Blueger",
     "C",
     "LVA",
-    461,
+    462,
     false,
     2018,
     2026,
@@ -250001,7 +252686,7 @@
      "PIT": 250,
      "VGK": 18,
      "VAN": 185,
-     "TOR": 8
+     "TOR": 9
     },
     1994
    ],
@@ -250010,13 +252695,13 @@
     "Jake McCabe",
     "D",
     "USA",
-    731,
+    732,
     false,
     2013,
     2026,
     {
      "BUF": 353,
-     "TOR": 248,
+     "TOR": 249,
      "CHI": 130
     },
     1993
@@ -250181,12 +252866,12 @@
     "Jaccob Slavin",
     "D",
     "USA",
-    792,
+    793,
     false,
     2015,
     2026,
     {
-     "CAR": 792
+     "CAR": 793
     },
     1994
    ],
@@ -250292,7 +252977,7 @@
     "Erik Gustafsson",
     "D",
     "SWE",
-    520,
+    521,
     false,
     2015,
     2026,
@@ -250305,7 +252990,7 @@
      "WSH": 61,
      "CHI": 273,
      "CGY": 7,
-     "LAK": 3
+     "LAK": 4
     },
     1992
    ],
@@ -250314,12 +252999,12 @@
     "Josh Anderson",
     "R",
     "CAN",
-    695,
+    696,
     false,
     2014,
     2026,
     {
-     "MTL": 428,
+     "MTL": 429,
      "CBJ": 267
     },
     1994
@@ -250439,14 +253124,14 @@
     "Linus Ullmark",
     "G",
     "SWE",
-    346,
+    347,
     false,
     2015,
     2026,
     {
      "BUF": 117,
      "BOS": 130,
-     "OTT": 99
+     "OTT": 100
     },
     1993
    ],
@@ -250552,7 +253237,7 @@
     "Alexander Kerfoot",
     "C",
     "CAN",
-    646,
+    647,
     false,
     2017,
     2026,
@@ -250560,7 +253245,7 @@
      "TOR": 285,
      "COL": 157,
      "UTA": 115,
-     "NSH": 7
+     "NSH": 8
     },
     1994
    ],
@@ -250983,14 +253668,14 @@
     "Nate Schmidt",
     "D",
     "USA",
-    831,
+    832,
     false,
     2013,
     2026,
     {
      "FLA": 80,
      "WSH": 200,
-     "UTA": 90,
+     "UTA": 91,
      "WPG": 211,
      "VGK": 196,
      "VAN": 54
@@ -251334,13 +254019,13 @@
     "MacKenzie Weegar",
     "D",
     "CAN",
-    637,
+    638,
     false,
     2016,
     2026,
     {
      "FLA": 306,
-     "UTA": 27,
+     "UTA": 28,
      "CGY": 304
     },
     1994
@@ -251494,14 +254179,15 @@
     "Jonny Brodzinski",
     "C",
     "USA",
-    264,
+    265,
     false,
     2016,
-    2025,
+    2026,
     {
      "NYR": 207,
      "LAK": 54,
-     "SJS": 3
+     "SJS": 3,
+     "WSH": 1
     },
     1993
    ],
@@ -251588,13 +254274,13 @@
     "Pavel Buchnevich",
     "L",
     "RUS",
-    680,
+    681,
     false,
     2016,
     2026,
     {
      "NYR": 301,
-     "STL": 379
+     "STL": 380
     },
     1995
    ],
@@ -251603,12 +254289,12 @@
     "Jake Guentzel",
     "C",
     "USA",
-    688,
+    689,
     false,
     2016,
     2026,
     {
-     "TBL": 168,
+     "TBL": 169,
      "CAR": 17,
      "PIT": 503
     },
@@ -251651,7 +254337,7 @@
     "Anthony Duclair",
     "L",
     "CAN",
-    676,
+    677,
     false,
     2014,
     2026,
@@ -251660,7 +254346,7 @@
      "OTT": 87,
      "TBL": 17,
      "CBJ": 53,
-     "NYI": 113,
+     "NYI": 114,
      "NYR": 18,
      "CHI": 23,
      "SJS": 56
@@ -251672,12 +254358,12 @@
     "Carter Verhaeghe",
     "C",
     "CAN",
-    496,
+    497,
     false,
     2019,
     2026,
     {
-     "FLA": 444,
+     "FLA": 445,
      "TBL": 52
     },
     1995
@@ -251730,7 +254416,7 @@
     "Oliver Bjorkstrand",
     "R",
     "DNK",
-    713,
+    714,
     false,
     2015,
     2026,
@@ -251738,7 +254424,7 @@
      "TBL": 98,
      "CBJ": 382,
      "SEA": 224,
-     "NYR": 9
+     "NYR": 10
     },
     1995
    ],
@@ -251776,12 +254462,12 @@
     "Juuse Saros",
     "G",
     "FIN",
-    473,
+    474,
     false,
     2015,
     2026,
     {
-     "NSH": 473
+     "NSH": 474
     },
     1995
    ],
@@ -251806,14 +254492,14 @@
     "Nick Paul",
     "L",
     "CAN",
-    545,
+    546,
     false,
     2015,
     2026,
     {
      "OTT": 227,
      "TBL": 310,
-     "TOR": 8
+     "TOR": 9
     },
     1995
    ],
@@ -251850,12 +254536,12 @@
     "Andrew Copp",
     "C",
     "USA",
-    786,
+    787,
     false,
     2014,
     2026,
     {
-     "DET": 303,
+     "DET": 304,
      "NYR": 16,
      "WPG": 467
     },
@@ -251898,7 +254584,7 @@
     "Andre Burakovsky",
     "L",
     "AUT",
-    775,
+    776,
     false,
     2014,
     2026,
@@ -251907,7 +254593,7 @@
      "CHI": 75,
      "COL": 191,
      "SEA": 177,
-     "OTT": 4
+     "OTT": 5
     },
     1995
    ],
@@ -251947,13 +254633,13 @@
     "Shea Theodore",
     "D",
     "CAN",
-    643,
+    644,
     false,
     2015,
     2026,
     {
      "ANA": 53,
-     "VGK": 590
+     "VGK": 591
     },
     1995
    ],
@@ -252216,13 +254902,13 @@
     "Tristan Jarry",
     "G",
     "CAN",
-    328,
+    329,
     false,
     2016,
     2026,
     {
      "PIT": 307,
-     "EDM": 21
+     "EDM": 22
     },
     1995
    ],
@@ -252341,13 +255027,13 @@
     "William Carrier",
     "L",
     "CAN",
-    534,
+    535,
     false,
     2016,
     2026,
     {
      "BUF": 41,
-     "CAR": 121,
+     "CAR": 122,
      "VGK": 372
     },
     1994
@@ -252357,7 +255043,7 @@
     "Tyler Bertuzzi",
     "L",
     "CAN",
-    575,
+    576,
     false,
     2016,
     2026,
@@ -252365,7 +255051,7 @@
      "BOS": 21,
      "DET": 305,
      "TOR": 80,
-     "CHI": 169
+     "CHI": 170
     },
     1995
    ],
@@ -252442,13 +255128,13 @@
     "Brett Pesce",
     "D",
     "USA",
-    743,
+    744,
     false,
     2015,
     2026,
     {
      "CAR": 627,
-     "NJD": 116
+     "NJD": 117
     },
     1994
    ],
@@ -252517,12 +255203,12 @@
     "Seth Jones",
     "D",
     "USA",
-    920,
+    921,
     false,
     2013,
     2026,
     {
-     "FLA": 81,
+     "FLA": 82,
      "CBJ": 381,
      "CHI": 259,
      "NSH": 199
@@ -252534,12 +255220,12 @@
     "Elias Lindholm",
     "C",
     "SWE",
-    977,
+    978,
     false,
     2013,
     2026,
     {
-     "BOS": 159,
+     "BOS": 160,
      "CAR": 374,
      "CGY": 418,
      "VAN": 26
@@ -252551,13 +255237,13 @@
     "Sean Monahan",
     "C",
     "CAN",
-    901,
+    902,
     false,
     2013,
     2026,
     {
      "MTL": 74,
-     "CBJ": 137,
+     "CBJ": 138,
      "WPG": 34,
      "CGY": 656
     },
@@ -252568,13 +255254,13 @@
     "Darnell Nurse",
     "D",
     "CAN",
-    804,
+    805,
     false,
     2014,
     2026,
     {
      "EDM": 798,
-     "SJS": 6
+     "SJS": 7
     },
     1995
    ],
@@ -252598,12 +255284,12 @@
     "Bo Horvat",
     "C",
     "CAN",
-    888,
+    889,
     false,
     2014,
     2026,
     {
-     "NYI": 267,
+     "NYI": 268,
      "VAN": 621
     },
     1995
@@ -252613,14 +255299,14 @@
     "Valeri Nichushkin",
     "R",
     "RUS",
-    632,
+    633,
     false,
     2013,
     2026,
     {
      "COL": 404,
      "DAL": 223,
-     "CBJ": 5
+     "CBJ": 6
     },
     1995
    ],
@@ -252676,7 +255362,7 @@
     "Alexander Wennberg",
     "C",
     "SWE",
-    876,
+    877,
     false,
     2014,
     2026,
@@ -252685,7 +255371,7 @@
      "CBJ": 415,
      "NYR": 19,
      "SEA": 222,
-     "SJS": 164
+     "SJS": 165
     },
     1994
    ],
@@ -252694,12 +255380,12 @@
     "Ryan Pulock",
     "D",
     "CAN",
-    643,
+    644,
     false,
     2015,
     2026,
     {
-     "NYI": 643
+     "NYI": 644
     },
     1994
    ],
@@ -252778,7 +255464,7 @@
     "Anthony Mantha",
     "R",
     "CAN",
-    595,
+    596,
     false,
     2015,
     2026,
@@ -252788,7 +255474,7 @@
      "PIT": 81,
      "CGY": 13,
      "VGK": 18,
-     "NJD": 7
+     "NJD": 8
     },
     1994
    ],
@@ -253292,7 +255978,7 @@
     "Garnet Hathaway",
     "R",
     "USA",
-    680,
+    681,
     false,
     2015,
     2026,
@@ -253301,7 +255987,7 @@
      "PHI": 215,
      "WSH": 257,
      "CGY": 175,
-     "FLA": 8
+     "FLA": 9
     },
     1991
    ],
@@ -253353,7 +256039,7 @@
     "Freddy Gaudreau",
     "C",
     "CAN",
-    486,
+    487,
     false,
     2016,
     2026,
@@ -253361,7 +256047,7 @@
      "PIT": 19,
      "MIN": 307,
      "NSH": 84,
-     "SEA": 76
+     "SEA": 77
     },
     1993
    ],
@@ -253449,12 +256135,12 @@
     "Aaron Ekblad",
     "D",
     "CAN",
-    810,
+    811,
     false,
     2014,
     2026,
     {
-     "FLA": 810
+     "FLA": 811
     },
     1996
    ],
@@ -253463,12 +256149,12 @@
     "Sam Reinhart",
     "C",
     "CAN",
-    847,
+    848,
     false,
     2014,
     2026,
     {
-     "FLA": 393,
+     "FLA": 394,
      "BUF": 454
     },
     1995
@@ -253478,12 +256164,12 @@
     "Leon Draisaitl",
     "C",
     "DEU",
-    862,
+    863,
     false,
     2014,
     2026,
     {
-     "EDM": 862
+     "EDM": 863
     },
     1995
    ],
@@ -253492,12 +256178,12 @@
     "Sam Bennett",
     "C",
     "CAN",
-    775,
+    776,
     false,
     2014,
     2026,
     {
-     "FLA": 373,
+     "FLA": 374,
      "CGY": 402
     },
     1996
@@ -253535,14 +256221,14 @@
     "Haydn Fleury",
     "D",
     "CAN",
-    348,
+    349,
     false,
     2017,
     2026,
     {
      "TBL": 53,
      "CAR": 167,
-     "WPG": 80,
+     "WPG": 81,
      "ANA": 12,
      "SEA": 36
     },
@@ -253553,12 +256239,12 @@
     "William Nylander",
     "R",
     "CAN",
-    758,
+    759,
     false,
     2015,
     2026,
     {
-     "TOR": 758
+     "TOR": 759
     },
     1996
    ],
@@ -253567,12 +256253,12 @@
     "Nikolaj Ehlers",
     "L",
     "DNK",
-    764,
+    765,
     false,
     2015,
     2026,
     {
-     "CAR": 90,
+     "CAR": 91,
      "WPG": 674
     },
     1996
@@ -253662,12 +256348,12 @@
     "Dylan Larkin",
     "C",
     "USA",
-    813,
+    814,
     false,
     2015,
     2026,
     {
-     "DET": 813
+     "DET": 814
     },
     1996
    ],
@@ -253692,12 +256378,12 @@
     "Travis Sanheim",
     "D",
     "CAN",
-    669,
+    670,
     false,
     2017,
     2026,
     {
-     "PHI": 669
+     "PHI": 670
     },
     1996
    ],
@@ -253706,7 +256392,7 @@
     "Alex Tuch",
     "R",
     "USA",
-    622,
+    623,
     false,
     2016,
     2026,
@@ -253714,7 +256400,7 @@
      "BUF": 360,
      "MIN": 6,
      "VGK": 249,
-     "WSH": 7
+     "WSH": 8
     },
     1996
    ],
@@ -253723,13 +256409,13 @@
     "Tony DeAngelo",
     "D",
     "USA",
-    489,
+    490,
     false,
     2017,
     2026,
     {
      "CAR": 95,
-     "NYI": 118,
+     "NYI": 119,
      "PHI": 70,
      "NYR": 167
     },
@@ -253740,13 +256426,13 @@
     "Nick Schmaltz",
     "C",
     "USA",
-    678,
+    679,
     false,
     2016,
     2026,
     {
      "CHI": 162,
-     "UTA": 172
+     "UTA": 173
     },
     1996
    ],
@@ -253772,7 +256458,7 @@
     "Kasperi Kapanen",
     "R",
     "FIN",
-    575,
+    576,
     false,
     2015,
     2026,
@@ -253780,7 +256466,7 @@
      "TOR": 202,
      "PIT": 162,
      "STL": 106,
-     "EDM": 105
+     "EDM": 106
     },
     1996
    ],
@@ -253789,14 +256475,14 @@
     "Jared McCann",
     "L",
     "CAN",
-    728,
+    729,
     false,
     2015,
     2026,
     {
      "FLA": 143,
      "PIT": 141,
-     "SEA": 375,
+     "SEA": 376,
      "VAN": 69
     },
     1996
@@ -253806,12 +256492,12 @@
     "David Pastrnak",
     "R",
     "CZE",
-    841,
+    842,
     false,
     2014,
     2026,
     {
-     "BOS": 841
+     "BOS": 842
     },
     1996
    ],
@@ -253864,12 +256550,12 @@
     "Adrian Kempe",
     "R",
     "SWE",
-    716,
+    717,
     false,
     2016,
     2026,
     {
-     "LAK": 716
+     "LAK": 717
     },
     1996
    ],
@@ -253927,13 +256613,13 @@
     "Ivan Barbashev",
     "L",
     "RUS",
-    676,
+    677,
     false,
     2016,
     2026,
     {
      "STL": 410,
-     "VGK": 266
+     "VGK": 267
     },
     1995
    ],
@@ -253956,7 +256642,7 @@
     "Alex Nedeljkovic",
     "G",
     "USA",
-    221,
+    222,
     false,
     2016,
     2026,
@@ -253964,7 +256650,7 @@
      "DET": 74,
      "CAR": 29,
      "PIT": 76,
-     "SJS": 42
+     "SJS": 43
     },
     1996
    ],
@@ -253973,7 +256659,7 @@
     "Marcus Pettersson",
     "D",
     "SWE",
-    613,
+    614,
     false,
     2017,
     2026,
@@ -253981,7 +256667,7 @@
      "PIT": 442,
      "ANA": 49,
      "VAN": 113,
-     "NYR": 9
+     "NYR": 10
     },
     1996
    ],
@@ -254008,7 +256694,7 @@
     "Andreas Englund",
     "D",
     "SWE",
-    203,
+    204,
     false,
     2016,
     2026,
@@ -254018,7 +256704,7 @@
      "COL": 36,
      "NSH": 27,
      "LAK": 93,
-     "DET": 3
+     "DET": 4
     },
     1996
    ],
@@ -254137,13 +256823,13 @@
     "Ryan Donato",
     "C",
     "USA",
-    573,
+    574,
     false,
     2017,
     2026,
     {
      "BOS": 46,
-     "CHI": 248,
+     "CHI": 249,
      "MIN": 84,
      "SEA": 145,
      "SJS": 50
@@ -254155,13 +256841,13 @@
     "Christian Dvorak",
     "C",
     "USA",
-    623,
+    624,
     false,
     2021,
     2026,
     {
      "MTL": 232,
-     "PHI": 89
+     "PHI": 90
     },
     1996
    ],
@@ -254261,12 +256947,12 @@
     "Warren Foegele",
     "L",
     "CAN",
-    589,
+    590,
     false,
     2017,
     2026,
     {
-     "OTT": 29,
+     "OTT": 30,
      "CAR": 200,
      "LAK": 129,
      "EDM": 231
@@ -254306,12 +256992,12 @@
     "Ilya Sorokin",
     "G",
     "RUS",
-    313,
+    314,
     false,
     2020,
     2026,
     {
-     "NYI": 313
+     "NYI": 314
     },
     1995
    ],
@@ -254320,12 +257006,12 @@
     "Brayden Point",
     "C",
     "CAN",
-    727,
+    728,
     false,
     2016,
     2026,
     {
-     "TBL": 727
+     "TBL": 728
     },
     1996
    ],
@@ -254349,14 +257035,14 @@
     "Jake Walman",
     "D",
     "CAN",
-    324,
+    325,
     false,
     2019,
     2026,
     {
      "DET": 145,
      "STL": 57,
-     "EDM": 72,
+     "EDM": 73,
      "SJS": 50
     },
     1996
@@ -254382,12 +257068,12 @@
     "Michael Amadio",
     "R",
     "CAN",
-    530,
+    531,
     false,
     2017,
     2026,
     {
-     "OTT": 166,
+     "OTT": 167,
      "TOR": 3,
      "LAK": 168,
      "VGK": 193
@@ -254555,7 +257241,7 @@
     "Viktor Arvidsson",
     "L",
     "SWE",
-    689,
+    690,
     false,
     2014,
     2026,
@@ -254564,7 +257250,7 @@
      "NSH": 385,
      "LAK": 161,
      "EDM": 67,
-     "DET": 7
+     "DET": 8
     },
     1993
    ],
@@ -254573,7 +257259,7 @@
     "Sam Lafferty",
     "C",
     "USA",
-    382,
+    383,
     false,
     2019,
     2026,
@@ -254583,7 +257269,7 @@
      "PIT": 94,
      "CHI": 126,
      "VAN": 79,
-     "FLA": 4
+     "FLA": 5
     },
     1995
    ],
@@ -254592,13 +257278,13 @@
     "Danton Heinen",
     "L",
     "CAN",
-    617,
+    618,
     false,
     2016,
     2026,
     {
      "BOS": 294,
-     "CBJ": 38,
+     "CBJ": 39,
      "PIT": 182,
      "ANA": 52,
      "VAN": 51
@@ -254610,7 +257296,7 @@
     "Michael Bunting",
     "L",
     "CAN",
-    423,
+    424,
     false,
     2021,
     2026,
@@ -254620,7 +257306,7 @@
      "PIT": 79,
      "DAL": 13,
      "NSH": 79,
-     "PHI": 5
+     "PHI": 6
     },
     1995
    ],
@@ -254672,12 +257358,12 @@
     "Gustav Forsling",
     "D",
     "SWE",
-    564,
+    565,
     false,
     2016,
     2026,
     {
-     "FLA": 442,
+     "FLA": 443,
      "CHI": 122
     },
     1996
@@ -254947,12 +257633,12 @@
     "Jake Evans",
     "C",
     "CAN",
-    425,
+    426,
     false,
     2019,
     2026,
     {
-     "MTL": 425
+     "MTL": 426
     },
     1996
    ],
@@ -255010,14 +257696,14 @@
     "Bokondji Imama",
     "L",
     "CAN",
-    41,
+    42,
     false,
     2023,
     2026,
     {
      "OTT": 6,
      "PIT": 18,
-     "FLA": 8
+     "FLA": 9
     },
     1996
    ],
@@ -255055,13 +257741,13 @@
     "Darren Raddysh",
     "D",
     "CAN",
-    257,
+    258,
     false,
     2021,
     2026,
     {
      "TBL": 249,
-     "TOR": 8
+     "TOR": 9
     },
     1996
    ],
@@ -255252,14 +257938,14 @@
     "Noah Hanifin",
     "D",
     "USA",
-    838,
+    839,
     false,
     2015,
     2026,
     {
      "CAR": 239,
      "CGY": 420,
-     "VGK": 179
+     "VGK": 180
     },
     1997
    ],
@@ -255268,13 +257954,13 @@
     "Rasmus Andersson",
     "D",
     "SWE",
-    626,
+    627,
     false,
     2016,
     2026,
     {
      "CGY": 584,
-     "VGK": 42
+     "VGK": 43
     },
     1996
    ],
@@ -255283,12 +257969,12 @@
     "Kyle Connor",
     "L",
     "USA",
-    702,
+    703,
     false,
     2016,
     2026,
     {
-     "WPG": 702
+     "WPG": 703
     },
     1996
    ],
@@ -255297,12 +257983,12 @@
     "Jonas Siegenthaler",
     "D",
     "CHE",
-    456,
+    457,
     false,
     2018,
     2026,
     {
-     "NJD": 359,
+     "NJD": 360,
      "WSH": 97
     },
     1997
@@ -255345,12 +258031,12 @@
     "Connor McDavid",
     "C",
     "CAN",
-    801,
+    802,
     false,
     2015,
     2026,
     {
-     "EDM": 801
+     "EDM": 802
     },
     1997
    ],
@@ -255359,13 +258045,13 @@
     "Jack Eichel",
     "C",
     "USA",
-    699,
+    700,
     false,
     2015,
     2026,
     {
      "BUF": 375,
-     "VGK": 324
+     "VGK": 325
     },
     1996
    ],
@@ -255390,13 +258076,13 @@
     "Vince Dunn",
     "D",
     "CAN",
-    631,
+    632,
     false,
     2017,
     2026,
     {
      "STL": 267,
-     "SEA": 364
+     "SEA": 365
     },
     1996
    ],
@@ -255439,14 +258125,14 @@
     "Jordan Greenway",
     "L",
     "USA",
-    483,
+    484,
     false,
     2017,
     2026,
     {
      "BUF": 158,
      "MIN": 317,
-     "CHI": 8
+     "CHI": 9
     },
     1997
    ],
@@ -255455,12 +258141,12 @@
     "Timo Meier",
     "R",
     "CHE",
-    705,
+    706,
     false,
     2016,
     2026,
     {
-     "NJD": 254,
+     "NJD": 255,
      "SJS": 451
     },
     1996
@@ -255484,12 +258170,12 @@
     "Erik Cernak",
     "D",
     "SVK",
-    509,
+    510,
     false,
     2018,
     2026,
     {
-     "TBL": 509
+     "TBL": 510
     },
     1997
    ],
@@ -255512,14 +258198,14 @@
     "Mikko Rantanen",
     "R",
     "FIN",
-    723,
+    724,
     false,
     2015,
     2026,
     {
      "CAR": 13,
      "COL": 619,
-     "DAL": 91
+     "DAL": 92
     },
     1996
    ],
@@ -255579,12 +258265,12 @@
     "Sebastian Aho",
     "C",
     "FIN",
-    764,
+    765,
     false,
     2016,
     2026,
     {
-     "CAR": 764
+     "CAR": 765
     },
     1997
    ],
@@ -255654,13 +258340,13 @@
     "Keegan Kolesar",
     "R",
     "CAN",
-    446,
+    447,
     false,
     2019,
     2026,
     {
      "VGK": 439,
-     "DET": 7
+     "DET": 8
     },
     1997
    ],
@@ -255669,13 +258355,13 @@
     "Dan Vladar",
     "G",
     "CZE",
-    161,
+    162,
     false,
     2020,
     2026,
     {
      "BOS": 5,
-     "PHI": 56,
+     "PHI": 57,
      "CGY": 100
     },
     1997
@@ -255699,12 +258385,12 @@
     "Tommy Novak",
     "C",
     "USA",
-    293,
+    294,
     false,
     2021,
     2026,
     {
-     "PIT": 92,
+     "PIT": 93,
      "NSH": 201
     },
     1997
@@ -255728,12 +258414,12 @@
     "Dylan Strome",
     "C",
     "CAN",
-    605,
+    606,
     false,
     2018,
     2026,
     {
-     "WSH": 332,
+     "WSH": 333,
      "CHI": 225
     },
     1997
@@ -255757,14 +258443,14 @@
     "Brandon Carlo",
     "D",
     "USA",
-    699,
+    700,
     false,
     2016,
     2026,
     {
      "BOS": 617,
      "TOR": 75,
-     "STL": 7
+     "STL": 8
     },
     1996
    ],
@@ -255773,12 +258459,12 @@
     "Brock Boeser",
     "R",
     "USA",
-    638,
+    639,
     false,
     2016,
     2026,
     {
-     "VAN": 638
+     "VAN": 639
     },
     1997
    ],
@@ -255831,12 +258517,12 @@
     "Roope Hintz",
     "C",
     "FIN",
-    528,
+    529,
     false,
     2018,
     2026,
     {
-     "DAL": 528
+     "DAL": 529
     },
     1996
    ],
@@ -255930,7 +258616,7 @@
     "Jack Roslovic",
     "C",
     "USA",
-    603,
+    604,
     false,
     2016,
     2026,
@@ -255940,7 +258626,7 @@
      "NYR": 19,
      "WPG": 180,
      "EDM": 69,
-     "TOR": 8
+     "TOR": 9
     },
     1997
    ],
@@ -255949,12 +258635,12 @@
     "Zach Werenski",
     "D",
     "USA",
-    647,
+    648,
     false,
     2016,
     2026,
     {
-     "CBJ": 647
+     "CBJ": 648
     },
     1997
    ],
@@ -255980,13 +258666,13 @@
     "Anthony Beauvillier",
     "R",
     "CAN",
-    720,
+    721,
     false,
     2016,
     2026,
     {
      "NYI": 457,
-     "WSH": 107,
+     "WSH": 108,
      "PIT": 63,
      "CHI": 23,
      "NSH": 15,
@@ -256047,7 +258733,7 @@
     "Jeremy Lauzon",
     "D",
     "CAN",
-    393,
+    394,
     false,
     2018,
     2026,
@@ -256055,7 +258741,7 @@
      "BOS": 76,
      "NSH": 187,
      "SEA": 53,
-     "VGK": 77
+     "VGK": 78
     },
     1997
    ],
@@ -256064,12 +258750,12 @@
     "Thomas Chabot",
     "D",
     "CAN",
-    577,
+    578,
     false,
     2016,
     2026,
     {
-     "OTT": 577
+     "OTT": 578
     },
     1997
    ],
@@ -256093,7 +258779,7 @@
     "Mathieu Joseph",
     "R",
     "CAN",
-    478,
+    479,
     false,
     2018,
     2026,
@@ -256102,7 +258788,7 @@
      "TBL": 221,
      "STL": 99,
      "LAK": 12,
-     "EDM": 7
+     "EDM": 8
     },
     1997
    ],
@@ -256111,12 +258797,12 @@
     "Lawson Crouse",
     "L",
     "CAN",
-    674,
+    675,
     false,
     2024,
     2026,
     {
-     "UTA": 170
+     "UTA": 171
     },
     1997
    ],
@@ -256171,13 +258857,13 @@
     "Mitch Marner",
     "R",
     "CAN",
-    747,
+    748,
     false,
     2016,
     2026,
     {
      "TOR": 657,
-     "VGK": 90
+     "VGK": 91
     },
     1997
    ],
@@ -256291,13 +258977,13 @@
     "Jake DeBrusk",
     "L",
     "CAN",
-    635,
+    636,
     false,
     2017,
     2026,
     {
      "BOS": 465,
-     "VAN": 170
+     "VAN": 171
     },
     1996
    ],
@@ -256306,13 +258992,13 @@
     "Adin Hill",
     "G",
     "CAN",
-    216,
+    217,
     false,
     2021,
     2026,
     {
      "SJS": 25,
-     "VGK": 142
+     "VGK": 143
     },
     1996
    ],
@@ -256336,12 +259022,12 @@
     "Dennis Gilbert",
     "D",
     "USA",
-    121,
+    122,
     false,
     2018,
     2026,
     {
-     "BUF": 27,
+     "BUF": 28,
      "OTT": 12,
      "CHI": 22,
      "COL": 3,
@@ -256369,14 +259055,14 @@
     "John Marino",
     "D",
     "USA",
-    451,
+    452,
     false,
     2019,
     2026,
     {
      "NJD": 139,
      "PIT": 189,
-     "UTA": 123
+     "UTA": 124
     },
     1997
    ],
@@ -256419,12 +259105,12 @@
     "Anthony Cirelli",
     "C",
     "CAN",
-    589,
+    590,
     false,
     2017,
     2026,
     {
-     "TBL": 589
+     "TBL": 590
     },
     1997
    ],
@@ -256462,7 +259148,7 @@
     "Evan Rodrigues",
     "C",
     "CAN",
-    623,
+    624,
     false,
     2015,
     2026,
@@ -256471,7 +259157,7 @@
      "BUF": 192,
      "PIT": 124,
      "COL": 69,
-     "NJD": 7
+     "NJD": 8
     },
     1993
    ],
@@ -256480,7 +259166,7 @@
     "Artemi Panarin",
     "L",
     "RUS",
-    835,
+    836,
     false,
     2015,
     2026,
@@ -256488,7 +259174,7 @@
      "CBJ": 160,
      "NYR": 482,
      "CHI": 162,
-     "LAK": 31
+     "LAK": 32
     },
     1991
    ],
@@ -256598,7 +259284,7 @@
     "Noel Acciari",
     "C",
     "USA",
-    594,
+    595,
     false,
     2015,
     2026,
@@ -256608,7 +259294,7 @@
      "TOR": 23,
      "PIT": 201,
      "STL": 54,
-     "PHI": 9
+     "PHI": 10
     },
     1991
    ],
@@ -256647,14 +259333,14 @@
     "Kevin Stenlund",
     "C",
     "SWE",
-    376,
+    377,
     false,
     2018,
     2026,
     {
      "FLA": 81,
      "CBJ": 71,
-     "UTA": 170,
+     "UTA": 171,
      "WPG": 54
     },
     1996
@@ -256706,7 +259392,7 @@
     "William Borgen",
     "D",
     "USA",
-    381,
+    382,
     false,
     2018,
     2026,
@@ -256714,7 +259400,7 @@
      "BUF": 14,
      "NYR": 126,
      "SEA": 233,
-     "BOS": 8
+     "BOS": 9
     },
     1996
    ],
@@ -256813,12 +259499,12 @@
     "Alexandre Carrier",
     "D",
     "CAN",
-    376,
+    377,
     false,
     2016,
     2026,
     {
-     "MTL": 131,
+     "MTL": 132,
      "NSH": 245
     },
     1996
@@ -256828,13 +259514,13 @@
     "Ryan Shea",
     "D",
     "USA",
-    157,
+    158,
     false,
     2023,
     2026,
     {
      "PIT": 150,
-     "EDM": 7
+     "EDM": 8
     },
     1997
    ],
@@ -256843,12 +259529,12 @@
     "Conor Garland",
     "R",
     "USA",
-    561,
+    562,
     false,
     2021,
     2026,
     {
-     "CBJ": 26,
+     "CBJ": 27,
      "VAN": 371
     },
     1996
@@ -256874,12 +259560,12 @@
     "Niko Mikkola",
     "D",
     "FIN",
-    404,
+    405,
     false,
     2019,
     2026,
     {
-     "FLA": 234,
+     "FLA": 235,
      "NYR": 31,
      "STL": 139
     },
@@ -256953,12 +259639,12 @@
     "Karel Vejmelka",
     "G",
     "CZE",
-    269,
+    270,
     false,
     2024,
     2026,
     {
-     "UTA": 129
+     "UTA": 130
     },
     1996
    ],
@@ -257015,13 +259701,13 @@
     "Vladislav Gavrikov",
     "D",
     "RUS",
-    526,
+    527,
     false,
     2019,
     2026,
     {
      "CBJ": 256,
-     "NYR": 91,
+     "NYR": 92,
      "LAK": 179
     },
     1995
@@ -257166,13 +259852,13 @@
     "Joey Daccord",
     "G",
     "USA",
-    177,
+    178,
     false,
     2018,
     2026,
     {
      "OTT": 9,
-     "SEA": 168
+     "SEA": 169
     },
     1996
    ],
@@ -257284,12 +259970,12 @@
     "Jalen Chatfield",
     "D",
     "USA",
-    343,
+    344,
     false,
     2020,
     2026,
     {
-     "CAR": 325,
+     "CAR": 326,
      "VAN": 18
     },
     1996
@@ -257315,7 +260001,7 @@
     "Mason Marchment",
     "L",
     "CAN",
-    377,
+    378,
     false,
     2019,
     2026,
@@ -257325,7 +260011,7 @@
      "TOR": 4,
      "DAL": 211,
      "SEA": 29,
-     "SJS": 7
+     "SJS": 8
     },
     1995
    ],
@@ -257396,14 +260082,14 @@
     "Ryan Lomberg",
     "L",
     "CAN",
-    399,
+    400,
     false,
     2017,
     2026,
     {
      "FLA": 246,
      "CGY": 148,
-     "CBJ": 5
+     "CBJ": 6
     },
     1994
    ],
@@ -257699,12 +260385,12 @@
     "Matthew Tkachuk",
     "L",
     "USA",
-    681,
+    682,
     false,
     2016,
     2026,
     {
-     "FLA": 250,
+     "FLA": 251,
      "CGY": 431
     },
     1997
@@ -257748,12 +260434,12 @@
     "Auston Matthews",
     "C",
     "USA",
-    697,
+    698,
     false,
     2016,
     2026,
     {
-     "TOR": 697
+     "TOR": 698
     },
     1997
    ],
@@ -257806,12 +260492,12 @@
     "Adam Fox",
     "D",
     "USA",
-    495,
+    496,
     false,
     2019,
     2026,
     {
-     "NYR": 495
+     "NYR": 496
     },
     1998
    ],
@@ -257836,12 +260522,12 @@
     "Charlie McAvoy",
     "D",
     "USA",
-    575,
+    576,
     false,
     2017,
     2026,
     {
-     "BOS": 575
+     "BOS": 576
     },
     1997
    ],
@@ -257943,12 +260629,12 @@
     "Alex DeBrincat",
     "R",
     "USA",
-    703,
+    704,
     false,
     2017,
     2026,
     {
-     "DET": 253,
+     "DET": 254,
      "OTT": 82,
      "CHI": 368
     },
@@ -258003,12 +260689,12 @@
     "Clayton Keller",
     "R",
     "USA",
-    691,
+    692,
     false,
     2024,
     2026,
     {
-     "UTA": 171
+     "UTA": 172
     },
     1998
    ],
@@ -258034,13 +260720,13 @@
     "Jakob Chychrun",
     "D",
     "USA",
-    628,
+    629,
     false,
     2022,
     2026,
     {
      "OTT": 94,
-     "WSH": 161
+     "WSH": 162
     },
     1998
    ],
@@ -258094,12 +260780,12 @@
     "Sam Steel",
     "C",
     "CAN",
-    498,
+    499,
     false,
     2018,
     2026,
     {
-     "DAL": 236,
+     "DAL": 237,
      "MIN": 65,
      "ANA": 197
     },
@@ -258110,13 +260796,13 @@
     "Brett Howden",
     "C",
     "CAN",
-    498,
+    499,
     false,
     2018,
     2026,
     {
      "NYR": 178,
-     "VGK": 320
+     "VGK": 321
     },
     1998
    ],
@@ -258171,12 +260857,12 @@
     "Beck Malenstyn",
     "L",
     "CAN",
-    270,
+    271,
     false,
     2019,
     2026,
     {
-     "BUF": 165,
+     "BUF": 166,
      "WSH": 105
     },
     1998
@@ -258231,13 +260917,13 @@
     "Trent Frederic",
     "C",
     "USA",
-    419,
+    420,
     false,
     2018,
     2026,
     {
      "BOS": 337,
-     "EDM": 82
+     "EDM": 83
     },
     1998
    ],
@@ -258292,14 +260978,14 @@
     "Andrew Peeke",
     "D",
     "USA",
-    394,
+    395,
     false,
     2019,
     2026,
     {
      "BOS": 168,
      "CBJ": 218,
-     "UTA": 8
+     "UTA": 9
     },
     1998
    ],
@@ -258341,14 +261027,14 @@
     "Josh Mahura",
     "D",
     "CAN",
-    283,
+    284,
     false,
     2018,
     2026,
     {
      "FLA": 112,
      "ANA": 79,
-     "SEA": 92
+     "SEA": 93
     },
     1998
    ],
@@ -258402,14 +261088,14 @@
     "Logan Stanley",
     "D",
     "CAN",
-    285,
+    286,
     false,
     2020,
     2026,
     {
      "BUF": 17,
      "WPG": 261,
-     "NYI": 7
+     "NYI": 8
     },
     1998
    ],
@@ -258493,13 +261179,13 @@
     "Jordan Kyrou",
     "R",
     "CAN",
-    495,
+    496,
     false,
     2018,
     2026,
     {
      "STL": 488,
-     "WSH": 7
+     "WSH": 8
     },
     1998
    ],
@@ -258541,13 +261227,13 @@
     "Taylor Raddysh",
     "R",
     "CAN",
-    373,
+    374,
     false,
     2021,
-    2025,
+    2026,
     {
      "TBL": 53,
-     "NYR": 68,
+     "NYR": 69,
      "WSH": 80,
      "CHI": 172
     },
@@ -258608,12 +261294,12 @@
     "Samuel Girard",
     "D",
     "CAN",
-    616,
+    617,
     false,
     2017,
     2026,
     {
-     "PIT": 28,
+     "PIT": 29,
      "COL": 583,
      "NSH": 5
     },
@@ -258688,12 +261374,12 @@
     "Jesper Bratt",
     "L",
     "SWE",
-    641,
+    642,
     false,
     2017,
     2026,
     {
-     "NJD": 641
+     "NJD": 642
     },
     1998
    ],
@@ -258702,14 +261388,14 @@
     "Mikhail Sergachev",
     "D",
     "RUS",
-    638,
+    639,
     false,
     2016,
     2026,
     {
      "MTL": 4,
      "TBL": 471,
-     "UTA": 163
+     "UTA": 164
     },
     1998
    ],
@@ -258804,12 +261490,12 @@
     "Tage Thompson",
     "C",
     "USA",
-    537,
+    538,
     false,
     2017,
     2026,
     {
-     "BUF": 496,
+     "BUF": 497,
      "STL": 41
     },
     1997
@@ -258865,13 +261551,13 @@
     "Filip Hronek",
     "D",
     "CZE",
-    542,
+    543,
     false,
     2018,
     2026,
     {
      "DET": 305,
-     "VAN": 237
+     "VAN": 238
     },
     1997
    ],
@@ -258896,13 +261582,13 @@
     "Troy Stecher",
     "D",
     "CAN",
-    632,
+    633,
     false,
     2016,
     2026,
     {
      "DET": 60,
-     "TOR": 66,
+     "TOR": 67,
      "CGY": 20,
      "LAK": 13,
      "EDM": 79,
@@ -259128,7 +261814,7 @@
     "Brandon Duhaime",
     "L",
     "USA",
-    383,
+    384,
     false,
     2021,
     2026,
@@ -259136,7 +261822,7 @@
      "WSH": 164,
      "COL": 18,
      "MIN": 193,
-     "TOR": 8
+     "TOR": 9
     },
     1997
    ],
@@ -259175,14 +261861,14 @@
     "Ross Colton",
     "C",
     "USA",
-    411,
+    412,
     false,
     2020,
     2026,
     {
      "TBL": 190,
      "COL": 214,
-     "NSH": 7
+     "NSH": 8
     },
     1996
    ],
@@ -259263,12 +261949,12 @@
     "Brandon Hagel",
     "L",
     "CAN",
-    453,
+    454,
     false,
     2019,
     2026,
     {
-     "TBL": 345,
+     "TBL": 346,
      "CHI": 108
     },
     1998
@@ -259395,7 +262081,7 @@
     "Vincent Desharnais",
     "D",
     "CAN",
-    225,
+    226,
     false,
     2022,
     2026,
@@ -259404,7 +262090,7 @@
      "EDM": 114,
      "SJS": 60,
      "VAN": 34,
-     "WSH": 7
+     "WSH": 8
     },
     1996
    ],
@@ -259591,14 +262277,14 @@
     "Dylan Coghlan",
     "D",
     "CAN",
-    118,
+    119,
     false,
     2020,
     2026,
     {
      "CAR": 18,
      "WPG": 6,
-     "VGK": 94
+     "VGK": 95
     },
     1998
    ],
@@ -259666,12 +262352,12 @@
     "Tanner Jeannot",
     "L",
     "CAN",
-    379,
+    380,
     false,
     2020,
     2026,
     {
-     "BOS": 85,
+     "BOS": 86,
      "TBL": 75,
      "NSH": 152,
      "LAK": 67
@@ -259683,12 +262369,12 @@
     "Mathieu Olivier",
     "R",
     "USA",
-    316,
+    317,
     false,
     2019,
     2026,
     {
-     "CBJ": 268,
+     "CBJ": 269,
      "NSH": 48
     },
     1997
@@ -259698,13 +262384,13 @@
     "Trevor Moore",
     "L",
     "USA",
-    490,
+    491,
     false,
     2018,
     2026,
     {
      "TOR": 52,
-     "LAK": 438
+     "LAK": 439
     },
     1995
    ],
@@ -259817,7 +262503,7 @@
     "Zack MacEwen",
     "R",
     "CAN",
-    242,
+    243,
     false,
     2018,
     2026,
@@ -259827,7 +262513,7 @@
      "PHI": 121,
      "LAK": 10,
      "VAN": 55,
-     "TOR": 2
+     "TOR": 3
     },
     1996
    ],
@@ -259852,12 +262538,12 @@
     "Justin Danforth",
     "R",
     "CAN",
-    192,
+    193,
     false,
     2021,
     2026,
     {
-     "BUF": 9,
+     "BUF": 10,
      "CBJ": 183
     },
     1993
@@ -260019,12 +262705,12 @@
     "Kailer Yamamoto",
     "R",
     "USA",
-    377,
+    378,
     false,
     2017,
     2026,
     {
-     "UTA": 74,
+     "UTA": 75,
      "SEA": 59,
      "EDM": 244
     },
@@ -260035,12 +262721,12 @@
     "Jake Oettinger",
     "G",
     "USA",
-    310,
+    311,
     false,
     2020,
     2026,
     {
-     "DAL": 310
+     "DAL": 311
     },
     1998
    ],
@@ -260049,12 +262735,12 @@
     "Nicolas Hague",
     "D",
     "CAN",
-    433,
+    434,
     false,
     2019,
     2026,
     {
-     "NSH": 69,
+     "NSH": 70,
      "VGK": 364
     },
     1998
@@ -260097,13 +262783,13 @@
     "Mario Ferraro",
     "D",
     "CAN",
-    497,
+    498,
     false,
     2019,
     2026,
     {
      "SJS": 490,
-     "WPG": 7
+     "WPG": 8
     },
     1998
    ],
@@ -260128,13 +262814,13 @@
     "Cale Fleury",
     "D",
     "CAN",
-    102,
+    103,
     false,
     2019,
     2026,
     {
      "MTL": 41,
-     "SEA": 61
+     "SEA": 62
     },
     1998
    ],
@@ -260158,12 +262844,12 @@
     "Morgan Geekie",
     "C",
     "CAN",
-    422,
+    423,
     false,
     2019,
     2026,
     {
-     "BOS": 242,
+     "BOS": 243,
      "CAR": 38,
      "SEA": 142
     },
@@ -260189,12 +262875,12 @@
     "Michael Rasmussen",
     "C",
     "CAN",
-    461,
+    462,
     false,
     2018,
     2026,
     {
-     "DET": 461
+     "DET": 462
     },
     1999
    ],
@@ -260219,12 +262905,12 @@
     "Cody Glass",
     "C",
     "CAN",
-    329,
+    330,
     false,
     2019,
     2026,
     {
-     "NJD": 91,
+     "NJD": 92,
      "PIT": 51,
      "NSH": 121,
      "VGK": 66
@@ -260236,12 +262922,12 @@
     "Mikey Anderson",
     "D",
     "USA",
-    430,
+    431,
     false,
     2019,
     2026,
     {
-     "LAK": 430
+     "LAK": 431
     },
     1999
    ],
@@ -260250,13 +262936,13 @@
     "Casey Mittelstadt",
     "C",
     "USA",
-    517,
+    518,
     false,
     2017,
     2026,
     {
      "BUF": 339,
-     "BOS": 97,
+     "BOS": 98,
      "COL": 81
     },
     1998
@@ -260282,12 +262968,12 @@
     "Nico Hischier",
     "C",
     "CHE",
-    616,
+    617,
     false,
     2017,
     2026,
     {
-     "NJD": 616
+     "NJD": 617
     },
     1999
    ],
@@ -260296,14 +262982,14 @@
     "Jesper Boqvist",
     "C",
     "SWE",
-    392,
+    393,
     false,
     2019,
     2026,
     {
      "FLA": 151,
      "BOS": 47,
-     "NJD": 194
+     "NJD": 195
     },
     1998
    ],
@@ -260354,14 +263040,14 @@
     "Eeli Tolvanen",
     "R",
     "FIN",
-    432,
+    433,
     false,
     2017,
     2026,
     {
      "NSH": 135,
      "SEA": 288,
-     "NYR": 9
+     "NYR": 10
     },
     1999
    ],
@@ -260387,12 +263073,12 @@
     "Elias Pettersson",
     "C",
     "SWE",
-    554,
+    555,
     false,
     2018,
     2026,
     {
-     "VAN": 554
+     "VAN": 555
     },
     1998
    ],
@@ -260401,12 +263087,12 @@
     "Gabriel Vilardi",
     "C",
     "CAN",
-    359,
+    360,
     false,
     2019,
     2026,
     {
-     "WPG": 207,
+     "WPG": 208,
      "LAK": 152
     },
     1999
@@ -260431,12 +263117,12 @@
     "Nick Suzuki",
     "C",
     "CAN",
-    544,
+    545,
     false,
     2019,
     2026,
     {
-     "MTL": 544
+     "MTL": 545
     },
     1999
    ],
@@ -260459,7 +263145,7 @@
     "Jack Studnicka",
     "C",
     "CAN",
-    128,
+    129,
     false,
     2019,
     2026,
@@ -260468,7 +263154,7 @@
      "BOS": 38,
      "SJS": 17,
      "VAN": 52,
-     "PHI": 2
+     "PHI": 3
     },
     1999
    ],
@@ -260492,12 +263178,12 @@
     "Robert Thomas",
     "C",
     "CAN",
-    537,
+    538,
     false,
     2018,
     2026,
     {
-     "STL": 537
+     "STL": 538
     },
     1999
    ],
@@ -260520,12 +263206,12 @@
     "Jason Robertson",
     "L",
     "USA",
-    463,
+    464,
     false,
     2019,
     2026,
     {
-     "DAL": 463
+     "DAL": 464
     },
     1999
    ],
@@ -260549,13 +263235,13 @@
     "Alex Formenton",
     "L",
     "CAN",
-    116,
+    117,
     false,
     2017,
     2026,
     {
      "OTT": 109,
-     "EDM": 7
+     "EDM": 8
     },
     1999
    ],
@@ -260624,12 +263310,12 @@
     "Miro Heiskanen",
     "D",
     "FIN",
-    559,
+    560,
     false,
     2018,
     2026,
     {
-     "DAL": 559
+     "DAL": 560
     },
     1999
    ],
@@ -260696,13 +263382,13 @@
     "Timothy Liljegren",
     "D",
     "SWE",
-    318,
+    319,
     false,
     2019,
     2026,
     {
      "TOR": 197,
-     "WSH": 11,
+     "WSH": 12,
      "SJS": 110
     },
     1999
@@ -260712,12 +263398,12 @@
     "Ukko-Pekka Luukkonen",
     "G",
     "FIN",
-    196,
+    197,
     false,
     2020,
     2026,
     {
-     "BUF": 196
+     "BUF": 197
     },
     1999
    ],
@@ -260726,12 +263412,12 @@
     "Dylan Samberg",
     "D",
     "USA",
-    289,
+    290,
     false,
     2021,
     2026,
     {
-     "WPG": 289
+     "WPG": 290
     },
     1999
    ],
@@ -260841,12 +263527,12 @@
     "Josh Norris",
     "C",
     "USA",
-    291,
+    292,
     false,
     2019,
     2026,
     {
-     "BUF": 55,
+     "BUF": 56,
      "OTT": 236
     },
     1999
@@ -260946,12 +263632,12 @@
     "Alexandre Texier",
     "L",
     "FRA",
-    290,
+    291,
     false,
     2018,
     2026,
     {
-     "MTL": 50,
+     "MTL": 51,
      "CBJ": 201,
      "STL": 39
     },
@@ -260977,13 +263663,13 @@
     "Filip Chytil",
     "C",
     "CZE",
-    406,
+    407,
     false,
     2017,
     2026,
     {
      "NYR": 378,
-     "VAN": 28
+     "VAN": 29
     },
     1999
    ],
@@ -261081,12 +263767,12 @@
     "Alex Iafallo",
     "L",
     "USA",
-    670,
+    671,
     false,
     2017,
     2026,
     {
-     "WPG": 250,
+     "WPG": 251,
      "LAK": 420
     },
     1993
@@ -261129,13 +263815,13 @@
     "Neal Pionk",
     "D",
     "USA",
-    594,
+    595,
     false,
     2017,
     2026,
     {
      "NYR": 101,
-     "WPG": 493
+     "WPG": 494
     },
     1995
    ],
@@ -261308,12 +263994,12 @@
     "Eetu Luostarinen",
     "C",
     "FIN",
-    455,
+    456,
     false,
     2019,
     2026,
     {
-     "FLA": 447,
+     "FLA": 448,
      "CAR": 8
     },
     1998
@@ -261338,12 +264024,12 @@
     "Fabian Zetterlund",
     "L",
     "SWE",
-    337,
+    338,
     false,
     2021,
     2026,
     {
-     "OTT": 110,
+     "OTT": 111,
      "NJD": 59,
      "SJS": 168
     },
@@ -261368,13 +264054,13 @@
     "Johnathan Kovacevic",
     "D",
     "CAN",
-    260,
+    261,
     false,
     2021,
     2026,
     {
      "MTL": 139,
-     "NJD": 117,
+     "NJD": 118,
      "WPG": 4
     },
     1997
@@ -261458,12 +264144,12 @@
     "Drake Batherson",
     "R",
     "USA",
-    478,
+    479,
     false,
     2018,
     2026,
     {
-     "OTT": 478
+     "OTT": 479
     },
     1998
    ],
@@ -261501,12 +264187,12 @@
     "Noah Cates",
     "L",
     "USA",
-    326,
+    327,
     false,
     2021,
     2026,
     {
-     "PHI": 326
+     "PHI": 327
     },
     1999
    ],
@@ -261617,13 +264303,13 @@
     "Nick Perbix",
     "D",
     "USA",
-    306,
+    307,
     false,
     2022,
     2026,
     {
      "TBL": 220,
-     "NSH": 86
+     "NSH": 87
     },
     1998
    ],
@@ -261746,12 +264432,12 @@
     "Jeremy Swayman",
     "G",
     "USA",
-    251,
+    252,
     false,
     2020,
     2026,
     {
-     "BOS": 251
+     "BOS": 252
     },
     1998
    ],
@@ -261774,13 +264460,13 @@
     "Morgan Barron",
     "C",
     "CAN",
-    328,
+    329,
     false,
     2020,
     2026,
     {
      "NYR": 18,
-     "WPG": 310
+     "WPG": 311
     },
     1998
    ],
@@ -261859,12 +264545,12 @@
     "Logan Thompson",
     "G",
     "CAN",
-    209,
+    210,
     false,
     2020,
     2026,
     {
-     "WSH": 106,
+     "WSH": 107,
      "VGK": 103
     },
     1997
@@ -261888,12 +264574,12 @@
     "Sheldon Dries",
     "C",
     "USA",
-    131,
+    132,
     false,
     2018,
     2026,
     {
-     "DET": 9,
+     "DET": 10,
      "COL": 48,
      "VAN": 74
     },
@@ -261932,12 +264618,12 @@
     "Sean Walker",
     "D",
     "CAN",
-    484,
+    485,
     false,
     2018,
     2026,
     {
-     "CAR": 171,
+     "CAR": 172,
      "PHI": 63,
      "COL": 18,
      "LAK": 232
@@ -261963,12 +264649,12 @@
     "Mark Kastelic",
     "C",
     "USA",
-    295,
+    296,
     false,
     2021,
     2026,
     {
-     "BOS": 151,
+     "BOS": 152,
      "OTT": 144
     },
     1999
@@ -262052,12 +264738,12 @@
     "Charle-Edouard D'Astous",
     "D",
     "CAN",
-    76,
+    77,
     false,
     2025,
     2026,
     {
-     "TBL": 76
+     "TBL": 77
     },
     1998
    ],
@@ -262066,14 +264752,14 @@
     "Sean Durzi",
     "D",
     "CAN",
-    311,
+    312,
     false,
     2021,
     2026,
     {
      "UTA": 90,
      "LAK": 136,
-     "NYR": 9
+     "NYR": 10
     },
     1998
    ],
@@ -262139,14 +264825,14 @@
     "Pius Suter",
     "C",
     "CHE",
-    435,
+    436,
     false,
     2020,
     2026,
     {
      "DET": 161,
      "CHI": 55,
-     "STL": 71,
+     "STL": 72,
      "VAN": 148
     },
     1996
@@ -262228,7 +264914,7 @@
     "Kiefer Sherwood",
     "L",
     "USA",
-    344,
+    345,
     false,
     2018,
     2026,
@@ -262236,7 +264922,7 @@
      "COL": 27,
      "NSH": 100,
      "ANA": 60,
-     "SJS": 35,
+     "SJS": 36,
      "VAN": 122
     },
     1995
@@ -262260,13 +264946,13 @@
     "Eric Robinson",
     "L",
     "USA",
-    463,
+    464,
     false,
     2017,
     2026,
     {
      "BUF": 40,
-     "CAR": 157,
+     "CAR": 158,
      "CBJ": 266
     },
     1995
@@ -262350,12 +265036,12 @@
     "Martin Fehervary",
     "D",
     "SVK",
-    387,
+    388,
     false,
     2019,
     2026,
     {
-     "WSH": 387
+     "WSH": 388
     },
     1999
    ],
@@ -262409,13 +265095,13 @@
     "Brady Tkachuk",
     "L",
     "USA",
-    580,
+    581,
     false,
     2018,
     2026,
     {
      "OTT": 572,
-     "FLA": 8
+     "FLA": 9
     },
     1999
    ],
@@ -262424,12 +265110,12 @@
     "Ryan McLeod",
     "C",
     "CAN",
-    387,
+    388,
     false,
     2020,
     2026,
     {
-     "BUF": 168,
+     "BUF": 169,
      "EDM": 219
     },
     1999
@@ -262439,12 +265125,12 @@
     "Evan Bouchard",
     "D",
     "CAN",
-    436,
+    437,
     false,
     2018,
     2026,
     {
-     "EDM": 436
+     "EDM": 437
     },
     1999
    ],
@@ -262468,12 +265154,12 @@
     "Mattias Samuelsson",
     "D",
     "USA",
-    298,
+    299,
     false,
     2020,
     2026,
     {
-     "BUF": 298
+     "BUF": 299
     },
     2000
    ],
@@ -262513,12 +265199,12 @@
     "K'Andre Miller",
     "D",
     "USA",
-    448,
+    449,
     false,
     2020,
     2026,
     {
-     "CAR": 80,
+     "CAR": 81,
      "NYR": 368
     },
     2000
@@ -262629,13 +265315,13 @@
     "Jesperi Kotkaniemi",
     "C",
     "FIN",
-    524,
+    525,
     false,
     2018,
     2026,
     {
      "MTL": 171,
-     "CAR": 353
+     "CAR": 354
     },
     2000
    ],
@@ -262644,12 +265330,12 @@
     "Andrei Svechnikov",
     "R",
     "RUS",
-    565,
+    566,
     false,
     2018,
     2026,
     {
-     "CAR": 565
+     "CAR": 566
     },
     2000
    ],
@@ -262688,12 +265374,12 @@
     "Ty Emberson",
     "D",
     "USA",
-    183,
+    184,
     false,
     2023,
     2026,
     {
-     "EDM": 153,
+     "EDM": 154,
      "SJS": 30
     },
     2000
@@ -262703,14 +265389,14 @@
     "Jack Drury",
     "C",
     "USA",
-    275,
+    276,
     false,
     2021,
     2026,
     {
      "CAR": 153,
      "COL": 115,
-     "NSH": 7
+     "NSH": 8
     },
     2000
    ],
@@ -262761,13 +265447,13 @@
     "Filip Hallander",
     "C",
     "SWE",
-    21,
+    22,
     false,
     2021,
     2026,
     {
      "PIT": 18,
-     "EDM": 3
+     "EDM": 4
     },
     2000
    ],
@@ -262863,12 +265549,12 @@
     "Barrett Hayton",
     "C",
     "CAN",
-    366,
+    367,
     false,
     2024,
     2026,
     {
-     "UTA": 157
+     "UTA": 158
     },
     2000
    ],
@@ -262907,12 +265593,12 @@
     "Jack McBain",
     "C",
     "CAN",
-    324,
+    325,
     false,
     2024,
     2026,
     {
-     "UTA": 165
+     "UTA": 166
     },
     2000
    ],
@@ -262964,12 +265650,12 @@
     "Noah Dobson",
     "D",
     "CAN",
-    475,
+    476,
     false,
     2019,
     2026,
     {
-     "MTL": 87,
+     "MTL": 88,
      "NYI": 388
     },
     2000
@@ -262993,12 +265679,12 @@
     "Bo Groulx",
     "C",
     "FRA",
-    83,
+    84,
     false,
     2021,
     2026,
     {
-     "TOR": 18,
+     "TOR": 19,
      "ANA": 65
     },
     2000
@@ -263070,13 +265756,13 @@
     "Nils Lundkvist",
     "D",
     "SWE",
-    242,
+    243,
     false,
     2021,
     2026,
     {
      "NYR": 25,
-     "DAL": 217
+     "DAL": 218
     },
     2000
    ],
@@ -263191,14 +265877,14 @@
     "Michael Kesselring",
     "D",
     "USA",
-    197,
+    198,
     false,
     2024,
     2026,
     {
      "BUF": 34,
      "UTA": 82,
-     "SJS": 7
+     "SJS": 8
     },
     2000
    ],
@@ -263207,13 +265893,13 @@
     "Kirill Marchenko",
     "R",
     "RUS",
-    300,
+    301,
     false,
     2022,
     2026,
     {
      "CBJ": 292,
-     "TOR": 8
+     "TOR": 9
     },
     2000
    ],
@@ -263356,14 +266042,14 @@
     "Kevin Lankinen",
     "G",
     "FIN",
-    216,
+    217,
     false,
     2020,
     2026,
     {
      "CHI": 69,
      "NSH": 43,
-     "VAN": 104
+     "VAN": 105
     },
     1995
    ],
@@ -263459,13 +266145,13 @@
     "Connor Dewar",
     "C",
     "CAN",
-    324,
+    325,
     false,
     2021,
     2026,
     {
      "TOR": 48,
-     "PIT": 103,
+     "PIT": 104,
      "MIN": 173
     },
     1999
@@ -263503,7 +266189,7 @@
     "Declan Chisholm",
     "D",
     "CAN",
-    132,
+    133,
     false,
     2021,
     2026,
@@ -263511,7 +266197,7 @@
      "WSH": 26,
      "MIN": 95,
      "WPG": 4,
-     "NJD": 7
+     "NJD": 8
     },
     2000
    ],
@@ -263548,12 +266234,12 @@
     "Pontus Holmberg",
     "R",
     "SWE",
-    236,
+    237,
     false,
     2022,
     2026,
     {
-     "TBL": 77,
+     "TBL": 78,
      "TOR": 159
     },
     1999
@@ -263620,13 +266306,13 @@
     "Jonatan Berggren",
     "R",
     "SWE",
-    212,
+    213,
     false,
     2022,
     2026,
     {
      "DET": 169,
-     "STL": 43
+     "STL": 44
     },
     2000
    ],
@@ -263693,12 +266379,12 @@
     "Linus Karlsson",
     "C",
     "SWE",
-    115,
+    116,
     false,
     2023,
     2026,
     {
-     "VAN": 115
+     "VAN": 116
     },
     1999
    ],
@@ -263721,13 +266407,13 @@
     "Jack St. Ivany",
     "D",
     "USA",
-    56,
+    57,
     false,
     2023,
     2026,
     {
      "PIT": 53,
-     "WPG": 3
+     "WPG": 4
     },
     1999
    ],
@@ -263750,14 +266436,14 @@
     "Paul Cotter",
     "L",
     "USA",
-    305,
+    306,
     false,
     2021,
     2026,
     {
      "NJD": 158,
      "VGK": 138,
-     "VAN": 9
+     "VAN": 10
     },
     1999
    ],
@@ -263812,14 +266498,14 @@
     "Cole Koepke",
     "L",
     "USA",
-    170,
+    171,
     false,
     2022,
     2026,
     {
      "BOS": 73,
      "TBL": 26,
-     "WPG": 71
+     "WPG": 72
     },
     1998
    ],
@@ -263828,14 +266514,14 @@
     "Spencer Stastney",
     "D",
     "USA",
-    120,
+    121,
     false,
     2022,
     2026,
     {
      "NSH": 81,
      "EDM": 36,
-     "PIT": 3
+     "PIT": 4
     },
     2000
    ],
@@ -264004,14 +266690,14 @@
     "Simon Benoit",
     "D",
     "CAN",
-    360,
+    361,
     false,
     2020,
     2026,
     {
      "TOR": 215,
      "ANA": 137,
-     "PHI": 8
+     "PHI": 9
     },
     1998
    ],
@@ -264051,12 +266737,12 @@
     "Jake Christiansen",
     "D",
     "CAN",
-    156,
+    157,
     false,
     2021,
     2026,
     {
-     "CBJ": 156
+     "CBJ": 157
     },
     1999
    ],
@@ -264124,12 +266810,12 @@
     "Jonathan Aspirot",
     "D",
     "CAN",
-    64,
+    65,
     false,
     2025,
     2026,
     {
-     "BOS": 64
+     "BOS": 65
     },
     1999
    ],
@@ -264313,12 +266999,12 @@
     "Blake Lizotte",
     "C",
     "USA",
-    442,
+    443,
     false,
     2018,
     2026,
     {
-     "PIT": 122,
+     "PIT": 123,
      "LAK": 320
     },
     1997
@@ -264444,13 +267130,13 @@
     "Spencer Knight",
     "G",
     "USA",
-    156,
+    157,
     false,
     2020,
     2026,
     {
      "FLA": 80,
-     "CHI": 76
+     "CHI": 77
     },
     2001
    ],
@@ -264473,12 +267159,12 @@
     "Peyton Krebs",
     "C",
     "CAN",
-    386,
+    387,
     false,
     2020,
     2026,
     {
-     "BUF": 373,
+     "BUF": 374,
      "VGK": 13
     },
     2001
@@ -264488,12 +267174,12 @@
     "Kirby Dach",
     "C",
     "CAN",
-    313,
+    314,
     false,
     2019,
     2026,
     {
-     "MTL": 161,
+     "MTL": 162,
      "CHI": 152
     },
     2001
@@ -264533,13 +267219,13 @@
     "Kaedan Korczak",
     "D",
     "CAN",
-    163,
+    164,
     false,
     2021,
     2026,
     {
      "VGK": 155,
-     "PIT": 8
+     "PIT": 9
     },
     2001
    ],
@@ -264548,13 +267234,13 @@
     "Dylan Cozens",
     "C",
     "CAN",
-    452,
+    453,
     false,
     2020,
     2026,
     {
      "BUF": 341,
-     "OTT": 111
+     "OTT": 112
     },
     2001
    ],
@@ -264605,12 +267291,12 @@
     "Trevor Zegras",
     "C",
     "USA",
-    358,
+    359,
     false,
     2020,
     2026,
     {
-     "PHI": 90,
+     "PHI": 91,
      "ANA": 268
     },
     2001
@@ -264620,13 +267306,13 @@
     "Raphael Lavoie",
     "C",
     "CAN",
-    22,
+    23,
     false,
     2023,
     2026,
     {
      "EDM": 7,
-     "VGK": 15
+     "VGK": 16
     },
     2000
    ],
@@ -264635,13 +267321,13 @@
     "Nils Hoglander",
     "L",
     "SWE",
-    338,
+    339,
     false,
     2020,
     2026,
     {
      "VAN": 331,
-     "NSH": 7
+     "NSH": 8
     },
     2000
    ],
@@ -264680,12 +267366,12 @@
     "Cole Caufield",
     "R",
     "USA",
-    375,
+    376,
     false,
     2020,
     2026,
     {
-     "MTL": 375
+     "MTL": 376
     },
     2001
    ],
@@ -264708,12 +267394,12 @@
     "Moritz Seider",
     "D",
     "DEU",
-    417,
+    418,
     false,
     2021,
     2026,
     {
-     "DET": 417
+     "DET": 418
     },
     2001
    ],
@@ -264835,13 +267521,13 @@
     "Kaapo Kakko",
     "R",
     "FIN",
-    452,
+    453,
     false,
     2019,
     2026,
     {
      "NYR": 330,
-     "SEA": 122
+     "SEA": 123
     },
     2001
    ],
@@ -264907,12 +267593,12 @@
     "Jack Hughes",
     "C",
     "USA",
-    436,
+    437,
     false,
     2019,
     2026,
     {
-     "NJD": 436
+     "NJD": 437
     },
     2001
    ],
@@ -264994,12 +267680,12 @@
     "Alex Vlasic",
     "D",
     "USA",
-    268,
+    269,
     false,
     2021,
     2026,
     {
-     "CHI": 268
+     "CHI": 269
     },
     2001
    ],
@@ -265093,13 +267779,13 @@
     "Connor McMichael",
     "L",
     "CAN",
-    322,
+    323,
     false,
     2020,
     2026,
     {
      "WSH": 315,
-     "STL": 7
+     "STL": 8
     },
     2001
    ],
@@ -265108,12 +267794,12 @@
     "Thomas Harley",
     "D",
     "USA",
-    274,
+    275,
     false,
     2021,
     2026,
     {
-     "DAL": 274
+     "DAL": 275
     },
     2001
    ],
@@ -265122,13 +267808,13 @@
     "Nick Robertson",
     "L",
     "USA",
-    242,
+    243,
     false,
     2020,
     2026,
     {
      "TOR": 234,
-     "PIT": 8
+     "PIT": 9
     },
     2001
    ],
@@ -265181,13 +267867,13 @@
     "Jayden Struble",
     "D",
     "USA",
-    177,
+    178,
     false,
     2023,
     2026,
     {
      "MTL": 174,
-     "NSH": 3
+     "NSH": 4
     },
     2001
    ],
@@ -265210,12 +267896,12 @@
     "Shane Pinto",
     "C",
     "USA",
-    290,
+    291,
     false,
     2020,
     2026,
     {
-     "OTT": 290
+     "OTT": 291
     },
     2000
    ],
@@ -265238,12 +267924,12 @@
     "Philip Broberg",
     "D",
     "SWE",
-    237,
+    238,
     false,
     2021,
     2026,
     {
-     "STL": 156,
+     "STL": 157,
      "EDM": 81
     },
     2001
@@ -265283,12 +267969,12 @@
     "Simon Holmstrom",
     "R",
     "SWE",
-    286,
+    287,
     false,
     2022,
     2026,
     {
-     "NYI": 286
+     "NYI": 287
     },
     2001
    ],
@@ -265297,13 +267983,13 @@
     "Pavel Dorofeyev",
     "R",
     "RUS",
-    240,
+    241,
     false,
     2021,
     2026,
     {
      "VGK": 231,
-     "NYR": 9
+     "NYR": 10
     },
     2000
    ],
@@ -265326,12 +268012,12 @@
     "Jordan Spence",
     "D",
     "AUS",
-    261,
+    262,
     false,
     2021,
     2026,
     {
-     "OTT": 81,
+     "OTT": 82,
      "LAK": 180
     },
     2001
@@ -265341,12 +268027,12 @@
     "Albert Johansson",
     "D",
     "SWE",
-    150,
+    151,
     false,
     2024,
     2026,
     {
-     "DET": 150
+     "DET": 151
     },
     2001
    ],
@@ -265372,12 +268058,12 @@
     "Pyotr Kochetkov",
     "G",
     "RUS",
-    129,
+    130,
     false,
     2021,
     2026,
     {
-     "CAR": 129
+     "CAR": 130
     },
     1999
    ],
@@ -265386,12 +268072,12 @@
     "Vasily Podkolzin",
     "R",
     "RUS",
-    308,
+    309,
     false,
     2021,
     2026,
     {
-     "EDM": 171,
+     "EDM": 172,
      "VAN": 137
     },
     2001
@@ -265401,12 +268087,12 @@
     "Alex Newhook",
     "C",
     "CAN",
-    345,
+    346,
     false,
     2020,
     2026,
     {
-     "MTL": 186,
+     "MTL": 187,
      "COL": 159
     },
     2001
@@ -265416,7 +268102,7 @@
     "Ilya Mikheyev",
     "R",
     "RUS",
-    434,
+    435,
     false,
     2019,
     2026,
@@ -265424,7 +268110,7 @@
      "TOR": 146,
      "CHI": 157,
      "VAN": 124,
-     "TBL": 7
+     "TBL": 8
     },
     1994
    ],
@@ -265517,13 +268203,13 @@
     "Joel Kiviranta",
     "L",
     "FIN",
-    352,
+    353,
     false,
     2019,
     2026,
     {
      "COL": 186,
-     "DAL": 166
+     "DAL": 167
     },
     1996
    ],
@@ -265591,12 +268277,12 @@
     "Aliaksei Protas",
     "L",
     "BLR",
-    328,
+    329,
     false,
     2021,
     2026,
     {
-     "WSH": 328
+     "WSH": 329
     },
     2001
    ],
@@ -265763,14 +268449,14 @@
     "Matias Maccelli",
     "L",
     "FIN",
-    302,
+    303,
     false,
     2024,
     2026,
     {
      "TOR": 71,
      "UTA": 55,
-     "NYI": 7
+     "NYI": 8
     },
     2000
    ],
@@ -265850,12 +268536,12 @@
     "Arseny Gritsyuk",
     "R",
     "RUS",
-    73,
+    74,
     false,
     2025,
     2026,
     {
-     "NJD": 73
+     "NJD": 74
     },
     2001
    ],
@@ -265864,13 +268550,13 @@
     "Elmer Soderblom",
     "L",
     "SWE",
-    109,
+    110,
     false,
     2022,
     2026,
     {
      "DET": 86,
-     "PIT": 23
+     "PIT": 24
     },
     2001
    ],
@@ -265879,13 +268565,13 @@
     "Adam Edstrom",
     "C",
     "SWE",
-    104,
+    105,
     false,
     2023,
     2026,
     {
      "NYR": 97,
-     "NSH": 7
+     "NSH": 8
     },
     2000
    ],
@@ -265894,12 +268580,12 @@
     "Andre Lee",
     "L",
     "SWE",
-    29,
+    30,
     false,
     2024,
     2026,
     {
-     "LAK": 29
+     "LAK": 30
     },
     2000
    ],
@@ -265978,12 +268664,12 @@
     "Tye Kartye",
     "L",
     "CAN",
-    213,
+    214,
     false,
     2023,
     2026,
     {
-     "NYR": 33,
+     "NYR": 34,
      "SEA": 180
     },
     2001
@@ -265993,13 +268679,13 @@
     "Louis Crevier",
     "D",
     "CAN",
-    142,
+    143,
     false,
     2023,
     2026,
     {
      "CHI": 134,
-     "BUF": 8
+     "BUF": 9
     },
     2001
    ],
@@ -266078,13 +268764,13 @@
     "Drew O'Connor",
     "L",
     "USA",
-    332,
+    333,
     false,
     2020,
     2026,
     {
      "PIT": 210,
-     "VAN": 122
+     "VAN": 123
     },
     1998
    ],
@@ -266107,14 +268793,14 @@
     "Cole Smith",
     "R",
     "USA",
-    300,
+    301,
     false,
     2020,
     2026,
     {
      "NSH": 271,
      "VGK": 21,
-     "CHI": 8
+     "CHI": 9
     },
     1995
    ],
@@ -266183,12 +268869,12 @@
     "Braden Schneider",
     "D",
     "CAN",
-    377,
+    378,
     false,
     2021,
     2026,
     {
-     "NYR": 377
+     "NYR": 378
     },
     2001
    ],
@@ -266225,12 +268911,12 @@
     "Dylan Holloway",
     "L",
     "CAN",
-    232,
+    233,
     false,
     2022,
     2026,
     {
-     "STL": 143,
+     "STL": 144,
      "EDM": 89
     },
     2001
@@ -266240,12 +268926,12 @@
     "Lucas Raymond",
     "L",
     "SWE",
-    407,
+    408,
     false,
     2021,
     2026,
     {
-     "DET": 407
+     "DET": 408
     },
     2002
    ],
@@ -266283,12 +268969,12 @@
     "Kaiden Guhle",
     "D",
     "CAN",
-    211,
+    212,
     false,
     2022,
     2026,
     {
-     "MTL": 211
+     "MTL": 212
     },
     2002
    ],
@@ -266312,12 +268998,12 @@
     "Jake Neighbours",
     "L",
     "CAN",
-    287,
+    288,
     false,
     2021,
     2026,
     {
-     "STL": 287
+     "STL": 288
     },
     2002
    ],
@@ -266341,12 +269027,12 @@
     "Ridly Greig",
     "C",
     "CAN",
-    253,
+    254,
     false,
     2022,
     2026,
     {
-     "OTT": 253
+     "OTT": 254
     },
     2002
    ],
@@ -266383,12 +269069,12 @@
     "Tyler Kleven",
     "D",
     "USA",
-    174,
+    175,
     false,
     2022,
     2026,
     {
-     "OTT": 174
+     "OTT": 175
     },
     2002
    ],
@@ -266397,12 +269083,12 @@
     "Jack Quinn",
     "R",
     "CAN",
-    268,
+    269,
     false,
     2021,
     2026,
     {
-     "BUF": 268
+     "BUF": 269
     },
     2001
    ],
@@ -266496,12 +269182,12 @@
     "Alexis Lafrenière",
     "L",
     "CAN",
-    471,
+    472,
     false,
     2020,
     2026,
     {
-     "NYR": 471
+     "NYR": 472
     },
     2001
    ],
@@ -266510,12 +269196,12 @@
     "Dawson Mercer",
     "C",
     "CAN",
-    417,
+    418,
     false,
     2021,
     2026,
     {
-     "NJD": 417
+     "NJD": 418
     },
     2001
    ],
@@ -266524,7 +269210,7 @@
     "Justin Barron",
     "D",
     "CAN",
-    212,
+    213,
     false,
     2021,
     2026,
@@ -266532,7 +269218,7 @@
      "MTL": 109,
      "COL": 2,
      "NSH": 97,
-     "STL": 4
+     "STL": 5
     },
     2001
    ],
@@ -266541,12 +269227,12 @@
     "Anton Lundell",
     "C",
     "FIN",
-    367,
+    368,
     false,
     2021,
     2026,
     {
-     "FLA": 367
+     "FLA": 368
     },
     2001
    ],
@@ -266555,12 +269241,12 @@
     "Tim Stützle",
     "C",
     "DEU",
-    455,
+    456,
     false,
     2020,
     2026,
     {
-     "OTT": 455
+     "OTT": 456
     },
     2002
    ],
@@ -266627,12 +269313,12 @@
     "Quinton Byfield",
     "R",
     "CAN",
-    344,
+    345,
     false,
     2020,
     2026,
     {
-     "LAK": 344
+     "LAK": 345
     },
     2002
    ],
@@ -266656,13 +269342,13 @@
     "Emil Andrae",
     "D",
     "SWE",
-    110,
+    111,
     false,
     2023,
     2026,
     {
      "PHI": 107,
-     "CBJ": 3
+     "CBJ": 4
     },
     2002
    ],
@@ -266743,12 +269429,12 @@
     "Jamie Drysdale",
     "D",
     "CAN",
-    304,
+    305,
     false,
     2020,
     2026,
     {
-     "PHI": 181,
+     "PHI": 182,
      "ANA": 123
     },
     2002
@@ -266832,12 +269518,12 @@
     "Cole Perfetti",
     "C",
     "CAN",
-    297,
+    298,
     false,
     2021,
     2026,
     {
-     "WPG": 297
+     "WPG": 298
     },
     2002
    ],
@@ -266875,12 +269561,12 @@
     "Alex Laferriere",
     "R",
     "USA",
-    245,
+    246,
     false,
     2023,
     2026,
     {
-     "LAK": 245
+     "LAK": 246
     },
     2001
    ],
@@ -266889,12 +269575,12 @@
     "Will Cuylle",
     "L",
     "CAN",
-    258,
+    259,
     false,
     2022,
     2026,
     {
-     "NYR": 258
+     "NYR": 259
     },
     2002
    ],
@@ -266903,12 +269589,12 @@
     "Tyson Foerster",
     "R",
     "CAN",
-    204,
+    205,
     false,
     2022,
     2026,
     {
-     "PHI": 204
+     "PHI": 205
     },
     2002
    ],
@@ -267031,14 +269717,14 @@
     "JJ Peterka",
     "R",
     "DEU",
-    328,
+    329,
     false,
     2021,
     2026,
     {
      "BUF": 238,
      "UTA": 82,
-     "BOS": 8
+     "BOS": 9
     },
     2002
    ],
@@ -267047,12 +269733,12 @@
     "Wyatt Kaiser",
     "D",
     "USA",
-    183,
+    184,
     false,
     2022,
     2026,
     {
-     "CHI": 183
+     "CHI": 184
     },
     2002
    ],
@@ -267061,12 +269747,12 @@
     "Marat Khusnutdinov",
     "C",
     "RUS",
-    176,
+    177,
     false,
     2023,
     2026,
     {
-     "BOS": 103,
+     "BOS": 104,
      "MIN": 73
     },
     2002
@@ -267148,12 +269834,12 @@
     "Dylan Garand",
     "G",
     "CAN",
-    8,
+    9,
     false,
     2025,
     2026,
     {
-     "NYR": 8
+     "NYR": 9
     },
     2002
    ],
@@ -267177,12 +269863,12 @@
     "Gage Goncalves",
     "C",
     "CAN",
-    142,
+    143,
     false,
     2023,
     2026,
     {
-     "TBL": 142
+     "TBL": 143
     },
     2001
    ],
@@ -267321,12 +270007,12 @@
     "Artem Zub",
     "D",
     "RUS",
-    388,
+    389,
     false,
     2020,
     2026,
     {
-     "OTT": 388
+     "OTT": 389
     },
     1995
    ],
@@ -267394,13 +270080,13 @@
     "Bobby McMann",
     "C",
     "CAN",
-    226,
+    227,
     false,
     2022,
     2026,
     {
      "TOR": 200,
-     "SEA": 26
+     "SEA": 27
     },
     1996
    ],
@@ -267599,13 +270285,13 @@
     "Emil Heineman",
     "L",
     "SWE",
-    155,
+    156,
     false,
     2023,
     2026,
     {
      "MTL": 66,
-     "NYI": 89
+     "NYI": 90
     },
     2001
    ],
@@ -267628,12 +270314,12 @@
     "Adam Wilsby",
     "D",
     "SWE",
-    88,
+    89,
     false,
     2024,
     2026,
     {
-     "NSH": 88
+     "NSH": 89
     },
     2000
    ],
@@ -267684,12 +270370,12 @@
     "Mason Lohrei",
     "D",
     "USA",
-    199,
+    200,
     false,
     2023,
     2026,
     {
-     "BOS": 199
+     "BOS": 200
     },
     2001
    ],
@@ -267712,13 +270398,13 @@
     "Matthew Kessel",
     "D",
     "USA",
-    101,
+    102,
     false,
     2022,
     2026,
     {
      "STL": 99,
-     "NYI": 2
+     "NYI": 3
     },
     2000
    ],
@@ -267846,12 +270532,12 @@
     "J.J. Moser",
     "D",
     "CHE",
-    345,
+    346,
     false,
     2024,
     2026,
     {
-     "TBL": 140
+     "TBL": 141
     },
     2000
    ],
@@ -267860,13 +270546,13 @@
     "Sebastian Cossa",
     "G",
     "CAN",
-    3,
+    4,
     false,
     2024,
     2026,
     {
      "DET": 1,
-     "UTA": 2
+     "UTA": 3
     },
     2002
    ],
@@ -267875,12 +270561,12 @@
     "Josh Doan",
     "R",
     "USA",
-    152,
+    153,
     false,
     2024,
     2026,
     {
-     "BUF": 90,
+     "BUF": 91,
      "UTA": 51
     },
     2002
@@ -267890,12 +270576,12 @@
     "Kent Johnson",
     "C",
     "CAN",
-    279,
+    280,
     false,
     2021,
     2026,
     {
-     "CBJ": 279
+     "CBJ": 280
     },
     2002
    ],
@@ -267932,12 +270618,12 @@
     "Matty Beniers",
     "C",
     "USA",
-    339,
+    340,
     false,
     2021,
     2026,
     {
-     "SEA": 339
+     "SEA": 340
     },
     2002
    ],
@@ -267990,12 +270676,12 @@
     "Owen Power",
     "D",
     "CAN",
-    331,
+    332,
     false,
     2021,
     2026,
     {
-     "BUF": 331
+     "BUF": 332
     },
     2002
    ],
@@ -268032,12 +270718,12 @@
     "Luke Hughes",
     "D",
     "USA",
-    230,
+    231,
     false,
     2022,
     2026,
     {
-     "NJD": 230
+     "NJD": 231
     },
     2003
    ],
@@ -268075,12 +270761,12 @@
     "Dylan Guenther",
     "R",
     "CAN",
-    235,
+    236,
     false,
     2024,
     2026,
     {
-     "UTA": 157
+     "UTA": 158
     },
     2003
    ],
@@ -268089,13 +270775,13 @@
     "Nolan Allan",
     "D",
     "CAN",
-    46,
+    47,
     false,
     2024,
     2026,
     {
      "CHI": 43,
-     "SJS": 3
+     "SJS": 4
     },
     2003
    ],
@@ -268104,12 +270790,12 @@
     "Logan Stankoven",
     "C",
     "CAN",
-    191,
+    192,
     false,
     2023,
     2026,
     {
-     "CAR": 108,
+     "CAR": 109,
      "DAL": 83
     },
     2003
@@ -268119,13 +270805,13 @@
     "Colton Dach",
     "C",
     "CAN",
-    89,
+    90,
     false,
     2024,
     2026,
     {
      "CHI": 78,
-     "EDM": 11
+     "EDM": 12
     },
     2003
    ],
@@ -268134,12 +270820,12 @@
     "Cole Sillinger",
     "C",
     "USA",
-    372,
+    373,
     false,
     2021,
     2026,
     {
-     "CBJ": 372
+     "CBJ": 373
     },
     2003
    ],
@@ -268176,13 +270862,13 @@
     "Mackie Samoskevich",
     "R",
     "USA",
-    163,
+    164,
     false,
     2023,
     2026,
     {
      "FLA": 156,
-     "SEA": 7
+     "SEA": 8
     },
     2002
    ],
@@ -268205,13 +270891,13 @@
     "Matthew Knies",
     "L",
     "USA",
-    245,
+    246,
     false,
     2022,
     2026,
     {
      "TOR": 240,
-     "CBJ": 5
+     "CBJ": 6
     },
     2002
    ],
@@ -268220,12 +270906,12 @@
     "Samuel Helenius",
     "C",
     "USA",
-    106,
+    107,
     false,
     2024,
     2026,
     {
-     "LAK": 106
+     "LAK": 107
     },
     2002
    ],
@@ -268234,12 +270920,12 @@
     "Brandt Clarke",
     "D",
     "CAN",
-    190,
+    191,
     false,
     2022,
     2026,
     {
-     "LAK": 190
+     "LAK": 191
     },
     2003
    ],
@@ -268277,12 +270963,12 @@
     "Zachary Bolduc",
     "R",
     "CAN",
-    182,
+    183,
     false,
     2023,
     2026,
     {
-     "MTL": 85,
+     "MTL": 86,
      "STL": 97
     },
     2003
@@ -268292,12 +270978,12 @@
     "Wyatt Johnston",
     "C",
     "CAN",
-    333,
+    334,
     false,
     2022,
     2026,
     {
-     "DAL": 333
+     "DAL": 334
     },
     2003
    ],
@@ -268335,13 +271021,13 @@
     "Mason McTavish",
     "C",
     "CHE",
-    311,
+    312,
     false,
     2021,
     2026,
     {
      "ANA": 304,
-     "STL": 7
+     "STL": 8
     },
     2003
    ],
@@ -268379,12 +271065,12 @@
     "Ryan Winterton",
     "C",
     "CAN",
-    97,
+    98,
     false,
     2023,
     2026,
     {
-     "SEA": 97
+     "SEA": 98
     },
     2003
    ],
@@ -268393,12 +271079,12 @@
     "Ville Koivunen",
     "R",
     "FIN",
-    53,
+    54,
     false,
     2024,
     2026,
     {
-     "PIT": 53
+     "PIT": 54
     },
     2003
    ],
@@ -268449,13 +271135,13 @@
     "Isak Rosén",
     "R",
     "SWE",
-    59,
+    60,
     false,
     2023,
     2026,
     {
      "BUF": 31,
-     "WPG": 28
+     "WPG": 29
     },
     2003
    ],
@@ -268493,12 +271179,12 @@
     "Oliver Kapanen",
     "C",
     "SWE",
-    100,
+    101,
     false,
     2024,
-    2025,
+    2026,
     {
-     "MTL": 100
+     "MTL": 101
     },
     2003
    ],
@@ -268591,13 +271277,13 @@
     "Olen Zellweger",
     "D",
     "CAN",
-    171,
+    172,
     false,
     2023,
     2026,
     {
      "ANA": 164,
-     "BUF": 7
+     "BUF": 8
     },
     2003
    ],
@@ -268620,12 +271306,12 @@
     "Ethan Del Mastro",
     "D",
     "CAN",
-    47,
+    48,
     false,
     2023,
     2026,
     {
-     "CHI": 47
+     "CHI": 48
     },
     2003
    ],
@@ -268634,12 +271320,12 @@
     "Jackson Blake",
     "R",
     "USA",
-    170,
+    171,
     false,
     2023,
     2026,
     {
-     "CAR": 170
+     "CAR": 171
     },
     2003
    ],
@@ -268719,12 +271405,12 @@
     "Ryker Evans",
     "D",
     "CAN",
-    184,
+    185,
     false,
     2023,
     2026,
     {
-     "SEA": 184
+     "SEA": 185
     },
     2001
    ],
@@ -268733,13 +271419,13 @@
     "Zack Ostapchuk",
     "C",
     "CAN",
-    129,
+    130,
     false,
     2023,
     2026,
     {
      "OTT": 50,
-     "SJS": 79
+     "SJS": 80
     },
     2003
    ],
@@ -268764,12 +271450,12 @@
     "Ville Ottavainen",
     "D",
     "FIN",
-    6,
+    7,
     false,
     2024,
     2026,
     {
-     "SEA": 6
+     "SEA": 7
     },
     2002
    ],
@@ -268848,12 +271534,12 @@
     "Emil Lilleberg",
     "D",
     "NOR",
-    165,
+    166,
     false,
     2023,
     2026,
     {
-     "TBL": 165
+     "TBL": 166
     },
     2001
    ],
@@ -268918,12 +271604,12 @@
     "Arber Xhekaj",
     "D",
     "CAN",
-    237,
+    238,
     false,
     2022,
     2026,
     {
-     "MTL": 237
+     "MTL": 238
     },
     2001
    ],
@@ -268932,12 +271618,12 @@
     "Jet Greaves",
     "G",
     "CAN",
-    80,
+    81,
     false,
     2022,
     2026,
     {
-     "CBJ": 80
+     "CBJ": 81
     },
     2001
    ],
@@ -268974,12 +271660,12 @@
     "Frederic Brunet",
     "D",
     "CAN",
-    6,
+    7,
     false,
     2024,
     2026,
     {
-     "BOS": 6
+     "BOS": 7
     },
     2003
    ],
@@ -269058,12 +271744,12 @@
     "Arshdeep Bains",
     "L",
     "CAN",
-    56,
+    57,
     false,
     2023,
     2026,
     {
-     "VAN": 56
+     "VAN": 57
     },
     2001
    ],
@@ -269087,13 +271773,13 @@
     "Declan Carlile",
     "D",
     "USA",
-    54,
+    55,
     false,
     2023,
     2026,
     {
      "TBL": 46,
-     "PIT": 8
+     "PIT": 9
     },
     2000
    ],
@@ -269158,12 +271844,12 @@
     "Lian Bichsel",
     "D",
     "CHE",
-    95,
+    96,
     false,
     2024,
     2026,
     {
-     "DAL": 95
+     "DAL": 96
     },
     2004
    ],
@@ -269186,12 +271872,12 @@
     "Logan Cooley",
     "C",
     "USA",
-    219,
+    220,
     false,
     2024,
     2026,
     {
-     "UTA": 137
+     "UTA": 138
     },
     2004
    ],
@@ -269200,12 +271886,12 @@
     "Luca Del Bel Belluz",
     "C",
     "CAN",
-    30,
+    31,
     false,
     2023,
-    2025,
+    2026,
     {
-     "CBJ": 30
+     "CBJ": 31
     },
     2003
    ],
@@ -269270,12 +271956,12 @@
     "Conor Geekie",
     "C",
     "CAN",
-    73,
+    74,
     false,
     2024,
     2026,
     {
-     "TBL": 73
+     "TBL": 74
     },
     2004
    ],
@@ -269298,12 +271984,12 @@
     "Ryan Greene",
     "C",
     "CAN",
-    91,
+    92,
     false,
     2024,
     2026,
     {
-     "CHI": 91
+     "CHI": 92
     },
     2003
    ],
@@ -269326,12 +272012,12 @@
     "Isaac Howard",
     "L",
     "USA",
-    36,
+    37,
     false,
     2025,
     2026,
     {
-     "EDM": 36
+     "EDM": 37
     },
     2004
    ],
@@ -269340,12 +272026,12 @@
     "Lane Hutson",
     "D",
     "USA",
-    173,
+    174,
     false,
     2023,
     2026,
     {
-     "MTL": 173
+     "MTL": 174
     },
     2004
    ],
@@ -269354,13 +272040,13 @@
     "David Jiricek",
     "D",
     "CZE",
-    92,
+    93,
     false,
     2022,
     2026,
     {
      "CBJ": 53,
-     "PHI": 8,
+     "PHI": 9,
      "MIN": 31
     },
     2003
@@ -269454,12 +272140,12 @@
     "Jiri Kulich",
     "C",
     "CZE",
-    81,
+    82,
     false,
     2023,
     2026,
     {
-     "BUF": 81
+     "BUF": 82
     },
     2004
    ],
@@ -269468,12 +272154,12 @@
     "Brad Lambert",
     "C",
     "FIN",
-    37,
+    38,
     false,
     2023,
     2026,
     {
-     "WPG": 37
+     "WPG": 38
     },
     2003
    ],
@@ -269496,12 +272182,12 @@
     "Jonathan Lekkerimaki",
     "R",
     "SWE",
-    46,
+    47,
     false,
     2024,
     2026,
     {
-     "VAN": 46
+     "VAN": 47
     },
     2004
    ],
@@ -269538,12 +272224,12 @@
     "Denton Mateychuk",
     "D",
     "CAN",
-    125,
+    126,
     false,
     2024,
     2026,
     {
-     "CBJ": 125
+     "CBJ": 126
     },
     2004
    ],
@@ -269566,12 +272252,12 @@
     "Fraser Minten",
     "C",
     "CAN",
-    115,
+    116,
     false,
     2023,
     2026,
     {
-     "BOS": 96,
+     "BOS": 97,
      "TOR": 19
     },
     2004
@@ -269595,12 +272281,12 @@
     "Ivan Miroshnichenko",
     "L",
     "RUS",
-    53,
+    54,
     false,
     2023,
     2026,
     {
-     "WSH": 53
+     "WSH": 54
     },
     2004
    ],
@@ -269609,12 +272295,12 @@
     "Frank Nazar",
     "C",
     "USA",
-    128,
+    129,
     false,
     2023,
     2026,
     {
-     "CHI": 128
+     "CHI": 129
     },
     2004
    ],
@@ -269652,13 +272338,13 @@
     "Liam Ohgren",
     "L",
     "SWE",
-    106,
+    107,
     false,
     2023,
     2026,
     {
      "MIN": 46,
-     "VAN": 60
+     "VAN": 61
     },
     2004
    ],
@@ -269667,12 +272353,12 @@
     "Noah Ostlund",
     "C",
     "SWE",
-    76,
+    77,
     false,
     2024,
     2026,
     {
-     "BUF": 76
+     "BUF": 77
     },
     2004
    ],
@@ -269695,12 +272381,12 @@
     "Matthew Poitras",
     "C",
     "CAN",
-    74,
+    75,
     false,
     2023,
     2026,
     {
-     "BOS": 74
+     "BOS": 75
     },
     2004
    ],
@@ -269709,12 +272395,12 @@
     "Sam Rinzel",
     "D",
     "USA",
-    70,
+    71,
     false,
     2024,
     2026,
     {
-     "CHI": 70
+     "CHI": 71
     },
     2004
    ],
@@ -269752,12 +272438,12 @@
     "Reid Schaefer",
     "L",
     "CAN",
-    51,
+    52,
     false,
     2025,
     2026,
     {
-     "NSH": 51
+     "NSH": 52
     },
     2003
    ],
@@ -269766,12 +272452,12 @@
     "Juraj Slafkovský",
     "L",
     "SVK",
-    289,
+    290,
     false,
     2022,
     2026,
     {
-     "MTL": 289
+     "MTL": 290
     },
     2004
    ],
@@ -269780,12 +272466,12 @@
     "Jimmy Snuggerud",
     "R",
     "USA",
-    84,
+    85,
     false,
     2024,
     2026,
     {
-     "STL": 84
+     "STL": 85
     },
     2004
    ],
@@ -269794,12 +272480,12 @@
     "Shane Wright",
     "C",
     "CAN",
-    177,
+    178,
     false,
     2022,
     2026,
     {
-     "SEA": 177
+     "SEA": 178
     },
     2004
    ],
@@ -269865,13 +272551,13 @@
     "Clay Stevenson",
     "G",
     "CAN",
-    7,
+    8,
     false,
     2024,
     2026,
     {
      "WSH": 5,
-     "WPG": 2
+     "WPG": 3
     },
     1999
    ],
@@ -269936,13 +272622,13 @@
     "Marc Gatcomb",
     "C",
     "USA",
-    97,
+    98,
     false,
     2024,
     2026,
     {
      "NYI": 88,
-     "VGK": 9
+     "VGK": 10
     },
     1999
    ],
@@ -269951,7 +272637,7 @@
     "Nick Blankenburg",
     "D",
     "USA",
-    179,
+    180,
     false,
     2021,
     2026,
@@ -269959,7 +272645,7 @@
      "CBJ": 55,
      "COL": 12,
      "NSH": 109,
-     "TOR": 3
+     "TOR": 4
     },
     1998
    ],
@@ -269996,14 +272682,14 @@
     "Ben Meyers",
     "C",
     "USA",
-    133,
+    134,
     false,
     2021,
     2026,
     {
      "COL": 53,
      "ANA": 14,
-     "SEA": 66
+     "SEA": 67
     },
     1998
    ],
@@ -270154,12 +272840,12 @@
     "Stephen Halliday",
     "C",
     "CAN",
-    38,
+    39,
     false,
     2025,
     2026,
     {
-     "OTT": 38
+     "OTT": 39
     },
     2002
    ],
@@ -270168,12 +272854,12 @@
     "Elias Pettersson",
     "D",
     "SWE",
-    107,
+    108,
     false,
     2024,
     2026,
     {
-     "VAN": 107
+     "VAN": 108
     },
     2004
    ],
@@ -270210,12 +272896,12 @@
     "Noah Laba",
     "C",
     "USA",
-    83,
+    84,
     false,
     2025,
     2026,
     {
-     "NYR": 83
+     "NYR": 84
     },
     2003
    ],
@@ -270252,12 +272938,12 @@
     "Sergei Murashov",
     "G",
     "RUS",
-    8,
+    9,
     false,
     2025,
     2026,
     {
-     "PIT": 8
+     "PIT": 9
     },
     2004
    ],
@@ -270280,13 +272966,13 @@
     "Dennis Hildeby",
     "G",
     "SWE",
-    27,
+    28,
     false,
     2024,
     2026,
     {
      "TOR": 26,
-     "TBL": 1
+     "TBL": 2
     },
     2001
    ],
@@ -270366,12 +273052,12 @@
     "Dominic James",
     "C",
     "USA",
-    44,
+    45,
     false,
     2025,
     2026,
     {
-     "TBL": 44
+     "TBL": 45
     },
     2002
    ],
@@ -270422,13 +273108,13 @@
     "Victor Mancini",
     "D",
     "USA",
-    57,
+    58,
     false,
     2024,
     2026,
     {
      "NYR": 15,
-     "VAN": 42
+     "VAN": 43
     },
     2002
    ],
@@ -270437,12 +273123,12 @@
     "Sandis Vilmanis",
     "L",
     "LVA",
-    27,
+    28,
     false,
     2025,
     2026,
     {
-     "FLA": 27
+     "FLA": 28
     },
     2004
    ],
@@ -270451,7 +273137,7 @@
     "Andrei Kuzmenko",
     "L",
     "RUS",
-    275,
+    276,
     false,
     2022,
     2026,
@@ -270460,7 +273146,7 @@
      "CGY": 66,
      "LAK": 74,
      "VAN": 124,
-     "PIT": 4
+     "PIT": 5
     },
     1996
    ],
@@ -270483,12 +273169,12 @@
     "Braeden Bowman",
     "R",
     "CAN",
-    63,
+    64,
     false,
     2025,
     2026,
     {
-     "VGK": 63
+     "VGK": 64
     },
     2003
    ],
@@ -270553,12 +273239,12 @@
     "Max Sasson",
     "C",
     "USA",
-    104,
+    105,
     false,
     2024,
     2026,
     {
-     "VAN": 104
+     "VAN": 105
     },
     2000
    ],
@@ -270567,12 +273253,12 @@
     "Denver Barkey",
     "C",
     "CAN",
-    49,
+    50,
     false,
     2025,
     2026,
     {
-     "PHI": 49
+     "PHI": 50
     },
     2005
    ],
@@ -270581,12 +273267,12 @@
     "Connor Bedard",
     "C",
     "CAN",
-    221,
+    222,
     false,
     2023,
     2026,
     {
-     "CHI": 221
+     "CHI": 222
     },
     2005
    ],
@@ -270595,12 +273281,12 @@
     "Zach Benson",
     "L",
     "CAN",
-    219,
+    220,
     false,
     2023,
     2026,
     {
-     "BUF": 219
+     "BUF": 220
     },
     2005
    ],
@@ -270609,12 +273295,12 @@
     "Oliver Bonk",
     "D",
     "CAN",
-    4,
+    5,
     false,
     2025,
     2026,
     {
-     "PHI": 4
+     "PHI": 5
     },
     2005
    ],
@@ -270680,12 +273366,12 @@
     "Easton Cowan",
     "R",
     "CAN",
-    74,
+    75,
     false,
     2025,
     2026,
     {
-     "TOR": 74
+     "TOR": 75
     },
     2005
    ],
@@ -270694,12 +273380,12 @@
     "Nate Danielson",
     "C",
     "CAN",
-    34,
+    35,
     false,
     2025,
     2026,
     {
-     "DET": 34
+     "DET": 35
     },
     2004
    ],
@@ -270708,12 +273394,12 @@
     "Dalibor Dvorsky",
     "R",
     "SVK",
-    80,
+    81,
     false,
     2024,
     2026,
     {
-     "STL": 80
+     "STL": 81
     },
     2005
    ],
@@ -270722,12 +273408,12 @@
     "Adam Fantilli",
     "C",
     "CAN",
-    218,
+    219,
     false,
     2023,
     2026,
     {
-     "CBJ": 218
+     "CBJ": 219
     },
     2004
    ],
@@ -270764,12 +273450,12 @@
     "Jacob Fowler",
     "G",
     "USA",
-    20,
+    21,
     false,
     2025,
     2026,
     {
-     "MTL": 20
+     "MTL": 21
     },
     2004
    ],
@@ -270820,12 +273506,12 @@
     "Ryan Leonard",
     "R",
     "USA",
-    91,
+    92,
     false,
     2024,
     2026,
     {
-     "WSH": 91
+     "WSH": 92
     },
     2005
    ],
@@ -270834,12 +273520,12 @@
     "Theo Lindstein",
     "D",
     "SWE",
-    20,
+    21,
     false,
     2025,
     2026,
     {
-     "STL": 20
+     "STL": 21
     },
     2005
    ],
@@ -270848,12 +273534,12 @@
     "Oliver Moore",
     "C",
     "USA",
-    68,
+    69,
     false,
     2024,
     2026,
     {
-     "CHI": 68
+     "CHI": 69
     },
     2005
    ],
@@ -270862,12 +273548,12 @@
     "Bradly Nadeau",
     "L",
     "CAN",
-    15,
+    16,
     false,
     2023,
-    2025,
+    2026,
     {
-     "CAR": 15
+     "CAR": 16
     },
     2005
    ],
@@ -270876,12 +273562,12 @@
     "Gabe Perreault",
     "R",
     "CAN",
-    63,
+    64,
     false,
     2024,
     2026,
     {
-     "NYR": 63
+     "NYR": 64
     },
     2005
    ],
@@ -270904,12 +273590,12 @@
     "David Reinbacher",
     "D",
     "AUT",
-    2,
+    3,
     false,
     2025,
-    2025,
+    2026,
     {
-     "MTL": 2
+     "MTL": 3
     },
     2004
    ],
@@ -270918,12 +273604,12 @@
     "Calum Ritchie",
     "C",
     "CAN",
-    79,
+    80,
     false,
     2024,
     2026,
     {
-     "NYI": 72,
+     "NYI": 73,
      "COL": 7
     },
     2005
@@ -270947,12 +273633,12 @@
     "Will Smith",
     "C",
     "USA",
-    150,
+    151,
     false,
     2024,
     2026,
     {
-     "SJS": 150
+     "SJS": 151
     },
     2005
    ],
@@ -270989,12 +273675,12 @@
     "Tom Willander",
     "D",
     "SWE",
-    79,
+    80,
     false,
     2025,
     2026,
     {
-     "VAN": 79
+     "VAN": 80
     },
     2005
    ],
@@ -271003,12 +273689,12 @@
     "Matthew Wood",
     "R",
     "CAN",
-    84,
+    85,
     false,
     2024,
     2026,
     {
-     "NSH": 84
+     "NSH": 85
     },
     2005
    ],
@@ -271159,12 +273845,12 @@
     "Uvis Balinskis",
     "D",
     "LVA",
-    161,
+    162,
     false,
     2023,
     2026,
     {
-     "FLA": 161
+     "FLA": 162
     },
     1996
    ],
@@ -271173,12 +273859,12 @@
     "Zach Metsa",
     "D",
     "USA",
-    51,
+    52,
     false,
     2025,
     2026,
     {
-     "BUF": 51
+     "BUF": 52
     },
     1998
    ],
@@ -271215,12 +273901,12 @@
     "Nikolas Matinpalo",
     "D",
     "FIN",
-    101,
+    102,
     false,
     2023,
     2026,
     {
-     "OTT": 101
+     "OTT": 102
     },
     1998
    ],
@@ -271257,34 +273943,6 @@
     "Dmitri Simashev",
     "D",
     "RUS",
-    36,
-    false,
-    2025,
-    2026,
-    {
-     "UTA": 36
-    },
-    2005
-   ],
-   [
-    8484387,
-    "Matvei Michkov",
-    "R",
-    "RUS",
-    170,
-    false,
-    2024,
-    2026,
-    {
-     "PHI": 170
-    },
-    2004
-   ],
-   [
-    8484388,
-    "Daniil But",
-    "L",
-    "RUS",
     37,
     false,
     2025,
@@ -271295,16 +273953,44 @@
     2005
    ],
    [
-    8484392,
-    "Felix Unger Sorum",
+    8484387,
+    "Matvei Michkov",
     "R",
-    "NOR",
-    1,
+    "RUS",
+    171,
+    false,
+    2024,
+    2026,
+    {
+     "PHI": 171
+    },
+    2004
+   ],
+   [
+    8484388,
+    "Daniil But",
+    "L",
+    "RUS",
+    38,
     false,
     2025,
-    2025,
+    2026,
     {
-     "CAR": 1
+     "UTA": 38
+    },
+    2005
+   ],
+   [
+    8484392,
+    "Felix Unger Sörum",
+    "R",
+    "NOR",
+    2,
+    false,
+    2025,
+    2026,
+    {
+     "CAR": 2
     },
     2005
    ],
@@ -271355,12 +274041,12 @@
     "Emmitt Finnie",
     "C",
     "CAN",
-    89,
+    90,
     false,
     2025,
     2026,
     {
-     "DET": 89
+     "DET": 90
     },
     2005
    ],
@@ -271397,12 +274083,12 @@
     "Carter Yakemchuk",
     "D",
     "CAN",
-    12,
+    13,
     false,
     2025,
     2026,
     {
-     "OTT": 12
+     "OTT": 13
     },
     2005
    ],
@@ -271453,12 +274139,12 @@
     "Artyom Levshunov",
     "D",
     "BLR",
-    94,
+    95,
     false,
     2024,
     2026,
     {
-     "CHI": 94
+     "CHI": 95
     },
     2005
    ],
@@ -271481,12 +274167,12 @@
     "Michael Brandsegg-Nygård",
     "R",
     "NOR",
-    21,
+    22,
     false,
     2025,
     2026,
     {
-     "DET": 21
+     "DET": 22
     },
     2005
    ],
@@ -271495,12 +274181,12 @@
     "Konsta Helenius",
     "C",
     "FIN",
-    16,
+    17,
     false,
     2025,
     2026,
     {
-     "BUF": 16
+     "BUF": 17
     },
     2006
    ],
@@ -271509,13 +274195,13 @@
     "Zeev Buium",
     "D",
     "USA",
-    85,
+    86,
     false,
     2025,
     2026,
     {
      "MIN": 31,
-     "VAN": 54
+     "VAN": 55
     },
     2005
    ],
@@ -271524,12 +274210,12 @@
     "Berkly Catton",
     "C",
     "CAN",
-    74,
+    75,
     false,
     2025,
     2026,
     {
-     "SEA": 74
+     "SEA": 75
     },
     2006
    ],
@@ -271538,12 +274224,12 @@
     "Macklin Celebrini",
     "C",
     "CAN",
-    157,
+    158,
     false,
     2024,
     2026,
     {
-     "SJS": 157
+     "SJS": 158
     },
     2006
    ],
@@ -271552,12 +274238,12 @@
     "Sam Dickinson",
     "D",
     "CAN",
-    77,
+    78,
     false,
     2025,
     2026,
     {
-     "SJS": 77
+     "SJS": 78
     },
     2006
    ],
@@ -271580,12 +274266,12 @@
     "Justin Hryckowian",
     "C",
     "CAN",
-    93,
+    94,
     false,
     2024,
     2026,
     {
-     "DAL": 93
+     "DAL": 94
     },
     2001
    ],
@@ -271622,12 +274308,12 @@
     "Cole Hutson",
     "D",
     "USA",
-    21,
+    22,
     false,
     2025,
     2026,
     {
-     "WSH": 21
+     "WSH": 22
     },
     2006
    ],
@@ -271664,12 +274350,12 @@
     "Collin Graf",
     "R",
     "USA",
-    128,
+    129,
     false,
     2023,
     2026,
     {
-     "SJS": 128
+     "SJS": 129
     },
     2002
    ],
@@ -271706,12 +274392,12 @@
     "Arttu Hyry",
     "R",
     "FIN",
-    32,
+    33,
     false,
     2024,
     2026,
     {
-     "DAL": 32
+     "DAL": 33
     },
     2001
    ],
@@ -271764,12 +274450,12 @@
     "Igor Chernyshov",
     "L",
     "RUS",
-    35,
+    36,
     false,
     2025,
     2026,
     {
-     "SJS": 35
+     "SJS": 36
     },
     2005
    ],
@@ -271778,12 +274464,12 @@
     "Ilya Protas",
     "L",
     "BLR",
-    11,
+    12,
     false,
     2025,
     2026,
     {
-     "WSH": 11
+     "WSH": 12
     },
     2006
    ],
@@ -271820,12 +274506,12 @@
     "Matthew Schaefer",
     "D",
     "CAN",
-    89,
+    90,
     false,
     2025,
     2026,
     {
-     "NYI": 89
+     "NYI": 90
     },
     2007
    ],
@@ -271848,12 +274534,12 @@
     "Victor Eklund",
     "R",
     "SWE",
-    8,
+    9,
     false,
     2025,
     2026,
     {
-     "NYI": 8
+     "NYI": 9
     },
     2006
    ],
@@ -271862,12 +274548,12 @@
     "Anton Frondell",
     "C",
     "SWE",
-    20,
+    21,
     false,
     2025,
     2026,
     {
-     "CHI": 20
+     "CHI": 21
     },
     2007
    ],
@@ -271876,12 +274562,12 @@
     "James Hagens",
     "C",
     "USA",
-    10,
+    11,
     false,
     2025,
     2026,
     {
-     "BOS": 10
+     "BOS": 11
     },
     2006
    ],
@@ -271890,12 +274576,12 @@
     "Michael Misa",
     "C",
     "CAN",
-    52,
+    53,
     false,
     2025,
     2026,
     {
-     "SJS": 52
+     "SJS": 53
     },
     2007
    ],
@@ -271918,12 +274604,12 @@
     "Porter Martone",
     "R",
     "CAN",
-    18,
+    19,
     false,
     2025,
     2026,
     {
-     "PHI": 18
+     "PHI": 19
     },
     2006
    ],
@@ -271932,12 +274618,12 @@
     "Ben Kindel",
     "C",
     "CAN",
-    84,
+    85,
     false,
     2025,
     2026,
     {
-     "PIT": 84
+     "PIT": 85
     },
     2007
    ],
@@ -272101,12 +274787,12 @@
     "Dylan Peterson",
     "C",
     "USA",
-    2,
+    3,
     false,
     2026,
     2026,
     {
-     "STL": 2
+     "STL": 3
     },
     2002
    ],
@@ -272115,12 +274801,12 @@
     "William Wallinder",
     "D",
     "SWE",
-    3,
+    4,
     false,
     2026,
     2026,
     {
-     "DET": 3
+     "DET": 4
     },
     2002
    ],
@@ -272185,12 +274871,12 @@
     "Anton Johansson",
     "D",
     "SWE",
-    7,
+    8,
     false,
     2026,
     2026,
     {
-     "DET": 7
+     "DET": 8
     },
     2004
    ],
@@ -272199,12 +274885,12 @@
     "Amadeus Lombardi",
     "C",
     "CAN",
-    7,
+    8,
     false,
     2026,
     2026,
     {
-     "NJD": 7
+     "NJD": 8
     },
     2003
    ],
@@ -272227,12 +274913,12 @@
     "Roman Kantserov",
     "R",
     "RUS",
-    8,
+    9,
     false,
     2026,
     2026,
     {
-     "CHI": 8
+     "CHI": 9
     },
     2004
    ],
@@ -272269,12 +274955,12 @@
     "Adam Jiricek",
     "D",
     "CZE",
-    7,
+    8,
     false,
     2026,
     2026,
     {
-     "STL": 7
+     "STL": 8
     },
     2006
    ],
@@ -272283,12 +274969,12 @@
     "Trevor Connelly",
     "L",
     "USA",
-    9,
+    10,
     false,
     2026,
     2026,
     {
-     "VGK": 9
+     "VGK": 10
     },
     2006
    ],
@@ -272311,12 +274997,12 @@
     "Alberts Smits",
     "D",
     "LVA",
-    9,
+    10,
     false,
     2026,
     2026,
     {
-     "NYR": 9
+     "NYR": 10
     },
     2007
    ],
@@ -272325,12 +275011,12 @@
     "Viggo Björck",
     "C",
     "SWE",
-    7,
+    8,
     false,
     2026,
     2026,
     {
-     "WPG": 7
+     "WPG": 8
     },
     2008
    ],
@@ -272353,12 +275039,12 @@
     "Gavin McKenna",
     "L",
     "CAN",
-    8,
+    9,
     false,
     2026,
     2026,
     {
-     "TOR": 8
+     "TOR": 9
     },
     2007
    ],
@@ -272367,12 +275053,12 @@
     "Ivar Stenberg",
     "L",
     "SWE",
-    7,
+    8,
     false,
     2026,
     2026,
     {
-     "SJS": 7
+     "SJS": 8
     },
     2007
    ],
@@ -272381,12 +275067,12 @@
     "Owen Michaels",
     "R",
     "USA",
-    7,
+    8,
     false,
     2026,
     2026,
     {
-     "EDM": 7
+     "EDM": 8
     },
     2002
    ],
@@ -272409,12 +275095,12 @@
     "Vitali Pinchuk",
     "C",
     "BLR",
-    3,
+    4,
     false,
     2026,
     2026,
     {
-     "NSH": 3
+     "NSH": 4
     },
     2002
    ]
@@ -801943,7 +804629,7 @@
    "8484801": 45
   },
   "achievements_sha256": "062b3f729644babe25e1a5ac1944fc7b298f9a7a74e661f88b7967469d1496da",
-  "grid_asof": "2026-10-17"
+  "grid_asof": "2026-10-18"
  },
  "grid_features": 3,
  "grid_days": {
@@ -802411,6 +805097,20 @@
     null,
     null
    ]
+  },
+  "2026-11-17": {
+   "id": "grid-029",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   }
  },
  "grid_start": "2026-10-14",
@@ -802516,6 +805216,9 @@
   },
   "2026-11-16": {
    "id": "boss-002"
+  },
+  "2026-11-17": {
+   "id": "boss-096"
   }
  },
  "benchboss_start": "2026-10-14",
@@ -802621,6 +805324,9 @@
   },
   "2026-11-16": {
    "id": "trail-063"
+  },
+  "2026-11-17": {
+   "id": "trail-043"
   }
  },
  "teammatetrail_start": "2026-10-14",
@@ -808016,6 +810722,381 @@
     [
      "Stanley Cup",
      2015
+    ]
+   ]
+  },
+  "8474102": {
+   "id": 8474102,
+   "name": "David Perron",
+   "team": "DAL",
+   "pos": "L",
+   "shoots": "R",
+   "birth": "1988-05-28",
+   "nation": "CAN",
+   "number": 16,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DAL/8474102.png",
+   "ht": 72,
+   "bc": "Sherbrooke",
+   "bs": "QC",
+   "wt": 202,
+   "bp": [
+    45.4,
+    -71.9,
+    "Sherbrooke, QC, Canada"
+   ],
+   "past": [
+    "STL",
+    "EDM",
+    "PIT",
+    "ANA",
+    "VGK",
+    "DET",
+    "OTT"
+   ],
+   "car": [
+    [
+     2007,
+     "STL",
+     62,
+     13,
+     14,
+     27,
+     38,
+     16
+    ],
+    [
+     2008,
+     "STL",
+     81,
+     15,
+     35,
+     50,
+     50,
+     13
+    ],
+    [
+     2009,
+     "STL",
+     82,
+     20,
+     27,
+     47,
+     60,
+     -10
+    ],
+    [
+     2010,
+     "STL",
+     10,
+     5,
+     2,
+     7,
+     12,
+     7
+    ],
+    [
+     2011,
+     "STL",
+     57,
+     21,
+     21,
+     42,
+     28,
+     19
+    ],
+    [
+     2012,
+     "STL",
+     48,
+     10,
+     15,
+     25,
+     44,
+     0
+    ],
+    [
+     2013,
+     "EDM",
+     78,
+     28,
+     29,
+     57,
+     90,
+     -16
+    ],
+    [
+     2014,
+     "EDM",
+     38,
+     5,
+     14,
+     19,
+     20,
+     -17
+    ],
+    [
+     2014,
+     "PIT",
+     43,
+     12,
+     10,
+     22,
+     42,
+     -8
+    ],
+    [
+     2015,
+     "PIT",
+     43,
+     4,
+     12,
+     16,
+     28,
+     -13
+    ],
+    [
+     2015,
+     "ANA",
+     28,
+     8,
+     12,
+     20,
+     34,
+     12
+    ],
+    [
+     2016,
+     "STL",
+     82,
+     18,
+     28,
+     46,
+     54,
+     -2
+    ],
+    [
+     2017,
+     "VGK",
+     70,
+     16,
+     50,
+     66,
+     50,
+     1
+    ],
+    [
+     2018,
+     "STL",
+     57,
+     23,
+     23,
+     46,
+     46,
+     3
+    ],
+    [
+     2019,
+     "STL",
+     71,
+     25,
+     35,
+     60,
+     52,
+     2
+    ],
+    [
+     2020,
+     "STL",
+     56,
+     19,
+     39,
+     58,
+     22,
+     6
+    ],
+    [
+     2021,
+     "STL",
+     67,
+     27,
+     30,
+     57,
+     48,
+     8
+    ],
+    [
+     2022,
+     "DET",
+     82,
+     24,
+     32,
+     56,
+     52,
+     -7
+    ],
+    [
+     2023,
+     "DET",
+     76,
+     17,
+     30,
+     47,
+     55,
+     -12
+    ],
+    [
+     2024,
+     "OTT",
+     43,
+     9,
+     7,
+     16,
+     12,
+     -7
+    ],
+    [
+     2025,
+     "OTT",
+     49,
+     10,
+     15,
+     25,
+     22,
+     2
+    ],
+    [
+     2025,
+     "DET",
+     16,
+     3,
+     0,
+     3,
+     18,
+     -9
+    ]
+   ],
+   "draft": [
+    2007,
+    1,
+    26,
+    "STL"
+   ],
+   "po": [
+    [
+     2008,
+     "STL",
+     4,
+     1,
+     1,
+     2,
+     4,
+     3
+    ],
+    [
+     2011,
+     "STL",
+     9,
+     1,
+     4,
+     5,
+     10,
+     -4
+    ],
+    [
+     2012,
+     "STL",
+     6,
+     0,
+     2,
+     2,
+     6,
+     -3
+    ],
+    [
+     2014,
+     "PIT",
+     5,
+     0,
+     1,
+     1,
+     4,
+     -1
+    ],
+    [
+     2015,
+     "ANA",
+     7,
+     1,
+     2,
+     3,
+     8,
+     3
+    ],
+    [
+     2016,
+     "STL",
+     11,
+     0,
+     1,
+     1,
+     8,
+     -1
+    ],
+    [
+     2017,
+     "VGK",
+     15,
+     1,
+     8,
+     9,
+     10,
+     1
+    ],
+    [
+     2018,
+     "STL",
+     26,
+     7,
+     9,
+     16,
+     16,
+     4
+    ],
+    [
+     2019,
+     "STL",
+     9,
+     4,
+     5,
+     9,
+     8,
+     2
+    ],
+    [
+     2021,
+     "STL",
+     12,
+     9,
+     4,
+     13,
+     10,
+     0
+    ],
+    [
+     2024,
+     "OTT",
+     6,
+     2,
+     1,
+     3,
+     4,
+     1
+    ]
+   ],
+   "aw": [
+    [
+     "Stanley Cup",
+     2018
     ]
    ]
   },
@@ -821589,7 +824670,7 @@
    "ht": 76,
    "bc": "Tonka Bay",
    "bs": "MN",
-   "wt": 194,
+   "wt": 200,
    "bp": [
     44.91,
     -93.59,
@@ -889254,6 +892335,16 @@
      0,
      2,
      -2
+    ],
+    [
+     2026,
+     "BUF",
+     6,
+     0,
+     0,
+     0,
+     2,
+     1
     ]
    ],
    "draft": 0
@@ -896463,6 +899554,16 @@
      8,
      38,
      0
+    ],
+    [
+     2026,
+     "NJD",
+     3,
+     0,
+     0,
+     0,
+     7,
+     -2
     ]
    ],
    "draft": [
@@ -897896,6 +900997,16 @@
      0,
      0,
      0
+    ],
+    [
+     2026,
+     "DET",
+     5,
+     0,
+     0,
+     0,
+     0,
+     -3
     ]
    ],
    "draft": 0,
@@ -911012,10 +914123,10 @@
     [
      2026,
      "CAR",
-     2,
-     2,
-     1.95,
-     0.895,
+     5,
+     5,
+     1.78,
+     0.912,
      0
     ]
    ],
@@ -912799,6 +915910,16 @@
      2,
      0,
      -2
+    ],
+    [
+     2026,
+     "LAK",
+     3,
+     0,
+     0,
+     0,
+     2,
+     0
     ]
    ],
    "draft": [
@@ -914220,6 +917341,16 @@
      11,
      41,
      5
+    ],
+    [
+     2026,
+     "MTL",
+     4,
+     0,
+     1,
+     1,
+     2,
+     -1
     ]
    ],
    "draft": [
@@ -935493,6 +938624,16 @@
      2,
      2,
      -1
+    ],
+    [
+     2026,
+     "OTT",
+     6,
+     1,
+     1,
+     2,
+     2,
+     1
     ]
    ],
    "draft": [
@@ -936286,6 +939427,45 @@
     1,
     1,
     "SJS"
+   ]
+  },
+  "8484803": {
+   "id": 8484803,
+   "name": "Trevor Connelly",
+   "team": "VGK",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2006-02-28",
+   "nation": "USA",
+   "number": 24,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/VGK/8484803.png",
+   "ht": 73,
+   "bc": "Tustin",
+   "bs": "CA",
+   "wt": 177,
+   "bp": [
+    33.75,
+    -117.83,
+    "Tustin, CA, USA"
+   ],
+   "past": [],
+   "car": [
+    [
+     2026,
+     "VGK",
+     10,
+     4,
+     3,
+     7,
+     0,
+     -1
+    ]
+   ],
+   "draft": [
+    2024,
+    1,
+    19,
+    "VGK"
    ]
   },
   "8484804": {
@@ -938925,6 +942105,45 @@
    ],
    "draft": 0
   },
+  "8485957": {
+   "id": 8485957,
+   "name": "Alberts Smits",
+   "team": "NYR",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "2007-12-02",
+   "nation": "LVA",
+   "number": 12,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/NYR/8485957.png",
+   "ht": 75,
+   "bc": "Valmiera",
+   "bs": "",
+   "wt": 208,
+   "bp": [
+    57.54,
+    25.43,
+    "Valmiera, Latvia"
+   ],
+   "past": [],
+   "car": [
+    [
+     2026,
+     "NYR",
+     10,
+     0,
+     0,
+     0,
+     4,
+     -1
+    ]
+   ],
+   "draft": [
+    2026,
+    1,
+    5,
+    "NYR"
+   ]
+  },
   "8486009": {
    "id": 8486009,
    "name": "Ryden Evers",
@@ -939675,6 +942894,21 @@
    "bs": "MI",
    "wt": 237
   },
+  "8474102": {
+   "id": 8474102,
+   "name": "David Perron",
+   "team": "DAL",
+   "pos": "L",
+   "shoots": "R",
+   "birth": "1988-05-28",
+   "nation": "CAN",
+   "number": 16,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DAL/8474102.png",
+   "ht": 72,
+   "bc": "Sherbrooke",
+   "bs": "QC",
+   "wt": 202
+  },
   "8474141": {
    "id": 8474141,
    "name": "Patrick Kane",
@@ -940393,7 +943627,7 @@
    "ht": 76,
    "bc": "Tonka Bay",
    "bs": "MN",
-   "wt": 194
+   "wt": 200
   },
   "8475726": {
    "id": 8475726,
@@ -953180,6 +956414,21 @@
    "bs": "",
    "wt": 204
   },
+  "8483463": {
+   "id": 8483463,
+   "name": "Aleksanteri Kaskimaki",
+   "team": "STL",
+   "pos": "C",
+   "shoots": "L",
+   "birth": "2004-02-06",
+   "nation": "FIN",
+   "number": 41,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/STL/8483463.png",
+   "ht": 73,
+   "bc": "Espoo",
+   "bs": "",
+   "wt": 197
+  },
   "8483464": {
    "id": 8483464,
    "name": "Marco Kasper",
@@ -954774,7 +958023,48 @@
    "ht": 74,
    "bc": "Erding",
    "bs": "",
-   "wt": 198
+   "wt": 198,
+   "bp": [
+    48.31,
+    11.91,
+    "Erding, Germany"
+   ],
+   "past": [],
+   "car": [
+    [
+     2025,
+     "EDM",
+     24,
+     2,
+     2,
+     4,
+     6,
+     2
+    ],
+    [
+     2026,
+     "EDM",
+     6,
+     0,
+     1,
+     1,
+     8,
+     1
+    ]
+   ],
+   "draft": 0,
+   "po": [
+    [
+     2025,
+     "EDM",
+     5,
+     1,
+     1,
+     2,
+     4,
+     1
+    ]
+   ]
   },
   "8484762": {
    "id": 8484762,

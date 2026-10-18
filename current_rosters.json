@@ -109,6 +109,11 @@
   "team": "BUF",
   "number": 10
  },
+ "8479941": {
+  "name": "Justin Danforth",
+  "team": "BUF",
+  "number": 15
+ },
  "8482659": {
   "name": "Josh Doan",
   "team": "BUF",
@@ -258,6 +263,11 @@
   "name": "Alex DeBrincat",
   "team": "DET",
   "number": 93
+ },
+ "8480326": {
+  "name": "Sheldon Dries",
+  "team": "DET",
+  "number": 15
  },
  "8484471": {
   "name": "Emmitt Finnie",
@@ -1444,6 +1454,11 @@
   "team": "NYR",
   "number": 4
  },
+ "8485957": {
+  "name": "Alberts Smits",
+  "team": "NYR",
+  "number": 12
+ },
  "8476914": {
   "name": "Joonas Korpisalo",
   "team": "NYR",
@@ -2078,6 +2093,11 @@
   "name": "Joel Kiviranta",
   "team": "DAL",
   "number": 22
+ },
+ "8474102": {
+  "name": "David Perron",
+  "team": "DAL",
+  "number": 16
  },
  "8478420": {
   "name": "Mikko Rantanen",
@@ -2989,11 +3009,6 @@
   "team": "EDM",
   "number": 92
  },
- "8484509": {
-  "name": "Josh Samanski",
-  "team": "EDM",
-  "number": 81
- },
  "8483512": {
   "name": "Matt Savoie",
   "team": "EDM",
@@ -3114,10 +3129,10 @@
   "team": "LAK",
   "number": 15
  },
- "8483756": {
-  "name": "Jared Wright",
+ "8483406": {
+  "name": "Taylor Ward",
   "team": "LAK",
-  "number": 25
+  "number": 17
  },
  "8475692": {
   "name": "Mats Zuccarello",
@@ -3508,6 +3523,11 @@
   "name": "Braeden Bowman",
   "team": "VGK",
   "number": 42
+ },
+ "8484803": {
+  "name": "Trevor Connelly",
+  "team": "VGK",
+  "number": 24
  },
  "8475343": {
   "name": "Nic Dowd",
