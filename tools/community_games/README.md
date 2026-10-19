@@ -80,9 +80,12 @@ New samples affect future puzzles, rather than changing scores mid-game or in
 archives. The website build refreshes `grid_popularity.json` from the public
 aggregate endpoint and retains the previous snapshot during outages.
 
-The 32 local crests and four flags are unmodified vector source files. Their
-manifests include original URLs and SHA-256 checksums, verified during builds.
-CSS adjusts their painted dimensions rather than rasterizing scaled thumbnails.
+The 32 local crests and four flags are local vector files. Their manifests
+include original URLs and SHA-256 checksums, verified during builds. The USA
+flag uses smaller, explicitly drawn stars so its canton stays clear at Grid
+icon sizes; this adaptation is recorded in the flag manifest. The other
+vectors retain their source artwork. CSS adjusts their painted dimensions
+rather than rasterizing scaled thumbnails.
 
 Run the checks from the repository root:
 
