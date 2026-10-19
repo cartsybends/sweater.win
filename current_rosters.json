@@ -304,11 +304,6 @@
   "team": "DET",
   "number": 23
  },
- "8480879": {
-  "name": "Jacob Bernard-Docker",
-  "team": "DET",
-  "number": 25
- },
  "8475279": {
   "name": "Ben Chiarot",
   "team": "DET",
@@ -1249,6 +1244,11 @@
   "team": "NJD",
   "number": 34
  },
+ "8482070": {
+  "name": "Mitchell Chaffee",
+  "team": "NYI",
+  "number": 26
+ },
  "8475231": {
   "name": "Casey Cizikas",
   "team": "NYI",
@@ -1479,6 +1479,11 @@
   "team": "PHI",
   "number": 86
  },
+ "8483731": {
+  "name": "Alex Bump",
+  "team": "PHI",
+  "number": 20
+ },
  "8478047": {
   "name": "Michael Bunting",
   "team": "PHI",
@@ -1683,6 +1688,11 @@
   "name": "Kris Letang",
   "team": "PIT",
   "number": 58
+ },
+ "8482470": {
+  "name": "Ilya Solovyov",
+  "team": "PIT",
+  "number": 7
  },
  "8481056": {
   "name": "Spencer Stastney",
@@ -2438,6 +2448,11 @@
   "name": "Jimmy Snuggerud",
   "team": "STL",
   "number": 21
+ },
+ "8484230": {
+  "name": "Otto Stenberg",
+  "team": "STL",
+  "number": 28
  },
  "8480459": {
   "name": "Pius Suter",
