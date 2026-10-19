@@ -34,6 +34,7 @@ function fsIdentity(t, id, index, state, over) {
   </article>`;
 }
 G.faceswap = {
+  kind: 'score',
   title: 'Face Swap', share: 'Sweater Face Swap', view: 'view-faceswap', max: FACE_SWAP_MODEL.max,
   next: 'Next face', hideReveal: true, quietFinish: true, persistUnlimited: true, orderedRotation: true,
   pool: () => FS_POOL,

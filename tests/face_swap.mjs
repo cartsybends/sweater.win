@@ -119,6 +119,7 @@ test('Unlimited visits every portrait before repeating and resumes the same rota
   assert.notEqual(reload.g.random().id, ids.at(-1));
 });
 test('Face Swap replaces the retired interface and is a normal playable hub mode', () => {
+  assert.equal(runtime().g.kind, 'score', 'Daily history, statistics, and analytics must record points');
   const source = fs.readFileSync('build_sweater.py', 'utf8');
   assert(!source.includes('id="view-blur"')); assert(!source.includes('G.blur ='));
   assert(source.includes('["faceswap", "👥"')); assert(!/MAINTENANCE_GAMES = new Set\([^\n]*faceswap/.test(source));
