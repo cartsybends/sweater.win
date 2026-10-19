@@ -9,7 +9,8 @@
     "country": "us",
     "file": "us.svg",
     "source": "https://flagcdn.com/us.svg",
-    "sha256": "e1792c011daad918fdbd99a21f7f46fd71018ffd052af5a7d7faf9954d593e31"
+    "sha256": "f66a6405eef1599f7ab397e1b441c5a4ef8a8a3a05ff37240b5d6032350664b9",
+    "adaptation": "Smaller explicit stars for legibility at Grid icon sizes; based on the source flag."
   },
   {
     "country": "se",
