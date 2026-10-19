@@ -7,15 +7,17 @@ function runtime(storage=new Map()){
  const unavailable=new Set(),finished=new Set();
  const math=Object.create(Math);math.random=()=>random;
  const context=vm.createContext({Math:math,Date,Array,Set,Map,JSON,Number,String,console,HL_POOL:[1,2],HL_STATS:{points:{}},
-  dayKey:()=>day,mode:'unlimited',esc:String,openGame:id=>{opened=id;},KEYS:{benchboss:{daily:'sweater-benchboss-daily'}},archiveGet:()=>null,
+  dayKey:()=>day,mode:'unlimited',esc:String,modeIcon:id=>`<svg data-icon="${id}"></svg>`,openGame:id=>{opened=id;},KEYS:{benchboss:{daily:'sweater-benchboss-daily'}},archiveGet:()=>null,
   hubStatus:id=>[finished.has(id)?'done':'',''],
   store:{get:key=>storage.has(key)?JSON.parse(storage.get(key)):null,set:(key,value)=>storage.set(key,JSON.stringify(value))},
  });
  const run=code=>vm.runInContext(code,context),plain=code=>JSON.parse(JSON.stringify(run(code)));
  run(source.match(/^const pick = arr.*$/m)[0]);
  run(part('const HUB = [','/* Short, repeatable labels'));
- context.G=Object.fromEntries(plain('HUB.flatMap(s=>s.games.map(([id])=>id)).concat(EDGE_GAMES.map(x=>x.id))').map(id=>[id,{pool:()=>unavailable.has(id)?[]:[1,2]}]));
+ context.G=Object.fromEntries(plain('HUB.flatMap(s=>s.games.map(([id])=>id)).concat(EDGE_GAMES.map(x=>x.id))').map(id=>[id,{title:id,pool:()=>unavailable.has(id)?[]:[1,2]}]));
  run(part('const hubIds =','const cleanHubIds ='));
+ run(source.match(/^const keyUTC = .*$/m)[0]);
+ run(source.match(/^const cardTitle = .*$/m)[0]);
  run(part('const gameIsReady =','const LIBRARY_FILTERS ='));
  run(part('// ---- player progression','function renderPlayerProfile()'));
  return {run,plain,storage,unavailable,finished,setDay:value=>day=value,setRandom:value=>random=value,opened:()=>opened,
@@ -23,6 +25,39 @@ function runtime(storage=new Map()){
 }
 let checks=0;
 function test(name,fn){fn();checks++;console.log('PASS',name);}
+test('featured rotation covers every playable library mode and Teams exactly once per cycle',()=>{
+ const r=runtime(),ids=r.plain('featuredGameIds()'),expected=r.plain('hubIds().filter(gameIsReady)');
+ assert.deepEqual(ids,[...expected,'teams']);assert.equal(new Set(ids).size,ids.length);
+ for(const id of ['faceswap','grid','benchboss','teammatetrail','edgerush','edgespeed','edgeshot','edgebuild','teams'])assert(ids.includes(id),id);
+ assert(!ids.includes('edgemap'));assert.equal(ids.filter(id=>id==='teams').length,1);
+ for(const start of ['2026-01-25','2026-02-24','2026-03-01','2026-10-25','2026-12-25','2028-02-24']){
+  const date=new Date(start+'T12:00:00Z'),picks=[];
+  for(let n=0;n<ids.length+1;n++){
+   const day=new Date(date.getTime()+n*864e5).toISOString().slice(0,10);
+   picks.push(r.run(`featuredGame(${JSON.stringify(day)})`));
+  }
+  assert.deepEqual([...new Set(picks.slice(0,-1))].sort(),ids.slice().sort(),start);
+  for(let n=1;n<picks.length;n++)assert.equal(ids.indexOf(picks[n]),(ids.indexOf(picks[n-1])+1)%ids.length,start);
+  assert.equal(picks.at(-1),picks[0],start);
+ }
+});
+test('featured rotation skips unavailable games, picks up new library modes, and keeps Teams usable',()=>{
+ const r=runtime();r.unavailable.add('faceswap');r.unavailable.add('edgeshot');
+ assert(!r.plain('featuredGameIds()').includes('faceswap'));assert(!r.plain('featuredGameIds()').includes('edgeshot'));
+ r.run('HUB[0].games.push(["newmode","!","New mode"]);G.newmode={title:"New mode",pool:()=>[1]}');
+ assert(r.plain('featuredGameIds()').includes('newmode'));
+ r.plain('hubIds()').forEach(id=>r.unavailable.add(id));r.run('HL_POOL.length=0;G.newmode.pool=()=>[]');
+ assert.deepEqual(r.plain('featuredGameIds()'),['teams']);assert.equal(r.run('featuredGame()'),'teams');
+});
+test('featured cards include Teams navigation, EDGE descriptions, and existing resume/completion labels',()=>{
+ const r=runtime(),teams=r.run('featuredGameCard("teams")');
+ assert(teams.includes('data-open="teams"'));assert(teams.includes('>Teams</h2>'));
+ assert(teams.includes('Choose a team'));assert(teams.includes('Franchise challenges'));assert(!teams.includes('New daily puzzle'));
+ for(const id of r.plain('featuredGameIds()'))assert(r.run(`featuredGameCard(${JSON.stringify(id)})`).includes(`data-open="${id}"`));
+ assert(r.run('featuredGameCard("edgespeed")').includes('Pick the faster skater'));
+ const resume=r.run('featuredGameCard("classic",true)');assert(resume.includes('Continue playing'));assert(resume.includes('Resume'));
+ r.finished.add('classic');assert(r.run('featuredGameCard("classic")').includes('Daily complete'));
+});
 test('daily draws cover the playable library, including NHL EDGE, and skip unavailable modes',()=>{
  const r=runtime();r.unavailable.add('edgeshot');const ready=r.plain('hubIds().filter(gameIsReady)'),draws=new Set();
  for(let i=0;i<ready.length;i++){r.setRandom((i+.5)/ready.length);draws.add(r.run('randomDailyChallenge()'));}
