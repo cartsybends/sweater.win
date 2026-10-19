@@ -4051,7 +4051,7 @@ const UI_ICONS = {
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
 const MODE_ICONS = { grid: "grid", benchboss: "draft", teammatetrail: "route", classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", faceswap: "people", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
-  edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
+  edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people", teams: "shield" };
 MODE_ICONS.overtime = "clock";
 UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
 UI_ICONS.play = '<path d="m8 4 12 8-12 8V4Z"/>';
@@ -10876,7 +10876,7 @@ function rememberGame(id) {
   if (!hubIds().includes(hubId)) return;
   store.set("sweater-recent-games", [hubId, ...recentIds().filter(x => x !== hubId)].slice(0, 6));
 }
-const cardTitle = id => id === "hl" ? "Higher or Lower" : G[id].title;
+const cardTitle = id => id === "teams" ? "Teams" : id === "hl" ? "Higher or Lower" : G[id].title;
 let onHub = true, statsGame = null, hubReturnScroll = null;
 function rememberHubScroll() {
   if (!onHub || $("view-hub").hidden) return;
@@ -10908,8 +10908,27 @@ function hubStatus(id) {
   return ["", "Play"];
 }
 
-const FEATURE_SEQUENCE = ["whoscored", "trophy", "cups", "classic", "shoot", "map", "conn", "journey"];
 const gameIsReady = id => !MAINTENANCE_GAMES.has(id) && (id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0);
+const featuredGameIds = () => [...hubIds().filter(gameIsReady), "teams"];
+function featuredGame(day = dayKey()) {
+  const ids = featuredGameIds();
+  // Count actual days so the rotation continues across months and DST changes.
+  return ids[Math.floor(keyUTC(day) / 864e5) % ids.length];
+}
+function featuredGameCard(id, continuing = false) {
+  const teams = id === "teams", state = teams ? "" : hubStatus(id)[0];
+  const copy = continuing ? "Your current run is waiting—pick up where you left off."
+    : teams ? "Pick a franchise, then choose a challenge from its NHL history."
+    : HUB.flatMap(s => s.games).find(([game]) => game === id)?.[2]
+      || EDGE_GAMES.find(game => game.id === id)?.blurb || "Your next daily puzzle is ready.";
+  const status = teams ? "Franchise challenges" : state === "done" ? "Daily complete" : state === "going" ? "In progress" : "New daily puzzle";
+  return `<button type="button" class="hubfeature primary" data-open="${id}">
+      <p class="featureeyebrow">${continuing ? "Continue playing" : "Today's featured game"}</p>
+      <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${modeIcon(id)}</span>${esc(cardTitle(id))}</h2>
+      <p class="featurecopy">${esc(copy)}</p>
+      <span class="featurefooter"><span>${status}</span><b>${continuing ? "Resume" : teams ? "Choose a team" : "Play"} →</b></span>
+    </button>`;
+}
 const LIBRARY_FILTERS = [
   ["all", "All games"], ["favourites", "Favourites"], ["player", "Name a player"], ["details", "Hockey IQ"], ["puzzles", "Puzzles & streaks"], ["arcade", "Arcade"],
 ];
@@ -10917,20 +10936,10 @@ const librarySection = { player: "Name the player", details: "Know the details",
 function renderHub() {
   const allCards = HUB.flatMap(sec => sec.games);
   const going = allCards.find(([id]) => hubStatus(id)[0] === "going");
-  const dateSeed = Number(dayKey().replaceAll("-", ""));
-  const candidate = FEATURE_SEQUENCE[dateSeed % FEATURE_SEQUENCE.length];
-  const primary = going ? going[0] : (gameIsReady(candidate) ? candidate : "classic");
-  const primaryState = hubStatus(primary);
-  const primaryIcon = (CARD[primary] || {}).icon || "🏒";
-  const primaryCopy = going ? "Your current run is waiting—pick up where you left off." : HUB.flatMap(s => s.games).find(([id]) => id === primary)?.[2] || "Your next daily puzzle is ready.";
+  const primary = going ? going[0] : featuredGame();
   const hatTrickCount = dailyEntries(dayKey()).length;
   const theme = activeWeeklyTheme(), completedThemeGames = weeklyDoneGames(theme);
-  $("hubFeatures").innerHTML = `<button type="button" class="hubfeature primary" data-open="${primary}">
-      <p class="featureeyebrow">${going ? "Continue playing" : "Today's featured game"}</p>
-      <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${modeIcon(primary)}</span>${esc(cardTitle(primary))}</h2>
-      <p class="featurecopy">${esc(primaryCopy)}</p>
-      <span class="featurefooter"><span>${primaryState[0] === "done" ? "Daily complete" : primaryState[0] === "going" ? "In progress" : "New daily puzzle"}</span><b>${going ? "Resume" : "Play"} →</b></span>
-    </button><div class="queststack">
+  $("hubFeatures").innerHTML = `${featuredGameCard(primary, !!going)}<div class="queststack">
       ${challengeCard({ challenge: "daily", label: "Daily challenge", title: "Play any 3 dailies", copy: "Build your daily routine and earn a Hat Trick badge.", count: hatTrickCount, action: "Pick me a random game" })}
       ${challengeCard({ challenge: "weekly", label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completedThemeGames.length, action: completedThemeGames.length >= 3 ? "Keep playing" : "Play the next challenge" })}
     </div>`;
