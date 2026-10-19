@@ -6,6 +6,7 @@
 //   GET  /api/health
 
 import { COMMUNITY_MODEL } from '../../static/community-games/model.mjs';
+import { FACE_SWAP_MODEL } from '../../static/face-swap/model.mjs';
 
 const PICK6 = [10, 8, 6, 4, 2, 1];
 const GAMES = {
@@ -17,6 +18,7 @@ const GAMES = {
   team:     { days: "team_days",     max: 5 },
   journey:  { days: "journey_days",  max: 6, points: PICK6 },
   blur:     { days: "blur_days",     max: 6, points: PICK6 },
+  faceswap: { days: "faceswap_days", custom: "faceswap" },
   number:   { days: "number_days",   max: 5, points: [10, 7, 5, 3, 1], guessNumber: true },
   roster:   { days: "roster_days",   roster: true },
   draft:    { days: "draft_days",    max: 5, points: [10, 7, 5, 3, 1], guessDraft: true },
@@ -571,6 +573,12 @@ function scoreConnections(groups, guesses) {
 
 
 export function scoreGame(game, answer, guesses, schedule) {
+  if (GAMES[game].custom === 'faceswap') {
+    const puzzle = schedule.faceswap_puzzles?.find(p => p.id === answer?.id);
+    if (!puzzle) throw httpError(503, "Today's puzzle data is missing");
+    try { return FACE_SWAP_MODEL.result(puzzle, guesses); }
+    catch (error) { throw httpError(400, error.message); }
+  }
   if (GAMES[game].custom === 'community') {
     const data=schedule.community,base=data?.[game]?.find(p=>p.id===answer?.id),target=base&&{...base,...(game==='grid'&&Array.isArray(answer.rarity)?{rarity:answer.rarity}:{})};
     if(!target)throw httpError(503,"Today's puzzle data is missing");

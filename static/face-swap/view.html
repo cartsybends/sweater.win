@@ -1,0 +1,30 @@
+  <section class="view" id="view-faceswap" hidden>
+    <p class="intro">Two NHL players. One face. Can you name them both?</p>
+    <div class="fs-scoreboard">
+      <span id="fsProgress">0 / 2 identified</span>
+      <div id="fsMisses" class="fs-misses" aria-label="0 of 5 misses used"></div>
+      <span id="fsPoints">10 points available</span>
+    </div>
+    <div class="fs-layout">
+      <div class="fs-portrait" id="fsPhoto" data-state="loading">
+        <img id="fsImage" alt="A face combining two NHL players" width="1122" height="1402" draggable="false">
+        <div class="fs-photo-message" id="fsPhotoMessage">
+          <p id="fsPhotoStatus" role="status" aria-live="polite">Loading face…</p>
+          <button type="button" class="btn" id="fsRetry" hidden>Retry photo</button>
+        </div>
+        <span class="fs-photo-caption">WHO'S IN THE MIX?</span>
+      </div>
+      <div class="fs-identities" id="fsIdentities" aria-label="The two source players"></div>
+    </div>
+    <div class="fs-guessing" id="fsGuessing">
+      <p class="fs-feedback" id="fsFeedback" role="status" aria-live="polite" aria-atomic="true">Guess either player. Correct names lock in.</p>
+      <div class="search narrow">
+        <input id="fsGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="fsOpts" aria-describedby="fsFeedback fsRemaining" aria-label="Guess either NHL player" placeholder="Guess either player…">
+        <ul class="list" id="fsOpts" role="listbox" hidden></ul>
+      </div>
+      <p class="hint" id="fsRemaining">5 wrong guesses left · Correct names don't use a miss.</p>
+    </div>
+    <div class="slot"></div>
+    <div class="fs-history" id="fsHistory" hidden><h3>Your guesses</h3><ol id="fsGuesses"></ol></div>
+    <p class="nodata" hidden>Face Swap isn't available right now. Please try again shortly.</p>
+  </section>

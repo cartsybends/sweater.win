@@ -15,6 +15,7 @@ Sweater brings player guessing, highlight challenges, roster recall, hockey hist
 | Game | The challenge |
 | --- | --- |
 | **Classic** | Identify an NHL player using team, position, age, and other clues. |
+| **Face Swap** | Identify both NHL players in one combined face, with new clues after each miss. |
 | **Who Scored?** | Watch a goal with the scorer covered by a silhouette, then name the player. |
 | **Roster Recall** | Name as many players from a team's roster as you can in 60 seconds. |
 | **Higher or Lower** | Compare player stats and keep your streak alive. |

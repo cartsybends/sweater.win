@@ -1,0 +1,319 @@
+{
+  "created": "2026-10-19",
+  "portraits": 200,
+  "method": "AI-generated composites from paired official NHL headshots, following the ten user-approved visual samples. Contact sheets are separated into individual portraits without facial warping.",
+  "approved_originals": [
+    "face-01",
+    "face-02",
+    "face-03",
+    "face-04",
+    "face-05",
+    "face-06",
+    "face-07",
+    "face-08",
+    "face-09",
+    "face-10"
+  ],
+  "players": [
+    {
+      "id": 8478402,
+      "name": "Connor McDavid",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478402.png"
+    },
+    {
+      "id": 8479318,
+      "name": "Auston Matthews",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8479318.png"
+    },
+    {
+      "id": 8471675,
+      "name": "Sidney Crosby",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8471675.png"
+    },
+    {
+      "id": 8471214,
+      "name": "Alex Ovechkin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8471214.png"
+    },
+    {
+      "id": 8477492,
+      "name": "Nathan MacKinnon",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477492.png"
+    },
+    {
+      "id": 8480069,
+      "name": "Cale Makar",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480069.png"
+    },
+    {
+      "id": 8477934,
+      "name": "Leon Draisaitl",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477934.png"
+    },
+    {
+      "id": 8477956,
+      "name": "David Pastrnak",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477956.png"
+    },
+    {
+      "id": 8478550,
+      "name": "Artemi Panarin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478550.png"
+    },
+    {
+      "id": 8476453,
+      "name": "Nikita Kucherov",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476453.png"
+    },
+    {
+      "id": 8481559,
+      "name": "Jack Hughes",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8481559.png"
+    },
+    {
+      "id": 8479314,
+      "name": "Matthew Tkachuk",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8479314.png"
+    },
+    {
+      "id": 8480800,
+      "name": "Quinn Hughes",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480800.png"
+    },
+    {
+      "id": 8480801,
+      "name": "Brady Tkachuk",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480801.png"
+    },
+    {
+      "id": 8478427,
+      "name": "Sebastian Aho",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478427.png"
+    },
+    {
+      "id": 8478420,
+      "name": "Mikko Rantanen",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478420.png"
+    },
+    {
+      "id": 8478483,
+      "name": "Mitch Marner",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478483.png"
+    },
+    {
+      "id": 8477939,
+      "name": "William Nylander",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477939.png"
+    },
+    {
+      "id": 8477493,
+      "name": "Aleksander Barkov",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477493.png"
+    },
+    {
+      "id": 8475167,
+      "name": "Victor Hedman",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8475167.png"
+    },
+    {
+      "id": 8479323,
+      "name": "Adam Fox",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8479323.png"
+    },
+    {
+      "id": 8473419,
+      "name": "Brad Marchand",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8473419.png"
+    },
+    {
+      "id": 8480002,
+      "name": "Nico Hischier",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480002.png"
+    },
+    {
+      "id": 8474563,
+      "name": "Drew Doughty",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8474563.png"
+    },
+    {
+      "id": 8478398,
+      "name": "Kyle Connor",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478398.png"
+    },
+    {
+      "id": 8470613,
+      "name": "Brent Burns",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8470613.png"
+    },
+    {
+      "id": 8483678,
+      "name": "Elias Pettersson",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8483678.png"
+    },
+    {
+      "id": 8477946,
+      "name": "Dylan Larkin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477946.png"
+    },
+    {
+      "id": 8478864,
+      "name": "Kirill Kaprizov",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478864.png"
+    },
+    {
+      "id": 8475184,
+      "name": "Chris Kreider",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8475184.png"
+    },
+    {
+      "id": 8476945,
+      "name": "Connor Hellebuyck",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476945.png"
+    },
+    {
+      "id": 8477933,
+      "name": "Sam Reinhart",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477933.png"
+    },
+    {
+      "id": 8476887,
+      "name": "Filip Forsberg",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476887.png"
+    },
+    {
+      "id": 8474141,
+      "name": "Patrick Kane",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8474141.png"
+    },
+    {
+      "id": 8471215,
+      "name": "Evgeni Malkin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8471215.png"
+    },
+    {
+      "id": 8479420,
+      "name": "Tage Thompson",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8479420.png"
+    },
+    {
+      "id": 8478403,
+      "name": "Jack Eichel",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478403.png"
+    },
+    {
+      "id": 8474578,
+      "name": "Erik Karlsson",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8474578.png"
+    },
+    {
+      "id": 8480280,
+      "name": "Jeremy Swayman",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480280.png"
+    },
+    {
+      "id": 8471724,
+      "name": "Kris Letang",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8471724.png"
+    },
+    {
+      "id": 8476460,
+      "name": "Mark Scheifele",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476460.png"
+    },
+    {
+      "id": 8476883,
+      "name": "Andrei Vasilevskiy",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476883.png"
+    },
+    {
+      "id": 8480036,
+      "name": "Miro Heiskanen",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480036.png"
+    },
+    {
+      "id": 8480018,
+      "name": "Nick Suzuki",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480018.png"
+    },
+    {
+      "id": 8478010,
+      "name": "Brayden Point",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478010.png"
+    },
+    {
+      "id": 8475794,
+      "name": "Tyler Seguin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8475794.png"
+    },
+    {
+      "id": 8474564,
+      "name": "Steven Stamkos",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8474564.png"
+    },
+    {
+      "id": 8478048,
+      "name": "Igor Shesterkin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478048.png"
+    },
+    {
+      "id": 8475683,
+      "name": "Sergei Bobrovsky",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8475683.png"
+    },
+    {
+      "id": 8478444,
+      "name": "Brock Boeser",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8478444.png"
+    },
+    {
+      "id": 8476468,
+      "name": "J.T. Miller",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476468.png"
+    },
+    {
+      "id": 8481540,
+      "name": "Cole Caufield",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8481540.png"
+    },
+    {
+      "id": 8473994,
+      "name": "Jamie Benn",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8473994.png"
+    },
+    {
+      "id": 8479343,
+      "name": "Clayton Keller",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8479343.png"
+    },
+    {
+      "id": 8474600,
+      "name": "Roman Josi",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8474600.png"
+    },
+    {
+      "id": 8477404,
+      "name": "Jake Guentzel",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8477404.png"
+    },
+    {
+      "id": 8480830,
+      "name": "Andrei Svechnikov",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480830.png"
+    },
+    {
+      "id": 8480839,
+      "name": "Rasmus Dahlin",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480839.png"
+    },
+    {
+      "id": 8480027,
+      "name": "Jason Robertson",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8480027.png"
+    },
+    {
+      "id": 8476459,
+      "name": "Mika Zibanejad",
+      "url": "https://assets.nhle.com/mugs/nhl/latest/8476459.png"
+    }
+  ]
+}
