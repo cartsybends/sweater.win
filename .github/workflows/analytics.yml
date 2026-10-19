@@ -4,6 +4,8 @@ on:
     paths:
       - "backend/**"
       - "static/community-games/model.mjs"
+      - "static/face-swap/model.mjs"
+      - "tests/face_swap.mjs"
       - "tests/community_games.mjs"
       - "tests/grid_popularity.mjs"
       - "analytics/**"
@@ -15,6 +17,8 @@ on:
     paths:
       - "backend/**"
       - "static/community-games/model.mjs"
+      - "static/face-swap/model.mjs"
+      - "tests/face_swap.mjs"
       - "tests/community_games.mjs"
       - "tests/grid_popularity.mjs"
       - "analytics/**"
@@ -35,6 +39,7 @@ jobs:
       - run: npm ci --prefix backend --no-audit --no-fund
       - run: node tests/analytics_backend.mjs
       - run: node tests/community_games.mjs
+      - run: node tests/face_swap.mjs
       - run: node tests/grid_popularity.mjs
       - run: node tests/analytics_login.mjs
       - run: node tests/analytics_client.mjs

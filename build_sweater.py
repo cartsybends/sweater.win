@@ -57,7 +57,7 @@ TEAM_ID_MAP = {"ANA":24,"BOS":6,"BUF":7,"CGY":20,"CAR":12,"CHI":16,"COL":21,"CBJ
 HERE = Path(__file__).resolve().parent
 EDGE_CACHE = HERE / "edge_cache.json"
 EDGE_CACHE_SCHEMA = 2
-VERSION = "138 · Private Analytics Expanded"
+VERSION = "139 · Face Swap"
 # Rush goalie art intentionally uses one connected top-down silhouette for cleaner reads at game scale.
 
 
@@ -316,105 +316,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .jystop small { font-size: 12px; opacity: .75; font-variant-numeric: tabular-nums; }
   .jyarrow { color: var(--muted); font-size: 18px; }
   .chips.hints { margin: 0 0 10px; }
-  /* Blur — frosted portrait reveal */
-  .blcard {
-    width: min(360px, 100%); margin: 5px auto 12px; overflow: hidden;
-    border: 1px solid var(--line); border-radius: 19px;
-    background: color-mix(in srgb, var(--panel) 92%, var(--cell));
-    box-shadow: 0 14px 34px rgba(23,59,75,.075);
-  }
-  .blcardhead {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 11px 13px 9px; border-bottom: 1px solid var(--line);
-  }
-  .blcardhead span { display: flex; flex-direction: column; gap: 1px; }
-  .blcardhead small {
-    color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase;
-  }
-  .blcardhead b { font-size: 14px; letter-spacing: -.01em; }
-  .blcardhead em { color: var(--muted); font-size: 11px; font-style: normal; font-weight: 750; }
-  .blphoto {
-    position: relative; width: 100%; aspect-ratio: 1 / 1.04; overflow: hidden;
-    background:
-      radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--link) 12%, transparent), transparent 42%),
-      linear-gradient(180deg, color-mix(in srgb, var(--cream) 92%, white), var(--cream));
-  }
-  .blphoto > img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top;
-    transform: scale(1.025); user-select: none; -webkit-user-drag: none;
-    transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .45s ease;
-  }
-  .blphoto[data-stage="0"] > img { filter: saturate(.78) contrast(.93); }
-  .blphoto[data-stage="1"] > img { filter: saturate(.82) contrast(.95); }
-  .blphoto[data-stage="2"] > img { filter: saturate(.88) contrast(.97); }
-  .blphoto[data-stage="3"] > img { filter: saturate(.94) contrast(.99); }
-  .blphoto[data-stage="4"] > img, .blphoto.revealed > img { filter: none; transform: scale(1); }
-  .blfrost {
-    position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr);
-    gap: 0; pointer-events: none;
-  }
-  .blfrost span {
-    position: relative; overflow: hidden; border: 0; border-radius: 0;
-    background:
-      radial-gradient(circle at 28% 18%, rgba(255,255,255,.42), transparent 34%),
-      linear-gradient(145deg, rgba(242,250,253,.94), rgba(196,221,232,.90));
-    -webkit-backdrop-filter: blur(18px) saturate(.72);
-    backdrop-filter: blur(18px) saturate(.72);
-    box-shadow:
-      inset 0 0 0 .5px rgba(255,255,255,.28),
-      inset 0 1px 0 rgba(255,255,255,.58),
-      inset 0 -1px 0 rgba(111,155,174,.10);
-    opacity: 1; transform: scale(1.006); filter: blur(0);
-    transition:
-      opacity .26s ease,
-      transform .34s cubic-bezier(.2,.8,.2,1),
-      filter .26s ease;
-  }
-  .blfrost span::after {
-    content: ""; position: absolute; inset: 0; opacity: .62; pointer-events: none;
-    background: linear-gradient(118deg, transparent 18%, rgba(255,255,255,.20) 42%, rgba(255,255,255,.08) 54%, transparent 72%);
-  }
-  .blfrost span.clear { opacity: 0; transform: scale(.965); filter: blur(2px); }
-  .blmeter { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 9px 12px 11px; }
-  .blmeter i {
-    height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--line) 78%, transparent);
-    transition: background .28s ease, transform .28s ease;
-  }
-  .blmeter i.on { background: var(--link); transform: scaleY(1.15); }
-  .blclues {
-    width: min(560px,100%); min-height: 0; margin: 0 auto 10px;
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 7px;
-  }
-  .blclue {
-    display: inline-flex; align-items: center; gap: 6px; min-height: 31px; padding: 5px 9px;
-    border: 1px solid var(--line); border-radius: 999px;
-    background: color-mix(in srgb, var(--panel) 82%, var(--cell)); font-size: 11px;
-    animation: blcluein .30s ease both;
-  }
-  .blclue img { width: 20px; height: 20px; object-fit: contain; }
-  .blclue small { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .045em; text-transform: uppercase; }
-  .blclue b { font-size: 11px; }
-  @keyframes blcluein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-  #blWrong.blwrong {
-    width: min(560px,100%); margin: 10px auto 0; display: flex; flex-direction: column; gap: 6px;
-  }
-  #blWrong > .blmiss {
-    box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 9px; min-height: 42px; padding: 8px 10px;
-    border: 1px solid rgba(239,68,68,.32); border-radius: 10px; background: rgba(239,68,68,.07);
-  }
-  #blWrong > .blmiss.blmiss-new { animation: phwrongin .30s cubic-bezier(.2,.85,.2,1) both; }
-  #blWrong > .blmiss .x {
-    display: grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px;
-    color: color-mix(in srgb, var(--muted) 82%, #ef4444 18%); font-size: 18px; font-weight: 600; line-height: 1;
-  }
-  #blWrong > .blmiss .who {
-    min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    color: var(--fg); font-size: 14px; font-weight: 700;
-  }
-  .blmatch {
-    flex: none; padding: 3px 7px; border-radius: 999px;
-    background: var(--near); color: var(--near-fg); font-size: 9px; font-weight: 850;
-  }
+  /*__FACE_SWAP_CSS__*/
   .numrow { display: flex; justify-content: center; gap: 8px; margin: 10px auto; max-width: 320px; }
   .numrow.wide { max-width: 560px; }
   .numrow input { flex: 1; min-width: 0; padding: 12px 14px; font-size: 18px; border: 1px solid #bbb; border-radius: 6px;
@@ -436,8 +338,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .shake { animation: shake .35s ease; }
   @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
   @media (prefers-reduced-motion: reduce) {
-    .shake, .jystop, .blclue, #blWrong > .blmiss { animation: none; }
-    .blphoto > img, .blfrost span, .blmeter i { transition: none; }
+    .shake, .jystop { animation: none; }
   }
 
   /* playoff run */
@@ -3478,29 +3379,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="player-misses" id="jyWrong"></div>
   </section>
 
-  <section class="view" id="view-blur" hidden>
-    <p class="intro" id="blIntro">Who's under the frost?</p>
-    <div class="slot"></div>
-    <div class="blcard">
-      <div class="blcardhead">
-        <span><small>Photo reveal</small><b id="blStage">1 of 5</b></span>
-        <em id="blStageNote">Tiny window to start</em>
-      </div>
-      <div class="blphoto" id="blPhoto" data-stage="0">
-        <img id="blImg" alt="" draggable="false">
-        <div class="blfrost" id="blFrost" aria-hidden="true"></div>
-      </div>
-      <div class="blmeter" id="blMeter" aria-label="Photo reveal progress"></div>
-    </div>
-    <div class="blclues" id="blClues"></div>
-    <div class="search narrow">
-      <input id="blGuess" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="blOpts" aria-label="Player name" placeholder="Guess 1 of 5">
-      <ul class="list" id="blOpts" role="listbox" hidden></ul>
-    </div>
-    <p class="hint" id="blLeft"></p>
-    <div class="blwrong" id="blWrong"></div>
-    <p class="nodata" hidden>This game isn't available right now.</p>
-  </section>
+<!--__FACE_SWAP_VIEW__-->
 
   <section class="view" id="view-number" hidden>
     <div class="ttcard">
@@ -4171,7 +4050,7 @@ const UI_ICONS = {
   people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
-const MODE_ICONS = { grid: "grid", benchboss: "draft", teammatetrail: "route", classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", blur: "search", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
+const MODE_ICONS = { grid: "grid", benchboss: "draft", teammatetrail: "route", classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", faceswap: "people", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
   edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people" };
 MODE_ICONS.overtime = "clock";
 UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
@@ -4222,7 +4101,7 @@ const secondsToEtMidnight = () => {
 };
 const validStart = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
 const startOf = g => START[g.startsWith("hl_") ? "hl" : g];
-["classic", "statline", "team", "journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck",
+["classic", "statline", "team", "journey", "faceswap", "number", "roster", "draft", "map", "conn", "rank", "puck",
  "shoot", "overtime", "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups", "whoscored",
  "edgerush", "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { DAILY[g] = DAILY[g] || {}; });
 ["edgerush", "edgespeed", "edgeshot", "edgemap", "edgebuild"].forEach(g => { START[g] = START[g] || "2026-10-05"; });
@@ -4677,14 +4556,14 @@ function animateHLPair(pair) {
   pair.classList.add("slide");
 }
 
-// ======================= more games: journey, blur, sweater number, roster =======================
+// ======================= more games: journey, Face Swap, sweater number, roster =======================
 Object.assign(TEAM_NAMES, {
   ARI: "Arizona Coyotes", PHX: "Phoenix Coyotes", ATL: "Atlanta Thrashers", MNS: "Minnesota North Stars",
   HFD: "Hartford Whalers", QUE: "Quebec Nordiques", AFM: "Atlanta Flames", CLR: "Colorado Rockies",
   KCS: "Kansas City Scouts", CGS: "California Golden Seals", OAK: "Oakland Seals", CLE: "Cleveland Barons",
 });
 const KNOWN_TEAMS = new Set([...Object.keys(TEAMS), "ARI", "PHX", "ATL", "MNS", "HFD", "QUE", "AFM", "CLR", "KCS", "CGS", "OAK", "CLE"]);
-const isMoreGame = g => ["journey", "blur", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot",
+const isMoreGame = g => ["journey", "faceswap", "number", "roster", "draft", "map", "conn", "rank", "puck", "shoot",
                          "truths", "hlt", "season", "playoff", "trophy", "mroster", "cups"].includes(g);
 const spanLabel = (a, b) => `${a}–${String((b + 1) % 100).padStart(2, "0")}`;
 const teamName = t => TEAM_NAMES[t] || t;
@@ -4771,114 +4650,8 @@ G.journey = {
   squares: (t, id) => id === t.id ? "🟩" : "⬛"
 };
 
-// ---- Blur: clear a frosted portrait window by window ----
-const BL_FROST_STAGES = [0, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4];
-function blFrostStages(seed) {
-  let x = hash(`blur-frost-${seed}`) || 1;
-  const rnd = () => {
-    x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
-    return (x >>> 0) / 4294967296;
-  };
-  const stages = shuffled(BL_FROST_STAGES, rnd);
-  // The portrait head is centered, so never waste the opening reveal on the top corners.
-  const opening = stages.indexOf(0);
-  if (opening === 0 || opening === 2) {
-    const validOpenings = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-    const swap = validOpenings[Math.floor(rnd() * validOpenings.length)];
-    [stages[opening], stages[swap]] = [stages[swap], stages[opening]];
-  }
-  return stages;
-}
-const BL_POOL = PLAYERS.filter(p => p.headshot);
-function blGuessMatch(t, p) {
-  return p.team === t.team ? "Same team" : p.pos === t.pos ? "Same position" : "";
-}
-G.blur = {
-  title: "Blur", share: "Sweater Blur", view: "view-blur", max: 5, next: "Next player",
-  cheers: ["Eagle eyes! 🦅", "Snipe! 🎯", "Great read! 👀", "Clutch! 🧊", "Last look! 🚨"],
-  pool: () => BL_POOL,
-  daily(k) {
-    const p = BYID.get((DAILY.blur || {})[k]);
-    return p && p.headshot ? p : BL_POOL[hash("sweater-bl-" + k) % BL_POOL.length];
-  },
-  random: () => pick(BL_POOL),
-  tid: t => t.id, player: t => t, isWin: (t, id) => id === t.id,
-  meta: t => `${t.team} · #${t.number} · ${posName(t)} · ${countryName(t.nation)}`,
-  reset(t) {
-    $("blWrong").innerHTML = "";
-    $("blClues").innerHTML = "";
-    const st = S.blur;
-    // The frost pattern belongs to the puzzle, not to the render session.
-    // Reopening Blur must never expose a different set of tiles for free.
-    // Daily/archive layouts vary by date; Unlimited stays fixed for the
-    // current player even if the user leaves the mode and comes back.
-    const frostKey = st.mode === "unlimited"
-      ? `unlimited:${t.id}`
-      : `${st.mode || "daily"}:${st.day || dayKey()}:${t.id}`;
-    const frostSeed = hash(`sweater-blur-frost:${frostKey}`);
-    st.opts = { ...(st.opts || {}), frostSeed };
-    const frostStages = blFrostStages(frostSeed);
-    $("blFrost").innerHTML = frostStages.map((at, i) => `<span data-clear-at="${at}" data-frost-tile="${i}"></span>`).join("");
-    $("blMeter").innerHTML = Array.from({ length: 5 }, (_, i) => `<i data-bl-meter="${i}"></i>`).join("");
-    $("blPhoto").classList.remove("revealed");
-    $("blPhoto").dataset.stage = "0";
-    $("blImg").onerror = function () { this.onerror = null; this.src = FALLBACK; };
-    $("blImg").src = t.headshot || FALLBACK;
-  },
-  guess(t, id) {
-    const p = BYID.get(id);
-    return p ? p.id === t.id : null;
-  },
-  render(t, st) {
-    const wrongIds = st.guesses.filter(id => id !== t.id), wrong = wrongIds.length;
-    const stage = st.over ? 4 : Math.min(wrong, 4);
-    $("blPhoto").dataset.stage = String(stage);
-    $("blPhoto").classList.toggle("revealed", st.over);
-
-    $("blFrost").querySelectorAll("[data-clear-at]").forEach(tile => {
-      tile.classList.toggle("clear", st.over || Number(tile.dataset.clearAt) <= stage);
-    });
-    $("blMeter").querySelectorAll("[data-bl-meter]").forEach((bar, i) => {
-      bar.classList.toggle("on", st.over || i <= stage);
-    });
-
-    $("blStage").textContent = st.over ? "Fully revealed" : `${stage + 1} of 5`;
-    $("blStageNote").textContent = st.over ? "Photo cleared"
-      : stage === 0 ? "Tiny window to start"
-      : stage === 1 ? "Face starting to show"
-      : stage === 2 ? "Half the frost is gone"
-      : stage === 3 ? "Almost fully clear"
-      : "Final look";
-    $("blIntro").textContent = st.over ? "Player revealed." : "Who's under the frost?";
-
-    const clues = [];
-    if (wrong >= 2 || st.over) clues.push(`<span class="blclue"><small>Position</small><b>${esc(posName(t))}</b></span>`);
-    if (wrong >= 3 || st.over) clues.push(`<span class="blclue"><small>Country</small><b>${esc(countryName(t.nation))}</b></span>`);
-    if (wrong >= 4 || st.over) clues.push(`<span class="blclue"><img src="${logo(t.team)}" alt="" onerror="this.remove()"><small>Current team</small><b>${esc(teamName(t.team))}</b></span>`);
-    $("blClues").innerHTML = clues.join("");
-
-    $("blWrong").innerHTML = wrongIds.slice().reverse().map((id, i) => {
-      const p = BYID.get(id);
-      if (!p) return "";
-      const match = blGuessMatch(t, p);
-      return `<div class="blmiss${i === 0 ? " blmiss-new" : ""}"><span class="x" aria-hidden="true">×</span><span class="who">${esc(p.name)}</span>` +
-        `${match ? `<span class="blmatch">${esc(match)}</span>` : ""}</div>`;
-    }).join("");
-
-    if (st.over) {
-      $("blLeft").textContent = "";
-    } else {
-      const left = this.max - st.guesses.length;
-      const next = wrong < 1 ? "more of the portrait"
-        : wrong < 2 ? "more portrait + position"
-        : wrong < 3 ? "more portrait + country"
-        : wrong < 4 ? "the final photo + current team"
-        : "";
-      $("blLeft").textContent = `${left} ${left === 1 ? "try" : "tries"} left${next ? ` · next miss reveals ${next}` : ""}`;
-    }
-  },
-  squares: (t, id) => id === t.id ? "🟩" : "⬛"
-};
+/*__FACE_SWAP_MODEL__*/
+/*__FACE_SWAP_GAME__*/
 
 // ---- Sweater #: guess his jersey number ----
 const NUM_POOL = PLAYERS.filter(p => p.number > 0);
@@ -9891,7 +9664,8 @@ const isStatsGame = g => g === "statline" || g === "team";
 const gameTitle = g => G[g].title;
 const isDone = (g, t, guesses) => G[g].isDone ? G[g].isDone(t, guesses)
   : guesses.some(x => G[g].isWin(t, x)) || guesses.length >= G[g].max;
-let game = GAME_IDS.includes(store.get("sweater-game")) ? store.get("sweater-game") : "classic";
+const savedGame = store.get("sweater-game") === "blur" ? "faceswap" : store.get("sweater-game");
+let game = GAME_IDS.includes(savedGame) ? savedGame : "classic";
 let mode = store.get("sweater-mode") === "unlimited" ? "unlimited" : "daily";
 const S = Object.fromEntries(GAME_IDS.map(g => [g, { target: null, guesses: [], over: false, day: null, mode: null }]));
 
@@ -10097,7 +9871,7 @@ function doGuess(x, fresh = true) {
       if (typeof g.right === "function") { const answer = g.right(st.target, x, i); if (typeof answer === "boolean") correct = answer; }
       else if (typeof g.correct === "function") { const answer = g.correct(st.target, i, x); if (typeof answer === "boolean") correct = answer; }
       else if (Number.isInteger(question?.a) && /^\d+(?::|$)/.test(String(x))) correct = Number(String(x).split(":")[0]) === question.a;
-      else if (["classic","statline","team","journey","blur","number","mroster","season","draft","map"].includes(game) && typeof won === "boolean") correct = won;
+      else if (["classic","statline","team","journey","faceswap","number","mroster","season","draft","map"].includes(game) && typeof won === "boolean") correct = won;
     } catch {}
     globalThis.SweaterAnalytics?.step?.(st.guesses.length, correct);
     saveProgress();
@@ -10244,9 +10018,9 @@ function updateLabels() {
     : st.over ? (g.dailyOnly ? "Done for today. A new goal unlocks at midnight Eastern." : mode === "daily" ? "Done for today. Turn on Unlimited (top right) to keep playing"
                : mode === "archive" ? "Done. Pick another day from the archive" : `Game over. Click ${g.next}`)
     : `Guess ${st.guesses.length + 1} of ${g.max}`;
-  for (const id of ["guess", "slGuess", "jyGuess", "blGuess", "phGuess", "wsGuess"]) {
-    $(id).placeholder = id === "wsGuess" && !st.over ? "Search for the goal scorer…" : text;
-    $(id).disabled = !st.target || st.over || (id === "wsGuess" && game === "whoscored" && (!g.started || !g.ready));
+  for (const id of ["guess", "slGuess", "jyGuess", "fsGuess", "phGuess", "wsGuess"]) {
+    $(id).placeholder = id === "fsGuess" && !st.over ? "Guess either player…" : id === "wsGuess" && !st.over ? "Search for the goal scorer…" : text;
+    $(id).disabled = !st.target || st.over || (id === "fsGuess" && game === "faceswap" && !g.ready) || (id === "wsGuess" && game === "whoscored" && (!g.started || !g.ready));
   }
   const today = shortDay(dayKey());
   $("modeLabel").textContent = mode === "daily" ? `Daily #${dailyNumber(game, dayKey())} · ${today}`
@@ -10422,7 +10196,7 @@ function makeSearch(inputId, listId, toGuess = id => id, poolFn = () => PLAYERS,
   return { close };
 }
 const searches = [makeSearch("guess", "opts"), makeSearch("slGuess", "slOpts"),
-                  makeSearch("jyGuess", "jyOpts"), makeSearch("blGuess", "blOpts"),
+                  makeSearch("jyGuess", "jyOpts"), makeSearch("fsGuess", "fsOpts", id => id, () => [...BYID.values()].sort((a,b) => a.name.localeCompare(b.name))),
                   makeSearch("phGuess", "phOpts"),
                   makeSearch("wsGuess", "wsOpts", id => id, () => [...BYID.values()].filter(p => p.pos !== "G").sort((a,b) => a.name.localeCompare(b.name))),
                   makeSearch("roInput", "roOpts", id => id, () => PLAYERS, p => roAccept(p), p => posName(p)),
@@ -10829,7 +10603,7 @@ $("hlPair").addEventListener("click", e => {
 const LB_RULES = {
   whoscored: "Name the scorer in 6 guesses. Daily wins and guess counts appear in your stats.",
   journey: "Journey: 10 points for 1 guess, then 8, 6, 4, 2 and 1 for 6 guesses.",
-  blur: "Blur: 10 points for 1 guess, then 8, 6, 4, 2 and 1 for 6 guesses.",
+  faceswap: "Face Swap: find both players in either order. Five misses end the round. A win earns 10 points minus 2 per miss; a loss earns 0.",
   number: "Sweater #: 10 points on the first try, then 7, 5, 3 and 1 on the fifth.",
   roster: "Roster Recall: 1 point for every player you name in 60 seconds.",
   draft: "Draft Day: 10 points on the first try, then 7, 5, 3 and 1 on the fifth.",
@@ -11010,7 +10784,7 @@ const HUB = [
     ["statline", "📈", "Name him from his season-by-season stats."],
     ["playoff", "🏒", "Name him from one postseason run as clues build."],
     ["journey", "🧭", "Name him from the teams he's played for."],
-    ["blur", "🔍", "Under construction · We’re rebuilding this mode. Check back soon."],
+    ["faceswap", "👥", "Two players, one face. Identify both as hints unlock after misses."],
   ]},
   { title: "Know the details", copy: "Test your memory for stats, seasons and hockey history.", tone: "blue", games: [
     ["team", "🛡️", "Which team was he on that season?"],
@@ -11046,7 +10820,7 @@ const EDGE_GAMES = [
   { id:"edgemap", title:"Shot Map", tag:"Under construction", blurb:"We’re rebuilding this mode. Check back soon.", maintenance:true },
   { id:"edgebuild", title:"Build a Player", tag:"Draft room", blurb:"Draft Speed, Shot, Engine and Danger into one tracking-data super-player." },
 ];
-const MAINTENANCE_GAMES = new Set(["blur", "edgemap"]);
+const MAINTENANCE_GAMES = new Set(["edgemap"]);
 const HL_IDS = Object.keys(HL_STATS).map(s => `hl_${s}`);
 const CARD = {};
 HUB.forEach(sec => sec.games.forEach(([id, icon]) => { CARD[id] = { icon, tone: sec.tone }; }));
@@ -11062,7 +10836,7 @@ const MODE_META = Object.freeze({
   playoff:  { type: "Playoffs", time: "2–4 min", difficulty: "Medium", fact: "Start with one postseason stat line; every miss adds meaningful playoff context.", next: "trophy" },
   journey:  { type: "Careers", time: "2–4 min", difficulty: "Medium", fact: "The order of a player’s sweaters can be just as revealing as his stats.", next: "team" },
   whoscored:{ type: "Video", time: "1–2 min", difficulty: "Medium", fact: "A skating stride, a release, a familiar finish: playstyle is its own fingerprint.", next: "classic" },
-  blur:     { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Every miss clears another piece of the portrait and unlocks a little more context.", next: "classic" },
+  faceswap: { type: "Visual", time: "1–2 min", difficulty: "Medium", fact: "Guess either player first. Correct names lock in, and each miss unlocks a new clue for the remaining player.", next: "classic" },
   edgerush: { type: "NHL EDGE Arcade", time: "2–3 min", difficulty: "Medium", fact: "The Rush assigns carrier, support and finisher roles from real NHL EDGE speed, distance, shot velocity and shot-location data.", next: "edgespeed" },
   edgespeed:{ type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Max skating speed comes directly from NHL EDGE player tracking.", next: "edgeshot" },
   edgeshot: { type: "NHL EDGE", time: "1–2 min", difficulty: "Medium", fact: "Hardest Shot uses tracked in-game shot velocity from NHL EDGE.", next: "edgebuild" },
@@ -11088,7 +10862,7 @@ const MODE_META = Object.freeze({
 });
 const modeMeta = id => MODE_META[id] || { type: "Daily", time: "2–4 min", difficulty: "Medium", fact: "A fresh hockey puzzle is ready every day.", next: "classic" };
 const hubIds = () => [...HUB.flatMap(sec => sec.games.map(([id]) => id)), ...EDGE_GAMES.map(x => x.id)];
-const cleanHubIds = ids => [...new Set((Array.isArray(ids) ? ids : []).filter(id => hubIds().includes(id)))];
+const cleanHubIds = ids => [...new Set((Array.isArray(ids) ? ids : []).map(id => id === "blur" ? "faceswap" : id).filter(id => hubIds().includes(id)))];
 const favouriteIds = () => cleanHubIds(store.get("sweater-favourites"));
 const recentIds = () => cleanHubIds(store.get("sweater-recent-games"));
 function toggleFavourite(id) {
@@ -11536,11 +11310,12 @@ function showHub(push = true) {
 }
 
 function openGame(id, push = true) {
+  if (id === "blur") { id = "faceswap"; history.replaceState(null, "", "#faceswap"); }
   if (typeof teamMiniCleanup === "function") teamMiniCleanup();
   if (MAINTENANCE_GAMES.has(id)) {
     if (location.hash) history.replaceState(null, "", location.pathname + location.search);
     showHub(false);
-    toast(`${id === "blur" ? "Blur" : "Shot Map"} is under construction. Check back soon.`);
+    toast("Shot Map is under construction. Check back soon.");
     return;
   }
   if (push) rememberHubScroll();
@@ -11566,6 +11341,7 @@ function route() {
   let id;
   try { id = decodeURIComponent(location.hash.slice(1)); }
   catch { showHub(false); return; }
+  if (id === "blur") { id = "faceswap"; history.replaceState(null, "", "#faceswap"); }
   if (id === "goalie") {
     history.replaceState(null, "", location.pathname + location.search);
     showHub(false);
@@ -11858,7 +11634,7 @@ const HELP = {
   journey: `<p>Name the player from the teams he's played for, in order, with seasons and games. 6 tries.</p>
     <p>Hints appear after 2, 4 and 5 misses: position, birth country, then sweater number.</p>`,
   whoscored: `<p>One goal per day, with the same challenge for everyone. A new goal unlocks at midnight Eastern. Name the silhouetted scorer in 6 guesses using the search box. Your progress and completed result are saved for the day.</p><p>Replays of today's clip and 0.5× slow motion are unlimited. After 2 misses, a hint bubble shows their position group: Forward or Defenseman. After 4, another shows their birth-country flag. Hover, focus or tap the flag to see the country name. At the end, switch between the silhouette and the original clip.</p>`,
-  blur: `<p>Name the player from a blurry photo. Every miss sharpens it. 6 tries, with hints after 3 and 5 misses.</p>`,
+  faceswap: `<p>Identify both NHL players combined into one face. Guess either player first; a correct name locks in without using a miss. Five wrong guesses end the round.</p><p>Each miss reveals a new clue for unidentified players: position, age, country, then team. A win earns 10 points minus 2 per miss. The original headshots reveal when you find a player or the round ends.</p><p>Everyone gets the same daily face. Unlimited visits the whole photo library before repeating, and saves your current round.</p>`,
   team: `<p>You see a player and one season of his stats. Pick the team he played for that season. 5 tries.</p>
     <p>Yellow means the right team is in the same division.</p>`,
   number: `<p>Guess the player's sweater number in 5 tries. Arrows say go higher or lower, and yellow means you're within 3.</p>`,
@@ -13770,6 +13546,51 @@ def plan_community_days(saved, bank, today, mode):
     return dict(sorted(days.items()))
 
 
+def load_face_swap_puzzles():
+    """Only publish complete, reviewed pairings with unchanged portrait assets."""
+    root = HERE / "static/face-swap"
+    data = json.loads((root / "puzzles.json").read_text(encoding="utf-8"))
+    rows = data.get("puzzles")
+    if data.get("version") != 1 or not isinstance(rows, list) or len(rows) < 2:
+        raise ValueError("Face Swap needs a complete puzzle bank")
+    ids, pairs = set(), set()
+    for row in rows:
+        key, image, players = row.get("id"), row.get("image"), row.get("players")
+        if not isinstance(key, str) or not re.fullmatch(r"face-\d{2,3}", key) or key in ids:
+            raise ValueError("Invalid or duplicate Face Swap puzzle ID")
+        if (not isinstance(players, list) or len(players) != 2
+                or any(type(pid) is not int or not 1000000 <= pid <= 9999999 for pid in players)
+                or len(set(players)) != 2):
+            raise ValueError(f"Face Swap {key} must contain two different NHL players")
+        pair = tuple(sorted(players))
+        if pair in pairs:
+            raise ValueError("Duplicate Face Swap player pairing")
+        ids.add(key)
+        pairs.add(pair)
+        if image != key + ".webp":
+            raise ValueError(f"Invalid Face Swap portrait filename: {key}")
+        hashes = row.get("headshot_sha256")
+        if not isinstance(hashes, list) or len(hashes) != 2:
+            raise ValueError(f"Face Swap {key} needs two original headshots")
+        assets = [(root / image, row.get("sha256"))]
+        assets += [(root / "players" / f"{pid}.webp", digest) for pid, digest in zip(players, hashes)]
+        for path, digest in assets:
+            if (not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest)
+                    or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
+                raise ValueError(f"Missing or changed Face Swap photo: {path.name}")
+    return rows
+
+
+def copy_face_swap_media(out_dir, puzzles):
+    source = HERE / "static/face-swap"
+    destination = out_dir / "face-swap"
+    (destination / "players").mkdir(parents=True, exist_ok=True)
+    for puzzle in puzzles:
+        shutil.copy2(source / puzzle["image"], destination / puzzle["image"])
+    for pid in {pid for puzzle in puzzles for pid in puzzle["players"]}:
+        shutil.copy2(source / "players" / f"{pid}.webp", destination / "players" / f"{pid}.webp")
+
+
 def load_trophy_images():
     """Use local NHL photos for Trophy Case and Grid's Stanley Cup clue."""
     root = HERE / "static" / "trophies"
@@ -13937,7 +13758,6 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
                  {f"{i}:{y}": [i, y] for i, p in pool.items() for y in team_seasons(p)}, "sweater-tt"),
         "journey": ("journey_days", "journey_start",
                     {str(i): i for i, p in pool.items() if journey_ok(p)}, "sweater-jy"),
-        "blur": ("blur_days", "blur_start", {str(i): i for i, p in pool.items() if p.get("headshot")}, "sweater-bl"),
         "number": ("number_days", "number_start",
                    {str(i): i for i, p in pool.items() if (p.get("number") or 0) > 0}, "sweater-num"),
         "draft": ("draft_days", "draft_start",
@@ -13958,6 +13778,10 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
     first = "0000-00-00"   # every past day, for the archive
     last = (today + timedelta(days=EMBED_AHEAD)).isoformat()
     result, new = {}, {"whoscored_clip_ids": sorted(clip_ids)}
+    # Retain historical Blur answers for old results; Face Swap has independent schedules and stats.
+    for retired in ("blur_days", "blur_start"):
+        if retired in sched:
+            new[retired] = sched[retired]
     for g, (dk, sk, cands, seed, *rest) in games.items():
         days = plan_days(sched.get(dk, {}), cands, today, seed, *rest)
         start = sched.get(sk) or (today.isoformat() if days else "")
@@ -14043,12 +13867,27 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
         new[f"{g}_start"] = sched.get(f"{g}_start") or today.isoformat()
         result[g] = (new[f"{g}_start"], {k: v for k, v in days.items() if first <= k <= last})
 
+    faces = load_face_swap_puzzles()
+    face_ids = {pid for puzzle in faces for pid in puzzle["players"]}
+    missing = face_ids - pool.keys() - archive.keys()
+    if missing:
+        raise ValueError(f"Face Swap source players are missing from NHL data: {sorted(missing)}")
+    for pid in face_ids:
+        if pid in pool:
+            archive[pid] = pool[pid]
+    face_days = plan_community_days(sched.get("faceswap_days", {}), faces, today, "faceswap")
+    new["faceswap_puzzles"] = faces
+    new["faceswap_days"] = face_days
+    new["faceswap_start"] = sched.get("faceswap_start") or today.isoformat()
+    result["faceswap"] = (new["faceswap_start"], {k: v for k, v in face_days.items() if first <= k <= last})
+
     new["players"] = {str(k): v for k, v in sorted(archive.items())}
     new["roster_players"] = {str(k): v for k, v in sorted(roster_archive.items())}
     SCHEDULE.write_text(json.dumps(new, ensure_ascii=False, indent=1), encoding="utf-8")
 
     needed = {i for g, (_, window) in result.items() if g not in ("hl", "roster") for v in window.values() for i in ids_of(v)}
     needed |= clip_ids  # Retain every reviewed scorer for the unlimited rotation.
+    needed |= face_ids  # Every curated Face Swap pair must remain playable in Unlimited and archives.
     needed |= {i for day in hl_window.values() for seq in day.values() for i in seq}
     extras = [archive[i] for i in sorted(needed) if i not in pool and i in archive]
     roster_needed = {i for v in result.get("roster", ("", {}))[1].values() for i in ids_of(v)}
@@ -14432,9 +14271,14 @@ def main():
         site += "/"
     esc = lambda obj: json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
     trophy_images = load_trophy_images()
+    face_swap_puzzles = load_face_swap_puzzles()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+        "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
+        "<!--__FACE_SWAP_VIEW__-->": (HERE / "static/face-swap/view.html").read_text(encoding="utf-8"),
+        "/*__FACE_SWAP_MODEL__*/": (HERE / "static/face-swap/model.mjs").read_text(encoding="utf-8").replace("export const FACE_SWAP_MODEL", "const FACE_SWAP_MODEL"),
+        "/*__FACE_SWAP_GAME__*/": (HERE / "static/face-swap/game.js").read_text(encoding="utf-8").replace("/*__FACE_SWAP_PUZZLES__*/[]", esc(face_swap_puzzles)),
         "/*__MODE_ANALYTICS__*/": (HERE / "analytics" / "client.js").read_text(encoding="utf-8"),
         "/*__SHOOTOUT_CSS__*/": (HERE / "static" / "shootout" / "styles.css").read_text(encoding="utf-8"),
         "/*__TEAM_GAMES_CSS__*/": (HERE / "static" / "team-games" / "styles.css").read_text(encoding="utf-8"),
@@ -14468,6 +14312,7 @@ def main():
     out = Path(args.out).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
+    copy_face_swap_media(out.parent, face_swap_puzzles)
     copy_goal_media(out.parent, goal_clips)
     copy_trophy_images(out.parent, trophy_images)
     copy_community_logos(out.parent)

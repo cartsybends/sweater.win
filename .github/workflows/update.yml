@@ -17,6 +17,7 @@ on:
       - "static/trophies/**"
       - "static/team-games/**"
       - "static/community-games/**"
+      - "static/face-swap/**"
       - "tools/community_games/**"
       - "tests/community_games*"
       - "tests/grid_popularity.mjs"
@@ -26,6 +27,7 @@ on:
       - "tests/team_careers.py"
       - "tests/shootout.cjs"
       - "tests/home_challenges.cjs"
+      - "tests/face_swap*"
       - "tests/frontend_regressions.cjs"
       - "tests/current_team_refresh.py"
       - "tests/who_scored_batches.py"
@@ -88,6 +90,11 @@ jobs:
 
       - name: Check random home challenges and weekly progress
         run: node tests/home_challenges.cjs
+
+      - name: Check Face Swap gameplay, scoring, assets, and schedules
+        run: |
+          node tests/face_swap.mjs
+          python -B tests/face_swap_data.py
 
       - name: Check frontend regression cases and player refresh persistence
         run: |
