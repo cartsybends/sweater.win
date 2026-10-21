@@ -54,6 +54,11 @@
   "team": "BOS",
   "number": 10
  },
+ "8483505": {
+  "name": "Matthew Poitras",
+  "team": "BOS",
+  "number": 51
+ },
  "8478401": {
   "name": "Pavel Zacha",
   "team": "BOS",
@@ -1264,6 +1269,11 @@
   "team": "NYI",
   "number": 11
  },
+ "8485388": {
+  "name": "Victor Eklund",
+  "team": "NYI",
+  "number": 38
+ },
  "8482476": {
   "name": "Emil Heineman",
   "team": "NYI",
@@ -1963,6 +1973,11 @@
   "name": "Gavin Brindley",
   "team": "COL",
   "number": 54
+ },
+ "8486171": {
+  "name": "T.J. Hughes",
+  "team": "COL",
+  "number": 13
  },
  "8475172": {
   "name": "Nazem Kadri",
@@ -2829,6 +2844,11 @@
   "team": "ANA",
   "number": 2
  },
+ "8483482": {
+  "name": "Tristan Luneau",
+  "team": "ANA",
+  "number": 67
+ },
  "8483490": {
   "name": "Pavel Mintyukov",
   "team": "ANA",
@@ -2888,6 +2908,11 @@
   "name": "Jonathan Huberdeau",
   "team": "CGY",
   "number": 10
+ },
+ "8480259": {
+  "name": "Ben Jones",
+  "team": "CGY",
+  "number": 18
  },
  "8483609": {
   "name": "Adam Klapka",
@@ -3378,6 +3403,11 @@
   "name": "Will Smith",
   "team": "SJS",
   "number": 2
+ },
+ "8486103": {
+  "name": "Ivar Stenberg",
+  "team": "SJS",
+  "number": 41
  },
  "8475726": {
   "name": "Tyler Toffoli",
