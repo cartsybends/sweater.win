@@ -23,8 +23,19 @@ headshot into the published `face-swap/` directory. `sources.json` records the
 official NHL reference URLs.
 
 To expand the bank, add a new image and pair with a unique ID, include both local
-headshots, and record their SHA-256 hashes. Preserve existing images, IDs, and
-pairings so saved rounds and published daily answers remain valid. Keep the
-neutral jersey and consistent headshot framing used by the initial ten samples.
+headshots, and record their SHA-256 hashes. Preserve puzzle IDs and pairings so
+saved rounds and published daily answers remain valid. To improve a portrait,
+publish a new filename such as `face-198-v2.webp` and move the previous filename
+and hash into that puzzle's `previous_images` list. Both revisions are validated
+and copied to the site, so an already-open client can still load its old photo.
+Never overwrite a published image file or change a pair's source player IDs.
+
+Portraits must preserve recognizable facial anatomy from both players. Assign
+specific features to each source instead of asking for a vague average: for
+example, one player's eyes/brows/nose and the other's cheeks/mouth/jaw. Hair and
+facial hair can reinforce those identities, but cannot be the sole contribution
+from one player. Review each face alongside both originals at the size used in
+the game. Reject a smooth, attractive portrait if one identity has disappeared.
+Keep coherent, natural anatomy, a neutral jersey and consistent headshot framing.
 
 Checks: `node tests/face_swap.mjs` and `python -B tests/face_swap_data.py`.

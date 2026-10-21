@@ -813517,15 +813517,21 @@
   },
   {
    "id": "face-05",
-   "image": "face-05.webp",
+   "image": "face-05-v2.webp",
    "players": [
     8478550,
     8476453
    ],
-   "sha256": "3ab0b96e6d341c03836439aaffafb62935adf4f06fb053db70e409ea53cc2ad4",
+   "sha256": "db18d63c183791084b9d1168eb169f23d02238e46b90e23b72642090b4b7e42c",
    "headshot_sha256": [
     "0ec012020098a265c56c562b3e3aa70eff3d5ab973013082e813b00ead30aef0",
     "ab6a53d43fae38134d9fc4e26b8c86b61ea8f6f9ac8eee5764978c42f2c25d93"
+   ],
+   "previous_images": [
+    {
+     "image": "face-05.webp",
+     "sha256": "3ab0b96e6d341c03836439aaffafb62935adf4f06fb053db70e409ea53cc2ad4"
+    }
    ]
   },
   {
@@ -813829,41 +813835,59 @@
   },
   {
    "id": "face-29",
-   "image": "face-29.webp",
+   "image": "face-29-v2.webp",
    "players": [
     8480800,
     8477492
    ],
-   "sha256": "849ed484304005e10bb138cf298843762c988af7a8025cf27da68b28c4def461",
+   "sha256": "88861819f0bcd2ce15f008df7d15b1e7fe197f1508f3bd34a8c7c538eb02f5d7",
    "headshot_sha256": [
     "8f1281353b478487996deb2e4a8fa68883235d5abf0fed285cab804b7c9f8f7e",
     "9e2ad25292a974bba5095a023527aa4bd2a86f4f17acf9ef47ca2c43cfcd300e"
+   ],
+   "previous_images": [
+    {
+     "image": "face-29.webp",
+     "sha256": "849ed484304005e10bb138cf298843762c988af7a8025cf27da68b28c4def461"
+    }
    ]
   },
   {
    "id": "face-30",
-   "image": "face-30.webp",
+   "image": "face-30-v2.webp",
    "players": [
     8471675,
     8474141
    ],
-   "sha256": "ccdf6d07c105b6b7635ebb3da38fffc6a075e981a2b19b039728a9fc41d81164",
+   "sha256": "1e68eddbae335c42c3ef12324ea389b9e91cb5f6bfeed77a601ba5a378d47fa4",
    "headshot_sha256": [
     "3d9091fa6bad311b45ae1bab230ae601d488735bfc877f0da51468b1503437c2",
     "24ecd4875048499d3c0e3153ec3b5d6f8a33797679b58da76a59e5b98f15d047"
+   ],
+   "previous_images": [
+    {
+     "image": "face-30.webp",
+     "sha256": "ccdf6d07c105b6b7635ebb3da38fffc6a075e981a2b19b039728a9fc41d81164"
+    }
    ]
   },
   {
    "id": "face-31",
-   "image": "face-31.webp",
+   "image": "face-31-v2.webp",
    "players": [
     8473419,
     8477492
    ],
-   "sha256": "fa4304c6be7f082366ea967cca5e5d0da9900dd7a800ede90d09bd386f12fbd8",
+   "sha256": "f808b64f0d6d9ee567a20fd174b5f80228688c2f46df72692b68cb874787db64",
    "headshot_sha256": [
     "26128dc71da59994c1a9e2f204c2fec2b4c9d42d08b84517ae0a5e3ddec97418",
     "9e2ad25292a974bba5095a023527aa4bd2a86f4f17acf9ef47ca2c43cfcd300e"
+   ],
+   "previous_images": [
+    {
+     "image": "face-31.webp",
+     "sha256": "fa4304c6be7f082366ea967cca5e5d0da9900dd7a800ede90d09bd386f12fbd8"
+    }
    ]
   },
   {
@@ -813894,15 +813918,21 @@
   },
   {
    "id": "face-34",
-   "image": "face-34.webp",
+   "image": "face-34-v2.webp",
    "players": [
     8471675,
     8477946
    ],
-   "sha256": "daeec1eb0059519f2dbc9197b30635fbcc7c7e5ae070013a85dce4d6b075815d",
+   "sha256": "803bea13c1a4b48e2f7688fc2733774f7642a6dd12a70a9e2fbed53e29fbcd2b",
    "headshot_sha256": [
     "3d9091fa6bad311b45ae1bab230ae601d488735bfc877f0da51468b1503437c2",
     "4089f0d5b0607bbf8b4de07bcdd50d03302a64e2b5ce1e55822b0876bf387697"
+   ],
+   "previous_images": [
+    {
+     "image": "face-34.webp",
+     "sha256": "daeec1eb0059519f2dbc9197b30635fbcc7c7e5ae070013a85dce4d6b075815d"
+    }
    ]
   },
   {
@@ -813972,15 +814002,21 @@
   },
   {
    "id": "face-40",
-   "image": "face-40.webp",
+   "image": "face-40-v2.webp",
    "players": [
     8479318,
     8478403
    ],
-   "sha256": "353fef56cc87484eeb3cddda7ada0ce4410864a1f9604b21fc44fb1a797564bc",
+   "sha256": "cb4f64942e197dccd58ca86ad7b80d172ca7a334220122492d4a17a7c109280f",
    "headshot_sha256": [
     "86507dda963f8b484a22b1f6638e8ced7c5bd4a1091ca327521f3f618d74cb23",
     "291f876bf2d590600006852f52377fd008f0d1b76f1ea68bf7794751ece9e76a"
+   ],
+   "previous_images": [
+    {
+     "image": "face-40.webp",
+     "sha256": "353fef56cc87484eeb3cddda7ada0ce4410864a1f9604b21fc44fb1a797564bc"
+    }
    ]
   },
   {
@@ -814050,15 +814086,21 @@
   },
   {
    "id": "face-46",
-   "image": "face-46.webp",
+   "image": "face-46-v2.webp",
    "players": [
     8479318,
     8480036
    ],
-   "sha256": "b4f103453a6ec7e4aa3caf96511f2426e86c9ad20acef0600230c83804a64c9a",
+   "sha256": "324342f46ebdcd7fb8eb281ab63bc4d5cd5e9573e4f8dba48e35c6e212ca748f",
    "headshot_sha256": [
     "86507dda963f8b484a22b1f6638e8ced7c5bd4a1091ca327521f3f618d74cb23",
     "39fde41e973c99935b2ae89482781dafa7629291824c1bd83abfbb043e0a299b"
+   ],
+   "previous_images": [
+    {
+     "image": "face-46.webp",
+     "sha256": "b4f103453a6ec7e4aa3caf96511f2426e86c9ad20acef0600230c83804a64c9a"
+    }
    ]
   },
   {
@@ -814167,15 +814209,21 @@
   },
   {
    "id": "face-55",
-   "image": "face-55.webp",
+   "image": "face-55-v2.webp",
    "players": [
     8476453,
     8480018
    ],
-   "sha256": "1438b475357f313301db6ac00b79382bd77ae6037f717e1538ddfc6e24535e31",
+   "sha256": "d0901eb27a663b44e09b284dc744db13a36d912fafa83258286d9c3268452c31",
    "headshot_sha256": [
     "ab6a53d43fae38134d9fc4e26b8c86b61ea8f6f9ac8eee5764978c42f2c25d93",
     "8553b818f1cd4492b725c9d5e952b4ea0cd831ce93c157d39347d548eba020fa"
+   ],
+   "previous_images": [
+    {
+     "image": "face-55.webp",
+     "sha256": "1438b475357f313301db6ac00b79382bd77ae6037f717e1538ddfc6e24535e31"
+    }
    ]
   },
   {
@@ -814271,15 +814319,21 @@
   },
   {
    "id": "face-63",
-   "image": "face-63.webp",
+   "image": "face-63-v2.webp",
    "players": [
     8478402,
     8475683
    ],
-   "sha256": "a3264bfefe97d4e4b980995d1b802389a5280d592baeec9e94ad71104b87774e",
+   "sha256": "f0ec3c43f08aebda55a7e96a1b0483bc4bd4d29f51edf2861d08cede14afbd15",
    "headshot_sha256": [
     "c65320e9facee4c9a6ca7e93e69dde0b928ba30a7980d10c2683f970c6c2f750",
     "3d3e44b1221fc3871f79621f380fbd819120d2bccf4bd36b716460d3295d28ed"
+   ],
+   "previous_images": [
+    {
+     "image": "face-63.webp",
+     "sha256": "a3264bfefe97d4e4b980995d1b802389a5280d592baeec9e94ad71104b87774e"
+    }
    ]
   },
   {
@@ -814414,15 +814468,21 @@
   },
   {
    "id": "face-74",
-   "image": "face-74.webp",
+   "image": "face-74-v2.webp",
    "players": [
     8478427,
     8480069
    ],
-   "sha256": "8711f583bfa3315c22791cf84f64f4255ec1705e73ccbce650f4b59f427fce08",
+   "sha256": "d600283b6e1ecd130c7b5f391a0056e9c577eecf852bc8a89869156332e3ac54",
    "headshot_sha256": [
     "cbb6f090e1a52b062768e16c4fc3feffb9a745a3458d8908ebb7d67bcadf5ca1",
     "17cd458325268b9b9ab27f864eb8f2804c953cb80e13fda9280aae2d61ded1ac"
+   ],
+   "previous_images": [
+    {
+     "image": "face-74.webp",
+     "sha256": "8711f583bfa3315c22791cf84f64f4255ec1705e73ccbce650f4b59f427fce08"
+    }
    ]
   },
   {
@@ -814544,15 +814604,21 @@
   },
   {
    "id": "face-84",
-   "image": "face-84.webp",
+   "image": "face-84-v2.webp",
    "players": [
     8481559,
     8474141
    ],
-   "sha256": "975cec9430aadd0a84fe352cac49927e5dd962428be8d44cefc0ca879fde5f09",
+   "sha256": "87778f46077b33d3c6f38f0eb707177daae69ccbadfbbf1cd9ceb88646f543dd",
    "headshot_sha256": [
     "434643ff1ef0d472c2638506607767d5ab9772647b4d69e8771938f3735eda0b",
     "24ecd4875048499d3c0e3153ec3b5d6f8a33797679b58da76a59e5b98f15d047"
+   ],
+   "previous_images": [
+    {
+     "image": "face-84.webp",
+     "sha256": "975cec9430aadd0a84fe352cac49927e5dd962428be8d44cefc0ca879fde5f09"
+    }
    ]
   },
   {
@@ -814726,15 +814792,21 @@
   },
   {
    "id": "face-98",
-   "image": "face-98.webp",
+   "image": "face-98-v2.webp",
    "players": [
     8479318,
     8479323
    ],
-   "sha256": "7e44a0e6fded43401944606e9085eca5b70402530984fb1725abf6eb8f231a55",
+   "sha256": "47e9b113ef7292d5ea8ec8629cb5e14519bd274b19f37bec70eaf29dfe90a58b",
    "headshot_sha256": [
     "86507dda963f8b484a22b1f6638e8ced7c5bd4a1091ca327521f3f618d74cb23",
     "239235169c795b229f016f9d5e04e03b2d0b9c6f993547be409941756f0e39ff"
+   ],
+   "previous_images": [
+    {
+     "image": "face-98.webp",
+     "sha256": "7e44a0e6fded43401944606e9085eca5b70402530984fb1725abf6eb8f231a55"
+    }
    ]
   },
   {
@@ -814869,15 +814941,21 @@
   },
   {
    "id": "face-109",
-   "image": "face-109.webp",
+   "image": "face-109-v2.webp",
    "players": [
     8477492,
     8480830
    ],
-   "sha256": "4ddf9097aec77aba8300c7943a3df012b6ceaeb48803d17b1f390ed952561a5c",
+   "sha256": "eb14ca25283326dc1d7612731816c9f067748e6ed4332e6b6e64e2c0690d5e9b",
    "headshot_sha256": [
     "9e2ad25292a974bba5095a023527aa4bd2a86f4f17acf9ef47ca2c43cfcd300e",
     "76d78c8e8e59f451123e772816ac122c41ecd6583b723ba1380287d2560ae25f"
+   ],
+   "previous_images": [
+    {
+     "image": "face-109.webp",
+     "sha256": "4ddf9097aec77aba8300c7943a3df012b6ceaeb48803d17b1f390ed952561a5c"
+    }
    ]
   },
   {
@@ -815077,15 +815155,21 @@
   },
   {
    "id": "face-125",
-   "image": "face-125.webp",
+   "image": "face-125-v2.webp",
    "players": [
     8479318,
     8478427
    ],
-   "sha256": "be8e4f7860dd1af84830760cd9a7ab00b1508f3181f3d917b285e5f07ca6a81a",
+   "sha256": "98ec606a34c22872c4ffd64ee25021a11ac8184781fb408db037ae66ff4ce42f",
    "headshot_sha256": [
     "86507dda963f8b484a22b1f6638e8ced7c5bd4a1091ca327521f3f618d74cb23",
     "cbb6f090e1a52b062768e16c4fc3feffb9a745a3458d8908ebb7d67bcadf5ca1"
+   ],
+   "previous_images": [
+    {
+     "image": "face-125.webp",
+     "sha256": "be8e4f7860dd1af84830760cd9a7ab00b1508f3181f3d917b285e5f07ca6a81a"
+    }
    ]
   },
   {
@@ -815467,15 +815551,21 @@
   },
   {
    "id": "face-155",
-   "image": "face-155.webp",
+   "image": "face-155-v2.webp",
    "players": [
     8476453,
     8481559
    ],
-   "sha256": "0f8f9980797190f3974f7820a3a3bac345f900bc01f2e5645badbe9b034da6f4",
+   "sha256": "8d6133da6c4195085a32e355e4ec3747f6208b42fb7ce3f19492cfb11746b5fc",
    "headshot_sha256": [
     "ab6a53d43fae38134d9fc4e26b8c86b61ea8f6f9ac8eee5764978c42f2c25d93",
     "434643ff1ef0d472c2638506607767d5ab9772647b4d69e8771938f3735eda0b"
+   ],
+   "previous_images": [
+    {
+     "image": "face-155.webp",
+     "sha256": "0f8f9980797190f3974f7820a3a3bac345f900bc01f2e5645badbe9b034da6f4"
+    }
    ]
   },
   {
@@ -815571,15 +815661,21 @@
   },
   {
    "id": "face-163",
-   "image": "face-163.webp",
+   "image": "face-163-v2.webp",
    "players": [
     8477493,
     8480830
    ],
-   "sha256": "2684f5a048d16b9217ec7704fa52773eb6948d8089cc7fb055b9c442452846aa",
+   "sha256": "c9961f7b05a7722cce083130db3dccd687942af82203fc2524c3e0c56ca5fe25",
    "headshot_sha256": [
     "2c103fa6878b88f050a9fa2d7546bc9905639a0c47c3e4e42f39faa4ed501c4b",
     "76d78c8e8e59f451123e772816ac122c41ecd6583b723ba1380287d2560ae25f"
+   ],
+   "previous_images": [
+    {
+     "image": "face-163.webp",
+     "sha256": "2684f5a048d16b9217ec7704fa52773eb6948d8089cc7fb055b9c442452846aa"
+    }
    ]
   },
   {
@@ -815662,15 +815758,21 @@
   },
   {
    "id": "face-170",
-   "image": "face-170.webp",
+   "image": "face-170-v2.webp",
    "players": [
     8477956,
     8476883
    ],
-   "sha256": "f3e3b8fb65ba1a275c241a9636d7d851f9d17fa587c037448968df5051eda395",
+   "sha256": "6586b031d338d4a5679aa579a51e65522b9222ef8e3d6d431a41cd414e753e0b",
    "headshot_sha256": [
     "a12751424da36000c0b3c3bde384ab2115cf627b651cfdfc13c047fd4d0b5ca9",
     "5d6c82de606e1ddbdcc8c2491e913e9d37344a5dc91baefb19c95e6d85fce74c"
+   ],
+   "previous_images": [
+    {
+     "image": "face-170.webp",
+     "sha256": "f3e3b8fb65ba1a275c241a9636d7d851f9d17fa587c037448968df5051eda395"
+    }
    ]
   },
   {
@@ -815714,15 +815816,21 @@
   },
   {
    "id": "face-174",
-   "image": "face-174.webp",
+   "image": "face-174-v2.webp",
    "players": [
     8478427,
     8480027
    ],
-   "sha256": "17c944803f6e0a664a328da49cde028a268fc4ace08aec17e0b45545a4735ef5",
+   "sha256": "098d13218187437f658b1a463fadcee10e577bf9ed5692ee78ed845901955ff5",
    "headshot_sha256": [
     "cbb6f090e1a52b062768e16c4fc3feffb9a745a3458d8908ebb7d67bcadf5ca1",
     "0f7ac2acdd984eaf4b8287d162877ee68a719d89091e57ad2fb858fcb76d0a94"
+   ],
+   "previous_images": [
+    {
+     "image": "face-174.webp",
+     "sha256": "17c944803f6e0a664a328da49cde028a268fc4ace08aec17e0b45545a4735ef5"
+    }
    ]
   },
   {
@@ -815766,15 +815874,21 @@
   },
   {
    "id": "face-178",
-   "image": "face-178.webp",
+   "image": "face-178-v2.webp",
    "players": [
     8476460,
     8481559
    ],
-   "sha256": "53c562a100acc90e206f78ea7469f8914ed4860d142f8000660e9443cca0d678",
+   "sha256": "557cf7b2f280f3b27d607df3f8f01dd440267c70ccc66b0773379d0e0fc5c6b0",
    "headshot_sha256": [
     "afdbd8ec16e6ce15b52441dcdc39e543f73b6a7d0c0c6e30fefb08e906215e34",
     "434643ff1ef0d472c2638506607767d5ab9772647b4d69e8771938f3735eda0b"
+   ],
+   "previous_images": [
+    {
+     "image": "face-178.webp",
+     "sha256": "53c562a100acc90e206f78ea7469f8914ed4860d142f8000660e9443cca0d678"
+    }
    ]
   },
   {
@@ -815844,28 +815958,40 @@
   },
   {
    "id": "face-184",
-   "image": "face-184.webp",
+   "image": "face-184-v2.webp",
    "players": [
     8478444,
     8480800
    ],
-   "sha256": "95e0e1697fde31f4b757e41a2c63b0b824cea679b1b62dfc6dac0757363a1fb4",
+   "sha256": "fca8c3afb837bb2cdc373b440787c93e30f42fec4fa0e9b01e1c5f34b76fc906",
    "headshot_sha256": [
     "89e04f178494a1296f48b14f62657a8c6ed81ce8c3ce1e7fbe67b1cbddd69cf1",
     "8f1281353b478487996deb2e4a8fa68883235d5abf0fed285cab804b7c9f8f7e"
+   ],
+   "previous_images": [
+    {
+     "image": "face-184.webp",
+     "sha256": "95e0e1697fde31f4b757e41a2c63b0b824cea679b1b62dfc6dac0757363a1fb4"
+    }
    ]
   },
   {
    "id": "face-185",
-   "image": "face-185.webp",
+   "image": "face-185-v2.webp",
    "players": [
     8476460,
     8478483
    ],
-   "sha256": "4565ca909ec5c108d074390d00da461038304b247001d162cc29f5c3e4c92dcc",
+   "sha256": "1fefdcca028e56ff99970eeb485bec69de3d128f5b1ba3a4a6d652ffbadc2a70",
    "headshot_sha256": [
     "afdbd8ec16e6ce15b52441dcdc39e543f73b6a7d0c0c6e30fefb08e906215e34",
     "6abcae92ef6cb418a4ebb7ab8a055db0c1a1d80f341e99af3df9a7d50bb1d2a2"
+   ],
+   "previous_images": [
+    {
+     "image": "face-185.webp",
+     "sha256": "4565ca909ec5c108d074390d00da461038304b247001d162cc29f5c3e4c92dcc"
+    }
    ]
   },
   {
@@ -815948,15 +816074,21 @@
   },
   {
    "id": "face-192",
-   "image": "face-192.webp",
+   "image": "face-192-v2.webp",
    "players": [
     8479318,
     8475794
    ],
-   "sha256": "041005c359996a353b3d11549bd51bf24497eb4603068aba91f89aff458f4bc9",
+   "sha256": "a16f37f8286219c5abc00df23a4bd809202f8e4df6db678dec4ef1f4037a2bc9",
    "headshot_sha256": [
     "86507dda963f8b484a22b1f6638e8ced7c5bd4a1091ca327521f3f618d74cb23",
     "dd4325d4e5f6faa9368bbc09e267140aeb5aebeddadecef3660e4b9fbabbac35"
+   ],
+   "previous_images": [
+    {
+     "image": "face-192.webp",
+     "sha256": "041005c359996a353b3d11549bd51bf24497eb4603068aba91f89aff458f4bc9"
+    }
    ]
   },
   {
@@ -816013,28 +816145,40 @@
   },
   {
    "id": "face-197",
-   "image": "face-197.webp",
+   "image": "face-197-v2.webp",
    "players": [
     8476453,
     8483678
    ],
-   "sha256": "51e016239559c1d81aa2fa49de041b33b7dbe79f726fddb66c2ca460146720ab",
+   "sha256": "453f72bb63b46b5dd8d80256aee8f7c4ef17585f999ecf2ae597e26a7e004241",
    "headshot_sha256": [
     "ab6a53d43fae38134d9fc4e26b8c86b61ea8f6f9ac8eee5764978c42f2c25d93",
     "7e17d69e9f84bc17596aca5373f7bf09f6ea9fa23c1354d6d5f9b190b29807d8"
+   ],
+   "previous_images": [
+    {
+     "image": "face-197.webp",
+     "sha256": "51e016239559c1d81aa2fa49de041b33b7dbe79f726fddb66c2ca460146720ab"
+    }
    ]
   },
   {
    "id": "face-198",
-   "image": "face-198.webp",
+   "image": "face-198-v2.webp",
    "players": [
     8476460,
     8480800
    ],
-   "sha256": "5f5c5371787059714dce6b8f229e50160dc323784f0aefcd0a6add2e5aa74bb8",
+   "sha256": "4b1e16d40ac52a75a57419a574d304ac9fbe7619558a21bdcdf4c69248c99d95",
    "headshot_sha256": [
     "afdbd8ec16e6ce15b52441dcdc39e543f73b6a7d0c0c6e30fefb08e906215e34",
     "8f1281353b478487996deb2e4a8fa68883235d5abf0fed285cab804b7c9f8f7e"
+   ],
+   "previous_images": [
+    {
+     "image": "face-198.webp",
+     "sha256": "5f5c5371787059714dce6b8f229e50160dc323784f0aefcd0a6add2e5aa74bb8"
+    }
    ]
   },
   {
@@ -816052,15 +816196,21 @@
   },
   {
    "id": "face-200",
-   "image": "face-200.webp",
+   "image": "face-200-v2.webp",
    "players": [
     8476453,
     8475683
    ],
-   "sha256": "5536043367994b5208bcaacb9e7d9269119c2b5a4f1dcfdf897ad18b82b35eb2",
+   "sha256": "5c4da765a07ff781f6e9279e4c483cad69d6a5f2a6a2606ef918509962b072b2",
    "headshot_sha256": [
     "ab6a53d43fae38134d9fc4e26b8c86b61ea8f6f9ac8eee5764978c42f2c25d93",
     "3d3e44b1221fc3871f79621f380fbd819120d2bccf4bd36b716460d3295d28ed"
+   ],
+   "previous_images": [
+    {
+     "image": "face-200.webp",
+     "sha256": "5536043367994b5208bcaacb9e7d9269119c2b5a4f1dcfdf897ad18b82b35eb2"
+    }
    ]
   }
  ],

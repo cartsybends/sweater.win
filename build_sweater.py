@@ -13555,8 +13555,16 @@ def plan_community_days(saved, bank, today, mode):
     return dict(sorted(days.items()))
 
 
+def face_swap_portraits(puzzle):
+    """Current photo plus immutable older revisions kept for already-open clients."""
+    previous = puzzle.get("previous_images", [])
+    if not isinstance(previous, list) or any(not isinstance(row, dict) for row in previous):
+        raise ValueError("Invalid Face Swap portrait history")
+    return [{"image": puzzle.get("image"), "sha256": puzzle.get("sha256")}, *previous]
+
+
 def load_face_swap_puzzles():
-    """Only publish complete, reviewed pairings with unchanged portrait assets."""
+    """Only publish complete pairings with verified current and historical portraits."""
     root = HERE / "static/face-swap"
     data = json.loads((root / "puzzles.json").read_text(encoding="utf-8"))
     rows = data.get("puzzles")
@@ -13576,12 +13584,19 @@ def load_face_swap_puzzles():
             raise ValueError("Duplicate Face Swap player pairing")
         ids.add(key)
         pairs.add(pair)
-        if image != key + ".webp":
-            raise ValueError(f"Invalid Face Swap portrait filename: {key}")
+        portraits = face_swap_portraits(row)
+        names = set()
+        for portrait in portraits:
+            name = portrait.get("image")
+            if (not isinstance(name, str)
+                    or not re.fullmatch(rf"{re.escape(key)}(?:-v[1-9]\d*)?\.webp", name)
+                    or name in names):
+                raise ValueError(f"Invalid or duplicate Face Swap portrait filename: {key}")
+            names.add(name)
         hashes = row.get("headshot_sha256")
         if not isinstance(hashes, list) or len(hashes) != 2:
             raise ValueError(f"Face Swap {key} needs two original headshots")
-        assets = [(root / image, row.get("sha256"))]
+        assets = [(root / portrait["image"], portrait.get("sha256")) for portrait in portraits]
         assets += [(root / "players" / f"{pid}.webp", digest) for pid, digest in zip(players, hashes)]
         for path, digest in assets:
             if (not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest)
@@ -13595,7 +13610,8 @@ def copy_face_swap_media(out_dir, puzzles):
     destination = out_dir / "face-swap"
     (destination / "players").mkdir(parents=True, exist_ok=True)
     for puzzle in puzzles:
-        shutil.copy2(source / puzzle["image"], destination / puzzle["image"])
+        for portrait in face_swap_portraits(puzzle):
+            shutil.copy2(source / portrait["image"], destination / portrait["image"])
     for pid in {pid for puzzle in puzzles for pid in puzzle["players"]}:
         shutil.copy2(source / "players" / f"{pid}.webp", destination / "players" / f"{pid}.webp")
 

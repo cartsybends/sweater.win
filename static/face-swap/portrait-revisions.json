@@ -1,0 +1,232 @@
+{
+  "date": "2026-10-21",
+  "reason": "One-sided composites made the second source player difficult to recognize.",
+  "standard": "Both source players contribute identifiable facial anatomy; hair or beard alone is insufficient. Reviewed with both original photos at game-card size.",
+  "portraits": [
+    {
+      "id": "face-05",
+      "image": "face-05-v2.webp",
+      "players": [
+        8478550,
+        8476453
+      ],
+      "feature_assignment": "Build the upper face, high forehead, very short/receded crown hair, eye shapes and long nose/bridge from Kucherov. Build the mouth, lips, jaw contour, cheek creases and medium beard from Panarin. Keep Panarin's smiling mouth from his source photograph but do NOT give him his old full wavy hair cap, which made the old portrait look entirely like Panarin. Leave a visible natural higher/receding Kucherov hairline and use Panarin's reddish curls only at the sides/back. Both identities must remain clearly readable."
+    },
+    {
+      "id": "face-109",
+      "image": "face-109-v2.webp",
+      "players": [
+        8477492,
+        8480830
+      ],
+      "feature_assignment": "Copy Svechnikov's exact upper face: his DARK slicked-back hair, high forehead/hairline, dark eyebrows, eye shapes and longer nose/bridge. Combine it with MacKinnon's unmistakable broad rosy cheeks, wide lower face, full lips/smiling mouth and rounded broad chin. Do NOT use MacKinnon's hair or MacKinnon's eyes/nose. The dark Svechnikov upper half and broad rosy MacKinnon lower half must remain different identifiable contributions."
+    },
+    {
+      "id": "face-125",
+      "image": "face-125-v2.webp",
+      "players": [
+        8479318,
+        8478427
+      ],
+      "feature_assignment": "Keep Sebastian Aho's recognizable eyes and eyelids, longer nose, upper cheeks and medium slicked-back dark hair. Graft Auston Matthews's strong brow contours, broad jaw/chin, upper lip/mouth proportions and dark moustache. Do not reduce Aho to a token hair choice: retain his eyes, nose and upper cheek shapes."
+    },
+    {
+      "id": "face-155",
+      "image": "face-155-v2.webp",
+      "players": [
+        8476453,
+        8481559
+      ],
+      "feature_assignment": "Build Kucherov's exact upper head: his visibly RECEDING/HIGH hairline with a very short front crown, high forehead, pale eyes/eyelids, eyebrows and long nose/bridge. Build Jack Hughes's unmistakable cheeks, full mouth/lips and softer narrower chin/jaw underneath. Retain Jack's long dark mullet/swept-back hair ONLY at the sides and back, around Kucherov's receding short-haired front. This should be a natural believable balding hockey player with Jack's lower face, not Jack's full-haired unchanged face. Kucherov upper half + Jack lower half; both anatomies must stay exact."
+    },
+    {
+      "id": "face-163",
+      "image": "face-163-v2.webp",
+      "players": [
+        8477493,
+        8480830
+      ],
+      "feature_assignment": "Copy Svechnikov's DARK slicked-back hair, high forehead/hairline, actual eyes/eyelids, eyebrows and long nose/bridge. Combine them with Barkov's recognizable wide square lower face: broad jaw/chin, his mouth/lower lip and short beard on fuller lower cheeks. Do NOT copy Barkov's short light-brown hair or his whole face. Svechnikov supplies the upper half and Barkov supplies the lower half."
+    },
+    {
+      "id": "face-170",
+      "image": "face-170-v2.webp",
+      "players": [
+        8477956,
+        8476883
+      ],
+      "feature_assignment": "Keep Andrei Vasilevskiy's characteristic eyes, upper eyelids, long oval face, cheekbones and nose. Graft Pastrnak's distinctive curly reddish-brown crown hair, mouth/lip shape, lower chin and ginger beard. The Vasilevskiy eyes/nose/oval midface must remain rather than becoming Pastrnak with longer hair."
+    },
+    {
+      "id": "face-174",
+      "image": "face-174-v2.webp",
+      "players": [
+        8478427,
+        8480027
+      ],
+      "feature_assignment": "Use Robertson's EXACT distinctive eye shapes and upper eyelids, eye spacing, eyebrows and cheek structure; keep his actual smile/mouth/lips. Transplant Aho's recognizably longer, narrower NOSE AND BRIDGE from between the eyes to its tip, along with Aho's longer/slimmer face outline, chin and medium swept-back dark hair. This is Robertson eye cluster and smiling lower cheeks + Aho's whole longer central nose/bridge and longer jaw silhouette. Do not give this Robertson's shorter nose; the Aho nose must be visibly identifiable. Keep natural seamless anatomical scale."
+    },
+    {
+      "id": "face-178",
+      "image": "face-178-v2.webp",
+      "players": [
+        8476460,
+        8481559
+      ],
+      "feature_assignment": "Keep Jack Hughes's full mouth/lips, softer rounded lower face, cheek shape and longer swept-back brown hair. Graft Mark Scheifele's pale blue-gray eyes with his actual eye shapes/spacing, strong eyebrow/ridge, and long straight broader nose and bridge. Mark supplies the central upper face; Jack supplies unmistakable cheeks, mouth and jaw. Do not copy Scheifele's broad angular lower face."
+    },
+    {
+      "id": "face-184",
+      "image": "face-184-v2.webp",
+      "players": [
+        8478444,
+        8480800
+      ],
+      "feature_assignment": "Copy Quinn Hughes's EXACT thick DARK eyebrows, deep-set BROWN eyes and eyelid shapes, long slender nose/bridge, small mouth and narrow chin. Keep these eye/eyebrow/nose features recognizably Quinn. Graft Boeser's golden-blond swept-back hair and forehead, Boeser's broader upper-cheek structure, and Boeser's lower jaw outline and light beard. Blonde Boeser hair and cheeks + unmistakable DARK BROWS/BROWN EYES/LONG NOSE from Quinn. Do NOT replace Quinn's eye cluster with Boeser's blue eyes; that erased Quinn in the prior attempt."
+    },
+    {
+      "id": "face-185",
+      "image": "face-185-v2.webp",
+      "players": [
+        8476460,
+        8478483
+      ],
+      "feature_assignment": "Keep Mitch Marner's distinctive cheek structure, large smile/mouth and lips, narrow pointed lower chin and dark hair. Graft Mark Scheifele's pale blue-gray eyes, their shapes/spacing, strong brow and long straight nose/bridge. Marner supplies an unmistakable lower facial identity with a small natural smile; Scheifele supplies the eyes/brow/nose."
+    },
+    {
+      "id": "face-192",
+      "image": "face-192-v2.webp",
+      "players": [
+        8479318,
+        8475794
+      ],
+      "feature_assignment": "Keep Tyler Seguin's distinct eye shapes/spacing, upper cheekbones, jaw/chin outline and thick slightly curly dark hair. Graft Auston Matthews's broad rounded nose, dark arched eyebrows, upper lip/mouth proportions and recognizable thick moustache. Seguin must contribute actual eye/cheek/jaw anatomy, not only more facial hair on Matthews."
+    },
+    {
+      "id": "face-197",
+      "image": "face-197-v2.webp",
+      "players": [
+        8476453,
+        8483678
+      ],
+      "feature_assignment": "Build Kucherov's exact RECEDING high hairline/high forehead, visibly short front crown, pale eyes/eyelids, eyebrows and nose/bridge. Build Pettersson's very distinctive LONG SLENDER lower face, small mouth/lips, narrow jaw and pointed/long chin. Use Pettersson's blond side/back flow around Kucherov's receding crown and a short Kucherov beard. Do NOT return to Pettersson's whole full-haired face, or Kucherov's entire round lower face. The high receding Kucherov upper face plus long slim Pettersson lower face should be very clear and still anatomically natural."
+    },
+    {
+      "id": "face-198",
+      "image": "face-198-v2.webp",
+      "players": [
+        8476460,
+        8480800
+      ],
+      "feature_assignment": "Quinn Hughes's face silhouette, jaw/chin, cheeks, mouth, short beard and center-parted dark hair with Mark Scheifele's eye shapes/spacing, pale blue-gray eyes and longer straight nose/bridge."
+    },
+    {
+      "id": "face-200",
+      "image": "face-200-v2.webp",
+      "players": [
+        8476453,
+        8475683
+      ],
+      "feature_assignment": "Build Kucherov's unmistakable high forehead with RECEDING very short-haired front crown, his pale-gray eye shapes/spacing and straighter nose/bridge. Underneath, use Bobrovsky's actual mouth/lips, jaw/chin outline and cheekbone/lower-cheek structure. Use Bobrovsky's dark wavy hair ONLY at sides/back, around the Kucherov receded front hairline. Include short beard. Kucherov eyes/nose/high hairline plus Bobrovsky mouth/cheeks/jaw must BOTH be recognizable, not Bobrovsky's entire youthful full-haired head."
+    },
+    {
+      "id": "face-29",
+      "image": "face-29-v2.webp",
+      "players": [
+        8480800,
+        8477492
+      ],
+      "feature_assignment": "Keep MacKinnon's broad rosy cheek structure, rounded broad jaw/chin and full mouth. Graft Quinn Hughes's exact dark eyebrows, deeper-set brown eyes, longer slimmer nose and center-parted dark hair with short stubble. The MacKinnon lower face must stay broad and recognizable rather than becoming Quinn's narrow soft jaw."
+    },
+    {
+      "id": "face-30",
+      "image": "face-30-v2.webp",
+      "players": [
+        8471675,
+        8474141
+      ],
+      "feature_assignment": "Keep Patrick Kane's long slender face, pale eyes, eyelid shapes and upper cheek/temple structure. Graft Crosby's recognizable prominent nose, full upper lip and distinctive mouth, broader lower chin and dark short hair. Kane must clearly supply the upper face and slender cheek structure, not a token eye color."
+    },
+    {
+      "id": "face-31",
+      "image": "face-31-v2.webp",
+      "players": [
+        8473419,
+        8477492
+      ],
+      "feature_assignment": "Keep MacKinnon's eyes, eyebrows, broad rosy cheeks, full lower-face shape and light-brown hair. Graft Brad Marchand's unmistakably long prominent curved nose and its bridge, his mouth/upper lip and ears. The Marchand nose must remain distinctive without caricature or stretching. Do not give the entire face Marchand's narrow silhouette."
+    },
+    {
+      "id": "face-34",
+      "image": "face-34-v2.webp",
+      "players": [
+        8471675,
+        8477946
+      ],
+      "feature_assignment": "Keep Dylan Larkin's recognizable blue eyes, eye spacing, cheekbones and curly brown hair. Graft Crosby's specific nose, prominent full upper lip, mouth, and strong lower chin. Preserve Larkin's upper facial anatomy, not just his hair. Do not copy Crosby's entire face and short flat hairstyle."
+    },
+    {
+      "id": "face-40",
+      "image": "face-40-v2.webp",
+      "players": [
+        8479318,
+        8478403
+      ],
+      "feature_assignment": "Keep Jack Eichel's blue eyes, upper cheeks, lighter curly hair and forehead. Graft Auston Matthews's strong dark arched eyebrows, distinctive broad/rounded nose, upper lip and signature dark moustache. Keep Eichel's eye shapes and cheekbone contours. The result should visibly be Eichel's upper face and curls with Matthews's nose/mouth."
+    },
+    {
+      "id": "face-46",
+      "image": "face-46-v2.webp",
+      "players": [
+        8479318,
+        8480036
+      ],
+      "feature_assignment": "Keep Miro Heiskanen's recognizable blue eyes, cheekbones, soft jaw contour and medium-length brown center-parted hair. Graft Auston Matthews's prominent nose, arched dark eyebrows, mouth/lip proportions and dark moustache. Do not make Miro's contribution just the hairstyle: his eye shapes and cheeks must remain."
+    },
+    {
+      "id": "face-55",
+      "image": "face-55-v2.webp",
+      "players": [
+        8476453,
+        8480018
+      ],
+      "feature_assignment": "Keep Nick Suzuki's thick dark hair, strong eyebrows, wider cheek/jaw structure and full mouth. Graft Kucherov's recognizable larger pale eyes, exact eyelid shapes, longer nose bridge and rounded nose tip, and short beard pattern. Suzuki's lower face and Kucherov's eyes/nose must each remain clear."
+    },
+    {
+      "id": "face-63",
+      "image": "face-63-v2.webp",
+      "players": [
+        8478402,
+        8475683
+      ],
+      "feature_assignment": "Use Bobrovsky's exact dark tousled hair, forehead, eyebrows, blue eye shapes and longer prominent nose. Use McDavid's very recognizable thin lips/mouth, sharp angular jaw/chin, reddish stubble and lower cheek structure. Crucially keep Bobrovsky's DARK HAIR and exact eyes/nose; do NOT turn this back into McDavid's whole sandy-haired face. Bobrovsky upper half plus McDavid angular lower half and ginger beard."
+    },
+    {
+      "id": "face-74",
+      "image": "face-74-v2.webp",
+      "players": [
+        8478427,
+        8480069
+      ],
+      "feature_assignment": "Keep Cale Makar's eye shapes, rosy cheeks, rounded full mouth/lower face and jaw. Graft Sebastian Aho's longer distinctive nose and bridge, heavier dark eyebrows and slicked-back medium dark hair. Makar must remain visible through the eyes, cheeks and lower face, not disappear into Aho's whole face."
+    },
+    {
+      "id": "face-84",
+      "image": "face-84-v2.webp",
+      "players": [
+        8481559,
+        8474141
+      ],
+      "feature_assignment": "Keep Patrick Kane's pale eyes, eyelid shape, higher forehead and long straight nose with slender upper cheeks. Graft Jack Hughes's distinctive mouth/lips, softer rounded jaw/chin, smooth lower cheeks and longer brown swept-back/mullet hair. Kane's upper face and Jack's lower face must remain equally recognizable."
+    },
+    {
+      "id": "face-98",
+      "image": "face-98-v2.webp",
+      "players": [
+        8479318,
+        8479323
+      ],
+      "feature_assignment": "Keep Adam Fox's blue eyes, high cheekbones, broad square jaw, chin and short light-brown/reddish hair. Graft Auston Matthews's distinctive broad nose, dark arched eyebrows, lip/upper-mouth shape and signature dark moustache. Fox's facial geometry must stay clear rather than turning into the whole Matthews face."
+    }
+  ]
+}
