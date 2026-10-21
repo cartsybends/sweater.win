@@ -4,6 +4,42 @@
   "standard": "Both source players contribute identifiable facial anatomy; hair or beard alone is insufficient. Reviewed with both original photos at game-card size.",
   "portraits": [
     {
+      "id": "face-01",
+      "image": "face-01-v2.webp",
+      "players": [
+        8478402,
+        8479318
+      ],
+      "feature_assignment": "Keep Connor McDavid's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short swept sandy/reddish-brown hair). Visibly graft Auston Matthews's distinctive NOSE/BRIDGE from the left-eye-to-tip region (heavy arched dark eyebrows, eye shapes and prominent broad rounded nose) and MOUTH/UPPER LIP/PHILTRUM (distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw). Auston Matthews's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Connor McDavid's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Auston Matthews's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-02",
+      "image": "face-02-v2.webp",
+      "players": [
+        8471675,
+        8471214
+      ],
+      "feature_assignment": "Keep Alex Ovechkin's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short close-cropped brown/gray hair). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Alex Ovechkin's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-03",
+      "image": "face-03-v2.webp",
+      "players": [
+        8477492,
+        8480069
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Cale Makar's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: small slightly narrowed eyes, straight brows and precise narrow nose/bridge. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Cale Makar's whole face underneath a token beard. Use Cale Makar's hairstyle (short textured spiky sandy-brown hair) to reinforce the mix. The Cale Makar eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-04",
+      "image": "face-04-v2.webp",
+      "players": [
+        8477934,
+        8477956
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Leon Draisaitl's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: strong straight dark eyebrows, deep-set eye shapes and long substantial nose. The LOWER face must be a substantial faithful graft from David Pastrnak: recognizable mouth/lips, lower-cheek/jaw contours and reddish beard. Keep David Pastrnak's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Leon Draisaitl's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The Leon Draisaitl eye/nose identity and David Pastrnak mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
       "id": "face-05",
       "image": "face-05-v2.webp",
       "players": [
@@ -13,121 +49,211 @@
       "feature_assignment": "Build the upper face, high forehead, very short/receded crown hair, eye shapes and long nose/bridge from Kucherov. Build the mouth, lips, jaw contour, cheek creases and medium beard from Panarin. Keep Panarin's smiling mouth from his source photograph but do NOT give him his old full wavy hair cap, which made the old portrait look entirely like Panarin. Leave a visible natural higher/receding Kucherov hairline and use Panarin's reddish curls only at the sides/back. Both identities must remain clearly readable."
     },
     {
-      "id": "face-109",
-      "image": "face-109-v2.webp",
+      "id": "face-06",
+      "image": "face-06-v2.webp",
       "players": [
-        8477492,
-        8480830
+        8481559,
+        8479314
       ],
-      "feature_assignment": "Copy Svechnikov's exact upper face: his DARK slicked-back hair, high forehead/hairline, dark eyebrows, eye shapes and longer nose/bridge. Combine it with MacKinnon's unmistakable broad rosy cheeks, wide lower face, full lips/smiling mouth and rounded broad chin. Do NOT use MacKinnon's hair or MacKinnon's eyes/nose. The dark Svechnikov upper half and broad rosy MacKinnon lower half must remain different identifiable contributions."
+      "feature_assignment": "The UPPER/CENTRAL face is Jack Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: youthful eye shapes/eyelids, brows and small straight nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jack Hughes's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The Jack Hughes eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
     },
     {
-      "id": "face-125",
-      "image": "face-125-v2.webp",
+      "id": "face-07",
+      "image": "face-07-v2.webp",
       "players": [
-        8479318,
-        8478427
+        8480800,
+        8480801
       ],
-      "feature_assignment": "Keep Sebastian Aho's recognizable eyes and eyelids, longer nose, upper cheeks and medium slicked-back dark hair. Graft Auston Matthews's strong brow contours, broad jaw/chin, upper lip/mouth proportions and dark moustache. Do not reduce Aho to a token hair choice: retain his eyes, nose and upper cheek shapes."
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Quinn Hughes's hairstyle (medium dark center-parted tucked-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
     },
     {
-      "id": "face-155",
-      "image": "face-155-v2.webp",
-      "players": [
-        8476453,
-        8481559
-      ],
-      "feature_assignment": "Build Kucherov's exact upper head: his visibly RECEDING/HIGH hairline with a very short front crown, high forehead, pale eyes/eyelids, eyebrows and long nose/bridge. Build Jack Hughes's unmistakable cheeks, full mouth/lips and softer narrower chin/jaw underneath. Retain Jack's long dark mullet/swept-back hair ONLY at the sides and back, around Kucherov's receding short-haired front. This should be a natural believable balding hockey player with Jack's lower face, not Jack's full-haired unchanged face. Kucherov upper half + Jack lower half; both anatomies must stay exact."
-    },
-    {
-      "id": "face-163",
-      "image": "face-163-v2.webp",
-      "players": [
-        8477493,
-        8480830
-      ],
-      "feature_assignment": "Copy Svechnikov's DARK slicked-back hair, high forehead/hairline, actual eyes/eyelids, eyebrows and long nose/bridge. Combine them with Barkov's recognizable wide square lower face: broad jaw/chin, his mouth/lower lip and short beard on fuller lower cheeks. Do NOT copy Barkov's short light-brown hair or his whole face. Svechnikov supplies the upper half and Barkov supplies the lower half."
-    },
-    {
-      "id": "face-170",
-      "image": "face-170-v2.webp",
-      "players": [
-        8477956,
-        8476883
-      ],
-      "feature_assignment": "Keep Andrei Vasilevskiy's characteristic eyes, upper eyelids, long oval face, cheekbones and nose. Graft Pastrnak's distinctive curly reddish-brown crown hair, mouth/lip shape, lower chin and ginger beard. The Vasilevskiy eyes/nose/oval midface must remain rather than becoming Pastrnak with longer hair."
-    },
-    {
-      "id": "face-174",
-      "image": "face-174-v2.webp",
+      "id": "face-08",
+      "image": "face-08-v2.webp",
       "players": [
         8478427,
-        8480027
+        8478420
       ],
-      "feature_assignment": "Use Robertson's EXACT distinctive eye shapes and upper eyelids, eye spacing, eyebrows and cheek structure; keep his actual smile/mouth/lips. Transplant Aho's recognizably longer, narrower NOSE AND BRIDGE from between the eyes to its tip, along with Aho's longer/slimmer face outline, chin and medium swept-back dark hair. This is Robertson eye cluster and smiling lower cheeks + Aho's whole longer central nose/bridge and longer jaw silhouette. Do not give this Robertson's shorter nose; the Aho nose must be visibly identifiable. Keep natural seamless anatomical scale."
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Sebastian Aho's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (exact slightly hooded eye shapes, brow contours and long distinctive nose/bridge), cheeks and mouth/lips/smile (precise small mouth/lips, softer narrower lower cheeks and tapered chin/jaw). This should look like Sebastian Aho's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Sebastian Aho's facial hair and, if appropriate, side/back hair (medium dark swept-back hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
     },
     {
-      "id": "face-178",
-      "image": "face-178-v2.webp",
+      "id": "face-09",
+      "image": "face-09-v2.webp",
       "players": [
-        8476460,
-        8481559
+        8478483,
+        8477939
       ],
-      "feature_assignment": "Keep Jack Hughes's full mouth/lips, softer rounded lower face, cheek shape and longer swept-back brown hair. Graft Mark Scheifele's pale blue-gray eyes with his actual eye shapes/spacing, strong eyebrow/ridge, and long straight broader nose and bridge. Mark supplies the central upper face; Jack supplies unmistakable cheeks, mouth and jaw. Do not copy Scheifele's broad angular lower face."
+      "feature_assignment": "The UPPER/CENTRAL face is William Nylander's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, brow contours, broad forehead and straight nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep William Nylander's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The William Nylander eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
     },
     {
-      "id": "face-184",
-      "image": "face-184-v2.webp",
+      "id": "face-10",
+      "image": "face-10-v2.webp",
       "players": [
-        8478444,
-        8480800
+        8477493,
+        8475167
       ],
-      "feature_assignment": "Copy Quinn Hughes's EXACT thick DARK eyebrows, deep-set BROWN eyes and eyelid shapes, long slender nose/bridge, small mouth and narrow chin. Keep these eye/eyebrow/nose features recognizably Quinn. Graft Boeser's golden-blond swept-back hair and forehead, Boeser's broader upper-cheek structure, and Boeser's lower jaw outline and light beard. Blonde Boeser hair and cheeks + unmistakable DARK BROWS/BROWN EYES/LONG NOSE from Quinn. Do NOT replace Quinn's eye cluster with Boeser's blue eyes; that erased Quinn in the prior attempt."
+      "feature_assignment": "The UPPER/CENTRAL face is Aleksander Barkov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: deep-set eyes, straight brow contours, broad nose bridge and upper cheeks. The LOWER face must be a substantial faithful graft from Victor Hedman: thin mouth/lip contours, long angular jaw/chin and light-brown beard. Keep Victor Hedman's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Aleksander Barkov's whole face underneath a token beard. Use Aleksander Barkov's hairstyle (short neat light-brown hair) to reinforce the mix. The Aleksander Barkov eye/nose identity and Victor Hedman mouth/jaw identity must BOTH be evident at thumbnail size."
     },
     {
-      "id": "face-185",
-      "image": "face-185-v2.webp",
+      "id": "face-11",
+      "image": "face-11-v2.webp",
       "players": [
-        8476460,
-        8478483
+        8479323,
+        8478427
       ],
-      "feature_assignment": "Keep Mitch Marner's distinctive cheek structure, large smile/mouth and lips, narrow pointed lower chin and dark hair. Graft Mark Scheifele's pale blue-gray eyes, their shapes/spacing, strong brow and long straight nose/bridge. Marner supplies an unmistakable lower facial identity with a small natural smile; Scheifele supplies the eyes/brow/nose."
+      "feature_assignment": "The UPPER/CENTRAL face is Sebastian Aho's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact slightly hooded eye shapes, brow contours and long distinctive nose/bridge. The LOWER face must be a substantial faithful graft from Adam Fox: broad square jaw, solid chin, thin upper lip and precise mouth corners. Keep Adam Fox's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sebastian Aho's whole face underneath a token beard. Use Sebastian Aho's hairstyle (medium dark swept-back hair) to reinforce the mix. The Sebastian Aho eye/nose identity and Adam Fox mouth/jaw identity must BOTH be evident at thumbnail size."
     },
     {
-      "id": "face-192",
-      "image": "face-192-v2.webp",
+      "id": "face-12",
+      "image": "face-12-v2.webp",
       "players": [
         8479318,
-        8475794
+        8477934
       ],
-      "feature_assignment": "Keep Tyler Seguin's distinct eye shapes/spacing, upper cheekbones, jaw/chin outline and thick slightly curly dark hair. Graft Auston Matthews's broad rounded nose, dark arched eyebrows, upper lip/mouth proportions and recognizable thick moustache. Seguin must contribute actual eye/cheek/jaw anatomy, not only more facial hair on Matthews."
+      "feature_assignment": "Keep Leon Draisaitl's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (dark slicked-back hair). Visibly graft Auston Matthews's distinctive NOSE/BRIDGE from the left-eye-to-tip region (heavy arched dark eyebrows, eye shapes and prominent broad rounded nose) and MOUTH/UPPER LIP/PHILTRUM (distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw). Auston Matthews's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Leon Draisaitl's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Auston Matthews's defining moustache when present while keeping both real feature shapes clear."
     },
     {
-      "id": "face-197",
-      "image": "face-197-v2.webp",
+      "id": "face-13",
+      "image": "face-13-v2.webp",
       "players": [
-        8476453,
-        8483678
+        8471214,
+        8473419
       ],
-      "feature_assignment": "Build Kucherov's exact RECEDING high hairline/high forehead, visibly short front crown, pale eyes/eyelids, eyebrows and nose/bridge. Build Pettersson's very distinctive LONG SLENDER lower face, small mouth/lips, narrow jaw and pointed/long chin. Use Pettersson's blond side/back flow around Kucherov's receding crown and a short Kucherov beard. Do NOT return to Pettersson's whole full-haired face, or Kucherov's entire round lower face. The high receding Kucherov upper face plus long slim Pettersson lower face should be very clear and still anatomically natural."
+      "feature_assignment": "Keep Alex Ovechkin's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short close-cropped brown/gray hair). Visibly graft Brad Marchand's distinctive NOSE/BRIDGE from the left-eye-to-tip region (wide eyes, high/sloping brows and unmistakably long curved prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (narrow lower face, small mouth and upper lip, long chin and prominent ears). Brad Marchand's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Alex Ovechkin's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Brad Marchand's defining moustache when present while keeping both real feature shapes clear."
     },
     {
-      "id": "face-198",
-      "image": "face-198-v2.webp",
+      "id": "face-14",
+      "image": "face-14-v2.webp",
       "players": [
-        8476460,
-        8480800
+        8477492,
+        8480002
       ],
-      "feature_assignment": "Quinn Hughes's face silhouette, jaw/chin, cheeks, mouth, short beard and center-parted dark hair with Mark Scheifele's eye shapes/spacing, pale blue-gray eyes and longer straight nose/bridge."
+      "feature_assignment": "The UPPER/CENTRAL face is Nico Hischier's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark brows, distinct deeper-set eye shapes and strong straight nose. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Nico Hischier's whole face underneath a token beard. Use Nico Hischier's hairstyle (thick medium-length dark-brown swept-back hair) to reinforce the mix. The Nico Hischier eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
     },
     {
-      "id": "face-200",
-      "image": "face-200-v2.webp",
+      "id": "face-15",
+      "image": "face-15-v2.webp",
       "players": [
-        8476453,
-        8475683
+        8474563,
+        8478420
       ],
-      "feature_assignment": "Build Kucherov's unmistakable high forehead with RECEDING very short-haired front crown, his pale-gray eye shapes/spacing and straighter nose/bridge. Underneath, use Bobrovsky's actual mouth/lips, jaw/chin outline and cheekbone/lower-cheek structure. Use Bobrovsky's dark wavy hair ONLY at sides/back, around the Kucherov receded front hairline. Include short beard. Kucherov eyes/nose/high hairline plus Bobrovsky mouth/cheeks/jaw must BOTH be recognizable, not Bobrovsky's entire youthful full-haired head."
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Drew Doughty's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (distinct slightly narrowed eyes, strong brows and substantial nose/bridge), cheeks and mouth/lips/smile (broad smiling mouth, rounded cheeks, wide jaw/chin and dark beard). This should look like Drew Doughty's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Drew Doughty's facial hair and, if appropriate, side/back hair (longer swept-back black hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Drew Doughty's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-16",
+      "image": "face-16-v2.webp",
+      "players": [
+        8480002,
+        8480069
+      ],
+      "feature_assignment": "Keep Nico's exact heavy dark eyebrows, deeper-set eyes and strong straight nose, but visibly use Makar's sandy spiky hair, rosy cheeks, small mouth and rounded youthful lower face. Hair must be Makar's, not Nico's dark long swept-back hair."
+    },
+    {
+      "id": "face-17",
+      "image": "face-17-v2.webp",
+      "players": [
+        8478398,
+        8471214
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Kyle Connor's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, fine brows and long slender nose. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Kyle Connor's whole face underneath a token beard. Use Kyle Connor's hairstyle (short cropped reddish hair) to reinforce the mix. The Kyle Connor eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-18",
+      "image": "face-18-v2.webp",
+      "players": [
+        8471675,
+        8470613
+      ],
+      "feature_assignment": "Keep Brent Burns's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (dark short-upward hair and broad beard silhouette). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Brent Burns's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-19",
+      "image": "face-19-v2.webp",
+      "players": [
+        8483678,
+        8477492
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Elias Pettersson's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: long slender upper face, slightly narrow eyes and long narrow nose. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Elias Pettersson's whole face underneath a token beard. Use Elias Pettersson's hairstyle (swept blond side/back flow) to reinforce the mix. The Elias Pettersson eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-20",
+      "image": "face-20-v2.webp",
+      "players": [
+        8477946,
+        8478483
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Dylan Larkin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: bright eye shapes/spacing, brows, upper-cheek geometry and straight nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Dylan Larkin's whole face underneath a token beard. Use Dylan Larkin's hairstyle (curly brown hair) to reinforce the mix. The Dylan Larkin eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-21",
+      "image": "face-21-v2.webp",
+      "players": [
+        8478864,
+        8476453
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant Kirill Kaprizov's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (bright eye shapes, low brows, rounded upper cheeks and small straight nose), cheeks and mouth/lips/smile (full lips, small relaxed smile, broad soft cheeks and rounded chin/jaw). This should look like Kirill Kaprizov's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use Kirill Kaprizov's facial hair and, if appropriate, side/back hair (wavy medium light-brown hair) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-22",
+      "image": "face-22-v2.webp",
+      "players": [
+        8478402,
+        8475184
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Connor McDavid's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: precise pale eye shapes/spacing, brows, high upper cheeks and long straight nose. The LOWER face must be a substantial faithful graft from Chris Kreider: long smile and lip contours, angular jaw/chin and facial-hair pattern. Keep Chris Kreider's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Connor McDavid's whole face underneath a token beard. Use Connor McDavid's hairstyle (short swept sandy/reddish-brown hair) to reinforce the mix. The Connor McDavid eye/nose identity and Chris Kreider mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-23",
+      "image": "face-23-v2.webp",
+      "players": [
+        8474563,
+        8477493
+      ],
+      "feature_assignment": "Use Barkov's short light-brown hair, forehead, broad jaw/chin, mouth/lips and close lighter beard as a clear outer/lower-face foundation; transplant Doughty's exact eye shapes/brows and nose/upper cheeks. Do not give this Doughty's long black hair and full dark beard."
+    },
+    {
+      "id": "face-24",
+      "image": "face-24-v2.webp",
+      "players": [
+        8476945,
+        8476453
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant Connor Hellebuyck's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (strong heavy brows, intense deep-set eyes and prominent angular nose), cheeks and mouth/lips/smile (longer lips/mouth, pointed/angular jaw and dark beard). This should look like Connor Hellebuyck's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use Connor Hellebuyck's facial hair and, if appropriate, side/back hair (dark wavy hair and facial hair) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-25",
+      "image": "face-25-v2.webp",
+      "players": [
+        8477933,
+        8478420
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Sam Reinhart's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (distinct narrowed eye shapes, brows and broad nose/bridge), cheeks and mouth/lips/smile (broad toothy smile, precise mouth/lips, wide cheeks, square jaw and chin). This should look like Sam Reinhart's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Sam Reinhart's facial hair and, if appropriate, side/back hair (short black hair swept upward) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Sam Reinhart's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-26",
+      "image": "face-26-v2.webp",
+      "players": [
+        8477939,
+        8481559
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is William Nylander's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, brow contours, broad forehead and straight nose. The LOWER face must be a substantial faithful graft from Jack Hughes: distinct full lips/mouth, smooth rounded cheeks, softer narrower jaw/chin. Keep Jack Hughes's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep William Nylander's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The William Nylander eye/nose identity and Jack Hughes mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-27",
+      "image": "face-27-v2.webp",
+      "players": [
+        8471675,
+        8478402
+      ],
+      "feature_assignment": "Keep Connor McDavid's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short swept sandy/reddish-brown hair). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Connor McDavid's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-28",
+      "image": "face-28-v2.webp",
+      "players": [
+        8476887,
+        8480069
+      ],
+      "feature_assignment": "Keep Cale Makar's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short textured spiky sandy-brown hair). Visibly graft Filip Forsberg's distinctive NOSE/BRIDGE from the left-eye-to-tip region (distinct eye shapes/brows, upper cheeks and straight nose) and MOUTH/UPPER LIP/PHILTRUM (recognizable mouth/lips and broad curved handlebar-style moustache, chin and short beard). Filip Forsberg's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Cale Makar's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Filip Forsberg's defining moustache when present while keeping both real feature shapes clear."
     },
     {
       "id": "face-29",
@@ -157,6 +283,24 @@
       "feature_assignment": "Keep MacKinnon's eyes, eyebrows, broad rosy cheeks, full lower-face shape and light-brown hair. Graft Brad Marchand's unmistakably long prominent curved nose and its bridge, his mouth/upper lip and ears. The Marchand nose must remain distinctive without caricature or stretching. Do not give the entire face Marchand's narrow silhouette."
     },
     {
+      "id": "face-32",
+      "image": "face-32-v2.webp",
+      "players": [
+        8477493,
+        8471215
+      ],
+      "feature_assignment": "Keep Malkin's unmistakable long nose/bridge, eye shapes and eyebrows, but use Barkov's short light-brown hair, forehead/outer face geometry, broad square jaw/chin, small smirking mouth/full lower lip and lighter close beard. Barkov must be a full recognizable frame/lower-face contribution, not a token chin under Malkin's whole head."
+    },
+    {
+      "id": "face-33",
+      "image": "face-33-v2.webp",
+      "players": [
+        8477939,
+        8479318
+      ],
+      "feature_assignment": "Keep William Nylander's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (longer swept-back blond hair). Visibly graft Auston Matthews's distinctive NOSE/BRIDGE from the left-eye-to-tip region (heavy arched dark eyebrows, eye shapes and prominent broad rounded nose) and MOUTH/UPPER LIP/PHILTRUM (distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw). Auston Matthews's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. William Nylander's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Auston Matthews's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
       "id": "face-34",
       "image": "face-34-v2.webp",
       "players": [
@@ -164,6 +308,51 @@
         8477946
       ],
       "feature_assignment": "Keep Dylan Larkin's recognizable blue eyes, eye spacing, cheekbones and curly brown hair. Graft Crosby's specific nose, prominent full upper lip, mouth, and strong lower chin. Preserve Larkin's upper facial anatomy, not just his hair. Do not copy Crosby's entire face and short flat hairstyle."
+    },
+    {
+      "id": "face-35",
+      "image": "face-35-v2.webp",
+      "players": [
+        8477956,
+        8479420
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is David Pastrnak's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes, pale brows and long straight nose/bridge. The LOWER face must be a substantial faithful graft from Tage Thompson: distinctive mouth and upper lip, long angular jaw/chin and light moustache. Keep Tage Thompson's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep David Pastrnak's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The David Pastrnak eye/nose identity and Tage Thompson mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-36",
+      "image": "face-36-v2.webp",
+      "players": [
+        8478403,
+        8475167
+      ],
+      "feature_assignment": "Use Hedman's actual pale eye shapes, long straight nose/bridge, long angular jaw/chin and upper cheek geometry. Graft Eichel's recognizable curly lighter hair, cheek/smile shape and actual small smiling mouth/lips. Hedman must contribute central face anatomy visibly, rather than just some beard on Eichel."
+    },
+    {
+      "id": "face-37",
+      "image": "face-37-v2.webp",
+      "players": [
+        8480800,
+        8474578
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Erik Karlsson: small lip/mouth contours, narrow chin/jaw and characteristic moustache/goatee. Keep Erik Karlsson's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Erik Karlsson's hairstyle (medium/long dark swept-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Erik Karlsson mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-38",
+      "image": "face-38-v2.webp",
+      "players": [
+        8477956,
+        8471214
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is David Pastrnak's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes, pale brows and long straight nose/bridge. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep David Pastrnak's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The David Pastrnak eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-39",
+      "image": "face-39-v2.webp",
+      "players": [
+        8480280,
+        8477956
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jeremy Swayman's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes/spacing, dark curved brows and nose/bridge. The LOWER face must be a substantial faithful graft from David Pastrnak: recognizable mouth/lips, lower-cheek/jaw contours and reddish beard. Keep David Pastrnak's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jeremy Swayman's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The Jeremy Swayman eye/nose identity and David Pastrnak mouth/jaw identity must BOTH be evident at thumbnail size."
     },
     {
       "id": "face-40",
@@ -175,6 +364,51 @@
       "feature_assignment": "Keep Jack Eichel's blue eyes, upper cheeks, lighter curly hair and forehead. Graft Auston Matthews's strong dark arched eyebrows, distinctive broad/rounded nose, upper lip and signature dark moustache. Keep Eichel's eye shapes and cheekbone contours. The result should visibly be Eichel's upper face and curls with Matthews's nose/mouth."
     },
     {
+      "id": "face-41",
+      "image": "face-41-v2.webp",
+      "players": [
+        8477493,
+        8471724
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Aleksander Barkov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: deep-set eyes, straight brow contours, broad nose bridge and upper cheeks. The LOWER face must be a substantial faithful graft from Kris Letang: recognizable broad smile/mouth, upper lip, broad jaw/chin and dark stubble. Keep Kris Letang's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Aleksander Barkov's whole face underneath a token beard. Use Aleksander Barkov's hairstyle (short neat light-brown hair) to reinforce the mix. The Aleksander Barkov eye/nose identity and Kris Letang mouth/jaw identity must BOTH be evident at thumbnail size. Show Kris Letang's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-42",
+      "image": "face-42-v2.webp",
+      "players": [
+        8480069,
+        8478403
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jack Eichel's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, upper cheeks and long prominent nose. The LOWER face must be a substantial faithful graft from Cale Makar: youthful rosy full cheeks, small mouth, rounded jaw/chin and clean/light-stubbled skin. Keep Cale Makar's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jack Eichel's whole face underneath a token beard. Use Jack Eichel's hairstyle (light-brown/blond curls) to reinforce the mix. The Jack Eichel eye/nose identity and Cale Makar mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-43",
+      "image": "face-43-v2.webp",
+      "players": [
+        8477493,
+        8476460
+      ],
+      "feature_assignment": "Use Scheifele's exact pale eye shapes, brow ridge, long straight nose/bridge and taller wavy dark hairstyle. Use Barkov's unmistakable broad square lower face, full lower lip/smirk, jaw/chin and close beard. Scheifele upper face and hair + Barkov lower anatomy, not all Barkov."
+    },
+    {
+      "id": "face-44",
+      "image": "face-44-v2.webp",
+      "players": [
+        8476883,
+        8478483
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Andrei Vasilevskiy's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: long oval upper face, high forehead, distinctive eyelids and long nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Andrei Vasilevskiy's whole face underneath a token beard. Use Andrei Vasilevskiy's hairstyle (medium brown side-parted hair tucked around the ears) to reinforce the mix. The Andrei Vasilevskiy eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-45",
+      "image": "face-45-v2.webp",
+      "players": [
+        8479314,
+        8476883
+      ],
+      "feature_assignment": "Build the OUTER HEAD AND LOWER FACE exactly from Matthew Tkachuk: his short curly brown hair, broad high forehead, wide boxy cheeks/jaw, strong broad chin, actual smiling mouth/lips/teeth. Transplant Andrei Vasilevskiy\u2019s entire INNER UPPER FACE: distinct eyes/eyelids, brows, high upper-cheek contours and his long nose/bridge/tip. Keep Matthew\u2019s unmistakable broad head/hair/jaw/mouth around Andrei\u2019s central eyes/nose. No Vasilevskiy medium long hair or narrow chin; make a clear broad Matthew with Andrei\u2019s eye/nose identity."
+    },
+    {
       "id": "face-46",
       "image": "face-46-v2.webp",
       "players": [
@@ -182,6 +416,78 @@
         8480036
       ],
       "feature_assignment": "Keep Miro Heiskanen's recognizable blue eyes, cheekbones, soft jaw contour and medium-length brown center-parted hair. Graft Auston Matthews's prominent nose, arched dark eyebrows, mouth/lip proportions and dark moustache. Do not make Miro's contribution just the hairstyle: his eye shapes and cheeks must remain."
+    },
+    {
+      "id": "face-47",
+      "image": "face-47-v2.webp",
+      "players": [
+        8479318,
+        8475184
+      ],
+      "feature_assignment": "Keep Chris Kreider's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (thick wavy black hair with high volume). Visibly graft Auston Matthews's distinctive NOSE/BRIDGE from the left-eye-to-tip region (heavy arched dark eyebrows, eye shapes and prominent broad rounded nose) and MOUTH/UPPER LIP/PHILTRUM (distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw). Auston Matthews's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Chris Kreider's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Auston Matthews's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-48",
+      "image": "face-48-v2.webp",
+      "players": [
+        8479420,
+        8471214
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Tage Thompson's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact eye shapes, strong upper cheeks, brow contours and substantial nose. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Tage Thompson's whole face underneath a token beard. Use Tage Thompson's hairstyle (tall wavy/curly sandy-brown hair) to reinforce the mix. The Tage Thompson eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-49",
+      "image": "face-49-v2.webp",
+      "players": [
+        8478420,
+        8480069
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Cale Makar's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (small slightly narrowed eyes, straight brows and precise narrow nose/bridge), cheeks and mouth/lips/smile (youthful rosy full cheeks, small mouth, rounded jaw/chin and clean/light-stubbled skin). This should look like Cale Makar's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Cale Makar's facial hair and, if appropriate, side/back hair (short textured spiky sandy-brown hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-50",
+      "image": "face-50-v2.webp",
+      "players": [
+        8475167,
+        8478427
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sebastian Aho's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact slightly hooded eye shapes, brow contours and long distinctive nose/bridge. The LOWER face must be a substantial faithful graft from Victor Hedman: thin mouth/lip contours, long angular jaw/chin and light-brown beard. Keep Victor Hedman's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sebastian Aho's whole face underneath a token beard. Use Sebastian Aho's hairstyle (medium dark swept-back hair) to reinforce the mix. The Sebastian Aho eye/nose identity and Victor Hedman mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-51",
+      "image": "face-51-v2.webp",
+      "players": [
+        8477946,
+        8475167
+      ],
+      "feature_assignment": "Build the OUTER HEAD exactly from Victor Hedman: his high forehead, medium brown side-parted hair, longer angular head/jaw/chin and light-brown beard. Transplant Dylan Larkin\u2019s ENTIRE INNER FACE: exact bright eyes/eyelids and spacing, eyebrows, nose/bridge, full lifted smiling cheeks and recognizable broad smiling mouth/lips/teeth. It should look like Larkin\u2019s whole recognizable central face naturally set in Hedman\u2019s high-forehead long angular head, not Larkin\u2019s curly-haired whole head."
+    },
+    {
+      "id": "face-52",
+      "image": "face-52-v2.webp",
+      "players": [
+        8479314,
+        8480800
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Quinn Hughes's hairstyle (medium dark center-parted tucked-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-53",
+      "image": "face-53-v2.webp",
+      "players": [
+        8480800,
+        8471215
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Evgeni Malkin: specific upper-lip/mouth proportions, long lower face and pronounced chin. Keep Evgeni Malkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Quinn Hughes's hairstyle (medium dark center-parted tucked-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Evgeni Malkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-54",
+      "image": "face-54-v2.webp",
+      "players": [
+        8478550,
+        8477933
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sam Reinhart's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct narrowed eye shapes, brows and broad nose/bridge. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sam Reinhart's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Sam Reinhart eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
     },
     {
       "id": "face-55",
@@ -193,6 +499,69 @@
       "feature_assignment": "Keep Nick Suzuki's thick dark hair, strong eyebrows, wider cheek/jaw structure and full mouth. Graft Kucherov's recognizable larger pale eyes, exact eyelid shapes, longer nose bridge and rounded nose tip, and short beard pattern. Suzuki's lower face and Kucherov's eyes/nose must each remain clear."
     },
     {
+      "id": "face-56",
+      "image": "face-56-v2.webp",
+      "players": [
+        8480801,
+        8480280
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jeremy Swayman's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes/spacing, dark curved brows and nose/bridge. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jeremy Swayman's whole face underneath a token beard. Use Jeremy Swayman's hairstyle (short wavy dark-brown hair) to reinforce the mix. The Jeremy Swayman eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-57",
+      "image": "face-57-v2.webp",
+      "players": [
+        8478402,
+        8478010
+      ],
+      "feature_assignment": "Use Brayden Point's exact eye shapes, brows, nose/upper cheeks and tousled medium-brown hair as a clear upper-face contribution; graft McDavid's recognizable thin lips/mouth corners, sharp angular jaw/chin and reddish stubble. Point's dark/brown hair and central facial anatomy must remain, not McDavid's whole sandy-haired head."
+    },
+    {
+      "id": "face-58",
+      "image": "face-58-v2.webp",
+      "players": [
+        8478550,
+        8480800
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-59",
+      "image": "face-59-v2.webp",
+      "players": [
+        8475794,
+        8480069
+      ],
+      "feature_assignment": "Use Makar's sandy spiky hair, forehead, youthful ROSY cheeks, small mouth, round jaw/chin and light stubble as the unmistakable frame/lower half. Graft Seguin's exact heavy dark eyebrows, eye shapes/spacing and substantial nose/bridge. Do not use Seguin's whole dark curly head and face."
+    },
+    {
+      "id": "face-60",
+      "image": "face-60-v2.webp",
+      "players": [
+        8478403,
+        8477934
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jack Eichel's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, upper cheeks and long prominent nose. The LOWER face must be a substantial faithful graft from Leon Draisaitl: precise thin lips/mouth corners, strong angular jaw/chin and close beard. Keep Leon Draisaitl's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jack Eichel's whole face underneath a token beard. Use Jack Eichel's hairstyle (light-brown/blond curls) to reinforce the mix. The Jack Eichel eye/nose identity and Leon Draisaitl mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-61",
+      "image": "face-61-v2.webp",
+      "players": [
+        8474564,
+        8475167
+      ],
+      "feature_assignment": "Use Hedman's actual medium side-parted brown hair, upper face/forehead, pale eye shapes, long nose/bridge and cheekbone geometry, with Stamkos's actual compact mouth/lips, smile contours, defined jaw/chin and close beard. Give Hedman real upper-face anatomy and hair, not merely beard on Stamkos."
+    },
+    {
+      "id": "face-62",
+      "image": "face-62-v2.webp",
+      "players": [
+        8478427,
+        8478048
+      ],
+      "feature_assignment": "Use Shesterkin's intense eye shapes, eyelids and eyebrows, plus his medium dark wavy hair. Use Aho's recognizable longer nose/bridge, softer lower cheeks, small mouth/lips and tapered chin/jaw. Shesterkin's eye cluster and wavy hairstyle must be exact, with Aho's whole nose and lower-face anatomy."
+    },
+    {
       "id": "face-63",
       "image": "face-63-v2.webp",
       "players": [
@@ -200,6 +569,96 @@
         8475683
       ],
       "feature_assignment": "Use Bobrovsky's exact dark tousled hair, forehead, eyebrows, blue eye shapes and longer prominent nose. Use McDavid's very recognizable thin lips/mouth, sharp angular jaw/chin, reddish stubble and lower cheek structure. Crucially keep Bobrovsky's DARK HAIR and exact eyes/nose; do NOT turn this back into McDavid's whole sandy-haired face. Bobrovsky upper half plus McDavid angular lower half and ginger beard."
+    },
+    {
+      "id": "face-64",
+      "image": "face-64-v2.webp",
+      "players": [
+        8478550,
+        8478398
+      ],
+      "feature_assignment": "Use Kyle Connor's long slender outer face/jaw/chin, pale eye shapes and exact long slender nose. Graft Panarin's recognizable smile/mouth/lips and lifted cheek creases plus his wavy curly hair. Keep Kyle's longer facial geometry and reddish beard tone; do not recreate Panarin's whole rounder head."
+    },
+    {
+      "id": "face-65",
+      "image": "face-65-v2.webp",
+      "players": [
+        8478444,
+        8471675
+      ],
+      "feature_assignment": "Keep Brock Boeser's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (swept golden-blond hair). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Brock Boeser's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-66",
+      "image": "face-66-v2.webp",
+      "players": [
+        8478402,
+        8475167
+      ],
+      "feature_assignment": "Use Hedman's exact eye shapes and spacing, long straight nose/bridge and upper-cheek/long-face geometry. Graft McDavid's recognizable thin lips/mouth, sharp angular chin/jaw, swept sandy/reddish hair and reddish stubble. Hedman's central eye/nose identity must be substantial, not just beard."
+    },
+    {
+      "id": "face-67",
+      "image": "face-67-v2.webp",
+      "players": [
+        8478402,
+        8470613
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Connor McDavid's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: precise pale eye shapes/spacing, brows, high upper cheeks and long straight nose. The LOWER face must be a substantial faithful graft from Brent Burns: wide smiling mouth, strong square jaw/chin and thick dark beard matching the photo. Keep Brent Burns's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Connor McDavid's whole face underneath a token beard. Use Connor McDavid's hairstyle (short swept sandy/reddish-brown hair) to reinforce the mix. The Connor McDavid eye/nose identity and Brent Burns mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-68",
+      "image": "face-68-v2.webp",
+      "players": [
+        8478420,
+        8473419
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Brad Marchand's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (wide eyes, high/sloping brows and unmistakably long curved prominent nose/bridge), cheeks and mouth/lips/smile (narrow lower face, small mouth and upper lip, long chin and prominent ears). This should look like Brad Marchand's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Brad Marchand's facial hair and, if appropriate, side/back hair (short dark side-parted hair with high temples) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-69",
+      "image": "face-69-v2.webp",
+      "players": [
+        8475167,
+        8478010
+      ],
+      "feature_assignment": "Use Brayden Point's tousled medium-brown hair, actual lower-cheek/mouth/lip/chin geometry as a clear frame/lower-face contribution. Transplant Hedman's exact eye shapes/spacing, brows and long narrow nose/bridge. Do not give this Hedman's entire side-parted-haired head."
+    },
+    {
+      "id": "face-70",
+      "image": "face-70-v2.webp",
+      "players": [
+        8479314,
+        8476468
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is J.T. Miller's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: specific eye shapes/spacing, brow ridge and broad straight nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep J.T. Miller's whole face underneath a token beard. Use J.T. Miller's hairstyle (short swept-up medium-brown hair) to reinforce the mix. The J.T. Miller eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-71",
+      "image": "face-71-v2.webp",
+      "players": [
+        8478402,
+        8478048
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Igor Shesterkin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct intense eye shapes and eyelids, dark brows and narrow long nose. The LOWER face must be a substantial faithful graft from Connor McDavid: recognizable thin lips, mouth corners, sharp angular jaw/chin and reddish short beard. Keep Connor McDavid's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Igor Shesterkin's whole face underneath a token beard. Use Igor Shesterkin's hairstyle (dark wavy medium-length hair) to reinforce the mix. The Igor Shesterkin eye/nose identity and Connor McDavid mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-72",
+      "image": "face-72-v2.webp",
+      "players": [
+        8479314,
+        8477956
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is David Pastrnak's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes, pale brows and long straight nose/bridge. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep David Pastrnak's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The David Pastrnak eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-73",
+      "image": "face-73-v2.webp",
+      "players": [
+        8477493,
+        8477492
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Aleksander Barkov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: deep-set eyes, straight brow contours, broad nose bridge and upper cheeks. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Aleksander Barkov's whole face underneath a token beard. Use Aleksander Barkov's hairstyle (short neat light-brown hair) to reinforce the mix. The Aleksander Barkov eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
     },
     {
       "id": "face-74",
@@ -211,6 +670,87 @@
       "feature_assignment": "Keep Cale Makar's eye shapes, rosy cheeks, rounded full mouth/lower face and jaw. Graft Sebastian Aho's longer distinctive nose and bridge, heavier dark eyebrows and slicked-back medium dark hair. Makar must remain visible through the eyes, cheeks and lower face, not disappear into Aho's whole face."
     },
     {
+      "id": "face-75",
+      "image": "face-75-v2.webp",
+      "players": [
+        8478427,
+        8481540
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sebastian Aho's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact slightly hooded eye shapes, brow contours and long distinctive nose/bridge. The LOWER face must be a substantial faithful graft from Cole Caufield: round youthful cheeks, small full mouth with lifted corners, compact rounded jaw/chin. Keep Cole Caufield's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sebastian Aho's whole face underneath a token beard. Use Sebastian Aho's hairstyle (medium dark swept-back hair) to reinforce the mix. The Sebastian Aho eye/nose identity and Cole Caufield mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-76",
+      "image": "face-76-v2.webp",
+      "players": [
+        8474563,
+        8478483
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Drew Doughty's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct slightly narrowed eyes, strong brows and substantial nose/bridge. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Drew Doughty's whole face underneath a token beard. Use Drew Doughty's hairstyle (longer swept-back black hair) to reinforce the mix. The Drew Doughty eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-77",
+      "image": "face-77-v2.webp",
+      "players": [
+        8476468,
+        8471214
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is J.T. Miller's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: specific eye shapes/spacing, brow ridge and broad straight nose. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep J.T. Miller's whole face underneath a token beard. Use J.T. Miller's hairstyle (short swept-up medium-brown hair) to reinforce the mix. The J.T. Miller eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-78",
+      "image": "face-78-v2.webp",
+      "players": [
+        8474141,
+        8478427
+      ],
+      "feature_assignment": "Use Kane's exact pale eye shapes/eyelids, brow/upper cheek structure and longer straight nose/bridge. Graft Aho's small mouth/lips, softer lower cheeks and tapered chin/jaw, plus his medium dark swept-back hair. Kane must contribute obvious central eye/nose anatomy, not just a token narrower chin."
+    },
+    {
+      "id": "face-79",
+      "image": "face-79-v2.webp",
+      "players": [
+        8478402,
+        8477493
+      ],
+      "feature_assignment": "Use Barkov's short light-brown hair, forehead/head outline, wide square jaw/chin, small smirking mouth/full lower lip and close lighter beard. Graft McDavid's actual eye shapes/spacing, eyebrows and long nose/bridge. Barkov must be the recognizable frame/lower face; do not restore McDavid's entire sandy-haired head."
+    },
+    {
+      "id": "face-80",
+      "image": "face-80-v2.webp",
+      "players": [
+        8473994,
+        8477493
+      ],
+      "feature_assignment": "Use Barkov's short light-brown hair and recognizable forehead/head outline, broad jaw/chin, lip/mouth/smirk and close lighter beard. Transplant Benn's exact dark eye shapes, strong eyebrows and broad nose/bridge. Barkov supplies substantial frame/lower anatomy, not a token chin under Benn's whole dark-haired face."
+    },
+    {
+      "id": "face-81",
+      "image": "face-81-v2.webp",
+      "players": [
+        8480036,
+        8475167
+      ],
+      "feature_assignment": "Use Hedman's exact pale eye shapes/spacing, longer nose/bridge and upper-cheek geometry, combined with Heiskanen's actual medium brown center-parted hair, mouth/lips, broad cheek/jaw outline and rounded chin. Hedman needs obvious eyes/nose anatomy rather than merely beard."
+    },
+    {
+      "id": "face-82",
+      "image": "face-82-v2.webp",
+      "players": [
+        8476453,
+        8479343
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant Clayton Keller's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (distinct eye shapes/spacing, high dark brows and narrow nose/bridge), cheeks and mouth/lips/smile (recognizable smiling mouth, upper teeth, rounded lower cheeks and compact chin). This should look like Clayton Keller's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use Clayton Keller's facial hair and, if appropriate, side/back hair (thick dark hair swept up/back) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Clayton Keller's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-83",
+      "image": "face-83-v2.webp",
+      "players": [
+        8478427,
+        8479343
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sebastian Aho's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact slightly hooded eye shapes, brow contours and long distinctive nose/bridge. The LOWER face must be a substantial faithful graft from Clayton Keller: recognizable smiling mouth, upper teeth, rounded lower cheeks and compact chin. Keep Clayton Keller's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sebastian Aho's whole face underneath a token beard. Use Sebastian Aho's hairstyle (medium dark swept-back hair) to reinforce the mix. The Sebastian Aho eye/nose identity and Clayton Keller mouth/jaw identity must BOTH be evident at thumbnail size. Show Clayton Keller's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
       "id": "face-84",
       "image": "face-84-v2.webp",
       "players": [
@@ -220,6 +760,123 @@
       "feature_assignment": "Keep Patrick Kane's pale eyes, eyelid shape, higher forehead and long straight nose with slender upper cheeks. Graft Jack Hughes's distinctive mouth/lips, softer rounded jaw/chin, smooth lower cheeks and longer brown swept-back/mullet hair. Kane's upper face and Jack's lower face must remain equally recognizable."
     },
     {
+      "id": "face-85",
+      "image": "face-85-v2.webp",
+      "players": [
+        8474600,
+        8477956
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Roman Josi's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: specific eye shapes, strong brows, high cheekbones and straight nose. The LOWER face must be a substantial faithful graft from David Pastrnak: recognizable mouth/lips, lower-cheek/jaw contours and reddish beard. Keep David Pastrnak's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Roman Josi's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The Roman Josi eye/nose identity and David Pastrnak mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-86",
+      "image": "face-86-v2.webp",
+      "players": [
+        8477939,
+        8480018
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Nick Suzuki's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick straight dark eyebrows, exact eye shapes/eyelids and substantial nose. The LOWER face must be a substantial faithful graft from William Nylander: fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard. Keep William Nylander's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Nick Suzuki's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The Nick Suzuki eye/nose identity and William Nylander mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-87",
+      "image": "face-87-v2.webp",
+      "players": [
+        8476945,
+        8480800
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Connor Hellebuyck: longer lips/mouth, pointed/angular jaw and dark beard. Keep Connor Hellebuyck's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Quinn Hughes's hairstyle (medium dark center-parted tucked-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Connor Hellebuyck mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-88",
+      "image": "face-88-v2.webp",
+      "players": [
+        8478483,
+        8470613
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Brent Burns's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinctive eyes/brows, broad upper cheeks and substantial straight nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Brent Burns's whole face underneath a token beard. Use Brent Burns's hairstyle (dark short-upward hair and broad beard silhouette) to reinforce the mix. The Brent Burns eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-89",
+      "image": "face-89-v2.webp",
+      "players": [
+        8477939,
+        8475184
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Chris Kreider's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: dark eye shapes, strong brows, long nose/bridge and high cheekbones. The LOWER face must be a substantial faithful graft from William Nylander: fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard. Keep William Nylander's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Chris Kreider's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The Chris Kreider eye/nose identity and William Nylander mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-90",
+      "image": "face-90-v2.webp",
+      "players": [
+        8478864,
+        8477939
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Kirill Kaprizov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: bright eye shapes, low brows, rounded upper cheeks and small straight nose. The LOWER face must be a substantial faithful graft from William Nylander: fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard. Keep William Nylander's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Kirill Kaprizov's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The Kirill Kaprizov eye/nose identity and William Nylander mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-91",
+      "image": "face-91-v2.webp",
+      "players": [
+        8479420,
+        8480801
+      ],
+      "feature_assignment": "Use Brady Tkachuk\u2019s unmistakable very short cropped hair, broad high forehead, wide boxy OUTER HEAD silhouette, broad square lower jaw/neck and huge squared chin. Transplant Tage Thompson\u2019s ENTIRE INNER FACE: actual eye shapes/spacing, eyebrows, long nose/bridge, upper-cheek anatomy and narrow lip/mouth with light moustache. This should look like Thompson\u2019s face set in Brady\u2019s very broad boxy short-haired head. Remove Thompson\u2019s tall curly hair and narrow chin. Brady must contribute his full recognizable head geometry, Thompson his exact eye/nose/mouth shapes."
+    },
+    {
+      "id": "face-92",
+      "image": "face-92-v2.webp",
+      "players": [
+        8479314,
+        8477404
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jake Guentzel's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eyes, higher forehead, fine brows and narrow nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jake Guentzel's whole face underneath a token beard. Use Jake Guentzel's hairstyle (short swept-back sandy-blond hair) to reinforce the mix. The Jake Guentzel eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-93",
+      "image": "face-93-v2.webp",
+      "players": [
+        8479318,
+        8474578
+      ],
+      "feature_assignment": "Keep Erik Karlsson's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (medium/long dark swept-back hair). Visibly graft Auston Matthews's distinctive NOSE/BRIDGE from the left-eye-to-tip region (heavy arched dark eyebrows, eye shapes and prominent broad rounded nose) and MOUTH/UPPER LIP/PHILTRUM (distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw). Auston Matthews's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Erik Karlsson's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Auston Matthews's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-94",
+      "image": "face-94-v2.webp",
+      "players": [
+        8478483,
+        8478444
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Brock Boeser's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, broad forehead and upper-cheek contours, straight nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Brock Boeser's whole face underneath a token beard. Use Brock Boeser's hairstyle (swept golden-blond hair) to reinforce the mix. The Brock Boeser eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-95",
+      "image": "face-95-v2.webp",
+      "players": [
+        8475794,
+        8477493
+      ],
+      "feature_assignment": "Use Barkov's short lighter-brown hair, forehead/outer face shape, broad square jaw/chin, full lower lip/smirk and close lighter beard. Transplant Seguin's exact eye shapes, heavier dark eyebrows and nose/upper cheeks. Do not give this Seguin's whole curly dark-haired head and full dark beard."
+    },
+    {
+      "id": "face-96",
+      "image": "face-96-v2.webp",
+      "players": [
+        8477939,
+        8474578
+      ],
+      "feature_assignment": "Keep Nylander's blond swept-back hair, eyes/eyelids and spacing, cheeks and broad rounded jaw/face outline. Graft Karlsson's long narrow nose/bridge, exact mouth/lip shape and characteristic dark moustache/goatee. The Karlsson nose AND mouth must be exact, not just arbitrary facial hair. Preserve Nylander's real eye/cheek anatomy."
+    },
+    {
+      "id": "face-97",
+      "image": "face-97-v2.webp",
+      "players": [
+        8471675,
+        8475167
+      ],
+      "feature_assignment": "Keep Victor Hedman's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (medium brown side-parted hair). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Victor Hedman's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
       "id": "face-98",
       "image": "face-98-v2.webp",
       "players": [
@@ -227,6 +884,925 @@
         8479323
       ],
       "feature_assignment": "Keep Adam Fox's blue eyes, high cheekbones, broad square jaw, chin and short light-brown/reddish hair. Graft Auston Matthews's distinctive broad nose, dark arched eyebrows, lip/upper-mouth shape and signature dark moustache. Fox's facial geometry must stay clear rather than turning into the whole Matthews face."
+    },
+    {
+      "id": "face-99",
+      "image": "face-99-v2.webp",
+      "players": [
+        8475794,
+        8477934
+      ],
+      "feature_assignment": "Use Draisaitl's slicked-back dark hair, heavy straight eyebrows, exact deep-set eye shapes and long nose/bridge. Graft Seguin's actual mouth/lip shape, lower cheeks, broad jaw/chin and thick dark beard. Draisaitl supplies the recognizable upper head/central anatomy, Seguin supplies the genuine lower-face geometry."
+    },
+    {
+      "id": "face-100",
+      "image": "face-100-v2.webp",
+      "players": [
+        8477939,
+        8481540
+      ],
+      "feature_assignment": "Keep Nylander's blond swept-back hair, forehead/head outline, broad jaw/chin and blond beard as the outer frame. Transplant Caufield's whole actual inner face: youthful eye shapes/spacing, eyebrows, small nose and nose bridge, round upper cheeks and exact mouth/smile/lips. Do not reproduce Nylander's whole nose/eyes/mouth again; Caufield's inner anatomy must be obvious."
+    },
+    {
+      "id": "face-101",
+      "image": "face-101-v2.webp",
+      "players": [
+        8480069,
+        8481540
+      ],
+      "feature_assignment": "Use Makar's actual sandy spiky hairstyle, forehead, eye shapes/eyelids, eyebrows and narrow nose/bridge. Graft Caufield's actual rounded full lower cheeks, mouth/lip/smile shape and compact rounded jaw/chin. Makar supplies unmistakable upper anatomy and hairstyle, Caufield supplies his genuine lower face."
+    },
+    {
+      "id": "face-102",
+      "image": "face-102-v2.webp",
+      "players": [
+        8477933,
+        8480800
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Sam Reinhart: broad toothy smile, precise mouth/lips, wide cheeks, square jaw and chin. Keep Sam Reinhart's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Quinn Hughes's hairstyle (medium dark center-parted tucked-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Sam Reinhart mouth/jaw identity must BOTH be evident at thumbnail size. Show Sam Reinhart's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-103",
+      "image": "face-103-v2.webp",
+      "players": [
+        8477933,
+        8477939
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sam Reinhart's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct narrowed eye shapes, brows and broad nose/bridge. The LOWER face must be a substantial faithful graft from William Nylander: fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard. Keep William Nylander's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sam Reinhart's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The Sam Reinhart eye/nose identity and William Nylander mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-104",
+      "image": "face-104-v2.webp",
+      "players": [
+        8480801,
+        8480830
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Andrei Svechnikov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: high forehead, slightly heavy eyelids, dark brows and long nose/bridge. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Andrei Svechnikov's whole face underneath a token beard. Use Andrei Svechnikov's hairstyle (dark slicked-back hair with a high hairline) to reinforce the mix. The Andrei Svechnikov eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-105",
+      "image": "face-105-v2.webp",
+      "players": [
+        8479314,
+        8474564
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Steven Stamkos's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eyes/eyelids, high forehead, brow contours and straight nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Steven Stamkos's whole face underneath a token beard. Use Steven Stamkos's hairstyle (short slicked-back sandy-brown hair with high temples) to reinforce the mix. The Steven Stamkos eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-106",
+      "image": "face-106-v2.webp",
+      "players": [
+        8478864,
+        8478550
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Kirill Kaprizov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: bright eye shapes, low brows, rounded upper cheeks and small straight nose. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Kirill Kaprizov's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Kirill Kaprizov eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-107",
+      "image": "face-107-v2.webp",
+      "players": [
+        8479314,
+        8474600
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Roman Josi's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: specific eye shapes, strong brows, high cheekbones and straight nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Roman Josi's whole face underneath a token beard. Use Roman Josi's hairstyle (short curly dark salt-and-pepper hair) to reinforce the mix. The Roman Josi eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-108",
+      "image": "face-108-v2.webp",
+      "players": [
+        8480069,
+        8480839
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Rasmus Dahlin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eye shapes, fine blond brows, broad forehead and straight nose. The LOWER face must be a substantial faithful graft from Cale Makar: youthful rosy full cheeks, small mouth, rounded jaw/chin and clean/light-stubbled skin. Keep Cale Makar's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Rasmus Dahlin's whole face underneath a token beard. Use Rasmus Dahlin's hairstyle (blond center-parted swept-back hair) to reinforce the mix. The Rasmus Dahlin eye/nose identity and Cale Makar mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-109",
+      "image": "face-109-v2.webp",
+      "players": [
+        8477492,
+        8480830
+      ],
+      "feature_assignment": "Copy Svechnikov's exact upper face: his DARK slicked-back hair, high forehead/hairline, dark eyebrows, eye shapes and longer nose/bridge. Combine it with MacKinnon's unmistakable broad rosy cheeks, wide lower face, full lips/smiling mouth and rounded broad chin. Do NOT use MacKinnon's hair or MacKinnon's eyes/nose. The dark Svechnikov upper half and broad rosy MacKinnon lower half must remain different identifiable contributions."
+    },
+    {
+      "id": "face-110",
+      "image": "face-110-v2.webp",
+      "players": [
+        8477956,
+        8478420
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant David Pastrnak's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (distinct eye shapes, pale brows and long straight nose/bridge), cheeks and mouth/lips/smile (recognizable mouth/lips, lower-cheek/jaw contours and reddish beard). This should look like David Pastrnak's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use David Pastrnak's facial hair and, if appropriate, side/back hair (loose reddish-brown curly hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-111",
+      "image": "face-111-v2.webp",
+      "players": [
+        8477934,
+        8480801
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Leon Draisaitl's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: strong straight dark eyebrows, deep-set eye shapes and long substantial nose. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Leon Draisaitl's whole face underneath a token beard. Use Leon Draisaitl's hairstyle (dark slicked-back hair) to reinforce the mix. The Leon Draisaitl eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-112",
+      "image": "face-112-v2.webp",
+      "players": [
+        8479323,
+        8475167
+      ],
+      "feature_assignment": "Use Hedman's exact pale eye shapes/spacing, long straight nose/bridge and longer upper-cheek/midface geometry. Graft Fox's actual short reddish/light-brown swept-up hair, compact mouth/lip shape, broad square jaw and solid chin. Hedman needs clear central facial anatomy rather than merely a longer beard on Fox."
+    },
+    {
+      "id": "face-113",
+      "image": "face-113-v2.webp",
+      "players": [
+        8480002,
+        8480801
+      ],
+      "feature_assignment": "Use Brady Tkachuk\u2019s unmistakably very short cropped light-brown hair, broad high forehead, extremely broad boxy OUTER HEAD silhouette, squared lower jaw/neck and large broad chin. Transplant Nico Hischier\u2019s ENTIRE INNER FACE: exact deep-set eye shapes and spacing, heavy black eyebrows, strong long nose/bridge, youthful cheeks and fuller closed smiling mouth/lips. This should look like Nico\u2019s actual inner face set in Brady\u2019s broad short-haired head. Do not use Nico\u2019s long dark hair, narrow oval chin or entire head."
+    },
+    {
+      "id": "face-114",
+      "image": "face-114-v2.webp",
+      "players": [
+        8480027,
+        8478420
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Jason Robertson's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (exact eye shapes/upper eyelids and spacing, brow contours, cheekbones and nose), cheeks and mouth/lips/smile (recognizable warm broad smile, lip/teeth shape, rounder lower cheeks and jaw/chin). This should look like Jason Robertson's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Jason Robertson's facial hair and, if appropriate, side/back hair (short black hair swept to one side) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Jason Robertson's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-115",
+      "image": "face-115-v2.webp",
+      "players": [
+        8477934,
+        8471724
+      ],
+      "feature_assignment": "Use Draisaitl's actual slicked-back dark hair, heavy straight eyebrows, deep-set eyes and long nose. Graft Letang's unmistakable broad smiling mouth/upper teeth, upper lip, smile/cheek creases and actual broad jaw/chin. Copy Letang's source smile exactly; do not make a generic closed-mouth Draisaitl."
+    },
+    {
+      "id": "face-116",
+      "image": "face-116-v2.webp",
+      "players": [
+        8477493,
+        8474600
+      ],
+      "feature_assignment": "Use Roman Josi's actual curly dark/salt-and-pepper hairstyle, distinctive pale eye shapes/brows and nose/upper cheeks. Graft Barkov's actual lower lip/smirking mouth, broad squared lower cheeks/jaw/chin and close lighter beard. Josi must contribute clear upper anatomy and hair, Barkov the genuine recognizable lower face."
+    },
+    {
+      "id": "face-117",
+      "image": "face-117-v2.webp",
+      "players": [
+        8478420,
+        8471215
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Evgeni Malkin's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (long upper face, distinctive eyes/spacing, brows and large long nose/bridge), cheeks and mouth/lips/smile (specific upper-lip/mouth proportions, long lower face and pronounced chin). This should look like Evgeni Malkin's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Evgeni Malkin's facial hair and, if appropriate, side/back hair (short neat dark-brown hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-118",
+      "image": "face-118-v2.webp",
+      "players": [
+        8478427,
+        8476459
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sebastian Aho's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact slightly hooded eye shapes, brow contours and long distinctive nose/bridge. The LOWER face must be a substantial faithful graft from Mika Zibanejad: mouth/lip contours, slender lower face and distinctive moustache/beard outline. Keep Mika Zibanejad's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sebastian Aho's whole face underneath a token beard. Use Mika Zibanejad's hairstyle (long dark hair pulled or swept back) to reinforce the mix. The Sebastian Aho eye/nose identity and Mika Zibanejad mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-119",
+      "image": "face-119-v2.webp",
+      "players": [
+        8476887,
+        8471214
+      ],
+      "feature_assignment": "Keep Alex Ovechkin's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short close-cropped brown/gray hair). Visibly graft Filip Forsberg's distinctive NOSE/BRIDGE from the left-eye-to-tip region (distinct eye shapes/brows, upper cheeks and straight nose) and MOUTH/UPPER LIP/PHILTRUM (recognizable mouth/lips and broad curved handlebar-style moustache, chin and short beard). Filip Forsberg's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Alex Ovechkin's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Filip Forsberg's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-120",
+      "image": "face-120-v2.webp",
+      "players": [
+        8477939,
+        8476453
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant William Nylander's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (pale eye shapes, brow contours, broad forehead and straight nose), cheeks and mouth/lips/smile (fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard). This should look like William Nylander's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use William Nylander's facial hair and, if appropriate, side/back hair (longer swept-back blond hair) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-121",
+      "image": "face-121-v2.webp",
+      "players": [
+        8477934,
+        8477946
+      ],
+      "feature_assignment": "Use Larkin's curly brown hair, broad cheek/smile shape and actual smiling mouth/lips/upper teeth as a recognizable frame/lower contribution. Graft Draisaitl's unmistakable straight heavy dark eyebrows, deeper-set eye shapes/spacing and long nose/bridge plus his angular chin. Do not use Draisaitl's whole slicked-back-haired head; keep Larkin's actual smile and curls."
+    },
+    {
+      "id": "face-122",
+      "image": "face-122-v2.webp",
+      "players": [
+        8474600,
+        8480801
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Roman Josi's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: specific eye shapes, strong brows, high cheekbones and straight nose. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Roman Josi's whole face underneath a token beard. Use Roman Josi's hairstyle (short curly dark salt-and-pepper hair) to reinforce the mix. The Roman Josi eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-123",
+      "image": "face-123-v2.webp",
+      "players": [
+        8471215,
+        8471675
+      ],
+      "feature_assignment": "Keep Malkin's actual forehead, eye shapes/spacing, eyebrows, longer outer face/jaw outline and short dark hair. Visibly graft Crosby's exact prominent nose/bridge AND his full upper lip, philtrum, mouth/lips and small smile. Crosby's upper-lip/mouth anatomy must be obvious, not Malkin's thin mouth again. Do not copy Malkin's entire inner face."
+    },
+    {
+      "id": "face-124",
+      "image": "face-124-v2.webp",
+      "players": [
+        8477956,
+        8474578
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is David Pastrnak's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes, pale brows and long straight nose/bridge. The LOWER face must be a substantial faithful graft from Erik Karlsson: small lip/mouth contours, narrow chin/jaw and characteristic moustache/goatee. Keep Erik Karlsson's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep David Pastrnak's whole face underneath a token beard. Use Erik Karlsson's hairstyle (medium/long dark swept-back hair) to reinforce the mix. The David Pastrnak eye/nose identity and Erik Karlsson mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-125",
+      "image": "face-125-v2.webp",
+      "players": [
+        8479318,
+        8478427
+      ],
+      "feature_assignment": "Keep Sebastian Aho's recognizable eyes and eyelids, longer nose, upper cheeks and medium slicked-back dark hair. Graft Auston Matthews's strong brow contours, broad jaw/chin, upper lip/mouth proportions and dark moustache. Do not reduce Aho to a token hair choice: retain his eyes, nose and upper cheek shapes."
+    },
+    {
+      "id": "face-126",
+      "image": "face-126-v2.webp",
+      "players": [
+        8479314,
+        8478483
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Matthew Tkachuk's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: slightly narrowed eye shapes, flatter brows and broad nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Matthew Tkachuk's whole face underneath a token beard. Use Matthew Tkachuk's hairstyle (short curly brown hair) to reinforce the mix. The Matthew Tkachuk eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-127",
+      "image": "face-127-v2.webp",
+      "players": [
+        8480069,
+        8474141
+      ],
+      "feature_assignment": "Use Makar's sandy spiky hair, forehead, rosy full cheeks, small mouth and rounded jaw/chin as the obvious frame/lower half. Graft Kane's actual pale eye shapes/eyelids and longer straight nose/bridge. Makar must have real cheek/mouth/jaw geometry and his hairstyle, not a token slightly rosy chin under Kane's whole receding-haired head."
+    },
+    {
+      "id": "face-128",
+      "image": "face-128-v2.webp",
+      "players": [
+        8478420,
+        8478483
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Mitch Marner's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (exact eye shapes/spacing, curved dark brows and narrow nose), cheeks and mouth/lips/smile (unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin). This should look like Mitch Marner's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Mitch Marner's facial hair and, if appropriate, side/back hair (thick dark side-parted hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-129",
+      "image": "face-129-v2.webp",
+      "players": [
+        8471724,
+        8481559
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Kris Letang's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: deep-set eyes, strong brows, high cheekbones and long straight nose. The LOWER face must be a substantial faithful graft from Jack Hughes: distinct full lips/mouth, smooth rounded cheeks, softer narrower jaw/chin. Keep Jack Hughes's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Kris Letang's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The Kris Letang eye/nose identity and Jack Hughes mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-130",
+      "image": "face-130-v2.webp",
+      "players": [
+        8481540,
+        8478550
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Cole Caufield's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: wide bright eyes, softly curved brows and small nose. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Cole Caufield's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Cole Caufield eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-131",
+      "image": "face-131-v2.webp",
+      "players": [
+        8477939,
+        8476459
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Mika Zibanejad's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact eye shapes/eyelids, dark brows, high forehead and long nose. The LOWER face must be a substantial faithful graft from William Nylander: fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard. Keep William Nylander's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Mika Zibanejad's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The Mika Zibanejad eye/nose identity and William Nylander mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-132",
+      "image": "face-132-v2.webp",
+      "players": [
+        8476459,
+        8477956
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Mika Zibanejad's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact eye shapes/eyelids, dark brows, high forehead and long nose. The LOWER face must be a substantial faithful graft from David Pastrnak: recognizable mouth/lips, lower-cheek/jaw contours and reddish beard. Keep David Pastrnak's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Mika Zibanejad's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The Mika Zibanejad eye/nose identity and David Pastrnak mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-133",
+      "image": "face-133-v2.webp",
+      "players": [
+        8478402,
+        8476945
+      ],
+      "feature_assignment": "Use Hellebuyck's exact heavy dark eyebrows, intense eye shapes, prominent angular nose and wavy dark hair. Graft McDavid's recognizable thin lips/mouth corners, sharp angular jaw/chin and reddish short beard. The upper head must visibly be Hellebuyck, the lower anatomy unmistakably McDavid; do not give it McDavid's whole sandy-haired head."
+    },
+    {
+      "id": "face-134",
+      "image": "face-134-v2.webp",
+      "players": [
+        8474563,
+        8480800
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Drew Doughty: broad smiling mouth, rounded cheeks, wide jaw/chin and dark beard. Keep Drew Doughty's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Quinn Hughes's hairstyle (medium dark center-parted tucked-back hair) to reinforce the mix. The Quinn Hughes eye/nose identity and Drew Doughty mouth/jaw identity must BOTH be evident at thumbnail size. Show Drew Doughty's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-135",
+      "image": "face-135-v2.webp",
+      "players": [
+        8478402,
+        8476883
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Andrei Vasilevskiy's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: long oval upper face, high forehead, distinctive eyelids and long nose. The LOWER face must be a substantial faithful graft from Connor McDavid: recognizable thin lips, mouth corners, sharp angular jaw/chin and reddish short beard. Keep Connor McDavid's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Andrei Vasilevskiy's whole face underneath a token beard. Use Andrei Vasilevskiy's hairstyle (medium brown side-parted hair tucked around the ears) to reinforce the mix. The Andrei Vasilevskiy eye/nose identity and Connor McDavid mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-136",
+      "image": "face-136-v2.webp",
+      "players": [
+        8480801,
+        8471214
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Brady Tkachuk's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: broad high forehead, pale eye shapes, flatter brows and broad nose. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Brady Tkachuk's whole face underneath a token beard. Use Brady Tkachuk's hairstyle (short cropped light-brown hair) to reinforce the mix. The Brady Tkachuk eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-137",
+      "image": "face-137-v2.webp",
+      "players": [
+        8477934,
+        8476468
+      ],
+      "feature_assignment": "Use J.T. Miller's actual eye shapes/spacing, eyebrows, broad nose/upper cheeks and short swept-up brown hairstyle. Graft Draisaitl's exact thin lips/mouth corners, angular jaw/chin and close beard. Do not retain all of Draisaitl's eyes/nose/hair; Miller must contribute recognizable upper anatomical features."
+    },
+    {
+      "id": "face-138",
+      "image": "face-138-v2.webp",
+      "players": [
+        8480280,
+        8477934
+      ],
+      "feature_assignment": "Use Leon Draisaitl\u2019s actual dark slicked-back short hair, forehead, unmistakable heavy straight black eyebrows, deep-set eye shapes and substantial long nose/bridge. Transplant Jeremy Swayman\u2019s exact entire LOWER FACE: broad lifted smiling cheeks, broad toothy smiling mouth/lips/teeth and rounded full jaw/chin. Keep Swayman\u2019s very recognizable broad source smile exactly, but his eyes/nose/hair must be replaced with Draisaitl\u2019s actual eyes/nose and slick hair. Natural wide smile on Draisaitl\u2019s unmistakable upper facial anatomy."
+    },
+    {
+      "id": "face-139",
+      "image": "face-139-v2.webp",
+      "players": [
+        8479318,
+        8473419
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Brad Marchand's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: wide eyes, high/sloping brows and unmistakably long curved prominent nose/bridge. The LOWER face must be a substantial faithful graft from Auston Matthews: distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw. Keep Auston Matthews's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Brad Marchand's whole face underneath a token beard. Use Brad Marchand's hairstyle (short dark side-parted hair with high temples) to reinforce the mix. The Brad Marchand eye/nose identity and Auston Matthews mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-140",
+      "image": "face-140-v2.webp",
+      "players": [
+        8481559,
+        8476945
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Connor Hellebuyck's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: strong heavy brows, intense deep-set eyes and prominent angular nose. The LOWER face must be a substantial faithful graft from Jack Hughes: distinct full lips/mouth, smooth rounded cheeks, softer narrower jaw/chin. Keep Jack Hughes's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Connor Hellebuyck's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The Connor Hellebuyck eye/nose identity and Jack Hughes mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-141",
+      "image": "face-141-v2.webp",
+      "players": [
+        8479314,
+        8470613
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Brent Burns's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinctive eyes/brows, broad upper cheeks and substantial straight nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Brent Burns's whole face underneath a token beard. Use Brent Burns's hairstyle (dark short-upward hair and broad beard silhouette) to reinforce the mix. The Brent Burns eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-142",
+      "image": "face-142-v2.webp",
+      "players": [
+        8478398,
+        8479314
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Kyle Connor's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: pale eye shapes, fine brows and long slender nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Kyle Connor's whole face underneath a token beard. Use Kyle Connor's hairstyle (short cropped reddish hair) to reinforce the mix. The Kyle Connor eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-143",
+      "image": "face-143-v2.webp",
+      "players": [
+        8471675,
+        8480027
+      ],
+      "feature_assignment": "Keep Robertson's actual eyes/eyelids, eyebrows, forehead, cheeks, head outline and short black hair. Visibly transplant Crosby's actual prominent nose/bridge, FULL upper lip/philtrum and mouth/lip shape. Do not use Robertson's big warm grin again; copy Crosby's distinct lip anatomy from his source. Crosby's nose AND mouth must be recognizable."
+    },
+    {
+      "id": "face-144",
+      "image": "face-144-v2.webp",
+      "players": [
+        8475167,
+        8478444
+      ],
+      "feature_assignment": "Use Boeser's golden-blond hairstyle, outer forehead/head outline, lower cheek/jaw/chin and actual mouth/lip contours as the recognizable frame. Transplant Hedman's entire actual central eye shapes/spacing, eyebrows, long nose/bridge and longer upper-cheek geometry. Do not retain all of Boeser's eyes/nose; Hedman's inner anatomy must be substantial and exact."
+    },
+    {
+      "id": "face-145",
+      "image": "face-145-v2.webp",
+      "players": [
+        8476468,
+        8476453
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant J.T. Miller's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (specific eye shapes/spacing, brow ridge and broad straight nose), cheeks and mouth/lips/smile (mouth/lip shape, wide square jaw/chin and dark moustache/goatee pattern). This should look like J.T. Miller's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use J.T. Miller's facial hair and, if appropriate, side/back hair (short swept-up medium-brown hair) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-146",
+      "image": "face-146-v2.webp",
+      "players": [
+        8471675,
+        8478048
+      ],
+      "feature_assignment": "Keep Igor Shesterkin's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (dark wavy medium-length hair). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Igor Shesterkin's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-147",
+      "image": "face-147-v2.webp",
+      "players": [
+        8477492,
+        8479420
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Tage Thompson's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact eye shapes, strong upper cheeks, brow contours and substantial nose. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Tage Thompson's whole face underneath a token beard. Use Tage Thompson's hairstyle (tall wavy/curly sandy-brown hair) to reinforce the mix. The Tage Thompson eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-148",
+      "image": "face-148-v2.webp",
+      "players": [
+        8473994,
+        8481559
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jamie Benn's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: dark eyes, strong brows and broad substantial nose. The LOWER face must be a substantial faithful graft from Jack Hughes: distinct full lips/mouth, smooth rounded cheeks, softer narrower jaw/chin. Keep Jack Hughes's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jamie Benn's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The Jamie Benn eye/nose identity and Jack Hughes mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-149",
+      "image": "face-149-v2.webp",
+      "players": [
+        8478550,
+        8477934
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Leon Draisaitl's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: strong straight dark eyebrows, deep-set eye shapes and long substantial nose. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Leon Draisaitl's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Leon Draisaitl eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-150",
+      "image": "face-150-v2.webp",
+      "players": [
+        8478427,
+        8480002
+      ],
+      "feature_assignment": "Use Hischier's actual thick brown swept-back hair, broader forehead/outer face shape, cheek/jaw contours and recognizable fuller mouth/lips as the frame/lower contribution. Transplant Aho's exact eye shapes/eyelids, brow contours and long distinctive nose/bridge. Nico must contribute substantial face geometry, not only a token chin."
+    },
+    {
+      "id": "face-151",
+      "image": "face-151-v2.webp",
+      "players": [
+        8478420,
+        8471724
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Kris Letang's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (deep-set eyes, strong brows, high cheekbones and long straight nose), cheeks and mouth/lips/smile (recognizable broad smile/mouth, upper lip, broad jaw/chin and dark stubble). This should look like Kris Letang's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Kris Letang's facial hair and, if appropriate, side/back hair (short thick black hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Kris Letang's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-152",
+      "image": "face-152-v2.webp",
+      "players": [
+        8478010,
+        8478420
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Brayden Point's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (slightly hooded eyes, subtly raised brows and narrow straight nose), cheeks and mouth/lips/smile (compact mouth/lips, strong rounded chin, lower cheek structure and short beard). This should look like Brayden Point's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Brayden Point's facial hair and, if appropriate, side/back hair (tousled medium brown hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-153",
+      "image": "face-153-v2.webp",
+      "players": [
+        8480018,
+        8480801
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Nick Suzuki's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick straight dark eyebrows, exact eye shapes/eyelids and substantial nose. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Nick Suzuki's whole face underneath a token beard. Use Nick Suzuki's hairstyle (short thick black hair swept up) to reinforce the mix. The Nick Suzuki eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-154",
+      "image": "face-154-v2.webp",
+      "players": [
+        8475167,
+        8475683
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sergei Bobrovsky's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct pale eye shapes/spacing, dark brows and longer prominent nose. The LOWER face must be a substantial faithful graft from Victor Hedman: thin mouth/lip contours, long angular jaw/chin and light-brown beard. Keep Victor Hedman's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sergei Bobrovsky's whole face underneath a token beard. Use Sergei Bobrovsky's hairstyle (dark wavy/tousled hair with a front fringe) to reinforce the mix. The Sergei Bobrovsky eye/nose identity and Victor Hedman mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-155",
+      "image": "face-155-v2.webp",
+      "players": [
+        8476453,
+        8481559
+      ],
+      "feature_assignment": "Build Kucherov's exact upper head: his visibly RECEDING/HIGH hairline with a very short front crown, high forehead, pale eyes/eyelids, eyebrows and long nose/bridge. Build Jack Hughes's unmistakable cheeks, full mouth/lips and softer narrower chin/jaw underneath. Retain Jack's long dark mullet/swept-back hair ONLY at the sides and back, around Kucherov's receding short-haired front. This should be a natural believable balding hockey player with Jack's lower face, not Jack's full-haired unchanged face. Kucherov upper half + Jack lower half; both anatomies must stay exact."
+    },
+    {
+      "id": "face-156",
+      "image": "face-156-v2.webp",
+      "players": [
+        8471675,
+        8479343
+      ],
+      "feature_assignment": "Keep Clayton Keller's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (thick dark hair swept up/back). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Clayton Keller's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-157",
+      "image": "face-157-v2.webp",
+      "players": [
+        8479314,
+        8480036
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Miro Heiskanen's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact blue eye shapes, low brow contours, broad upper cheeks and straight nose. The LOWER face must be a substantial faithful graft from Matthew Tkachuk: wide cheek/smile shape, mouth/lips, broad square jaw and strong chin. Keep Matthew Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Miro Heiskanen's whole face underneath a token beard. Use Miro Heiskanen's hairstyle (medium brown center-parted swept-back hair) to reinforce the mix. The Miro Heiskanen eye/nose identity and Matthew Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-158",
+      "image": "face-158-v2.webp",
+      "players": [
+        8476453,
+        8478398
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant Kyle Connor's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (pale eye shapes, fine brows and long slender nose), cheeks and mouth/lips/smile (wide toothy smile, lip contours, long jaw/chin and reddish beard). This should look like Kyle Connor's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use Kyle Connor's facial hair and, if appropriate, side/back hair (short cropped reddish hair) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Kyle Connor's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-159",
+      "image": "face-159-v2.webp",
+      "players": [
+        8480830,
+        8478550
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Andrei Svechnikov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: high forehead, slightly heavy eyelids, dark brows and long nose/bridge. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Andrei Svechnikov's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Andrei Svechnikov eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-160",
+      "image": "face-160-v2.webp",
+      "players": [
+        8477404,
+        8477934
+      ],
+      "feature_assignment": "Use Draisaitl's actual heavy straight dark eyebrows, deep-set eye shapes and long substantial nose/bridge. Graft Guentzel's recognizable short sandy-blond hair, cheek/smile contours, wide toothy smiling mouth and long chin/jaw with light beard. Keep Guentzel's source smile while making Draisaitl's central eye/nose anatomy obvious."
+    },
+    {
+      "id": "face-161",
+      "image": "face-161-v2.webp",
+      "players": [
+        8481559,
+        8474564
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Steven Stamkos's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eyes/eyelids, high forehead, brow contours and straight nose. The LOWER face must be a substantial faithful graft from Jack Hughes: distinct full lips/mouth, smooth rounded cheeks, softer narrower jaw/chin. Keep Jack Hughes's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Steven Stamkos's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The Steven Stamkos eye/nose identity and Jack Hughes mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-162",
+      "image": "face-162-v2.webp",
+      "players": [
+        8480839,
+        8478550
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Rasmus Dahlin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eye shapes, fine blond brows, broad forehead and straight nose. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Rasmus Dahlin's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Rasmus Dahlin eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-163",
+      "image": "face-163-v2.webp",
+      "players": [
+        8477493,
+        8480830
+      ],
+      "feature_assignment": "Copy Svechnikov's DARK slicked-back hair, high forehead/hairline, actual eyes/eyelids, eyebrows and long nose/bridge. Combine them with Barkov's recognizable wide square lower face: broad jaw/chin, his mouth/lower lip and short beard on fuller lower cheeks. Do NOT copy Barkov's short light-brown hair or his whole face. Svechnikov supplies the upper half and Barkov supplies the lower half."
+    },
+    {
+      "id": "face-164",
+      "image": "face-164-v2.webp",
+      "players": [
+        8477956,
+        8475184
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is David Pastrnak's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes, pale brows and long straight nose/bridge. The LOWER face must be a substantial faithful graft from Chris Kreider: long smile and lip contours, angular jaw/chin and facial-hair pattern. Keep Chris Kreider's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep David Pastrnak's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The David Pastrnak eye/nose identity and Chris Kreider mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-165",
+      "image": "face-165-v2.webp",
+      "players": [
+        8471214,
+        8477493
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Aleksander Barkov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: deep-set eyes, straight brow contours, broad nose bridge and upper cheeks. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Aleksander Barkov's whole face underneath a token beard. Use Aleksander Barkov's hairstyle (short neat light-brown hair) to reinforce the mix. The Aleksander Barkov eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-166",
+      "image": "face-166-v2.webp",
+      "players": [
+        8480801,
+        8483678
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Elias Pettersson's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: long slender upper face, slightly narrow eyes and long narrow nose. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Elias Pettersson's whole face underneath a token beard. Use Elias Pettersson's hairstyle (swept blond side/back flow) to reinforce the mix. The Elias Pettersson eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-167",
+      "image": "face-167-v2.webp",
+      "players": [
+        8480839,
+        8477492
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Rasmus Dahlin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eye shapes, fine blond brows, broad forehead and straight nose. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Rasmus Dahlin's whole face underneath a token beard. Use Rasmus Dahlin's hairstyle (blond center-parted swept-back hair) to reinforce the mix. The Rasmus Dahlin eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-168",
+      "image": "face-168-v2.webp",
+      "players": [
+        8476887,
+        8478550
+      ],
+      "feature_assignment": "Keep Artemi Panarin's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (soft wavy/curly reddish-brown hair). Visibly graft Filip Forsberg's distinctive NOSE/BRIDGE from the left-eye-to-tip region (distinct eye shapes/brows, upper cheeks and straight nose) and MOUTH/UPPER LIP/PHILTRUM (recognizable mouth/lips and broad curved handlebar-style moustache, chin and short beard). Filip Forsberg's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Artemi Panarin's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Filip Forsberg's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-169",
+      "image": "face-169-v2.webp",
+      "players": [
+        8480801,
+        8475683
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Sergei Bobrovsky's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct pale eye shapes/spacing, dark brows and longer prominent nose. The LOWER face must be a substantial faithful graft from Brady Tkachuk: very broad square jaw, wide lower cheeks, small straight mouth and strong boxy chin. Keep Brady Tkachuk's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Sergei Bobrovsky's whole face underneath a token beard. Use Sergei Bobrovsky's hairstyle (dark wavy/tousled hair with a front fringe) to reinforce the mix. The Sergei Bobrovsky eye/nose identity and Brady Tkachuk mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-170",
+      "image": "face-170-v2.webp",
+      "players": [
+        8477956,
+        8476883
+      ],
+      "feature_assignment": "Keep Andrei Vasilevskiy's characteristic eyes, upper eyelids, long oval face, cheekbones and nose. Graft Pastrnak's distinctive curly reddish-brown crown hair, mouth/lip shape, lower chin and ginger beard. The Vasilevskiy eyes/nose/oval midface must remain rather than becoming Pastrnak with longer hair."
+    },
+    {
+      "id": "face-171",
+      "image": "face-171-v2.webp",
+      "players": [
+        8477956,
+        8477404
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is David Pastrnak's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes, pale brows and long straight nose/bridge. The LOWER face must be a substantial faithful graft from Jake Guentzel: wide toothy smile, thin lips, long jaw/chin and light beard. Keep Jake Guentzel's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep David Pastrnak's whole face underneath a token beard. Use David Pastrnak's hairstyle (loose reddish-brown curly hair) to reinforce the mix. The David Pastrnak eye/nose identity and Jake Guentzel mouth/jaw identity must BOTH be evident at thumbnail size. Show Jake Guentzel's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-172",
+      "image": "face-172-v2.webp",
+      "players": [
+        8476453,
+        8477492
+      ],
+      "feature_assignment": "Keep Nikita Kucherov's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (visibly receding high hairline with a very short crown). Do not cover that frontal hairline with the other player's full hair cap. Transplant Nathan MacKinnon's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (slightly narrowed pale eye shapes, straight brows and broad nose/bridge), cheeks and mouth/lips/smile (unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin). This should look like Nathan MacKinnon's unmistakable inner face set in Nikita Kucherov's recognizable head/forehead/jaw, not Nikita Kucherov's entire face with a token beard. Use Nathan MacKinnon's facial hair and, if appropriate, side/back hair (short swept light-brown hair) AROUND Nikita Kucherov's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-173",
+      "image": "face-173-v2.webp",
+      "players": [
+        8477492,
+        8478048
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Igor Shesterkin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct intense eye shapes and eyelids, dark brows and narrow long nose. The LOWER face must be a substantial faithful graft from Nathan MacKinnon: unmistakable broad rosy cheeks, full smiling mouth/upper teeth and broad rounded jaw/chin. Keep Nathan MacKinnon's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Igor Shesterkin's whole face underneath a token beard. Use Igor Shesterkin's hairstyle (dark wavy medium-length hair) to reinforce the mix. The Igor Shesterkin eye/nose identity and Nathan MacKinnon mouth/jaw identity must BOTH be evident at thumbnail size. Show Nathan MacKinnon's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-174",
+      "image": "face-174-v2.webp",
+      "players": [
+        8478427,
+        8480027
+      ],
+      "feature_assignment": "Use Robertson's EXACT distinctive eye shapes and upper eyelids, eye spacing, eyebrows and cheek structure; keep his actual smile/mouth/lips. Transplant Aho's recognizably longer, narrower NOSE AND BRIDGE from between the eyes to its tip, along with Aho's longer/slimmer face outline, chin and medium swept-back dark hair. This is Robertson eye cluster and smiling lower cheeks + Aho's whole longer central nose/bridge and longer jaw silhouette. Do not give this Robertson's shorter nose; the Aho nose must be visibly identifiable. Keep natural seamless anatomical scale."
+    },
+    {
+      "id": "face-175",
+      "image": "face-175-v2.webp",
+      "players": [
+        8476887,
+        8477492
+      ],
+      "feature_assignment": "Keep Nathan MacKinnon's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short swept light-brown hair). Visibly graft Filip Forsberg's distinctive NOSE/BRIDGE from the left-eye-to-tip region (distinct eye shapes/brows, upper cheeks and straight nose) and MOUTH/UPPER LIP/PHILTRUM (recognizable mouth/lips and broad curved handlebar-style moustache, chin and short beard). Filip Forsberg's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Nathan MacKinnon's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Filip Forsberg's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-176",
+      "image": "face-176-v2.webp",
+      "players": [
+        8480036,
+        8480069
+      ],
+      "feature_assignment": "Use Makar's sandy spiky hairstyle, forehead, rosy cheeks, small mouth and rounded youthful jaw/chin as the recognizable frame/lower face. Transplant Heiskanen's exact eye shapes/eyelids, low brow contours and broader straight nose/bridge. Do not use Heiskanen's whole medium-brown-haired head; Makar needs real cheek/jaw anatomy and his hairstyle."
+    },
+    {
+      "id": "face-177",
+      "image": "face-177-v2.webp",
+      "players": [
+        8478550,
+        8483678
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Elias Pettersson's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: long slender upper face, slightly narrow eyes and long narrow nose. The LOWER face must be a substantial faithful graft from Artemi Panarin: recognizable smiling lips and mouth, lifted cheek creases and medium brown beard. Keep Artemi Panarin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Elias Pettersson's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Elias Pettersson eye/nose identity and Artemi Panarin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-178",
+      "image": "face-178-v2.webp",
+      "players": [
+        8476460,
+        8481559
+      ],
+      "feature_assignment": "Keep Jack Hughes's full mouth/lips, softer rounded lower face, cheek shape and longer swept-back brown hair. Graft Mark Scheifele's pale blue-gray eyes with his actual eye shapes/spacing, strong eyebrow/ridge, and long straight broader nose and bridge. Mark supplies the central upper face; Jack supplies unmistakable cheeks, mouth and jaw. Do not copy Scheifele's broad angular lower face."
+    },
+    {
+      "id": "face-179",
+      "image": "face-179-v2.webp",
+      "players": [
+        8478864,
+        8481559
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Kirill Kaprizov's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: bright eye shapes, low brows, rounded upper cheeks and small straight nose. The LOWER face must be a substantial faithful graft from Jack Hughes: distinct full lips/mouth, smooth rounded cheeks, softer narrower jaw/chin. Keep Jack Hughes's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Kirill Kaprizov's whole face underneath a token beard. Use Jack Hughes's hairstyle (long brown swept-back/mullet hair) to reinforce the mix. The Kirill Kaprizov eye/nose identity and Jack Hughes mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-180",
+      "image": "face-180-v2.webp",
+      "players": [
+        8473994,
+        8471214
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jamie Benn's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: dark eyes, strong brows and broad substantial nose. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jamie Benn's whole face underneath a token beard. Use Jamie Benn's hairstyle (short black hair) to reinforce the mix. The Jamie Benn eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-181",
+      "image": "face-181-v2.webp",
+      "players": [
+        8479343,
+        8478402
+      ],
+      "feature_assignment": "Use McDavid's swept sandy/reddish hair, forehead/head outline, sharp angular outer jaw/chin and reddish short beard as the recognizable outer frame. Transplant Keller's entire actual inner face: eye shapes/spacing, eyebrows, nose/bridge, cheek/smile contours and wide recognizable toothy grin/mouth. McDavid must retain actual head/jaw geometry, while Keller supplies exact central eyes/nose AND smile; do not reproduce Keller's whole dark-haired head."
+    },
+    {
+      "id": "face-182",
+      "image": "face-182-v2.webp",
+      "players": [
+        8477404,
+        8479318
+      ],
+      "feature_assignment": "Keep Jake Guentzel's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short swept-back sandy-blond hair). Visibly graft Auston Matthews's distinctive NOSE/BRIDGE from the left-eye-to-tip region (heavy arched dark eyebrows, eye shapes and prominent broad rounded nose) and MOUTH/UPPER LIP/PHILTRUM (distinctive upper-lip/mouth proportions, dark thick moustache and solid lower jaw). Auston Matthews's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Jake Guentzel's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Auston Matthews's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-183",
+      "image": "face-183-v2.webp",
+      "players": [
+        8479323,
+        8477934
+      ],
+      "feature_assignment": "Use Draisaitl's exact heavy straight dark eyebrows, deep-set eye shapes/spacing and long substantial nose/bridge. Graft Fox's short reddish/light-brown swept-up hair, broad square jaw, solid chin, cheek contours and compact mouth/lips. Draisaitl must have substantial central facial anatomy rather than just darker beard on Fox."
+    },
+    {
+      "id": "face-184",
+      "image": "face-184-v2.webp",
+      "players": [
+        8478444,
+        8480800
+      ],
+      "feature_assignment": "Copy Quinn Hughes's EXACT thick DARK eyebrows, deep-set BROWN eyes and eyelid shapes, long slender nose/bridge, small mouth and narrow chin. Keep these eye/eyebrow/nose features recognizably Quinn. Graft Boeser's golden-blond swept-back hair and forehead, Boeser's broader upper-cheek structure, and Boeser's lower jaw outline and light beard. Blonde Boeser hair and cheeks + unmistakable DARK BROWS/BROWN EYES/LONG NOSE from Quinn. Do NOT replace Quinn's eye cluster with Boeser's blue eyes; that erased Quinn in the prior attempt."
+    },
+    {
+      "id": "face-185",
+      "image": "face-185-v2.webp",
+      "players": [
+        8476460,
+        8478483
+      ],
+      "feature_assignment": "Keep Mitch Marner's distinctive cheek structure, large smile/mouth and lips, narrow pointed lower chin and dark hair. Graft Mark Scheifele's pale blue-gray eyes, their shapes/spacing, strong brow and long straight nose/bridge. Marner supplies an unmistakable lower facial identity with a small natural smile; Scheifele supplies the eyes/brow/nose."
+    },
+    {
+      "id": "face-186",
+      "image": "face-186-v2.webp",
+      "players": [
+        8480801,
+        8471675
+      ],
+      "feature_assignment": "Keep Brady Tkachuk's EXACT eyes/eyelids, eyebrows, upper cheeks, face outline/jaw and hair (short cropped light-brown hair). Visibly graft Sidney Crosby's distinctive NOSE/BRIDGE from the left-eye-to-tip region (deep-set eye shapes, strong brows and distinct prominent nose/bridge) and MOUTH/UPPER LIP/PHILTRUM (unmistakably full upper lip, philtrum and mouth, strong broad chin/jaw and short stubble). Sidney Crosby's nose AND actual lip/mouth shapes must be faithfully recognizable; do not supply just a moustache. Brady Tkachuk's eyes, cheeks and jaw must remain, not just a hairstyle. Retain Sidney Crosby's defining moustache when present while keeping both real feature shapes clear."
+    },
+    {
+      "id": "face-187",
+      "image": "face-187-v2.webp",
+      "players": [
+        8471214,
+        8480280
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jeremy Swayman's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: distinct eye shapes/spacing, dark curved brows and nose/bridge. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jeremy Swayman's whole face underneath a token beard. Use Jeremy Swayman's hairstyle (short wavy dark-brown hair) to reinforce the mix. The Jeremy Swayman eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-188",
+      "image": "face-188-v2.webp",
+      "players": [
+        8471214,
+        8480027
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Jason Robertson's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact eye shapes/upper eyelids and spacing, brow contours, cheekbones and nose. The LOWER face must be a substantial faithful graft from Alex Ovechkin: broad powerful jaw, wide smiling mouth and lip shape, characteristic front-tooth gap if teeth are shown, and salt-and-pepper beard. Keep Alex Ovechkin's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Jason Robertson's whole face underneath a token beard. Use Jason Robertson's hairstyle (short black hair swept to one side) to reinforce the mix. The Jason Robertson eye/nose identity and Alex Ovechkin mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-189",
+      "image": "face-189-v2.webp",
+      "players": [
+        8480839,
+        8477939
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Rasmus Dahlin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eye shapes, fine blond brows, broad forehead and straight nose. The LOWER face must be a substantial faithful graft from William Nylander: fuller cheeks, recognizable small mouth/lips, broad rounded jaw/chin and blond beard. Keep William Nylander's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Rasmus Dahlin's whole face underneath a token beard. Use William Nylander's hairstyle (longer swept-back blond hair) to reinforce the mix. The Rasmus Dahlin eye/nose identity and William Nylander mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-190",
+      "image": "face-190-v2.webp",
+      "players": [
+        8474564,
+        8478483
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Steven Stamkos's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: exact pale eyes/eyelids, high forehead, brow contours and straight nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Steven Stamkos's whole face underneath a token beard. Use Steven Stamkos's hairstyle (short slicked-back sandy-brown hair with high temples) to reinforce the mix. The Steven Stamkos eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-191",
+      "image": "face-191-v2.webp",
+      "players": [
+        8478483,
+        8478010
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Brayden Point's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: slightly hooded eyes, subtly raised brows and narrow straight nose. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Brayden Point's whole face underneath a token beard. Use Brayden Point's hairstyle (tousled medium brown hair) to reinforce the mix. The Brayden Point eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-192",
+      "image": "face-192-v2.webp",
+      "players": [
+        8479318,
+        8475794
+      ],
+      "feature_assignment": "Keep Tyler Seguin's distinct eye shapes/spacing, upper cheekbones, jaw/chin outline and thick slightly curly dark hair. Graft Auston Matthews's broad rounded nose, dark arched eyebrows, upper lip/mouth proportions and recognizable thick moustache. Seguin must contribute actual eye/cheek/jaw anatomy, not only more facial hair on Matthews."
+    },
+    {
+      "id": "face-193",
+      "image": "face-193-v2.webp",
+      "players": [
+        8481559,
+        8480069
+      ],
+      "feature_assignment": "Use Cale Makar as the OUTER face and hair: his recognizable short upright sandy hair, broad rosy round cheeks, square jaw and pale colouring. Graft Jack Hughes\u2019 exact deep brown eyes, thick eyebrows, narrow straight nose and closed smiling lip anatomy into the central face. Both sources must be obvious; do not retain Jack\u2019s dark long hair or his entire face."
+    },
+    {
+      "id": "face-194",
+      "image": "face-194-v2.webp",
+      "players": [
+        8478420,
+        8473994
+      ],
+      "feature_assignment": "Keep Mikko Rantanen's actual OUTER HEAD GEOMETRY: forehead shape, head width, jaw outline and chin, plus his true frontal hairline/crown (very short buzzed light-brown hair and visible high forehead). Do not cover that frontal hairline with the other player's full hair cap. Transplant Jamie Benn's EXACT INNER FACIAL FEATURES together: eyebrows, eyes/eyelids and spacing, whole nose/bridge/tip (dark eyes, strong brows and broad substantial nose), cheeks and mouth/lips/smile (wide mouth/lips, thick angular lower jaw/chin and dark beard/goatee). This should look like Jamie Benn's unmistakable inner face set in Mikko Rantanen's recognizable head/forehead/jaw, not Mikko Rantanen's entire face with a token beard. Use Jamie Benn's facial hair and, if appropriate, side/back hair (short black hair) AROUND Mikko Rantanen's frontal hairline. Match both real face geometries. The inner eye/nose/mouth donor must be very obvious."
+    },
+    {
+      "id": "face-195",
+      "image": "face-195-v2.webp",
+      "players": [
+        8476459,
+        8480800
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Quinn Hughes's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: thick dark fairly straight brows, deeper-set eye shapes and long slender nose. The LOWER face must be a substantial faithful graft from Mika Zibanejad: mouth/lip contours, slender lower face and distinctive moustache/beard outline. Keep Mika Zibanejad's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Quinn Hughes's whole face underneath a token beard. Use Mika Zibanejad's hairstyle (long dark hair pulled or swept back) to reinforce the mix. The Quinn Hughes eye/nose identity and Mika Zibanejad mouth/jaw identity must BOTH be evident at thumbnail size."
+    },
+    {
+      "id": "face-196",
+      "image": "face-196-v2.webp",
+      "players": [
+        8481559,
+        8480018
+      ],
+      "feature_assignment": "Use Nick Suzuki\u2019s exact short dark squared hairline, broad cheekbones, wide square jaw and sturdy chin as the OUTER face. Insert Jack Hughes\u2019 exact deep brown eyes, curved thick brows, slender straight nose and small closed smiling mouth. Keep Suzuki\u2019s broad lower face and strong frame unmistakable; no longer Jack Hughes face or hair."
+    },
+    {
+      "id": "face-197",
+      "image": "face-197-v2.webp",
+      "players": [
+        8476453,
+        8483678
+      ],
+      "feature_assignment": "Build Kucherov's exact RECEDING high hairline/high forehead, visibly short front crown, pale eyes/eyelids, eyebrows and nose/bridge. Build Pettersson's very distinctive LONG SLENDER lower face, small mouth/lips, narrow jaw and pointed/long chin. Use Pettersson's blond side/back flow around Kucherov's receding crown and a short Kucherov beard. Do NOT return to Pettersson's whole full-haired face, or Kucherov's entire round lower face. The high receding Kucherov upper face plus long slim Pettersson lower face should be very clear and still anatomically natural."
+    },
+    {
+      "id": "face-198",
+      "image": "face-198-v2.webp",
+      "players": [
+        8476460,
+        8480800
+      ],
+      "feature_assignment": "Quinn Hughes's face silhouette, jaw/chin, cheeks, mouth, short beard and center-parted dark hair with Mark Scheifele's eye shapes/spacing, pale blue-gray eyes and longer straight nose/bridge."
+    },
+    {
+      "id": "face-199",
+      "image": "face-199-v2.webp",
+      "players": [
+        8478550,
+        8478483
+      ],
+      "feature_assignment": "The UPPER/CENTRAL face is Artemi Panarin's exact eye shapes and spacing, eyelids, eyebrows and NOSE including bridge and tip: wide expressive eyes, softly arched brows and distinctive nose bridge/tip. The LOWER face must be a substantial faithful graft from Mitch Marner: unmistakable broad toothy grin and upper teeth, lip shape, lean cheeks and pointed chin. Keep Mitch Marner's actual cheek width, mouth/teeth/lip shape, jaw contour and chin; DO NOT keep Artemi Panarin's whole face underneath a token beard. Use Artemi Panarin's hairstyle (soft wavy/curly reddish-brown hair) to reinforce the mix. The Artemi Panarin eye/nose identity and Mitch Marner mouth/jaw identity must BOTH be evident at thumbnail size. Show Mitch Marner's recognizable small tooth-showing smile from the source, not a generic closed mouth."
+    },
+    {
+      "id": "face-200",
+      "image": "face-200-v2.webp",
+      "players": [
+        8476453,
+        8475683
+      ],
+      "feature_assignment": "Build Kucherov's unmistakable high forehead with RECEDING very short-haired front crown, his pale-gray eye shapes/spacing and straighter nose/bridge. Underneath, use Bobrovsky's actual mouth/lips, jaw/chin outline and cheekbone/lower-cheek structure. Use Bobrovsky's dark wavy hair ONLY at sides/back, around the Kucherov receded front hairline. Include short beard. Kucherov eyes/nose/high hairline plus Bobrovsky mouth/cheeks/jaw must BOTH be recognizable, not Bobrovsky's entire youthful full-haired head."
     }
-  ]
+  ],
+  "completed": "2026-10-21"
 }

@@ -322,6 +322,12 @@
       "portraits": 25,
       "notes": "portrait-revisions.json",
       "method": "Explicit anatomical feature assignments from both original NHL headshots. Original image files retained; new versions have distinct filenames."
+    },
+    {
+      "date": "2026-10-21",
+      "portraits": 175,
+      "notes": "portrait-revisions.json",
+      "method": "Completed the full library using explicit source eye/nose and mouth/jaw feature assignments, with every replacement compared alongside both NHL originals. The first 25 revised portraits and all old files are retained."
     }
   ]
 }
