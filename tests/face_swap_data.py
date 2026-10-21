@@ -74,17 +74,17 @@ class FaceSwapDataTests(unittest.TestCase):
         bank = json.loads(json.dumps(builder.load_face_swap_puzzles()[:2]))
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp) / 'static/face-swap'
-            (folder / 'players').mkdir(parents=True)
-            for p in bank:
-                for portrait in builder.face_swap_portraits(p):
-                    shutil.copy2(ROOT / 'static/face-swap' / portrait['image'], folder / portrait['image'])
-                for pid in p['players']:
-                    shutil.copy2(ROOT / 'static/face-swap/players' / f'{pid}.webp', folder / 'players' / f'{pid}.webp')
+            builder.copy_face_swap_media(Path(tmp) / 'static', bank)
             original = {k: bank[0][k] for k in ['image', 'sha256']}
             identity = bank[0]['id'], bank[0]['players'][:]
-            revised = bank[0]['id'] + '-v2.webp'
+            version = 2
+            while (folder / f"{bank[0]['id']}-v{version}.webp").exists():
+                version += 1
+            revised = f"{bank[0]['id']}-v{version}.webp"
             shutil.copy2(folder / original['image'], folder / revised)
-            bank[0].update(image=revised, previous_images=[dict(original)])
+            history = bank[0].get('previous_images', [])
+            prior_index = len(history)
+            bank[0].update(image=revised, previous_images=[*history, dict(original)])
             manifest = folder / 'puzzles.json'
             def save():
                 manifest.write_text(json.dumps({'version': 1, 'puzzles': bank}))
@@ -97,11 +97,11 @@ class FaceSwapDataTests(unittest.TestCase):
                 for name in [original['image'], revised]:
                     self.assertEqual((output / 'face-swap' / name).read_bytes(), (folder / name).read_bytes())
                 for bad in ['../outside.webp', 'face-02-v2.webp', revised]:
-                    bank[0]['previous_images'][0]['image'] = bad
+                    bank[0]['previous_images'][prior_index]['image'] = bad
                     save()
                     with self.assertRaisesRegex(ValueError, 'filename'):
                         builder.load_face_swap_puzzles()
-                bank[0]['previous_images'][0] = {**original, 'sha256': '0' * 64}
+                bank[0]['previous_images'][prior_index] = {**original, 'sha256': '0' * 64}
                 save()
                 with self.assertRaisesRegex(ValueError, 'photo'):
                     builder.load_face_swap_puzzles()
@@ -114,11 +114,7 @@ class FaceSwapDataTests(unittest.TestCase):
         bank = builder.load_face_swap_puzzles()[:2]
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp) / 'static/face-swap'
-            (folder / 'players').mkdir(parents=True)
-            for p in bank:
-                shutil.copy2(ROOT / 'static/face-swap' / p['image'], folder / p['image'])
-                for pid in p['players']:
-                    shutil.copy2(ROOT / 'static/face-swap/players' / f'{pid}.webp', folder / 'players' / f'{pid}.webp')
+            builder.copy_face_swap_media(Path(tmp) / 'static', bank)
             manifest = folder / 'puzzles.json'
             manifest.write_text(json.dumps({'version': 1, 'puzzles': bank}))
             with patch.object(builder, 'HERE', Path(tmp)):
