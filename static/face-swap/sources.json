@@ -315,5 +315,13 @@
       "name": "Mika Zibanejad",
       "url": "https://assets.nhle.com/mugs/nhl/latest/8476459.png"
     }
+  ],
+  "revisions": [
+    {
+      "date": "2026-10-21",
+      "portraits": 25,
+      "notes": "portrait-revisions.json",
+      "method": "Explicit anatomical feature assignments from both original NHL headshots. Original image files retained; new versions have distinct filenames."
+    }
   ]
 }

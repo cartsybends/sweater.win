@@ -65,9 +65,50 @@ class FaceSwapDataTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             builder.copy_face_swap_media(Path(tmp), bank)
             for p in bank:
-                self.assertEqual((Path(tmp) / 'face-swap' / p['image']).read_bytes(),
-                                 (ROOT / 'static/face-swap' / p['image']).read_bytes())
+                for portrait in builder.face_swap_portraits(p):
+                    self.assertEqual((Path(tmp) / 'face-swap' / portrait['image']).read_bytes(),
+                                     (ROOT / 'static/face-swap' / portrait['image']).read_bytes())
             self.assertEqual(len(list((Path(tmp) / 'face-swap/players').glob('*.webp'))), 60)
+
+    def test_photo_revisions_keep_answers_and_old_files_available(self):
+        bank = json.loads(json.dumps(builder.load_face_swap_puzzles()[:2]))
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / 'static/face-swap'
+            (folder / 'players').mkdir(parents=True)
+            for p in bank:
+                for portrait in builder.face_swap_portraits(p):
+                    shutil.copy2(ROOT / 'static/face-swap' / portrait['image'], folder / portrait['image'])
+                for pid in p['players']:
+                    shutil.copy2(ROOT / 'static/face-swap/players' / f'{pid}.webp', folder / 'players' / f'{pid}.webp')
+            original = {k: bank[0][k] for k in ['image', 'sha256']}
+            identity = bank[0]['id'], bank[0]['players'][:]
+            revised = bank[0]['id'] + '-v2.webp'
+            shutil.copy2(folder / original['image'], folder / revised)
+            bank[0].update(image=revised, previous_images=[dict(original)])
+            manifest = folder / 'puzzles.json'
+            def save():
+                manifest.write_text(json.dumps({'version': 1, 'puzzles': bank}))
+            save()
+            with patch.object(builder, 'HERE', Path(tmp)):
+                loaded = builder.load_face_swap_puzzles()
+                self.assertEqual((loaded[0]['id'], loaded[0]['players']), identity)
+                output = Path(tmp) / 'site'
+                builder.copy_face_swap_media(output, loaded)
+                for name in [original['image'], revised]:
+                    self.assertEqual((output / 'face-swap' / name).read_bytes(), (folder / name).read_bytes())
+                for bad in ['../outside.webp', 'face-02-v2.webp', revised]:
+                    bank[0]['previous_images'][0]['image'] = bad
+                    save()
+                    with self.assertRaisesRegex(ValueError, 'filename'):
+                        builder.load_face_swap_puzzles()
+                bank[0]['previous_images'][0] = {**original, 'sha256': '0' * 64}
+                save()
+                with self.assertRaisesRegex(ValueError, 'photo'):
+                    builder.load_face_swap_puzzles()
+                bank[0]['previous_images'] = 'invalid'
+                save()
+                with self.assertRaisesRegex(ValueError, 'history'):
+                    builder.load_face_swap_puzzles()
 
     def test_missing_or_changed_photos_and_duplicate_pairs_cannot_ship(self):
         bank = builder.load_face_swap_puzzles()[:2]
