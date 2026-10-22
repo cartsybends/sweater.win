@@ -73,8 +73,20 @@ jobs:
       - name: Install video validation tools
         run: |
           if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update
-            sudo apt-get install --no-install-recommends -y ffmpeg
+            video_sources="${RUNNER_TEMP}/sweater-video-tools.list"
+            printf '%s\n' \
+              'deb [signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://archive.ubuntu.com/ubuntu jammy main universe' \
+              'deb [signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://archive.ubuntu.com/ubuntu jammy-updates main universe' \
+              'deb [signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://security.ubuntu.com/ubuntu jammy-security main universe' \
+              > "$video_sources"
+            video_apt_options=(
+              -o "Dir::Etc::sourcelist=$video_sources"
+              -o "Dir::Etc::sourceparts=-"
+              -o Acquire::Retries=2
+              -o Acquire::https::Timeout=30
+            )
+            sudo apt-get "${video_apt_options[@]}" update
+            sudo apt-get "${video_apt_options[@]}" install --no-install-recommends -y ffmpeg
           fi
           ffmpeg -version
           ffprobe -version
