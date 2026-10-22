@@ -1607,6 +1607,22 @@ TEMPLATE = r'''<!DOCTYPE html>
             border: 3px solid transparent; transition: border-color .25s, background-color .25s; }
   .hlcard.ok { border-color: var(--hit); }
   .hlcard.bad { border-color: #c0392b; }
+  :is(#htPair, #teamHLPair) { --hl-error: #bb3948; }
+  :root[data-theme="dark"] :is(#htPair, #teamHLPair) { --hl-error: #f27c85; }
+  :is(#htPair, #teamHLPair) .hlcard.bad { border-color: var(--hl-error); background: color-mix(in srgb, var(--hl-error) 8%, var(--panel)); }
+  :is(#htPair, #teamHLPair) .hlcard.hl-miss { animation: hl-miss .45s ease-out both; }
+  .hl-miss-label { display: inline-flex; align-items: center; gap: 7px; margin: 12px 0 0; color: var(--hl-error); font-size: 13px; font-weight: 700; line-height: 1.4; }
+  .hl-miss-label svg { flex: none; }
+  @keyframes hl-miss {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :is(#htPair, #teamHLPair) .hlcard.hl-miss { animation: none; transition: none; }
+  }
   .hlimg { width: 112px; height: 112px; border-radius: 50%; background: var(--cream); object-fit: cover; }
   .hlname { font-size: 20px; font-weight: 600; margin: 10px 0 2px; }
   .hlteam { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: .75; margin: 0 0 10px; }
@@ -4556,6 +4572,10 @@ function animateHLPair(pair) {
   pair.classList.add("slide");
 }
 
+function hlMissLabel(state = "") {
+  return state.includes("bad") ? `<p class="hl-miss-label" role="status"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>Incorrect</p>` : "";
+}
+
 // ======================= more games: journey, Face Swap, sweater number, roster =======================
 Object.assign(TEAM_NAMES, {
   ARI: "Arizona Coyotes", PHX: "Phoenix Coyotes", ATL: "Atlanta Thrashers", MNS: "Minnesota North Stars",
@@ -6485,7 +6505,7 @@ G.hlt = {
         : `<p class="hlunit">${esc(info.name.toLowerCase())}:</p>
            <div class="hlbtns"><button class="btn hlbtn" type="button" data-hlt="H">▲ ${info.up}</button>
            <button class="btn hlbtn" type="button" data-hlt="L">▼ ${info.down}</button></div>
-           <p class="hlyr">than ${esc(other)}</p>`}
+           <p class="hlyr">than ${esc(other)}</p>`}${hlMissLabel(state)}
     </div>`;
   },
   guess(t, x, fresh) {
@@ -6495,7 +6515,8 @@ G.hlt = {
     const ok = this.correct(t, i, x);
     if (fresh) {
       this.pending = true;
-      $("htB").innerHTML = this.card(t, i, "b", true, ok ? "ok" : "bad");
+      if (!ok) $("htPair").classList.remove("slide");
+      $("htB").innerHTML = this.card(t, i, "b", true, ok ? "ok" : "bad hl-miss");
       const duration = t.rounds[i][4] === "height" ? 1200 : 600;
       const value = $("htB").querySelector("[data-count]");
       if (t.rounds[i][4] === "height") animateHltHeight(value, duration);
@@ -6516,7 +6537,7 @@ G.hlt = {
     const lastOk = st.over && st.guesses.length ? this.correct(t, st.guesses.length - 1, st.guesses[st.guesses.length - 1]) : null;
     $("htA").innerHTML = this.card(t, i, "a", true, "");
     $("htB").innerHTML = this.card(t, i, "b", st.over, st.over ? (lastOk ? "ok" : "bad") : "");
-    if (slide) animateHLPair($("htPair"));
+    if (slide && lastOk !== false) animateHLPair($("htPair"));
   },
   squares(t, x, i) { return this.correct(t, i, x) ? "🟩" : "🟥"; },
 };
@@ -11241,7 +11262,7 @@ function startTeamHigher(t){
     const unit=info.type==="teamCareer"?`regular-season games with ${esc(teamFullName(t))}`:`career-high ${info.label}`;
     const sub=info.type==="teamCareer"?`across his ${esc(teamFullName(t))} career`:`in ${seasonText(p.y)}`;
     const prompt=info.type==="teamCareer"?`career games with ${esc(teamFullName(t))}:`:`career-high ${info.label}:`;
-    return `<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b data-count="${p.v}">${p.v}</b></p><p class="hlunit">${unit}</p><p class="hlyr">${sub}</p>`:`<p class="hlunit">${prompt}</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info.up}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info.down}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}</div>`;
+    return `<div class="hlcard ${state||''}"><img class="hlimg" src="${esc(teamHistHeadshot(t,p.id,p.y))}" alt="" onerror="this.onerror=null;this.src=FALLBACK"><p class="hlname">${esc(p.name)}</p><p class="hlteam"><img src="${logo(t)}" alt="">${esc(t)} · ${esc(p.pos)}</p>${reveal?`<p class="hlval"><b data-count="${p.v}">${p.v}</b></p><p class="hlunit">${unit}</p><p class="hlyr">${sub}</p>`:`<p class="hlunit">${prompt}</p><div class="hlbtns"><button class="btn teamHLBtn" type="button" data-pick="H">▲ ${info.up}</button><button class="btn teamHLBtn" type="button" data-pick="L">▼ ${info.down}</button></div><p class="hlyr">than ${esc(seq[0].name)}</p>`}${hlMissLabel(state)}</div>`;
   };
   const nextPlayer=()=>{
     const used=new Set(seq.map(p=>p.id));
@@ -11259,7 +11280,8 @@ function startTeamHigher(t){
       pending=true;
       const ok=btn.dataset.pick==="H"?seq[1].v>=seq[0].v:seq[1].v<=seq[0].v;
       globalThis.SweaterAnalytics?.step?.(++analyticsMoves,ok,analyticsRound);
-      $("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad");
+      if(!ok)$("teamHLPair").classList.remove("slide");
+      $("teamHLB").innerHTML=card(seq[1],true,ok?"ok":"bad hl-miss");
       countUp($("teamHLB").querySelector("[data-count]"));
       if(ok){streak++;if(streak>(store.get(bestKey)||0))store.set(bestKey,streak);timer=setTimeout(()=>{if(!active)return;const next=nextPlayer();seq=[seq[1],next];pending=false;draw(true);},1100);}else{over=true;globalThis.SweaterAnalytics?.completeRound(null,{token:analyticsRound,attempts:analyticsMoves,score:streak});}
     });
