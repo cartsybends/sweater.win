@@ -689,6 +689,11 @@
   "team": "OTT",
   "number": 30
  },
+ "8477992": {
+  "name": "Jonas Johansson",
+  "team": "OTT",
+  "number": 31
+ },
  "8476999": {
   "name": "Linus Ullmark",
   "team": "OTT",
@@ -1659,6 +1664,11 @@
   "team": "PIT",
   "number": 71
  },
+ "8483487": {
+  "name": "Rutger McGroarty",
+  "team": "PIT",
+  "number": 2
+ },
  "8478438": {
   "name": "Tommy Novak",
   "team": "PIT",
@@ -1963,11 +1973,6 @@
   "name": "Arvid Soderblom",
   "team": "CHI",
   "number": 40
- },
- "8484149": {
-  "name": "Gavin Brindley",
-  "team": "COL",
-  "number": 54
  },
  "8486171": {
   "name": "T.J. Hughes",
