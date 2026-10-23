@@ -274,11 +274,6 @@
   "team": "DET",
   "number": 93
  },
- "8480326": {
-  "name": "Sheldon Dries",
-  "team": "DET",
-  "number": 15
- },
  "8484471": {
   "name": "Emmitt Finnie",
   "team": "DET",
@@ -329,6 +324,11 @@
   "team": "DET",
   "number": 20
  },
+ "8483679": {
+  "name": "Anton Johansson",
+  "team": "DET",
+  "number": 42
+ },
  "8484223": {
   "name": "Axel Sandin-Pellikka",
   "team": "DET",
@@ -374,11 +374,6 @@
   "team": "FLA",
   "number": 14
  },
- "8478043": {
-  "name": "Sam Lafferty",
-  "team": "FLA",
-  "number": 18
- },
  "8482113": {
   "name": "Anton Lundell",
   "team": "FLA",
@@ -394,10 +389,20 @@
   "team": "FLA",
   "number": 63
  },
+ "8481133": {
+  "name": "Cole Reinhardt",
+  "team": "FLA",
+  "number": 29
+ },
  "8477933": {
   "name": "Sam Reinhart",
   "team": "FLA",
   "number": 13
+ },
+ "8481655": {
+  "name": "Cole Schwindt",
+  "team": "FLA",
+  "number": 79
  },
  "8480801": {
   "name": "Brady Tkachuk",
@@ -468,6 +473,11 @@
   "name": "Josh Anderson",
   "team": "MTL",
   "number": 17
+ },
+ "8483424": {
+  "name": "Owen Beck",
+  "team": "MTL",
+  "number": 62
  },
  "8482737": {
   "name": "Zachary Bolduc",
@@ -2519,10 +2529,10 @@
   "team": "STL",
   "number": 17
  },
- "8484188": {
-  "name": "Theo Lindstein",
+ "8484790": {
+  "name": "Adam Jiricek",
   "team": "STL",
-  "number": 4
+  "number": 36
  },
  "8482733": {
   "name": "Logan Mailloux",
@@ -2663,6 +2673,11 @@
   "name": "Morgan Barron",
   "team": "WPG",
   "number": 36
+ },
+ "8486025": {
+  "name": "Viggo Björck",
+  "team": "WPG",
+  "number": 61
  },
  "8478398": {
   "name": "Kyle Connor",
@@ -2854,15 +2869,15 @@
   "team": "ANA",
   "number": 98
  },
- "8484262": {
-  "name": "Travis Mitchell",
-  "team": "ANA",
-  "number": 34
- },
  "8482178": {
   "name": "Ian Moore",
   "team": "ANA",
   "number": 3
+ },
+ "8483521": {
+  "name": "Noah Warren",
+  "team": "ANA",
+  "number": 47
  },
  "8480843": {
   "name": "Lukas Dostal",
@@ -3009,6 +3024,11 @@
   "team": "EDM",
   "number": 29
  },
+ "8480029": {
+  "name": "Alex Formenton",
+  "team": "EDM",
+  "number": 26
+ },
  "8479365": {
   "name": "Trent Frederic",
   "team": "EDM",
@@ -3053,6 +3073,11 @@
   "name": "Connor McDavid",
   "team": "EDM",
   "number": 97
+ },
+ "8486161": {
+  "name": "Owen Michaels",
+  "team": "EDM",
+  "number": 43
  },
  "8476454": {
   "name": "Ryan Nugent-Hopkins",
@@ -3613,6 +3638,11 @@
   "name": "Tomas Hertl",
   "team": "VGK",
   "number": 48
+ },
+ "8482125": {
+  "name": "Alexander Holtz",
+  "team": "VGK",
+  "number": 10
  },
  "8479353": {
   "name": "Brett Howden",
