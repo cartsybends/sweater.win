@@ -31,6 +31,7 @@ on:
       - "tests/frontend_regressions.cjs"
       - "tests/current_team_refresh.py"
       - "tests/who_scored_batches.py"
+      - "tests/who_scored_leaderboard.mjs"
       - ".github/workflows/update.yml"
 
 permissions:
@@ -97,6 +98,7 @@ jobs:
       - name: Check Who Scored? round flow and rotations
         run: |
           node tests/who_scored.cjs
+          node tests/who_scored_leaderboard.mjs
           python tests/who_scored_schedule.py
           python tests/who_scored_batches.py
           python tools/who_scored/validate.py
