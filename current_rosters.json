@@ -909,6 +909,11 @@
   "team": "TOR",
   "number": 22
  },
+ "8477541": {
+  "name": "Dakota Mermis",
+  "team": "TOR",
+  "number": 36
+ },
  "8478178": {
   "name": "Darren Raddysh",
   "team": "TOR",
@@ -1144,6 +1149,11 @@
   "team": "CBJ",
   "number": 9
  },
+ "8476923": {
+  "name": "Damon Severson",
+  "team": "CBJ",
+  "number": 78
+ },
  "8477369": {
   "name": "Carson Soucy",
   "team": "CBJ",
@@ -1214,11 +1224,6 @@
   "team": "NJD",
   "number": 28
  },
- "8482110": {
-  "name": "Dawson Mercer",
-  "team": "NJD",
-  "number": 91
- },
  "8476474": {
   "name": "Stefan Noesen",
   "team": "NJD",
@@ -1268,6 +1273,11 @@
   "name": "Jake Allen",
   "team": "NJD",
   "number": 34
+ },
+ "8476945": {
+  "name": "Connor Hellebuyck",
+  "team": "NJD",
+  "number": 37
  },
  "8482070": {
   "name": "Mitchell Chaffee",
@@ -1399,6 +1409,11 @@
   "team": "NYR",
   "number": 16
  },
+ "8476822": {
+  "name": "Luke Glendening",
+  "team": "NYR",
+  "number": 43
+ },
  "8481789": {
   "name": "Tye Kartye",
   "team": "NYR",
@@ -1478,6 +1493,11 @@
   "name": "Marcus Pettersson",
   "team": "NYR",
   "number": 26
+ },
+ "8481525": {
+  "name": "Matthew Robertson",
+  "team": "NYR",
+  "number": 29
  },
  "8482073": {
   "name": "Braden Schneider",
@@ -1904,6 +1924,11 @@
   "team": "CHI",
   "number": 88
  },
+ "8484390": {
+  "name": "Roman Kantserov",
+  "team": "CHI",
+  "number": 80
+ },
  "8478233": {
   "name": "Andrew Mangiapane",
   "team": "CHI",
@@ -2018,6 +2043,11 @@
   "name": "Nathan MacKinnon",
   "team": "COL",
   "number": 29
+ },
+ "8482953": {
+  "name": "Taylor Makar",
+  "team": "COL",
+  "number": 16
  },
  "8480039": {
   "name": "Martin Necas",
@@ -2768,11 +2798,6 @@
   "name": "Jack St. Ivany",
   "team": "WPG",
   "number": 6
- },
- "8476945": {
-  "name": "Connor Hellebuyck",
-  "team": "WPG",
-  "number": 37
  },
  "8479973": {
   "name": "Stuart Skinner",
