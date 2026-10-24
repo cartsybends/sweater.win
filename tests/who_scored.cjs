@@ -7,6 +7,7 @@ const clips = JSON.parse(fs.readFileSync('static/who-scored/clips.json')).map(c 
 const players = Object.values(JSON.parse(fs.readFileSync('schedule.json')).players);
 const storage = new Map(), elements = new Map();
 let day="2026-10-12";
+let leaderboardGame=null;
 class Element {
   constructor() {
     this.hidden=false; this.disabled=false; this.style={}; this.attrs={}; this.events={};
@@ -25,7 +26,7 @@ class Element {
 }
 const $ = id => {if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};
 const ctx = vm.createContext({console,Math,Map,Set,Date,Array,Number,String,JSON,
-  G:{}, BYID:new Map(players.map(p=>[p.id,p])), $, DAILY:{whoscored:{'2026-10-12':clips[0].pid}}, START:{whoscored:'2026-10-12'},
+  G:{}, API_ON:true, openLeaderboard:g=>leaderboardGame=g, BYID:new Map(players.map(p=>[p.id,p])), $, DAILY:{whoscored:{'2026-10-12':clips[0].pid}}, START:{whoscored:'2026-10-12'},
   store:{get:k=>storage.has(k)?JSON.parse(storage.get(k)):null,set:(k,v)=>storage.set(k,JSON.stringify(v))},
   document:{hidden:false,querySelectorAll:()=>[],addEventListener(){}},
   uiIcon:()=>'<svg></svg>', esc:s=>String(s), toast:()=>{}, addWrong:()=>{}, FALLBACK:'',
@@ -66,6 +67,10 @@ assert.equal(run('S.whoscored.target.id'),target.id);assert.equal(run('S.whoscor
 $('wsVideo').events.loadeddata();run(`doGuess(${target.pid})`);
 assert.equal(run('S.whoscored.over'),true);assert.equal($('wsOriginal').hidden,false);
 assert.equal($('wsGuessing').hidden,true);assert.equal($('wsQuestionCopy').hidden,true);assert.equal($('wsFinishActions').hidden,false);
+assert.equal(run('!!G.whoscored.localOnly'),false);assert.equal($('wsLeaderboard').hidden,false);
+$('wsLeaderboard').onclick();assert.equal(leaderboardGame,'whoscored');
+ctx.API_ON=false;run('G.whoscored.render(S.whoscored.target,S.whoscored)');assert.equal($('wsLeaderboard').hidden,true);
+ctx.API_ON=true;run('G.whoscored.render(S.whoscored.target,S.whoscored)');assert.equal($('wsLeaderboard').hidden,false);
 assert($('wsWrong').innerHTML.includes('Correct'));assert(storage.has('sweater-daily-whoscored'));
 assert.equal($('profile').href,`https://www.nhl.com/gamecenter/${target.game.id}/boxscore`);
 assert($('profile').classList.contains('ws-game-result'));
@@ -143,3 +148,37 @@ assert.equal($('profile').attrs['aria-label'],undefined);
 assert.equal(new Set(clips.map(c=>c.pid)).size,clips.length);
 for(const c of clips){assert(ctx.BYID.has(c.pid));for(const k of ['masked','reveal','poster'])assert(!c[k].includes(ctx.BYID.get(c.pid).name.split(' ').at(-1).toLowerCase()));}
 console.log(`Who Scored?: ${clips.length} scorers; hint timing/bubbles/resume, daily-only guards, win/loss game stats, timezone-safe dates, banner reuse, rollover and replay/reveal passed.`);
+
+// Exercise the actual shared submission queue with existing saved Who Scored? rounds.
+(async () => {
+  const calls=[];
+  let status=400, error='Unknown game';
+  ctx.HL_STATS={};ctx.HL_LEN=40;ctx.API='https://api.example.test';ctx.prevDayKey=()=> '2026-10-12';
+  ctx.fetch=async (url,options)=>{
+    calls.push({url,body:JSON.parse(options.body)});
+    return {ok:status===200,status,json:async()=>status===200?{points:0}:{error}};
+  };
+  run(part('const LB_RULES =','function renderStatsLb('));
+  assert(run('LB_RULES.whoscored').includes('10 points for 1 guess'));
+  await run('submitPending()');assert.equal(calls.length,0,'Unnamed players are not submitted');
+  ctx.store.set('sweater-lb-id',{uid:'00000000-0000-0000-0000-000000000001',secret:'a'.repeat(64)});
+  ctx.store.set('sweater-lb-name','Test player');
+  ctx.API_ON=false;await run('submitPending()');assert.equal(calls.length,0);
+  ctx.API_ON=true;await run('submitPending()');assert.equal(calls.length,1);
+  assert.equal(calls[0].body.game,'whoscored');assert.equal(calls[0].body.day,day);
+  assert.deepEqual(calls[0].body.guesses,JSON.parse(storage.get('sweater-daily-whoscored')).guesses);
+  assert.equal(ctx.store.get('sweater-lb-sent')['whoscored:'+day],undefined,'An older API must not discard the new mode\'s result');
+  status=503;error='Unavailable';await run('submitPending()');assert.equal(calls.length,2);
+  assert.equal(ctx.store.get('sweater-lb-sent')['whoscored:'+day],undefined,'Server failures remain retryable');
+  status=200;await run('submitPending()');assert.equal(calls.length,3);
+  assert.equal(ctx.store.get('sweater-lb-sent')['whoscored:'+day],0,'Completed losses are sent and acknowledged');
+  await run('submitPending()');assert.equal(calls.length,3,'Acknowledged rounds are not resubmitted');
+  ctx.store.set('sweater-daily-whoscored',{date:'2026-10-12',target:clips[0].id,guesses:[clips[0].pid]});
+  await run('submitPending()');assert.equal(calls.length,4,'Yesterday\'s previously completed round is submitted');
+  ctx.store.set('sweater-daily-whoscored',{date:'2026-10-11',target:clips[0].id,guesses:[clips[0].pid]});
+  await run('submitPending()');assert.equal(calls.length,4,'Older rounds are excluded');
+  ctx.store.set('sweater-lb-sent',{});
+  ctx.store.set('sweater-daily-whoscored',{date:day,target:clips[1].id,guesses:[clips[0].pid]});
+  await run('submitPending()');assert.equal(calls.length,4,'Unfinished rounds are excluded');
+  console.log('Who Scored? leaderboard: result button, offline and name guards, saved rounds, losses, retry and deduplication passed.');
+})().catch(error=>{console.error(error);process.exitCode=1;});

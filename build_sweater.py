@@ -3371,6 +3371,7 @@ TEMPLATE = r'''<!DOCTYPE html>
         </div>
         <div class="slot"></div>
         <div class="ws-finish-actions" id="wsFinishActions" hidden>
+          <button type="button" id="wsLeaderboard" aria-haspopup="dialog" aria-controls="lbModal" hidden>See the leaderboard</button>
           <button type="button" id="wsOriginal" aria-pressed="false" hidden>Watch original</button>
         </div>
         <div class="ws-history" id="wsHistory" hidden><small>Your guesses</small><ol class="ws-guesses" id="wsWrong"></ol></div>
@@ -9568,7 +9569,7 @@ function wsLoadVideo(t, original = false, play = false) {
 }
 G.whoscored = {
   title: "Who Scored?", share: "Sweater Who Scored?", view: "view-whoscored", max: 6, next: "Next goal",
-  quietFinish: true, localOnly: true, dailyOnly: true,
+  quietFinish: true, dailyOnly: true,
   cheers: ["You know that move! 🏒", "What a read! 🎯", "Found the finish! 🥅", "Nice eye! 👀", "Got there! 🙌", "Buzzer beater! 🚨"],
   pool: () => WS_CLIPS,
   daily(k) {
@@ -9600,6 +9601,7 @@ G.whoscored = {
     $("wsQuestionCopy").hidden = st.over;
     $("wsGuessing").hidden = st.over;
     $("wsFinishActions").hidden = !st.over;
+    $("wsLeaderboard").hidden = !API_ON;
     $("wsPool").textContent = "One goal per day · Unlimited replays · No timer";
     $("wsStart").textContent = "Watch today's goal";
     $("wsRoundLabel").textContent = this.original ? "Original goal" : st.over ? "Scorer revealed" : "Today's mystery goal";
@@ -9655,6 +9657,7 @@ $("wsOriginal").onclick = () => {
   if (game !== "whoscored" || !st.over) return;
   wsLoadVideo(st.target,!g.original,true); g.render(st.target,st);
 };
+$("wsLeaderboard").onclick = () => openLeaderboard("whoscored");
 $("wsVideo").addEventListener("loadeddata", () => {
   const g = G.whoscored, st = S.whoscored;
   if (game !== "whoscored" || !g.started || !g.file || !st.target) return;
@@ -10622,7 +10625,7 @@ $("hlPair").addEventListener("click", e => {
 
 // ======================= global leaderboard =======================
 const LB_RULES = {
-  whoscored: "Name the scorer in 6 guesses. Daily wins and guess counts appear in your stats.",
+  whoscored: "Who Scored?: 10 points for 1 guess, then 8, 6, 4, 2 and 1 for 6 guesses. A loss scores 0.",
   journey: "Journey: 10 points for 1 guess, then 8, 6, 4, 2 and 1 for 6 guesses.",
   faceswap: "Face Swap: find both players in either order. Five misses end the round. A win earns 10 points minus 2 per miss; a loss earns 0.",
   number: "Sweater #: 10 points on the first try, then 7, 5, 3 and 1 on the fifth.",
@@ -10699,7 +10702,8 @@ function submitPending() {
         const r = await api("/api/result", { ...me, game: g, day: saved.date, guesses: saved.guesses });
         sent[key] = r.points;
       } catch (e) {
-        if (e.status === 400) sent[key] = null;  // can't be scored; don't keep retrying
+        // A newly supported game may reach the frontend before the API rollout.
+        if (e.status === 400 && e.message !== "Unknown game") sent[key] = null;
       }
       store.set("sweater-lb-sent", sent);
     }
@@ -11664,7 +11668,7 @@ const HELP = {
     <p>Before your first guess, choose whether his oldest or newest seasons appear first. After 4 misses you'll see his current team.</p>`,
   journey: `<p>Name the player from the teams he's played for, in order, with seasons and games. 6 tries.</p>
     <p>Hints appear after 2, 4 and 5 misses: position, birth country, then sweater number.</p>`,
-  whoscored: `<p>One goal per day, with the same challenge for everyone. A new goal unlocks at midnight Eastern. Name the silhouetted scorer in 6 guesses using the search box. Your progress and completed result are saved for the day.</p><p>Replays of today's clip and 0.5× slow motion are unlimited. After 2 misses, a hint bubble shows their position group: Forward or Defenseman. After 4, another shows their birth-country flag. Hover, focus or tap the flag to see the country name. At the end, switch between the silhouette and the original clip.</p>`,
+  whoscored: `<p>One goal per day, with the same challenge for everyone. A new goal unlocks at midnight Eastern. Name the silhouetted scorer in 6 guesses using the search box. Your progress and completed result are saved for the day.</p><p>Replays of today's clip and 0.5× slow motion are unlimited. After 2 misses, a hint bubble shows their position group: Forward or Defenseman. After 4, another shows their birth-country flag. Hover, focus or tap the flag to see the country name. At the end, switch between the silhouette and the original clip.</p><p>A daily win earns 10 points on the first guess, then 8, 6, 4, 2 or 1. A loss earns 0. Join the leaderboard to compare your points today, this week, and all time.</p>`,
   faceswap: `<p>Identify both NHL players combined into one face. Guess either player first; a correct name locks in without using a miss. Five wrong guesses end the round.</p><p>Each miss reveals a new clue for unidentified players: position, age, country, then team. A win earns 10 points minus 2 per miss. The original headshots reveal when you find a player or the round ends.</p><p>Everyone gets the same daily face. Unlimited visits the whole photo library before repeating, and saves your current round.</p>`,
   team: `<p>You see a player and one season of his stats. Pick the team he played for that season. 5 tries.</p>
     <p>Yellow means the right team is in the same division.</p>`,
