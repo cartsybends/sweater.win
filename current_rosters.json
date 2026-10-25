@@ -849,6 +849,11 @@
   "team": "TOR",
   "number": 29
  },
+ "8479772": {
+  "name": "Zack MacEwen",
+  "team": "TOR",
+  "number": 19
+ },
  "8480893": {
   "name": "Kirill Marchenko",
   "team": "TOR",
@@ -1664,6 +1669,11 @@
   "team": "PIT",
   "number": 19
  },
+ "8482993": {
+  "name": "Avery Hayes",
+  "team": "PIT",
+  "number": 85
+ },
  "8485414": {
   "name": "Ben Kindel",
   "team": "PIT",
@@ -2334,10 +2344,10 @@
   "team": "MIN",
   "number": 43
  },
- "8482094": {
-  "name": "Daemon Hunt",
+ "8482641": {
+  "name": "Matt Kiersted",
   "team": "MIN",
-  "number": 48
+  "number": 26
  },
  "8476874": {
   "name": "Olli Maatta",
@@ -2424,15 +2434,15 @@
   "team": "NSH",
   "number": 71
  },
- "8482072": {
-  "name": "Jack Ahcan",
-  "team": "NSH",
-  "number": 47
- },
  "8479980": {
   "name": "Nicolas Hague",
   "team": "NSH",
   "number": 41
+ },
+ "8482094": {
+  "name": "Daemon Hunt",
+  "team": "NSH",
+  "number": 52
  },
  "8474600": {
   "name": "Roman Josi",
@@ -2734,6 +2744,11 @@
   "team": "WPG",
   "number": 17
  },
+ "8482110": {
+  "name": "Dawson Mercer",
+  "team": "WPG",
+  "number": 19
+ },
  "8476480": {
   "name": "Vladislav Namestnikov",
   "team": "WPG",
@@ -2789,15 +2804,15 @@
   "team": "WPG",
   "number": 4
  },
+ "8483510": {
+  "name": "Elias Salomonsson",
+  "team": "WPG",
+  "number": 57
+ },
  "8480049": {
   "name": "Dylan Samberg",
   "team": "WPG",
   "number": 54
- },
- "8481030": {
-  "name": "Jack St. Ivany",
-  "team": "WPG",
-  "number": 6
  },
  "8479973": {
   "name": "Stuart Skinner",
@@ -3339,6 +3354,11 @@
   "team": "SEA",
   "number": 59
  },
+ "8483497": {
+  "name": "Jani Nyman",
+  "team": "SEA",
+  "number": 38
+ },
  "8482713": {
   "name": "Mackie Samoskevich",
   "team": "SEA",
@@ -3679,6 +3699,11 @@
   "team": "VGK",
   "number": 71
  },
+ "8481534": {
+  "name": "Raphael Lavoie",
+  "team": "VGK",
+  "number": 36
+ },
  "8478483": {
   "name": "Mitch Marner",
   "team": "VGK",
@@ -3698,6 +3723,11 @@
   "name": "Rasmus Andersson",
   "team": "VGK",
   "number": 4
+ },
+ "8479639": {
+  "name": "Dylan Coghlan",
+  "team": "VGK",
+  "number": 52
  },
  "8478396": {
   "name": "Noah Hanifin",
