@@ -1499,11 +1499,6 @@
   "team": "NYR",
   "number": 26
  },
- "8481525": {
-  "name": "Matthew Robertson",
-  "team": "NYR",
-  "number": 29
- },
  "8482073": {
   "name": "Braden Schneider",
   "team": "NYR",
@@ -1523,6 +1518,11 @@
   "name": "Joonas Korpisalo",
   "team": "NYR",
   "number": 70
+ },
+ "8473503": {
+  "name": "James Reimer",
+  "team": "NYR",
+  "number": 47
  },
  "8478048": {
   "name": "Igor Shesterkin",
@@ -2053,11 +2053,6 @@
   "name": "Nathan MacKinnon",
   "team": "COL",
   "number": 29
- },
- "8482953": {
-  "name": "Taylor Makar",
-  "team": "COL",
-  "number": 16
  },
  "8480039": {
   "name": "Martin Necas",
