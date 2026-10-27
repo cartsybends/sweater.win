@@ -314,6 +314,11 @@
   "team": "DET",
   "number": 8
  },
+ "8477971": {
+  "name": "Andreas Englund",
+  "team": "DET",
+  "number": 24
+ },
  "8475753": {
   "name": "Justin Faulk",
   "team": "DET",
@@ -1033,6 +1038,11 @@
   "name": "K'Andre Miller",
   "team": "CAR",
   "number": 19
+ },
+ "8482100": {
+  "name": "Alexander Nikishin",
+  "team": "CAR",
+  "number": 21
  },
  "8476422": {
   "name": "Mike Reilly",
@@ -1888,6 +1898,11 @@
   "name": "Rasmus Sandin",
   "team": "WSH",
   "number": 38
+ },
+ "8481030": {
+  "name": "Jack St. Ivany",
+  "team": "WSH",
+  "number": 29
  },
  "8479292": {
   "name": "Charlie Lindgren",
@@ -3289,6 +3304,11 @@
   "team": "LAK",
   "number": 6
  },
+ "8476979": {
+  "name": "Erik Gustafsson",
+  "team": "LAK",
+  "number": 64
+ },
  "8476341": {
   "name": "Anton Forsberg",
   "team": "LAK",
@@ -3678,11 +3698,6 @@
   "name": "Tomas Hertl",
   "team": "VGK",
   "number": 48
- },
- "8482125": {
-  "name": "Alexander Holtz",
-  "team": "VGK",
-  "number": 10
  },
  "8479353": {
   "name": "Brett Howden",

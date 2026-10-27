@@ -4738,37 +4738,6 @@
     }
    ]
   },
-  "8480291": {
-   "id": 8480291,
-   "season": "20252026",
-   "shot": 78.3,
-   "speed": 21.59,
-   "bursts20": 3,
-   "miles": 2.43,
-   "distance": 9.44,
-   "total": 2,
-   "hd": 0,
-   "mid": 1,
-   "long": 0,
-   "hdPct": 0.0,
-   "midPct": 0.0,
-   "longPct": 0.0,
-   "oz": 0.4142,
-   "nz": 0.2007,
-   "dz": 0.3852,
-   "areas": [
-    {
-     "area": "L Circle",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "R Net Side",
-     "shots": 1,
-     "pct": null
-    }
-   ]
-  },
   "8475791": {
    "id": 8475791,
    "season": "20252026",
@@ -36939,67 +36908,6 @@
     }
    ]
   },
-  "8482125": {
-   "id": 8482125,
-   "season": "20252026",
-   "shot": 89.04,
-   "speed": 21.6,
-   "bursts20": 26,
-   "miles": 3.09,
-   "distance": 54.67,
-   "total": 30,
-   "hd": 13,
-   "mid": 6,
-   "long": 7,
-   "hdPct": 0.1538,
-   "midPct": 0.0,
-   "longPct": 0.1429,
-   "oz": 0.4046,
-   "nz": 0.1879,
-   "dz": 0.4075,
-   "areas": [
-    {
-     "area": "Low Slot",
-     "shots": 8,
-     "pct": null
-    },
-    {
-     "area": "Crease",
-     "shots": 5,
-     "pct": null
-    },
-    {
-     "area": "L Circle",
-     "shots": 3,
-     "pct": null
-    },
-    {
-     "area": "R Point",
-     "shots": 3,
-     "pct": null
-    },
-    {
-     "area": "Center Point",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "L Point",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "Outside R",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 2,
-     "pct": null
-    }
-   ]
-  },
   "8483890": {
    "id": 8483890,
    "season": "20252026",
@@ -39985,67 +39893,6 @@
     }
    ]
   },
-  "8479345": {
-   "id": 8479345,
-   "season": "20252026",
-   "shot": 99.06,
-   "speed": 23.08,
-   "bursts20": 91,
-   "miles": 4.14,
-   "distance": 264.38,
-   "total": 221,
-   "hd": 26,
-   "mid": 63,
-   "long": 99,
-   "hdPct": 0.1538,
-   "midPct": 0.2063,
-   "longPct": 0.0606,
-   "oz": 0.4416,
-   "nz": 0.1766,
-   "dz": 0.3818,
-   "areas": [
-    {
-     "area": "Center Point",
-     "shots": 53,
-     "pct": null
-    },
-    {
-     "area": "L Point",
-     "shots": 36,
-     "pct": null
-    },
-    {
-     "area": "High Slot",
-     "shots": 24,
-     "pct": null
-    },
-    {
-     "area": "Low Slot",
-     "shots": 24,
-     "pct": null
-    },
-    {
-     "area": "L Circle",
-     "shots": 21,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 18,
-     "pct": null
-    },
-    {
-     "area": "Outside L",
-     "shots": 14,
-     "pct": null
-    },
-    {
-     "area": "R Point",
-     "shots": 10,
-     "pct": null
-    }
-   ]
-  },
   "8481030": {
    "id": 8481030,
    "season": "20252026",
@@ -40103,6 +39950,67 @@
     {
      "area": "R Circle",
      "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8479345": {
+   "id": 8479345,
+   "season": "20252026",
+   "shot": 99.06,
+   "speed": 23.08,
+   "bursts20": 91,
+   "miles": 4.14,
+   "distance": 264.38,
+   "total": 221,
+   "hd": 26,
+   "mid": 63,
+   "long": 99,
+   "hdPct": 0.1538,
+   "midPct": 0.2063,
+   "longPct": 0.0606,
+   "oz": 0.4416,
+   "nz": 0.1766,
+   "dz": 0.3818,
+   "areas": [
+    {
+     "area": "Center Point",
+     "shots": 53,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 36,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 24,
+     "pct": null
+    },
+    {
+     "area": "Low Slot",
+     "shots": 24,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 21,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 18,
+     "pct": null
+    },
+    {
+     "area": "Outside L",
+     "shots": 14,
+     "pct": null
+    },
+    {
+     "area": "R Point",
+     "shots": 10,
      "pct": null
     }
    ]
@@ -40708,6 +40616,139 @@
     {
      "area": "R Net Side",
      "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8481848": {
+   "id": 8481848,
+   "season": "20252026",
+   "shot": 78.74,
+   "speed": 20.63,
+   "bursts20": 4,
+   "miles": 1.83,
+   "distance": 5.83,
+   "total": 4,
+   "hd": 1,
+   "mid": 1,
+   "long": 0,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4632,
+   "nz": 0.1739,
+   "dz": 0.363,
+   "areas": [
+    {
+     "area": "Outside R",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "Low Slot",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8480007": {
+   "id": 8480007,
+   "season": "20252026",
+   "shot": 80.5,
+   "speed": 20.83,
+   "bursts20": 6,
+   "miles": 2.33,
+   "distance": 7.96,
+   "total": 6,
+   "hd": 3,
+   "mid": 3,
+   "long": 0,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4168,
+   "nz": 0.1805,
+   "dz": 0.4027,
+   "areas": [
+    {
+     "area": "Low Slot",
+     "shots": 3,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8482100": {
+   "id": 8482100,
+   "season": "20252026",
+   "shot": 99.4,
+   "speed": 22.38,
+   "bursts20": 65,
+   "miles": 4.08,
+   "distance": 215.96,
+   "total": 122,
+   "hd": 7,
+   "mid": 26,
+   "long": 71,
+   "hdPct": 0.0,
+   "midPct": 0.1923,
+   "longPct": 0.0845,
+   "oz": 0.4729,
+   "nz": 0.1795,
+   "dz": 0.3476,
+   "areas": [
+    {
+     "area": "Center Point",
+     "shots": 30,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 29,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 13,
+     "pct": null
+    },
+    {
+     "area": "R Point",
+     "shots": 12,
+     "pct": null
+    },
+    {
+     "area": "Outside L",
+     "shots": 9,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 7,
+     "pct": null
+    },
+    {
+     "area": "Low Slot",
+     "shots": 7,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 6,
      "pct": null
     }
    ]
