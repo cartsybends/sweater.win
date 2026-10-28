@@ -74,6 +74,11 @@
   "team": "BOS",
   "number": 17
  },
+ "8483017": {
+  "name": "Frederic Brunet",
+  "team": "BOS",
+  "number": 42
+ },
  "8477365": {
   "name": "Connor Clifton",
   "team": "BOS",
@@ -1228,6 +1233,11 @@
   "name": "Jack Hughes",
   "team": "NJD",
   "number": 86
+ },
+ "8483695": {
+  "name": "Amadeus Lombardi",
+  "team": "NJD",
+  "number": 93
  },
  "8477511": {
   "name": "Anthony Mantha",
@@ -2833,6 +2843,11 @@
   "name": "Leo Carlsson",
   "team": "ANA",
   "number": 91
+ },
+ "8481538": {
+  "name": "Judd Caulfield",
+  "team": "ANA",
+  "number": 28
  },
  "8482118": {
   "name": "Sam Colangelo",
