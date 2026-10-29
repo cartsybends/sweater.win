@@ -859,6 +859,11 @@
   "team": "TOR",
   "number": 29
  },
+ "8478057": {
+  "name": "Dakota Joshua",
+  "team": "TOR",
+  "number": 81
+ },
  "8479772": {
   "name": "Zack MacEwen",
   "team": "TOR",
@@ -1629,6 +1634,11 @@
   "team": "PHI",
   "number": 44
  },
+ "8484148": {
+  "name": "Oliver Bonk",
+  "team": "PHI",
+  "number": 59
+ },
  "8482142": {
   "name": "Jamie Drysdale",
   "team": "PHI",
@@ -1688,11 +1698,6 @@
   "name": "Connor Dewar",
   "team": "PIT",
   "number": 19
- },
- "8482993": {
-  "name": "Avery Hayes",
-  "team": "PIT",
-  "number": 85
  },
  "8485414": {
   "name": "Ben Kindel",
@@ -3523,11 +3528,6 @@
   "name": "Alexander Wennberg",
   "team": "SJS",
   "number": 21
- },
- "8484152": {
-  "name": "Luca Cagnoni",
-  "team": "SJS",
-  "number": 42
  },
  "8484806": {
   "name": "Sam Dickinson",
