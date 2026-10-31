@@ -314,6 +314,11 @@
   "team": "DET",
   "number": 23
  },
+ "8480879": {
+  "name": "Jacob Bernard-Docker",
+  "team": "DET",
+  "number": 25
+ },
  "8475279": {
   "name": "Ben Chiarot",
   "team": "DET",
@@ -338,11 +343,6 @@
   "name": "Anton Johansson",
   "team": "DET",
   "number": 42
- },
- "8484223": {
-  "name": "Axel Sandin-Pellikka",
-  "team": "DET",
-  "number": 44
  },
  "8481542": {
   "name": "Moritz Seider",
@@ -2049,6 +2049,11 @@
   "team": "CHI",
   "number": 40
  },
+ "8484149": {
+  "name": "Gavin Brindley",
+  "team": "COL",
+  "number": 54
+ },
  "8486171": {
   "name": "T.J. Hughes",
   "team": "COL",
@@ -2599,6 +2604,11 @@
   "team": "STL",
   "number": 36
  },
+ "8484188": {
+  "name": "Theo Lindstein",
+  "team": "STL",
+  "number": 4
+ },
  "8482733": {
   "name": "Logan Mailloux",
   "team": "STL",
@@ -2623,11 +2633,6 @@
   "name": "Joel Hofer",
   "team": "STL",
   "number": 30
- },
- "8484388": {
-  "name": "Daniil But",
-  "team": "UTA",
-  "number": 50
  },
  "8479619": {
   "name": "Michael Carcone",
@@ -2973,6 +2978,11 @@
   "name": "Mikael Backlund",
   "team": "CGY",
   "number": 11
+ },
+ "8484154": {
+  "name": "Jonathan Castagna",
+  "team": "CGY",
+  "number": 38
  },
  "8482679": {
   "name": "Matt Coronato",
@@ -3623,6 +3633,11 @@
   "name": "Elias Pettersson",
   "team": "VAN",
   "number": 40
+ },
+ "8484901": {
+  "name": "Jacob Quillan",
+  "team": "VAN",
+  "number": 62
  },
  "8482079": {
   "name": "Marco Rossi",
