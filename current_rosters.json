@@ -194,11 +194,6 @@
   "team": "BUF",
   "number": 26
  },
- "8478502": {
-  "name": "Dennis Gilbert",
-  "team": "BUF",
-  "number": 44
- },
  "8476891": {
   "name": "Matt Grzelcyk",
   "team": "BUF",
@@ -298,6 +293,11 @@
   "name": "Keegan Kolesar",
   "team": "DET",
   "number": 55
+ },
+ "8481077": {
+  "name": "John Leonard",
+  "team": "DET",
+  "number": 43
  },
  "8482802": {
   "name": "Carter Mazur",
@@ -1524,6 +1524,11 @@
   "team": "NYR",
   "number": 26
  },
+ "8481525": {
+  "name": "Matthew Robertson",
+  "team": "NYR",
+  "number": 29
+ },
  "8482073": {
   "name": "Braden Schneider",
   "team": "NYR",
@@ -1729,11 +1734,6 @@
   "team": "PIT",
   "number": 71
  },
- "8483487": {
-  "name": "Rutger McGroarty",
-  "team": "PIT",
-  "number": 2
- },
  "8478438": {
   "name": "Tommy Novak",
   "team": "PIT",
@@ -1798,6 +1798,11 @@
   "name": "Trevor van Riemsdyk",
   "team": "PIT",
   "number": 57
+ },
+ "8483703": {
+  "name": "Sergei Murashov",
+  "team": "PIT",
+  "number": 1
  },
  "8481668": {
   "name": "Arturs Silovs",
@@ -2048,11 +2053,6 @@
   "name": "Arvid Soderblom",
   "team": "CHI",
   "number": 40
- },
- "8484149": {
-  "name": "Gavin Brindley",
-  "team": "COL",
-  "number": 54
  },
  "8486171": {
   "name": "T.J. Hughes",
