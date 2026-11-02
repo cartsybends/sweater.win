@@ -1569,11 +1569,6 @@
   "team": "PHI",
   "number": 86
  },
- "8483731": {
-  "name": "Alex Bump",
-  "team": "PHI",
-  "number": 20
- },
  "8478047": {
   "name": "Michael Bunting",
   "team": "PHI",
@@ -2384,6 +2379,11 @@
   "team": "MIN",
   "number": 3
  },
+ "8483766": {
+  "name": "David Spacek",
+  "team": "MIN",
+  "number": 82
+ },
  "8474716": {
   "name": "Jared Spurgeon",
   "team": "MIN",
@@ -2459,10 +2459,10 @@
   "team": "NSH",
   "number": 91
  },
- "8484241": {
-  "name": "Matthew Wood",
+ "8483524": {
+  "name": "Shane Wright",
   "team": "NSH",
-  "number": 71
+  "number": 15
  },
  "8479980": {
   "name": "Nicolas Hague",
@@ -3423,11 +3423,6 @@
   "name": "Ryan Winterton",
   "team": "SEA",
   "number": 26
- },
- "8483524": {
-  "name": "Shane Wright",
-  "team": "SEA",
-  "number": 51
  },
  "8478407": {
   "name": "Vince Dunn",
