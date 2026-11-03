@@ -349,6 +349,11 @@
   "team": "DET",
   "number": 53
  },
+ "8482171": {
+  "name": "William Wallinder",
+  "team": "DET",
+  "number": 54
+ },
  "8476434": {
   "name": "John Gibson",
   "team": "DET",
@@ -1429,6 +1434,11 @@
   "team": "NYR",
   "number": 28
  },
+ "8482877": {
+  "name": "Jaroslav Chmelar",
+  "team": "NYR",
+  "number": 49
+ },
  "8482157": {
   "name": "Will Cuylle",
   "team": "NYR",
@@ -1468,11 +1478,6 @@
   "name": "Gabe Perreault",
   "team": "NYR",
   "number": 94
- },
- "8479390": {
-  "name": "Taylor Raddysh",
-  "team": "NYR",
-  "number": 14
  },
  "8482460": {
   "name": "Matt Rempe",
@@ -2609,11 +2614,6 @@
   "team": "STL",
   "number": 4
  },
- "8482733": {
-  "name": "Logan Mailloux",
-  "team": "STL",
-  "number": 23
- },
  "8476892": {
   "name": "Colton Parayko",
   "team": "STL",
@@ -2928,11 +2928,6 @@
   "name": "Tyson Hinds",
   "team": "ANA",
   "number": 55
- },
- "8475324": {
-  "name": "Nick Jensen",
-  "team": "ANA",
-  "number": 4
  },
  "8481605": {
   "name": "Jackson LaCombe",
@@ -3299,11 +3294,6 @@
   "team": "LAK",
   "number": 15
  },
- "8483406": {
-  "name": "Taylor Ward",
-  "team": "LAK",
-  "number": 17
- },
  "8475692": {
   "name": "Mats Zuccarello",
   "team": "LAK",
@@ -3424,6 +3414,11 @@
   "team": "SEA",
   "number": 26
  },
+ "8484241": {
+  "name": "Matthew Wood",
+  "team": "SEA",
+  "number": 71
+ },
  "8478407": {
   "name": "Vince Dunn",
   "team": "SEA",
@@ -3538,6 +3533,11 @@
   "name": "Alexander Wennberg",
   "team": "SJS",
   "number": 21
+ },
+ "8482700": {
+  "name": "Nolan Allan",
+  "team": "SJS",
+  "number": 5
  },
  "8484806": {
   "name": "Sam Dickinson",
