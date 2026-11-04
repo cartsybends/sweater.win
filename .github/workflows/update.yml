@@ -18,6 +18,9 @@ on:
       - "static/team-games/**"
       - "static/community-games/**"
       - "static/face-swap/**"
+      - "static/deep-cut/**"
+      - "tools/deep_cut/**"
+      - "tests/deep_cut*"
       - "tools/community_games/**"
       - "tests/community_games*"
       - "tests/grid_popularity.mjs"
@@ -130,6 +133,11 @@ jobs:
           node tests/grid_popularity.mjs
           python -B tests/community_games_data.py
           python -B tests/community_games_refresh.py
+
+      - name: Check Deep Cut names, data, timers, and leaderboard scoring
+        run: |
+          node tests/deep_cut.mjs
+          python -B tests/deep_cut_data.py
 
       - name: Validate generated JavaScript
         shell: bash

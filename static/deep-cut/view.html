@@ -1,0 +1,22 @@
+  <section class="view dc-view" id="view-deepcut" hidden aria-label="Deep Cut NHL trivia">
+    <div class="dc-cabinet" id="dcCabinet">
+      <header class="dc-masthead"><span>SWEATER ARCADE <i>◆</i> VOL. 01</span><button type="button" id="dcSound" aria-pressed="false" aria-label="Turn game sound on">SOUND OFF</button></header>
+      <div class="dc-title"><p>HOW DEEP DOES YOUR HOCKEY KNOWLEDGE GO?</p><h2>DEEP <span>CUT</span></h2><div>RARE NAMES. LONG SHIFTS.</div></div>
+      <div class="dc-hud">
+        <div><small>THE SHIFT</small><div class="dc-dots" id="dcDots" aria-label="Seven prompts"></div></div>
+        <div><small>POINTS</small><strong id="dcPoints">000</strong><span> / 700</span></div>
+        <div class="dc-distance"><small>DISTANCE SKATED</small><strong id="dcDistance">0</strong><span> m</span></div>
+      </div>
+      <div class="dc-arena" id="dcArena">
+        <canvas id="dcCanvas" aria-label="A pixel-art skater crosses an outdoor hockey rink" role="img"></canvas>
+        <span class="dc-arena-tag" id="dcArenaTag">01 / THE NEIGHBOURHOOD RINK</span>
+        <span class="dc-burst" id="dcBurst" aria-hidden="true"></span>
+        <div class="dc-distance-track" role="progressbar" aria-label="Distance toward a perfect 7,000 metre shift" aria-valuemin="0" aria-valuemax="7000" aria-valuenow="0" id="dcTrack"><i id="dcTrackFill"></i></div>
+      </div>
+      <div class="dc-board" id="dcBoard"></div>
+      <div class="dc-tier-strip" id="dcTiers" aria-label="Answer rarity tiers"></div>
+      <footer class="dc-footer"><span>LESS OBVIOUS. MORE ICE.</span><details><summary>Rules & scoring</summary><p>Seven prompts. Three seconds to read, then 35 seconds to name one qualifying player. Wrong or unrecognized names cost three seconds. A pass or expired clock scores zero. The clock keeps running if you leave an active prompt.</p><p>Full names, unique surnames, common aliases, accents, and small typos are supported. Ambiguous names need more detail. Each point moves your skater 10 metres; 700 points is a perfect shift. At least 300 points counts as a daily win.</p><p>Rarity tiers are fixed editorial estimates from career games, awards, Hall of Fame status, era, and team appearances. They are not live player-pick percentages. Cult legends are selected for a satisfying obscure connection. Everyone receives the same daily set and scores; practice is unranked. Player facts are frozen through 2025–26, and predecessor franchises are separate.</p></details></footer>
+    </div>
+    <div class="slot"></div>
+    <p class="nodata" hidden>Deep Cut is taking a quick intermission. Please try again shortly.</p>
+  </section>

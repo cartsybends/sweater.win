@@ -3,6 +3,7 @@ import {RETENTION_DAYS,USAGE_VERSION,validateEvents,schemaStatements,eventStatem
 import {usageReport} from './reports.mjs';
 
 export const MODES = {
+  deepcut:'Deep Cut',
   grid:'Sweater Grid', benchboss:'Bench Boss', teammatetrail:'Teammate Trail',
   hub:'Home', classic:'Classic', statline:'Stat Line', team:'Guess the Team', journey:'Journey', blur:'Blur (retired)', faceswap:'Face Swap',
   number:'Sweater #', roster:'Roster Recall', draft:'Draft Day', map:'Birthplace', conn:'Connections',

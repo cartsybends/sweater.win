@@ -39,6 +39,14 @@ the published `whoscored_days` assignment and keeps the first result per player
 and day. Today, Week and All time use the same rankings as the other games.
 Deploy the Worker together with the frontend update to enable this board.
 
+Deep Cut uses the same result tables and daily rankings. The Worker replays
+exactly seven player IDs or `MISS` actions against the published `deepcut_days`
+assignment and frozen `deepcut` answer bank in `schedule.json`. Points are
+calculated from that bank, never a client-provided score; the maximum is 700.
+Deploy the Worker alongside the frontend to enable the new leaderboard. Until
+then, local saves, XP, practice, and sharing work normally; unknown-game
+submissions remain eligible for retry after the API rollout.
+
 ## Activate private analytics
 
 In **sweater-api → Settings → Variables and Secrets**, add a **Secret** named
