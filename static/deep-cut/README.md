@@ -19,6 +19,25 @@ arena at 150, big leagues at 300, rafters at 450, and legends at 600. The next
 threshold is visible and crossing it announces the new arena. Rarity scoring
 and the immutable published puzzle bank do not change with these visual effects.
 
+The seven shift markers are miniature pucks. Completed pucks take the answer's
+rarity colour; the current prompt has a mint outline, and missed prompts stay
+muted. Their labels include the round, points and rarity for screen readers.
+
+Click or tap exposed scenery for a small local flourish, or drag for a trail:
+snowflakes at the neighbourhood rink, ice chips at the community arena,
+confetti in the big leagues, silver glints in the rafters and gold sparkles
+in legends. These effects ignore game panels and controls, preserve native
+touch scrolling, respect reduced motion and never affect answers or the clock.
+Particles expire within 1.2 seconds and are capped at 120. Leaving the game,
+resizing or hiding the tab clears them; a new scene removes old-scene particles.
+
+The neighbourhood has snow-rooted evergreen trunks and complete building
+facades. The community arena has empty bleachers, three rinkside spectators,
+and lights suspended from the roof. Clean 1440×900 background exports and a
+labelled overview live in `backgrounds/`; the production build copies these
+PNG files for direct viewing and download. `dcDraw(time,{backgroundOnly:true})`
+renders the same scenery without the skater or interaction effects for exports.
+
 `data.json` is a frozen v1 content release: 8,280 players, 119 prompts across
 seven families, and 365 seven-round sets. Its source is the verified NHL-backed
 community catalog through 2025–26. Each prompt stores its complete eligible set
