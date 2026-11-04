@@ -1,9 +1,11 @@
 const DEEP_CUT_DATA = /*__DEEP_CUT_DATA__*/{};
 const dcModel = DEEP_CUT_MODEL;
 const dcIndex = () => dcModel.index(DEEP_CUT_DATA);
+const dcPracticePool=()=>DEEP_CUT_DATA.practice_runs?DEEP_CUT_DATA.practice_runs.map(id=>dcIndex().runs.get(id)):DEEP_CUT_DATA.runs;
 let dcTimer=0,dcFrame=0,dcAudio=null,dcAnimation=null,dcLastFrame=0,dcOffset=0,dcVisualDistance=0,dcBurstTimer=0,dcEffectTimer=0,dcZoneTimer=0;
 let dcRinkParticles=[],dcRinkPointer=null,dcRinkLastPoint=null;
 let dcCrowdWave=null;
+let dcRibbonContext={round:1,lastScore:0,over:false};
 const dcZones=['THE NEIGHBOURHOOD RINK','THE COMMUNITY ARENA','THE BIG LEAGUES','UP IN THE RAFTERS','LEGENDS ONLY'];
 const dcZone=distance=>Math.max(0,Math.min(4,Math.floor(distance/1500)));
 const dcAnimationLevel=score=>[10,15,30,60,85,100].indexOf(score)+1;
@@ -49,7 +51,7 @@ G.deepcut={
   next:'Another shift',hideReveal:true,quietFinish:true,persistUnlimited:true,
   pool:()=>DEEP_CUT_DATA.runs,
   daily(day){return dcIndex().runs.get(DAILY.deepcut?.[day]?.id)||this.pool()[hash(`sweater-deepcut-${day}`)%this.pool().length];},
-  random(){return pick(this.pool());},tid:t=>t.id,player:()=>null,meta:()=>'',
+  random(){return pick(dcPracticePool());},tid:t=>t.id,player:()=>null,meta:()=>'',
   prepareTarget(t,opts){const s=opts.dcRun;if(s?.target!==t.id||!['ready','preview','ask','reveal'].includes(s.phase)||!Number.isInteger(s.index)||s.index<0||s.index>7||['preview','ask'].includes(s.phase)&&(!Number.isFinite(s.deadline)||!Number.isFinite(s.previewUntil)))opts.dcRun={target:t.id,index:0,phase:'ready'};return t;},
   reset(){dcCleanup();dcSoundPaint();dcCorrectionsPaint();},
   guess(t,x){try{return dcModel.state(t,[...S.deepcut.guesses,x],DEEP_CUT_DATA).won;}catch{return null;}},
@@ -66,6 +68,7 @@ G.deepcut={
 function dcHud(state){
   $('dcPoints').textContent=String(state.score).padStart(3,'0');$('dcDistance').textContent=state.distance.toLocaleString();
   const session=dcSession();
+  dcRibbonContext={round:Math.min(7,Math.max(1,state.rounds.length+(!state.over&&['preview','ask'].includes(session.phase)?1:0))),lastScore:state.rounds.at(-1)?.score||0,over:state.over};
   $('dcDots').innerHTML=Array.from({length:7},(_,i)=>{const r=state.rounds[i],current=!state.over&&i===state.rounds.length&&['preview','ask'].includes(session.phase),label=r?`Round ${i+1}: ${r.score} points, ${r.tier.name}`:`Round ${i+1}${current?': current prompt':': not played'}`;return `<i class="dc-puck${current?' is-current':''}${r?' is-complete':''}${r&&!r.score?' is-missed':''}"${r?` style="--puck-color:${r.tier.color}"`:''} role="img" title="${label}" aria-label="${label}"></i>`;}).join('');
   $('dcTrackFill').style.width=`${state.distance/7000*100}%`;$('dcTrack').setAttribute('aria-valuenow',state.distance);
   const zone=dcZone(state.distance);
@@ -78,10 +81,11 @@ function dcRender(t,st){
   const state=dcModel.state(t,st.guesses,DEEP_CUT_DATA),session=dcSession(),board=$('dcBoard');
   document.body?.classList.toggle('dc-immersive',dcActive());$('dcCabinet').dataset.phase=state.over?'complete':session.index!==st.guesses.length?'reveal':session.phase;
   dcHud(state);dcSoundPaint();dcCorrectionsPaint();
+  $('dcScoringInfo').textContent=t.scoringVersion>=2?`Current-roster club answers score 10${t.scoringVersion>=3?', except the six current skaters with the lowest average TOI per game for that club, who score 15':''}. Goalies stay at 10. Other scores combine estimated recognition with reviewed prompt-specific connections. Rosters, usage and scores stay fixed for this shift.`:`This shift retains original scoring. New practice shifts${DEEP_CUT_DATA.rollout?.daily_from?' and daily shifts dated '+DEEP_CUT_DATA.rollout.daily_from+' onward':''} use the current-roster scoring rule.`;
   $('dcTiers').innerHTML=dcModel.tiers.slice(1).map(t=>`<div class="dc-tier" style="--tier-color:${t.color}"><i aria-hidden="true"></i><b>${t.score}</b><span>${t.name}</span></div>`).join('');
   if(state.over){clearInterval(dcTimer);dcTimer=0;dcResults(state);}
   else if(session.phase==='ready'&&!st.guesses.length){
-    board.innerHTML=`<p class="dc-eyebrow"><span>THE NHL RARITY GAME</span><span>${mode==='unlimited'?'UNRANKED PRACTICE':mode==='archive'?'ARCHIVE SHIFT':`DAILY #${dailyNumber('deepcut',st.day)}`}</span></p><div class="dc-intro-head"><h3>You know the stars.<br>Who else have you got?</h3><i class="dc-pixel-puck" aria-hidden="true"></i></div><p class="dc-copy">Seven hockey prompts. Name anyone who fits.<br>The less obvious your answer, the farther you skate.</p><div class="dc-actions"><button type="button" class="dc-primary" data-dc-start>▶ ${mode==='unlimited'?'START PRACTICE':'TAKE THE ICE'}</button><button type="button" class="dc-secondary" data-dc-variant="${mode==='unlimited'?'daily':'unlimited'}">${mode==='unlimited'?'DAILY SHIFT':'PRACTICE'}</button></div><p class="dc-fineprint">35 seconds per prompt · No answer suggestions · ${mode==='unlimited'?'Fresh sets. No daily stats affected.':mode==='archive'?'Replay a previous day’s seven prompts.':'One shared daily set. Your progress saves automatically.'}</p>`;
+    board.innerHTML=`<p class="dc-eyebrow"><span>THE NHL RARITY GAME</span><span>${mode==='unlimited'?'UNRANKED PRACTICE':mode==='archive'?'ARCHIVE SHIFT':`DAILY #${dailyNumber('deepcut',st.day)}`}</span></p><div class="dc-intro-head"><h3>You know the stars.<br>Who else have you got?</h3><i class="dc-pixel-puck" aria-hidden="true"></i></div><p class="dc-copy">Seven hockey prompts. Name anyone who fits.<br>The less obvious your answer, the farther you skate.</p><div class="dc-actions"><button type="button" class="dc-primary" data-dc-start>▶ ${mode==='unlimited'?'START PRACTICE':'TAKE THE ICE'}</button><button type="button" class="dc-secondary" data-dc-variant="${mode==='unlimited'?'daily':'unlimited'}">${mode==='unlimited'?'DAILY SHIFT':'PRACTICE'}</button></div><p class="dc-fineprint">35 seconds per prompt · No answer suggestions · ${mode==='unlimited'?'Fresh sets. No daily stats affected.':mode==='archive'?'Replay a previous day’s seven prompts.':'One shared daily set. Your progress saves automatically.'} ${t.scoringVersion>=2?(t.scoringVersion>=3?'Current roster: 10 points. Six lowest-TOI skaters: 15.':'Current team-roster answers score 10.'):DEEP_CUT_DATA.version===2?'Original scoring for this saved shift; new scoring is in Practice.':''}</p>`;
   } else if(session.index!==st.guesses.length||session.phase==='reveal')dcReveal(state);
   else {
     const p=dcCurrentPrompt();
@@ -267,11 +271,12 @@ function dcDraw(time,{backgroundOnly=false}={}){
       }else {paint(x-1,top-3,w+2,3,'#c4d8d5');paint(x+4,top-7,7,4,'#6d8590');paint(x+3,top-8,9,1,'#c4d8d5');}
       paint(x-2,top-1,w+4,2,'#a9c4c8');
       for(let row=0;row<Math.max(1,Math.floor((h-6)/10));row++)for(let col=0;col<2;col++){
-        const wx=x+5+col*8,wy=top+5+row*9;if(wy+4>townBase-5||wx+4>x+w-2)continue;
-        paint(wx-1,wy-1,6,6,'#203b4a');paint(wx,wy,4,4,(i+row+col)%3?'#e6cd92':'#6d939e');paint(wx+2,wy,1,4,'#55717c');
+        const wx=x+5+col*10,wy=top+5+row*9;if(wy+6>townBase-5||wx+6>x+w-2||col===1&&wy+6>townBase-12)continue;
+        DEEP_CUT_SCENERY.houseWindow(paint,{x:wx,y:wy,seed:i*31+row*7+col,time,still:dcReduced()});
       }
       paint(x-2,townBase,w+4,2,'#c0d5d4');paint(x+w-10,townBase+2,8,1,'#8baab5');
     }
+    DEEP_CUT_SCENERY.neighbourhoodWalkers(paint,{W,ice,time,still:dcReduced()});
     for(let i=0;i<Math.ceil(W/55)+2;i++){
       const x=(i*67+19-dcOffset*.2+W*30)%(W+100)-50,h=22+i*7%20,base=ground+(i%2?1:0),top=base-h-9;
       // The canopy ends above a visible trunk rooted in a small snow bank.
@@ -286,7 +291,7 @@ function dcDraw(time,{backgroundOnly=false}={}){
   }else if(zone===1){
     DEEP_CUT_SCENERY.community(paint,{W,ice,time,still:dcReduced()});
   }else{
-    DEEP_CUT_SCENERY.arena(paint,{W,ice,time,still:dcReduced(),zone,wave});
+    DEEP_CUT_SCENERY.arena(paint,{W,ice,time,still:dcReduced(),zone,wave,progress:{...dcRibbonContext,score:Math.round(dcVisualDistance/10)}});
   }
   const lightCount=zone===0?4:zone===1?6:10;
   for(let i=0;i<lightCount;i++){

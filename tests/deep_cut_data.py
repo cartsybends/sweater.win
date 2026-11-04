@@ -11,12 +11,15 @@ builder = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(builder)
 DATA = builder.load_deep_cut_data()
 SOURCE = json.loads((ROOT / "static/community-games/data.json").read_text())
+BASE = json.loads((ROOT / "static/deep-cut/data.json").read_text())
+UPDATED = builder.load_community_data()
 
 
 class DeepCutDataTests(unittest.TestCase):
     def test_every_answer_set_matches_all_qualifying_source_records(self):
         for prompt in DATA["prompts"]:
             kind, _, value = prompt["rule"].partition("-")
+            records = UPDATED if prompt.get("version") == 2 and kind in ("team", "goalie") else SOURCE
             def matches(p):
                 if kind == "team": return p[8].get(value, 0) > 0
                 if kind == "goalie": return p[2] == "G" and p[8].get(value, 0) > 0
@@ -32,19 +35,25 @@ class DeepCutDataTests(unittest.TestCase):
                     return p[8].get(a, 0) > 0 and p[8].get(b, 0) > 0
                 self.fail(prompt["rule"])
             with self.subTest(prompt=prompt["id"]):
-                self.assertEqual({pid for pid, _ in prompt["answers"]}, {p[0] for p in SOURCE["players"] if matches(p)})
+                actual = {pid for pid, _ in prompt["answers"]}
+                expected = {p[0] for p in records["players"] if matches(p)}
+                if prompt.get("version") == 2 and kind in ("team", "goalie") and prompt["id"] not in DATA["current_prompts"].values():
+                    self.assertTrue(actual <= expected)
+                else:
+                    self.assertEqual(actual, expected)
 
     def test_published_daily_assignments_are_stable(self):
         today = date(2026, 11, 4)
-        days = builder.plan_community_days({}, DATA["runs"], today, "deepcut")
+        days = builder.plan_deep_cut_days({}, DATA, today)
         self.assertEqual(len(days), builder.AHEAD + 1)
         self.assertEqual(len(set(v["id"] for v in days.values())), len(days))
-        extended = builder.plan_community_days(days, DATA["runs"][::-1], today + timedelta(days=10), "deepcut")
+        extended = builder.plan_deep_cut_days(days, DATA, today + timedelta(days=10))
         for day, ref in days.items(): self.assertEqual(extended[day], ref)
 
     def test_canonical_names_and_font_are_included(self):
-        self.assertEqual(len(DATA["players"]), 8280)
-        self.assertEqual(len(DATA["prompts"]), 119)
+        self.assertEqual(len(BASE["players"]), 8280)
+        self.assertEqual(len(BASE["prompts"]), 119)
+        builder.deep_cut_scoring().validate(BASE, DATA)
         self.assertTrue((ROOT / "static/deep-cut/pixel.ttf").read_bytes().startswith(b"\0\1\0\0"))
         self.assertIn("SIL OPEN FONT LICENSE", (ROOT / "static/deep-cut/FONT-LICENSE.txt").read_text())
 

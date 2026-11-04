@@ -13573,9 +13573,12 @@ def load_community_data():
 
 def load_deep_cut_data():
     """A versioned snapshot keeps scores stable during builds and archive replays."""
-    data = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
-    if data.get("version") != 1 or len(data.get("runs", [])) != 365:
+    base = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
+    cache = HERE / "deep_cut_scoring_cache.json"
+    data = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else base
+    if data.get("version") not in (1, 2) or len(data.get("runs", [])) < 365:
         raise ValueError("Incomplete Deep Cut answer bank")
+    deep_cut_scoring().validate(base, data)
     players = {p[0] for p in data["players"]}
     prompts = {p["id"]: p for p in data["prompts"]}
     if len(players) != len(data["players"]) or len(prompts) != len(data["prompts"]):
@@ -13588,11 +13591,40 @@ def load_deep_cut_data():
             raise ValueError("Invalid Deep Cut answer set")
     if len({run["id"] for run in data["runs"]}) != len(data["runs"]):
         raise ValueError("Duplicate Deep Cut run IDs")
+    if data.get("version") == 2:
+        latest = data.get("practice_runs", [])
+        if len(latest) != 365 or len(set(latest)) != 365 or not set(latest) <= {run["id"] for run in data["runs"]}:
+            raise ValueError("Incomplete current Deep Cut edition")
+        for prompt in prompts.values():
+            if any(dict(prompt["answers"]).get(pid) != (15 if pid in prompt.get("lowToiRoster", []) else 10) for pid in prompt.get("currentRoster", [])):
+                raise ValueError("A current-roster answer must match its 10/15 point usage tier")
     for run in data["runs"]:
         ids = run["prompts"]
         if len(ids) != 7 or len(set(ids)) != 7 or any(key not in prompts for key in ids):
             raise ValueError("Deep Cut runs require seven distinct prompts")
     return data
+
+
+def deep_cut_scoring():
+    spec = importlib.util.spec_from_file_location("sweater_deepcut_scoring", HERE / "tools/deep_cut/scoring.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def refresh_deep_cut_scoring(source, roster_players, game_players, today):
+    base = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
+    roster = {str(p["id"]): {"team": p["team"]} for p in roster_players}
+    roster.update({str(p["id"]): {"team": p["team"]} for p in game_players})
+    review = json.loads((HERE / "static/deep-cut/familiarity.json").read_text(encoding="utf-8"))
+    usage = json.loads(GRID_CURRENT_CACHE.read_text(encoding="utf-8")).get("toi", [])
+    data = deep_cut_scoring().publish(base, load_deep_cut_data(), source, roster, today, review, usage, require_toi=True)
+    (HERE / "deep_cut_scoring_cache.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    return data
+
+
+def plan_deep_cut_days(saved, data, today):
+    return deep_cut_scoring().plan_days(saved, data, today, AHEAD)
 
 
 def plan_community_days(saved, bank, today, mode):
@@ -13930,9 +13962,9 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
                 roster_archive[i] = archive[i]
     community = load_community_data()
     new["community"] = community
-    deep_cut = load_deep_cut_data()
+    deep_cut = refresh_deep_cut_scoring(community, roster_players, players, today)
     new["deepcut"] = deep_cut
-    deep_days = plan_community_days(sched.get("deepcut_days", {}), deep_cut["runs"], today, "deepcut")
+    deep_days = plan_deep_cut_days(sched.get("deepcut_days", {}), deep_cut, today)
     new["deepcut_days"] = deep_days
     new["deepcut_start"] = sched.get("deepcut_start") or today.isoformat()
     result["deepcut"] = (new["deepcut_start"], {k: v for k, v in deep_days.items() if first <= k <= last})

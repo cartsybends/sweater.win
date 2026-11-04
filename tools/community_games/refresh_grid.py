@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import re
@@ -135,17 +136,25 @@ def refresh(bank, today, fetch):
                 if row['playerId'] not in bios or row['gamesPlayed'] > bios[row['playerId']]['gamesPlayed']:
                     bios[row['playerId']] = row
 
+    logs = {}
     def get_log(pid, season):
+        if (pid, season) in logs:
+            return logs[(pid, season)]
         document, audit = fetch(f'log-{pid}-{season}.json',
             f'https://api-web.nhle.com/v1/player/{pid}/game-log/{season}/2')
         sources.append(audit)
+        logs[(pid, season)] = document
         return document
 
     appearances = appearance_rows(summaries, get_log, cutoff, through)
+    spec = importlib.util.spec_from_file_location('deep_cut_toi', ROOT / 'tools/deep_cut/toi.py')
+    toi = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(toi)
+    usage = toi.usage_rows(summaries['skater'], get_log)
     snapshot = {'version': 1, 'asof': today.isoformat(), 'base_team_cutoff': cutoff,
                 'season_through': through,
                 'bank_sha256': hashlib.sha256(json.dumps(bank, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest(),
-                'sources': sources, 'appearances': appearances,
+                'sources': sources, 'appearances': appearances, 'toi': usage,
                 'players': updated_players(bank, appearances, bios)}
     attach_updates(bank, snapshot)
     return snapshot

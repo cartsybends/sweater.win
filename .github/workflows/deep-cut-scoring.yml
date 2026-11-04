@@ -1,0 +1,55 @@
+name: Verify Deep Cut scoring data
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "tools/deep_cut/**"
+      - "tools/community_games/refresh_grid.py"
+      - "static/deep-cut/familiarity.json"
+      - "deep_cut_scoring_cache.json"
+      - "tests/deep_cut*"
+      - ".github/workflows/deep-cut-scoring.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Refresh official NHL appearances and club TOI
+        run: python -B tools/community_games/refresh_grid.py
+      - name: Build and verify a roster and TOI scoring edition
+        run: |
+          python -B - <<'PY'
+          import importlib.util, json
+          from pathlib import Path
+          spec = importlib.util.spec_from_file_location('builder', 'build_sweater.py')
+          b = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(b)
+          base = json.loads(Path('static/deep-cut/data.json').read_text())
+          roster = json.loads(Path('current_rosters.json').read_text())
+          review = json.loads(Path('static/deep-cut/familiarity.json').read_text())
+          usage = json.loads(Path('grid_current_cache.json').read_text())['toi']
+          data = b.deep_cut_scoring().publish(base, b.load_deep_cut_data(), b.load_community_data(), roster, b.eastern_today(), review, usage, require_toi=True)
+          Path('deep_cut_scoring_cache.json').write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n')
+          print('Verified six low-TOI skaters for', len(data['low_toi_roster']), 'clubs.')
+          PY
+          python -B tests/deep_cut_data.py
+          python -B tests/deep_cut_scoring.py
+          python -B tests/deep_cut_toi.py
+          node tests/deep_cut.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deep-cut-scoring-snapshot
+          path: |
+            grid_current_cache.json
+            deep_cut_scoring_cache.json

@@ -138,6 +138,8 @@ jobs:
         run: |
           node tests/deep_cut.mjs
           python -B tests/deep_cut_data.py
+          python -B tests/deep_cut_scoring.py
+          python -B tests/deep_cut_toi.py
 
       - name: Validate generated JavaScript
         shell: bash
@@ -185,6 +187,7 @@ jobs:
             career_cache.json
             team_history_cache.json
             current_rosters.json
+            deep_cut_scoring_cache.json
             lineup_cache.json
             edge_cache.json
             trophy_history.json

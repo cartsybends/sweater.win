@@ -38,7 +38,7 @@ def main():
     bank = builder.load_deep_cut_data()
     schedule = json.loads((ROOT / "schedule.json").read_text())
     today = builder.eastern_today()
-    days = builder.plan_community_days(schedule.get("deepcut_days", {}), bank["runs"], today, "deepcut")
+    days = builder.plan_deep_cut_days(schedule.get("deepcut_days", {}), bank, today)
     start = schedule.get("deepcut_start", today.isoformat())
     data = json.dumps(bank, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     css = (root / "styles.css").read_text().replace("deep-cut/pixel.ttf", "data:font/ttf;base64," + base64.b64encode((root / "pixel.ttf").read_bytes()).decode())

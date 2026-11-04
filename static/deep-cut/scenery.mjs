@@ -5,12 +5,71 @@ export const DEEP_CUT_SCENERY=(()=>{
   const mod=(n,d)=>((n%d)+d)%d;
   const mix=(a,b,t)=>a+(b-a)*Math.max(0,Math.min(1,t));
   const glyphs={A:'010101111101101',B:'110101110101110',C:'011100100100011',D:'110101101101110',E:'111100110100111',F:'111100110100100',I:'111010010010111',K:'101101110101101',L:'100100100100111',M:'101111111101101',N:'101111111111101',O:'010101101101010',P:'110101110100100',R:'110101110101101',S:'011100010001110',T:'111010010010010',U:'101101101101111',V:'101101101101010',W:'101101111111101',X:'101101010101101',Z:'111001010100111'};
+  Object.assign(glyphs,{G:'011100101101011',H:'101101111101101',J:'001001001101010',Q:'010101101111011',Y:'101101010010010','0':'111101101101111','1':'010110010010111','2':'110001010100111','3':'110001010001110','4':'101101111001001','5':'111100110001110','6':'011100111101111','7':'111001010010010','8':'111101111101111','9':'111101111001110',' ':'000000000000000','/':'001001010100100','-':'000000111000000','+':'000010111010000',':':'000010000010000','%':'101001010100101'});
   function word(paint,text,x,y,color){
     [...text].forEach((letter,i)=>{const glyph=glyphs[letter]||glyphs.X;for(let j=0;j<15;j++)if(glyph[j]==='1')paint(x+i*4+j%3,y+Math.floor(j/3),1,1,color);});
   }
   function ring(paint,x,y,rx,ry,color){
     const count=Math.max(64,Math.ceil(rx*6));
     for(let i=0;i<=count;i++){const a=i/count*Math.PI*2;paint(x+Math.cos(a)*rx,y+Math.sin(a)*ry,1,1,color);}
+  }
+  function windowState(seed,time,still=false){
+    if(still)return {lit:seed%3!==0,person:seed%17===0,figureX:2,blind:seed%11===0?.5:0,stage:'still'};
+    const cycle=55+mod(seed*13,37),phase=mod(time/1000+seed*11.3,cycle),visitor=seed%4===0,closes=seed%8===0;
+    const lit=phase<(visitor?35:23+seed%13);
+    const person=visitor&&phase>=10&&phase<24;
+    const figureX=phase<12?mix(-2,2,(phase-10)/2):phase<20||closes?2:mix(2,7,(phase-20)/4);
+    const blind=visitor&&closes&&phase>=20&&phase<35?Math.min(1,(phase-20)/4):0;
+    const stage=!lit?'off':!person?blind?'closed':'lit':phase<12?'arriving':phase<20?'watching':closes?'closing-blinds':'leaving';
+    return {lit,person,figureX,blind,stage};
+  }
+  function houseWindow(paint,{x,y,seed,time,still}){
+    const state=windowState(seed,time,still);
+    paint(x-1,y-1,8,8,'#1c3847');paint(x,y,6,6,state.lit?'#e4ce95':'#486a79');paint(x+1,y,4,1,state.lit?'#f2dda6':'#5c7d87');
+    const clipped=(px,py,w,h,color)=>{const left=Math.max(x,px),top=Math.max(y,py),right=Math.min(x+6,px+w),bottom=Math.min(y+6,py+h);if(right>left&&bottom>top)paint(left,top,right-left,bottom-top,color);};
+    if(state.person&&state.lit){const px=x+Math.round(state.figureX);clipped(px,y+1,2,2,'#273b44');clipped(px-1,y+3,4,3,'#304751');}
+    if(state.blind){const h=Math.ceil(6*state.blind);paint(x,y,6,h,state.lit?'#aaab94':'#647d83');for(let row=1;row<h;row+=2)paint(x,y+row,6,1,'#6c817f');}
+    if(!state.person&&!state.blind)paint(x+3,y,1,6,'#6c8585');paint(x-1,y+6,8,1,'#a3bdbb');
+  }
+  function dogWalkerState(index,W,ice,time,still=false){
+    const direction=index===0?1:-1,travel=mod((still?0:time/1000*(index?6:8))+W*(index?.63:.18),W+80)-40;
+    const x=still?W*(index?.72:.2):direction===1?travel:W-travel;
+    return {x,y:ice-7+index,direction,dogX:x+direction*13,step:still?0:Math.floor(time/180+index)%2};
+  }
+  function neighbourhoodWalkers(paint,{W,ice,time,still}){
+    paint(0,ice-11,W,5,'#829fa3');paint(0,ice-11,W,1,'#adc7c5');
+    for(let i=0;i<2;i++){
+      const a=dogWalkerState(i,W,ice,time,still),x=a.x,y=a.y,d=a.direction,s=a.step,coat=i?'#957783':'#637e96';
+      paint(x-2,y-15,4,4,'#c9ad90');paint(x-3,y-16,5,2,i?'#b3b59b':'#b9c3b6');paint(x+(d>0?1:-2),y-13,1,1,'#223847');
+      paint(x-3,y-11,6,7,coat);paint(x-3,y-11,6,1,'#b8aa7e');paint(x+1,y-10,1,4,'#b8aa7e');paint(x+d*3,y-9,2,4,coat);
+      paint(x-2-s,y-4,2,4,'#2a4051');paint(x+1+s,y-4,2,4,'#2a4051');paint(x-3-s,y,3,1,'#c2ccbf');paint(x+1+s,y,3,1,'#c2ccbf');
+      const dog=a.dogX,fur=i?'#9f8c70':'#b8b1a0';
+      for(let j=0;j<=12;j++)paint(mix(x+d*4,dog-d*2,j/12),mix(y-6,y-3,j/12),1,1,'#bebba0');
+      paint(dog-3,y-4,7,3,fur);paint(dog+d*3-(d<0?2:0),y-6,3,3,fur);paint(dog+d*3,y-6,1,2,'#5b5650');paint(dog+d*5,y-4,1,1,'#303d44');
+      paint(dog-d*5,y-5,2,1,fur);paint(dog-2-s,y-1,1,2,'#605e56');paint(dog+2+s,y-1,1,2,'#605e56');paint(dog+d*2,y-3,2,1,'#a66f72');
+    }
+  }
+  function logo(paint,kind,x,y,color){
+    if(kind==='cup'){paint(x+1,y+1,4,4,color);paint(x+5,y+2,2,2,color);paint(x,y+5,7,1,color);paint(x+2,y-1,1,1,color);paint(x+4,y-1,1,1,color);}
+    else if(kind==='leaf'){paint(x+3,y,1,6,color);paint(x+1,y+1,5,2,color);paint(x,y+2,7,1,color);paint(x+2,y+3,3,2,color);}
+    else if(kind==='skate'){paint(x+1,y,3,3,color);paint(x+1,y+2,6,2,color);paint(x,y+5,8,1,color);paint(x+2,y+4,1,1,color);paint(x+5,y+4,1,1,color);}
+    else if(kind==='pizza'){for(let row=0;row<5;row++)paint(x+Math.floor(row/2),y+row,7-row,1,color);paint(x,y-1,7,1,color);paint(x+2,y+1,1,1,'#b46d66');paint(x+3,y+3,1,1,'#b46d66');}
+    else if(kind==='mountain'){for(let row=0;row<5;row++){paint(x+3-row,y+row,2,1,color);paint(x+4+row,y+row,2,1,color);}paint(x+3,y,3,1,color);}
+    else if(kind==='bolt'){paint(x+3,y,3,1,color);paint(x+2,y+1,3,2,color);paint(x+1,y+3,5,1,color);paint(x+3,y+4,2,2,color);}
+    else {paint(x,y+1,7,1,color);paint(x+1,y,5,1,color);for(let i=1;i<6;i+=2)paint(x+i,y+2,1,3,color);paint(x,y+5,7,1,color);}
+  }
+  function ribbonMessage({score=0,round=1,over=false,lastScore=0}={}){
+    score=Math.max(0,Math.min(700,Math.round(score)));round=Math.max(1,Math.min(7,round));
+    const next=Math.min(700,(Math.floor(score/150)+1)*150),celebration=score===700?'PERFECT SHIFT':score>=600?'LEGENDS ONLY':score>=450?'UP IN THE RAFTERS':score>=300?'THE BIG LEAGUES':'KEEP SKATING';
+    const goal=score===700?'PERFECT 700':over?'TRY ANOTHER SHIFT':score<600?'NEXT ARENA '+next:'CHASE 700';
+    return `${over?'SHIFT COMPLETE':'ROUND '+round+' OF 7'} / ${score} POINTS / ${score*10} M SKATED / ${goal} / ${lastScore>=60?'DEEP CUT +'+lastScore+' / ':''}${celebration}`;
+  }
+  function ribbon(paint,{W,y,time,still,zone,progress={}}){
+    const gold=zone===4,purple=zone===3,background=gold?'#70532c':purple?'#50366c':'#155b71',ink=gold?'#ffdf95':purple?'#dec9f7':'#a6eced',message=ribbonMessage(progress),span=message.length*4+28,shift=still?0:mod(time*.012,span);
+    paint(0,y-1,W,11,'#0a1728');paint(0,y,W,8,background);paint(0,y,W,1,ink);paint(0,y+7,W,1,'#31465b');
+    for(let x=2;x<W;x+=4)paint(x,y+1,1,5,'#ffffff08');
+    for(let x=-shift;x<W;x+=span){word(paint,message,x+3,y+2,ink);logo(paint,'bolt',x+span-15,y+2,ink);}
+    paint(0,y+7,W*Math.max(0,Math.min(1,(progress.score||0)/700)),1,ink);
   }
   function person(paint,x,y,seed,{pose='sit',carry=null,time=0,zone=1,cheer=0}={}){
     const rise=Math.round(cheer*2),head=y-(pose==='sit'?11:15)-rise,step=pose==='walk'?Math.floor(time/160+seed)%2:0;
@@ -123,7 +182,7 @@ export const DEEP_CUT_SCENERY=(()=>{
     const pulse=(time-wave.start)/1000-seat.x/W*3.2-seat.bowl*.65-seat.row*.06;
     return pulse>0&&pulse<1.25?Math.sin(pulse/1.25*Math.PI):0;
   }
-  function arena(paint,{W,ice,time,still,zone,wave=null}){
+  function arena(paint,{W,ice,time,still,zone,wave=null,progress={}}){
     const layout=arenaLayout(W,ice,zone),gold=zone===4,purple=zone===3,wall=gold?'#30283a':purple?'#25243f':'#152c43',metal=gold?'#766046':purple?'#565073':'#425a71';
     paint(0,30,W,ice-30,wall);paint(0,29,W,3,metal);
     for(let x=0;x<W;x+=60){paint(x,31,2,Math.max(4,layout.upperWalkY-48),metal);paint(x,31,61,2,metal);for(let j=0;j<6;j++)paint(x+j*10,33+j*2,2,2,metal);}
@@ -137,10 +196,7 @@ export const DEEP_CUT_SCENERY=(()=>{
         paint(section.aisle+4,walkY-3,1,bottom-walkY+4,'#8a9ca4');
       }
     }
-    const ribbon=gold?'#70532c':purple?'#50366c':'#155b71',ink=gold?'#ffdf95':purple?'#dec9f7':'#a6eced';
-    paint(0,layout.ribbonY-1,W,11,'#0a1728');paint(0,layout.ribbonY,W,8,ribbon);paint(0,layout.ribbonY,W,1,ink);paint(0,layout.ribbonY+7,W,1,ink);
-    const advert=still?0:Math.floor(time/9000)%3;
-    for(let x=3,i=0;x<W;x+=45,i++){word(paint,['NIVO','VEXA','ZORP'][(i+advert)%3],x+8,layout.ribbonY+2,ink);paint(x+40,layout.ribbonY+1,1,6,'#0d253a');}
+    ribbon(paint,{W,y:layout.ribbonY,time,still,zone,progress});
     const actors=layout.travellers.map(seat=>({seat,actor:arenaActor(seat,time,still)})),travellers=new Map(actors.filter(({seat})=>!seat.standingRoom).map(p=>[p.seat.id,p]));
     for(const seat of layout.seats){
       paint(seat.x-3,seat.y-5,6,4,gold?'#635264':purple?'#4a4266':'#39576e');paint(seat.x-2,seat.y-5,4,1,gold?'#87715e':'#638293');
@@ -165,9 +221,10 @@ export const DEEP_CUT_SCENERY=(()=>{
     }
     paint(0,ice,W,2,'#a7c4cc');paint(0,ice+2,W,8,zone===1?'#cbd7cd':'#dce8e4');paint(0,ice+10,W,1,'#d4ae5f');
     if(zone===1){for(let x=16;x<W;x+=53){paint(x,ice+5,14,1,'#8ca49e');paint(x+5,ice+7,7,1,'#b3beb1');}return;}
-    for(let i=0;i<Math.ceil(W/51)+2;i++){
-      const x=mod(i*51-offset*.6,W+102)-51,color=['#557e93','#926577','#538b83','#8b724d'][i%4];
-      paint(x,ice+2,1,8,'#a4b8bb');word(paint,['ZORP','VEXA','NIVO','FLIM'][i%4],x+9,ice+3,color);paint(x+35,ice+4,3,3,color);paint(x+39,ice+5,2,1,color);
+    const ads=[['MAPLE','leaf'],['COFFEE','cup'],['NORTH','mountain'],['PIZZA','pizza'],['SKATES','skate'],['ZORP','bolt'],['HOME ICE','mountain'],['BANK','bank'],['FROST','bolt'],['','leaf']];
+    for(let i=0;i<Math.ceil(W/59)+2;i++){
+      const x=mod(i*59-offset*.6,W+118)-59,color=['#557e93','#926577','#538b83','#8b724d'][i%4],[label,icon]=ads[i%ads.length];
+      paint(x,ice+2,1,8,'#a4b8bb');logo(paint,icon,x+(label?5:25),ice+3,color);if(label)word(paint,label,x+16,ice+3,color);
     }
   }
   function iceSurface(paint,{W,H,ice,zone,offset}){
@@ -196,5 +253,5 @@ export const DEEP_CUT_SCENERY=(()=>{
       }
     }
   }
-  return Object.freeze({communityActor,vendingLit,community,arenaLayout,arenaActor,waveLift,arena,boards,iceSurface,ring});
+  return Object.freeze({windowState,houseWindow,dogWalkerState,neighbourhoodWalkers,ribbonMessage,ribbon,communityActor,vendingLit,community,arenaLayout,arenaActor,waveLift,arena,boards,iceSurface,ring});
 })();

@@ -255,4 +255,34 @@ test('interactive waves respect cooldown, cleanup and reduced motion and never r
  r.run('dcStartCrowdWave();dcCleanup()');assert.equal(r.run('dcCrowdWave'),null);assert.equal(r.el('dcWave').hidden,true);
  r.ctx.matchMedia=()=>({matches:true});r.run('dcStartCrowdWave();dcWaveState(performance.now(),2)');assert.equal(r.run('dcCrowdWave'),null);assert.equal(r.el('dcWave').hidden,true);
 });
+test('new scoring editions keep browser/server parity and current-club answers follow 10/15 usage tiers',()=>{
+ const current=JSON.parse(fs.readFileSync('deep_cut_scoring_cache.json','utf8')),currentIndex=M.index(current);
+ for(const id of current.practice_runs){const run=currentIndex.runs.get(id),actions=run.prompts.map(key=>String(currentIndex.prompts.get(key).answers.find(a=>a[1]===100)[0]));assert.deepEqual(scoreGame('deepcut',{id},actions,{deepcut:current}),{won:true,tries:7,points:700});}
+ for(const id of Object.values(current.current_prompts)){
+  const prompt=currentIndex.prompts.get(id);
+  for(const pid of prompt.currentRoster||[]){const p=currentIndex.players.get(pid);assert.equal(M.match(p.name+' '+p.born,id,current).score,prompt.lowToiRoster?.includes(pid)?15:10);}
+ }
+ const old=ix.prompts.get('team-CGY').points.get(8448208),reviewed=currentIndex.prompts.get(current.current_prompts['team-CGY']).points.get(8448208);
+ assert.equal(old,10);assert.equal(reviewed,85);assert.equal(ix.prompts.get('team-CGY').points.get(8469500),10);
+});
+test('windows alternate watching, walking away and lowering blinds without rapid light cycling',()=>{
+ for(const [seed,expected] of [[0,'closing-blinds'],[4,'leaving']]){
+  const stages=new Set();let switches=0,previous;
+  for(let time=0;time<=180000;time+=250){const state=SCENERY.windowState(seed,time);stages.add(state.stage);assert(state.blind>=0&&state.blind<=1);if(previous&&previous.lit!==state.lit)switches++;previous=state;}
+  assert(stages.has('watching'));assert(stages.has(expected));assert(stages.has('off'));assert(switches<10);
+  assert.deepEqual(SCENERY.windowState(seed,0,true),SCENERY.windowState(seed,90000,true));
+ }
+});
+test('dog walkers stay behind the rink and reduced motion freezes their positions',()=>{
+ for(const W of [160,188,480])for(const index of [0,1]){
+  let previous=null;for(let time=0;time<180000;time+=1000){const actor=SCENERY.dogWalkerState(index,W,228,time);assert(actor.y<228);assert.equal(Math.sign(actor.dogX-actor.x),actor.direction);if(previous&&actor.x>=0&&actor.x<=W&&previous.x>=0&&previous.x<=W)assert(Math.abs(actor.x-previous.x)<=8.01);previous=actor;}
+  assert.deepEqual(SCENERY.dogWalkerState(index,W,228,0,true),SCENERY.dogWalkerState(index,W,228,80000,true));
+ }
+});
+test('ribbon messages track round, points, distance and milestones while reduced motion stops scrolling',()=>{
+ const message=SCENERY.ribbonMessage({score:315,round:5,lastScore:85});for(const part of ['ROUND 5 OF 7','315 POINTS','3150 M SKATED','NEXT ARENA 450','DEEP CUT +85'])assert(message.includes(part));
+ const perfect=SCENERY.ribbonMessage({score:700,round:7,over:true});assert(perfect.includes('SHIFT COMPLETE'));assert(perfect.includes('PERFECT 700'));assert(!perfect.includes('CHASE 700'));
+ const capture=(time,still)=>{const out=[];SCENERY.ribbon((...args)=>out.push(args),{W:480,y:100,time,still,zone:3,progress:{score:450,round:6}});return out;};
+ assert.deepEqual(capture(0,true),capture(5000,true));assert.notDeepEqual(capture(0,false),capture(5000,false));
+});
 console.log(`${checks} Deep Cut checks passed`);
