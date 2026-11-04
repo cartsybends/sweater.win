@@ -30,6 +30,47 @@ test('ambiguous names, nonexistent names, and correct names in the wrong categor
   assert.equal(M.match('','team-VAN',data).status,'missing');
   assert.equal(M.match('roy','team-MTL',data).status,'ambiguous');
 });
+test('Mike Cammalleri is accepted for Calgary and every other qualifying prompt at his existing score',()=>{
+  const id=8469500,calgary=ix.prompts.get('team-CGY');assert(calgary.points.has(id));
+  for(const name of ['Mike Cammalleri','mike cammalleri','Michael Cammalleri','Mike Cammalleri 1982','Mike Cammaleri']){
+    const hit=M.match(name,'team-CGY',data);assert.equal(hit.status,'accepted',name);assert.equal(hit.id,id);assert.equal(hit.score,calgary.points.get(id));
+  }
+  for(const prompt of data.prompts){
+    const hit=M.match('Mike Cammalleri',prompt.id,data);
+    assert.equal(hit.status,prompt.answers.some(a=>a[0]===id)?'accepted':'wrong',prompt.id);
+    if(hit.status==='accepted')assert.equal(hit.score,ix.prompts.get(prompt.id).points.get(id));
+  }
+  const run=data.runs.find(run=>run.prompts.includes('team-CGY')),actions=run.prompts.map(key=>String(key==='team-CGY'?id:ix.prompts.get(key).answers[0][0]));
+  assert.deepEqual(scoreGame('deepcut',{id:run.id},actions,{deepcut:data}),M.result(run,actions,data));
+});
+test('common given-name aliases retain surnames and respect exact identities and ambiguity',()=>{
+  const cases=[['Mike Cammalleri','Michael Cammalleri'],['Matthew Duchene','Matt Duchene'],['Christopher Tanev','Chris Tanev'],['William Guerin','Bill Guerin'],['Joseph Sakic','Joe Sakic']];
+  for(const [alias,canonical] of cases){const id=player(canonical);assert(id,canonical);const p=data.prompts.find(p=>p.answers.some(a=>a[0]===id));assert.equal(M.match(alias,p.id,data).id,id,alias);}
+  const fixture={players:[[1111111,'Michael Smith',1980],[2222222,'Michael Smith',1985],[3333333,'Mike Smith',1990]],prompts:[{id:'all',answers:[[1111111,10],[2222222,60],[3333333,85]]},{id:'one',answers:[[1111111,10]]}],runs:[]};
+  assert.equal(M.match('Mike Smith','all',fixture).id,3333333,'An exact canonical name takes priority over nickname aliases');
+  assert.equal(M.match('Michael Smith','all',fixture).status,'ambiguous');
+  assert.equal(M.match('Mike Smith 1980','all',fixture).id,1111111,'Aliases also support birth-year disambiguation');
+  assert.equal(M.match('Mike Smith','one',fixture).status,'wrong','An exact name cannot become a different eligible player');
+  assert.equal(M.match('Mike Jones','all',fixture).status,'missing','A shared first name does not establish a player match');
+});
+test('answer corrections support useful partial names and hard spellings without guessing short fragments',()=>{
+  for(const text of ['Cammal','Mike Camm','Niederretr','Niederrieter']){
+    const prompt=text.startsWith('Nied')?'team-MIN':'team-CGY',id=prompt==='team-MIN'?8475799:8469500;
+    const hit=M.match(text,prompt,data);assert.equal(hit.status,'accepted',text);assert.equal(hit.id,id,text);
+  }
+  for(const text of ['Mike','Camm','Mike Ca','Tkach'])assert.equal(M.match(text,'team-CGY',data).status,'missing',text);
+  assert.equal(M.match('Sedin','team-VAN',data).status,'ambiguous');
+  assert.equal(M.match('Wayne Gretzky','country-RUS',data).status,'wrong');
+  const fixture={players:[[1111111,'Adam Examplelong',1980],[2222222,'Adam Examplerong',1981]],prompts:[{id:'one',answers:[[2222222,100]]}],runs:[]};
+  assert.equal(M.match('Adam Examplelonx','one',fixture).status,'wrong','A nearer nonqualifying identity cannot be replaced by a more distant qualifying player');
+});
+test('turning corrections off requires full names but still ignores accents, case and punctuation',()=>{
+  const off={corrections:false};
+  for(const text of ['Cammalleri','Mike Camm','Michael Cammaleri'])assert.equal(M.match(text,'team-CGY',data,off).status,'missing',text);
+  assert.equal(M.match('Mike Cammalleri','team-CGY',data,off).id,8469500,'Known complete name variants remain valid with spelling assistance off');
+  assert.equal(M.match('MICHAEL CAMMALLERI','team-CGY',data,off).id,8469500);
+  assert.equal(M.match('Jaromír-Jágr','team-PIT',data,off).id,8448208);
+});
 test('unfinished and fabricated leaderboard logs are rejected',()=>{
   const run=data.runs[0],correct=run.prompts.map(id=>String(ix.prompts.get(id).answers[0][0]));
   for(const log of [correct.slice(0,6),[...correct,'MISS'],['9999999',...correct.slice(1)],['100:9999999',...correct.slice(1)],[100,...correct.slice(1)]])assert.throws(()=>scoreGame('deepcut',{id:run.id},log,{deepcut:data}),e=>e.status===400);
@@ -58,6 +99,18 @@ test('a round has a three-second preview, a fixed deadline, and a three-second w
   const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;r.el('dcAnswer').value='zzzznotaplayerzzzz';r.run('dcSubmit({preventDefault(){}})');
   assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline-3000);assert.equal(r.ctx.S.deepcut.guesses.length,0);
   r.advance(32000);assert.deepEqual([...r.ctx.S.deepcut.guesses],['MISS']);assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'reveal');assert.equal(r.timers.size,0);
+});
+test('submitting Mike Cammalleri locks the correct Calgary player without a time penalty',()=>{
+  const r=runtime();r.ctx.S.deepcut.target={id:'calgary-alias-fixture',prompts:['team-CGY',...data.runs[0].prompts.filter(id=>id!=='team-CGY').slice(0,6)]};
+  r.run('G.deepcut.prepareTarget(S.deepcut.target,S.deepcut.opts);dcBegin()');r.advance(3000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
+  r.el('dcAnswer').value='Mike Cammalleri';r.run('dcSubmit({preventDefault(){}})');
+  assert.deepEqual([...r.ctx.S.deepcut.guesses],['8469500']);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'reveal');
+});
+test('the corrections preference defaults on, persists, and never resets an active clock',()=>{
+  const r=runtime();assert.equal(r.el('dcCorrections').checked,true);r.run('dcBegin()');r.advance(3000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
+  r.el('dcCorrections').checked=false;r.run('$("dcCorrections").onchange()');assert.equal(r.records.get('sweater-deepcut-corrections'),false);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);
+  r.run('dcCleanup();G.deepcut.reset();G.deepcut.render(S.deepcut.target,S.deepcut)');assert.equal(r.el('dcCorrections').checked,false);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);
+  r.el('dcCorrections').checked=true;r.run('$("dcCorrections").onchange()');assert.equal(r.records.get('sweater-deepcut-corrections'),true);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);
 });
 test('reload/restoration and leaving the game never reset a running clock',()=>{
   const r=runtime();r.run('dcBegin()');r.advance(6000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;

@@ -40,6 +40,25 @@ model with Sweater and draws original procedural pixel scenery and a skater on
 Canvas. Game sound is optional and off by default. Reduced motion disables
 continuous movement. No reference game's source or artwork is reused.
 
+Common given-name variants (for example, Mike/Michael and Matt/Matthew) are
+recognized with the full surname and optional birth year. Exact canonical names
+take priority over aliases, and ambiguous identities still require more detail.
+Aliases map to the original NHL player ID; they do not add team appearances or
+change any published answer's rarity score. Michael Cammalleri's Calgary record
+already exists in v1, and "Mike Cammalleri" resolves to that same record.
+
+The persistent **Answer corrections** checkbox is on by default. It enables
+unique surnames, common first-name variants, conservative spelling corrections,
+and useful partial names. Long names can tolerate two edits; short names get
+at most one. Surname prefixes require six characters, and first+surname
+fragments require at least eight overall with four in the surname. Exact names
+and literal prefixes take priority over spelling corrections; the closest
+spelling candidates are considered before eligibility. Ambiguous matches need
+more detail. The result identifies the recognized full name and correction type.
+Turning the option off requires an exact full name; accents, punctuation and
+case remain normalized, and known full-name variants such as Mike/Michael stay
+valid. Changing this preference does not reset the deadline.
+
 The locally served VT323 font is by Peter Hull and licensed under the SIL Open
 Font License; see `FONT-LICENSE.txt`.
 

@@ -12,18 +12,38 @@ export const DEEP_CUT_MODEL = (() => {
   const cache = new WeakMap();
   const normalize = text => String(text).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/ø/g,'o').replace(/ł/g,'l').replace(/ß/g,'ss').replace(/æ/g,'ae').replace(/œ/g,'oe').replace(/[^a-z0-9]/g,'');
   const tier = score => tiers.find(t=>t.score===score) || tiers[0];
+  // Input aliases only: these never change a player's identity or eligibility.
+  // Expand the first given name while keeping the complete surname intact.
+  const givenNameGroups=[
+    ['michael','mike'],['matthew','matt'],['christopher','chris'],
+    ['nicholas','nicolas','nick'],['alexander','alexandre','alex'],
+    ['robert','rob','bob','bobby'],['william','will','bill','billy'],
+    ['joseph','joe','joey'],['james','jim','jimmy'],['thomas','tom'],
+    ['daniel','dan','danny'],['david','dave'],['stephen','steven','steve'],
+    ['edward','ed','eddie'],['anthony','tony'],['timothy','tim'],
+    ['kenneth','ken'],['richard','rick'],['andrew','andy'],
+    ['benjamin','ben'],['joshua','josh'],['zachary','zach'],
+    ['patrick','pat'],['douglas','doug'],['donald','don'],['ronald','ron'],
+  ];
+  const givenNames=new Map(givenNameGroups.flatMap(group=>group.map(name=>[name,group])));
   function index(data) {
     if(cache.has(data))return cache.get(data);
-    const players=new Map(),full=new Map(),aliases=new Map(),prompts=new Map(),runs=new Map();
+    const players=new Map(),full=new Map(),fullAliases=new Map(),aliases=new Map(),surnames=new Map(),prompts=new Map(),runs=new Map();
     const add=(map,key,id)=>{if(!key)return;const ids=map.get(key)||new Set();ids.add(id);map.set(key,ids);};
     for(const [id,name,born,other=[]] of data.players){
       players.set(id,{id,name,born});add(full,normalize(name),id);add(full,normalize(name+' '+born),id);
       const parts=name.trim().split(/\s+/);add(aliases,normalize(parts.at(-1)),id);if(parts.length>2)add(aliases,normalize(parts.slice(1).join(' ')),id);
-      for(const alias of other)add(aliases,normalize(alias),id);
+      add(surnames,normalize(parts.at(-1)),id);if(parts.length>2)add(surnames,normalize(parts.slice(1).join(' ')),id);
+      const variants=new Set(other);
+      if(parts.length>1)for(const first of givenNames.get(normalize(parts[0]))||[])variants.add([first,...parts.slice(1)].join(' '));
+      for(const alias of variants){
+        const key=normalize(alias);add(aliases,key,id);add(aliases,normalize(alias+' '+born),id);
+        if(alias.trim().split(/\s+/).length>1&&key.endsWith(normalize(parts.slice(1).join(' ')))){add(fullAliases,key,id);add(fullAliases,normalize(alias+' '+born),id);}
+      }
     }
     for(const p of data.prompts)prompts.set(p.id,{...p,points:new Map(p.answers)});
     for(const run of data.runs)runs.set(run.id,run);
-    const out={players,full,aliases,prompts,runs};cache.set(data,out);return out;
+    const out={players,full,fullAliases,aliases,surnames,prompts,runs};cache.set(data,out);return out;
   }
   function oneEdit(a,b){
     if(Math.abs(a.length-b.length)>1)return false;
@@ -32,20 +52,46 @@ export const DEEP_CUT_MODEL = (() => {
     if(a.length>b.length)[a,b]=[b,a];
     let i=0;while(i<a.length&&a[i]===b[i])i++;return a.slice(i)===b.slice(i+1);
   }
-  function match(text,promptId,data){
+  function twoEdits(a,b){
+    if(Math.abs(a.length-b.length)>2)return false;
+    let i=0;while(i<Math.min(a.length,b.length)&&a[i]===b[i])i++;
+    if(i===Math.min(a.length,b.length))return true;
+    return oneEdit(a.slice(i+1),b.slice(i+1))||oneEdit(a.slice(i+1),b.slice(i))||oneEdit(a.slice(i),b.slice(i+1))
+      ||a[i]===b[i+1]&&a[i+1]===b[i]&&oneEdit(a.slice(i+2),b.slice(i+2));
+  }
+  function match(text,promptId,data,{corrections=true}={}){
     const ix=index(data),prompt=ix.prompts.get(promptId),key=normalize(text);
     if(!prompt||!key||key.length>80)return {status:'missing'};
-    // Exact identities take precedence over fuzzy matches and prompt filtering.
-    let ids=ix.full.get(key)||ix.aliases.get(key),fuzzy=false;
-    if(!ids&&key.length>=5){
-      ids=new Set();fuzzy=true;
-      for(const map of [ix.full,ix.aliases])for(const [alias,candidates] of map)if(oneEdit(key,alias))for(const id of candidates)ids.add(id);
+    const resolve=(ids,correction)=>{
+      const eligible=[...ids].filter(id=>prompt.points.has(id));
+      if(eligible.length>1)return {status:'ambiguous'};
+      if(eligible.length===1){const id=eligible[0];return {status:'accepted',id,score:prompt.points.get(id),name:ix.players.get(id).name,fuzzy:correction==='spelling'||correction==='partial',correction};}
+      return {status:'wrong'};
+    };
+    // Never change an exact known identity into a different qualifying player.
+    if(ix.full.has(key))return resolve(ix.full.get(key),null);
+    if(ix.fullAliases.has(key))return resolve(ix.fullAliases.get(key),corrections?'name':null);
+    if(!corrections)return {status:'missing'};
+    if(ix.aliases.has(key))return resolve(ix.aliases.get(key),ix.surnames.has(key)?'surname':'alias');
+    const ids=new Set();
+    // Literal prefixes take priority over changing letters in another name.
+    // Require a useful surname or first+surname fragment, not a few letters.
+    if(key.length>=6&&!/\d/.test(key))for(const [surname,candidates] of ix.surnames)if(surname.startsWith(key))for(const id of candidates)ids.add(id);
+    const words=String(text).trim().split(/\s+/);
+    if(key.length>=8&&words.length>=2&&normalize(words.at(-1)).length>=4&&!/\d/.test(key))for(const map of [ix.full,ix.aliases])for(const [alias,candidates] of map)if(alias.startsWith(key))for(const id of candidates)ids.add(id);
+    if(ids.size)return resolve(ids,'partial');
+    let nearest=3;
+    if(key.length>=5){
+      for(const map of [ix.full,ix.aliases])for(const [alias,candidates] of map){
+        const limit=Math.min(key.length,alias.length)>=8?2:1;
+        if(Math.abs(key.length-alias.length)>Math.min(limit,nearest))continue;
+        const distance=oneEdit(key,alias)?1:nearest>1&&limit===2&&twoEdits(key,alias)?2:3;
+        if(distance>2||distance>nearest)continue;
+        if(distance<nearest){ids.clear();nearest=distance;}
+        for(const id of candidates)ids.add(id);
+      }
     }
-    if(!ids?.size)return {status:'missing'};
-    const eligible=[...ids].filter(id=>prompt.points.has(id));
-    if(eligible.length>1)return {status:'ambiguous'};
-    if(eligible.length===1){const id=eligible[0];return {status:'accepted',id,score:prompt.points.get(id),name:ix.players.get(id).name,fuzzy};}
-    return {status:'wrong'};
+    return ids.size?resolve(ids,'spelling'):{status:'missing'};
   }
   function state(run,actions,data){
     const ix=index(data);

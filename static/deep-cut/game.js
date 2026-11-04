@@ -10,7 +10,10 @@ const dcActive=()=>game==='deepcut'&&!onHub&&!$('view-deepcut').hidden;
 const dcSession=()=>S.deepcut.opts.dcRun;
 const dcCurrentPrompt=()=>dcIndex().prompts.get(S.deepcut.target.prompts[S.deepcut.guesses.length]);
 const dcSoundOn=()=>store.get('sweater-deepcut-sound')===true;
+const dcCorrectionsOn=()=>store.get('sweater-deepcut-corrections')!==false;
+const DC_CORRECTION_LABELS={name:'Name variant recognized',alias:'Nickname recognized',surname:'Surname recognized',spelling:'Spelling corrected',partial:'Partial name completed'};
 function dcSoundPaint(){const b=$('dcSound'),on=dcSoundOn();b.textContent=on?'SOUND ON':'SOUND OFF';b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-label',`Turn game sound ${on?'off':'on'}`);}
+function dcCorrectionsPaint(){const on=dcCorrectionsOn();$('dcCorrections').checked=on;$('dcCorrectionsState').textContent=on?'ON':'OFF';$('dcCorrectionHelp').textContent=on?'Accepts common nicknames, unique surnames, and close spellings. Ambiguous names need more detail.':'Answer corrections are off. Enter an exact full name.';}
 function dcPlay(score){
   if(!dcSoundOn()||!dcAudio)return;
   dcAudio.resume().catch(()=>{});
@@ -46,7 +49,7 @@ G.deepcut={
   daily(day){return dcIndex().runs.get(DAILY.deepcut?.[day]?.id)||this.pool()[hash(`sweater-deepcut-${day}`)%this.pool().length];},
   random(){return pick(this.pool());},tid:t=>t.id,player:()=>null,meta:()=>'',
   prepareTarget(t,opts){const s=opts.dcRun;if(s?.target!==t.id||!['ready','preview','ask','reveal'].includes(s.phase)||!Number.isInteger(s.index)||s.index<0||s.index>7||['preview','ask'].includes(s.phase)&&(!Number.isFinite(s.deadline)||!Number.isFinite(s.previewUntil)))opts.dcRun={target:t.id,index:0,phase:'ready'};return t;},
-  reset(){dcCleanup();dcSoundPaint();},
+  reset(){dcCleanup();dcSoundPaint();dcCorrectionsPaint();},
   guess(t,x){try{return dcModel.state(t,[...S.deepcut.guesses,x],DEEP_CUT_DATA).won;}catch{return null;}},
   right:(t,x)=>x!=='MISS',
   isDone:(t,g)=>dcModel.state(t,g,DEEP_CUT_DATA).over,
@@ -71,7 +74,7 @@ function dcHud(state){
 function dcRender(t,st){
   const state=dcModel.state(t,st.guesses,DEEP_CUT_DATA),session=dcSession(),board=$('dcBoard');
   document.body?.classList.toggle('dc-immersive',dcActive());$('dcCabinet').dataset.phase=state.over?'complete':session.index!==st.guesses.length?'reveal':session.phase;
-  dcHud(state);dcSoundPaint();
+  dcHud(state);dcSoundPaint();dcCorrectionsPaint();
   $('dcTiers').innerHTML=dcModel.tiers.slice(1).map(t=>`<div class="dc-tier" style="--tier-color:${t.color}"><i aria-hidden="true"></i><b>${t.score}</b><span>${t.name}</span></div>`).join('');
   if(state.over){clearInterval(dcTimer);dcTimer=0;dcResults(state);}
   else if(session.phase==='ready'&&!st.guesses.length){
@@ -88,7 +91,8 @@ function dcRender(t,st){
 function dcReveal(state){
   const r=state.rounds.at(-1);
   if(!r){dcSession().phase='ready';return dcRender(S.deepcut.target,S.deepcut);}
-  $('dcBoard').innerHTML=`<p class="dc-eyebrow"><span>PROMPT ${state.rounds.length} / 7</span><span>SHIFT IN PROGRESS</span></p><div class="dc-reveal" style="--dc-result:${r.tier.color}"><p class="dc-reveal-tag">${r.tier.name.toUpperCase()}</p><h3>${r.id?esc(r.name):'This one got away.'}</h3><div class="dc-reveal-score"><strong>+${r.score}</strong><span>${r.score?`${(r.score*10).toLocaleString()} metres of fresh ice`:'Shake it off. There’s more ice ahead.'}</span></div><p class="dc-copy">${esc(r.prompt.text)}</p></div><div class="dc-actions"><button type="button" class="dc-primary" data-dc-start>NEXT PROMPT →</button></div>`;
+  const correction=dcSession().lastCorrection,kind=correction?.round===state.rounds.length-1&&correction.kind,label=kind&&Object.hasOwn(DC_CORRECTION_LABELS,kind)?DC_CORRECTION_LABELS[kind]:'';
+  $('dcBoard').innerHTML=`<p class="dc-eyebrow"><span>PROMPT ${state.rounds.length} / 7</span><span>SHIFT IN PROGRESS</span></p><div class="dc-reveal" style="--dc-result:${r.tier.color}"><p class="dc-reveal-tag">${r.tier.name.toUpperCase()}</p>${label?`<p class="dc-correction-note">${label} · counted as</p>`:''}<h3>${r.id?esc(r.name):'This one got away.'}</h3><div class="dc-reveal-score"><strong>+${r.score}</strong><span>${r.score?`${(r.score*10).toLocaleString()} metres of fresh ice`:'Shake it off. There’s more ice ahead.'}</span></div><p class="dc-copy">${esc(r.prompt.text)}</p></div><div class="dc-actions"><button type="button" class="dc-primary" data-dc-start>NEXT PROMPT →</button></div>`;
 }
 function dcResults(state){
   $('dcBoard').innerHTML=`<p class="dc-eyebrow"><span>SHIFT COMPLETE</span><span>${mode==='unlimited'?'PRACTICE':mode==='archive'?'ARCHIVE':'DAILY SHIFT'}</span></p><div class="dc-finish-heading"><h3>${dcModel.rank(state.score)}</h3><strong>${state.score}<small> / 700</small></strong></div><p class="dc-copy">${state.rounds.filter(r=>r.id).length} of 7 answers landed. ${state.rounds.filter(r=>r.score>=60).length} rare pulls. ${state.distance.toLocaleString()} metres on the ice.</p><ol class="dc-round-results">${state.rounds.map((r,i)=>`<li style="--tier-color:${r.tier.color}"><b>${i+1}</b><span>${esc(r.name||'No answer')}<small>${esc(r.tier.name)}</small></span><em>+${r.score}</em></li>`).join('')}</ol><div class="dc-actions"><button type="button" class="dc-primary" data-dc-share>SHARE YOUR SHIFT ↗</button><button type="button" class="dc-secondary" data-dc-variant="unlimited">PLAY PRACTICE</button>${mode!=='daily'?'<button type="button" class="dc-secondary" data-dc-variant="daily">DAILY SHIFT</button>':''}</div><div class="dc-answer-sheets"><p>THE DEEP CUTS YOU COULD HAVE PULLED</p>${state.rounds.map((r,i)=>`<details class="dc-answer-sheet" data-dc-sheet="${r.prompt.id}"><summary>${i+1}. ${esc(r.prompt.text)}</summary><input type="search" data-dc-answer-search aria-label="Search accepted answers for prompt ${i+1}" placeholder="Search all accepted answers…"><div class="dc-answer-list"></div><small></small></details>`).join('')}</div>`;
@@ -142,11 +146,11 @@ function dcLand(action){
 function dcSubmit(event){
   event.preventDefault();dcPulse();if(!dcActive()||S.deepcut.over||dcSession().phase!=='ask')return;
   const input=$('dcAnswer'),value=input.value.trim();if(!value){input.focus();return;}
-  const result=dcModel.match(value,dcCurrentPrompt().id,DEEP_CUT_DATA);
-  if(result.status==='accepted')return dcLand(String(result.id));
+  const result=dcModel.match(value,dcCurrentPrompt().id,DEEP_CUT_DATA,{corrections:dcCorrectionsOn()});
+  if(result.status==='accepted'){dcSession().lastCorrection={round:S.deepcut.guesses.length,kind:result.correction};return dcLand(String(result.id));}
   if(result.status==='ambiguous'){$('dcFeedback').textContent='More than one player fits that name. Use a full name; add a birth year if needed.';$('dcFeedback').classList.add('error');input.focus();return;}
   dcSession().deadline-=3000;saveProgress();
-  $('dcFeedback').textContent=result.status==='wrong'?'That player doesn’t fit this prompt. −3 seconds. Try another.':'Name not recognized. Check the spelling or try another player. −3 seconds.';
+  $('dcFeedback').textContent=result.status==='wrong'?'That player doesn’t fit this prompt. −3 seconds. Try another.':dcCorrectionsOn()?'Name not recognized. Check the spelling or try another player. −3 seconds.':'Enter the full player name, or enable Answer corrections. −3 seconds.';
   $('dcFeedback').classList.add('error');input.select();dcPulse();
 }
 $('dcBoard').addEventListener('click',async event=>{
@@ -162,6 +166,10 @@ $('dcBoard').addEventListener('click',async event=>{
 });
 $('dcBoard').addEventListener('submit',event=>{if(event.target.id==='dcForm')dcSubmit(event);});
 $('dcBoard').addEventListener('input',event=>{if(event.target.matches('[data-dc-answer-search]'))dcAnswerSheet(event.target.closest('[data-dc-sheet]'),event.target.value);});
+$('dcCorrections').onchange=()=>{
+  store.set('sweater-deepcut-corrections',$('dcCorrections').checked);dcCorrectionsPaint();
+  if(dcActive()&&dcSession().phase==='ask'&&$('dcFeedback')){$('dcFeedback').textContent=dcCorrectionsOn()?'Corrections on · Surnames, nicknames and close spellings count.':'Corrections off · Enter an exact full name.';$('dcFeedback').classList.remove('error');}
+};
 $('view-deepcut').addEventListener('click',event=>{
   if(event.target.closest('[data-dc-home]')){if(typeof showHub==='function')showHub();else toast('This is the standalone Deep Cut preview');return;}
   const button=event.target.closest('[data-dc-menu]');if(!button)return;
