@@ -17,6 +17,7 @@ const GAMES = {
   statline: { days: "statline_days", max: 8 },
   team:     { days: "team_days",     max: 5 },
   journey:  { days: "journey_days",  max: 6, points: PICK6 },
+  whoscored: { days: "whoscored_days", max: 6, points: PICK6 },
   blur:     { days: "blur_days",     max: 6, points: PICK6 },
   faceswap: { days: "faceswap_days", custom: "faceswap" },
   number:   { days: "number_days",   max: 5, points: [10, 7, 5, 3, 1], guessNumber: true },

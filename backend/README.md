@@ -33,6 +33,12 @@ The tracked configuration contains no account credentials or database IDs.
 Its zero UUID is a dry-run placeholder. The deployment command resolves the real
 existing database and refuses to deploy that placeholder.
 
+Who Scored? uses the existing leaderboard and result tables: daily wins earn
+10, 8, 6, 4, 2 or 1 point by guess count, and losses earn 0. The Worker checks
+the published `whoscored_days` assignment and keeps the first result per player
+and day. Today, Week and All time use the same rankings as the other games.
+Deploy the Worker together with the frontend update to enable this board.
+
 ## Activate private analytics
 
 In **sweater-api → Settings → Variables and Secrets**, add a **Secret** named
@@ -152,6 +158,7 @@ node tests/analytics_client_v2.mjs
 node tests/analytics_insights.mjs
 node tests/analytics_dashboard.mjs
 node tests/who_scored.cjs
+node tests/who_scored_leaderboard.mjs
 node tests/shootout.cjs
 SWEATER_D1_DATABASE_ID=00000000-0000-0000-0000-000000000000 npm --prefix backend run build
 ```

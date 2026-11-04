@@ -6,6 +6,7 @@ on:
       - "static/community-games/model.mjs"
       - "static/face-swap/model.mjs"
       - "tests/face_swap.mjs"
+      - "tests/who_scored*"
       - "tests/community_games.mjs"
       - "tests/grid_popularity.mjs"
       - "analytics/**"
@@ -19,6 +20,7 @@ on:
       - "static/community-games/model.mjs"
       - "static/face-swap/model.mjs"
       - "tests/face_swap.mjs"
+      - "tests/who_scored*"
       - "tests/community_games.mjs"
       - "tests/grid_popularity.mjs"
       - "analytics/**"
@@ -48,5 +50,6 @@ jobs:
       - run: node tests/analytics_diagnostics.mjs
       - run: node tests/analytics_dashboard.mjs
       - run: node tests/who_scored.cjs
+      - run: node tests/who_scored_leaderboard.mjs
       - name: Package Worker without deploying
         run: SWEATER_D1_DATABASE_ID=00000000-0000-0000-0000-000000000000 npm --prefix backend run build
