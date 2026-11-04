@@ -2,7 +2,7 @@
 export const DEEP_CUT_MODEL = (() => {
   const tiers = Object.freeze([
     {score:0,name:'Off the ice',color:'#71829e',mark:'⬛'},
-    {score:10,name:'Household name',color:'#9baac4',mark:'⬜'},
+    {score:10,name:'Familiar pick',color:'#9baac4',mark:'⬜'},
     {score:15,name:'Fan favourite',color:'#6dc5ff',mark:'🟦'},
     {score:30,name:'Roster regular',color:'#60e4bd',mark:'🟩'},
     {score:60,name:'Hidden gem',color:'#c09bff',mark:'🟪'},

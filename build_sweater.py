@@ -11664,7 +11664,7 @@ function partyRender(message = "") {
 
 // ======================= help window =======================
 const HELP = {
-  deepcut: `<p>Seven NHL prompts, one valid player per prompt. Read for three seconds, then type an answer within 35 seconds. Wrong or unrecognized names cost three seconds. Use full names, unique surnames or common aliases; accents and small typos are accepted. A pass or timeout earns zero.</p><p>Less obvious players earn fixed editorial rarity scores: 10, 15, 30, 60, 85 or 100 points. Each point moves your pixel skater 10 metres. At least 300 points is a daily win; 700 is perfect. These tiers estimate familiarity using career games, awards, Hall of Fame status, era and team appearances, rather than live answer percentages.</p><p>Daily sets and scoring stay identical for everyone. Practice is unlimited and unranked. The clock keeps running when you leave an active prompt. Results reveal all accepted answers after all seven rounds. The answer bank is frozen through 2025–26, and predecessor clubs are separate.</p>`,
+  deepcut: `<p>Seven NHL prompts, one valid player per prompt. Read for three seconds, then type an answer within 35 seconds. Wrong or unrecognized names cost three seconds. Use full names, unique surnames or common aliases; accents and small typos are accepted. A pass or timeout earns zero.</p><p>Less obvious players earn fixed editorial rarity scores: 10, 15, 30, 60, 85 or 100 points. Each point moves your pixel skater 10 metres. At least 300 points is a daily win; 700 is perfect. New team shifts give current-roster players 10 points, or 15 for the six current skaters with the lowest average time on ice per game for that club. Other tiers combine estimated name recognition and editorial reviews of the specific connection; they are not live answer percentages.</p><p>Daily sets and scoring stay identical for everyone. Practice is unlimited and unranked. The clock keeps running when you leave an active prompt. Results reveal all accepted answers after all seven rounds. Career and award facts are frozen through 2025–26. Team appearances, rosters and usage are snapshotted for new shifts; older shifts keep their original scoring. Predecessor clubs are separate.</p>`,
   grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues, including Stanley Cup winner, require a career win as a player, even if it happened on another team. A 30+ goals clue requires at least 30 goals in one NHL regular season; traded players' goals count across all their teams that season. Team connections include played NHL regular-season games and refresh daily. Cup wins and 30-goal seasons cover completed seasons through 2025–26; predecessor franchises are separate. Trophy photos come from NHL Records.</p><p>Revealing ends the run. Muted cards show valid examples, since each square accepts multiple players. Revealed examples never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
   benchboss: `<p>Build a lineup for the season shown at the top, with three forwards, two defensemen, and one goalie within a $100 draft budget. Select a position tab to browse; tap a selected card or lineup slot to remove it. Team badges identify the player’s club that season, even when their photo shows a later jersey.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Statistics reveal when you lock all six slots. Your score is out of 10 against the best legal lineup; at least 90% of that season score is a win.</p><p>Revealing the best lineup forfeits the run with zero points and no XP or daily challenge progress. Daily and archive reveals require confirmation. Markets use completed seasons from 2005–06 through 2024–25, including all clubs after a trade. The draft budget is fictional.</p>`,
   teammatetrail: `<p>Build a trail from Start to Finish through real NHL teammates. Drag a card by its grip into the highlighted stop, tap any offered card, or search other available teammates. The target joins automatically when your last connecting player was their teammate.</p><p>Each stop shows the club and season that connect it to the previous player. There are three trails. A shortest route on your first attempt earns 10 points; one extra teammate, Undo, or a first-link hint caps that trail at 6. Reveal gives zero for that trail; use Next trail to continue.</p><p>A hint locks the first teammate in place. Every offered link has verified overlapping NHL regular-season appearances, including trade seasons.</p>`,
@@ -13573,9 +13573,12 @@ def load_community_data():
 
 def load_deep_cut_data():
     """A versioned snapshot keeps scores stable during builds and archive replays."""
-    data = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
-    if data.get("version") != 1 or len(data.get("runs", [])) != 365:
+    base = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
+    cache = HERE / "deep_cut_scoring_cache.json"
+    data = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else base
+    if data.get("version") not in (1, 2) or len(data.get("runs", [])) < 365:
         raise ValueError("Incomplete Deep Cut answer bank")
+    deep_cut_scoring().validate(base, data)
     players = {p[0] for p in data["players"]}
     prompts = {p["id"]: p for p in data["prompts"]}
     if len(players) != len(data["players"]) or len(prompts) != len(data["prompts"]):
@@ -13588,11 +13591,40 @@ def load_deep_cut_data():
             raise ValueError("Invalid Deep Cut answer set")
     if len({run["id"] for run in data["runs"]}) != len(data["runs"]):
         raise ValueError("Duplicate Deep Cut run IDs")
+    if data.get("version") == 2:
+        latest = data.get("practice_runs", [])
+        if len(latest) != 365 or len(set(latest)) != 365 or not set(latest) <= {run["id"] for run in data["runs"]}:
+            raise ValueError("Incomplete current Deep Cut edition")
+        for prompt in prompts.values():
+            if any(dict(prompt["answers"]).get(pid) != (15 if pid in prompt.get("lowToiRoster", []) else 10) for pid in prompt.get("currentRoster", [])):
+                raise ValueError("A current-roster answer must match its 10/15 point usage tier")
     for run in data["runs"]:
         ids = run["prompts"]
         if len(ids) != 7 or len(set(ids)) != 7 or any(key not in prompts for key in ids):
             raise ValueError("Deep Cut runs require seven distinct prompts")
     return data
+
+
+def deep_cut_scoring():
+    spec = importlib.util.spec_from_file_location("sweater_deepcut_scoring", HERE / "tools/deep_cut/scoring.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def refresh_deep_cut_scoring(source, roster_players, game_players, today):
+    base = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
+    roster = {str(p["id"]): {"team": p["team"]} for p in roster_players}
+    roster.update({str(p["id"]): {"team": p["team"]} for p in game_players})
+    review = json.loads((HERE / "static/deep-cut/familiarity.json").read_text(encoding="utf-8"))
+    usage = json.loads(GRID_CURRENT_CACHE.read_text(encoding="utf-8")).get("toi", [])
+    data = deep_cut_scoring().publish(base, load_deep_cut_data(), source, roster, today, review, usage, require_toi=True)
+    (HERE / "deep_cut_scoring_cache.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    return data
+
+
+def plan_deep_cut_days(saved, data, today):
+    return deep_cut_scoring().plan_days(saved, data, today, AHEAD)
 
 
 def plan_community_days(saved, bank, today, mode):
@@ -13930,9 +13962,9 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
                 roster_archive[i] = archive[i]
     community = load_community_data()
     new["community"] = community
-    deep_cut = load_deep_cut_data()
+    deep_cut = refresh_deep_cut_scoring(community, roster_players, players, today)
     new["deepcut"] = deep_cut
-    deep_days = plan_community_days(sched.get("deepcut_days", {}), deep_cut["runs"], today, "deepcut")
+    deep_days = plan_deep_cut_days(sched.get("deepcut_days", {}), deep_cut, today)
     new["deepcut_days"] = deep_days
     new["deepcut_start"] = sched.get("deepcut_start") or today.isoformat()
     result["deepcut"] = (new["deepcut_start"], {k: v for k, v in deep_days.items() if first <= k <= last})
@@ -14362,7 +14394,7 @@ def main():
     face_swap_puzzles = load_face_swap_puzzles()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["deep_cut_scoring_cache.json", "static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
         "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),

@@ -19,7 +19,7 @@ const levels=[['neighbourhood-rink','The neighbourhood rink','0–149 points'],[
   const images=[];
   for(const [zone,[slug,name,points]] of levels.entries()){
    const uri=await page.evaluate(zone=>{
-    dcAnimation=null;dcOffset=0;dcVisualDistance=zone*1500;dcClearRinkParticles();dcDraw(0,{backgroundOnly:true});
+    dcAnimation=null;dcOffset=0;dcVisualDistance=zone*1500;dcRibbonContext={round:Math.min(7,Math.max(1,Math.ceil(zone*150/70)+1)),lastScore:0,over:false};dcClearRinkParticles();dcDraw(0,{backgroundOnly:true});
     const canvas=document.createElement('canvas');canvas.width=1440;canvas.height=900;
     const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage(document.getElementById('dcCanvas'),0,0,1440,900);return canvas.toDataURL('image/png');
    },zone);

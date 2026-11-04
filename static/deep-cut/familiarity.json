@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "method": "Editorial familiarity adjustments, not measured answer frequencies. Current-roster club answers take precedence: 10 points, or 15 for the six lowest average-TOI current skaters on that club.",
+  "global_caps": [
+    {"id":8484144,"name":"Connor Bedard","points":15,"reason":"High-profile first-overall pick: career games alone understate name recognition."},
+    {"id":8484801,"name":"Macklin Celebrini","points":15,"reason":"High-profile first-overall pick: career games alone understate name recognition."},
+    {"id":8484387,"name":"Matvei Michkov","points":15,"reason":"High-profile prospect and NHL arrival: career games alone understate name recognition."}
+  ],
+  "team_connections": [
+    {"team":"CGY","id":8448208,"name":"Jaromir Jagr","points":85,"reason":"A famous name with a brief 22-game Calgary connection."},
+    {"team":"STL","id":8455710,"name":"Martin Brodeur","points":85,"reason":"An iconic New Jersey goalie with a seven-game St. Louis stint."},
+    {"team":"NSH","id":8458520,"name":"Peter Forsberg","points":85,"reason":"A famous player with a brief 17-game Nashville connection."},
+    {"team":"BOS","id":8446117,"name":"Paul Coffey","points":85,"reason":"An iconic defenceman with an 18-game Boston stint."},
+    {"team":"FLA","id":8466138,"name":"Joe Thornton","points":85,"reason":"A famous player with a short 34-game Florida connection."},
+    {"team":"DAL","id":8458515,"name":"Eric Lindros","points":60,"reason":"A recognizable star with a less obvious 49-game Dallas connection."}
+  ]
+}

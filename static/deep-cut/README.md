@@ -19,6 +19,30 @@ arena at 150, big leagues at 300, rafters at 450, and legends at 600. The next
 threshold is visible and crossing it announces the new arena. Rarity scoring
 and the immutable published puzzle bank do not change with these visual effects.
 
+New team-prompt editions use the NHL roster snapshot for the shift: current
+players score 10, except the six current skaters with the lowest average TOI
+per game for that club score 15. Current-club goalies stay at 10. Only recorded positive
+usage counts; unknown/zero usage is never treated as an artificially low value.
+The NHL stats refresh saves club-specific usage, splitting traded seasons with
+actual game-log TOI. A complete six-player ranking for all 32 clubs is required
+before production publishes the new rule.
+
+`familiarity.json` supplies auditable editorial name-recognition caps and
+question-specific adjustments. For example, an iconic player's very short
+stint with an unexpected club can be worth 85 despite their general fame.
+Current-roster/TOI tiers take precedence over editorial adjustments. These
+scores are estimates rather than observed answer frequencies; retirement age
+alone does not make an answer rare.
+
+`deep_cut_scoring_cache.json` appends immutable prompt and run editions while
+retaining every published v1 answer and run. New practice uses the latest
+edition; today's shared daily and existing saved shifts retain their original
+scores, while upcoming daily assignments switch to the current edition. The
+roster, usage ranking and score table never change inside an existing shift.
+The daily build persists this catalog together with the shared schedule so the
+browser and scoring Worker use identical answer tables. The read-only scoring
+verification workflow checks fresh NHL data before publication.
+
 The seven shift markers are miniature pucks. Completed pucks take the answer's
 rarity colour; the current prompt has a mint outline, and missed prompts stay
 muted. Their labels include the round, points and rarity for screen readers.
@@ -32,7 +56,10 @@ Particles expire within 1.2 seconds and are capped at 120. Leaving the game,
 resizing or hiding the tab clears them; a new scene removes old-scene particles.
 
 The neighbourhood has snow-rooted evergreen trunks, complete building facades,
-weathered wooden boards and rough, unmarked ice. Indoor rinks have perspective
+weathered wooden boards and rough, unmarked ice. Two neighbours walk their dogs
+along the snowy path by the houses. Windows have asynchronous lighting cycles
+and silhouettes that watch briefly before walking away or lowering the blinds.
+Reduced motion freezes these activities. Indoor rinks have perspective
 faceoff circles, a blue centre circle and neutral-zone dots. The community
 arena has chipped and missing bleacher planks, three detailed spectators who
 stand, walk along aisles and exit through the back door, and three vending
@@ -45,7 +72,9 @@ are about 75% occupied, rafters about 88%, and every legends seat is filled.
 Selected spectators leave through the aisles and come back carrying popcorn
 or drinks. Full legends seats stay occupied while extra visitors use the
 aisles; the other levels limit vacant seats to preserve their density ranges.
-Board ads use fictional pixel lettering. Rafters
+Board ads mix recognizable words, fictional names and original pixel logos.
+The ribbon screen scrolls live round, points, distance, next-arena progress and
+rare-answer messages, stopping its motion when reduced motion is enabled. Rafters
 retain the purple palette and hanging banners; legends keep the gold palette,
 banners and sparkles. Roof lights stay suspended above the rink. Clicking exposed
 scenery or the keyboard-accessible **Wave** button triggers a wave across the
@@ -73,7 +102,7 @@ variables select an existing Playwright installation and Chromium binary. The
 exporter freezes animations and seats spectators for the still images; the live
 game retains their movement. Python 3 is used to build the ZIP download.
 
-`data.json` is a frozen v1 content release: 8,280 players, 119 prompts across
+`data.json` remains a frozen v1 content release: 8,280 players, 119 prompts across
 seven families, and 365 seven-round sets. Its source is the verified NHL-backed
 community catalog through 2025–26. Each prompt stores its complete eligible set
 and fixed point values. `tools/deep_cut/build_data.py` records the source hash
@@ -116,7 +145,8 @@ valid. Changing this preference does not reset the deadline.
 The locally served VT323 font is by Peter Hull and licensed under the SIL Open
 Font License; see `FONT-LICENSE.txt`.
 
-Run `node tests/deep_cut.mjs` and `python -B tests/deep_cut_data.py`.
+Run `node tests/deep_cut.mjs`, `python -B tests/deep_cut_data.py`,
+`python -B tests/deep_cut_scoring.py` and `python -B tests/deep_cut_toi.py`.
 
 For a self-contained playable preview without fetching NHL data, run
 `python -B tools/deep_cut/preview.py --out work/deep-cut.html` and open that file
