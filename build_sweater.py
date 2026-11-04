@@ -9679,6 +9679,7 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 /*__COMMUNITY_MODEL__*/
 /*__COMMUNITY_GAMES__*/
 /*__DEEP_CUT_MODEL__*/
+/*__DEEP_CUT_SCENERY__*/
 /*__DEEP_CUT_GAME__*/
 
 /*__MODE_ANALYTICS__*/
@@ -14361,11 +14362,12 @@ def main():
     face_swap_puzzles = load_face_swap_puzzles()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["static/deep-cut/model.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
         "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_MODEL__*/": (HERE / "static/deep-cut/model.mjs").read_text(encoding="utf-8").replace("export const DEEP_CUT_MODEL", "const DEEP_CUT_MODEL"),
+        "/*__DEEP_CUT_SCENERY__*/": (HERE / "static/deep-cut/scenery.mjs").read_text(encoding="utf-8").replace("export const DEEP_CUT_SCENERY", "const DEEP_CUT_SCENERY"),
         "/*__DEEP_CUT_GAME__*/": (HERE / "static/deep-cut/game.js").read_text(encoding="utf-8").replace("/*__DEEP_CUT_DATA__*/{}", esc(load_deep_cut_data())),
         "<!--__FACE_SWAP_VIEW__-->": (HERE / "static/face-swap/view.html").read_text(encoding="utf-8"),
         "/*__FACE_SWAP_MODEL__*/": (HERE / "static/face-swap/model.mjs").read_text(encoding="utf-8").replace("export const FACE_SWAP_MODEL", "const FACE_SWAP_MODEL"),

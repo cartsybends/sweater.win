@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import {DEEP_CUT_MODEL as M} from '../static/deep-cut/model.mjs';
+import {DEEP_CUT_SCENERY as SCENERY} from '../static/deep-cut/scenery.mjs';
 import {scoreGame} from '../backend/src/existing-api.mjs';
 const data=JSON.parse(fs.readFileSync('static/deep-cut/data.json','utf8')),ix=M.index(data);
 let checks=0;
@@ -87,7 +88,7 @@ function runtime(){
   const bodyClasses=new Set(),body={classList:{add:k=>bodyClasses.add(k),remove:k=>bodyClasses.delete(k),contains:k=>bodyClasses.has(k),toggle(k,on){if(on)bodyClasses.add(k);else bodyClasses.delete(k);}}};
   const ctx=vm.createContext({console,Date:Clock,Math,Map,Set,performance:{now:()=>now},G:{},S:{deepcut:{target:data.runs[0],guesses:[],opts:{},over:false,day:'2026-11-04'}},game:'deepcut',mode:'daily',onHub:false,$:el,
     document:{body,hidden:false,addEventListener(){}},window:{addEventListener(){}},store:{get:k=>records.get(k),set:(k,v)=>records.set(k,JSON.parse(JSON.stringify(v)))},matchMedia:()=>({matches:true}),esc:s=>String(s),hash:()=>0,pick:a=>a[0],dailyNumber:()=>1,
-    setInterval:fn=>{timers.set(++serial,fn);return serial;},clearInterval:id=>timers.delete(id),setTimeout:()=>++serial,clearTimeout(){},requestAnimationFrame:()=>++serial,cancelAnimationFrame(){},saveProgress(){records.set('saved',JSON.parse(JSON.stringify(ctx.S.deepcut.opts)));},toast(){},DEEP_CUT_MODEL:M});
+    setInterval:fn=>{timers.set(++serial,fn);return serial;},clearInterval:id=>timers.delete(id),setTimeout:()=>++serial,clearTimeout(){},requestAnimationFrame:()=>++serial,cancelAnimationFrame(){},saveProgress(){records.set('saved',JSON.parse(JSON.stringify(ctx.S.deepcut.opts)));},toast(){},DEEP_CUT_MODEL:M,DEEP_CUT_SCENERY:SCENERY});
   ctx.doGuess=action=>{const st=ctx.S.deepcut,g=ctx.G.deepcut;if(g.guess(st.target,action)===null)return;st.guesses.push(action);st.over=g.isDone(st.target,st.guesses);ctx.saveProgress();g.render(st.target,st);};
   const source=fs.readFileSync('static/deep-cut/game.js','utf8').replace('/*__DEEP_CUT_DATA__*/{}',JSON.stringify(data));vm.runInContext(source,ctx);
   vm.runInContext('G.deepcut.prepareTarget(S.deepcut.target,S.deepcut.opts);G.deepcut.reset();G.deepcut.render(S.deepcut.target,S.deepcut)',ctx);
@@ -187,5 +188,71 @@ test('scenery pointer effects respect controls, reduced motion and inactive game
  r.ctx.matchMedia=()=>({matches:false});down({...click,target:{closest:()=>({})}});assert.equal(r.run('dcRinkParticles.length'),0,'Controls and panels do not spawn effects');
  down(click);assert.equal(r.run('dcRinkParticles.length'),10);
  r.run('dcClearRinkParticles();onHub=true');down(click);assert.equal(r.run('dcRinkParticles.length'),0);
+});
+test('community spectators stand, use the aisle, exit through the door, and return without jumping',()=>{
+ for(const W of [160,188,480,640])for(let i=0;i<3;i++){
+  const stages=new Set();let previous=null;
+  for(let ms=0;ms<=64000;ms+=100){
+   const actor=SCENERY.communityActor(i,W,228,ms);stages.add(actor.stage);
+   assert(Number.isFinite(actor.x)&&Number.isFinite(actor.y));assert(actor.x>=0&&actor.x<W);
+   if(previous?.visible&&actor.visible)assert(Math.hypot(actor.x-previous.x,actor.y-previous.y)<Math.max(3,W*.02));
+   if(actor.stage==='outside'){assert.equal(actor.visible,false);assert(Math.abs(actor.x-(W*.82+7))<.001);assert.equal(actor.y,189);}
+   previous=actor;
+  }
+  for(const stage of ['seated','standing','to-aisle','up-steps','to-door','outside','returning','down-steps','to-seat'])assert(stages.has(stage),stage);
+ }
+});
+test('larger arenas have two bowls, separated aisles and ribbon screens, and about 75 percent occupied seats',()=>{
+ for(const [W,ice] of [[160,99],[188,254],[480,228],[640,300]]){
+  const layout=SCENERY.arenaLayout(W,ice);assert(layout.upperBottom<layout.ribbonY);assert(layout.ribbonY<layout.lowerTop);
+  for(const bowl of [0,1]){const seats=layout.seats.filter(s=>s.bowl===bowl),fill=seats.filter(s=>s.occupied).length/seats.length;assert(fill>=.7&&fill<=.8,`${W}/${ice}: ${fill}`);}
+  for(const seat of layout.seats){const section=layout.sections.find(s=>s.index===seat.section);assert(seat.x<section.aisle-4);}
+  assert(layout.travellers.length>0);assert(layout.travellers.every(seat=>seat.occupied));
+ }
+});
+test('concessions trips leave seats vacant, return with snacks, and stay on continuous aisle paths',()=>{
+ for(const seat of SCENERY.arenaLayout(480,228).travellers){
+  let previous=null,sawAway=false,sawSnack=false;
+  for(let ms=0;ms<=64000;ms+=100){
+   const actor=SCENERY.arenaActor(seat,ms);
+   if(previous?.visible&&actor.visible)assert(Math.hypot(actor.x-previous.x,actor.y-previous.y)<3);
+   if(!actor.visible){sawAway=true;assert.equal(actor.stage,'concessions');assert.equal(actor.x,seat.door);}
+   if(actor.stage==='returning'){sawSnack=true;assert(['popcorn','drink'].includes(actor.carry));}
+   previous=actor;
+  }
+  assert(sawAway&&sawSnack);
+ }
+});
+test('reduced motion freezes spectators, ribbon screens and vending flicker in every indoor scene',()=>{
+ const capture=(zone,time,still)=>{const commands=[],paint=(...args)=>commands.push(args);if(zone===1)SCENERY.community(paint,{W:480,ice:228,time,still});else SCENERY.arena(paint,{W:480,ice:228,time,still,zone});return commands;};
+ for(let zone=1;zone<5;zone++)assert.deepEqual(capture(zone,0,true),capture(zone,47200,true));
+ assert.notDeepEqual(capture(1,0,false),capture(1,14200,false));assert.notDeepEqual(capture(2,0,false),capture(2,47200,false));
+ assert.equal(SCENERY.vendingLit(1,14200),false);assert.equal(SCENERY.vendingLit(0,14200),true);assert.equal(SCENERY.vendingLit(1,14200,true),true);assert.equal(SCENERY.vendingLit(1,16000),true);
+});
+test('crowd density grows from big leagues to rafters to a full legends crowd, including concessions trips',()=>{
+ for(const [W,ice] of [[160,99],[188,254],[480,228],[640,300]])for(const [zone,min,max] of [[2,.7,.8],[3,.85,.9],[4,1,1]]){
+  const layout=SCENERY.arenaLayout(W,ice,zone),occupied=layout.seats.filter(seat=>seat.occupied).length;
+  for(let time=0;time<=64000;time+=500){
+   const away=layout.travellers.filter(seat=>!seat.standingRoom&&SCENERY.arenaActor(seat,time).pose!=='sit').length;
+   const fill=(occupied-away)/layout.seats.length;assert(fill>=min&&fill<=max,`${W}/${ice}/${zone}/${time}: ${fill}`);
+  }
+ }
+});
+test('the crowd wave travels across the lower bowl, then follows through the upper bowl and ends',()=>{
+ const wave={start:0},left={x:48,bowl:0,row:0},right={x:432,bowl:0,row:0},upper={...left,bowl:1};
+ assert(SCENERY.waveLift(left,480,945,wave)>.99);assert.equal(SCENERY.waveLift(right,480,945,wave),0);
+ assert(SCENERY.waveLift(right,480,3505,wave)>.99);assert.equal(SCENERY.waveLift(left,480,3505,wave),0);
+ assert(SCENERY.waveLift(upper,480,1595,wave)>.99);assert.equal(SCENERY.waveLift(upper,480,400,wave),0);
+ for(const seat of [left,right,upper])assert.equal(SCENERY.waveLift(seat,480,6200,wave),0);
+ assert.equal(SCENERY.waveLift(left,480,945,null),0);
+});
+test('interactive waves respect cooldown, cleanup and reduced motion and never reset the answer clock',()=>{
+ const r=runtime();r.ctx.matchMedia=()=>({matches:false});r.run('dcBegin()');r.advance(3000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
+ r.run('dcVisualDistance=1500;dcStartCrowdWave()');assert.equal(r.run('dcCrowdWave'),null);
+ r.run('dcVisualDistance=3000;dcStartCrowdWave()');const start=r.run('dcCrowdWave.start');assert.equal(r.el('dcWave').disabled,true);
+ r.advance(500);r.run('dcStartCrowdWave()');assert.equal(r.run('dcCrowdWave.start'),start);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.guesses.length,0);
+ r.run('dcWaveState(dcCrowdWave.start+6200,2)');assert.equal(r.run('dcCrowdWave'),null);assert.equal(r.el('dcWave').disabled,false);
+ r.run('dcStartCrowdWave();dcCleanup()');assert.equal(r.run('dcCrowdWave'),null);assert.equal(r.el('dcWave').hidden,true);
+ r.ctx.matchMedia=()=>({matches:true});r.run('dcStartCrowdWave();dcWaveState(performance.now(),2)');assert.equal(r.run('dcCrowdWave'),null);assert.equal(r.el('dcWave').hidden,true);
 });
 console.log(`${checks} Deep Cut checks passed`);

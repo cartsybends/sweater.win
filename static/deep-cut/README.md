@@ -31,12 +31,47 @@ touch scrolling, respect reduced motion and never affect answers or the clock.
 Particles expire within 1.2 seconds and are capped at 120. Leaving the game,
 resizing or hiding the tab clears them; a new scene removes old-scene particles.
 
-The neighbourhood has snow-rooted evergreen trunks and complete building
-facades. The community arena has empty bleachers, three rinkside spectators,
-and lights suspended from the roof. Clean 1440×900 background exports and a
-labelled overview live in `backgrounds/`; the production build copies these
-PNG files for direct viewing and download. `dcDraw(time,{backgroundOnly:true})`
-renders the same scenery without the skater or interaction effects for exports.
+The neighbourhood has snow-rooted evergreen trunks, complete building facades,
+weathered wooden boards and rough, unmarked ice. Indoor rinks have perspective
+faceoff circles, a blue centre circle and neutral-zone dots. The community
+arena has chipped and missing bleacher planks, three detailed spectators who
+stand, walk along aisles and exit through the back door, and three vending
+machines with missing stock. One machine's inner light occasionally dims twice;
+reduced motion keeps it steadily lit.
+
+The big leagues, rafters and legends use two seating bowls with section aisles,
+concourse portals and a full-width ribbon screen between levels. Big leagues
+are about 75% occupied, rafters about 88%, and every legends seat is filled.
+Selected spectators leave through the aisles and come back carrying popcorn
+or drinks. Full legends seats stay occupied while extra visitors use the
+aisles; the other levels limit vacant seats to preserve their density ranges.
+Board ads use fictional pixel lettering. Rafters
+retain the purple palette and hanging banners; legends keep the gold palette,
+banners and sparkles. Roof lights stay suspended above the rink. Clicking exposed
+scenery or the keyboard-accessible **Wave** button triggers a wave across the
+lower and upper bowls. Fans stand and raise their arms as it passes. The wave
+has a 6.2-second cooldown, clears when leaving the game, and respects reduced
+motion without affecting answers or the clock.
+
+`scenery.mjs` owns the indoor architecture, people, boards and ice. Spectator
+routes are continuous paths calculated from frame time, with no added timers
+or changes to game state. Reduced motion freezes people, screen ads and vending
+lights. Seating layouts are cached for up to eight viewport sizes.
+
+Clean 1440×900 background exports, a labelled overview and a ZIP live in
+`backgrounds/`; the production build copies these files for direct viewing and
+download. `dcDraw(time,{backgroundOnly:true})` renders the same scenery without
+the skater or interaction effects. To refresh the exports from a locally served
+build, install Playwright and run:
+
+```
+node tools/deep_cut/export_backgrounds.cjs --url http://127.0.0.1:8765/#deepcut
+```
+
+Optional `SWEATER_PLAYWRIGHT_MODULE` and `SWEATER_CHROMIUM_PATH` environment
+variables select an existing Playwright installation and Chromium binary. The
+exporter freezes animations and seats spectators for the still images; the live
+game retains their movement. Python 3 is used to build the ZIP download.
 
 `data.json` is a frozen v1 content release: 8,280 players, 119 prompts across
 seven families, and 365 seven-round sets. Its source is the verified NHL-backed

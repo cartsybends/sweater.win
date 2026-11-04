@@ -83,6 +83,7 @@ body.dc-immersive>.navbar{visibility:hidden}
 .dc-footer{width:min(840px,calc(100% - 64px));margin:0 auto;padding:10px 0 13px;font-size:9px;letter-spacing:.08em;background:#06131c77}.dc-footer details[open]{padding:12px;background:#071521;border:1px solid #40566c;border-radius:3px}
 .dc-arena-tag{top:auto;bottom:110px;left:clamp(18px,3vw,52px);padding:7px 10px;font-size:10px;background:#081420b3}
 .dc-next-zone{position:absolute;bottom:116px;right:clamp(18px,3vw,52px);font-size:9px;letter-spacing:.08em;color:#d7eeef;text-shadow:1px 1px #07131d;background:#08142099;padding:5px 7px}
+.dc-shift{position:relative}.dc-cabinet .dc-wave{position:absolute;left:90px;top:-4px;border:1px solid #78969f77;border-radius:3px;background:#0b2030df;color:#d7eeef;font-size:8px;letter-spacing:.02em;padding:3px 6px;min-height:21px;cursor:pointer}.dc-cabinet .dc-wave:hover{background:#183b4a}.dc-cabinet .dc-wave:disabled{opacity:.7;cursor:default}
 .dc-distance-track{bottom:100px;background:#09162277;height:3px}
 #dcBurst{position:fixed;right:5%;top:50%;z-index:4;font-size:clamp(36px,5vw,68px);text-align:right;color:var(--dc-celebration,#ffdb82);text-shadow:3px 3px #06121c;pointer-events:none}
 #dcBurst small{display:block;font:10px ui-monospace,monospace;letter-spacing:.12em;margin-bottom:7px}
@@ -137,6 +138,7 @@ body.dc-immersive>.modal{z-index:50}body.dc-immersive>.toast{z-index:60}
  .dc-tier-strip{padding:10px 0 6px}.dc-footer{padding:7px 0 10px}
 }
 @media(max-width:700px){.dc-arena-tag{left:auto;right:14px;bottom:108px;max-width:190px;font-size:8px}.dc-next-zone{bottom:138px}}
+@media(max-width:700px){.dc-cabinet .dc-wave{left:auto;right:0;top:-4px;font-size:7px;padding:3px;min-height:19px}}
 @media(max-width:360px){.dc-dots i{width:10px;height:8px}}
 @media(min-width:701px) and (max-height:820px){.dc-arena-tag{left:auto;right:3vw;bottom:110px}.dc-next-zone{bottom:141px}}
 .dc-cabinet[data-celebration] #dcPoints{color:var(--dc-celebration);text-shadow:0 0 17px color-mix(in srgb,var(--dc-celebration) 45%,transparent)}
