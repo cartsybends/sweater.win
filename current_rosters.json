@@ -1899,11 +1899,6 @@
   "team": "WSH",
   "number": 27
  },
- "8475795": {
-  "name": "Dylan McIlrath",
-  "team": "WSH",
-  "number": 52
- },
  "8478911": {
   "name": "Matt Roy",
   "team": "WSH",
@@ -2804,6 +2799,11 @@
   "team": "WPG",
   "number": 13
  },
+ "8482459": {
+  "name": "Tyrel Bauer",
+  "team": "WPG",
+  "number": 77
+ },
  "8476331": {
   "name": "Dylan DeMelo",
   "team": "WPG",
@@ -2883,6 +2883,11 @@
   "name": "Jeff Malott",
   "team": "ANA",
   "number": 39
+ },
+ "8485400": {
+  "name": "Roger McQueen",
+  "team": "ANA",
+  "number": 95
  },
  "8481754": {
   "name": "Nikita Nesterenko",
