@@ -25,10 +25,10 @@ function runtime(storage=new Map()){
 }
 let checks=0;
 function test(name,fn){fn();checks++;console.log('PASS',name);}
-test('featured rotation covers every playable library mode and Teams exactly once per cycle',()=>{
+test('Deep Cut stays featured across dates, months, DST and completed daily runs',()=>{
  const r=runtime(),ids=r.plain('featuredGameIds()'),expected=r.plain('hubIds().filter(gameIsReady)');
  assert.deepEqual(ids,[...expected,'teams']);assert.equal(new Set(ids).size,ids.length);
- for(const id of ['faceswap','grid','benchboss','teammatetrail','edgerush','edgespeed','edgeshot','edgebuild','teams'])assert(ids.includes(id),id);
+ for(const id of ['deepcut','faceswap','grid','benchboss','teammatetrail','edgerush','edgespeed','edgeshot','edgebuild','teams'])assert(ids.includes(id),id);
  assert(!ids.includes('edgemap'));assert.equal(ids.filter(id=>id==='teams').length,1);
  for(const start of ['2026-01-25','2026-02-24','2026-03-01','2026-10-25','2026-12-25','2028-02-24']){
   const date=new Date(start+'T12:00:00Z'),picks=[];
@@ -36,18 +36,27 @@ test('featured rotation covers every playable library mode and Teams exactly onc
    const day=new Date(date.getTime()+n*864e5).toISOString().slice(0,10);
    picks.push(r.run(`featuredGame(${JSON.stringify(day)})`));
   }
-  assert.deepEqual([...new Set(picks.slice(0,-1))].sort(),ids.slice().sort(),start);
-  for(let n=1;n<picks.length;n++)assert.equal(ids.indexOf(picks[n]),(ids.indexOf(picks[n-1])+1)%ids.length,start);
-  assert.equal(picks.at(-1),picks[0],start);
+  assert(picks.every(id=>id==='deepcut'),start);
  }
+ r.finished.add('deepcut');assert.equal(r.run('featuredGame()'),'deepcut');
 });
-test('featured rotation skips unavailable games, picks up new library modes, and keeps Teams usable',()=>{
+test('the featured game only falls back when Deep Cut is unavailable',()=>{
  const r=runtime();r.unavailable.add('faceswap');r.unavailable.add('edgeshot');
  assert(!r.plain('featuredGameIds()').includes('faceswap'));assert(!r.plain('featuredGameIds()').includes('edgeshot'));
  r.run('HUB[0].games.push(["newmode","!","New mode"]);G.newmode={title:"New mode",pool:()=>[1]}');
  assert(r.plain('featuredGameIds()').includes('newmode'));
+ assert.equal(r.run('featuredGame()'),'deepcut');r.unavailable.add('deepcut');assert.notEqual(r.run('featuredGame()'),'deepcut');
  r.plain('hubIds()').forEach(id=>r.unavailable.add(id));r.run('HL_POOL.length=0;G.newmode.pool=()=>[]');
  assert.deepEqual(r.plain('featuredGameIds()'),['teams']);assert.equal(r.run('featuredGame()'),'teams');
+});
+test('another in-progress game cannot displace the permanent Deep Cut feature',()=>{
+ const r=runtime();r.run('hubStatus=id=>[id==="classic"?"going":"",""]');
+ r.run('G.deepcut.title="Deep Cut"');r.run('globalThis.$=id=>globalThis.elements.get(id)');r.run('globalThis.elements=new Map()');
+ r.run('elements.set("hubFeatures",{})');
+ const prefix=part('function renderHub() {','  const favourites = favouriteIds(), recents = recentIds();');
+ r.run(prefix+'\n}');r.run('renderHub()');const rendered=r.run('elements.get("hubFeatures").innerHTML');
+ assert(rendered.includes('data-open="deepcut"'));assert(!rendered.includes('data-open="classic"'));assert(rendered.includes('Featured game'));
+ r.run('hubStatus=id=>[id==="deepcut"?"going":"",""]');r.run('renderHub()');assert(r.run('elements.get("hubFeatures").innerHTML').includes('Resume'));
 });
 test('featured cards include Teams navigation, EDGE descriptions, and existing resume/completion labels',()=>{
  const r=runtime(),teams=r.run('featuredGameCard("teams")');

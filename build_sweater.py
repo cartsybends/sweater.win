@@ -10943,10 +10943,8 @@ function hubStatus(id) {
 
 const gameIsReady = id => !MAINTENANCE_GAMES.has(id) && (id === "hl" ? HL_POOL.length > 1 : G[id] && G[id].pool().length > 0);
 const featuredGameIds = () => [...hubIds().filter(gameIsReady), "teams"];
-function featuredGame(day = dayKey()) {
-  const ids = featuredGameIds();
-  // Count actual days so the rotation continues across months and DST changes.
-  return ids[Math.floor(keyUTC(day) / 864e5) % ids.length];
+function featuredGame() {
+  return gameIsReady("deepcut") ? "deepcut" : featuredGameIds()[0];
 }
 function featuredGameCard(id, continuing = false) {
   const teams = id === "teams", state = teams ? "" : hubStatus(id)[0];
@@ -10956,7 +10954,7 @@ function featuredGameCard(id, continuing = false) {
       || EDGE_GAMES.find(game => game.id === id)?.blurb || "Your next daily puzzle is ready.";
   const status = teams ? "Franchise challenges" : state === "done" ? "Daily complete" : state === "going" ? "In progress" : "New daily puzzle";
   return `<button type="button" class="hubfeature primary" data-open="${id}">
-      <p class="featureeyebrow">${continuing ? "Continue playing" : "Today's featured game"}</p>
+      <p class="featureeyebrow">${continuing ? "Continue playing" : "Featured game"}</p>
       <h2 class="featuretitle"><span class="featureicon" aria-hidden="true">${modeIcon(id)}</span>${esc(cardTitle(id))}</h2>
       <p class="featurecopy">${esc(copy)}</p>
       <span class="featurefooter"><span>${status}</span><b>${continuing ? "Resume" : teams ? "Choose a team" : "Play"} →</b></span>
@@ -10967,12 +10965,11 @@ const LIBRARY_FILTERS = [
 ];
 const librarySection = { player: "Name the player", details: "Know the details", puzzles: "Streaks and puzzles", arcade: "Arcade" };
 function renderHub() {
-  const allCards = HUB.flatMap(sec => sec.games);
-  const going = allCards.find(([id]) => hubStatus(id)[0] === "going");
-  const primary = going ? going[0] : featuredGame();
+  const primary = featuredGame();
+  const continuing = primary !== "teams" && hubStatus(primary)[0] === "going";
   const hatTrickCount = dailyEntries(dayKey()).length;
   const theme = activeWeeklyTheme(), completedThemeGames = weeklyDoneGames(theme);
-  $("hubFeatures").innerHTML = `${featuredGameCard(primary, !!going)}<div class="queststack">
+  $("hubFeatures").innerHTML = `${featuredGameCard(primary, continuing)}<div class="queststack">
       ${challengeCard({ challenge: "daily", label: "Daily challenge", title: "Play any 3 dailies", copy: "Build your daily routine and earn a Hat Trick badge.", count: hatTrickCount, action: "Pick me a random game" })}
       ${challengeCard({ challenge: "weekly", label: "Weekly challenge", title: theme.title, copy: theme.copy, count: completedThemeGames.length, action: completedThemeGames.length >= 3 ? "Keep playing" : "Play the next challenge" })}
     </div>`;

@@ -7,6 +7,18 @@ three seconds. The absolute deadline persists across reloads and navigation.
 Practice is unlimited and unranked. Daily results use Sweater's existing stats,
 XP, archives, sharing, and server-validated leaderboard replay.
 
+The game fills the viewport with an original rink scene and overlays large
+prompts and controls. A jumbotron clock lights seven-segment digits down to
+tenths, with a red warning for the final five seconds. Correct answers trigger
+six animation levels: small sprays, longer skating bursts, rare-tier spotlights,
+and a gold-star celebration for cult legends. Optional audio follows the tier;
+reduced motion removes moving particles, camera impacts, and light sweeps.
+
+Backgrounds progress by total score: neighbourhood rink below 150, community
+arena at 150, big leagues at 300, rafters at 450, and legends at 600. The next
+threshold is visible and crossing it announces the new arena. Rarity scoring
+and the immutable published puzzle bank do not change with these visual effects.
+
 `data.json` is a frozen v1 content release: 8,280 players, 119 prompts across
 seven families, and 365 seven-round sets. Its source is the verified NHL-backed
 community catalog through 2025–26. Each prompt stores its complete eligible set
