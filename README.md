@@ -20,6 +20,7 @@ Sweater brings player guessing, highlight challenges, roster recall, hockey hist
 | **Roster Recall** | Name as many players from a team's roster as you can in 60 seconds. |
 | **Higher or Lower** | Compare player stats and keep your streak alive. |
 | **Shootout** | Answer trivia to earn shots, then try to beat the goalie. |
+| **Deep Cut** | Answer seven NHL prompts with obscure players; rarer names score more and send a pixel skater farther. |
 | **Sweater Grid** | Fill nine squares with players who satisfy both intersecting clues. |
 | **Bench Boss** | Build the strongest six-player lineup for a specific season within a $100 budget. |
 | **Teammate Trail** | Connect two players through their NHL teammates. |

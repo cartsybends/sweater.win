@@ -655,6 +655,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   /*__SHOOTOUT_CSS__*/
   /*__TEAM_GAMES_CSS__*/
   /*__COMMUNITY_GAMES_CSS__*/
+  /*__DEEP_CUT_CSS__*/
 
   /* NHL EDGE hub + games */
   .edgehome { margin: 20px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 18px;
@@ -3397,6 +3398,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
 <!--__FACE_SWAP_VIEW__-->
+<!--__DEEP_CUT_VIEW__-->
 
   <section class="view" id="view-number" hidden>
     <div class="ttcard">
@@ -4067,7 +4069,7 @@ const UI_ICONS = {
   people: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 5a5 5 0 0 1 3 5"/>',
 };
 const uiIcon = name => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name] || UI_ICONS.stick}</svg>`;
-const MODE_ICONS = { grid: "grid", benchboss: "draft", teammatetrail: "route", classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", faceswap: "people", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
+const MODE_ICONS = { deepcut: "ice", grid: "grid", benchboss: "draft", teammatetrail: "route", classic: "mystery", statline: "chart", playoff: "trophy", journey: "route", faceswap: "people", team: "shield", number: "shirt", draft: "draft", season: "calendar", trophy: "trophy", cups: "trophy", mroster: "people", map: "pin", hl: "arrows", rank: "rank", hlt: "shield", truths: "search", roster: "clock", conn: "grid", puck: "target", shoot: "net",
   edgerush: "route", edgespeed: "arrows", edgeshot: "target", edgemap: "ice", edgebuild: "people", teams: "shield" };
 MODE_ICONS.overtime = "clock";
 UI_ICONS.video = '<rect x="3" y="4" width="18" height="16" rx="4"/><path d="m10 8 6 4-6 4V8Z"/>';
@@ -6242,6 +6244,7 @@ function leaveGame(g) {
   $("unlimited").disabled = false;
   if (["benchboss", "teammatetrail"].includes(g)) cgCleanup();
   if (g === "whoscored") $("wsVideo").pause();
+  if (g === "deepcut") dcCleanup();
   if (g === "edgerush") edgeRushCancelAnimation();
   if (g === "overtime" && overtimeRun) endArcade("overtime",true);
   if (g === "puck" && puckRun) { stopPuck(); if (!S.puck.over) doGuess("END"); }
@@ -9675,6 +9678,8 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 
 /*__COMMUNITY_MODEL__*/
 /*__COMMUNITY_GAMES__*/
+/*__DEEP_CUT_MODEL__*/
+/*__DEEP_CUT_GAME__*/
 
 /*__MODE_ANALYTICS__*/
 
@@ -10652,6 +10657,7 @@ const LB_RULES = {
     [`hl_${s}`, `Higher or Lower (${i.name}): 1 point for every right answer in a row, up to ${HL_LEN}.`])),
   classic: "Classic: 10 points for 1 guess, 9 for 2, down to 3 for 8. A loss scores 0.",
   grid: "Sweater Grid: 10 points per connection, plus up to 5 bonus points for less popular answers when enough samples exist. Short-stint bonuses apply before then. Nine squares, twelve guesses, one use per player.",
+  deepcut: "Deep Cut: seven prompts worth 10, 15, 30, 60, 85 or 100 points each. Fixed editorial rarity tiers reward less obvious valid players. A pass scores 0. Maximum 700; at least 300 is a daily win.",
   benchboss: "Bench Boss: up to 10 points based on your lineup's season score compared with the best legal lineup. A score of at least 90% is a win.",
   teammatetrail: "Teammate Trail: 10 points for each shortest route, or 6 with an extra link, Undo or a hint. Three trails, up to 30 points.",
   statline: "Stat Line: 8 points for 1 guess down to 1 for 8, plus 2 for every season still locked when you get it (up to +10).",
@@ -10833,6 +10839,7 @@ const HUB = [
     ["benchboss", "📋", "Draft the best six-player lineup with a $100 budget."],
   ]},
   { title: "Arcade", copy: "Quick rounds, fast decisions and a little competition.", tone: "red", games: [
+    ["deepcut", "🧊", "Seven NHL prompts. Rare names score more and send your skater farther."],
     ["puck", "🎯", "Tap every player who fits the rule before he slides by."],
     ["shoot", "🥅", "Answer right to earn a shot, then beat the goalie."],
     ["overtime", "⏱️", "Fast hockey trivia. Keep the clock alive."],
@@ -10853,6 +10860,7 @@ EDGE_GAMES.forEach(x => { CARD[x.id] = { icon: "📡", tone: "blue" }; });
 /* Short, repeatable labels make the game library scannable before a player
    has to read a description. They also power the shelf, Locker, and results. */
 const MODE_META = Object.freeze({
+  deepcut: {type:"Rare-answer trivia",time:"4–6 min",difficulty:"Medium",fact:"The less obvious your valid answer, the farther you skate. Seven prompts, up to 700 points.",next:"grid"},
   grid: {type:"Connections",time:"2–4 min",difficulty:"Medium",fact:"Each square accepts multiple players. Niche connections can earn bigger bonuses.",next:"teammatetrail"},
   benchboss: {type:"Lineup strategy",time:"2–4 min",difficulty:"Medium",fact:"Your lineup scores from a completed NHL season, and every market has a verified best lineup.",next:"roster"},
   teammatetrail: {type:"Teammates",time:"2–4 min",difficulty:"Medium",fact:"Every link is supported by overlapping NHL appearances, including trade seasons.",next:"grid"},
@@ -11658,6 +11666,7 @@ function partyRender(message = "") {
 
 // ======================= help window =======================
 const HELP = {
+  deepcut: `<p>Seven NHL prompts, one valid player per prompt. Read for three seconds, then type an answer within 35 seconds. Wrong or unrecognized names cost three seconds. Use full names, unique surnames or common aliases; accents and small typos are accepted. A pass or timeout earns zero.</p><p>Less obvious players earn fixed editorial rarity scores: 10, 15, 30, 60, 85 or 100 points. Each point moves your pixel skater 10 metres. At least 300 points is a daily win; 700 is perfect. These tiers estimate familiarity using career games, awards, Hall of Fame status, era and team appearances, rather than live answer percentages.</p><p>Daily sets and scoring stay identical for everyone. Practice is unlimited and unranked. The clock keeps running when you leave an active prompt. Results reveal all accepted answers after all seven rounds. The answer bank is frozen through 2025–26, and predecessor clubs are separate.</p>`,
   grid: `<p>Fill nine team-and-clue intersections in twelve guesses. Select a square, then search for a player. Use each player once; wrong answers cost a guess. All squares accept multiple players.</p><p>Correct answers earn 10 points, plus up to 5 bonus points. With at least 100 anonymous answers for an intersection, less popular picks earn bigger bonuses: up to 1% chosen adds 5, up to 5% adds 3, up to 10% adds 2, and below 20% adds 1. Before enough samples exist, short team stints earn 5 points for up to 100 qualifying games or 3 for 101–250. Scores stay fixed during your run and in archives.</p><p>Country means birth country. Trophy clues, including Stanley Cup winner, require a career win as a player, even if it happened on another team. A 30+ goals clue requires at least 30 goals in one NHL regular season; traded players' goals count across all their teams that season. Team connections include played NHL regular-season games and refresh daily. Cup wins and 30-goal seasons cover completed seasons through 2025–26; predecessor franchises are separate. Trophy photos come from NHL Records.</p><p>Revealing ends the run. Muted cards show valid examples, since each square accepts multiple players. Revealed examples never contribute to popularity counts. Anonymous correct answers help future bonuses, subject to your analytics privacy settings.</p>`,
   benchboss: `<p>Build a lineup for the season shown at the top, with three forwards, two defensemen, and one goalie within a $100 draft budget. Select a position tab to browse; tap a selected card or lineup slot to remove it. Team badges identify the player’s club that season, even when their photo shows a later jersey.</p><p>Skaters earn 2 points per goal plus 1 per assist; goalies earn 3 per win. Statistics reveal when you lock all six slots. Your score is out of 10 against the best legal lineup; at least 90% of that season score is a win.</p><p>Revealing the best lineup forfeits the run with zero points and no XP or daily challenge progress. Daily and archive reveals require confirmation. Markets use completed seasons from 2005–06 through 2024–25, including all clubs after a trade. The draft budget is fictional.</p>`,
   teammatetrail: `<p>Build a trail from Start to Finish through real NHL teammates. Drag a card by its grip into the highlighted stop, tap any offered card, or search other available teammates. The target joins automatically when your last connecting player was their teammate.</p><p>Each stop shows the club and season that connect it to the previous player. There are three trails. A shortest route on your first attempt earns 10 points; one extra teammate, Undo, or a first-link hint caps that trail at 6. Reveal gives zero for that trail; use Next trail to continue.</p><p>A hint locks the first teammate in place. Every offered link has verified overlapping NHL regular-season appearances, including trade seasons.</p>`,
@@ -13564,6 +13573,30 @@ def load_community_data():
     return refresh.attach_updates(data, json.loads(GRID_CURRENT_CACHE.read_text(encoding="utf-8")))
 
 
+def load_deep_cut_data():
+    """A versioned snapshot keeps scores stable during builds and archive replays."""
+    data = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
+    if data.get("version") != 1 or len(data.get("runs", [])) != 365:
+        raise ValueError("Incomplete Deep Cut answer bank")
+    players = {p[0] for p in data["players"]}
+    prompts = {p["id"]: p for p in data["prompts"]}
+    if len(players) != len(data["players"]) or len(prompts) != len(data["prompts"]):
+        raise ValueError("Duplicate Deep Cut records")
+    for prompt in prompts.values():
+        answers = prompt["answers"]
+        if (len(answers) < 9 or len({a[0] for a in answers}) != len(answers)
+                or any(pid not in players or score not in (10, 15, 30, 60, 85, 100) for pid, score in answers)
+                or not any(score == 100 for _, score in answers)):
+            raise ValueError("Invalid Deep Cut answer set")
+    if len({run["id"] for run in data["runs"]}) != len(data["runs"]):
+        raise ValueError("Duplicate Deep Cut run IDs")
+    for run in data["runs"]:
+        ids = run["prompts"]
+        if len(ids) != 7 or len(set(ids)) != 7 or any(key not in prompts for key in ids):
+            raise ValueError("Deep Cut runs require seven distinct prompts")
+    return data
+
+
 def plan_community_days(saved, bank, today, mode):
     by_id = {p["id"]: p for p in bank}
     if len(by_id) != len(bank):
@@ -13899,6 +13932,12 @@ def update_schedule(players, today, roster_players, goal_clips=None, grid_popula
                 roster_archive[i] = archive[i]
     community = load_community_data()
     new["community"] = community
+    deep_cut = load_deep_cut_data()
+    new["deepcut"] = deep_cut
+    deep_days = plan_community_days(sched.get("deepcut_days", {}), deep_cut["runs"], today, "deepcut")
+    new["deepcut_days"] = deep_days
+    new["deepcut_start"] = sched.get("deepcut_start") or today.isoformat()
+    result["deepcut"] = (new["deepcut_start"], {k: v for k, v in deep_days.items() if first <= k <= last})
     for g in ("grid", "benchboss", "teammatetrail"):
         days = plan_community_days(sched.get(f"{g}_days", {}), community[g], today, g)
         if g == "grid":
@@ -14325,8 +14364,12 @@ def main():
     face_swap_puzzles = load_face_swap_puzzles()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["static/deep-cut/model.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
+        "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
+        "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),
+        "/*__DEEP_CUT_MODEL__*/": (HERE / "static/deep-cut/model.mjs").read_text(encoding="utf-8").replace("export const DEEP_CUT_MODEL", "const DEEP_CUT_MODEL"),
+        "/*__DEEP_CUT_GAME__*/": (HERE / "static/deep-cut/game.js").read_text(encoding="utf-8").replace("/*__DEEP_CUT_DATA__*/{}", esc(load_deep_cut_data())),
         "<!--__FACE_SWAP_VIEW__-->": (HERE / "static/face-swap/view.html").read_text(encoding="utf-8"),
         "/*__FACE_SWAP_MODEL__*/": (HERE / "static/face-swap/model.mjs").read_text(encoding="utf-8").replace("export const FACE_SWAP_MODEL", "const FACE_SWAP_MODEL"),
         "/*__FACE_SWAP_GAME__*/": (HERE / "static/face-swap/game.js").read_text(encoding="utf-8").replace("/*__FACE_SWAP_PUZZLES__*/[]", esc(face_swap_puzzles)),
@@ -14367,6 +14410,7 @@ def main():
     copy_goal_media(out.parent, goal_clips)
     copy_trophy_images(out.parent, trophy_images)
     copy_community_logos(out.parent)
+    shutil.copytree(HERE / "static/deep-cut", out.parent / "deep-cut", dirs_exist_ok=True, ignore=shutil.ignore_patterns("*.js", "*.mjs", "*.html", "*.css", "*.json", "README.md"))
     og = HERE / "sweater-trivia-preview.png"
     if og.exists() and out.parent != HERE:
         shutil.copy(og, out.parent / "sweater-trivia-preview.png")

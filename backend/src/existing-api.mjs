@@ -7,9 +7,11 @@
 
 import { COMMUNITY_MODEL } from '../../static/community-games/model.mjs';
 import { FACE_SWAP_MODEL } from '../../static/face-swap/model.mjs';
+import { DEEP_CUT_MODEL } from '../../static/deep-cut/model.mjs';
 
 const PICK6 = [10, 8, 6, 4, 2, 1];
 const GAMES = {
+  deepcut: { days: 'deepcut_days', custom: 'deepcut' },
   grid: { days: 'grid_days', custom: 'community' },
   benchboss: { days: 'benchboss_days', custom: 'community' },
   teammatetrail: { days: 'teammatetrail_days', custom: 'community' },
@@ -574,6 +576,12 @@ function scoreConnections(groups, guesses) {
 
 
 export function scoreGame(game, answer, guesses, schedule) {
+  if (GAMES[game].custom === 'deepcut') {
+    const data = schedule.deepcut, run = data?.runs?.find(p => p.id === answer?.id);
+    if (!run) throw httpError(503, "Today's puzzle data is missing");
+    try { return DEEP_CUT_MODEL.result(run, guesses, data); }
+    catch (error) { throw httpError(400, error.message); }
+  }
   if (GAMES[game].custom === 'faceswap') {
     const puzzle = schedule.faceswap_puzzles?.find(p => p.id === answer?.id);
     if (!puzzle) throw httpError(503, "Today's puzzle data is missing");
