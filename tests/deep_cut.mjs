@@ -91,7 +91,7 @@ function runtime(){
   ctx.doGuess=action=>{const st=ctx.S.deepcut,g=ctx.G.deepcut;if(g.guess(st.target,action)===null)return;st.guesses.push(action);st.over=g.isDone(st.target,st.guesses);ctx.saveProgress();g.render(st.target,st);};
   const source=fs.readFileSync('static/deep-cut/game.js','utf8').replace('/*__DEEP_CUT_DATA__*/{}',JSON.stringify(data));vm.runInContext(source,ctx);
   vm.runInContext('G.deepcut.prepareTarget(S.deepcut.target,S.deepcut.opts);G.deepcut.reset();G.deepcut.render(S.deepcut.target,S.deepcut)',ctx);
-  return {ctx,el,records,timers,run:s=>vm.runInContext(s,ctx),advance(ms){now+=ms;for(const fn of [...timers.values()])fn();}};
+  return {ctx,el,records,timers,events,run:s=>vm.runInContext(s,ctx),advance(ms){now+=ms;for(const fn of [...timers.values()])fn();}};
 }
 test('a round has a three-second preview, a fixed deadline, and a three-second wrong-answer penalty',()=>{
   const r=runtime();r.run('dcBegin()');assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'preview');assert.equal(r.el('dcAnswer').disabled,true);
@@ -161,5 +161,31 @@ test('hidden game refreshes cannot trap the home page in fullscreen or start a b
  const r=runtime();r.run('dcBegin()');assert(r.run('document.body.classList.contains("dc-immersive")'));
  r.run('dcCleanup();onHub=true;G.deepcut.render(S.deepcut.target,S.deepcut)');assert.equal(r.run('document.body.classList.contains("dc-immersive")'),false);assert.equal(r.timers.size,0);
  r.run('onHub=false;G.deepcut.render(S.deepcut.target,S.deepcut)');assert(r.run('document.body.classList.contains("dc-immersive")'));assert.equal(r.timers.size,1);
+});
+test('rink clicks use the visible zone and leave the running clock, answers and score untouched',()=>{
+ const r=runtime();r.ctx.matchMedia=()=>({matches:false});r.el('dcCanvas').getBoundingClientRect=()=>({left:0,top:0,right:900,bottom:600,width:900,height:600});
+ r.run('dcBegin()');r.advance(3000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
+ const palettes=[];
+ for(let zone=0;zone<5;zone++){
+  r.run(`dcClearRinkParticles();dcVisualDistance=${zone*1500};dcSprinkleRink(60,90)`);
+  assert.equal(r.run('dcRinkParticles.length'),10);assert(r.run(`dcRinkParticles.every(p=>p.zone===${zone}&&p.x>=0&&p.x<=1&&p.y>=0&&p.y<=1)`));palettes.push(r.run('dcRinkParticles[0].color'));
+ }
+ assert.equal(new Set(palettes).size,5);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.guesses.length,0);
+});
+test('rink particles have a hard limit, expire, and clear when their scene or game changes',()=>{
+ const r=runtime();r.ctx.matchMedia=()=>({matches:false});r.el('dcCanvas').getBoundingClientRect=()=>({left:0,top:0,right:900,bottom:600,width:900,height:600});
+ r.run('for(let i=0;i<50;i++)dcSprinkleRink(60,90)');assert.equal(r.run('dcRinkParticles.length'),120);
+ r.ctx.paint=()=>{};r.ctx.canvasContext={globalAlpha:1};r.run('dcDrawRinkParticles(canvasContext,paint,performance.now()+1300,300,200,3,0)');assert.equal(r.run('dcRinkParticles.length'),0);assert.equal(r.ctx.canvasContext.globalAlpha,1);
+ r.run('dcSprinkleRink(60,90);dcDrawRinkParticles(canvasContext,paint,performance.now(),300,200,3,1)');assert.equal(r.run('dcRinkParticles.length'),0);
+ r.run('dcSprinkleRink(-1,90);dcSprinkleRink(901,90)');assert.equal(r.run('dcRinkParticles.length'),0);
+ r.run('dcSprinkleRink(60,90);dcCleanup()');assert.equal(r.run('dcRinkParticles.length'),0);assert.equal(r.run('dcRinkPointer'),null);
+});
+test('scenery pointer effects respect controls, reduced motion and inactive games without canceling events',()=>{
+ const r=runtime();r.el('dcCanvas').getBoundingClientRect=()=>({left:0,top:0,right:900,bottom:600,width:900,height:600});
+ const click={button:0,pointerId:1,isPrimary:true,clientX:60,clientY:90,target:{closest:()=>null},preventDefault(){throw Error('Do not cancel native pointer behavior');}};
+ const down=r.events.get('dcCabinet:pointerdown');down(click);assert.equal(r.run('dcRinkParticles.length'),0,'Reduced motion disables scenery particles');
+ r.ctx.matchMedia=()=>({matches:false});down({...click,target:{closest:()=>({})}});assert.equal(r.run('dcRinkParticles.length'),0,'Controls and panels do not spawn effects');
+ down(click);assert.equal(r.run('dcRinkParticles.length'),10);
+ r.run('dcClearRinkParticles();onHub=true');down(click);assert.equal(r.run('dcRinkParticles.length'),0);
 });
 console.log(`${checks} Deep Cut checks passed`);
