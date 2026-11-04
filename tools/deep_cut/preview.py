@@ -47,6 +47,7 @@ def main():
     game = (root / "game.js").read_text().replace("/*__DEEP_CUT_DATA__*/{}", data)
     boot = "const START=" + json.dumps(start) + ",DAILY={deepcut:" + json.dumps(days) + "};\n"
     html = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deep Cut · Sweater playable preview</title><meta name="description" content="Seven NHL prompts. Rare names score more. Play Sweater Deep Cut."><style>html{background:#050e17;color:#e9f5ff}body{margin:0;padding:24px 16px;font-family:monospace}*{box-sizing:border-box}[hidden]{display:none!important}.preview-label{max-width:980px;margin:0 auto 16px;font-size:10px;letter-spacing:.08em;color:#9aafc4}.preview-label span{color:#81f2df}.preview-toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);color:#e9f5ff;background:#152a3b;font:12px monospace;padding:12px;z-index:10;box-shadow:0 3px 20px #0006;max-width:90vw}.preview-toast:empty{display:none}' + css + '</style></head><body><p class="preview-label"><span>SWEATER / DEEP CUT</span> · PLAYABLE PREVIEW</p>' + view + '<p class="preview-toast" id="previewToast" role="status"></p><script>' + boot + ADAPTER + model + game + '\nloadDaily();\n</script></body></html>'
+    html = html.replace("z-index:10;box-shadow", "z-index:60;box-shadow")
     out = Path(args.out).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html)
