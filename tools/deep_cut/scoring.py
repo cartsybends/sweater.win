@@ -1,4 +1,4 @@
-"""Append immutable team-prompt editions with a current-roster 10-point rule."""
+"""Append immutable prompt releases and current-roster scoring editions."""
 from copy import deepcopy
 from datetime import timedelta, date
 import hashlib
@@ -20,6 +20,39 @@ def validate(base, data):
         if len(incoming) != len(data[key]) or any(incoming.get(identity(row)) != row for row in base[key]):
             raise ValueError(f"Deep Cut changed or removed published {key}")
     return data
+
+
+def load_expansion():
+    path = Path(__file__).resolve().parents[2] / 'static/deep-cut/expansion.json'
+    return json.loads(path.read_text()) if path.exists() else None
+
+
+def expanded_templates(prompts):
+    """Balance all families and cover every question in a stable 365-set bank."""
+    families = {}
+    for prompt in prompts:
+        families.setdefault(prompt['family'], []).append(prompt['id'])
+    usage = dict.fromkeys((p['id'] for p in prompts), 0)
+    family_usage = dict.fromkeys(families, 0)
+    selected = []
+    for i in range(365):
+        rng = random.Random(f'sweater-deepcut-expanded-v1-{i}')
+        choices = list(families)
+        rng.shuffle(choices)
+        choices.sort(key=lambda family: family_usage[family])
+        keys = []
+        for family in choices[:7]:
+            options = list(families[family])
+            rng.shuffle(options)
+            key = min(options, key=lambda key: usage[key])
+            usage[key] += 1
+            family_usage[family] += 1
+            keys.append(key)
+        rng.shuffle(keys)
+        selected.append(keys)
+    if not all(usage.values()) or len({tuple(keys) for keys in selected}) != 365:
+        raise ValueError('Expanded practice rotation does not cover the question bank')
+    return selected
 
 
 def publish(base, previous, source, roster, today, review=None, toi_rows=None, require_toi=False):
@@ -89,18 +122,49 @@ def publish(base, previous, source, roster, today, review=None, toi_rows=None, r
             prompts[identity] = {**deepcopy(prompt), "id": identity, "version": 2, "base": prompt["id"],
                                  "asof": today.isoformat(), "currentRoster": active, "lowToiRoster": depth, "answers": rows,
                                  "note": f"Verified appearances through {source.get('grid_asof', source['asof'])}. Current roster: 10 points" + ("; six lowest average-TOI skaters: 15" if policy == 3 and kind == 'team' else '') + f". Snapshot {today.isoformat()}; former players count."}
+    expansion = load_expansion()
+    templates = list(base['prompts'])
+    if expansion:
+        templates += expansion['prompts']
+        for player in expansion['players']:
+            players.setdefault(player[0], player)
+        for prompt in expansion['prompts']:
+            if prompt['id'] in prompts and prompts[prompt['id']] != prompt:
+                raise ValueError('A published expansion prompt changed; release a new content identity')
+            prompts.setdefault(prompt['id'], deepcopy(prompt))
+            team = prompt.get('rosterTeam')
+            if prompt['criteria']['kind'] == 'shared-season':
+                team = current.get(prompt['criteria']['player'])
+            if not team:
+                replacements[prompt['id']] = prompt['id']
+                continue
+            active = sorted(pid for pid, _ in prompt['answers'] if current.get(pid) == team)
+            depth = sorted(set(active) & set(low_toi.get(team, [])))
+            rows = [[pid, (15 if pid in depth else 10) if pid in active else points] for pid, points in prompt['answers']]
+            if not any(score == 100 for _, score in rows):
+                former = [row for row in rows if row[0] not in active and row[0] not in caps]
+                if not former: raise ValueError('No former player remains for a team-era prompt')
+                max(former, key=lambda row: (row[1], source_players.get(row[0], [0,0,0,0,0])[4], -row[0]))[1] = 100
+            identity = f'dc{policy}-' + prompt['id'] + '-' + fingerprint({'answers':rows, 'current':active, 'depth':depth, 'policy':policy})
+            replacements[prompt['id']] = identity
+            prompts.setdefault(identity, {**deepcopy(prompt), 'id':identity, 'base':prompt['id'], 'version':2,
+                                          'rosterTeam':team, 'currentRoster':active, 'lowToiRoster':depth,
+                                          'answers':rows, 'rosterAsOf':today.isoformat()})
     latest = []
-    for template in base["runs"]:
-        keys = [replacements.get(key, key) for key in template["prompts"]]
-        identity = f"dc-v{policy}-" + template["id"].rsplit("-", 1)[1] + "-" + fingerprint(keys)
+    sets = expanded_templates(templates) if expansion else [template['prompts'] for template in base['runs']]
+    for i, template in enumerate(sets):
+        keys = [replacements.get(key, key) for key in template]
+        identity = (f'dc-x1-v{policy}-' if expansion else f'dc-v{policy}-') + f'{i:03}-' + fingerprint(keys)
         latest.append(identity)
-        runs.setdefault(identity, {"id": identity, "prompts": keys, "scoringVersion": policy})
+        runs.setdefault(identity, {"id": identity, "prompts": keys, "scoringVersion": policy, **({'contentVersion':1} if expansion else {})})
     rollout = previous.get("rollout", {"daily_from": (today + timedelta(days=1)).isoformat()})
     result = {**base, "version": 2, "team_asof": source.get("grid_asof", source["asof"]), "roster_asof": today.isoformat(),
               "roster_snapshot": {str(pid): team for pid, team in sorted(current.items())},
               "toi_snapshot": toi_rows or [], "toi_season": toi_season, "low_toi_roster": low_toi, "active_policy": policy,
               "rollout": rollout, "practice_runs": latest, "current_prompts": replacements,
               "review_sha": fingerprint(review),
+              **({'content_asof':expansion['asof'], 'active_prompt_ids':[replacements.get(p['id'],p['id']) for p in templates],
+                  'content_version':1, 'content_prompts':len(templates), 'content_families':len({p['family'] for p in templates})} if expansion else {}),
               "scoring": "Fixed editorial tiers with reviewed name-recognition and club-connection adjustments. Current-club players score 10, except the six lowest average-TOI current skaters for that club score 15. Goalies stay at 10. Historical shifts retain their original scores; this is not live answer popularity.",
               "players": list(players.values()), "prompts": list(prompts.values()), "runs": list(runs.values())}
     return validate(previous, result)
