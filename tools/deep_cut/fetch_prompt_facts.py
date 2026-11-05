@@ -13,31 +13,36 @@ from zoneinfo import ZoneInfo
 def collect(fetch, today):
     year = today.year if today.month >= 7 else today.year - 1
     season = year * 10000 + year + 1
-    jobs = [(kind, report) for kind in ('skater', 'goalie') for report in ('summary', 'bios')]
+    # The stats service silently caps a response AND its reported total at
+    # 10,000 rows. Fetch season summaries in decades, never one all-time query.
+    jobs = [(kind, 'bios', None) for kind in ('skater', 'goalie')]
+    jobs += [(kind, 'summary', decade) for kind in ('skater', 'goalie') for decade in range(1910, year + 1, 10)]
     def request(job):
-        kind, report = job
+        kind, report, decade = job
+        expression = f'gameTypeId=2 and seasonId<={season}'
+        if decade is not None:
+            expression += f' and seasonId>={decade * 10000 + decade + 1} and seasonId<={(decade + 9) * 10000 + decade + 10}'
         params = {'isAggregate': 'true' if report == 'bios' else 'false', 'isGame': 'false', 'start': 0, 'limit': -1,
-                  'cayenneExp': f'gameTypeId=2 and seasonId<={season}'}
+                  'cayenneExp': expression}
         url = f'https://api.nhle.com/stats/rest/en/{kind}/{report}?' + urllib.parse.urlencode(params)
-        document, audit = fetch(kind + '-' + report + '.json', url)
-        if len(document['data']) != document['total']:
+        document, audit = fetch(f'{kind}-{report}-{decade}.json', url)
+        if len(document['data']) != document['total'] or len(document['data']) >= 10000:
             raise ValueError('Incomplete official NHL facts response')
         return kind, report, document['data'], audit
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=6) as pool:
         results = list(pool.map(request, jobs))
-    bios, seasons, sources = {}, {}, []
+    bios, seasons, sources, seen = {}, {}, [], set()
     for kind, report, records, audit in results:
         sources.append(audit)
-        seen = set()
         for record in records:
             pid = record['playerId']
             if report == 'bios':
                 if pid not in bios or kind == 'skater': bios[pid] = record
                 continue
             season_id, gp = record['seasonId'], record['gamesPlayed']
-            if (pid, season_id) in seen or type(gp) is not int or not 0 < gp < 100 or season_id > season:
+            if (kind, pid, season_id) in seen or type(gp) is not int or not 0 < gp < 100 or season_id > season:
                 raise ValueError('Invalid or duplicate NHL player-season fact')
-            seen.add((pid, season_id))
+            seen.add((kind, pid, season_id))
             clubs = [club.strip() for club in record['teamAbbrevs'].split(',')]
             key = (pid, season_id)
             row = seasons.setdefault(key, [pid, season_id, [], 0, 0, 0, 0, 0, 0, 0])
@@ -46,6 +51,10 @@ def collect(fetch, today):
             else: row[8:10] = [record.get(k, 0) or 0 for k in ('wins', 'shutouts')]
     played = {key[0] for key in seasons}
     if not played <= bios.keys(): raise ValueError('An NHL player is missing biographical evidence')
+    totals = dict.fromkeys(played, 0)
+    for row in seasons.values(): totals[row[0]] += row[3]
+    if any(totals[pid] != bios[pid]['gamesPlayed'] for pid in played):
+        raise ValueError('Season appearances do not cover complete official career GP')
     teams_url = 'https://api.nhle.com/stats/rest/en/team'
     teams, audit = fetch('teams.json', teams_url);sources.append(audit)
     return {'version': 1, 'asof': today.isoformat(), 'through_season': season,
