@@ -2,6 +2,11 @@ name: Verify Deep Cut scoring data
 
 on:
   workflow_dispatch:
+    inputs:
+      collect_prompt_facts:
+        description: Collect official NHL facts for a new prompt content release
+        type: boolean
+        default: false
   pull_request:
     paths:
       - "tools/deep_cut/**"
@@ -25,6 +30,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
+      - name: Collect official prompt expansion facts
+        if: github.event_name == 'workflow_dispatch' && inputs.collect_prompt_facts
+        run: python -B tools/deep_cut/fetch_prompt_facts.py --out /tmp/deep-cut-prompt-facts.json
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch' && inputs.collect_prompt_facts
+        with:
+          name: deep-cut-prompt-facts
+          path: /tmp/deep-cut-prompt-facts.json
       - name: Refresh official NHL appearances and club TOI
         run: python -B tools/community_games/refresh_grid.py
       - name: Build and verify a roster and TOI scoring edition
