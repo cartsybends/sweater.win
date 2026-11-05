@@ -137,12 +137,13 @@ function dcLand(action){
   let after;try{after=dcModel.state(st.target,[...st.guesses,action],DEEP_CUT_DATA);}catch{return;}
   clearInterval(dcTimer);dcTimer=0;const before=dcModel.state(st.target,st.guesses,DEEP_CUT_DATA).distance,r=after.rounds.at(-1),level=dcAnimationLevel(r.score);
   dcEndEffects();dcVisualDistance=before;
-  dcAnimation={start:performance.now(),duration:dcReduced()?0:900+level*400,from:before,to:after.distance,score:r.score,level,color:r.tier.color};
+  const motion=DEEP_CUT_SCENERY.skateMotion(r.score,0,dcReduced());
+  dcAnimation=r.score?{start:performance.now(),duration:motion.duration,offset:dcOffset,from:before,to:after.distance,score:r.score,level,color:r.tier.color}:null;
   dcSession().phase='reveal';doGuess(action);dcPlay(r.score);
   if(r.score){
     const cabinet=$('dcCabinet');cabinet.dataset.celebration=level;cabinet.style.setProperty?.('--dc-celebration',r.tier.color);
     $('dcBurst').innerHTML=`<small>${r.tier.name.toUpperCase()}</small>+${(r.score*10).toLocaleString()} m`;$('dcBurst').classList.add('on');
-    dcBurstTimer=setTimeout(()=>$('dcBurst').classList.remove('on'),900+level*400);dcEffectTimer=setTimeout(()=>delete cabinet.dataset.celebration,900+level*400);
+    const duration=Math.max(1300,motion.duration);dcBurstTimer=setTimeout(()=>$('dcBurst').classList.remove('on'),duration);dcEffectTimer=setTimeout(()=>delete cabinet.dataset.celebration,duration);
   }
   if(dcZone(before)!==dcZone(after.distance)){
     $('dcZoneAnnouncement').innerHTML=`<small>NEW ARENA UNLOCKED</small><strong>${dcZones[dcZone(after.distance)]}</strong>`;
@@ -243,15 +244,14 @@ function dcDraw(time,{backgroundOnly=false}={}){
   const canvas=$('dcCanvas'),c=canvas.getContext('2d');if(!c)return;
   const bounds=canvas.getBoundingClientRect(),mobile=bounds.width<620,pixel=mobile?2:3,W=Math.max(160,Math.ceil(bounds.width/pixel)),H=Math.max(160,Math.ceil(bounds.height/pixel));
   if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}c.imageSmoothingEnabled=false;
-  let moving=false,speed=.1,level=0,progress=1,color='#81f2df';
+  let motion=DEEP_CUT_SCENERY.skateMotion(0,0),level=0,progress=1,color='#81f2df';
   if(dcAnimation){
-    const a=dcAnimation;progress=a.duration?Math.min(1,(time-a.start)/a.duration):1;
-    dcVisualDistance=a.from+(a.to-a.from)*(1-(1-progress)**3);moving=progress<1&&a.score>0;level=a.level;color=a.color;
-    speed=moving?1.5+level*1.15:.1;
+    const a=dcAnimation;motion=DEEP_CUT_SCENERY.skateMotion(a.score,time-a.start,dcReduced());progress=motion.progress;level=a.level;color=a.color;
+    dcVisualDistance=a.from+(a.to-a.from)*motion.distanceRatio;
+    if(!dcReduced())dcOffset=a.offset+motion.travelPixels;
     $('dcDistance').textContent=Math.round(dcVisualDistance).toLocaleString();$('dcPoints').textContent=String(Math.round(dcVisualDistance/10)).padStart(3,'0');
-    if(progress>=1)dcAnimation=null;
+    if(motion.done)dcAnimation=null;
   }
-  if(!dcReduced())dcOffset+=speed;
   const zone=dcZone(dcVisualDistance),gold=zone===4,foot=H-Math.round(108/pixel),ice=Math.min(Math.floor(H*.76),foot-25);
   const wave=dcWaveState(time,zone);
   const paint=(x,y,w,h,fill)=>{c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));};
@@ -305,21 +305,11 @@ function dcDraw(time,{backgroundOnly=false}={}){
   DEEP_CUT_SCENERY.iceSurface(paint,{W,H,ice,zone,offset:dcOffset});
   if(zone===0&&!dcReduced())for(let i=0;i<45;i++)paint((i*113+time*.007*(1+i%3))%W,(i*17+time*.004)%ice,1,1,'#d7f1ec66');
   if(backgroundOnly)return;
-  const x=Math.max(23,Math.floor(W*(mobile?.14:bounds.height<830?.09:.22))),y=foot-39,stride=moving?Math.floor(time/(125-level*8))%2:0,bob=moving?stride:0;
-  paint(x-6,foot,35,3,'#315a6a55');
-  if(moving){
-    const spray=4+level*4;for(let i=0;i<spray;i++){const t=(progress*3+i*.131)%1;paint(x-3-t*(12+level*9),foot-t*(3+level*3)+i%3,1+i%2,1,'#ecfff1bb');}
-    for(let i=0;i<level*2;i++)paint(x-25-i*9,foot-7-i%4*4,10+i%9,1,color+'66');
-  }
-  const px=(dx,dy,w,h,fill)=>paint(x+dx,y+dy+bob,w,h,fill);
-  px(3,0,9,2,'#ece9ce');px(1,2,13,6,'#e4e7cf');px(3,3,8,2,'#f7f3d7');px(12,5,3,5,'#d7ad8d');px(11,5,2,2,'#24384d');px(12,10,2,2,'#c89f81');
-  px(2,8,9,4,'#233c50');px(-1,12,15,12,gold?'#e5b861':'#64c9c2');px(2,13,8,9,gold?'#ffdb82':'#8ce3d0');px(0,18,13,2,'#eef1d8');px(3,15,3,4,'#244c54');px(7,15,2,4,'#244c54');
-  px(-5,13,5,5,'#5ab9b6');px(-7,18,6,4,'#253c50');px(12,13,6,5,'#7bd5c6');px(16,17,5,5,'#263d51');px(18,18,4,2,'#e4ddc2');
-  px(0,24,13,5,'#233e53');px(stride?-3:0,29,5,6,'#20394e');px(stride?10:8,28,5,7,'#29455a');px(stride?-6:-2,35,8,2,'#e9ebd4');px(stride?10:9,35,8,2,'#e9ebd4');px(stride?-7:-3,38,10,1,'#243b4c');px(stride?9:8,38,11,1,'#243b4c');
-  // One continuous, taped blade; exactly one puck remains beside its toe.
-  for(let i=0;i<15;i++)px(20+i,22+i,2,2,'#b49d76');px(33,36,10,2,'#eee9cd');px(33,38,11,1,'#65717a');px(35,36,1,2,'#83929b');px(39,36,1,2,'#83929b');
-  c.fillStyle='#101a24';c.beginPath();c.ellipse(x+46,y+39+bob,3,1.5,0,0,Math.PI*2);c.fill();
-  if(moving&&!dcReduced()){
+  const x=Math.max(23,Math.floor(W*(mobile?.14:bounds.height<830?.09:.22)))+motion.shift;
+  if(motion.speed>10)for(let i=0;i<level*2;i++)paint(x-25-i*9,foot-7-i%4*4,10+i%9,1,color+'66');
+  const puck=DEEP_CUT_SCENERY.skater(paint,{x,foot,zone,motion});
+  c.fillStyle='#101a24';c.beginPath();c.ellipse(puck.x,puck.y,3,1.5,0,0,Math.PI*2);c.fill();
+  if(level&&progress<1&&!dcReduced()){
     const count=level<4?level*7:level===4?35:level===5?62:95,fade=Math.sin(Math.PI*progress);
     c.globalAlpha=fade;
     for(let i=0;i<count;i++){

@@ -4,6 +4,77 @@ export const DEEP_CUT_SCENERY=(()=>{
   const layouts=new Map();
   const mod=(n,d)=>((n%d)+d)%d;
   const mix=(a,b,t)=>a+(b-a)*Math.max(0,Math.min(1,t));
+  const skateProfiles=[
+    // Run, brake, settle (ms), peak rink speed (pixels/s), stride cycles/s.
+    [1800,200,200,68,2.4],[1700,220,220,90,2.9],[1550,250,240,128,3.5],
+    [1400,300,280,190,4.3],[1200,430,340,290,5.3],[1050,560,420,390,6.5],
+  ];
+  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
+  function skateMotion(score,elapsed,still=false){
+    const level=[10,15,30,60,85,100].indexOf(score)+1;
+    const idle={level,phase:'idle',duration:0,runMs:0,brakeMs:0,progress:1,distanceRatio:1,speed:0,travelPixels:0,cadence:0,swing:0,bob:0,lean:0,turn:0,shift:0,stopMs:-1,hardStop:false,done:true};
+    if(!level||still)return idle;
+    const [runMs,brakeMs,settleMs,peak,cadence]=skateProfiles[level-1],duration=runMs+brakeMs+settleMs;
+    const t=Math.max(0,elapsed),pushMs=Math.min(220,runMs*.2),brake=Math.max(0,Math.min(brakeMs,t-runMs));
+    const run=Math.min(t,runMs),integral=run<pushMs?run*run/(2*pushMs):run-pushMs/2;
+    const travel=integral+brake-brake*brake/(2*brakeMs),total=runMs-pushMs/2+brakeMs/2;
+    const ratio=t<runMs?Math.min(1,t/pushMs):Math.max(0,1-(t-runMs)/brakeMs);
+    const done=t>=duration,phase=done?'idle':t<pushMs?'push':t<runMs?'sprint':t<runMs+brakeMs?'brake':'settle';
+    const hardStop=level>=5,stopMs=t>=runMs?t-runMs:-1;
+    const turn=hardStop&&stopMs>=0?smooth(stopMs/(brakeMs*.6))*(1-smooth((stopMs-brakeMs)/settleMs)):0;
+    const swing=t<runMs?Math.sin(travel/1000*cadence*Math.PI*2):Math.sin((runMs-pushMs/2)/1000*cadence*Math.PI*2)*(1-smooth((t-runMs)/100));
+    return {level,phase,duration,runMs,brakeMs,progress:Math.min(1,t/duration),distanceRatio:Math.min(1,travel/total),speed:peak*ratio,
+      travelPixels:peak*travel/1000,cadence:cadence*ratio,swing,bob:Math.abs(swing)*(level>=4?2:1),
+      lean:(1+level)*ratio-3*turn,turn,shift:6*ratio-3*turn,stopMs,hardStop,done};
+  }
+  function pixelLine(paint,x1,y1,x2,y2,width,color){
+    const steps=Math.max(1,Math.ceil(Math.max(Math.abs(x2-x1),Math.abs(y2-y1))));
+    for(let i=0;i<=steps;i++)paint(mix(x1,x2,i/steps),mix(y1,y2,i/steps),width,width,color);
+  }
+  function skater(paint,{x,foot,zone,motion=skateMotion(0,0)}){
+    const m=motion,turn=m.turn,y=foot-39,crouch=turn*3,bob=m.bob+crouch,gold=zone===4;
+    const alpha=(hex,value)=>hex+Math.round(Math.max(0,Math.min(1,value))*255).toString(16).padStart(2,'0');
+    paint(x-6,foot+1,35,3,'#315a6a55');
+    if(m.speed>5&&m.phase!=='brake'){
+      for(let i=0;i<4+m.level*2;i++){
+        const t=mod(m.travelPixels/24+i*.137,1);
+        paint(x-4-t*(10+m.level*5),foot-1-t*(2+m.level),1+i%2,1,'#ecfff199');
+      }
+    }
+    if(m.hardStop&&m.stopMs>=0&&!m.done){
+      const legendary=m.level===6,count=legendary?84:42,seconds=m.stopMs/1000;
+      for(let i=0;i<count;i++){
+        const seed=mod(i*37,101)/100,birth=i%7*.025,age=seconds-birth,life=Math.min(.38+seed*.4,(m.duration-m.runMs)/1000-birth-.04);
+        if(age<0||age>life)continue;
+        const angle=-Math.PI*(.14+mod(i*19,83)/100),velocity=(legendary?85:58)*(1+seed);
+        const px=x+12+Math.cos(angle)*velocity*age,py=foot-2+Math.sin(angle)*velocity*age+85*age*age;
+        paint(px,Math.min(foot+1,py),i%5===0?3:1+i%2,1+i%3,alpha(i%3?'#edfff8':'#b8e2ed',1-age/life));
+      }
+      const fade=Math.max(0,1-m.stopMs/(m.brakeMs+300));
+      pixelLine(paint,x-9,foot+3,x+11,foot-2,1,alpha('#f4fff6',fade));
+      pixelLine(paint,x+8,foot+4,x+28,foot-1,1,alpha('#f4fff6',fade));
+    }
+    const px=(dx,dy,w,h,fill)=>paint(x+dx+m.lean*Math.max(0,1-dy/30),y+dy+bob,w,h,fill);
+    px(3,0,9,2,'#ece9ce');px(1,2,13,6,'#e4e7cf');px(3,3,8,2,'#f7f3d7');
+    if(turn>.45){px(4,6,8,4,'#d7ad8d');px(3,5,10,2,'#24384d');px(6,7,1,1,'#24384d');px(10,7,1,1,'#24384d');}
+    else {px(12,5,3,5,'#d7ad8d');px(11,5,2,2,'#24384d');px(12,10,2,2,'#c89f81');}
+    px(2,8,9,4,'#233c50');px(-1-turn,12,15+turn*2,12,gold?'#e5b861':'#64c9c2');px(2,13,8,9,gold?'#ffdb82':'#8ce3d0');px(0,18,13,2,'#eef1d8');px(3,15,3,4,'#244c54');px(7,15,2,4,'#244c54');
+    px(-5-turn*2,13,5,5,'#5ab9b6');px(-7-turn*2,18,6,4,'#253c50');px(12,13,6,5,'#7bd5c6');px(16-turn*3,17,5,5,'#263d51');px(18-turn*3,18,4,2,'#e4ddc2');
+    px(0,24,13,5,'#233e53');
+    for(let i=0;i<2;i++){
+      const swing=m.swing*(i?-1:1),hip=x+(i?9:2),knee=x+(i?10:1)+swing*3;
+      const boot=mix(x+(i?10:0)+swing*9,x+(i?16:-6),turn),lift=(1-turn)*Math.max(0,-swing)*3;
+      pixelLine(paint,hip,y+27+bob,knee,y+31+bob,4,i?'#29455a':'#20394e');
+      pixelLine(paint,knee,y+31+bob,boot+2,foot-5-lift,3,i?'#29455a':'#20394e');
+      pixelLine(paint,boot,foot-4-lift,boot+6,foot-4-lift-turn*3,3,'#e9ebd4');
+      pixelLine(paint,boot-1,foot-lift,boot+9,foot-lift-turn*4,1,'#243b4c');
+    }
+    const bladeX=x+33-turn*12,bladeY=foot-3;
+    pixelLine(paint,x+20+m.lean*.3-turn*3,y+22+bob,bladeX,bladeY,2,'#b49d76');
+    paint(bladeX,bladeY,10,2,'#eee9cd');paint(bladeX,bladeY+2,11,1,'#65717a');paint(bladeX+2,bladeY,1,2,'#83929b');paint(bladeX+6,bladeY,1,2,'#83929b');
+    // The caller draws one puck at this toe, always resting on the ice.
+    return {x:bladeX+13,y:foot};
+  }
   const glyphs={A:'010101111101101',B:'110101110101110',C:'011100100100011',D:'110101101101110',E:'111100110100111',F:'111100110100100',I:'111010010010111',K:'101101110101101',L:'100100100100111',M:'101111111101101',N:'101111111111101',O:'010101101101010',P:'110101110100100',R:'110101110101101',S:'011100010001110',T:'111010010010010',U:'101101101101111',V:'101101101101010',W:'101101111111101',X:'101101010101101',Z:'111001010100111'};
   Object.assign(glyphs,{G:'011100101101011',H:'101101111101101',J:'001001001101010',Q:'010101101111011',Y:'101101010010010','0':'111101101101111','1':'010110010010111','2':'110001010100111','3':'110001010001110','4':'101101111001001','5':'111100110001110','6':'011100111101111','7':'111001010010010','8':'111101111101111','9':'111101111001110',' ':'000000000000000','/':'001001010100100','-':'000000111000000','+':'000010111010000',':':'000010000010000','%':'101001010100101'});
   function word(paint,text,x,y,color){
@@ -253,5 +324,5 @@ export const DEEP_CUT_SCENERY=(()=>{
       }
     }
   }
-  return Object.freeze({windowState,houseWindow,dogWalkerState,neighbourhoodWalkers,ribbonMessage,ribbon,communityActor,vendingLit,community,arenaLayout,arenaActor,waveLift,arena,boards,iceSurface,ring});
+  return Object.freeze({skateMotion,skater,windowState,houseWindow,dogWalkerState,neighbourhoodWalkers,ribbonMessage,ribbon,communityActor,vendingLit,community,arenaLayout,arenaActor,waveLift,arena,boards,iceSurface,ring});
 })();

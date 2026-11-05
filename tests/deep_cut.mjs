@@ -152,6 +152,61 @@ test('rarer accepted answers have six distinct celebration levels and new prompt
  }
  r.run('dcCleanup()');assert.equal(r.el('dcCabinet').dataset.celebration,undefined);assert.equal(r.el('dcZoneAnnouncement').hidden,true);assert.equal(r.timers.size,0);
 });
+test('deeper answers sprint faster with quicker strides and begin braking sooner',()=>{
+ let previous=null;
+ for(const score of [10,15,30,60,85,100]){
+  const m=SCENERY.skateMotion(score,500);
+  assert.equal(m.phase,'sprint');assert(m.speed>0&&m.cadence>0);
+  if(previous){assert(m.speed>previous.speed);assert(m.cadence>previous.cadence);assert(m.runMs<previous.runMs);assert(m.travelPixels>previous.travelPixels);}
+  previous=m;
+ }
+ assert.equal(SCENERY.skateMotion(0,500).speed,0);
+});
+test('skating acceleration and braking are continuous and finish at the exact awarded distance',()=>{
+ for(const score of [10,15,30,60,85,100]){
+  const profile=SCENERY.skateMotion(score,0);let previous=profile;
+  for(let time=0;time<=profile.duration+100;time+=10){
+   const m=SCENERY.skateMotion(score,time);
+   assert(m.distanceRatio>=previous.distanceRatio&&m.distanceRatio<=1);assert(m.travelPixels>=previous.travelPixels);assert(m.speed>=0);
+   assert(Math.abs(m.speed-previous.speed)<20,'No jump in camera speed at phase boundaries');previous=m;
+  }
+  const ended=SCENERY.skateMotion(score,profile.duration),late=SCENERY.skateMotion(score,profile.duration+2000);
+  assert.equal(ended.done,true);assert.equal(ended.distanceRatio,1);assert.equal(ended.speed,0);assert.equal(ended.turn,0);assert.equal(ended.travelPixels,late.travelPixels);
+ }
+ const m=SCENERY.skateMotion(100,1500);assert(m.turn>.9);assert(m.speed<SCENERY.skateMotion(100,500).speed);
+});
+test('the deepest pull turns onto the edges with a larger snow fan and one puck at the stick toe',()=>{
+ const render=(score,time)=>{
+  const rows=[],motion=SCENERY.skateMotion(score,time),puck=SCENERY.skater((...row)=>rows.push(row),{x:55,foot:240,zone:2,motion});
+  assert(rows.every(row=>row.slice(0,4).every(Number.isFinite)));assert.equal(puck.y,240);
+  const blade=rows.find(row=>row[4]==='#eee9cd');assert.equal(puck.x,blade[0]+13);
+  return {rows,snow:rows.filter(row=>/^#(?:edfff8|b8e2ed)[0-9a-f]{2}$/.test(row[4])).length,puck};
+ };
+ const common=render(10,SCENERY.skateMotion(10,0).runMs+180),deep=render(85,1380),legend=render(100,1230);
+ assert.equal(common.snow,0);assert(deep.snow>20);assert(legend.snow>deep.snow);assert(legend.puck.x<common.puck.x,'The blade and puck tuck in during the stop');
+ const duration=SCENERY.skateMotion(100,0).duration;assert.equal(render(100,duration).snow,0);
+});
+test('the rink comes to rest after a stop and animation cleanup never changes the game clock or score',()=>{
+ const r=runtime();r.ctx.matchMedia=()=>({matches:false});
+ const c={fillRect(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},fill(){},ellipse(){}};
+ r.el('dcCanvas').getContext=()=>c;r.el('dcCanvas').getBoundingClientRect=()=>({left:0,top:0,width:1440,height:900});
+ r.run('dcBegin()');r.advance(3000);const p=ix.prompts.get(r.ctx.S.deepcut.target.prompts[0]),id=p.answers.find(a=>a[1]===100)[0],deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
+ r.run(`dcLand('${id}')`);const start=r.run('dcAnimation.start'),duration=r.run('dcAnimation.duration');
+ r.run(`dcDraw(${start+600})`);const first=r.run('dcOffset');assert(first>0);
+ r.run(`dcDraw(${start+600})`);assert.equal(r.run('dcOffset'),first,'Drawing twice at one timestamp must not advance the rink');
+ r.run(`dcDraw(${start+duration+10})`);assert.equal(r.run('dcAnimation'),null);const stopped=r.run('dcOffset');
+ r.run(`dcDraw(${start+duration+1000})`);assert.equal(r.run('dcOffset'),stopped);assert.equal(r.run('dcVisualDistance'),1000);
+ assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.guesses.length,1);assert.equal(r.ctx.G.deepcut.score(r.ctx.S.deepcut.target,r.ctx.S.deepcut.guesses),100);
+ r.run('dcBegin();dcCleanup()');assert.equal(r.run('dcAnimation'),null);assert.equal(r.run('dcOffset'),stopped);
+});
+test('reduced motion suppresses the sprint, stop and snow while keeping the awarded points',()=>{
+ for(const score of [10,15,30,60,85,100]){
+  const a=SCENERY.skateMotion(score,0,true),b=SCENERY.skateMotion(score,1500,true);
+  assert.deepEqual(a,b);assert.equal(a.speed,0);assert.equal(a.turn,0);assert.equal(a.done,true);assert.equal(a.distanceRatio,1);
+ }
+ const r=runtime();r.run('dcBegin()');r.advance(3000);const p=ix.prompts.get(r.ctx.S.deepcut.target.prompts[0]),id=p.answers.find(a=>a[1]===100)[0];r.run(`dcLand('${id}')`);
+ assert.equal(r.run('dcAnimation'),null);assert.equal(r.run('dcVisualDistance'),1000);assert.equal(r.run('dcOffset'),0);
+});
 test('arena progression uses total points and announces each next threshold',()=>{
  const r=runtime();
  for(const [points,name,next] of [[0,'NEIGHBOURHOOD','150'],[149,'NEIGHBOURHOOD','150'],[150,'COMMUNITY','300'],[299,'COMMUNITY','300'],[300,'BIG LEAGUES','450'],[450,'RAFTERS','600'],[600,'LEGENDS','700'],[700,'LEGENDS','700']]){
