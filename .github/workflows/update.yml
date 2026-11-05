@@ -140,6 +140,7 @@ jobs:
           python -B tests/deep_cut_data.py
           python -B tests/deep_cut_scoring.py
           python -B tests/deep_cut_toi.py
+          python -B tests/deep_cut_expansion.py
 
       - name: Validate generated JavaScript
         shell: bash

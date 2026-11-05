@@ -12,6 +12,7 @@ on:
       - "tools/deep_cut/**"
       - "tools/community_games/refresh_grid.py"
       - "static/deep-cut/familiarity.json"
+      - "static/deep-cut/expansion.json"
       - "deep_cut_scoring_cache.json"
       - "tests/deep_cut*"
       - ".github/workflows/deep-cut-scoring.yml"
@@ -59,6 +60,7 @@ jobs:
           python -B tests/deep_cut_data.py
           python -B tests/deep_cut_scoring.py
           python -B tests/deep_cut_toi.py
+          python -B tests/deep_cut_expansion.py
           node tests/deep_cut.mjs
       - uses: actions/upload-artifact@v4
         with:
