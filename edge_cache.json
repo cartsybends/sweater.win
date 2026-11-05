@@ -37057,42 +37057,6 @@
     }
    ]
   },
-  "8480007": {
-   "id": 8480007,
-   "season": "20252026",
-   "shot": 80.5,
-   "speed": 20.83,
-   "bursts20": 6,
-   "miles": 2.33,
-   "distance": 7.96,
-   "total": 6,
-   "hd": 3,
-   "mid": 3,
-   "long": 0,
-   "hdPct": 0.0,
-   "midPct": 0.0,
-   "longPct": 0.0,
-   "oz": 0.4168,
-   "nz": 0.1805,
-   "dz": 0.4027,
-   "areas": [
-    {
-     "area": "Low Slot",
-     "shots": 3,
-     "pct": null
-    },
-    {
-     "area": "High Slot",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 1,
-     "pct": null
-    }
-   ]
-  },
   "8483553": {
    "id": 8483553,
    "season": "20252026",
@@ -37902,67 +37866,6 @@
     {
      "area": "Beyond Red Line",
      "shots": 3,
-     "pct": null
-    }
-   ]
-  },
-  "8483471": {
-   "id": 8483471,
-   "season": "20252026",
-   "shot": 73.85,
-   "speed": 22.6,
-   "bursts20": 60,
-   "miles": 2.38,
-   "distance": 46.37,
-   "total": 27,
-   "hd": 9,
-   "mid": 8,
-   "long": 1,
-   "hdPct": 0.1111,
-   "midPct": 0.125,
-   "longPct": 1.0,
-   "oz": 0.3869,
-   "nz": 0.1772,
-   "dz": 0.436,
-   "areas": [
-    {
-     "area": "Low Slot",
-     "shots": 8,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 6,
-     "pct": null
-    },
-    {
-     "area": "Outside R",
-     "shots": 3,
-     "pct": null
-    },
-    {
-     "area": "L Circle",
-     "shots": 2,
-     "pct": null
-    },
-    {
-     "area": "Behind the Net",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "Beyond Red Line",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "Center Point",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "Crease",
-     "shots": 1,
      "pct": null
     }
    ]
@@ -40316,6 +40219,37 @@
     },
     {
      "area": "R Net Side",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8484242": {
+   "id": 8484242,
+   "season": "20252026",
+   "shot": 80.53,
+   "speed": 20.42,
+   "bursts20": 1,
+   "miles": 2.29,
+   "distance": 5.66,
+   "total": 2,
+   "hd": 0,
+   "mid": 1,
+   "long": 1,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.3649,
+   "nz": 0.2013,
+   "dz": 0.4338,
+   "areas": [
+    {
+     "area": "L Circle",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "R Point",
      "shots": 1,
      "pct": null
     }
