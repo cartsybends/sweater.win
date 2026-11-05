@@ -125,9 +125,11 @@ class ExpansionTests(unittest.TestCase):
         self.assertEqual(set(usage),set(DATA['active_prompt_ids']))
         self.assertGreater(min(usage.values()),0)
         for p in BANK['prompts']:
-            if not p.get('rosterTeam'): continue
+            team = p.get('rosterTeam')
+            if p['criteria']['kind'] == 'shared-season': team = DATA['roster_snapshot'].get(str(p['criteria']['player']))
+            if not team: continue
             updated = prompts[DATA['current_prompts'][p['id']]]
-            expected = {pid for pid,_ in p['answers'] if DATA['roster_snapshot'].get(str(pid)) == p['rosterTeam']}
+            expected = {pid for pid,_ in p['answers'] if DATA['roster_snapshot'].get(str(pid)) == team}
             self.assertEqual(set(updated['currentRoster']),expected)
             for pid, points in updated['answers']:
                 if pid in expected: self.assertEqual(points,15 if pid in updated['lowToiRoster'] else 10)

@@ -133,6 +133,8 @@ def publish(base, previous, source, roster, today, review=None, toi_rows=None, r
                 raise ValueError('A published expansion prompt changed; release a new content identity')
             prompts.setdefault(prompt['id'], deepcopy(prompt))
             team = prompt.get('rosterTeam')
+            if prompt['criteria']['kind'] == 'shared-season':
+                team = current.get(prompt['criteria']['player'])
             if not team:
                 replacements[prompt['id']] = prompt['id']
                 continue
@@ -146,7 +148,8 @@ def publish(base, previous, source, roster, today, review=None, toi_rows=None, r
             identity = f'dc{policy}-' + prompt['id'] + '-' + fingerprint({'answers':rows, 'current':active, 'depth':depth, 'policy':policy})
             replacements[prompt['id']] = identity
             prompts.setdefault(identity, {**deepcopy(prompt), 'id':identity, 'base':prompt['id'], 'version':2,
-                                          'currentRoster':active, 'lowToiRoster':depth, 'answers':rows, 'rosterAsOf':today.isoformat()})
+                                          'rosterTeam':team, 'currentRoster':active, 'lowToiRoster':depth,
+                                          'answers':rows, 'rosterAsOf':today.isoformat()})
     latest = []
     sets = expanded_templates(templates) if expansion else [template['prompts'] for template in base['runs']]
     for i, template in enumerate(sets):

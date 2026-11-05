@@ -39,8 +39,9 @@ before installing it. The daily site build does not refetch these frozen facts.
 Run `python -B tools/deep_cut/build_expansion.py` to reproduce this release.
 The script refuses to overwrite a different published bank. Future content
 changes require a new version and identities; do not edit a published answer
-set. `scoring.py` appends current-roster editions for team-era questions using
-the same 10/15-point policy as other single-club prompts. New practice sets use
+set. `scoring.py` appends current-roster editions for team-era questions and for
+eligible current teammates of an active named player in shared-club questions,
+using the same 10/15-point policy as other single-club prompts. New practice sets use
 all categories immediately. The day planner preserves today's shared daily and
 all past dates, and rotates expanded sets into future days. Every previously
 published player, question, scoring edition and run remains available unchanged.
