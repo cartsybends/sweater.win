@@ -1109,11 +1109,6 @@
   "team": "CBJ",
   "number": 83
  },
- "8478046": {
-  "name": "Danton Heinen",
-  "team": "CBJ",
-  "number": 58
- },
  "8482660": {
   "name": "Kent Johnson",
   "team": "CBJ",
@@ -1128,6 +1123,11 @@
   "name": "Ryan Lomberg",
   "team": "CBJ",
   "number": 94
+ },
+ "8478904": {
+  "name": "Steven Lorentz",
+  "team": "CBJ",
+  "number": 18
  },
  "8477497": {
   "name": "Sean Monahan",
@@ -1153,11 +1153,6 @@
   "name": "Dmitri Voronkov",
   "team": "CBJ",
   "number": 10
- },
- "8482126": {
-  "name": "Emil Andrae",
-  "team": "CBJ",
-  "number": 36
  },
  "8481161": {
   "name": "Jake Christiansen",
@@ -1388,6 +1383,11 @@
   "name": "Tony DeAngelo",
   "team": "NYI",
   "number": 77
+ },
+ "8477018": {
+  "name": "Ben Hutton",
+  "team": "NYI",
+  "number": 71
  },
  "8482516": {
   "name": "Matthew Kessel",
