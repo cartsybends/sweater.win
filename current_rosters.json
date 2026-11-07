@@ -1554,11 +1554,6 @@
   "team": "NYR",
   "number": 70
  },
- "8473503": {
-  "name": "James Reimer",
-  "team": "NYR",
-  "number": 47
- },
  "8478048": {
   "name": "Igor Shesterkin",
   "team": "NYR",
@@ -1988,11 +1983,6 @@
   "name": "Teuvo Teravainen",
   "team": "CHI",
   "number": 86
- },
- "8476952": {
-  "name": "Dominic Toninato",
-  "team": "CHI",
-  "number": 25
  },
  "8481524": {
   "name": "Bowen Byram",
@@ -2603,6 +2593,11 @@
   "name": "Theo Lindstein",
   "team": "STL",
   "number": 4
+ },
+ "8482733": {
+  "name": "Logan Mailloux",
+  "team": "STL",
+  "number": 23
  },
  "8476892": {
   "name": "Colton Parayko",
