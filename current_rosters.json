@@ -1,4 +1,9 @@
 {
+ "8479591": {
+  "name": "Michael Eyssimont",
+  "team": "BOS",
+  "number": 81
+ },
  "8479987": {
   "name": "Morgan Geekie",
   "team": "BOS",
@@ -264,11 +269,6 @@
   "team": "DET",
   "number": 18
  },
- "8484160": {
-  "name": "Nate Danielson",
-  "team": "DET",
-  "number": 29
- },
  "8479337": {
   "name": "Alex DeBrincat",
   "team": "DET",
@@ -293,11 +293,6 @@
   "name": "Keegan Kolesar",
   "team": "DET",
   "number": 55
- },
- "8481077": {
-  "name": "John Leonard",
-  "team": "DET",
-  "number": 43
  },
  "8482802": {
   "name": "Carter Mazur",
@@ -718,11 +713,6 @@
   "name": "Samuel Ersson",
   "team": "OTT",
   "number": 30
- },
- "8477992": {
-  "name": "Jonas Johansson",
-  "team": "OTT",
-  "number": 31
  },
  "8476999": {
   "name": "Linus Ullmark",
@@ -2819,11 +2809,6 @@
   "team": "WPG",
   "number": 4
  },
- "8483510": {
-  "name": "Elias Salomonsson",
-  "team": "WPG",
-  "number": 57
- },
  "8480049": {
   "name": "Dylan Samberg",
   "team": "WPG",
@@ -3443,6 +3428,11 @@
   "name": "Brandon Montour",
   "team": "SEA",
   "number": 62
+ },
+ "8482866": {
+  "name": "Ville Ottavainen",
+  "team": "SEA",
+  "number": 46
  },
  "8478916": {
   "name": "Joey Daccord",
