@@ -1926,6 +1926,67 @@
     }
    ]
   },
+  "8479591": {
+   "id": 8479591,
+   "season": "20252026",
+   "shot": 84.05,
+   "speed": 22.51,
+   "bursts20": 45,
+   "miles": 2.62,
+   "distance": 97.43,
+   "total": 109,
+   "hd": 34,
+   "mid": 24,
+   "long": 7,
+   "hdPct": 0.1471,
+   "midPct": 0.0833,
+   "longPct": 0.0,
+   "oz": 0.4156,
+   "nz": 0.1866,
+   "dz": 0.3978,
+   "areas": [
+    {
+     "area": "Low Slot",
+     "shots": 19,
+     "pct": null
+    },
+    {
+     "area": "Outside R",
+     "shots": 17,
+     "pct": null
+    },
+    {
+     "area": "Crease",
+     "shots": 15,
+     "pct": null
+    },
+    {
+     "area": "Outside L",
+     "shots": 12,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 10,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 9,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 5,
+     "pct": null
+    },
+    {
+     "area": "R Net Side",
+     "shots": 5,
+     "pct": null
+    }
+   ]
+  },
   "8479987": {
    "id": 8479987,
    "season": "20252026",
@@ -14309,6 +14370,57 @@
     },
     {
      "area": "Offensive Neutral Zone",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8483433": {
+   "id": 8483433,
+   "season": "20252026",
+   "shot": 72.61,
+   "speed": 21.74,
+   "bursts20": 5,
+   "miles": 1.6,
+   "distance": 8.58,
+   "total": 6,
+   "hd": 1,
+   "mid": 2,
+   "long": 0,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4235,
+   "nz": 0.2051,
+   "dz": 0.3714,
+   "areas": [
+    {
+     "area": "Crease",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "Offensive Neutral Zone",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "Outside R",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "R Net Side",
      "shots": 1,
      "pct": null
     }
@@ -38211,6 +38323,42 @@
     }
    ]
   },
+  "8481567": {
+   "id": 8481567,
+   "season": "20252026",
+   "shot": 78.26,
+   "speed": 19.91,
+   "bursts20": 0,
+   "miles": 2.1,
+   "distance": 7.94,
+   "total": 4,
+   "hd": 0,
+   "mid": 1,
+   "long": 3,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.3806,
+   "nz": 0.1768,
+   "dz": 0.4426,
+   "areas": [
+    {
+     "area": "Center Point",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
   "8482765": {
    "id": 8482765,
    "season": "20252026",
@@ -40077,149 +40225,123 @@
     }
    ]
   },
-  "8479591": {
-   "id": 8479591,
+  "8483487": {
+   "id": 8483487,
    "season": "20252026",
-   "shot": 84.05,
-   "speed": 22.51,
-   "bursts20": 45,
-   "miles": 2.62,
-   "distance": 97.43,
-   "total": 109,
-   "hd": 34,
-   "mid": 24,
-   "long": 7,
-   "hdPct": 0.1471,
-   "midPct": 0.0833,
+   "shot": 86.18,
+   "speed": 22.61,
+   "bursts20": 28,
+   "miles": 2.52,
+   "distance": 46.55,
+   "total": 37,
+   "hd": 13,
+   "mid": 9,
+   "long": 3,
+   "hdPct": 0.0769,
+   "midPct": 0.2222,
    "longPct": 0.0,
-   "oz": 0.4156,
-   "nz": 0.1866,
-   "dz": 0.3978,
+   "oz": 0.4193,
+   "nz": 0.176,
+   "dz": 0.4047,
    "areas": [
     {
      "area": "Low Slot",
-     "shots": 19,
-     "pct": null
-    },
-    {
-     "area": "Outside R",
-     "shots": 17,
-     "pct": null
-    },
-    {
-     "area": "Crease",
-     "shots": 15,
-     "pct": null
-    },
-    {
-     "area": "Outside L",
      "shots": 12,
      "pct": null
     },
     {
-     "area": "R Circle",
-     "shots": 10,
+     "area": "High Slot",
+     "shots": 4,
      "pct": null
     },
     {
      "area": "L Circle",
-     "shots": 9,
+     "shots": 4,
      "pct": null
     },
     {
-     "area": "High Slot",
-     "shots": 5,
+     "area": "Outside L",
+     "shots": 4,
      "pct": null
     },
     {
      "area": "R Net Side",
-     "shots": 5,
+     "shots": 4,
      "pct": null
-    }
-   ]
-  },
-  "8481567": {
-   "id": 8481567,
-   "season": "20252026",
-   "shot": 78.26,
-   "speed": 19.91,
-   "bursts20": 0,
-   "miles": 2.1,
-   "distance": 7.94,
-   "total": 4,
-   "hd": 0,
-   "mid": 1,
-   "long": 3,
-   "hdPct": 0.0,
-   "midPct": 0.0,
-   "longPct": 0.0,
-   "oz": 0.3806,
-   "nz": 0.1768,
-   "dz": 0.4426,
-   "areas": [
+    },
     {
-     "area": "Center Point",
+     "area": "Behind the Net",
      "shots": 2,
      "pct": null
     },
     {
      "area": "L Point",
-     "shots": 1,
+     "shots": 2,
      "pct": null
     },
     {
-     "area": "R Circle",
+     "area": "Center Point",
      "shots": 1,
      "pct": null
     }
    ]
   },
-  "8483433": {
-   "id": 8483433,
+  "8481167": {
+   "id": 8481167,
    "season": "20252026",
-   "shot": 72.61,
-   "speed": 21.74,
-   "bursts20": 5,
-   "miles": 1.6,
-   "distance": 8.58,
-   "total": 6,
-   "hd": 1,
-   "mid": 2,
-   "long": 0,
+   "shot": 86.62,
+   "speed": 21.14,
+   "bursts20": 14,
+   "miles": 2.71,
+   "distance": 74.95,
+   "total": 28,
+   "hd": 2,
+   "mid": 3,
+   "long": 16,
    "hdPct": 0.0,
    "midPct": 0.0,
-   "longPct": 0.0,
-   "oz": 0.4235,
-   "nz": 0.2051,
-   "dz": 0.3714,
+   "longPct": 0.0625,
+   "oz": 0.4104,
+   "nz": 0.1859,
+   "dz": 0.4038,
    "areas": [
+    {
+     "area": "R Point",
+     "shots": 8,
+     "pct": null
+    },
+    {
+     "area": "Center Point",
+     "shots": 5,
+     "pct": null
+    },
+    {
+     "area": "Outside R",
+     "shots": 4,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 3,
+     "pct": null
+    },
+    {
+     "area": "Beyond Red Line",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 2,
+     "pct": null
+    },
     {
      "area": "Crease",
      "shots": 1,
      "pct": null
     },
     {
-     "area": "L Circle",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "Offensive Neutral Zone",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "Outside R",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 1,
-     "pct": null
-    },
-    {
-     "area": "R Net Side",
+     "area": "High Slot",
      "shots": 1,
      "pct": null
     }
@@ -40237,6 +40359,7 @@
   "8479976",
   "8480029",
   "8481538",
+  "8481743",
   "8482121",
   "8482160",
   "8482169",
@@ -40246,6 +40369,7 @@
   "8482784",
   "8482806",
   "8482866",
+  "8483012",
   "8483017",
   "8483428",
   "8483442",
