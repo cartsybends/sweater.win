@@ -253,6 +253,8 @@ function dcDraw(time,{backgroundOnly=false}={}){
     if(motion.done)dcAnimation=null;
   }
   const zone=dcZone(dcVisualDistance),gold=zone===4,foot=H-Math.round(108/pixel),ice=Math.min(Math.floor(H*.76),foot-25);
+  const skaterX=Math.max(23,Math.floor(W*(mobile?.14:bounds.height<830?.09:.22)))+motion.shift;
+  const watchTarget=backgroundOnly?{x:W/2,y:foot-20}:{x:skaterX+7+motion.lean*.6,y:foot-20+motion.bob+motion.turn*3};
   const wave=dcWaveState(time,zone);
   const paint=(x,y,w,h,fill)=>{c.fillStyle=fill;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));};
   paint(0,0,W,H,['#102535','#102232','#091a31','#131c36','#211b33'][zone]);
@@ -291,7 +293,7 @@ function dcDraw(time,{backgroundOnly=false}={}){
   }else if(zone===1){
     DEEP_CUT_SCENERY.community(paint,{W,ice,time,still:dcReduced()});
   }else{
-    DEEP_CUT_SCENERY.arena(paint,{W,ice,time,still:dcReduced(),zone,wave,progress:{...dcRibbonContext,score:Math.round(dcVisualDistance/10)}});
+    DEEP_CUT_SCENERY.arena(paint,{W,ice,time,still:dcReduced(),zone,wave,watchTarget,progress:{...dcRibbonContext,score:Math.round(dcVisualDistance/10)}});
   }
   const lightCount=zone===0?4:zone===1?6:10;
   for(let i=0;i<lightCount;i++){
@@ -305,7 +307,7 @@ function dcDraw(time,{backgroundOnly=false}={}){
   DEEP_CUT_SCENERY.iceSurface(paint,{W,H,ice,zone,offset:dcOffset});
   if(zone===0&&!dcReduced())for(let i=0;i<45;i++)paint((i*113+time*.007*(1+i%3))%W,(i*17+time*.004)%ice,1,1,'#d7f1ec66');
   if(backgroundOnly)return;
-  const x=Math.max(23,Math.floor(W*(mobile?.14:bounds.height<830?.09:.22)))+motion.shift;
+  const x=skaterX;
   if(motion.speed>10)for(let i=0;i<level*2;i++)paint(x-25-i*9,foot-7-i%4*4,10+i%9,1,color+'66');
   const puck=DEEP_CUT_SCENERY.skater(paint,{x,foot,zone,motion});
   c.fillStyle='#101a24';c.beginPath();c.ellipse(puck.x,puck.y,3,1.5,0,0,Math.PI*2);c.fill();
