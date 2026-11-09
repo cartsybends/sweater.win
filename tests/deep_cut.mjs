@@ -265,6 +265,40 @@ test('larger arenas have two bowls, separated aisles and ribbon screens, and abo
   assert(layout.travellers.length>0);assert(layout.travellers.every(seat=>seat.occupied));
  }
 });
+test('fans turn left, right or down toward the actual rink action instead of sharing one fixed gaze',()=>{
+ const x=200,head=90;
+ assert.equal(SCENERY.fanGaze(x,head,{x:30,y:220}).direction,-1);
+ assert.equal(SCENERY.fanGaze(x,head,{x:370,y:220}).direction,1);
+ const down=SCENERY.fanGaze(x,head,{x,y:220}),up=SCENERY.fanGaze(x,head,{x,y:30});
+ assert.equal(down.direction,0);assert(down.eyeY>up.eyeY);assert.equal(down.headShift,0);
+ assert(Math.abs(SCENERY.fanGaze(x,40,{x:30,y:220}).headShift)<Math.abs(SCENERY.fanGaze(x,170,{x:30,y:220}).headShift),'The upper bowl looks more steeply down toward the ice');
+ for(let target=-100;target<=500;target+=5){const g=SCENERY.fanGaze(x,head,{x:target,y:220});assert(Number.isFinite(g.headShift)&&Math.abs(g.headShift)<=.65);assert(g.eyeY>=1&&g.eyeY<=2.8);}
+ for(const seed of [8,9])for(const pose of ['sit','stand','cheer']){
+  const eyes=target=>{const rows=[];SCENERY.person((...p)=>rows.push(p),x,110,seed,{pose,zone:3,cheer:1,carry:'popcorn',lookAt:target});assert(rows.every(p=>p.slice(0,4).every(Number.isFinite)));return rows.filter(p=>p[4]==='#1b2937');};
+  assert(eyes({x:0,y:230}).every(p=>p[0]<x));assert(eyes({x:400,y:230}).every(p=>p[0]>x));
+  const center=eyes({x,y:230});assert.equal(center.length,2);assert(center[0][0]<x&&center[1][0]>x);
+ }
+});
+test('both bowls and standing fans follow the supplied skater in levels three through five',()=>{
+ for(const [W,ice] of [[160,99],[188,254],[480,228],[640,300]])for(const zone of [2,3,4]){
+  const eyes=watchTarget=>{const rows=[];SCENERY.arena((...p)=>{if(p[4]==='#1b2937')rows.push(p);},{W,ice,zone,still:true,time:0,watchTarget});return rows;};
+  const left=eyes({x:-1000,y:ice+40}),right=eyes({x:W+1000,y:ice+40}),layout=SCENERY.arenaLayout(W,ice,zone);
+  assert.equal(left.length,layout.seats.filter(s=>s.occupied).length+layout.travellers.filter(s=>s.standingRoom).length);
+  assert.equal(left.length,right.length);for(let i=0;i<left.length;i++)assert(left[i][0]<right[i][0]);
+ }
+});
+test('the game passes its moving skater position to the crowd on every arena frame',()=>{
+ const r=runtime(),gazes=[],sprites=[];r.ctx.matchMedia=()=>({matches:false});
+ r.ctx.DEEP_CUT_SCENERY={...SCENERY,arena(p,options){gazes.push(options.watchTarget);return SCENERY.arena(p,options);},skater(p,options){sprites.push(options);return SCENERY.skater(p,options);}};
+ r.el('dcCanvas').getContext=()=>({fillRect(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},fill(){},ellipse(){}});
+ r.el('dcCanvas').getBoundingClientRect=()=>({left:0,top:0,width:1440,height:900});
+ for(const from of [3000,4500,6000]){
+  r.run(`dcAnimation={start:0,duration:2030,offset:0,from:${from},to:${from+1000},score:100,level:6,color:'#ffdb82'}`);
+  for(const time of [500,1400]){r.run(`dcDraw(${time})`);const gaze=gazes.at(-1),sprite=sprites.at(-1);assert.equal(gaze.x,sprite.x+7+sprite.motion.lean*.6);assert.equal(gaze.y,sprite.foot-20+sprite.motion.bob+sprite.motion.turn*3);}
+  assert.notEqual(gazes.at(-1).x,gazes.at(-2).x,'Eyes track the sprint-to-stop position change');
+ }
+ assert.equal(r.ctx.S.deepcut.guesses.length,0);
+});
 test('concessions trips leave seats vacant, return with snacks, and stay on continuous aisle paths',()=>{
  for(const seat of SCENERY.arenaLayout(480,228).travellers){
   let previous=null,sawAway=false,sawSnack=false;

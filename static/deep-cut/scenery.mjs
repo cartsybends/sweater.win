@@ -142,12 +142,23 @@ export const DEEP_CUT_SCENERY=(()=>{
     for(let x=-shift;x<W;x+=span){word(paint,message,x+3,y+2,ink);logo(paint,'bolt',x+span-15,y+2,ink);}
     paint(0,y+7,W*Math.max(0,Math.min(1,(progress.score||0)/700)),1,ink);
   }
-  function person(paint,x,y,seed,{pose='sit',carry=null,time=0,zone=1,cheer=0}={}){
+  function fanGaze(x,headY,target){
+    const dx=(Number.isFinite(target?.x)?target.x:x)-x,dy=(Number.isFinite(target?.y)?target.y:headY+40)-headY;
+    const bearing=dx/Math.hypot(dx,Math.max(16,Math.abs(dy)*.65)),direction=bearing<-.25?-1:bearing>.25?1:0;
+    return {direction,headShift:bearing*.65,eyeX:direction*2,eyeY:dy<0?1:2+Math.max(0,1-Math.abs(bearing)*1.6)*.8};
+  }
+  function person(paint,x,y,seed,{pose='sit',carry=null,time=0,zone=1,cheer=0,lookAt=null}={}){
     const rise=Math.round(cheer*2),head=y-(pose==='sit'?11:15)-rise,step=pose==='walk'?Math.floor(time/160+seed)%2:0;
     const skin=['#deb995','#af866e','#edc9aa','#946c58'][mod(seed,4)],hair=['#443b37','#8b7051','#302f36','#af9470'][mod(seed*3,4)];
     const shirt=(zone===4?['#bd984e','#647d91','#b19b7c','#7d6385']:zone===3?['#9278ab','#687fa4','#b6808a','#5d999d']:['#6895a5','#b17c83','#6f9c91','#8e87ad','#b79568'])[mod(seed,zone>=3?4:5)];
-    paint(x-2,head,4,4,skin);paint(x-2,head,4,1,hair);paint(x+1,head+2,1,1,'#1b2937');
-    if(seed%3===0){paint(x-3,head-1,5,2,shirt);paint(x+2,head,2,1,shirt);}else paint(x-2,head+1,1,2,hair);
+    const gaze=lookAt?fanGaze(x,head,lookAt):null,hx=x+(gaze?.headShift||0),direction=gaze?.direction??1;
+    paint(hx-2,head,gaze?5:4,4,skin);paint(hx-2,head,gaze?5:4,1,hair);
+    if(seed%3===0){paint(hx-3,head-1,5,2,shirt);paint(hx+(direction<0?-4:direction>0?2:-2),head,direction?2:5,1,shirt);}
+    else {paint(hx+(direction<0?2:-2),head+1,1,2,hair);if(gaze&&!direction)paint(hx+2,head+1,1,2,hair);}
+    if(!gaze)paint(x+1,head+2,1,1,'#1b2937');
+    else if(direction){
+      paint(hx+(direction<0?-2:1),head+gaze.eyeY,2,1,'#e2e6d6');paint(hx+gaze.eyeX,head+gaze.eyeY,1,1,'#1b2937');paint(hx+(direction<0?-3:3),head+2,1,1,skin);
+    }else {paint(hx-1,head+gaze.eyeY,1,1,'#1b2937');paint(hx+1,head+gaze.eyeY,1,1,'#1b2937');}
     paint(x-3,head+4,6,5,shirt);paint(x-3,head+7,6,1,seed%2?'#dce6d7':'#304b61');paint(x-1,head+5,1,2,'#cbd8c5');
     if(pose==='cheer'){paint(x-4,head-1,1,7,shirt);paint(x+3,head-1,1,7,shirt);paint(x-5,head-3,2,2,skin);paint(x+3,head-3,2,2,skin);}
     else {paint(x-4,head+5,1,4,shirt);paint(x+3,head+5,1,4,shirt);paint(x-4,head+8,1,1,skin);paint(x+3,head+8,1,1,skin);}
@@ -253,7 +264,7 @@ export const DEEP_CUT_SCENERY=(()=>{
     const pulse=(time-wave.start)/1000-seat.x/W*3.2-seat.bowl*.65-seat.row*.06;
     return pulse>0&&pulse<1.25?Math.sin(pulse/1.25*Math.PI):0;
   }
-  function arena(paint,{W,ice,time,still,zone,wave=null,progress={}}){
+  function arena(paint,{W,ice,time,still,zone,wave=null,progress={},watchTarget={x:W/2,y:ice+30}}){
     const layout=arenaLayout(W,ice,zone),gold=zone===4,purple=zone===3,wall=gold?'#30283a':purple?'#25243f':'#152c43',metal=gold?'#766046':purple?'#565073':'#425a71';
     paint(0,30,W,ice-30,wall);paint(0,29,W,3,metal);
     for(let x=0;x<W;x+=60){paint(x,31,2,Math.max(4,layout.upperWalkY-48),metal);paint(x,31,61,2,metal);for(let j=0;j<6;j++)paint(x+j*10,33+j*2,2,2,metal);}
@@ -273,9 +284,14 @@ export const DEEP_CUT_SCENERY=(()=>{
       paint(seat.x-3,seat.y-5,6,4,gold?'#635264':purple?'#4a4266':'#39576e');paint(seat.x-2,seat.y-5,4,1,gold?'#87715e':'#638293');
       const traveller=travellers.get(seat.id);if(!seat.occupied||traveller&&(!traveller.actor.visible||traveller.actor.pose!=='sit'))continue;
       const cheer=still?0:waveLift(seat,W,time,wave);
-      person(paint,seat.x,seat.y,seat.seed,{zone,pose:cheer>.15?'cheer':'sit',cheer,carry:cheer>.15?null:traveller?.actor.carry||(seat.seed%13===0?'popcorn':seat.seed%17===0?'drink':null),time:still?0:time});
+      person(paint,seat.x,seat.y,seat.seed,{zone,pose:cheer>.15?'cheer':'sit',cheer,carry:cheer>.15?null:traveller?.actor.carry||(seat.seed%13===0?'popcorn':seat.seed%17===0?'drink':null),time:still?0:time,lookAt:watchTarget});
     }
-    for(const {seat,actor} of actors)if(actor.visible&&actor.pose!=='sit')person(paint,actor.x,actor.y,seat.seed,{pose:actor.pose,carry:actor.carry,time:still?0:time,zone});
+    for(const {seat,actor} of actors)if(actor.visible&&actor.pose!=='sit'){
+      const next=actor.pose==='walk'?arenaActor(seat,time+120,still):null;
+      const path=next?{x:actor.x+(next.x-actor.x)*100,y:actor.y+(next.y-actor.y)*100}:null;
+      // Seated/standing fans watch the ice; people on snack trips watch their path.
+      person(paint,actor.x,actor.y,seat.seed,{pose:actor.pose,carry:actor.carry,time:still?0:time,zone,lookAt:path||watchTarget});
+    }
     paint(0,ice-8,W,1,'#8aa7b6');for(let x=0;x<W;x+=38)paint(x,ice-8,1,8,'#7d9aa688');
     if(gold)for(let i=0;i<18;i++){const x=(i*47+20)%W,y=40+(i*23)%Math.max(1,layout.upperTop-50);paint(x,y,1,5,'#e7c87588');paint(x-2,y+2,5,1,'#e7c87588');}
     return layout;
@@ -324,5 +340,5 @@ export const DEEP_CUT_SCENERY=(()=>{
       }
     }
   }
-  return Object.freeze({skateMotion,skater,windowState,houseWindow,dogWalkerState,neighbourhoodWalkers,ribbonMessage,ribbon,communityActor,vendingLit,community,arenaLayout,arenaActor,waveLift,arena,boards,iceSurface,ring});
+  return Object.freeze({skateMotion,skater,fanGaze,person,windowState,houseWindow,dogWalkerState,neighbourhoodWalkers,ribbonMessage,ribbon,communityActor,vendingLit,community,arenaLayout,arenaActor,waveLift,arena,boards,iceSurface,ring});
 })();
