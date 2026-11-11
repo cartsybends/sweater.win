@@ -2299,11 +2299,6 @@
   "team": "MIN",
   "number": 47
  },
- "8475752": {
-  "name": "Tyler Pitlick",
-  "team": "MIN",
-  "number": 19
- },
  "8485702": {
   "name": "Maxim Shabanov",
   "team": "MIN",
@@ -2803,6 +2798,11 @@
   "name": "Dylan Samberg",
   "team": "WPG",
   "number": 54
+ },
+ "8482076": {
+  "name": "Nico Daws",
+  "team": "WPG",
+  "number": 35
  },
  "8479973": {
   "name": "Stuart Skinner",
@@ -3628,11 +3628,6 @@
   "name": "Filip Hronek",
   "team": "VAN",
   "number": 17
- },
- "8483768": {
-  "name": "Victor Mancini",
-  "team": "VAN",
-  "number": 90
  },
  "8476467": {
   "name": "Jamie Oleksiak",
