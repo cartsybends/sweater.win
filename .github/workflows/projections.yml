@@ -1,0 +1,33 @@
+name: Verify point projections
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "static/projections/**"
+      - "tools/projections/**"
+      - "tests/projections*"
+      - "projections_cache.json"
+      - ".github/workflows/projections.yml"
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Verify official NHL season totals and club games
+        run: python -B tools/projections/data.py
+      - name: Check projection calculations
+        run: |
+          if [ -f tests/projections.mjs ]; then node tests/projections.mjs; fi
+          if [ -f tests/projections_data.py ]; then python -B tests/projections_data.py; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: point-projections-snapshot
+          path: projections_cache.json
