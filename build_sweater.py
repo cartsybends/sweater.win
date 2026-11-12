@@ -9697,7 +9697,9 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 /*__COMMUNITY_MODEL__*/
 /*__COMMUNITY_GAMES__*/
 /*__PROJECTIONS_MODEL__*/
+/*__PROJECTIONS_SHARE_MODEL__*/
 /*__PROJECTIONS_APP__*/
+/*__PROJECTIONS_SHARE__*/
 /*__DEEP_CUT_MODEL__*/
 /*__DEEP_CUT_SCENERY__*/
 /*__DEEP_CUT_GAME__*/
@@ -11413,7 +11415,7 @@ function route() {
     showHub(false);
     return;
   }
-  if (id === "projections") { openProjections(false); return; }
+  if (id === "projections" || id.startsWith("projections?")) { openProjections(false); return; }
   if (id === "teams" || id.startsWith("team-")) {
     const team = id.startsWith("team-") ? id.slice(5).toUpperCase() : "";
     openTeams(Object.hasOwn(TEAMS, team) ? team : "", false); return;
@@ -14434,11 +14436,13 @@ def main():
     face_swap_puzzles = load_face_swap_puzzles()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["static/projections/model.mjs", "static/projections/app.js", "static/projections/styles.css", "static/projections/view.html", "projections_cache.json", "deep_cut_scoring_cache.json", "static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["static/projections/model.mjs", "static/projections/share-model.mjs", "static/projections/share.js", "static/projections/app.js", "static/projections/styles.css", "static/projections/view.html", "projections_cache.json", "deep_cut_scoring_cache.json", "static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
         "/*__PROJECTIONS_CSS__*/": (HERE / "static/projections/styles.css").read_text(),
         "<!--__PROJECTIONS_VIEW__-->": (HERE / "static/projections/view.html").read_text(),
         "/*__PROJECTIONS_MODEL__*/": (HERE / "static/projections/model.mjs").read_text().replace("export const POINT_PROJECTIONS", "const POINT_PROJECTIONS"),
+        "/*__PROJECTIONS_SHARE_MODEL__*/": (HERE / "static/projections/share-model.mjs").read_text().replace("export function createProjectionSharing", "function createProjectionSharing"),
         "/*__PROJECTIONS_APP__*/": (HERE / "static/projections/app.js").read_text().replace("/*__PROJECTION_DATA__*/{}", esc(load_projection_data())),
+        "/*__PROJECTIONS_SHARE__*/": (HERE / "static/projections/share.js").read_text(),
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
         "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),
