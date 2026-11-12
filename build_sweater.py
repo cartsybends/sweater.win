@@ -655,6 +655,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   /*__SHOOTOUT_CSS__*/
   /*__TEAM_GAMES_CSS__*/
   /*__COMMUNITY_GAMES_CSS__*/
+  /*__PROJECTIONS_CSS__*/
   /*__DEEP_CUT_CSS__*/
 
   /* NHL EDGE hub + games */
@@ -3144,6 +3145,7 @@ TEMPLATE = r'''<!DOCTYPE html>
 <body class="hubmode">
 <nav class="navbar">
   <a href="./" id="homeLink" class="brand" title="All games"><span>SWEATER</span></a>
+  <a class="pp-nav" id="projectionsNav" href="#projections" aria-label="Point projections"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 19h16M5 15l5-5 4 3 6-9m-5 0h5v5"/></svg><span>Projections</span></a>
   <div class="navactions">
     <button class="iconbtn round" id="statsBtn" type="button" aria-label="Statistics" title="Statistics">📊</button>
     <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
@@ -3182,6 +3184,7 @@ TEMPLATE = r'''<!DOCTYPE html>
       <span><b>Dive into team based games!</b><small>Pick your team and test how deep your franchise knowledge goes — seasons, leaders, rosters and history.</small><strong>Choose a team →</strong></span>
       <span class="teamlogos" id="teamLogoMosaic" aria-hidden="true"></span>
     </button>
+    <button type="button" class="pp-home" data-open="projections"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19h16M5 15l5-5 4 3 6-9m-5 0h5v5"/></svg></span><span class="pp-home-copy"><small>SWEATER TOOLS</small><b>Point Projections</b><small>Compare NHL players, explore an 84-game pace, or calculate your own.</small></span><strong aria-hidden="true">↗</strong></button>
     <section class="edgehome" aria-labelledby="edgeHomeTitle">
       <div class="edgehomehead">
         <div><p>Player tracking</p><h2 id="edgeHomeTitle">NHL EDGE</h2><small>Games built from real puck-and-player tracking: skating speed, shot velocity, distance and shot-location zones.</small></div>
@@ -3210,6 +3213,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="libraryfilters" id="libraryFilters" role="group" aria-label="Filter game library"></div>
     <div id="hubSections" hidden></div>
   </section>
+
+  <!--__PROJECTIONS_VIEW__-->
 
   <section class="view community-view" id="view-grid" hidden>
     <div class="cg-stage">
@@ -9678,6 +9683,8 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 
 /*__COMMUNITY_MODEL__*/
 /*__COMMUNITY_GAMES__*/
+/*__PROJECTIONS_MODEL__*/
+/*__PROJECTIONS_APP__*/
 /*__DEEP_CUT_MODEL__*/
 /*__DEEP_CUT_SCENERY__*/
 /*__DEEP_CUT_GAME__*/
@@ -10531,6 +10538,7 @@ function dayMeter() {
 }
 
 function tick() {
+  if (document.body.classList.contains("projections-mode")) return;
   if (mode === "daily" && S[game].day && S[game].day !== dayKey()) { loadDaily(); return; }
   const s = secondsToEtMidnight();
   const pad = n => String(n).padStart(2, "0");
@@ -11041,6 +11049,7 @@ $("view-hub").addEventListener("click", e => {
   if (b.dataset.challenge) openChallenge(b.dataset.challenge);
   else if (b.dataset.open === "party") openParty("");
   else if (b.dataset.open === "teams") openTeams();
+  else if (b.dataset.open === "projections") openProjections();
   else openGame(b.dataset.open);
 });
 
@@ -11309,6 +11318,7 @@ function openTeamMode(t, mode) {
   else if (mode === "journey" || mode === "mystery") startTeamJourney(t);
 }
 function openTeams(team = "", push = true) {
+  if (typeof closeProjections === "function") closeProjections();
   teamMiniCleanup();
   globalThis.SweaterAnalytics?.view("teams", "unlimited");
   if (team) globalThis.SweaterAnalytics?.team?.(team);
@@ -11330,6 +11340,7 @@ $("view-teams").addEventListener("click", e => {
 });
 
 function showHub(push = true) {
+  if (typeof closeProjections === "function") closeProjections();
   if (typeof teamMiniCleanup === "function") teamMiniCleanup();
   globalThis.SweaterAnalytics?.hub?.();
   const returningToHub = !onHub;
@@ -11351,6 +11362,7 @@ function showHub(push = true) {
 }
 
 function openGame(id, push = true) {
+  if (typeof closeProjections === "function") closeProjections();
   if (id === "blur") { id = "faceswap"; history.replaceState(null, "", "#faceswap"); }
   if (typeof teamMiniCleanup === "function") teamMiniCleanup();
   if (MAINTENANCE_GAMES.has(id)) {
@@ -11388,6 +11400,7 @@ function route() {
     showHub(false);
     return;
   }
+  if (id === "projections") { openProjections(false); return; }
   if (id === "teams" || id.startsWith("team-")) {
     const team = id.startsWith("team-") ? id.slice(5).toUpperCase() : "";
     openTeams(Object.hasOwn(TEAMS, team) ? team : "", false); return;
@@ -11397,7 +11410,7 @@ function route() {
     return;
   }
   if (id && (Object.hasOwn(G, id) || id === "hl")) {
-    if (!onHub && id === game) return;
+    if (!onHub && id === game && !$(G[id].view).hidden) return;
     openGame(id, false);
   } else {
     // The hub is dynamic. Even when onHub is already true on first load, we
@@ -11430,6 +11443,7 @@ let party = null, partyTimer = null, partyBusy = false;
 const partySaved = () => { const p = store.get("sweater-party"); return p && Date.now() - p.at < 6 * 3600e3 ? p : null; };
 
 function openParty(code, push = true) {
+  if (typeof closeProjections === "function") closeProjections();
   globalThis.SweaterAnalytics?.view("party", "party");
   if (push) rememberHubScroll();
   if (push) history.pushState(null, "", code ? `#party-${code}` : "#party");
@@ -13571,6 +13585,17 @@ def load_community_data():
     return refresh.attach_updates(data, json.loads(GRID_CURRENT_CACHE.read_text(encoding="utf-8")))
 
 
+def projections_module():
+    spec = importlib.util.spec_from_file_location("sweater_projections", HERE / "tools/projections/data.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_projection_data():
+    return projections_module().load()
+
+
 def load_deep_cut_data():
     """A versioned snapshot keeps scores stable during builds and archive replays."""
     base = json.loads((HERE / "static/deep-cut/data.json").read_text(encoding="utf-8"))
@@ -14376,6 +14401,8 @@ def main():
     team_history = load_team_history(players)
     today = eastern_today()
     edge_data = fetch_edge_data(roster_players, today)
+    projection_roster = list({p["id"]: p for p in roster_players + players}.values())
+    projections_module().refresh(get_json, projection_roster, today)
     build_stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     print(f"\n{stamp()} Planning daily puzzles...")
     goal_clips = load_goal_clips()
@@ -14394,7 +14421,11 @@ def main():
     face_swap_puzzles = load_face_swap_puzzles()
     fills = {
         "/*__SITE_RELEASE__*/": hashlib.sha256(Path(__file__).read_bytes() + b"\0" + GRID_CURRENT_CACHE.read_bytes() + b"\0" + b"\0".join((HERE / name).read_bytes() for name in
-            ["deep_cut_scoring_cache.json", "static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+            ["static/projections/model.mjs", "static/projections/app.js", "static/projections/styles.css", "static/projections/view.html", "projections_cache.json", "deep_cut_scoring_cache.json", "static/deep-cut/model.mjs", "static/deep-cut/scenery.mjs", "static/deep-cut/game.js", "static/deep-cut/styles.css", "static/deep-cut/view.html", "static/deep-cut/data.json", "static/deep-cut/pixel.ttf", "analytics/client.js", "static/shootout/animation.js", "static/who-scored/clips.json", "static/who-scored/sources.json", "static/who-scored/games.json", "static/trophies/images.json", "static/team-games/games.js", "static/team-games/styles.css", "static/community-games/model.mjs", "static/community-games/games.js", "static/community-games/styles.css", "static/community-games/data.json", "static/community-games/logos.json", "static/community-games/flags.json", "static/face-swap/model.mjs", "static/face-swap/game.js", "static/face-swap/styles.css", "static/face-swap/view.html", "static/face-swap/puzzles.json", "grid_popularity.json"])).hexdigest()[:12],
+        "/*__PROJECTIONS_CSS__*/": (HERE / "static/projections/styles.css").read_text(),
+        "<!--__PROJECTIONS_VIEW__-->": (HERE / "static/projections/view.html").read_text(),
+        "/*__PROJECTIONS_MODEL__*/": (HERE / "static/projections/model.mjs").read_text().replace("export const POINT_PROJECTIONS", "const POINT_PROJECTIONS"),
+        "/*__PROJECTIONS_APP__*/": (HERE / "static/projections/app.js").read_text().replace("/*__PROJECTION_DATA__*/{}", esc(load_projection_data())),
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
         "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),

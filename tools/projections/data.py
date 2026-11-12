@@ -54,7 +54,9 @@ def collect(fetch,roster,today):
       'team_games':teams,'players':sorted(records.values(),key=lambda p:p['id'])})
 
 def load():
-    return validate(json.loads(CACHE.read_text())) if CACHE.exists() else {'version':1,'start':2026,'season':20262027,'season_games':84,'asof':None,'players':[],'team_games':{}}
+    start=season_start(datetime.now(ZoneInfo('America/New_York')).date())
+    old=validate(json.loads(CACHE.read_text())) if CACHE.exists() else None
+    return old if old and old['start']==start else {'version':1,'start':start,'season':start*10000+start+1,'season_games':84,'asof':None,'players':[],'team_games':{}}
 
 def refresh(fetch,roster,today):
     try:
