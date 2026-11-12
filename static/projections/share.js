@@ -1,5 +1,5 @@
 const PP_SWEATER_MARK='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#18232f"/><path d="M27 11H17a5 5 0 0 0 0 10h6a4 4 0 0 1 0 8H12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M12 35h16" stroke="#8055ff" stroke-width="3"/></svg>';
-const ppImageCache=new Map(),ppExportCache=new Map();
+const ppImageCache=new Map(),ppExportCache=new Map(),ppCrestCache=new Map();
 let ppPrepared=null,ppPreviewURL='',ppPreviewSnapshot=null,ppPreviewBlob=null;
 $('ppCardBrand').innerHTML=PP_SWEATER_MARK+'<span>sweater.win</span>';
 
@@ -9,6 +9,7 @@ function ppShareSnapshot(){
 }
 function ppShareURL(snapshot){const url=new URL(SITE||location.href);url.search='';url.hash=ppSharing.hash(snapshot);return url.href;}
 function ppCloseShare(focus=false){$('ppShareMenu').hidden=true;$('ppShareToggle').setAttribute('aria-expanded','false');if(focus)$('ppShareToggle').focus();}
+function ppFinishPresentation(snapshot,r){const adjusted=!!snapshot&&(snapshot.rate!==100||snapshot.missed>0);return {show:!!r.valid&&(adjusted||Math.abs(r.finish.points-r.pace.points)>1e-8),label:adjusted?'Adjusted projection':'Projected season total'};}
 function ppRenderShare(p,r,manual){
  const snapshot=ppShareSnapshot(),start=snapshot?.start||PROJECTION_DATA.start||2026;
  $('ppShareToggle').disabled=!r.valid;$('ppShareStatus').textContent='';if(!r.valid)ppCloseShare();
@@ -22,7 +23,8 @@ function ppRenderShare(p,r,manual){
   $('ppCardPortrait').innerHTML=manual?uiIcon('chart'):`<span>${esc(initials)}</span>${p?`<img src="projection-headshots/${p.id}.webp" alt="" onload="this.previousElementSibling.hidden=true" onerror="this.remove()">`:''}`;
  }
  const team=!manual&&p?.team&&Object.hasOwn(TEAMS,p.team)?p.team:null;
- $('ppTeamArt').hidden=!team;if(team&&$('ppTeamArt').getAttribute('src')!==`team-logos/${team}.svg`)$('ppTeamArt').src=`team-logos/${team}.svg`;
+ $('ppTeamArt').hidden=!team;if(team&&$('ppTeamArt').dataset.team!==team){$('ppTeamArt').dataset.team=team;$('ppTeamArt').src=`team-logos/${team}.svg`;ppLoadCrest(team).then(img=>{if(img&&$('ppTeamArt').dataset.team===team)$('ppTeamArt').src=img.src;});}
+ const finish=ppFinishPresentation(snapshot,r);$('ppFinishSection').hidden=!finish.show;$('ppFinishLabel').textContent=finish.label;
  $('ppCardFootnote').textContent=manual?'Pace estimate · manual calculator':`Pace estimate${snapshot?.asof?' · '+snapshot.asof:''}`;
  if(!$('ppShareMenu').hidden)ppCloseShare();
 }
@@ -35,14 +37,28 @@ function ppLoadImage(src){
  });
  ppImageCache.set(src,promise);if(ppImageCache.size>32)ppImageCache.delete(ppImageCache.keys().next().value);return promise;
 }
+function ppLoadCrest(team){
+ if(ppCrestCache.has(team))return ppCrestCache.get(team);
+ const promise=ppLoadImage(`team-logos/${team}.svg`).then(image=>{
+  if(!image)return null;
+  // Remove only transparent padding from the official SVG, keeping the full crest.
+  const c=document.createElement('canvas');c.width=960;c.height=640;const ctx=c.getContext('2d');ctx.drawImage(image,0,0,960,640);
+  const pixels=ctx.getImageData(0,0,960,640).data;let left=960,top=640,right=-1,bottom=-1;
+  for(let y=0;y<640;y++)for(let x=0;x<960;x++)if(pixels[(y*960+x)*4+3]){left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
+  if(right<left)return image;
+  const cropped=document.createElement('canvas');cropped.width=right-left+1;cropped.height=bottom-top+1;cropped.getContext('2d').drawImage(c,left,top,cropped.width,cropped.height,0,0,cropped.width,cropped.height);
+  return ppLoadImage(cropped.toDataURL('image/png'));
+ }).catch(()=>null);
+ ppCrestCache.set(team,promise);if(ppCrestCache.size>12)ppCrestCache.delete(ppCrestCache.keys().next().value);return promise;
+}
 function ppRoundRect(ctx,x,y,w,h,r,fill){ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);if(fill){ctx.fillStyle=fill;ctx.fill();}}
-function ppDrawContain(ctx,img,x,y,w,h){if(!img)return;const scale=Math.min(w/img.width,h/img.height),dw=img.width*scale,dh=img.height*scale;ctx.drawImage(img,x+(w-dw)/2,y+h-dh,dw,dh);}
+function ppDrawContain(ctx,img,x,y,w,h,center=false){if(!img)return;const scale=Math.min(w/img.width,h/img.height),dw=img.width*scale,dh=img.height*scale;ctx.drawImage(img,x+(w-dw)/2,y+(center?(h-dh)/2:h-dh),dw,dh);}
 async function ppDrawExport(snapshot){
- const p=snapshot.player,r=ppModel.calculate({...p,...snapshot}),manual=snapshot.mode==='manual';
- const [portrait,crest,mark]=await Promise.all([manual?null:ppLoadImage(`projection-headshots/${p.id}.webp`),p.team?ppLoadImage(`team-logos/${p.team}.svg`):null,ppLoadImage('data:image/svg+xml,'+encodeURIComponent(PP_SWEATER_MARK))]);
- const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=1040;const ctx=canvas.getContext('2d');
- ppRoundRect(ctx,0,0,1200,1040,36,'#102b35');ctx.save();ctx.clip();
- if(crest){ctx.globalAlpha=.1;ppDrawContain(ctx,crest,690,190,570,480);ctx.globalAlpha=1;}
+ const p=snapshot.player,r=ppModel.calculate({...p,...snapshot}),manual=snapshot.mode==='manual',finish=ppFinishPresentation(snapshot,r),height=finish.show?1040:850;
+ const [portrait,crest,mark]=await Promise.all([manual?null:ppLoadImage(`projection-headshots/${p.id}.webp`),p.team?ppLoadCrest(p.team):null,ppLoadImage('data:image/svg+xml,'+encodeURIComponent(PP_SWEATER_MARK))]);
+ const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=height;const ctx=canvas.getContext('2d');
+ ppRoundRect(ctx,0,0,1200,height,36,'#102b35');ctx.save();ctx.clip();
+ if(crest){ctx.globalAlpha=.045;ppDrawContain(ctx,crest,60,45,1080,height-90,true);ctx.globalAlpha=1;}
  ctx.restore();
  const text=(value,x,y,size=22,color='#f3f8f8',weight=500,align='left')=>{ctx.font=`${weight} ${size}px Arial, sans-serif`;ctx.textAlign=align;ctx.fillStyle=color;ctx.fillText(String(value),x,y);};
  const fit=(value,max,size,min=24)=>{for(;size>min;size--){ctx.font=`750 ${size}px Arial, sans-serif`;if(ctx.measureText(value).width<=max)break;}return size;};
@@ -57,11 +73,11 @@ async function ppDrawExport(snapshot){
  ctx.font=`750 ${size}px Arial, sans-serif`;const pw=ctx.measureText(points).width;text('POINTS',Math.min(830,70+pw),451,18,'#abc4c9',600);
  text(ppRate(r.ppg),1138,409,58,'#f3f8f8',650,'right');text('POINTS / GAME',1138,443,15,'#abc4c9',500,'right');
  [['PROJECTED GOALS',r.pace.goals],['PROJECTED ASSISTS',r.pace.assists],['POINTS SO FAR',r.points]].forEach(([label,n],i)=>{const x=60+i*366;ppRoundRect(ctx,x,510,348,128,16,'#193640');text(label,x+24,550,15,'#abc4c9',500);text(ppFmt(n),x+24,610,fit(ppFmt(n),300,48), '#f3f8f8',650);});
- text('YOUR SCENARIO FINISH',62,716,17,'#abc4c9',600);text(`${ppFmt(r.finish.points)} points`,1138,722,fit(`${ppFmt(r.finish.points)} points`,620,54),'#f3f8f8',650,'right');
- text(`${r.points} recorded points + ${ppRate(r.ppg*r.rate/100)} points/game × ${r.remaining} remaining games`,62,775,21,'#abc4c9');
- text(`${r.points} PTS in ${r.gp} GP  ·  future scoring ${r.rate}%  ·  ${r.missed} future games missed`,62,818,19,'#8faeb7');
- if(mark)ctx.drawImage(mark,60,930,44,44);text('sweater.win',116,962,30,'#d6e5e8',700);
- text('PACE ESTIMATE · REGULAR SEASON',1138,943,15,'#90aeb5',500,'right');text(manual?'Manual calculator':`Stats recorded · ${snapshot.asof||'date unavailable'}`,1138,973,16,'#90aeb5',500,'right');
+ if(finish.show){text(finish.label.toUpperCase(),62,716,17,'#abc4c9',600);text(`${ppFmt(r.finish.points)} points`,1138,722,fit(`${ppFmt(r.finish.points)} points`,620,54),'#f3f8f8',650,'right');
+  text(`${r.points} recorded points + ${ppRate(r.ppg*r.rate/100)} points/game × ${r.remaining} remaining games`,62,775,21,'#abc4c9');
+  text(`${r.points} PTS in ${r.gp} GP  ·  future scoring ${r.rate}%  ·  ${r.missed} future games missed`,62,818,19,'#8faeb7');}
+ if(mark)ctx.drawImage(mark,60,height-110,44,44);text('sweater.win',116,height-78,30,'#d6e5e8',700);
+ text('PACE ESTIMATE · REGULAR SEASON',1138,height-97,15,'#90aeb5',500,'right');text(manual?'Manual calculator':`Stats recorded · ${snapshot.asof||'date unavailable'}`,1138,height-67,16,'#90aeb5',500,'right');
  return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('Image export failed')),'image/png'));
 }
 function ppGetExport(snapshot){const key=JSON.stringify(snapshot);if(!ppExportCache.has(key)){ppExportCache.set(key,ppDrawExport(snapshot));if(ppExportCache.size>2)ppExportCache.delete(ppExportCache.keys().next().value);}return ppExportCache.get(key);}
