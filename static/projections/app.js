@@ -1,14 +1,26 @@
 const PROJECTION_DATA=/*__PROJECTION_DATA__*/{};
 const ppModel=POINT_PROJECTIONS,ppPlayers=new Map((PROJECTION_DATA.players||[]).map(p=>[p.id,p]));
+const ppSharing=createProjectionSharing(ppModel);
 const ppSaved=store.get('sweater-projections')||{},ppDefault=ppPlayers.has(8478402)?8478402:[...ppPlayers.values()].sort((a,b)=>b.points-a.points)[0]?.id;
 let ppState={mode:ppSaved.mode==='manual'||!ppPlayers.size?'manual':'players',ids:Array.isArray(ppSaved.ids)?[...new Set(ppSaved.ids)].filter(id=>ppPlayers.has(id)).slice(0,3):[],selected:ppSaved.selected,
  seasonGames:Number.isInteger(ppSaved.seasonGames)&&ppSaved.seasonGames>=1&&ppSaved.seasonGames<=200?ppSaved.seasonGames:84,rate:Number.isFinite(ppSaved.rate)&&ppSaved.rate>=50&&ppSaved.rate<=150?ppSaved.rate:100,missed:Number.isInteger(ppSaved.missed)&&ppSaved.missed>=0&&ppSaved.missed<=200?ppSaved.missed:0,manual:{goals:'10',assists:'15',gp:'20',...(ppSaved.manual||{})}};
 if(!ppState.ids.length&&ppDefault)ppState.ids=[ppDefault];if(!ppState.ids.includes(ppState.selected))ppState.selected=ppState.ids[0];
-let ppReady=false,ppSearchResults=[],ppSearchIndex=-1,ppAnnouncementTimer=0;
+let ppReady=false,ppSearchResults=[],ppSearchIndex=-1,ppAnnouncementTimer=0,ppShared=null,ppSharedHash='';
 const ppFmt=n=>Number.isFinite(n)?Math.round(n).toLocaleString():'—',ppRate=n=>Number.isFinite(n)?n.toFixed(2):'—';
 const ppNorm=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const ppSave=()=>store.set('sweater-projections',ppState);
-function ppCurrent(){return ppState.mode==='manual'?{name:'Your stat line',...ppState.manual,teamGP:ppState.manual.gp}:ppPlayers.get(ppState.selected);}
+const ppPlayer=id=>ppShared?.player.id===id?ppShared.player:ppPlayers.get(id);
+function ppCurrent(){return ppState.mode==='manual'?{name:'Your stat line',...ppState.manual,teamGP:ppState.manual.gp}:ppPlayer(ppState.selected);}
+function ppDropShared(){ppShared=null;ppSharedHash='';ppState.ids=ppState.ids.filter(id=>ppPlayers.has(id));if(!ppState.ids.includes(ppState.selected))ppState.selected=ppState.ids[0];if(location.hash.startsWith('#projections?'))history.replaceState(null,'','#projections');}
+function ppOpenShared(){
+ if(!location.hash.startsWith('#projections?')){if(ppShared)ppDropShared();return '';}
+ if(ppSharedHash===location.hash)return '';
+ const shared=ppSharing.read(location.hash);if(!shared)return 'This shared projection could not be opened. Your calculator is still ready to use.';
+ ppShared=shared;ppShared.player.clubs=shared.player.team?[shared.player.team]:[];ppSharedHash=location.hash;
+ Object.assign(ppState,{mode:shared.mode,seasonGames:shared.seasonGames,rate:shared.rate,missed:shared.missed});
+ if(shared.mode==='players'){ppState.ids=[shared.player.id];ppState.selected=shared.player.id;}else{ppState.manual={goals:String(shared.player.goals),assists:String(shared.player.assists),gp:String(shared.player.gp)};ppReady=false;}
+ return '';
+}
 function ppResult(p){return p?ppModel.calculate({...p,seasonGames:ppState.seasonGames,missed:ppState.missed,rate:ppState.rate}):{valid:false,reason:'Choose a player to get started.'};}
 function ppCloseSearch(){$('ppSearchList').hidden=true;$('ppSearch').setAttribute('aria-expanded','false');$('ppSearch').removeAttribute('aria-activedescendant');ppSearchIndex=-1;}
 function ppSearch(){
@@ -18,6 +30,7 @@ function ppSearch(){
 }
 function ppPick(id){
  if(!ppPlayers.has(id))return;
+ if(ppShared)ppDropShared();
  if(!ppState.ids.includes(id)){if(ppState.ids.length>=3){$('ppSearchStatus').textContent='You’re comparing three players. Remove one to add someone else.';ppCloseSearch();return;}ppState.ids.push(id);}
  ppState.selected=id;ppCloseSearch();$('ppSearch').value='';$('ppSearchStatus').textContent='';ppRender();ppSave();
 }
@@ -25,37 +38,40 @@ function ppChart(p,r){
  if(!r.valid)return '<p class="pp-small">A valid stat line will draw your pace here.</p>';
  const maxX=Math.max(r.seasonGames,r.gp,r.finish.gp),maxY=Math.max(10,Math.ceil(Math.max(r.pace.points,r.finish.points,r.points)/25)*25),x=n=>42+n/maxX*442,y=n=>240-n/maxY*202;
  const ax=x(r.gp),ay=y(r.points),bx=x(r.seasonGames),by=y(r.pace.points),fx=x(r.finish.gp),fy=y(r.finish.points);
- return `<svg viewBox="0 0 520 285" role="img" aria-labelledby="ppChartTitle ppChartDesc"><title id="ppChartTitle">${esc(p.name)} point projection</title><desc id="ppChartDesc">${r.points} points in ${r.gp} games. ${ppFmt(r.pace.points)} points over ${r.seasonGames} games at the current rate. Scenario: ${ppFmt(r.finish.points)} points in ${r.finish.gp} player appearances.</desc>${[0,.25,.5,.75,1].map(t=>`<line x1="42" x2="484" y1="${y(maxY*t)}" y2="${y(maxY*t)}" stroke="var(--line)"/><text x="32" y="${y(maxY*t)+4}" text-anchor="end" fill="var(--muted)" font-size="10">${Math.round(maxY*t)}</text>`).join('')}<line x1="42" y1="240" x2="${bx}" y2="${by}" stroke="var(--link)" stroke-width="2" opacity=".7"/><line x1="${ax}" y1="${ay}" x2="${fx}" y2="${fy}" stroke="var(--hit)" stroke-width="3" stroke-dasharray="6 5"/><line x1="${ax}" x2="${ax}" y1="${ay}" y2="240" stroke="var(--muted)" stroke-dasharray="2 5" opacity=".4"/><circle cx="${bx}" cy="${by}" r="4" fill="var(--link)"/><circle cx="${fx}" cy="${fy}" r="5" fill="var(--hit)"/><circle cx="${ax}" cy="${ay}" r="5" fill="var(--panel)" stroke="var(--fg)" stroke-width="2"/>${[0,.25,.5,.75,1].map(t=>`<text x="${x(maxX*t)}" y="261" text-anchor="middle" fill="var(--muted)" font-size="10">${Math.round(maxX*t)}</text>`).join('')}<text x="263" y="281" text-anchor="middle" fill="var(--muted)" font-size="9">GAMES PLAYED</text><text x="${Math.min(475,Math.max(62,fx))}" y="${Math.max(17,fy-13)}" text-anchor="middle" fill="var(--hit)" font-size="12" font-weight="700">${ppFmt(r.finish.points)}</text></svg>`;
+ return `<svg viewBox="0 0 520 285" role="img" aria-labelledby="ppChartTitle ppChartDesc"><title id="ppChartTitle">${esc(p.name)} point projection</title><desc id="ppChartDesc">${r.points} points in ${r.gp} games. ${ppFmt(r.pace.points)} points over ${r.seasonGames} games at the current rate. Projected finish: ${ppFmt(r.finish.points)} points in ${r.finish.gp} player appearances.</desc>${[0,.25,.5,.75,1].map(t=>`<line x1="42" x2="484" y1="${y(maxY*t)}" y2="${y(maxY*t)}" stroke="var(--line)"/><text x="32" y="${y(maxY*t)+4}" text-anchor="end" fill="var(--muted)" font-size="10">${Math.round(maxY*t)}</text>`).join('')}<line x1="42" y1="240" x2="${bx}" y2="${by}" stroke="var(--link)" stroke-width="2" opacity=".7"/><line x1="${ax}" y1="${ay}" x2="${fx}" y2="${fy}" stroke="var(--hit)" stroke-width="3" stroke-dasharray="6 5"/><line x1="${ax}" x2="${ax}" y1="${ay}" y2="240" stroke="var(--muted)" stroke-dasharray="2 5" opacity=".4"/><circle cx="${bx}" cy="${by}" r="4" fill="var(--link)"/><circle cx="${fx}" cy="${fy}" r="5" fill="var(--hit)"/><circle cx="${ax}" cy="${ay}" r="5" fill="var(--panel)" stroke="var(--fg)" stroke-width="2"/>${[0,.25,.5,.75,1].map(t=>`<text x="${x(maxX*t)}" y="261" text-anchor="middle" fill="var(--muted)" font-size="10">${Math.round(maxX*t)}</text>`).join('')}<text x="263" y="281" text-anchor="middle" fill="var(--muted)" font-size="9">GAMES PLAYED</text><text x="${Math.min(475,Math.max(62,fx))}" y="${Math.max(17,fy-13)}" text-anchor="middle" fill="var(--hit)" font-size="12" font-weight="700">${ppFmt(r.finish.points)}</text></svg>`;
 }
 function ppRender(){
  ppState.missed=Math.min(ppState.missed,Number.isInteger(ppState.seasonGames)?ppState.seasonGames:84);$('ppMissed').max=Number.isInteger(ppState.seasonGames)?ppState.seasonGames:84;
  const manual=ppState.mode==='manual',p=ppCurrent(),r=ppResult(p),valid=r.valid;
  $('ppPlayerPanel').hidden=manual;$('ppManualPanel').hidden=!manual;$('ppComparePanel').hidden=manual;$('ppPlayersTab').setAttribute('aria-selected',String(!manual));$('ppManualTab').setAttribute('aria-selected',String(manual));$('ppPlayersTab').tabIndex=manual?-1:0;$('ppManualTab').tabIndex=manual?0:-1;
- $('ppSeason').textContent=`${PROJECTION_DATA.start||2026}–${String((PROJECTION_DATA.start||2026)+1).slice(-2)} · ${ppState.seasonGames||'—'} GAMES`;
+ const start=ppShared?.start||PROJECTION_DATA.start||2026;
+ $('ppSeason').textContent=`${start}–${String(start+1).slice(-2)} · ${ppState.seasonGames||'—'} GAMES`;
  $('ppLength').value=Number.isFinite(ppState.seasonGames)?ppState.seasonGames:'';$('ppRate').value=ppState.rate;$('ppRateValue').textContent=ppState.rate+'%';$('ppMissed').value=ppState.missed;$('ppMissedValue').textContent=ppState.missed;
  $('view-projections').querySelectorAll('[data-pp-length]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.ppLength===ppState.seasonGames)));
- $('ppPicks').innerHTML=ppState.ids.map(id=>{const p=ppPlayers.get(id);return `<span class="pp-pick${id===ppState.selected?' on':''}"><button type="button" data-pp-focus="${id}" aria-pressed="${id===ppState.selected}">${esc(p.name)}</button><button type="button" data-pp-remove="${id}" aria-label="Remove ${esc(p.name)} from comparison">×</button></span>`;}).join('');
+ $('ppPicks').innerHTML=ppState.ids.map(id=>{const p=ppPlayer(id);return `<span class="pp-pick${id===ppState.selected?' on':''}"><button type="button" data-pp-focus="${id}" aria-pressed="${id===ppState.selected}">${esc(p.name)}</button><button type="button" data-pp-remove="${id}" aria-label="Remove ${esc(p.name)} from comparison">×</button></span>`;}).join('');
  if(!manual&&p){
   const image=String(p.headshot||'').startsWith('https://assets.nhle.com/')?p.headshot:`https://assets.nhle.com/mugs/nhl/latest/${p.id}.png`,initials=p.name.split(' ').map(s=>s[0]).slice(0,2).join('');
   $('ppPlayerCard').innerHTML=`<div class="pp-player"><span class="pp-headshot"><span aria-hidden="true">${esc(initials)}</span><img src="${esc(image)}" alt="" onload="this.previousElementSibling.hidden=true" onerror="this.remove()"></span><div><h3>${esc(p.name)}</h3><p>${esc(p.team?teamFullName(p.team):'Multiple / unconfirmed current club')} · ${p.pos==='D'?'Defense':'Forward'}</p></div></div><div class="pp-record">${[['GP',p.gp],['GOALS',p.goals],['ASSISTS',p.assists],['POINTS',p.points]].map(([label,n])=>`<div><span>${label}</span><b>${n}</b></div>`).join('')}</div>`;
-  $('ppSource').textContent=`NHL regular season · snapshot ${PROJECTION_DATA.asof||'unavailable'}.`+(p.clubs.length>1?' Season totals combine all clubs.':'');
+  $('ppSource').textContent=`${ppShared?'Shared stat line':'NHL regular season'} · snapshot ${ppShared?.asof||PROJECTION_DATA.asof||'unavailable'}.`+(p.clubs.length>1?' Season totals combine all clubs.':'');
  }
  if(!manual&&!p){$('ppPlayerCard').innerHTML='<p class="pp-small">Find a skater above to start a projection.</p>';$('ppSource').textContent='';}
  const value=field=>valid?ppFmt(field):'—';$('ppResultName').textContent=p?.name||'Choose a player';$('ppPaceLabel').textContent=`${ppState.seasonGames||'—'}-game pace`;$('ppPace').textContent=value(r.pace?.points);$('ppPace').classList.toggle('pp-long',$('ppPace').textContent.length>5);$('ppPPG').textContent=valid?ppRate(r.ppg):'—';$('ppPaceGoals').textContent=value(r.pace?.goals);$('ppPaceAssists').textContent=value(r.pace?.assists);$('ppCurrentPoints').textContent=valid?r.points:'—';$('ppFinish').textContent=value(r.finish?.points);
  $('ppError').hidden=valid;$('ppError').textContent=valid?'':r.reason;
- $('ppRemaining').textContent=valid?`${r.clubRemaining} games remain ${!manual&&p.team?'for '+p.team:'in the selected schedule'}. Scenario assumes ${r.remaining} more appearances.`:'';
+ $('ppRemaining').textContent=valid?`${r.clubRemaining} games remain ${!manual&&p.team?'for '+p.team:'in the selected schedule'}. Projection assumes ${r.remaining} more appearances.`:'';
  $('ppFinishDetail').textContent=valid?`${r.points} recorded points + ${ppRate(r.ppg*ppState.rate/100)} points/game × ${r.remaining} remaining games.`:'';
  $('ppChart').innerHTML=ppChart(p||{name:'Your stat line'},r);$('ppCompareLength').textContent=`${ppState.seasonGames||'—'}-game pace`;
- $('ppCompareRows').innerHTML=ppState.ids.map(id=>{const q=ppPlayers.get(id),n=ppResult(q);return `<tr class="${id===ppState.selected?'on':''}"><td><button type="button" data-pp-focus="${id}">${esc(q.name)}<small>${esc(q.team||'NHL')} · ${q.pos}</small></button></td><td>${q.gp}</td><td>${q.points}</td><td>${n.valid?ppRate(n.ppg):'—'}</td><td>${n.valid?ppFmt(n.pace.points):'—'}</td><td>${n.valid?ppFmt(n.finish.points):'—'}</td></tr>`;}).join('');
- clearTimeout(ppAnnouncementTimer);ppAnnouncementTimer=setTimeout(()=>{$('ppAnnouncement').textContent=valid?`${ppState.seasonGames}-game pace: ${ppFmt(r.pace.points)} points. Scenario finish: ${ppFmt(r.finish.points)} points.`:r.reason;},200);
+ $('ppCompareRows').innerHTML=ppState.ids.map(id=>{const q=ppPlayer(id),n=ppResult(q);return `<tr class="${id===ppState.selected?'on':''}"><td><button type="button" data-pp-focus="${id}">${esc(q.name)}<small>${esc(q.team||'NHL')} · ${q.pos}</small></button></td><td>${q.gp}</td><td>${q.points}</td><td>${n.valid?ppRate(n.ppg):'—'}</td><td>${n.valid?ppFmt(n.pace.points):'—'}</td><td>${n.valid?ppFmt(n.finish.points):'—'}</td></tr>`;}).join('');
+ ppRenderShare(p,r,manual);
+ clearTimeout(ppAnnouncementTimer);ppAnnouncementTimer=setTimeout(()=>{$('ppAnnouncement').textContent=valid?`${ppState.seasonGames}-game pace: ${ppFmt(r.pace.points)} points. Projected finish: ${ppFmt(r.finish.points)} points.`:r.reason;},200);
 }
-function closeProjections(){if(!$('view-projections'))return;$('view-projections').hidden=true;document.body.classList.remove('projections-mode');$('projectionsNav').removeAttribute('aria-current');ppCloseSearch();clearTimeout(ppAnnouncementTimer);}
+function closeProjections(){if(!$('view-projections'))return;$('view-projections').hidden=true;document.body.classList.remove('projections-mode');$('projectionsNav').removeAttribute('aria-current');ppCloseSearch();ppCloseShare();if($('ppImageDialog').open)$('ppImageDialog').close();clearTimeout(ppAnnouncementTimer);}
 function openProjections(push=true){
  if(push)rememberHubScroll();globalThis.SweaterAnalytics?.leave();leaveGame(game);teamMiniCleanup();closeParty();onHub=false;document.body.classList.remove('hubmode');document.body.classList.add('projections-mode');$('view-hub').hidden=true;$('view-teams').hidden=true;$('view-party').hidden=true;
  new Set(GAME_IDS.map(id=>G[id].view)).forEach(id=>{$(id).hidden=true;});$('view-projections').hidden=false;$('gameBar').hidden=false;$('archBar').hidden=true;$('gIcon').innerHTML=uiIcon('chart');$('gTitle').textContent='Point Projections';$('modeLabel').textContent='NHL players & your own stat lines';$('gameBar').dataset.game='projections';$('projectionsNav').setAttribute('aria-current','page');
+ const sharedError=ppOpenShared();
  if(!ppReady){for(const [key,id] of [['goals','ppGoals'],['assists','ppAssists'],['gp','ppGP']])$(id).value=ppState.manual[key];ppReady=true;}
- $('ppPlayersTab').disabled=!ppPlayers.size;$('ppAvailability').hidden=!!ppPlayers.size;if(!ppPlayers.size){ppState.mode='manual';$('ppSearchStatus').textContent='Player data is unavailable. The calculator is ready to use.';}
- if(push&&location.hash!=='#projections')history.pushState(null,'','#projections');document.title='Point Projections · Sweater';ppRender();window.scrollTo({top:0});
+ const available=ppPlayers.size||ppShared?.mode==='players';$('ppPlayersTab').disabled=!available;$('ppAvailability').hidden=!!available;if(!available){ppState.mode='manual';$('ppSearchStatus').textContent='Player data is unavailable. The calculator is ready to use.';}
+ if(push&&!/^#projections(?:\?|$)/.test(location.hash))history.pushState(null,'','#projections');document.title='Point Projections · Sweater';ppRender();if(sharedError)$('ppShareStatus').textContent=sharedError;window.scrollTo({top:0});
 }
 $('projectionsNav').onclick=e=>{e.preventDefault();openProjections();};
 $('ppSearch').oninput=ppSearch;$('ppSearch').onfocus=ppSearch;

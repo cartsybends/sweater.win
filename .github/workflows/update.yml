@@ -101,6 +101,19 @@ jobs:
       - name: Install Who Scored? image test dependency
         run: python -m pip install "Pillow>=11,<13"
 
+      - name: Identify projection portrait sources
+        id: projection-portrait-key
+        run: python -B tools/projections/assets.py --cache-key >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
+        with:
+          path: .cache/projection-headshots
+          key: projection-portraits-v1-${{ runner.os }}-${{ steps.projection-portrait-key.outputs.key }}
+          restore-keys: projection-portraits-v1-${{ runner.os }}-
+
+      - name: Publish portraits for projection image sharing
+        run: python -B tools/projections/assets.py site/projection-headshots
+
       - name: Check Who Scored? round flow and rotations
         run: |
           node tests/who_scored.cjs
@@ -149,6 +162,7 @@ jobs:
         run: |
           node tests/projections.mjs
           python -B tests/projections_data.py
+          python -B tests/projections_assets.py
 
       - name: Validate generated JavaScript
         shell: bash
