@@ -25,4 +25,6 @@ class ProjectionDataTests(unittest.TestCase):
   with self.assertRaises(AssertionError):m.collect(self.fetch,self.roster,date(2026,11,12))
  def test_published_cache_covers_every_club_and_valid_stats(self):
   d=json.loads(m.CACHE.read_text());m.validate(d);self.assertEqual(len(d['team_games']),32);self.assertGreater(len(d['players']),700);self.assertEqual(d['season_games'],84)
+ def test_collection_records_a_real_successful_check_time(self):
+  d=m.collect(self.fetch,self.roster,date(2026,11,12));self.assertRegex(d['collected_at'],r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$');self.assertEqual(d['asof'],'2026-11-12')
 if __name__=='__main__':unittest.main()

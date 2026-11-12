@@ -1,0 +1,40 @@
+name: Refresh NHL point projections
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize with the full build so its cached NHL data cannot overwrite a newer feed.
+concurrency:
+  group: sweater-update
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh and validate official NHL totals
+        run: |
+          python -B tools/projections/data.py
+          python -B tests/projections_data.py
+      - name: Publish the projection feed
+        run: |
+          git config user.name "sweater-bot"
+          git config user.email "sweater-bot@users.noreply.github.com"
+          git add projections_cache.json
+          if ! git diff --cached --quiet; then
+            # This data-only commit must not redeploy the connected API Worker.
+            git commit -m "[skip ci] Refresh NHL point projections"
+            git pull --rebase
+            git push
+          fi

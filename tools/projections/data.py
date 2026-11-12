@@ -50,6 +50,7 @@ def collect(fetch,roster,today):
         if pid not in records:records[pid]={'id':pid,'name':p['name'],'pos':p['pos'],'team':p['team'],'clubs':[],
           'gp':0,'goals':0,'assists':0,'points':0,'teamGP':teams[p['team']],'headshot':p.get('headshot','')}
     return validate({'version':1,'start':start,'season':season,'season_games':84,'asof':today.isoformat(),
+      'collected_at':datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z'),
       'sources':[url,standings_url],'source_sha256':hashlib.sha256(json.dumps([summary,standings],sort_keys=True,separators=(',',':')).encode()).hexdigest(),
       'team_games':teams,'players':sorted(records.values(),key=lambda p:p['id'])})
 
