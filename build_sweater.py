@@ -1452,7 +1452,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   .roline { display: grid; grid-template-columns: 46px repeat(3, minmax(0, 1fr)); gap: 6px; align-items: stretch; margin-top: 6px; }
   .roline.defense, .roline.goalies { grid-template-columns: 46px repeat(2, minmax(0, 1fr)); }
   .rolabel { display: grid; place-items: center; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
-  .roslot { min-width: 0; min-height: 46px; padding: 7px 8px; border: 1px dashed color-mix(in srgb, var(--fg) 22%, transparent);
+  .roslot { position: relative; min-width: 0; min-height: 46px; padding: 7px 8px; border: 1px dashed color-mix(in srgb, var(--fg) 22%, transparent);
             border-radius: 10px; background: color-mix(in srgb, var(--fg) 3%, var(--cell)); color: var(--cell-fg);
             display: flex; flex-direction: column; justify-content: center; transition: transform .16s ease, border-color .16s ease, background-color .16s ease; }
   .roslot.empty { opacity: .72; }
@@ -1460,9 +1460,15 @@ TEMPLATE = r'''<!DOCTYPE html>
   .roslot b { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 1.15; }
   .roslot small { margin-top: 2px; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
   .roslot.hit { border-style: solid; border-color: var(--hit); background: color-mix(in srgb, var(--hit) 17%, var(--cell)); }
+  .roslot.has-headshot { padding-right: 48px; }
+  .roheadshot { position: absolute; right: 3px; bottom: 0; width: 44px; height: 46px; object-fit: contain; object-position: center bottom;
+                border-radius: 0 0 8px 0; opacity: 0; pointer-events: none; }
+  .roheadshot.ready { opacity: 1; }
+  .roslot.fresh .roheadshot.ready { animation: roheadshotin .36s cubic-bezier(.2,.75,.3,1) both; }
   .roslot.hit.fresh { animation: roslotpop .24s ease-out; }
   .roslot.missed { border-style: solid; border-color: color-mix(in srgb, #c0392b 55%, var(--line)); background: color-mix(in srgb, #c0392b 8%, var(--cell)); opacity: .76; }
   @keyframes roslotpop { 0% { transform: scale(.95); } 70% { transform: scale(1.035); } 100% { transform: scale(1); } }
+  @keyframes roheadshotin { 0% { opacity: 0; transform: translateY(5px) scale(.88); } 70% { opacity: 1; transform: translateY(-1px) scale(1.025); } 100% { opacity: 1; transform: none; } }
   .roextras { min-width: 0; }
   .roextrasgrid { display: grid; gap: 6px; }
   .roextras .roslot { min-height: 42px; }
@@ -1474,9 +1480,12 @@ TEMPLATE = r'''<!DOCTYPE html>
     .rogroup, .roextras { padding: 9px; }
     .roslot { min-height: 43px; padding: 6px; }
     .roslot b { font-size: 11px; }
+    .roslot.has-headshot { padding-right: 32px; }
+    .roslot.has-headshot b { white-space: normal; overflow-wrap: anywhere; }
+    .roheadshot { right: 1px; width: 29px; height: 37px; }
     .roextrasgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  @media (prefers-reduced-motion: reduce) { .roslot.hit.fresh { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .roslot.hit.fresh, .roslot.fresh .roheadshot.ready { animation: none; } }
 
   /* mystery roster */
   .mrlist { list-style: none; padding: 0; margin: 10px auto; max-width: 560px; display: grid; gap: 8px; }
@@ -4765,7 +4774,7 @@ function rosterLayout(t) {
   const extras = t.ids.filter(id => !used.has(id)).map(id => BYID.get(id)).filter(Boolean).sort(roPlayerSort);
   return { lines, pairs, goalies, extras, source: live };
 }
-let roTimer = null, roMemory = null;
+let roTimer = null, roMemory = null, roFreshId = null;
 
 G.roster = {
   kind: "score", title: "Roster Recall", share: "Sweater Roster", view: "view-roster", max: 99, next: "Next team",
@@ -4802,6 +4811,7 @@ G.roster = {
   reset(t) {
     const st = S.roster;
     clearInterval(roTimer);
+    roFreshId = null;
     st.endsAt = null;
     const saved = mode === "unlimited" ? roMemory : store.get("sweater-roster-clock");
     if (saved && saved.key === this.clockKey(t)) st.endsAt = saved.endsAt;
@@ -4833,14 +4843,16 @@ G.roster = {
     $("roInput").placeholder = running ? "Type a player's name and press Enter"
       : st.over ? "Time's up" : "Press Start to begin";
     $("roTime").textContent = st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : RO_SECONDS;
-    const layout = rosterLayout(t), foundSet = new Set(found), latestFound = found.at(-1);
+    const layout = rosterLayout(t), foundSet = new Set(found), latestFound = roFreshId;
+    roFreshId = null;
     const slot = p => {
       if (!p) return '<div class="roslot empty" aria-hidden="true"></div>';
       const named = foundSet.has(p.id), reveal = named || st.over;
       const cls = named ? `hit${p.id === latestFound ? " fresh" : ""}` : st.over ? "missed" : "empty";
       if (!reveal) return `<div class="roslot ${cls}" data-player="${p.id}" aria-label="Unnamed roster slot"></div>`;
       const meta = [p.pos, p.number ? `#${p.number}` : ""].filter(Boolean).join(" · ");
-      return `<div class="roslot ${cls}" data-player="${p.id}"><b>${esc(p.name)}</b><small>${esc(meta)}</small></div>`;
+      const headshot = named ? `<img class="roheadshot" src="${esc(p.headshot || FALLBACK)}" alt="" width="44" height="46" decoding="async" onload="this.classList.add('ready')" onerror="this.onerror=null;this.src=FALLBACK">` : "";
+      return `<div class="roslot ${cls}${named ? " has-headshot" : ""}" data-player="${p.id}" title="${esc(p.name)}"><b>${esc(p.name)}</b><small>${esc(meta)}</small>${headshot}</div>`;
     };
     const forwardHtml = layout.lines.map((line, i) =>
       `<div class="roline"><span class="rolabel">Line ${i + 1}</span>${[0,1,2].map(n => slot(line[n])).join("")}</div>`).join("");
@@ -4895,6 +4907,7 @@ function roAccept(p) {
   const rec = { key: G.roster.clockKey(t), endsAt: st.endsAt };
   if (mode === "unlimited") roMemory = rec; else store.set("sweater-roster-clock", rec);
   roSay(`✓ ${p.name} · +5s`);
+  roFreshId = p.id;
   doGuess(p.id);
   if (!S.roster.over) {
     $("roTime").textContent = Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000));
