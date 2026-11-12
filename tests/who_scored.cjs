@@ -28,7 +28,7 @@ const $ = id => {if(!elements.has(id))elements.set(id,new Element());return elem
 const ctx = vm.createContext({console,Math,Map,Set,Date,Array,Number,String,JSON,
   G:{}, API_ON:true, openLeaderboard:g=>leaderboardGame=g, BYID:new Map(players.map(p=>[p.id,p])), $, DAILY:{whoscored:{'2026-10-12':clips[0].pid}}, START:{whoscored:'2026-10-12'},
   store:{get:k=>storage.has(k)?JSON.parse(storage.get(k)):null,set:(k,v)=>storage.set(k,JSON.stringify(v))},
-  document:{hidden:false,querySelectorAll:()=>[],addEventListener(){}},
+  document:{body:new Element(),hidden:false,querySelectorAll:()=>[],addEventListener(){}},
   uiIcon:()=>'<svg></svg>', esc:s=>String(s), toast:()=>{}, addWrong:()=>{}, FALLBACK:'',
   renderOptions(){},updateLabels(){},tick(){},renderResultRecap(){},recordResult(){},awardProgression:()=>[],submitPending(){},confetti(){},
   archiveGet:()=>null, archiveSet(){}, historyGet:()=>null, historySet(){},
@@ -89,7 +89,11 @@ assert.equal(run('archiveDays("whoscored").length'),0);
 // Midnight rollover is the only normal way to get a fresh goal.
 run('DAILY.whoscored["2026-10-13"]=WS_CLIPS[1].pid');
 run(part('function tick()','setInterval(tick'));
-day='2026-10-13';run('tick()');
+day='2026-10-13';
+// The shared midnight timer cannot replace the projections utility with a game.
+ctx.document.body.classList.add('projections-mode');run('tick()');
+assert.equal(run('S.whoscored.target.pid'),clips[0].pid);
+ctx.document.body.classList.remove('projections-mode');run('tick()');
 assert.equal(run('mode'),'daily');assert.equal(run('S.whoscored.target.pid'),clips[1].pid);
 assert.equal(run('S.whoscored.over'),false);assert.equal(run('S.whoscored.guesses.length'),0);
 assert.equal($('wsVideo').playbackRate,1);assert.equal($('wsOriginal').hidden,true);

@@ -19,6 +19,9 @@ on:
       - "static/community-games/**"
       - "static/face-swap/**"
       - "static/deep-cut/**"
+      - "static/projections/**"
+      - "tools/projections/**"
+      - "tests/projections*"
       - "tools/deep_cut/**"
       - "tests/deep_cut*"
       - "tools/community_games/**"
@@ -142,6 +145,11 @@ jobs:
           python -B tests/deep_cut_toi.py
           python -B tests/deep_cut_expansion.py
 
+      - name: Check point projections
+        run: |
+          node tests/projections.mjs
+          python -B tests/projections_data.py
+
       - name: Validate generated JavaScript
         shell: bash
         run: |
@@ -189,6 +197,7 @@ jobs:
             team_history_cache.json
             current_rosters.json
             deep_cut_scoring_cache.json
+            projections_cache.json
             lineup_cache.json
             edge_cache.json
             trophy_history.json

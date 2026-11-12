@@ -141,6 +141,13 @@ function runtime(extra = {}) {
     const valid = navigation(); valid.location.hash = '#classic'; valid.run('route()');
     assert.equal(valid.opened(), 'classic'); assert.equal(valid.hubCalls(), 0);
   });
+  await test('projections route as a utility and returning to the previous game reveals its view', () => {
+    const r=navigation();let openedTool=false;r.ctx.openProjections=()=>{openedTool=true;};
+    r.location.hash='#projections';r.run('route()');assert.equal(openedTool,true);assert.equal(r.opened(),null);
+    r.run('G.classic.view="view-classic";onHub=false');r.$('view-classic').hidden=true;
+    r.location.hash='#classic';r.run('route()');assert.equal(r.opened(),'classic');
+  });
+
   await test('Higher or Lower only restores a valid Higher or Lower variant', () => {
     for (const saved of ['constructor', '__proto__', 'classic', null]) {
       const r = navigation(); r.setSaved(saved); r.run('openGame("hl")'); assert.equal(r.opened(), 'hl_points');
