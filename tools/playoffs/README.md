@@ -117,14 +117,22 @@ among teams; a qualification ring is normalized over 16 places, not over 100%
 of independent qualification probabilities. The labels/readout show the actual
 team probabilities. The Cup ring sums to one champion. Team colors are stable
 across rings. Hover, focus, and touch inspection retain the optional team view.
-Team crests sit directly inside wider outer slices, with leader lines and
-outside logo/percentage callouts for narrow slices. Callouts are spaced along
-each side without changing wedge angles. Percentages are labeled inside each
-stage wherever they fit; every segment exposes the exact probability through
-a pointer/focus/touch tooltip and the complete team-stage readout. A clickable
-outer-to-inner stage key identifies every ring. Only the hovered team's slices
-darken slightly; all other slices and logos retain full brightness. Transparent
-image padding is trimmed using the existing local-crest loader.
+Team crests sit directly inside wider outer slices. Narrow-slice logos sit
+directly outside their own angular midpoint, connected by a short radial line;
+they intentionally may overlap instead of being spread into side columns.
+Percentages are labeled wherever they fit; every segment exposes its exact
+probability through a pointer/focus/touch tooltip and the complete team-stage
+readout. Labels directly across the top of each ring identify all five stages,
+and an existing NHL Stanley Cup photo occupies the larger center opening.
+The stage labels also select single-round views. Probability geometry stays
+normalized within each ring; presentation radii do not affect the forecast.
+
+Playoff Picture uses larger table, legend, tooltip and supporting text, with a
+larger desktop circle. Fit, 2× and 3× zoom keeps detailed chart text readable on
+small screens without widening the page; the circle scrolls within its own
+region. Tooltips stay inside the visible chart area. Only the hovered team's
+slices darken slightly; all other slices and logos retain full brightness.
+Transparent image padding is trimmed using the existing local-crest loader.
 
 `games.py` adds the last 14 days and next seven days of games. Before-game win
 probabilities use the model's posterior mean scoring rates; the season model
