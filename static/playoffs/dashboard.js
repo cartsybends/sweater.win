@@ -11,28 +11,42 @@ function poGamesKey(data){return JSON.stringify((data.games||[]).map(g=>[g.id,g.
 function poMarketMoneyline(g){
  const m=g.market;if(!m)return '<span class="po-market-unavailable">Unavailable</span>';
  const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),past=Date.now()>=Date.parse(g.start),stale=!past&&Date.now()-Date.parse(m.observed_at)>1800000;
- return `<div class="po-game-pair po-market-prices"><span>${number(m.away)}</span><span>${number(m.home)}</span></div><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;
+ return `<div class="po-game-pair po-market-prices"><span>${number(m.away)}</span><span>${number(m.home)}</span></div><div class="po-market-attribution"><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a></div><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;
+}
+function poGoalieStats(player){
+ const s=player.stats;if(!s)return '<p class="po-goalie-stats-missing">Season stats unavailable</p>';
+ const values=[['GP',s.gp],['GS',s.gs],['SV%',s.sv===null?'—':s.sv.toFixed(3).replace(/^0/,'')],['GAA',s.gaa===null?'—':s.gaa.toFixed(2)]];
+ return `<div class="po-goalie-stats" aria-label="Current-season NHL goalie statistics">${values.map(([label,value])=>`<span><small>${label}</small><b>${value}</b></span>`).join('')}</div>${s.status==='cached'?`<small class="po-goalie-stats-age">Last available stats · ${poDate(s.as_of)}</small>`:''}`;
 }
 function poGameGoalie(g,side){
  const goalie=g.context?.[side]?.goalie;if(!goalie)return '';
  const top=goalie.players?.[0];if(!top||goalie.status==='unknown')return '<small class="po-game-goalie">Starter unconfirmed</small>';
  const confirmed=goalie.status==='confirmed',report=goalie.report,shown=report?.status==='likely'?goalie.players.find(p=>p.id===report.player_id)||top:top;
- return `<small class="po-game-goalie"><span>${esc(shown.name)}</span> · ${confirmed?'Confirmed':report?.status==='likely'?`Reported likely · model ${Math.round(shown.probability)}%`:`Projected starter ${Math.round(shown.probability)}%`}${report?` · <a href="${esc(report.source_url)}" target="_blank" rel="noopener noreferrer">${confirmed?'source':'report'}</a>`:''}</small>`;
+ const chance=shown.probability>0&&shown.probability<1?'&lt;1%':shown.probability>99&&shown.probability<100?'&gt;99%':`${Math.round(shown.probability)}%`,style=`--po-start-hue:${Math.round(shown.probability*1.2)}`;
+ const status=confirmed?`<a class="po-goalie-confirmed" href="${esc(report.source_url)}" target="_blank" rel="noopener noreferrer" aria-label="Confirmed starter report for ${esc(shown.name)}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8 3 3 6-6"/></svg>Confirmed</a>`:report?.status==='likely'?`<a class="po-goalie-chance" style="${style}" href="${esc(report.source_url)}" target="_blank" rel="noopener noreferrer" aria-label="${Math.round(shown.probability)}% chance to start; likely starter report for ${esc(shown.name)}">${chance}</a>`:`<span class="po-goalie-chance" style="${style}" aria-label="${Math.round(shown.probability)}% chance to start">${chance}</span>`;
+ return `<div class="po-game-goalie"><div class="po-goalie-heading"><strong>${esc(shown.name)}</strong>${status}</div>${report?.status==='conflicting'?'<small>Reports conflict · starter unconfirmed</small>':''}${poGoalieStats(shown)}</div>`;
+}
+function poReturnEstimate(value){
+ const day=typeof value==='string'?value.slice(0,10):'';
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||!Number.isFinite(Date.parse(day)))return 'Return date unknown';
+ const date=new Date(day+'T12:00:00'),label=date.toLocaleDateString(undefined,{month:'short',day:'numeric',...(date.getFullYear()!==new Date().getFullYear()?{year:'numeric'}:{})});
+ return day<poModel.localDay(Date.now())?`Previous estimate ${label} · awaiting update`:`Est. return ${label}`;
 }
 function poInjurySummary(c){
- if(c.injury_status==='not_reconstructed')return 'Historical injuries were not reconstructed.';
- if(!['reported','cached','stale'].includes(c.injury_status))return 'Injury report unavailable.';
- const injuries=c.injuries||[],note=c.injury_status==='stale'?'Older injury report; availability may have changed. ':c.injury_status==='cached'?'Last available injury report. ':'';
- return note+(injuries.length?injuries.map(i=>esc(i.name)+' — '+esc(i.status)).join('<br>'):'No absences listed in this report.');
+ if(c.injury_status==='not_reconstructed')return '<p class="po-availability-note">Historical injury reports unavailable.</p>';
+ if(!['reported','cached','stale'].includes(c.injury_status))return '<p class="po-availability-note">Injury report unavailable.</p>';
+ const injuries=c.injuries||[],note=c.injury_status==='stale'?'Older injury report; availability may have changed.':c.injury_status==='cached'?'Last available injury report.':'';
+ const status=value=>/injured reserve|^ir$/i.test(value)?'IR':/day.?to.?day|^dtd$/i.test(value)?'DTD':value;
+ return (note?`<p class="po-availability-note">${note}</p>`:'')+(injuries.length?`<ul class="po-injury-list">${injuries.map(i=>`<li><div><strong>${esc(i.name)}</strong><span class="po-injury-status">${esc(status(i.status))}</span></div><small>${esc(poReturnEstimate(i.return_estimate))}</small></li>`).join('')}</ul>`:'<p class="po-availability-note">No absences listed.</p>');
 }
 function poGameContext(g){
  if(!g.context)return '';
  const teams=['away','home'].map(side=>{
-  const c=g.context[side],goalie=c.goalie,report=goalie.report;
-  const players=goalie.players.map(p=>`<p>${esc(p.name)} <strong>${p.probability>0&&p.probability<1?'&lt;1':Math.round(p.probability)}%</strong> chance to start</p>`).join('');
-  return `<div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><p>${c.rest_days===1?'Team on a back-to-back':`Team last played ${c.rest_days===7?'7+':c.rest_days} days earlier`}</p>${players}${report?`<p><a href="${esc(report.source_url)}" target="_blank" rel="noopener noreferrer">${esc(report.author)}</a> · ${esc(report.status)} · ${poDate(report.reported_at)}${report.via_url?` · <a href="${esc(report.via_url)}" target="_blank" rel="noopener noreferrer">corroboration</a>`:''}</p>`:''}<p>${poInjurySummary(c)}</p></div>`;
+  const c=g.context[side];
+  return `<section><div class="po-availability-team"><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div>${poInjurySummary(c)}</section>`;
  });
- return `<details class="po-game-context"><summary>Goalies &amp; availability</summary>${teams.join('')}<small>Starter percentages describe who will play, not who will win. Goalie absences affect eligibility; other skater injuries are context only.</small></details>`;
+ const reported=g.context.home.injury_reported_at||g.context.away.injury_reported_at;
+ return `<details class="po-game-context"><summary>Team availability</summary><div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Return dates are estimates and may change.</small></details>`;
 }
 function poLocalClockChanged(){return poGamesAutoDate&&poGamesDate!==poModel.localDay(Date.now())||poGamesZone!==Intl.DateTimeFormat().resolvedOptions().timeZone;}
 function poFilteredTeams(){const conference=$('poConference').value;return (poData?.teams||[]).filter(t=>conference==='all'||t.conference===conference).sort((a,b)=>(poDescending?-1:1)*(poModel.sortValue(a,poSort)-poModel.sortValue(b,poSort))||a.name.localeCompare(b.name));}
@@ -62,7 +76,7 @@ function poRenderGames(){
   return `<tr data-po-game="${g.id}"><td>${two(team(g.away,'away'),team(g.home,'home'))}<small class="po-game-basis">${basis}${g.neutral?' · neutral site':''}${p.model&&p.model!==poData.model?' · previous model':''}</small>${poGameContext(g)}</td><td>${results?two(`<b>${g.ag}</b>`,`<b>${g.hg}</b>`)+`<small class="po-game-basis">Final${g.end==='REG'?'':' / '+g.end}</small>`:`<span>${time}</span><small class="po-game-basis">${['LIVE','CRIT'].includes(g.state)?'In progress · pregame estimates':g.state==='PRE'?'Pregame':'Scheduled'}</small>`}</td><td class="po-model-win">${two(poModel.percent(p.away_win),poModel.percent(p.home_win))}</td><td class="po-market-cell">${poMarketMoneyline(g)}</td><td>${two(p.away_goals.toFixed(2),p.home_goals.toFixed(2))}</td>${results?`<td>${two(g.away_shots??'—',g.home_shots??'—')}</td><td>${two(poRatePercent(poModel.shooting(g,'away')),poRatePercent(poModel.shooting(g,'home')))}</td>`:''}</tr>`;
  }).join('');
  $('poGamesEmpty').hidden=rows.length>0;$('poGamesEmpty').textContent=!poData?.analytics_version?'The game feed is updating. League projections remain available.':results?'No completed games on this date. Choose another date to review results.':'No upcoming games on this date. Select Results for finished games or choose another date.';
- $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” pregame estimates use only earlier calendar dates; they were not recorded before those games. Saved pregame estimates remain fixed after puck drop.':poData?.model==='sweater-xg-v2'?'Sweater estimates use recency-weighted results, shot quality, special teams, goalie availability and rest. Confirmed starters have a source; otherwise the model uses a projected goalie mix. Estimates are pregame and do not follow live scores.':'Pregame win estimates are based on the two teams’ scoring and goals-allowed rates. They do not adjust to the score during a game.';
+ $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” estimates use earlier calendar dates; they were not recorded before those games. Saved pregame estimates stay fixed after puck drop.':poData?.model==='sweater-xg-v2'?'Pregame estimates include recent form, shot quality, goalie availability and rest. Starter percentages show the chance of starting; confirmed goalies link to their report.':'Pregame estimates use scoring and goals-allowed rates and do not follow live scores.';
 }
 function poDonutSector(cx,cy,outer,inner,start,end){
  const point=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)].map(v=>v.toFixed(3)).join(','),span=end-start;

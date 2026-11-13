@@ -212,6 +212,23 @@ class AdvancedModel(unittest.TestCase):
 
 
 class AvailabilityAndEvaluation(unittest.TestCase):
+    def test_official_goalie_totals_match_identity_and_cache_during_outage(self):
+        row={'playerId':1000,'seasonId':20262027,'gamesPlayed':13,'gamesStarted':12,'savePct':.91815,'goalsAgainstAverage':2.42322}
+        with tempfile.TemporaryDirectory() as folder,patch.object(A,'CACHE',Path(folder)):
+            stats=A.goalie_statistics(20262027,NOW,lambda u:{'data':[row],'total':1})
+            self.assertEqual(stats['players'][1000],{'gp':13,'gs':12,'sv':.91815,'gaa':2.42322})
+            saved=A.goalie_statistics(20262027,NOW,lambda u:(_ for _ in ()).throw(OSError()))
+            self.assertEqual(saved['status'],'cached');self.assertEqual(saved['as_of'],NOW)
+            missing=A.goalie_statistics(20272028,NOW,lambda u:(_ for _ in ()).throw(OSError()))
+            self.assertEqual(missing['status'],'unavailable');self.assertEqual(missing['players'],{})
+
+    def test_current_goalie_stats_are_not_backfilled_into_historical_reconstructions(self):
+        data,inputs,availability=fixture();availability['goalie_stats']={'season':20262027,'as_of':NOW,'status':'reported','players':{'1000':{'gp':13,'gs':12,'sv':.91815,'gaa':2.42322}}}
+        engine=E.Engine(data,[],inputs,availability,{},NOW);current=engine.context(GAME)['away']['goalie']
+        self.assertEqual(next(p for p in current['players'] if p['id']==1000)['stats']['gp'],13)
+        self.assertEqual(next(p for p in current['players'] if p['id']==1001)['stats']['gp'],0)
+        self.assertTrue(all('stats' not in p for p in engine.predict(GAME,force_historical=True)[3]['away']['goalie']['players']))
+
     def test_source_outage_keeps_dated_injury_snapshot_and_marks_its_age(self):
         def failed(url):raise OSError('Source unavailable')
         with tempfile.TemporaryDirectory() as folder,patch.object(A,'CACHE',Path(folder)):

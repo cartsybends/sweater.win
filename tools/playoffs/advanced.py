@@ -154,6 +154,39 @@ def load_inputs(start):
         raise
 
 
+def goalie_statistics(season, now, fetch=None):
+    """Official season totals; unavailable values never become invented statistics."""
+    query=urllib.parse.urlencode({'isAggregate':'false','isGame':'false','start':0,'limit':-1,
+                                 'cayenneExp':f'gameTypeId=2 and seasonId={season}'})
+    url='https://api.nhle.com/stats/rest/en/goalie/summary?'+query
+    directory=CACHE/'advanced';directory.mkdir(parents=True,exist_ok=True)
+    target=directory/f'goalie-totals-{season}.json'
+    try:
+        if fetch:
+            raw=fetch(url)
+        else:
+            with tempfile.TemporaryDirectory(prefix='sweater-goalies-') as folder:
+                path=Path(folder)/'totals.json';download(url,path);raw=json.loads(path.read_text())
+        if not raw['data'] or len(raw['data'])!=raw['total']:
+            raise ValueError('Incomplete official goalie totals')
+        players={}
+        for r in raw['data']:
+            pid=r['playerId'];gp=r['gamesPlayed'];gs=r['gamesStarted'];sv=r.get('savePct');gaa=r.get('goalsAgainstAverage')
+            if (r['seasonId']!=season or type(pid) is not int or pid in players or type(gp) is not int or type(gs) is not int or not 0<=gs<=gp<=100
+                or sv is not None and (not math.isfinite(sv) or not 0<=sv<=1)
+                or gaa is not None and (not math.isfinite(gaa) or not 0<=gaa<=3600)):
+                raise ValueError('Invalid official goalie totals')
+            players[pid]={'gp':gp,'gs':gs,'sv':sv,'gaa':gaa}
+        result={'season':season,'as_of':now,'status':'reported','players':players}
+        temporary=target.with_suffix('.tmp');temporary.write_text(json.dumps(result));temporary.replace(target)
+        return result
+    except Exception:
+        if target.exists():
+            saved=json.loads(target.read_text());saved['status']='cached'
+            return saved
+        return {'season':season,'as_of':None,'status':'unavailable','players':{}}
+
+
 def availability(teams, fetch, now):
     """Report source observations and only resolve unambiguous NHL player identities."""
     directory=CACHE/'advanced';directory.mkdir(parents=True,exist_ok=True)

@@ -37,9 +37,15 @@ export const PLAYOFF_PICTURE = (()=>{
   return placed;
  }
  function shooting(g,side){const shots=g[side==='home'?'home_shots':'away_shots'];if(!finite(shots)||shots<=0)return null;const goals=g[side==='home'?'hg':'ag'],other=g[side==='home'?'ag':'hg'];return (goals-(g.end==='SO'&&goals>other?1:0))/shots*100;}
+ function goalieStatsValid(p,g){
+  const s=p.stats;if(s===undefined)return true;
+  const year=Number(String(g.id).slice(0,4));
+  return s&&Number.isInteger(s.gp)&&Number.isInteger(s.gs)&&s.gs>=0&&s.gs<=s.gp&&s.gp<=100&&s.season===year*10000+year+1&&['reported','cached'].includes(s.status)&&Number.isFinite(Date.parse(s.as_of))&&Date.parse(s.as_of)<Date.parse(g.start)&&(s.sv===null||finite(s.sv)&&s.sv>=0&&s.sv<=1)&&(s.gaa===null||finite(s.gaa)&&s.gaa>=0&&s.gaa<=3600);
+ }
  function contextValid(g){
   if(!g.context)return true;
   return ['home','away'].every(side=>{const c=g.context[side],q=c?.goalie;if(!q||!['reported','cached','stale','unavailable','not_reconstructed'].includes(c.injury_status)||!Number.isInteger(c.rest_days)||c.rest_days<1||c.rest_days>7||!['projected','confirmed','unknown'].includes(q.status)||!finite(q.gsax)||Math.abs(q.gsax)>2||!Array.isArray(q.players)||q.players.length>10||q.players.some(p=>!Number.isInteger(p.id)||p.id<0||typeof p.name!=='string'||!p.name.length||p.name.length>100||!finite(p.probability)||p.probability<0||p.probability>100)||new Set(q.players.map(p=>p.id)).size!==q.players.length||q.players.length&&Math.abs(q.players.reduce((n,p)=>n+p.probability,0)-100)>.002||!Array.isArray(c.injuries)||c.injuries.length>100||c.injuries.some(i=>typeof i.name!=='string'||i.name.length>100||typeof i.status!=='string'||i.status.length>50))return false;
+   if(!q.players.every(p=>goalieStatsValid(p,g)))return false;
    const r=q.report;if(r&&(!['confirmed','likely','conflicting','not_starting'].includes(r.status)||r.game_id!==g.id||r.team!==g[side]||!Number.isInteger(r.player_id)||typeof r.author!=='string'||r.author.length>100||!/^https:\/\/(?:x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+$/.test(r.source_url)||!Number.isFinite(Date.parse(r.reported_at))||Date.parse(r.reported_at)>=Date.parse(g.start)||r.via_url&&!/^https:\/\/www\.dailyfaceoff\.com\//.test(r.via_url)))return false;
    return q.status!=='confirmed'||r?.status==='confirmed'&&q.players.filter(p=>p.probability===100&&p.id===r.player_id).length===1;
   });
