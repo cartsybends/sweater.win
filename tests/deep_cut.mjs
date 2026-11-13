@@ -94,18 +94,31 @@ function runtime(){
   vm.runInContext('G.deepcut.prepareTarget(S.deepcut.target,S.deepcut.opts);G.deepcut.reset();G.deepcut.render(S.deepcut.target,S.deepcut)',ctx);
   return {ctx,el,records,timers,events,run:s=>vm.runInContext(s,ctx),advance(ms){now+=ms;for(const fn of [...timers.values()])fn();}};
 }
-test('a round has a three-second preview, a fixed deadline, and a three-second wrong-answer penalty',()=>{
+test('a round has a three-second preview and wrong or unrecognized guesses never shorten its deadline',()=>{
   const r=runtime();r.run('dcBegin()');assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'preview');assert.equal(r.el('dcAnswer').disabled,true);
   r.advance(3000);assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'ask');assert.equal(r.el('dcAnswer').disabled,false);
   const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;r.el('dcAnswer').value='zzzznotaplayerzzzz';r.run('dcSubmit({preventDefault(){}})');
-  assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline-3000);assert.equal(r.ctx.S.deepcut.guesses.length,0);
-  r.advance(32000);assert.deepEqual([...r.ctx.S.deepcut.guesses],['MISS']);assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'reveal');assert.equal(r.timers.size,0);
+  assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.guesses.length,0);
+  assert(!r.el('dcFeedback').textContent.includes('seconds'));
+  r.advance(32000);assert.equal(r.ctx.S.deepcut.guesses.length,0);assert.equal(r.el('dcClockText').textContent,'0:03.0');
+  r.advance(3000);assert.deepEqual([...r.ctx.S.deepcut.guesses],['MISS']);assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'reveal');assert.equal(r.timers.size,0);
 });
 test('submitting Mike Cammalleri locks the correct Calgary player without a time penalty',()=>{
   const r=runtime();r.ctx.S.deepcut.target={id:'calgary-alias-fixture',prompts:['team-CGY',...data.runs[0].prompts.filter(id=>id!=='team-CGY').slice(0,6)]};
   r.run('G.deepcut.prepareTarget(S.deepcut.target,S.deepcut.opts);dcBegin()');r.advance(3000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
   r.el('dcAnswer').value='Mike Cammalleri';r.run('dcSubmit({preventDefault(){}})');
   assert.deepEqual([...r.ctx.S.deepcut.guesses],['8469500']);assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.opts.dcRun.phase,'reveal');
+});
+test('wrong players, missing names, arbitrary text and blanks keep the same deadline with corrections on or off',()=>{
+ for(const corrections of [true,false]){
+  const r=runtime();r.ctx.S.deepcut.target={id:'no-penalty-fixture',prompts:['country-RUS',...data.runs[0].prompts.filter(id=>id!=='country-RUS').slice(0,6)]};
+  r.run('G.deepcut.prepareTarget(S.deepcut.target,S.deepcut.opts);dcBegin()');r.advance(3000);r.el('dcCorrections').checked=corrections;r.run('$("dcCorrections").onchange()');
+  const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
+  for(const answer of ['Wayne Gretzky','zzzznotaplayerzzzz','anything at all','   ']){
+   r.el('dcAnswer').value=answer;r.run('dcSubmit({preventDefault(){}})');assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);assert.equal(r.ctx.S.deepcut.guesses.length,0);assert(!r.el('dcFeedback').textContent.includes('−3'));
+  }
+  r.advance(2000);assert.equal(r.el('dcClockText').textContent,'0:33.0');assert.equal(r.ctx.S.deepcut.opts.dcRun.deadline,deadline);
+ }
 });
 test('the corrections preference defaults on, persists, and never resets an active clock',()=>{
   const r=runtime();assert.equal(r.el('dcCorrections').checked,true);r.run('dcBegin()');r.advance(3000);const deadline=r.ctx.S.deepcut.opts.dcRun.deadline;
@@ -139,7 +152,7 @@ test('jumbotron clock preserves tenths and turns expired time into zero',()=>{
  for(const [ms,expected] of [[35000,'0:35.0'],[34900,'0:34.9'],[5010,'0:05.1'],[5000,'0:05.0'],[100,'0:00.1'],[0,'0:00.0'],[-10,'0:00.0']]){
   r.run(`dcPaintClock(${ms},false)`);assert.equal(r.el('dcClockText').textContent,expected);
  }
- r.run('dcBegin()');r.advance(3000);r.el('dcAnswer').value='zzzznotaplayerzzzz';r.run('dcSubmit({preventDefault(){}})');assert.equal(r.el('dcClockText').textContent,'0:32.0');
+ r.run('dcBegin()');r.advance(3000);r.el('dcAnswer').value='zzzznotaplayerzzzz';r.run('dcSubmit({preventDefault(){}})');assert.equal(r.el('dcClockText').textContent,'0:35.0');
 });
 test('rarer accepted answers have six distinct celebration levels and new prompts clear prior effects',()=>{
  const r=runtime();r.ctx.matchMedia=()=>({matches:false});
