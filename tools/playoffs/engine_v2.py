@@ -72,6 +72,10 @@ class Engine:
                                     home=bool(game and game['home']==team and not game['neutral']),importance=state.urgency(team))
         if roster is None:
             result={**result,'status':'unknown','roster_status':'unavailable'}
+        totals=self.availability.get('goalie_stats',{})
+        if totals.get('status') in {'reported','cached'} and totals.get('season')==self.data['season']:
+            result={**result,'players':[{**p,'stats':{**totals['players'].get(str(p['id']),totals['players'].get(p['id'],{'gp':0,'gs':0,'sv':None,'gaa':None})),
+                                                   'season':totals['season'],'as_of':totals['as_of'],'status':totals['status']}} for p in result['players']]}
         return result
 
     def rest(self,game,team):
@@ -93,8 +97,9 @@ class Engine:
         for side in ['home','away']:
             team=game[side];goalie=self.project(team,game['date'],game,historical,state)
             result[side]={'rest_days':self.rest(game,team),'goalie':goalie,
-                          'injuries':[] if historical else self.injuries(team,game['date']),
-                          'injury_status':'not_reconstructed' if historical else self.availability['status']}
+                          'injuries':[] if historical else self.availability['injuries'].get(team,[]),
+                          'injury_status':'not_reconstructed' if historical else self.availability['status'],
+                          'injury_reported_at':None if historical else self.availability.get('reported_at')}
         self.game_cache[key]=result
         return result
 

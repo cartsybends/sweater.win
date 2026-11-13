@@ -136,6 +136,14 @@ def validate_context(game):
         assert len(players)<=10 and all(type(p['id']) is int and p['id']>=0 and isinstance(p['name'],str) and 0<len(p['name'])<=100 and math.isfinite(p['probability']) and 0<=p['probability']<=100 for p in players)
         assert not players or abs(sum(p['probability'] for p in players)-100)<=.002
         assert len({p['id'] for p in players})==len(players)
+        for p in players:
+            if 'stats' in p:
+                s=p['stats']
+                assert type(s['gp']) is int and type(s['gs']) is int and 0<=s['gs']<=s['gp']<=100
+                assert s['season']==int(str(game['id'])[:4])*10000+int(str(game['id'])[:4])+1
+                assert s['status'] in {'reported','cached'} and datetime.fromisoformat(s['as_of'].replace('Z','+00:00'))<datetime.fromisoformat(game['start'].replace('Z','+00:00'))
+                assert s['sv'] is None or math.isfinite(s['sv']) and 0<=s['sv']<=1
+                assert s['gaa'] is None or math.isfinite(s['gaa']) and 0<=s['gaa']<=3600
         report=goalie.get('report')
         if report:
             roster={game[side]:[{'id':report['player_id'],'position':'goalies'}]}

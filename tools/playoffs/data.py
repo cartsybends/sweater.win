@@ -164,11 +164,12 @@ def main():
     path = ROOT / 'playoffs_cache.json'
     old = json.loads(path.read_text()) if path.exists() else {}
     now = datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z')
-    from advanced import load_inputs, availability
+    from advanced import load_inputs, availability, goalie_statistics
     from starters import collect as starter_reports
     from engine_v2 import Engine
     inputs=load_inputs(start)
     context=availability(data['teams'],fetch,now)
+    context['goalie_stats']=goalie_statistics(data['season'],datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z'))
     now=datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
     reports,starter_feed=starter_reports(data['games'],context['rosters'],old,now)
     engine=Engine(data,history,inputs,context,reports,now)

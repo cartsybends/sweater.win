@@ -252,3 +252,20 @@ Game start times explicitly use the visitor's device timezone and locale, with
 the timezone abbreviation displayed. The date picker and game grouping use
 local calendar dates derived from the start timestamp, including midnight and
 DST transitions. NHL calendar dates remain unchanged in the model inputs.
+
+Games uses the League table's 42px team-logo boxes (34px on mobile), emphasized
+team/goalie names, and linked checkmarked confirmations. Unconfirmed percentages
+describe the chance of starting and use a red-to-yellow-to-green scale; a likely
+report links through its percentage. Confirmed does not mean a guaranteed win.
+The separate Team availability panel lists current reported injuries, status
+and estimated return dates. Passed estimates remain marked as awaiting an update;
+they are never represented as an actual return. Starter distributions are not
+repeated in that panel. Bookmaker-source links have only their text's hit area.
+
+Goalie GP, GS, SV% and GAA are official current-season regular-season totals,
+fetched once per refresh from the NHL statistics API and joined by NHL player ID.
+Failed fetches retain dated cached totals. A player absent from a validated complete
+season response has zero appearances; missing sources do not invent zeros.
+Saved pregame contexts freeze their statistics, and current totals are never
+backfilled into historical reconstructions. Missing historical totals are shown
+as unavailable. These display statistics do not change the fitted model inputs.
