@@ -1,7 +1,7 @@
 const PLAYOFF_DATA=/*__PLAYOFF_DATA__*/{};
 const poModel=PLAYOFF_PICTURE,poStages=poModel.stages,poSaved=store.get('sweater-playoffs')||{};
 const poTabs=['league','games','circle','team','history'];
-let poData=poModel.validate(PLAYOFF_DATA),poTeam=poModel.clubs.has(poSaved.team)?poSaved.team:'',poTab='league',poFormat='american',poSort='playoffs',poDescending=true,poShared=null,poSharedHash='',poTimer=null,poController=null,poBusy=false,poAttempt=0,poRequest=0,poError=false,poImageURL='';
+let poData=poModel.validate(PLAYOFF_DATA),poTeam=poModel.clubs.has(poSaved.team)?poSaved.team:'',poTab='league',poFormat='percent',poSort='playoffs',poDescending=true,poShared=null,poSharedHash='',poTimer=null,poController=null,poBusy=false,poAttempt=0,poRequest=0,poError=false,poImageURL='';
 const poDate=value=>new Date(value).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
 const poTeamRecord=team=>poData?.teams.find(t=>t.abbr===team);
 const poCurrent=()=>poShared?{abbr:poShared.team,name:poShared.name,gp:poShared.gp,points:poShared.points,projected_points:poShared.projected,odds:poShared.odds,shared:true}:poTeamRecord(poTeam);
@@ -77,7 +77,7 @@ function poRender(){
 async function poRefresh(force=false){
  if($('view-playoffs').hidden||document.hidden||poBusy||!force&&Date.now()-poAttempt<poModel.interval)return;
  poAttempt=Date.now();poBusy=true;poFeedStatus();const request=++poRequest,controller=new AbortController();poController=controller;const timeout=setTimeout(()=>controller.abort(),15000);
- try{const r=await fetch(poModel.url+'?v='+Math.floor(Date.now()/(force?1000:poModel.interval)),{cache:'no-store',credentials:'omit',signal:controller.signal});if(!r.ok)throw new Error();const next=poModel.validate(await r.json());if(request!==poRequest)return;if(!next)throw new Error();if(!poData||Date.parse(next.checked_at)>Date.parse(poData.checked_at)){const changed=!poData||next.source_sha256!==poData.source_sha256||next.analytics_version!==poData.analytics_version||next.games_today!==poData.games_today||poGamesKey(next)!==poGamesKey(poData);poData=next;if(changed)poRender();}poError=false;}catch{if(request===poRequest)poError=true;}finally{clearTimeout(timeout);if(request===poRequest){poController=null;poBusy=false;poFeedStatus();}}
+ try{const r=await fetch(poModel.url+'?v='+Math.floor(Date.now()/(force?1000:poModel.interval)),{cache:'no-store',credentials:'omit',signal:controller.signal});if(!r.ok)throw new Error();const next=poModel.validate(await r.json());if(request!==poRequest)return;if(!next)throw new Error();if(!poData||Date.parse(next.checked_at)>Date.parse(poData.checked_at)){const changed=!poData||next.source_sha256!==poData.source_sha256||next.analytics_version!==poData.analytics_version||next.games_today!==poData.games_today||poGamesKey(next)!==poGamesKey(poData);poData=next;if(changed)poRender();}poError=false;}catch{if(request===poRequest)poError=true;}finally{clearTimeout(timeout);if(request===poRequest){poController=null;poBusy=false;if(poLocalClockChanged())poRenderGames();poFeedStatus();}}
 }
 function closePlayoffs(){if(!$('view-playoffs'))return;$('view-playoffs').hidden=true;document.body.classList.remove('playoffs-mode');$('playoffsNav').removeAttribute('aria-current');clearInterval(poTimer);poTimer=null;poRequest++;poController?.abort();poController=null;poBusy=false;poAttempt=0;poCloseShare();if($('poImageDialog').open)$('poImageDialog').close();}
 function openPlayoffs(push=true){

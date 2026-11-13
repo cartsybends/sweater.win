@@ -67,7 +67,7 @@ use the season. Identical inputs produce identical outputs. The live feed uses
 Point distributions sum to 100% and first-round matchup probabilities sum to
 each team's qualification probability. All main stage probabilities are
 unconditional from the forecast time. Opponent cards explicitly condition on
-qualification. Percentages can be converted to fair American/decimal odds;
+qualification. Percentages can be converted to fair American odds;
 they are not sportsbook prices. Simulation zero/one values are displayed as
 <0.1% / >99.9%, not as mathematical clinching or elimination.
 
@@ -106,10 +106,10 @@ Official rules:
 
 The default entry is the league-wide table, including after a team has been
 saved locally. Team cards are shown only in the optional Team detail tab or
-when opening a frozen share. The board defaults to fair American odds with
-percentages alongside them, with decimal and percentage options. Season stats
+when opening a frozen share. The board defaults to percentages with American
+odds as the only alternate format. Season stats
 expose official records, win/points percentages, GF/GA, RW/ROW, and last-ten form.
-CSV downloads contain numeric percentages and both fair-odds formats.
+CSV downloads contain numeric percentages and fair American odds.
 
 Circle view is an independent SVG chart with five nested rings (playoffs to
 champion) and a single-round option. Slices divide each round's expected places
@@ -117,11 +117,14 @@ among teams; a qualification ring is normalized over 16 places, not over 100%
 of independent qualification probabilities. The labels/readout show the actual
 team probabilities. The Cup ring sums to one champion. Team colors are stable
 across rings. Hover, focus, and touch inspection retain the optional team view.
-Team crests sit directly inside the outer colored slices, sized to stay within
-their geometry. Tiny slices keep their original angles without forcing in a
-logo; all 32 crests remain available in the legend. Transparent image padding
-is trimmed using the existing local-crest loader, with updates applied to the
-image nodes without rebuilding the chart or intercepting pointer interactions.
+Team crests sit directly inside wider outer slices, with leader lines and
+outside logo/percentage callouts for narrow slices. Callouts are spaced along
+each side without changing wedge angles. Percentages are labeled inside each
+stage wherever they fit; every segment exposes the exact probability through
+a pointer/focus/touch tooltip and the complete team-stage readout. A clickable
+outer-to-inner stage key identifies every ring. Only the hovered team's slices
+darken slightly; all other slices and logos retain full brightness. Transparent
+image padding is trimmed using the existing local-crest loader.
 
 `games.py` adds the last 14 days and next seven days of games. Before-game win
 probabilities use the model's posterior mean scoring rates; the season model
@@ -138,3 +141,8 @@ corrections; older verified shots can be reused from the preceding feed. The
 goal awarded for a shootout win is excluded from goals-per-shot calculations.
 Scoring estimates are not presented as shot-based expected goals or a
 deserve-to-win metric. No sportsbook feed was added.
+
+Game start times explicitly use the visitor's device timezone and locale, with
+the timezone abbreviation displayed. The date picker and game grouping use
+local calendar dates derived from the start timestamp, including midnight and
+DST transitions. NHL calendar dates remain unchanged in the model inputs.
