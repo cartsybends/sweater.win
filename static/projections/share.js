@@ -128,11 +128,17 @@ $('ppImageClose').onclick=()=>$('ppImageDialog').close();$('ppImageSave').onclic
 $('ppImageDialog').addEventListener('close',()=>{if(ppPreviewURL)URL.revokeObjectURL(ppPreviewURL);ppPreviewURL='';ppPreviewSnapshot=null;ppPreviewBlob=null;$('ppImagePreview').removeAttribute('src');$('ppShareToggle').focus();});
 $('ppUseLatest').onclick=()=>{if(ppShared&&!ppPlayers.has(ppShared.player.id)){toast('Current-season stats are unavailable for this player. Choose another skater above.');return;}ppDropShared();ppRender();ppSave();};
 
+const ppSliderStops=[];
+function ppStopSliderDrags(){ppSliderStops.forEach(stop=>stop());}
 // Drag from anywhere on either scenario track, including touch. Native keys still work.
 for(const id of ['ppRate','ppMissed']){
  const range=$(id);let pointer=null;
+ const stop=()=>{const active=pointer;pointer=null;if(active!==null&&range.hasPointerCapture(active))range.releasePointerCapture(active);};
+ ppSliderStops.push(stop);
  const update=e=>{const rect=range.getBoundingClientRect(),inset=8,ratio=Math.max(0,Math.min(1,(e.clientX-rect.left-inset)/(rect.width-2*inset))),step=Number(range.step)||1;range.value=Number(range.min)+Math.round(ratio*(Number(range.max)-Number(range.min))/step)*step;range.dispatchEvent(new Event('input',{bubbles:true}));};
- range.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();pointer=e.pointerId;range.focus({preventScroll:true});range.setPointerCapture(pointer);update(e);});
- range.addEventListener('pointermove',e=>{if(e.pointerId===pointer)update(e);});
- for(const event of ['pointerup','pointercancel','lostpointercapture'])range.addEventListener(event,()=>{pointer=null;});
+ range.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();stop();pointer=e.pointerId;range.focus({preventScroll:true});range.setPointerCapture(pointer);update(e);});
+ range.addEventListener('pointermove',e=>{if(e.pointerId!==pointer)return;if(!range.hasPointerCapture(pointer)||e.pointerType!=='touch'&&!(e.buttons&1)){stop();return;}update(e);});
+ for(const event of ['pointerup','pointercancel','lostpointercapture'])range.addEventListener(event,e=>{if(e.pointerId===pointer)stop();});
+ for(const event of ['pointerup','pointercancel'])window.addEventListener(event,e=>{if(e.pointerId===pointer)stop();},true);
+ window.addEventListener('blur',stop);document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 }
