@@ -1,0 +1,585 @@
+{
+  "version": 1,
+  "model": "sweater-goals-v1",
+  "parameters": {
+    "prior_games": 60,
+    "home_factor": 1.06,
+    "prior_regression": 0.25
+  },
+  "training": {
+    "season": "2024\u201325",
+    "games": 1312,
+    "brier": 0.23656,
+    "log_loss": 0.66549,
+    "accuracy": 0.5953,
+    "reliability": [
+      {
+        "range": [
+          0.2,
+          0.3
+        ],
+        "games": 15,
+        "mean_probability": 0.2787,
+        "actual_win_rate": 0.2667
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "games": 87,
+        "mean_probability": 0.3625,
+        "actual_win_rate": 0.3563
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "games": 297,
+        "mean_probability": 0.4571,
+        "actual_win_rate": 0.4815
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "games": 443,
+        "mean_probability": 0.5513,
+        "actual_win_rate": 0.5621
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "games": 355,
+        "mean_probability": 0.6482,
+        "actual_win_rate": 0.6451
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "games": 100,
+        "mean_probability": 0.7362,
+        "actual_win_rate": 0.68
+      },
+      {
+        "range": [
+          0.8,
+          0.9
+        ],
+        "games": 15,
+        "mean_probability": 0.8222,
+        "actual_win_rate": 0.9333
+      }
+    ]
+  },
+  "holdout": {
+    "season": "2025\u201326",
+    "games": 1312,
+    "brier": 0.25066,
+    "log_loss": 0.69481,
+    "accuracy": 0.5252,
+    "reliability": [
+      {
+        "range": [
+          0.2,
+          0.3
+        ],
+        "games": 2,
+        "mean_probability": 0.2905,
+        "actual_win_rate": 1.0
+      },
+      {
+        "range": [
+          0.3,
+          0.4
+        ],
+        "games": 47,
+        "mean_probability": 0.3677,
+        "actual_win_rate": 0.3617
+      },
+      {
+        "range": [
+          0.4,
+          0.5
+        ],
+        "games": 257,
+        "mean_probability": 0.4607,
+        "actual_win_rate": 0.5136
+      },
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "games": 609,
+        "mean_probability": 0.5529,
+        "actual_win_rate": 0.4926
+      },
+      {
+        "range": [
+          0.6,
+          0.7
+        ],
+        "games": 339,
+        "mean_probability": 0.6435,
+        "actual_win_rate": 0.5811
+      },
+      {
+        "range": [
+          0.7,
+          0.8
+        ],
+        "games": 56,
+        "mean_probability": 0.7335,
+        "actual_win_rate": 0.625
+      },
+      {
+        "range": [
+          0.8,
+          0.9
+        ],
+        "games": 2,
+        "mean_probability": 0.8008,
+        "actual_win_rate": 1.0
+      }
+    ]
+  },
+  "baseline": {
+    "method": "2024\u201325 home win rate",
+    "games": 1312,
+    "brier": 0.25114,
+    "log_loss": 0.69547,
+    "accuracy": 0.5221,
+    "reliability": [
+      {
+        "range": [
+          0.5,
+          0.6
+        ],
+        "games": 1312,
+        "mean_probability": 0.5625,
+        "actual_win_rate": 0.5221
+      }
+    ]
+  },
+  "summary": "Walk-forward game validation: 1,312 games in 2025\u201326; Brier score 0.2507 versus 0.2511 for a fixed home-team baseline (lower is better). Holdout performance is close to that baseline. This is a beta model; game tests do not establish playoff-probability calibration.",
+  "limitations": [
+    "Goal totals include empty-net and shootout-awarded goals.",
+    "No injuries, lineups, starting goalies, or expected-goal inputs.",
+    "Game-probability evaluation does not establish playoff-probability calibration.",
+    "Retrospective playoff snapshots use the final published schedule; original postponement publication times are unavailable."
+  ],
+  "playoff_snapshots": [
+    {
+      "asof": "2025-11-15",
+      "simulations": 10000,
+      "brier": 0.24057,
+      "teams": {
+        "ANA": {
+          "probability": 0.5458,
+          "qualified": true
+        },
+        "BOS": {
+          "probability": 0.4039,
+          "qualified": true
+        },
+        "BUF": {
+          "probability": 0.1139,
+          "qualified": true
+        },
+        "CAR": {
+          "probability": 0.9355,
+          "qualified": true
+        },
+        "CBJ": {
+          "probability": 0.3415,
+          "qualified": false
+        },
+        "CGY": {
+          "probability": 0.066,
+          "qualified": false
+        },
+        "CHI": {
+          "probability": 0.2154,
+          "qualified": false
+        },
+        "COL": {
+          "probability": 0.9934,
+          "qualified": true
+        },
+        "DAL": {
+          "probability": 0.9495,
+          "qualified": true
+        },
+        "DET": {
+          "probability": 0.3664,
+          "qualified": false
+        },
+        "EDM": {
+          "probability": 0.6173,
+          "qualified": true
+        },
+        "FLA": {
+          "probability": 0.7107,
+          "qualified": false
+        },
+        "LAK": {
+          "probability": 0.8631,
+          "qualified": true
+        },
+        "MIN": {
+          "probability": 0.2635,
+          "qualified": true
+        },
+        "MTL": {
+          "probability": 0.3404,
+          "qualified": true
+        },
+        "NJD": {
+          "probability": 0.7831,
+          "qualified": false
+        },
+        "NSH": {
+          "probability": 0.0709,
+          "qualified": false
+        },
+        "NYI": {
+          "probability": 0.3589,
+          "qualified": false
+        },
+        "NYR": {
+          "probability": 0.5721,
+          "qualified": false
+        },
+        "OTT": {
+          "probability": 0.48,
+          "qualified": true
+        },
+        "PHI": {
+          "probability": 0.2668,
+          "qualified": true
+        },
+        "PIT": {
+          "probability": 0.4146,
+          "qualified": true
+        },
+        "SEA": {
+          "probability": 0.462,
+          "qualified": false
+        },
+        "SJS": {
+          "probability": 0.0278,
+          "qualified": false
+        },
+        "STL": {
+          "probability": 0.2067,
+          "qualified": false
+        },
+        "TBL": {
+          "probability": 0.8156,
+          "qualified": true
+        },
+        "TOR": {
+          "probability": 0.4979,
+          "qualified": false
+        },
+        "UTA": {
+          "probability": 0.545,
+          "qualified": true
+        },
+        "VAN": {
+          "probability": 0.3593,
+          "qualified": false
+        },
+        "VGK": {
+          "probability": 0.8571,
+          "qualified": true
+        },
+        "WPG": {
+          "probability": 0.9572,
+          "qualified": false
+        },
+        "WSH": {
+          "probability": 0.5987,
+          "qualified": false
+        }
+      }
+    },
+    {
+      "asof": "2026-01-01",
+      "simulations": 10000,
+      "brier": 0.18485,
+      "teams": {
+        "ANA": {
+          "probability": 0.4116,
+          "qualified": true
+        },
+        "BOS": {
+          "probability": 0.2421,
+          "qualified": true
+        },
+        "BUF": {
+          "probability": 0.538,
+          "qualified": true
+        },
+        "CAR": {
+          "probability": 0.9531,
+          "qualified": true
+        },
+        "CBJ": {
+          "probability": 0.1437,
+          "qualified": false
+        },
+        "CGY": {
+          "probability": 0.3115,
+          "qualified": false
+        },
+        "CHI": {
+          "probability": 0.0219,
+          "qualified": false
+        },
+        "COL": {
+          "probability": 1.0,
+          "qualified": true
+        },
+        "DAL": {
+          "probability": 0.9995,
+          "qualified": true
+        },
+        "DET": {
+          "probability": 0.571,
+          "qualified": false
+        },
+        "EDM": {
+          "probability": 0.8573,
+          "qualified": true
+        },
+        "FLA": {
+          "probability": 0.6675,
+          "qualified": false
+        },
+        "LAK": {
+          "probability": 0.7868,
+          "qualified": true
+        },
+        "MIN": {
+          "probability": 0.9732,
+          "qualified": true
+        },
+        "MTL": {
+          "probability": 0.4741,
+          "qualified": true
+        },
+        "NJD": {
+          "probability": 0.3742,
+          "qualified": false
+        },
+        "NSH": {
+          "probability": 0.2569,
+          "qualified": false
+        },
+        "NYI": {
+          "probability": 0.5479,
+          "qualified": false
+        },
+        "NYR": {
+          "probability": 0.2989,
+          "qualified": false
+        },
+        "OTT": {
+          "probability": 0.3121,
+          "qualified": true
+        },
+        "PHI": {
+          "probability": 0.4328,
+          "qualified": true
+        },
+        "PIT": {
+          "probability": 0.2832,
+          "qualified": true
+        },
+        "SEA": {
+          "probability": 0.2889,
+          "qualified": false
+        },
+        "SJS": {
+          "probability": 0.0942,
+          "qualified": false
+        },
+        "STL": {
+          "probability": 0.0733,
+          "qualified": false
+        },
+        "TBL": {
+          "probability": 0.9594,
+          "qualified": true
+        },
+        "TOR": {
+          "probability": 0.3892,
+          "qualified": false
+        },
+        "UTA": {
+          "probability": 0.3543,
+          "qualified": true
+        },
+        "VAN": {
+          "probability": 0.1474,
+          "qualified": false
+        },
+        "VGK": {
+          "probability": 0.8937,
+          "qualified": true
+        },
+        "WPG": {
+          "probability": 0.5295,
+          "qualified": false
+        },
+        "WSH": {
+          "probability": 0.8128,
+          "qualified": false
+        }
+      }
+    },
+    {
+      "asof": "2026-03-01",
+      "simulations": 10000,
+      "brier": 0.11424,
+      "teams": {
+        "ANA": {
+          "probability": 0.7907,
+          "qualified": true
+        },
+        "BOS": {
+          "probability": 0.6037,
+          "qualified": true
+        },
+        "BUF": {
+          "probability": 0.9474,
+          "qualified": true
+        },
+        "CAR": {
+          "probability": 0.9993,
+          "qualified": true
+        },
+        "CBJ": {
+          "probability": 0.3112,
+          "qualified": false
+        },
+        "CGY": {
+          "probability": 0.0209,
+          "qualified": false
+        },
+        "CHI": {
+          "probability": 0.0013,
+          "qualified": false
+        },
+        "COL": {
+          "probability": 1.0,
+          "qualified": true
+        },
+        "DAL": {
+          "probability": 1.0,
+          "qualified": true
+        },
+        "DET": {
+          "probability": 0.716,
+          "qualified": false
+        },
+        "EDM": {
+          "probability": 0.7372,
+          "qualified": true
+        },
+        "FLA": {
+          "probability": 0.1226,
+          "qualified": false
+        },
+        "LAK": {
+          "probability": 0.5012,
+          "qualified": true
+        },
+        "MIN": {
+          "probability": 0.9997,
+          "qualified": true
+        },
+        "MTL": {
+          "probability": 0.8769,
+          "qualified": true
+        },
+        "NJD": {
+          "probability": 0.012,
+          "qualified": false
+        },
+        "NSH": {
+          "probability": 0.247,
+          "qualified": false
+        },
+        "NYI": {
+          "probability": 0.7679,
+          "qualified": false
+        },
+        "NYR": {
+          "probability": 0.0005,
+          "qualified": false
+        },
+        "OTT": {
+          "probability": 0.2827,
+          "qualified": true
+        },
+        "PHI": {
+          "probability": 0.1126,
+          "qualified": true
+        },
+        "PIT": {
+          "probability": 0.8264,
+          "qualified": true
+        },
+        "SEA": {
+          "probability": 0.5521,
+          "qualified": false
+        },
+        "SJS": {
+          "probability": 0.134,
+          "qualified": false
+        },
+        "STL": {
+          "probability": 0.0017,
+          "qualified": false
+        },
+        "TBL": {
+          "probability": 0.9997,
+          "qualified": true
+        },
+        "TOR": {
+          "probability": 0.0533,
+          "qualified": false
+        },
+        "UTA": {
+          "probability": 0.8707,
+          "qualified": true
+        },
+        "VAN": {
+          "probability": 0.0,
+          "qualified": false
+        },
+        "VGK": {
+          "probability": 0.964,
+          "qualified": true
+        },
+        "WPG": {
+          "probability": 0.1795,
+          "qualified": false
+        },
+        "WSH": {
+          "probability": 0.3678,
+          "qualified": false
+        }
+      }
+    }
+  ]
+}
