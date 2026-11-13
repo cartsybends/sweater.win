@@ -157,8 +157,7 @@ function dcSubmit(event){
   const result=dcModel.match(value,dcCurrentPrompt().id,DEEP_CUT_DATA,{corrections:dcCorrectionsOn()});
   if(result.status==='accepted'){dcSession().lastCorrection={round:S.deepcut.guesses.length,kind:result.correction};return dcLand(String(result.id));}
   if(result.status==='ambiguous'){$('dcFeedback').textContent='More than one player fits that name. Use a full name; add a birth year if needed.';$('dcFeedback').classList.add('error');input.focus();return;}
-  dcSession().deadline-=3000;saveProgress();
-  $('dcFeedback').textContent=result.status==='wrong'?'That player doesn’t fit this prompt. −3 seconds. Try another.':dcCorrectionsOn()?'Name not recognized. Check the spelling or try another player. −3 seconds.':'Enter the full player name, or enable Answer corrections. −3 seconds.';
+  $('dcFeedback').textContent=result.status==='wrong'?'That player doesn’t fit this prompt. Try another.':dcCorrectionsOn()?'Name not recognized. Check the spelling or try another player.':'Enter the full player name, or enable Answer corrections.';
   $('dcFeedback').classList.add('error');input.select();dcPulse();
 }
 $('dcBoard').addEventListener('click',async event=>{

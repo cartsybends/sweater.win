@@ -2,8 +2,9 @@
 
 Seven timed, open-answer NHL prompts per daily shift. Each recognized player has
 a fixed score of 10, 15, 30, 60, 85 or 100. Passes and timeouts score zero. A
-three-second preview precedes a 35-second answer window; rejected names cost
-three seconds. The absolute deadline persists across reloads and navigation.
+three-second preview precedes a 35-second answer window. Wrong or unrecognized
+guesses have no time penalty; the countdown continues normally. The absolute
+deadline persists across reloads and navigation.
 Practice is unlimited and unranked. Daily results use Sweater's existing stats,
 XP, archives, sharing, and server-validated leaderboard replay.
 
