@@ -53,7 +53,7 @@ function poRender(){
  $('poTeam').value=poTeam;$('poShareToggle').disabled=!available;$('poHero').hidden=!available;$('poNoTeam').hidden=available;$('poTeamCharts').hidden=!available;$('poOpponentPanel').hidden=!available;$('poTeamRaw').hidden=!available||!!poShared;
  $('poSeason').textContent=`${poShared?.start||poData?.start||'—'}–${String((poShared?.start||poData?.start||0)+1).slice(-2)} · ${poData?.season_games||84} GAMES`;
  $('poSharedNotice').hidden=!poShared;$('poSharedNotice').querySelector('span').textContent=poShared?'Saved team card · '+poDate(poShared.at)+'. The league board uses the latest forecast.':'';
- $('poOddsNote').hidden=false;$('view-playoffs').querySelectorAll('[data-po-format]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.poFormat===poFormat)));
+ $('poOddsNote').hidden=false;$('poOddsNote').textContent=poTab==='games'?'Sweater model win percentages and observed sportsbook prices.':'Sweater model probabilities, with fair American odds available alongside them.';$('view-playoffs').querySelector('.po-format').hidden=poTab==='games';$('view-playoffs').querySelectorAll('[data-po-format]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.poFormat===poFormat)));
  if(t){
   $('poName').textContent=t.name;$('poRecord').textContent=`${t.gp} GP · ${t.points} PTS · ${Math.round(t.projected_points)} projected final points`;
   const src=`team-logos/${t.abbr}.svg`;if($('poCrest').getAttribute('src')!==src)$('poCrest').src=src;
@@ -69,7 +69,9 @@ function poRender(){
  }
  poRenderBoard();poRenderGames();poRenderCircle();if(t&&!t.shared)poRenderTeamStats(t);
  $('poChangeNote').textContent=poData?.previous_at?`Playoff probability change since ${poDate(poData.previous_at)}. All stage probabilities are measured from today.`:'Changes will appear after the next result changes the forecast. All stage probabilities are measured from today.';
- $('poMethodCount').textContent=`Sweater goals model v1 · ${(poData?.simulations||50000).toLocaleString()} simulations per forecast. Historical validation and the model assumptions are published with the source.`;
+ $('poMethodCount').textContent=`${poData?.model==='sweater-xg-v2'?'Sweater expected-goals model v2':'Sweater goals model v1'} · ${(poData?.simulations||50000).toLocaleString()} simulations per forecast. Historical validation and the model assumptions are published with the source.`;
+ $('poAdvancedNote').hidden=poData?.model!=='sweater-xg-v2';$('poAdvancedNote').textContent=poData?.advanced?poData.advanced.summary+' Advanced game data through '+poData.advanced.data_through+'. Future injury returns and goalie assignments remain uncertain.':'';
+ $('poLegacyNote').hidden=poData?.model==='sweater-xg-v2';
  $('poValidationText').textContent=poData?.validation?.summary||'This first version uses a goals-based model. Historical validation is documented alongside its source code.';
  for(const tab of poTabs){const cap=tab[0].toUpperCase()+tab.slice(1),on=tab===poTab;$('poTab'+cap).setAttribute('aria-selected',String(on));$('poTab'+cap).tabIndex=on?0:-1;$('poPanel'+cap).hidden=!on;}
  poRenderHistory();poFeedStatus();poCloseShare();

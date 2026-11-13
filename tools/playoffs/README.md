@@ -12,6 +12,7 @@ PNG sharing includes the Sweater S mark, URL, timestamp, and model-estimate labe
 python -m pip install -r tools/playoffs/requirements.txt
 python -B tools/playoffs/data.py
 python -B tests/playoffs_data.py
+python -B tests/playoffs_advanced.py
 node tests/playoffs.mjs
 ```
 
@@ -27,14 +28,92 @@ full schedule is present. The regular-season length is read/validated for the
 season: 84 from 2026–27, 82 for the historical evaluation seasons. Preseason and
 postseason games never enter regular-season points or strength training.
 
-Unchanged results update `checked_at`, preserving `updated_at`, probabilities,
-and history. Changes to the confirmed results, schedule, parameters, or model
+Unchanged model inputs update `checked_at`, preserving `updated_at`, probabilities,
+and history. Changes to results, schedule, advanced input revision, availability,
+goalie reports, date, parameters, or model
 produce a new forecast. The atomic file replacement occurs after conservation
 and range checks. Data-only commits use `[skip ci]` and don't rebuild the site or
 redeploy the API Worker. No new service, paid data feed, secret, database, or
-betting provider is needed.
+betting account is needed. Public market quotes and injuries come from ESPN;
+listed advanced-stat downloads come from MoneyPuck.com, credited in the footer.
 
-## Model v1 (beta)
+## Model v2 (current beta)
+
+`sweater-xg-v2` uses the same trained goal-rate engine for Games, remaining
+regular-season simulations and playoff series. Features include recency-weighted
+goals and expected goals, five-on-five shot quality, power-play/penalty-kill rates,
+home advantage, team rest and projected goalie quality. MoneyPuck's listed team
+game files and goalie downloads are reconciled with official NHL results and
+goalie starts. No MoneyPuck predictions are copied.
+
+Previous-season team strength uses the last three seasons at 60/30/10 weights,
+regressed 35% toward league averages. A fitted 30-game prior decays with a
+15-game half-life as current games arrive. Current-season results therefore
+replace historical expectations faster than v1's fixed 60-game prior. Missing
+current xG is left missing, never entered as zero. Historic xG can be revised by
+its publisher and is not an as-published archive.
+
+The separate conditional goalie model uses rest, last result, recent full-game
+share, three-year playing time, age, two-year GSAx/save percentage, home ice,
+roster size and a standings-based game-importance proxy. The last feature is not
+exact playoff-odds leverage. Unconfirmed starters remain a probability mixture.
+Current NHL rosters and identified goalie injuries constrain eligibility. A
+source-confirmed starter overrides the mixture for that game only; a newer
+injury/report conflict remains unconfirmed. A likely report is labeled separately
+from the model's probability. **Skater injuries are reported context only:** no
+unvalidated equal penalty is applied to every absent player. Estimated injury
+return dates and future goalie rotations remain uncertain.
+
+Simulation rates use the trained coefficients and the same game-specific rest
+and goalie adjustments. Playoff series assume equal two-day team rest and
+available-roster goalie probabilities; unknown future assignments are not
+presented as confirmed. Gamma strength uncertainty is an approximation, not a
+separately calibrated posterior. Simulated results do not retrain ratings inside
+a run. The standings, bracket and probability-conservation rules below remain
+the same.
+
+`parameters_v2.json` records chronological selection on 2024–25 and evaluation
+on 1,312 games in 2025–26: Brier 0.24506 versus v1's 0.25066; log loss 0.68289
+versus 0.69481. Upstream goalie training is cross-fitted using only earlier
+seasons. The live coefficients are subsequently refitted through 2025–26.
+Retrospectively rebuilt xG prevents calling this an untouched end-to-end holdout.
+These results do not establish superiority to MoneyPuck, sportsbook markets or
+calibration of season/playoff probabilities. `playoffs_predictions.json` captures
+actual pregame forecasts for forward evaluation; reconstructions are excluded.
+
+Offline coefficient regeneration requires SciPy in addition to runtime NumPy:
+
+```sh
+python -B tools/playoffs/fit_advanced.py --inputs /path/to/chronological-inputs.json
+```
+
+The input bundle uses `advanced.load_inputs`'s `teams`, `goalies` and `births`
+schema, covering team seasons from 2019 and goalie appearances from 2021 through
+the evaluation season. Merge the listed historical downloads by game/team or
+game/player key; current-season compact caches alone do not cover training.
+
+## Goalie reports and optional X access
+
+`starter_reports.json` contains manually reviewed, game-specific sourced facts.
+`starter_sources.json` lists official team accounts and selected beat reporters;
+it can be extended after checking a reporter's identity and team coverage.
+Clear starting statements can confirm; morning-skate/expected/likely language,
+conflicting reports, retractions and different game dates are treated separately.
+Only report facts, source URLs and timestamps are retained, not full posts.
+The parser is conservative but is not a guarantee that every report is captured.
+
+The optional recent-search connector makes read-only requests. To enable it,
+configure the GitHub Actions secret `X_BEARER_TOKEN` and the repository variable
+`X_MAX_POSTS_PER_DAY` with an explicit positive read cap. The default is **zero**,
+including when a token exists. Do not put credentials in code, public files or
+chat. Configure billing controls in X's developer console as well: a post-read
+cap is not a guaranteed dollar spending limit. The job polls no more often than
+15 minutes and requests at most ten posts per query, respecting its remaining
+daily allowance. Source cursors and read counts persist in the public feed;
+credentials never do. No X writes or direct messages are used. Access/credit
+failures leave statistical projections available without claiming confirmation.
+
+## Model v1 (legacy baseline and shared simulation rules)
 
 This is an independent Sweater forecast, not the NHL's or a sportsbook's odds.
 Scoring and goals allowed use gamma-Poisson posterior rates. The prior blends
@@ -71,7 +150,7 @@ qualification. Percentages can be converted to fair American odds;
 they are not sportsbook prices. Simulation zero/one values are displayed as
 <0.1% / >99.9%, not as mathematical clinching or elimination.
 
-## Evaluation and limitations
+## Legacy evaluation and shared limitations
 
 `parameters.json` records parameter selection on 2024–25, an untouched 2025–26
 walk-forward game evaluation, a fixed-home-rate baseline, reliability bins,
@@ -162,8 +241,12 @@ Final scores and shots are reconciled against NHL boxscores. Missing shots
 stay missing rather than becoming zeros. Recent boxscores are rechecked for
 corrections; older verified shots can be reused from the preceding feed. The
 goal awarded for a shootout win is excluded from goals-per-shot calculations.
-Scoring estimates are not presented as shot-based expected goals or a
-deserve-to-win metric. No sportsbook feed was added.
+The Games table always shows Sweater model win percentages. Market moneylines
+are separate, observed two-way sportsbook prices sourced via ESPN, with provider,
+link and observation time. They never fall back to a converted model probability.
+Matching requires both clubs, home/away and start time. Missing prices stay
+unavailable; stale and saved pregame prices are labeled. These quotes need not
+match every bookmaker or represent a live market consensus.
 
 Game start times explicitly use the visitor's device timezone and locale, with
 the timezone abbreviation displayed. The date picker and game grouping use

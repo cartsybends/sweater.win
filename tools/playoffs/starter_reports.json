@@ -1,0 +1,7 @@
+{
+  "note":"Game-specific reviewed reports. Confirmed and likely remain separate. Daily Faceoff supplies the attribution chain; no claim of independently reading unavailable X posts.",
+  "reports":[
+    {"game_id":2026020310,"team":"NYR","player_id":8482193,"name":"Dylan Garand","status":"confirmed","author":"Vince Mercogliano via Daily Faceoff","source_kind":"journalist","source_url":"https://x.com/vzmercogliano/status/2121309661412380837","via_url":"https://www.dailyfaceoff.com/starting-goalies","reported_at":"2026-11-13T18:31:14Z"},
+    {"game_id":2026020310,"team":"VAN","player_id":8482447,"name":"Leevi Meriläinen","status":"likely","author":"Jeff Paterson via Daily Faceoff","source_kind":"journalist","source_url":"https://x.com/patersonjeff/status/2121293185590927363","via_url":"https://www.dailyfaceoff.com/starting-goalies","reported_at":"2026-11-13T17:27:31Z"}
+  ]
+}

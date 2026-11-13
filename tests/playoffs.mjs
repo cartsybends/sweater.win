@@ -40,4 +40,26 @@ test('shared links preserve exactly the original forecast',()=>{const normalized
 test('malformed and oversized share links cannot replace a forecast',()=>{for(const hash of ['#playoffs?s=bad','#playoffs?s='+encodeURIComponent('{}'),'#playoffs?s='+'a'.repeat(3000),'#projections'])assert.equal(M.read(hash),null);for(const patch of [{team:'BAD'},{gp:1000},{points:-1},{n:0},{name:'X'.repeat(81)},{odds:{...t.odds,playoffs:-1}},{at:'bad'}])assert.equal(M.snapshot({...snapshot,...patch}),null);});
 test('history validates all team values and chronological order',()=>{const d=structuredClone(data);d.history[0].teams[t.abbr][0]=200;assert.equal(M.validate(d,now),null);const e=structuredClone(data);e.history.push({...e.history[0],at:'1990-01-01T00:00:00Z'});assert.equal(M.validate(e,now),null);});
 test('builder integrates tool routes, source modules and cleanup',()=>{const b=fs.readFileSync('build_sweater.py','utf8');for(const token of ['/*__PLAYOFFS_CSS__*/','<!--__PLAYOFFS_VIEW__-->','/*__PLAYOFFS_MODEL__*/','/*__PLAYOFFS_APP__*/','openPlayoffs(false)','data-open="playoffs"'])assert(b.includes(token));assert.match(b,/function showHub\(push = true\) \{\s+if \(typeof closePlayoffs/);assert.match(b,/function openTeams\(team = "", push = true\) \{\s+if \(typeof closePlayoffs/);});
+test('market provenance and goalie confirmation must validate before a new feed is displayed',()=>{
+ const fixture=structuredClone(data),g=fixture.games[0],withMarket=0,withContext=0;
+ g.market={source:'ESPN',provider:'Example book',source_url:'https://www.espn.com/nhl/game/_/gameId/123',home:-110,away:100,observed_at:new Date(Date.parse(g.start)-3600000).toISOString()};
+ const c={rest_days:2,injury_status:'reported',injuries:[],goalie:{status:'projected',gsax:0,players:[{id:1,name:'Example goalie',probability:100}]}};
+ g.context={home:structuredClone(c),away:structuredClone(c)};assert(M.validate(fixture,now));
+ const alter=fn=>{const d=structuredClone(fixture);fn(d);assert.equal(M.validate(d,now),null);};
+ alter(d=>d.games[withMarket].market.source_url='https://example.com/unverified');
+ alter(d=>d.games[withMarket].market.home=-1.5);
+ alter(d=>d.games[withMarket].market.observed_at=d.games[withMarket].start);
+ alter(d=>{const q=d.games[withContext].context.home.goalie;q.status='confirmed';delete q.report;});
+ alter(d=>d.games[withContext].context.home.goalie.players[0].probability=101);
+ alter(d=>d.games[withContext].context.home.injury_status='healthy');
+});
+test('availability shows dated cached/stale reports and starter zero remains zero',()=>{
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String,poTeamRecord:()=>null,poDate:String});
+ vm.runInContext(source.slice(source.indexOf('function poInjurySummary('),source.indexOf('function poLocalClockChanged(')),ctx);
+ assert.match(ctx.poInjurySummary({injury_status:'stale',injuries:[{name:'Test Goalie',status:'Out'}]}),/Older injury report.*Test Goalie/);
+ assert.match(ctx.poInjurySummary({injury_status:'cached',injuries:[]}),/Last available/);
+ const team={rest_days:7,injury_status:'reported',injuries:[],goalie:{players:[{name:'Starter',probability:100},{name:'Backup',probability:0}]}};
+ const html=ctx.poGameContext({home:'VAN',away:'NYR',context:{home:team,away:team}});
+ assert.match(html,/Backup <strong>0%/);assert.match(html,/7\+ days earlier/);
+});
 console.log(`${count} Playoff Picture client checks passed`);

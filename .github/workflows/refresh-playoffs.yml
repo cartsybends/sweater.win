@@ -39,7 +39,26 @@ jobs:
         with:
           path: .cache/playoffs
           key: nhl-playoff-history-v1-${{ steps.season.outputs.start }}
+      - name: Identify advanced input revision
+        id: advanced
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime, timezone
+          import hashlib, subprocess
+          response = subprocess.run(['curl','--fail','--silent','--show-error','--max-time','20','https://moneypuck.com/moneypuck/playerData/seasonSummary/update_date.txt'], capture_output=True)
+          revision = hashlib.sha256(response.stdout).hexdigest()[:20] if response.returncode == 0 else 'source-unavailable'
+          print('revision=' + datetime.now(timezone.utc).strftime('%Y%m%d') + '-' + revision)
+          PY
+      - uses: actions/cache@v4
+        with:
+          path: .cache/playoffs/advanced
+          key: nhl-advanced-v2-${{ steps.season.outputs.start }}-${{ steps.advanced.outputs.revision }}
+          restore-keys: |
+            nhl-advanced-v2-${{ steps.season.outputs.start }}-
       - name: Reconcile every completed game and update the forecast
+        env:
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          X_MAX_POSTS_PER_DAY: ${{ vars.X_MAX_POSTS_PER_DAY }}
         run: |
           python -B tools/playoffs/data.py
           python -B tests/playoffs_data.py --feed-only
@@ -47,7 +66,7 @@ jobs:
         run: |
           git config user.name "sweater-bot"
           git config user.email "sweater-bot@users.noreply.github.com"
-          git add playoffs_cache.json
+          git add playoffs_cache.json playoffs_predictions.json
           if ! git diff --cached --quiet; then
             git commit -m "[skip ci] Refresh NHL playoff probabilities"
             git pull --rebase

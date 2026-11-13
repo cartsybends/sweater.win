@@ -21,7 +21,7 @@ def boxscore_stats(game, fetch):
     return {'home_shots': hs, 'away_shots': ats}
 
 
-def enrich(output, data, history, old, fetch, now):
+def enrich(output, data, history, old, fetch, now, engine=None, clock=None):
     now_dt = datetime.fromisoformat(now.replace('Z', '+00:00'))
     today = now_dt.astimezone(ZoneInfo('America/New_York')).date()
     first, last = today - timedelta(days=14), today + timedelta(days=7)
@@ -36,7 +36,7 @@ def enrich(output, data, history, old, fetch, now):
     by_day = {}
     for day in {g['date'] for g in included}:
         by_day[day] = records([g for g in games if g['date'] < day])
-    old_games = {g['id']: g for g in old.get('games', [])} if old.get('model') == output['model'] and old.get('parameters') == output.get('parameters') else {}
+    old_games = {g['id']: g for g in old.get('games', [])}
     rows = []
     for g in included:
         before = by_day[g['date']]
@@ -47,17 +47,31 @@ def enrich(output, data, history, old, fetch, now):
         lh = rate(g['home'], 'gf') * rate(g['away'], 'ga') / league * factor
         la = rate(g['away'], 'gf') * rate(g['home'], 'ga') / league / factor
         hp = round(game_probability(lh, la) * 100, 4)
-        upcoming = now_dt < datetime.fromisoformat(g['start'].replace('Z', '+00:00'))
+        context=None
+        if engine:
+            probability,lh,la,context=engine.predict(g)
+            hp=round(probability*100,4)
+        captured_at=clock() if clock else now
+        upcoming = datetime.fromisoformat(captured_at.replace('Z','+00:00')) < datetime.fromisoformat(g['start'].replace('Z', '+00:00'))
+        if engine and not upcoming:
+            probability,lh,la,context=engine.predict(g,force_historical=True)
+            hp=round(probability*100,4)
         prediction = {'home_win': hp, 'away_win': round(100-hp, 4), 'home_goals': round(lh, 3), 'away_goals': round(la, 3),
-                      'basis': 'pregame' if upcoming else 'reconstructed', 'at': now if upcoming else None}
+                      'basis': 'pregame' if upcoming else 'reconstructed', 'at': captured_at if upcoming else None, 'model':output['model']}
         previous = old_games.get(g['id'])
-        if not upcoming and previous and previous['home'] == g['home'] and previous['away'] == g['away']:
+        if not upcoming and previous and previous['start'] == g['start'] and previous['home'] == g['home'] and previous['away'] == g['away']:
             saved = previous.get('prediction', {})
             at = saved.get('at')
             if saved.get('basis') in {'pregame', 'recorded'} and at and datetime.fromisoformat(at.replace('Z', '+00:00')) < datetime.fromisoformat(g['start'].replace('Z', '+00:00')):
-                prediction = {**saved, 'basis': 'recorded'}
+                prediction = {**saved, 'basis': 'recorded','model':saved.get('model',old.get('model'))}
         row = {k: g[k] for k in ['id', 'date', 'start', 'home', 'away', 'state', 'neutral']}
         row['prediction'] = prediction
+        if context:
+            if prediction['basis']=='recorded' and previous:
+                if previous.get('context'):
+                    row['context']=previous['context']
+            else:
+                row['context']=context
         if g['state'] in FINAL:
             row.update({k: g[k] for k in ['hg', 'ag', 'end']})
             if previous and g['date'] < (today-timedelta(days=1)).isoformat() and previous.get('hg') == g['hg'] and previous.get('ag') == g['ag'] and previous.get('end') == g['end'] and type(previous.get('home_shots')) is int and type(previous.get('away_shots')) is int:
@@ -77,6 +91,8 @@ def enrich(output, data, history, old, fetch, now):
         recent = [g for g in games if g['state'] in FINAL and t['abbr'] in (g['home'], g['away'])][-10:]
         t['form'] = records(recent)[t['abbr']]
     output.update(analytics_version=1, games_from=first.isoformat(), games_through=last.isoformat(), games_today=today.isoformat())
+    from market import enrich_markets
+    output = enrich_markets(output, old, fetch, now)
     return validate_analytics(output)
 
 
@@ -99,7 +115,31 @@ def validate_analytics(output):
             assert type(g['hg']) is int and type(g['ag']) is int and g['hg'] != g['ag']
             for field in ['home_shots', 'away_shots']:
                 assert field not in g or type(g[field]) is int and 0 <= g[field] <= 200
+        if 'market' in g:
+            from market import valid_market
+            assert valid_market(g['market'], g)
+        if 'context' in g:
+            validate_context(g)
     for t in output['teams']:
         f = t['form']
         assert 0 <= f['gp'] <= 10 and 0 <= f['points'] <= 2*f['gp'] and 0 <= f['wins'] <= f['gp']
     return output
+
+
+def validate_context(game):
+    from starters import valid_report
+    for side in ['home','away']:
+        context=game['context'][side];goalie=context['goalie'];players=goalie['players']
+        assert type(context['rest_days']) is int and 1<=context['rest_days']<=7
+        assert context['injury_status'] in {'reported','cached','stale','unavailable','not_reconstructed'}
+        assert goalie['status'] in {'projected','confirmed','unknown'} and math.isfinite(goalie['gsax']) and abs(goalie['gsax'])<=2
+        assert len(players)<=10 and all(type(p['id']) is int and p['id']>=0 and isinstance(p['name'],str) and 0<len(p['name'])<=100 and math.isfinite(p['probability']) and 0<=p['probability']<=100 for p in players)
+        assert not players or abs(sum(p['probability'] for p in players)-100)<=.002
+        assert len({p['id'] for p in players})==len(players)
+        report=goalie.get('report')
+        if report:
+            roster={game[side]:[{'id':report['player_id'],'position':'goalies'}]}
+            assert valid_report(report,game,roster,game['start'])
+        if goalie['status']=='confirmed':
+            assert report and report['status']=='confirmed' and sum(p['id']==report['player_id'] and p['probability']==100 for p in players)==1
+        assert len(context['injuries'])<=100 and all(isinstance(i['name'],str) and len(i['name'])<=100 and isinstance(i['status'],str) and len(i['status'])<=50 for i in context['injuries'])

@@ -3804,6 +3804,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <footer class="foot"><span id="foot"></span>
+    <small>Playoff Picture advanced hockey data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener">MoneyPuck.com</a> · Sportsbook quotes and injury reports via <a href="https://www.espn.com/nhl/" target="_blank" rel="noopener">ESPN</a>.</small>
     <small class="creator">Sweater was made by <strong>Carter George</strong>. Questions or inquiries? Reach out at <a href="mailto:1epiccarter1@gmail.com">1epiccarter1@gmail.com</a>.</small>
     <small>Sweater is a fan-made game and is not affiliated with or endorsed by the NHL or its teams. NHL, team names, logos and player images are the property of the NHL and its teams.</small>
   </footer>
