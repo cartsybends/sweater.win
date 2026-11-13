@@ -9,7 +9,7 @@ let ppReady=false,ppSearchResults=[],ppSearchIndex=-1,ppAnnouncementTimer=0,ppSh
 const ppFmt=n=>Number.isFinite(n)?Math.round(n).toLocaleString():'—',ppRate=n=>Number.isFinite(n)?n.toFixed(2):'—';
 const ppNorm=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const ppSave=()=>store.set('sweater-projections',ppState);
-const ppPlayer=id=>ppShared?.player.id===id?ppShared.player:ppPlayers.get(id);
+const ppPlayer=id=>ppShared&&ppShared.player.id===id?ppShared.player:ppPlayers.get(id);
 function ppCurrent(){return ppState.mode==='manual'?{name:'Your stat line',...ppState.manual,teamGP:ppState.manual.gp}:ppPlayer(ppState.selected);}
 function ppDropShared(){ppShared=null;ppSharedHash='';ppState.ids=ppState.ids.filter(id=>ppPlayers.has(id));if(!ppState.ids.includes(ppState.selected))ppState.selected=ppState.ids[0];if(location.hash.startsWith('#projections?'))history.replaceState(null,'','#projections');}
 function ppOpenShared(){
@@ -51,10 +51,17 @@ function ppRender(){
  $('ppPicks').innerHTML=ppState.ids.map(id=>{const p=ppPlayer(id);return `<span class="pp-pick${id===ppState.selected?' on':''}"><button type="button" data-pp-focus="${id}" aria-pressed="${id===ppState.selected}">${esc(p.name)}</button><button type="button" data-pp-remove="${id}" aria-label="Remove ${esc(p.name)} from comparison">×</button></span>`;}).join('');
  if(!manual&&p){
   const image=String(p.headshot||'').startsWith('https://assets.nhle.com/')?p.headshot:`https://assets.nhle.com/mugs/nhl/latest/${p.id}.png`,initials=p.name.split(' ').map(s=>s[0]).slice(0,2).join('');
-  $('ppPlayerCard').innerHTML=`<div class="pp-player"><span class="pp-headshot"><span aria-hidden="true">${esc(initials)}</span><img src="${esc(image)}" alt="" onload="this.previousElementSibling.hidden=true" onerror="this.remove()"></span><div><h3>${esc(p.name)}</h3><p>${esc(p.team?teamFullName(p.team):'Multiple / unconfirmed current club')} · ${p.pos==='D'?'Defense':'Forward'}</p></div></div><div class="pp-record">${[['GP',p.gp],['GOALS',p.goals],['ASSISTS',p.assists],['POINTS',p.points]].map(([label,n])=>`<div><span>${label}</span><b>${n}</b></div>`).join('')}</div>`;
+  const card=$('ppPlayerCard'),identity=JSON.stringify([p.id,image]);
+  if(card.dataset.player!==identity){
+   card.dataset.player=identity;
+   card.innerHTML=`<div class="pp-player"><span class="pp-headshot"><span aria-hidden="true">${esc(initials)}</span><img src="${esc(image)}" alt="" onload="this.previousElementSibling.hidden=true" onerror="this.remove()"></span><div><h3></h3><p></p></div></div><div class="pp-record">${['GP','GOALS','ASSISTS','POINTS'].map(label=>`<div><span>${label}</span><b></b></div>`).join('')}</div>`;
+  }
+  const update=(node,value)=>{if(node.textContent!==String(value))node.textContent=value;};
+  update(card.querySelector('.pp-headshot>span'),initials);update(card.querySelector('h3'),p.name);update(card.querySelector('.pp-player p'),`${p.team?teamFullName(p.team):'Multiple / unconfirmed current club'} · ${p.pos==='D'?'Defense':'Forward'}`);
+  const stats=card.querySelectorAll('.pp-record b');[p.gp,p.goals,p.assists,p.points].forEach((value,i)=>update(stats[i],value));
   $('ppSource').textContent=`${ppShared?'Shared stat line':'NHL regular season'} · ${ppSnapshotChecked()?'checked':'snapshot'} ${ppCheckedLabel(ppSnapshotChecked(),ppShared?.asof||PROJECTION_DATA.asof||'unavailable')}.`+(p.clubs.length>1?' Season totals combine all clubs.':'');
  }
- if(!manual&&!p){$('ppPlayerCard').innerHTML='<p class="pp-small">Find a skater above to start a projection.</p>';$('ppSource').textContent='';}
+ if(!manual&&!p){delete $('ppPlayerCard').dataset.player;$('ppPlayerCard').innerHTML='<p class="pp-small">Find a skater above to start a projection.</p>';$('ppSource').textContent='';}
  const value=field=>valid?ppFmt(field):'—';$('ppResultName').textContent=p?.name||'Choose a player';$('ppPaceLabel').textContent=`${ppState.seasonGames||'—'}-game projection`;$('ppPace').textContent=value(r.finish?.points);$('ppPace').classList.toggle('pp-long',$('ppPace').textContent.length>5);$('ppPPG').textContent=valid?ppRate(r.ppg):'—';$('ppPaceGoals').textContent=value(r.finish?.goals);$('ppPaceAssists').textContent=value(r.finish?.assists);
  $('ppError').hidden=valid;$('ppError').textContent=valid?'':r.reason;
  $('ppRemaining').textContent=valid?`${r.clubRemaining} games remain ${!manual&&p.team?'for '+p.team:'in the selected schedule'}. Projection assumes ${r.remaining} more appearances.`:'';
@@ -64,7 +71,7 @@ function ppRender(){
  ppFeedStatus();ppStartFeed();
  clearTimeout(ppAnnouncementTimer);ppAnnouncementTimer=setTimeout(()=>{$('ppAnnouncement').textContent=valid?`${ppState.seasonGames}-game projection: ${ppFmt(r.finish.points)} points. ${ppAdjustmentText(ppState)}.`:r.reason;},200);
 }
-function closeProjections(){if(!$('view-projections'))return;$('view-projections').hidden=true;document.body.classList.remove('projections-mode');$('projectionsNav').removeAttribute('aria-current');ppCloseSearch();ppCloseShare();ppStopFeed();if($('ppImageDialog').open)$('ppImageDialog').close();clearTimeout(ppAnnouncementTimer);}
+function closeProjections(){if(!$('view-projections'))return;$('view-projections').hidden=true;document.body.classList.remove('projections-mode');$('projectionsNav').removeAttribute('aria-current');ppCloseSearch();ppCloseShare();ppStopSliderDrags();ppStopFeed();if($('ppImageDialog').open)$('ppImageDialog').close();clearTimeout(ppAnnouncementTimer);}
 function openProjections(push=true){
  if(push)rememberHubScroll();globalThis.SweaterAnalytics?.leave();leaveGame(game);teamMiniCleanup();closeParty();onHub=false;document.body.classList.remove('hubmode');document.body.classList.add('projections-mode');$('view-hub').hidden=true;$('view-teams').hidden=true;$('view-party').hidden=true;
  new Set(GAME_IDS.map(id=>G[id].view)).forEach(id=>{$(id).hidden=true;});$('view-projections').hidden=false;$('gameBar').hidden=false;$('archBar').hidden=true;$('gIcon').innerHTML=uiIcon('chart');$('gTitle').textContent='Point Projections';$('modeLabel').textContent='NHL players & your own stat lines';$('gameBar').dataset.game='projections';$('projectionsNav').setAttribute('aria-current','page');
