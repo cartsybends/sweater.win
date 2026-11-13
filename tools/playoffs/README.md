@@ -117,9 +117,10 @@ among teams; a qualification ring is normalized over 16 places, not over 100%
 of independent qualification probabilities. The labels/readout show the actual
 team probabilities. The Cup ring sums to one champion. Team colors are stable
 across rings. Hover, focus, and touch inspection retain the optional team view.
-All team crests sit outside their own angular midpoint, connected by a short
-radial line;
-they intentionally may overlap instead of being spread into side columns.
+All team crests sit outside the circle, connected to their actual slice by a
+leader line. Crowded logos use a second radial lane, with a small angular shift
+only when both lanes are occupied. Layout checks keep every crest and its hit
+area separate, including dense clusters as future probabilities change.
 Every playoff percentage appears inside the outer ring. Narrow slices use
 compact, rotated labels, staggered radially when needed to avoid collisions.
 All percentage labels are white with a subtle shadow over lighter team colors.
@@ -137,6 +138,16 @@ small screens without widening the page; the circle scrolls within its own
 region. Tooltips stay inside the visible chart area. Only the hovered team's
 slices darken slightly; all other slices and logos retain full brightness.
 Transparent image padding is trimmed using the existing local-crest loader.
+League table crests use 42-pixel boxes on desktop and 34-pixel boxes on mobile.
+
+Pointer updates are coalesced once per animation frame. Tooltip contents and
+the team readout change only when the team or stage changes; layout bounds and
+tooltip dimensions are cached, and movement uses a CSS transform. Highlighting
+touches only the old and new team's cached SVG nodes. The popup dismisses on
+leaving a slice or logo, entering chart gaps, scrolling, or leaving the page;
+pending hover frames are cancelled so it cannot reappear after exit. Keyboard
+focus and touch taps still expose the same data. Accessible slice labels remain,
+without a native SVG title tooltip duplicating the custom popup.
 
 `games.py` adds the last 14 days and next seven days of games. Before-game win
 probabilities use the model's posterior mean scoring rates; the season model

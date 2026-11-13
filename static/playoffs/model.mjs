@@ -8,7 +8,19 @@ export const PLAYOFF_PICTURE = (()=>{
  function sortValue(t,key){const r=record(t);return stages.some(([s])=>s===key)?t.odds[key]:key==='winPct'?r.winPct??-1:key==='pointPct'?r.pointPct??-1:key==='diff'?r.diff:key==='form'?t.form?.points??-1:key==='projected'?t.projected_points:key==='change'?t.change??-1000:t[key]??0;}
  function circle(teams,stage){const total=teams.reduce((sum,t)=>sum+t.odds[stage],0);let angle=-Math.PI/2;return teams.filter(t=>t.odds[stage]>0).map(t=>{const start=angle;angle+=t.odds[stage]/total*Math.PI*2;return {team:t.abbr,probability:t.odds[stage],share:t.odds[stage]/total*100,start,end:angle};});}
  function circleRings(mode='all'){return (mode==='all'?stages:stages.filter(([key])=>key===mode)).map(([stage],i)=>{const outer=mode==='all'?348-i*55:310;return {stage,outer,inner:mode==='all'?outer-52:135};});}
- function circleCallouts(slices,outer){return slices.map(s=>{const angle=(s.start+s.end)/2;return {...s,anchorX:420+outer*Math.cos(angle),anchorY:420+outer*Math.sin(angle),x:420+(outer+43)*Math.cos(angle),y:420+(outer+43)*Math.sin(angle),logoSize:30};});}
+ function circleCallouts(slices,outer){
+  const placed=new Map(),lanes=[outer+34,outer+88],gap=36;
+  const callout=(s,r,angle)=>({...s,anchorX:420+outer*Math.cos((s.start+s.end)/2),anchorY:420+outer*Math.sin((s.start+s.end)/2),x:420+r*Math.cos(angle),y:420+r*Math.sin(angle),logoSize:30});
+  for(const s of [...slices].sort((a,b)=>b.probability-a.probability||a.start-b.start)){
+   const angle=(s.start+s.end)/2;let found=null;
+   // Prefer the slice's exact angle, then spread only crowded logos around the perimeter.
+   for(let step=0;step<=128&&!found;step++)for(const offset of step?[-step,step]:[0]){for(const radius of lanes){const c=callout(s,radius,angle+offset*Math.PI/128);if([...placed.values()].every(p=>Math.abs(p.x-c.x)>=gap||Math.abs(p.y-c.y)>=gap)){found=c;break;}}if(found)break;}
+   // A fully packed ring is a bounded fallback even for an extreme cluster of tiny slices.
+   if(!found)return slices.map((item,i)=>callout(item,lanes[1],(slices[0].start+slices[0].end)/2+i*Math.PI*2/slices.length));
+   placed.set(s.team,found);
+  }
+  return slices.map(s=>placed.get(s.team));
+ }
  function circleLabels(slices,outer,inner,required=false){
   const placed=[],middle=(outer+inner)/2;
   const overlaps=(a,b)=>{for(const box of [a,b])for(let i=0;i<2;i++){const p=box[i],q=box[i+1],axis=[p.y-q.y,q.x-p.x],project=points=>points.map(v=>v.x*axis[0]+v.y*axis[1]),aa=project(a),bb=project(b);if(Math.max(...aa)<=Math.min(...bb)||Math.max(...bb)<=Math.min(...aa))return false;}return true;};
