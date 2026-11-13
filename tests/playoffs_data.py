@@ -177,6 +177,12 @@ class GameAnalytics(unittest.TestCase):
         p=next(g for g in later['games'] if g['id']==1)['prediction']
         self.assertEqual(p,{**saved,'basis':'recorded'})
 
+    def test_refresh_crossing_puck_drop_cannot_backdate_a_new_prediction(self):
+        game=self.game(1,'2026-11-13',state='FUT');d,out=self.output([game])
+        result=A.enrich(out,d,[],{},lambda _: {},'2026-11-13T22:59:00Z',clock=lambda:'2026-11-13T23:01:00Z')
+        prediction=result['games'][0]['prediction']
+        self.assertEqual(prediction['basis'],'reconstructed');self.assertIsNone(prediction['at'])
+
     def test_official_shots_reconcile_with_the_exact_final(self):
         g=self.game(1,'2026-11-12');self.lookup={1:g}
         self.assertEqual(A.boxscore_stats(g,self.fetch),{'home_shots':31,'away_shots':24})

@@ -129,7 +129,7 @@ def playoff_pairs(ranks, teams):
     return all_pairs, inv
 
 
-def simulate(data, history, simulations=50000, params=None):
+def simulate(data, history, simulations=50000, params=None, engine=None):
     if not 100 <= simulations <= 200000:
         raise ValueError('Simulation count outside supported range')
     params = params or parameters()
@@ -141,7 +141,12 @@ def simulate(data, history, simulations=50000, params=None):
     columns = len(teams)
     rows = np.arange(n)
     rng = np.random.default_rng(data['season'])
-    rt, league, so_share = rates(data, history, params)
+    if engine:
+        rt,league=engine.rating_rows,1.0
+        overtime=[g for g in history if g['state'] in {'OFF','FINAL'} and g.get('end') in {'OT','SO'}]
+        so_share=sum(g['end']=='SO' for g in overtime)/len(overtime) if overtime else .3
+    else:
+        rt, league, so_share = rates(data, history, params)
     attack = np.column_stack([rng.gamma(r['shape'][0], 1 / r['exposure'], n) for r in rt])
     defense = np.column_stack([rng.gamma(r['shape'][1], 1 / r['exposure'], n) for r in rt])
     fields = {k: np.tile(np.array([t[k] for t in teams], dtype=np.int16), (n, 1)) for k in ['points', 'rw', 'row', 'wins', 'gf', 'ga']}
@@ -164,6 +169,8 @@ def simulate(data, history, simulations=50000, params=None):
         factor = 1 if g['neutral'] else home_factor
         lh = attack[:, h] * defense[:, a] / league * factor
         la = attack[:, a] * defense[:, h] / league / factor
+        if engine:
+            lh,la=engine.adjust(g,lh,la)
         hg, ag = grng.poisson(lh), grng.poisson(la)
         tied = hg == ag
         hw = (hg > ag) | (tied & (grng.random(n) < lh / (lh + la)))
@@ -222,6 +229,8 @@ def simulate(data, history, simulations=50000, params=None):
             aa = np.where(high_home, low, high)
             lh = attack[rows, h] * defense[rows, aa] / league * home_factor
             la = attack[rows, aa] * defense[rows, h] / league / home_factor
+            if engine:
+                lh,la=engine.series_adjust(h,aa,lh,la)
             hg, ag = rng.poisson(lh), rng.poisson(la)
             home_win = (hg > ag) | ((hg == ag) & (rng.random(n) < lh / (lh + la)))
             high_win = home_win == high_home
@@ -242,9 +251,9 @@ def simulate(data, history, simulations=50000, params=None):
     return {'counts': results, 'points': fields['points'], 'opponents': opponents, 'rates': rt, 'rank': rank}
 
 
-def forecast(data, history, simulations=50000, params=None):
-    sim = simulate(data, history, simulations, params)
-    output = {'version': 1, 'model': MODEL_VERSION, 'season': data['season'], 'start': data['start'],
+def forecast(data, history, simulations=50000, params=None, engine=None):
+    sim = simulate(data, history, simulations, params, engine)
+    output = {'version': 1, 'model': engine.version if engine else MODEL_VERSION, 'season': data['season'], 'start': data['start'],
               'season_games': data['season_games'], 'simulations': simulations,
               'completed_games': sum(g['state'] in {'OFF', 'FINAL'} for g in data['games']),
               'total_games': len(data['games']), 'teams': [], 'history': []}
@@ -262,11 +271,15 @@ def forecast(data, history, simulations=50000, params=None):
           'opponents': [{'team': data['teams'][j]['abbr'], 'chance': round(float(opponent[j] / simulations * 100), 4)} for j in np.argsort(-opponent) if opponent[j]],
           'attack': round(sim['rates'][i]['attack'], 3), 'defense': round(sim['rates'][i]['defense'], 3)})
     output['teams'].sort(key=lambda t: (-t['odds']['playoffs'], -t['odds']['cup'], t['abbr']))
+    if engine:
+        output['advanced']=engine.metadata()
     return output
 
 
 def validate_forecast(data):
-    assert data['version'] == 1 and data['model'] == MODEL_VERSION
+    assert data['version'] == 1 and data['model'] in {MODEL_VERSION,'sweater-xg-v2'}
+    if data['model']=='sweater-xg-v2':
+        assert data.get('advanced',{}).get('version')==2
     assert len(data['teams']) == 32 and len({t['abbr'] for t in data['teams']}) == 32
     assert 100 <= data['simulations'] <= 200000
     assert 0 <= data['completed_games'] <= data['total_games'] == data['season_games'] * 16

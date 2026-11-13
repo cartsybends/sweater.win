@@ -142,10 +142,10 @@ def fingerprint(data):
     return hashlib.sha256(json.dumps(data, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
-def model_signature(data, params, simulations):
+def model_signature(data, params, simulations, engine=None):
     # A game going from FUT to LIVE is not a new confirmed result.
     stable = {**data, 'games': [{**g, 'state': 'OFF' if g['state'] in FINAL else 'FUT'} for g in data['games']]}
-    return fingerprint({'data': stable, 'model': 'sweater-goals-v1', 'parameters': params, 'simulations': simulations})
+    return fingerprint({'data': stable, 'model': engine.version if engine else 'sweater-goals-v1', 'parameters': params, 'simulations': simulations,**({'advanced':engine.signature} if engine else {})})
 
 
 def main():
@@ -161,23 +161,33 @@ def main():
         print('Cached', len(history), 'verified historical NHL games')
         return
     data = collect(start)
-    params = parameters()
-    signature = model_signature(data, params, args.simulations)
     path = ROOT / 'playoffs_cache.json'
     old = json.loads(path.read_text()) if path.exists() else {}
     now = datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z')
+    from advanced import load_inputs, availability
+    from starters import collect as starter_reports
+    from engine_v2 import Engine
+    inputs=load_inputs(start)
+    context=availability(data['teams'],fetch,now)
+    now=datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
+    reports,starter_feed=starter_reports(data['games'],context['rosters'],old,now)
+    engine=Engine(data,history,inputs,context,reports,now)
+    params=engine.parameters
+    signature=model_signature(data,params,args.simulations,engine)
     if old.get('source_sha256') == signature:
         output = {**old, 'checked_at': now}
     else:
-        output = forecast(data, history, args.simulations)
+        output = forecast(data, history, args.simulations, params, engine)
         output.update(source_sha256=signature, updated_at=now, checked_at=now,
                       parameters=params,
-                      validation={'summary': json.loads(PARAMETERS.read_text())['summary']} if PARAMETERS.exists() else {},
+                      validation={'summary': f"Retrospective 2025–26 evaluation: Brier {engine.params['validation']['new']['brier']:.4f} versus {engine.params['validation']['baseline']['brier']:.4f} for the previous Sweater model. Advanced historical xG can be retrospectively revised; forward validation is ongoing. Playoff calibration is not established."},
                       sources=['https://api-web.nhle.com/v1/standings/now',
                                f'https://api-web.nhle.com/v1/club-schedule-season/{{team}}/{data["season"]}',
+                               'https://moneypuck.com/data.htm',
+                               'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/injuries',
                                'https://www.nhl.com/info/standings-info/playoff-format',
                                'https://www.nhl.com/info/standings-info/tie-breaking-procedure'])
-        previous = old if old.get('season') == data['season'] and old.get('model') == MODEL_VERSION and old.get('parameters') == params else {}
+        previous = old if old.get('season') == data['season'] and old.get('model') == engine.version and old.get('parameters') == params else {}
         output['previous_at'] = previous.get('updated_at')
         prev = {t['abbr']: t for t in previous.get('teams', [])}
         for t in output['teams']:
@@ -187,7 +197,16 @@ def main():
           'teams': {t['abbr']: [t['odds']['playoffs'], t['odds']['cup']] for t in output['teams']}}]
     validate_forecast(output)
     from games import enrich
-    output = enrich(output, data, history, old, fetch, now)
+    output = enrich(output, data, history, old, fetch, now, engine,
+                    clock=lambda:datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z'))
+    output['advanced']=engine.metadata()
+    output['starter_feed']=starter_feed
+    output['checked_at']=datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
+    from evaluation import update as archive_update,scores as forward_scores
+    archive_path=ROOT/'playoffs_predictions.json'
+    archive=archive_update(json.loads(archive_path.read_text()) if archive_path.exists() else {},output,data['games'])
+    output['forward_validation']=forward_scores(archive)
+    archive_temp=archive_path.with_suffix('.tmp');archive_temp.write_text(json.dumps(archive,ensure_ascii=False,separators=(',',':'))+'\n');archive_temp.replace(archive_path)
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(output, ensure_ascii=False, separators=(',', ':')) + '\n')
     temp.replace(path)

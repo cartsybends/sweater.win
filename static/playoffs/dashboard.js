@@ -7,7 +7,33 @@ const poCircleLogoCache=new Map();
 function poCircleLogoURL(team){return poCircleLogoCache.get(team)?.url||`team-logos/${team}.svg`;}
 function poWarmCircleLogos(teams){if(poTab!=='circle')return;for(const t of teams){if(poCircleLogoCache.has(t.abbr))continue;const entry={url:''};poCircleLogoCache.set(t.abbr,entry);ppLoadCrest(t.abbr).then(img=>{if(!img)return;entry.url=img.src;$('poPanelCircle').querySelectorAll(`[data-po-circle-logo="${t.abbr}"]`).forEach(node=>{if(node.tagName.toLowerCase()==='image')node.setAttribute('href',entry.url);else node.src=entry.url;});});}}
 const poRatePercent=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
-function poGamesKey(data){return JSON.stringify((data.games||[]).map(g=>[g.id,g.state,g.hg,g.ag,g.end,g.start,g.home_shots,g.away_shots,g.prediction?.home_win,g.prediction?.home_goals,g.prediction?.away_goals,g.prediction?.basis]));}
+function poGamesKey(data){return JSON.stringify((data.games||[]).map(g=>[g.id,g.state,g.hg,g.ag,g.end,g.start,g.home_shots,g.away_shots,g.prediction?.home_win,g.prediction?.home_goals,g.prediction?.away_goals,g.prediction?.basis,g.market,g.context]));}
+function poMarketMoneyline(g){
+ const m=g.market;if(!m)return '<span class="po-market-unavailable">Unavailable</span>';
+ const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),past=Date.now()>=Date.parse(g.start),stale=!past&&Date.now()-Date.parse(m.observed_at)>1800000;
+ return `<div class="po-game-pair po-market-prices"><span>${number(m.away)}</span><span>${number(m.home)}</span></div><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;
+}
+function poGameGoalie(g,side){
+ const goalie=g.context?.[side]?.goalie;if(!goalie)return '';
+ const top=goalie.players?.[0];if(!top||goalie.status==='unknown')return '<small class="po-game-goalie">Starter unconfirmed</small>';
+ const confirmed=goalie.status==='confirmed',report=goalie.report,shown=report?.status==='likely'?goalie.players.find(p=>p.id===report.player_id)||top:top;
+ return `<small class="po-game-goalie"><span>${esc(shown.name)}</span> · ${confirmed?'Confirmed':report?.status==='likely'?`Reported likely · model ${Math.round(shown.probability)}%`:`Projected starter ${Math.round(shown.probability)}%`}${report?` · <a href="${esc(report.source_url)}" target="_blank" rel="noopener noreferrer">${confirmed?'source':'report'}</a>`:''}</small>`;
+}
+function poInjurySummary(c){
+ if(c.injury_status==='not_reconstructed')return 'Historical injuries were not reconstructed.';
+ if(!['reported','cached','stale'].includes(c.injury_status))return 'Injury report unavailable.';
+ const injuries=c.injuries||[],note=c.injury_status==='stale'?'Older injury report; availability may have changed. ':c.injury_status==='cached'?'Last available injury report. ':'';
+ return note+(injuries.length?injuries.map(i=>esc(i.name)+' — '+esc(i.status)).join('<br>'):'No absences listed in this report.');
+}
+function poGameContext(g){
+ if(!g.context)return '';
+ const teams=['away','home'].map(side=>{
+  const c=g.context[side],goalie=c.goalie,report=goalie.report;
+  const players=goalie.players.map(p=>`<p>${esc(p.name)} <strong>${p.probability>0&&p.probability<1?'&lt;1':Math.round(p.probability)}%</strong> chance to start</p>`).join('');
+  return `<div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><p>${c.rest_days===1?'Team on a back-to-back':`Team last played ${c.rest_days===7?'7+':c.rest_days} days earlier`}</p>${players}${report?`<p><a href="${esc(report.source_url)}" target="_blank" rel="noopener noreferrer">${esc(report.author)}</a> · ${esc(report.status)} · ${poDate(report.reported_at)}${report.via_url?` · <a href="${esc(report.via_url)}" target="_blank" rel="noopener noreferrer">corroboration</a>`:''}</p>`:''}<p>${poInjurySummary(c)}</p></div>`;
+ });
+ return `<details class="po-game-context"><summary>Goalies &amp; availability</summary>${teams.join('')}<small>Starter percentages describe who will play, not who will win. Goalie absences affect eligibility; other skater injuries are context only.</small></details>`;
+}
 function poLocalClockChanged(){return poGamesAutoDate&&poGamesDate!==poModel.localDay(Date.now())||poGamesZone!==Intl.DateTimeFormat().resolvedOptions().timeZone;}
 function poFilteredTeams(){const conference=$('poConference').value;return (poData?.teams||[]).filter(t=>conference==='all'||t.conference===conference).sort((a,b)=>(poDescending?-1:1)*(poModel.sortValue(a,poSort)-poModel.sortValue(b,poSort))||a.name.localeCompare(b.name));}
 function poOddsValue(n){const secondary=poFormat==='percent'?poModel.fair(n,'american'):poModel.percent(n);return `<b>${poModel.fair(n,poFormat)}</b><small>${secondary}</small>`;}
@@ -31,12 +57,12 @@ function poRenderGames(){
  $('view-playoffs').querySelectorAll('[data-po-games]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.poGames===poGamesMode)));
  $('poGamesTitle').textContent=results?'Recent game analysis':'Game probabilities';
  const two=(away,home)=>`<div class="po-game-pair"><span>${away}</span><span>${home}</span></div>`;
- $('poGamesHead').innerHTML=`<tr><th>Matchup</th><th>${results?'Final':'Start / status'}</th><th>Win %<small>before game</small></th><th>Fair moneyline</th><th>Model goals<small>before game</small></th>${results?'<th>Shots</th><th>Goals / shot</th>':''}</tr>`;
- $('poGamesRows').innerHTML=rows.map(g=>{const p=g.prediction,format=poFormat==='percent'?'american':poFormat,team=abbr=>`<button class="po-game-team" type="button" data-po-team="${abbr}"><img src="team-logos/${abbr}.svg" alt=""><span>${esc(poTeamRecord(abbr)?.name||abbr)}</span></button>`,time=new Date(g.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZone:zone,timeZoneName:'short'}),basis=p.basis==='reconstructed'?'Reconstructed':p.basis==='recorded'?'Saved pregame':'Pregame estimate';
-  return `<tr data-po-game="${g.id}"><td>${two(team(g.away),team(g.home))}<small class="po-game-basis">${basis}${g.neutral?' · neutral site':''}</small></td><td>${results?two(`<b>${g.ag}</b>`,`<b>${g.hg}</b>`)+`<small class="po-game-basis">Final${g.end==='REG'?'':' / '+g.end}</small>`:`<span>${time}</span><small class="po-game-basis">${['LIVE','CRIT'].includes(g.state)?'In progress · pregame odds':g.state==='PRE'?'Pregame':'Scheduled'}</small>`}</td><td>${two(poModel.percent(p.away_win),poModel.percent(p.home_win))}</td><td>${two(poModel.fair(p.away_win,format),poModel.fair(p.home_win,format))}</td><td>${two(p.away_goals.toFixed(2),p.home_goals.toFixed(2))}</td>${results?`<td>${two(g.away_shots??'—',g.home_shots??'—')}</td><td>${two(poRatePercent(poModel.shooting(g,'away')),poRatePercent(poModel.shooting(g,'home')))}</td>`:''}</tr>`;
+ $('poGamesHead').innerHTML=`<tr><th>Matchup</th><th>${results?'Final':'Start / status'}</th><th>Sweater model win %<small>before game</small></th><th>Market moneyline<small>sportsbook quote</small></th><th>Model goals<small>before game</small></th>${results?'<th>Shots</th><th>Goals / shot</th>':''}</tr>`;
+ $('poGamesRows').innerHTML=rows.map(g=>{const p=g.prediction,team=(abbr,side)=>`<div class="po-game-club"><button class="po-game-team" type="button" data-po-team="${abbr}"><img src="team-logos/${abbr}.svg" alt=""><span>${esc(poTeamRecord(abbr)?.name||abbr)}</span></button>${poGameGoalie(g,side)}</div>`,time=new Date(g.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZone:zone,timeZoneName:'short'}),basis=p.basis==='reconstructed'?'Reconstructed':p.basis==='recorded'?'Saved pregame':'Pregame estimate';
+  return `<tr data-po-game="${g.id}"><td>${two(team(g.away,'away'),team(g.home,'home'))}<small class="po-game-basis">${basis}${g.neutral?' · neutral site':''}${p.model&&p.model!==poData.model?' · previous model':''}</small>${poGameContext(g)}</td><td>${results?two(`<b>${g.ag}</b>`,`<b>${g.hg}</b>`)+`<small class="po-game-basis">Final${g.end==='REG'?'':' / '+g.end}</small>`:`<span>${time}</span><small class="po-game-basis">${['LIVE','CRIT'].includes(g.state)?'In progress · pregame estimates':g.state==='PRE'?'Pregame':'Scheduled'}</small>`}</td><td class="po-model-win">${two(poModel.percent(p.away_win),poModel.percent(p.home_win))}</td><td class="po-market-cell">${poMarketMoneyline(g)}</td><td>${two(p.away_goals.toFixed(2),p.home_goals.toFixed(2))}</td>${results?`<td>${two(g.away_shots??'—',g.home_shots??'—')}</td><td>${two(poRatePercent(poModel.shooting(g,'away')),poRatePercent(poModel.shooting(g,'home')))}</td>`:''}</tr>`;
  }).join('');
  $('poGamesEmpty').hidden=rows.length>0;$('poGamesEmpty').textContent=!poData?.analytics_version?'The game feed is updating. League projections remain available.':results?'No completed games on this date. Choose another date to review results.':'No upcoming games on this date. Select Results for finished games or choose another date.';
- $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” pregame estimates use only earlier calendar dates; they were not recorded before those games. Saved pregame estimates remain fixed after puck drop.':'Pregame win estimates are based on the two teams’ scoring and goals-allowed rates. They do not adjust to the score during a game.';
+ $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” pregame estimates use only earlier calendar dates; they were not recorded before those games. Saved pregame estimates remain fixed after puck drop.':poData?.model==='sweater-xg-v2'?'Sweater estimates use recency-weighted results, shot quality, special teams, goalie availability and rest. Confirmed starters have a source; otherwise the model uses a projected goalie mix. Estimates are pregame and do not follow live scores.':'Pregame win estimates are based on the two teams’ scoring and goals-allowed rates. They do not adjust to the score during a game.';
 }
 function poDonutSector(cx,cy,outer,inner,start,end){
  const point=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)].map(v=>v.toFixed(3)).join(','),span=end-start;

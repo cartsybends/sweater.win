@@ -1,0 +1,231 @@
+{
+  "intercept": 1.1172824275679594,
+  "coefficients": [
+    0.02497528343067412,
+    0.04434649330853074,
+    0.001095371896276831,
+    0.0,
+    0.017641771927111204,
+    0.03463303737685723,
+    0.0348886033735574,
+    0.0014412681135256371,
+    -0.016998337546988478,
+    0.02677835837530852,
+    -0.024791894756070576,
+    0.012784655653691685,
+    0.00551621012460563,
+    -0.00873597643931897
+  ],
+  "mean": [
+    1.1170742219845373,
+    1.0889466541645612,
+    0.8887249528151534,
+    1.881590825423498,
+    1.1164990082842232,
+    1.0897791991327606,
+    0.8890825553529107,
+    1.8873081391831574,
+    -0.03239432951163817,
+    0.0,
+    0.1521532012195122,
+    0.1521532012195122,
+    0.19302591463414634,
+    0.19302591463414634
+  ],
+  "scale": [
+    0.10970683162328136,
+    0.08794973292092069,
+    0.08954334305982185,
+    0.16165943778988373,
+    0.11610201995913592,
+    0.07747364559680575,
+    0.08208732022944655,
+    0.13269291531077868,
+    0.09893819065272114,
+    0.9977107944030137,
+    0.35916932577568245,
+    0.3591693257756825,
+    0.7866387020095162,
+    0.7866387020095162
+  ],
+  "version": 2,
+  "model": "sweater-xg-v2",
+  "prior_games": 30,
+  "half_life": 15,
+  "alpha": 0.01,
+  "temperature": 1,
+  "features": [
+    "attack_goals",
+    "attack_xg",
+    "attack_even_xg",
+    "attack_pp_xg",
+    "defense_goals",
+    "defense_xg",
+    "defense_even_xg",
+    "defense_pk_xg",
+    "goalie_gsax",
+    "home",
+    "own_back_to_back",
+    "opponent_back_to_back",
+    "own_rest",
+    "opponent_rest"
+  ],
+  "training_seasons": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "validation": {
+    "selection_season": 2024,
+    "selection_brier": 0.23518085754328868,
+    "evaluation_season": 2025,
+    "new": {
+      "games": 1312,
+      "brier": 0.24506,
+      "log_loss": 0.68289,
+      "accuracy": 0.545,
+      "reliability": [
+        {
+          "range": [
+            0.2,
+            0.3
+          ],
+          "games": 6,
+          "mean_probability": 0.276,
+          "actual_win_rate": 0.0
+        },
+        {
+          "range": [
+            0.3,
+            0.4
+          ],
+          "games": 59,
+          "mean_probability": 0.3665,
+          "actual_win_rate": 0.3729
+        },
+        {
+          "range": [
+            0.4,
+            0.5
+          ],
+          "games": 369,
+          "mean_probability": 0.4589,
+          "actual_win_rate": 0.4878
+        },
+        {
+          "range": [
+            0.5,
+            0.6
+          ],
+          "games": 573,
+          "mean_probability": 0.5493,
+          "actual_win_rate": 0.5061
+        },
+        {
+          "range": [
+            0.6,
+            0.7
+          ],
+          "games": 261,
+          "mean_probability": 0.6381,
+          "actual_win_rate": 0.6169
+        },
+        {
+          "range": [
+            0.7,
+            0.8
+          ],
+          "games": 43,
+          "mean_probability": 0.7291,
+          "actual_win_rate": 0.7209
+        },
+        {
+          "range": [
+            0.8,
+            0.9
+          ],
+          "games": 1,
+          "mean_probability": 0.8044,
+          "actual_win_rate": 1.0
+        }
+      ]
+    },
+    "baseline": {
+      "games": 1312,
+      "brier": 0.25066,
+      "log_loss": 0.69481,
+      "accuracy": 0.5252,
+      "reliability": [
+        {
+          "range": [
+            0.2,
+            0.3
+          ],
+          "games": 2,
+          "mean_probability": 0.2905,
+          "actual_win_rate": 1.0
+        },
+        {
+          "range": [
+            0.3,
+            0.4
+          ],
+          "games": 47,
+          "mean_probability": 0.3677,
+          "actual_win_rate": 0.3617
+        },
+        {
+          "range": [
+            0.4,
+            0.5
+          ],
+          "games": 257,
+          "mean_probability": 0.4607,
+          "actual_win_rate": 0.5136
+        },
+        {
+          "range": [
+            0.5,
+            0.6
+          ],
+          "games": 609,
+          "mean_probability": 0.5529,
+          "actual_win_rate": 0.4926
+        },
+        {
+          "range": [
+            0.6,
+            0.7
+          ],
+          "games": 339,
+          "mean_probability": 0.6435,
+          "actual_win_rate": 0.5811
+        },
+        {
+          "range": [
+            0.7,
+            0.8
+          ],
+          "games": 56,
+          "mean_probability": 0.7335,
+          "actual_win_rate": 0.625
+        },
+        {
+          "range": [
+            0.8,
+            0.9
+          ],
+          "games": 2,
+          "mean_probability": 0.8008,
+          "actual_win_rate": 1.0
+        }
+      ]
+    },
+    "limitations": [
+      "Retrospectively rebuilt expected-goal values; not an untouched end-to-end holdout.",
+      "No independently validated skater injury-impact coefficient.",
+      "Game-win validation does not establish playoff-probability calibration."
+    ]
+  }
+}
