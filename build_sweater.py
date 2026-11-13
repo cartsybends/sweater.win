@@ -9707,6 +9707,7 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 /*__PROJECTIONS_FEED__*/
 /*__PLAYOFFS_MODEL__*/
 /*__PLAYOFFS_APP__*/
+/*__PLAYOFFS_DASHBOARD__*/
 /*__DEEP_CUT_MODEL__*/
 /*__DEEP_CUT_SCENERY__*/
 /*__DEEP_CUT_GAME__*/
@@ -14467,6 +14468,7 @@ def main():
         "<!--__PLAYOFFS_VIEW__-->": (HERE / "static/playoffs/view.html").read_text(),
         "/*__PLAYOFFS_MODEL__*/": (HERE / "static/playoffs/model.mjs").read_text().replace("export const PLAYOFF_PICTURE", "const PLAYOFF_PICTURE"),
         "/*__PLAYOFFS_APP__*/": (HERE / "static/playoffs/app.js").read_text().replace("/*__PLAYOFF_DATA__*/{}", esc(load_playoff_data())),
+        "/*__PLAYOFFS_DASHBOARD__*/": (HERE / "static/playoffs/dashboard.js").read_text(),
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
         "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),
