@@ -117,13 +117,17 @@ among teams; a qualification ring is normalized over 16 places, not over 100%
 of independent qualification probabilities. The labels/readout show the actual
 team probabilities. The Cup ring sums to one champion. Team colors are stable
 across rings. Hover, focus, and touch inspection retain the optional team view.
-Team crests sit directly inside wider outer slices. Narrow-slice logos sit
-directly outside their own angular midpoint, connected by a short radial line;
+All team crests sit outside their own angular midpoint, connected by a short
+radial line;
 they intentionally may overlap instead of being spread into side columns.
-Percentages are labeled wherever they fit; every segment exposes its exact
+Every playoff percentage appears inside the outer ring. Narrow slices use
+compact, rotated labels, staggered radially when needed to avoid collisions.
+All percentage labels are white with a subtle shadow over lighter team colors.
+Later-round percentages appear when there is room; every segment exposes its exact
 probability through a pointer/focus/touch tooltip and the complete team-stage
-readout. Labels directly across the top of each ring identify all five stages,
-and an existing NHL Stanley Cup photo occupies the larger center opening.
+readout. Smaller labels along the top edge of each ring identify all five stages
+without covering the percentages below them. An existing NHL Stanley Cup photo
+occupies the larger center opening.
 The stage labels also select single-round views. Probability geometry stays
 normalized within each ring; presentation radii do not affect the forecast.
 

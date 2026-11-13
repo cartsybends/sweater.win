@@ -8,8 +8,22 @@ export const PLAYOFF_PICTURE = (()=>{
  function sortValue(t,key){const r=record(t);return stages.some(([s])=>s===key)?t.odds[key]:key==='winPct'?r.winPct??-1:key==='pointPct'?r.pointPct??-1:key==='diff'?r.diff:key==='form'?t.form?.points??-1:key==='projected'?t.projected_points:key==='change'?t.change??-1000:t[key]??0;}
  function circle(teams,stage){const total=teams.reduce((sum,t)=>sum+t.odds[stage],0);let angle=-Math.PI/2;return teams.filter(t=>t.odds[stage]>0).map(t=>{const start=angle;angle+=t.odds[stage]/total*Math.PI*2;return {team:t.abbr,probability:t.odds[stage],share:t.odds[stage]/total*100,start,end:angle};});}
  function circleRings(mode='all'){return (mode==='all'?stages:stages.filter(([key])=>key===mode)).map(([stage],i)=>{const outer=mode==='all'?348-i*55:310;return {stage,outer,inner:mode==='all'?outer-52:135};});}
- function circleLogo(slice,outer,inner){const radius=(outer+inner)/2,size=Math.min(outer-inner-22,outer-inner>100?32:22),angle=(slice.start+slice.end)/2,topDistance=Math.abs(Math.atan2(Math.sin(angle+Math.PI/2),Math.cos(angle+Math.PI/2)));if(size<18||(slice.end-slice.start)*radius<54||topDistance<.24)return null;return {x:420+radius*Math.cos(angle)-size/2,y:420+radius*Math.sin(angle)-(size+14)/2,size};}
- function circleCallouts(slices,outer,inner){return slices.filter(s=>!circleLogo(s,outer,inner)).map(s=>{const angle=(s.start+s.end)/2;return {...s,anchorX:420+outer*Math.cos(angle),anchorY:420+outer*Math.sin(angle),x:420+(outer+43)*Math.cos(angle),y:420+(outer+43)*Math.sin(angle),logoSize:30};});}
+ function circleCallouts(slices,outer){return slices.map(s=>{const angle=(s.start+s.end)/2;return {...s,anchorX:420+outer*Math.cos(angle),anchorY:420+outer*Math.sin(angle),x:420+(outer+43)*Math.cos(angle),y:420+(outer+43)*Math.sin(angle),logoSize:30};});}
+ function circleLabels(slices,outer,inner,required=false){
+  const placed=[],middle=(outer+inner)/2;
+  const overlaps=(a,b)=>{for(const box of [a,b])for(let i=0;i<2;i++){const p=box[i],q=box[i+1],axis=[p.y-q.y,q.x-p.x],project=points=>points.map(v=>v.x*axis[0]+v.y*axis[1]),aa=project(a),bb=project(b);if(Math.max(...aa)<=Math.min(...bb)||Math.max(...bb)<=Math.min(...aa))return false;}return true;};
+  for(const s of [...slices].sort((a,b)=>b.probability-a.probability)){
+   const text=percent(s.probability),angle=(s.start+s.end)/2,arc=(s.end-s.start)*middle,narrow=arc<text.length*7.2+8;
+   if(!required&&(s.probability<1||narrow))continue;
+   const fontSize=narrow?10:12,width=text.length*fontSize*.6,height=fontSize+2,rotation=narrow?Math.atan2(Math.sin(angle),Math.cos(angle)):0,readable=rotation>Math.PI/2?rotation-Math.PI:rotation<-Math.PI/2?rotation+Math.PI:rotation;
+   const radii=narrow?[inner+width/2+1,outer-width/2-1,middle]:[middle];let best=null,bestCount=Infinity;
+   for(const radius of radii){const x=420+radius*Math.cos(angle),y=420+radius*Math.sin(angle),corners=[[-1,-1],[1,-1],[1,1],[-1,1]].map(([dx,dy])=>({x:x+dx*width/2*Math.cos(readable)-dy*height/2*Math.sin(readable),y:y+dx*width/2*Math.sin(readable)+dy*height/2*Math.cos(readable)})),count=placed.filter(p=>overlaps(corners,p.corners)).length;
+    if(count<bestCount){best={team:s.team,probability:s.probability,text,x,y,fontSize,rotation:readable*180/Math.PI,corners};bestCount=count;}if(!count)break;
+   }
+   if(required||bestCount===0)placed.push(best);
+  }
+  return placed;
+ }
  function shooting(g,side){const shots=g[side==='home'?'home_shots':'away_shots'];if(!finite(shots)||shots<=0)return null;const goals=g[side==='home'?'hg':'ag'],other=g[side==='home'?'ag':'hg'];return (goals-(g.end==='SO'&&goals>other?1:0))/shots*100;}
  function analyticsValid(d){
   if(d.analytics_version===undefined)return true;
@@ -43,5 +57,5 @@ export const PLAYOFF_PICTURE = (()=>{
   return {v:1,team:raw.team,name:raw.name,start:raw.start,at:new Date(raw.at).toISOString(),gp:raw.gp,points:raw.points,projected:raw.projected,n:raw.n,odds:Object.fromEntries(stages.map(([k])=>[k,raw.odds[k]]))};
  }
  function read(hash){if(typeof hash!=='string'||hash.length>2500)return null;try{const q=hash.split('?')[1]||'',s=new URLSearchParams(q).get('s');return s?snapshot(JSON.parse(s)):null;}catch{return null;}}
- return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLogo,circleCallouts,localDay,shooting,percent,fair,validate,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
+ return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
 })();
