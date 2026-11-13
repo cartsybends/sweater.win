@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools/playoffs'))
 import data as D
 import model as M
+import games as A
 from validate_history import input_at, DIVISIONS
 
 
@@ -27,7 +28,7 @@ def fixture():
 
 class Rules(unittest.TestCase):
     def test_published_feed(self):
-        M.validate_forecast(json.loads((ROOT / 'playoffs_cache.json').read_text()))
+        A.validate_analytics(M.validate_forecast(json.loads((ROOT / 'playoffs_cache.json').read_text())))
 
     def test_correct_regular_season_outcome_points(self):
         def game(end, hg, ag):
@@ -139,9 +140,64 @@ class Rules(unittest.TestCase):
         self.assertEqual(report['holdout']['games'],1312)
 
 
+class GameAnalytics(unittest.TestCase):
+    def game(self, gid, day, hg=3, ag=2, end='REG', state='OFF'):
+        return {'id':gid,'season':20262027,'date':day,'start':day+'T23:00:00Z','home':'VAN','away':'SEA','neutral':False,'state':state,**({'hg':hg,'ag':ag,'end':end} if state=='OFF' else {})}
+
+    def output(self, games):
+        d=fixture();d.update(start=2026,season=20262027,season_games=84,games=games)
+        return d,{'model':M.MODEL_VERSION,'parameters':M.parameters(),'teams':copy.deepcopy(d['teams'])}
+
+    def fetch(self,url):
+        gid=int(url.split('/')[-2]);g=self.lookup[gid]
+        return {'id':gid,'gameState':'OFF','homeTeam':{'abbrev':'VAN','score':g['hg'],'sog':31},'awayTeam':{'abbrev':'SEA','score':g['ag'],'sog':24}}
+
+    def test_reconstructions_never_use_the_game_result_or_later_games(self):
+        games=[self.game(1,'2026-11-10'),self.game(2,'2026-11-11')]
+        self.lookup={g['id']:g for g in games};d,out=self.output(games)
+        original=A.enrich(out,d,[],{},self.fetch,'2026-11-12T18:00:00Z')
+        p=original['games'][0]['prediction']
+        changed=copy.deepcopy(games);changed[0]['hg']=20;changed[1]['hg']=22
+        self.lookup={g['id']:g for g in changed};d,out=self.output(changed)
+        newer=A.enrich(out,d,[],{},self.fetch,'2026-11-12T18:00:00Z')
+        self.assertEqual(p,newer['games'][0]['prediction'])
+        self.assertNotEqual(original['games'][1]['prediction']['home_win'],newer['games'][1]['prediction']['home_win'])
+        self.assertEqual(p['basis'],'reconstructed');self.assertIsNone(p['at'])
+
+    def test_pregame_estimates_are_frozen_after_puck_drop(self):
+        game=self.game(1,'2026-11-13',state='FUT');d,out=self.output([game])
+        initial=A.enrich(out,d,[],{},lambda _: {},'2026-11-13T18:00:00Z')
+        self.assertEqual(initial['games'][0]['prediction']['basis'],'pregame')
+        saved=copy.deepcopy(initial['games'][0]['prediction'])
+        # New results before the target date would change a fresh estimate, but
+        # cannot replace the already-recorded pregame number once play begins.
+        earlier=self.game(2,'2026-11-12',hg=10,ag=1);game.update(state='OFF',hg=3,ag=2,end='REG')
+        self.lookup={1:game,2:earlier};d,out=self.output([earlier,game])
+        later=A.enrich(out,d,[],initial,self.fetch,'2026-11-14T03:00:00Z')
+        p=next(g for g in later['games'] if g['id']==1)['prediction']
+        self.assertEqual(p,{**saved,'basis':'recorded'})
+
+    def test_official_shots_reconcile_with_the_exact_final(self):
+        g=self.game(1,'2026-11-12');self.lookup={1:g}
+        self.assertEqual(A.boxscore_stats(g,self.fetch),{'home_shots':31,'away_shots':24})
+        with self.assertRaises(ValueError):A.boxscore_stats(g,lambda _: {'id':1,'gameState':'OFF','homeTeam':{'abbrev':'VAN','score':4},'awayTeam':{'abbrev':'SEA','score':2}})
+
+    def test_missing_shots_stay_missing_instead_of_becoming_zero(self):
+        g=self.game(1,'2026-11-12');d,out=self.output([g])
+        result=A.enrich(out,d,[],{},lambda _: {},'2026-11-13T18:00:00Z')
+        self.assertNotIn('home_shots',result['games'][0]);self.assertNotIn('away_shots',result['games'][0])
+
+    def test_form_uses_only_ten_completed_games(self):
+        games=[self.game(i+1,f'2026-11-{i+1:02}',hg=3,ag=2,end='OT' if i%2 else 'REG') for i in range(12)]
+        d,out=self.output(games);self.lookup={g['id']:g for g in games}
+        result=A.enrich(out,d,[],{},self.fetch,'2026-11-13T18:00:00Z')
+        van=next(t for t in result['teams'] if t['abbr']=='VAN');sea=next(t for t in result['teams'] if t['abbr']=='SEA')
+        self.assertEqual(van['form']['gp'],10);self.assertEqual(van['form']['points'],20);self.assertEqual(sea['form']['points'],5)
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--feed-only',action='store_true');args=parser.parse_args()
     if args.feed_only:
-        M.validate_forecast(json.loads((ROOT/'playoffs_cache.json').read_text()));print('Verified 32-team forecast, probability totals, advancement, point distributions and opponents')
+        A.validate_analytics(M.validate_forecast(json.loads((ROOT/'playoffs_cache.json').read_text())));print('Verified 32-team forecast, probability totals, game estimates, results and NHL analytics')
     else:
         unittest.main(argv=[sys.argv[0]])

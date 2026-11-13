@@ -101,3 +101,35 @@ Official rules:
 
 - https://www.nhl.com/info/standings-info/playoff-format
 - https://www.nhl.com/info/standings-info/tie-breaking-procedure
+
+## League dashboard and game analytics
+
+The default entry is the league-wide table, including after a team has been
+saved locally. Team cards are shown only in the optional Team detail tab or
+when opening a frozen share. The board defaults to fair American odds with
+percentages alongside them, with decimal and percentage options. Season stats
+expose official records, win/points percentages, GF/GA, RW/ROW, and last-ten form.
+CSV downloads contain numeric percentages and both fair-odds formats.
+
+Circle view is an independent SVG chart with five nested rings (playoffs to
+champion) and a single-round option. Slices divide each round's expected places
+among teams; a qualification ring is normalized over 16 places, not over 100%
+of independent qualification probabilities. The labels/readout show the actual
+team probabilities. The Cup ring sums to one champion. Team colors are stable
+across rings. Hover, focus, and touch inspection retain the optional team view.
+
+`games.py` adds the last 14 days and next seven days of games. Before-game win
+probabilities use the model's posterior mean scoring rates; the season model
+also samples team-strength uncertainty. Upcoming numbers can update before
+the start. Once play begins, any estimate saved before that start is frozen.
+For older results without a saved estimate, reconstruction uses only completed
+games from strictly earlier calendar dates, excluding same-day overlapping
+games. Reconstructed values are labeled throughout and are not represented as
+previously published forecasts, sportsbook prices, or in-game estimates.
+
+Final scores and shots are reconciled against NHL boxscores. Missing shots
+stay missing rather than becoming zeros. Recent boxscores are rechecked for
+corrections; older verified shots can be reused from the preceding feed. The
+goal awarded for a shootout win is excluded from goals-per-shot calculations.
+Scoring estimates are not presented as shot-based expected goals or a
+deserve-to-win metric. No sportsbook feed was added.

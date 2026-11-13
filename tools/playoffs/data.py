@@ -186,6 +186,8 @@ def main():
         output['history'] = history_points + [{'at': now, 'completed': output['completed_games'],
           'teams': {t['abbr']: [t['odds']['playoffs'], t['odds']['cup']] for t in output['teams']}}]
     validate_forecast(output)
+    from games import enrich
+    output = enrich(output, data, history, old, fetch, now)
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(output, ensure_ascii=False, separators=(',', ':')) + '\n')
     temp.replace(path)
