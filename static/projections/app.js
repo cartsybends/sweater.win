@@ -73,6 +73,7 @@ function ppRender(){
 }
 function closeProjections(){if(!$('view-projections'))return;$('view-projections').hidden=true;document.body.classList.remove('projections-mode');$('projectionsNav').removeAttribute('aria-current');ppCloseSearch();ppCloseShare();ppStopSliderDrags();ppStopFeed();if($('ppImageDialog').open)$('ppImageDialog').close();clearTimeout(ppAnnouncementTimer);}
 function openProjections(push=true){
+ if(typeof closePlayoffs==='function')closePlayoffs();
  if(push)rememberHubScroll();globalThis.SweaterAnalytics?.leave();leaveGame(game);teamMiniCleanup();closeParty();onHub=false;document.body.classList.remove('hubmode');document.body.classList.add('projections-mode');$('view-hub').hidden=true;$('view-teams').hidden=true;$('view-party').hidden=true;
  new Set(GAME_IDS.map(id=>G[id].view)).forEach(id=>{$(id).hidden=true;});$('view-projections').hidden=false;$('gameBar').hidden=false;$('archBar').hidden=true;$('gIcon').innerHTML=uiIcon('chart');$('gTitle').textContent='Point Projections';$('modeLabel').textContent='NHL players & your own stat lines';$('gameBar').dataset.game='projections';$('projectionsNav').setAttribute('aria-current','page');
  const sharedError=ppOpenShared();

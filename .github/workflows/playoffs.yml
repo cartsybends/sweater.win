@@ -1,0 +1,33 @@
+name: Verify Playoff Picture
+on:
+  pull_request:
+    paths:
+      - "static/playoffs/**"
+      - "tools/playoffs/**"
+      - "tests/playoffs*"
+      - "playoffs_cache.json"
+      - "build_sweater.py"
+      - ".github/workflows/*playoffs.yml"
+  push:
+    branches-ignore: [main]
+    paths:
+      - "static/playoffs/**"
+      - "tools/playoffs/**"
+      - "tests/playoffs*"
+      - "playoffs_cache.json"
+      - "build_sweater.py"
+      - ".github/workflows/*playoffs.yml"
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: python -m pip install -r tools/playoffs/requirements.txt
+      - run: python -B tests/playoffs_data.py
+      - run: node tests/playoffs.mjs
