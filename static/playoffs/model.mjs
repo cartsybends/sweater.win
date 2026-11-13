@@ -6,6 +6,7 @@ export const PLAYOFF_PICTURE = (()=>{
  function record(t){const ot=t.points-2*t.wins;return {wins:t.wins,ot,losses:t.gp-t.wins-ot,winPct:t.gp?t.wins/t.gp*100:null,pointPct:t.gp?t.points/(2*t.gp)*100:null,diff:t.gf-t.ga};}
  function sortValue(t,key){const r=record(t);return stages.some(([s])=>s===key)?t.odds[key]:key==='winPct'?r.winPct??-1:key==='pointPct'?r.pointPct??-1:key==='diff'?r.diff:key==='form'?t.form?.points??-1:key==='projected'?t.projected_points:key==='change'?t.change??-1000:t[key]??0;}
  function circle(teams,stage){const total=teams.reduce((sum,t)=>sum+t.odds[stage],0);let angle=-Math.PI/2;return teams.filter(t=>t.odds[stage]>0).map(t=>{const start=angle;angle+=t.odds[stage]/total*Math.PI*2;return {team:t.abbr,probability:t.odds[stage],share:t.odds[stage]/total*100,start,end:angle};});}
+ function circleLogo(slice,outer,inner){const radius=(outer+inner)/2,size=Math.min(38,(outer-inner)*.65,(slice.end-slice.start)*radius*.6);if(size<18)return null;const angle=(slice.start+slice.end)/2;return {x:420+radius*Math.cos(angle)-size/2,y:420+radius*Math.sin(angle)-size/2,size};}
  function shooting(g,side){const shots=g[side==='home'?'home_shots':'away_shots'];if(!finite(shots)||shots<=0)return null;const goals=g[side==='home'?'hg':'ag'],other=g[side==='home'?'ag':'hg'];return (goals-(g.end==='SO'&&goals>other?1:0))/shots*100;}
  function analyticsValid(d){
   if(d.analytics_version===undefined)return true;
@@ -39,5 +40,5 @@ export const PLAYOFF_PICTURE = (()=>{
   return {v:1,team:raw.team,name:raw.name,start:raw.start,at:new Date(raw.at).toISOString(),gp:raw.gp,points:raw.points,projected:raw.projected,n:raw.n,odds:Object.fromEntries(stages.map(([k])=>[k,raw.odds[k]]))};
  }
  function read(hash){if(typeof hash!=='string'||hash.length>2500)return null;try{const q=hash.split('?')[1]||'',s=new URLSearchParams(q).get('s');return s?snapshot(JSON.parse(s)):null;}catch{return null;}}
- return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,shooting,percent,fair,validate,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
+ return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleLogo,shooting,percent,fair,validate,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
 })();

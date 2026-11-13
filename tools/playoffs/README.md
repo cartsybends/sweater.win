@@ -117,6 +117,11 @@ among teams; a qualification ring is normalized over 16 places, not over 100%
 of independent qualification probabilities. The labels/readout show the actual
 team probabilities. The Cup ring sums to one champion. Team colors are stable
 across rings. Hover, focus, and touch inspection retain the optional team view.
+Team crests sit directly inside the outer colored slices, sized to stay within
+their geometry. Tiny slices keep their original angles without forcing in a
+logo; all 32 crests remain available in the legend. Transparent image padding
+is trimmed using the existing local-crest loader, with updates applied to the
+image nodes without rebuilding the chart or intercepting pointer interactions.
 
 `games.py` adds the last 14 days and next seven days of games. Before-game win
 probabilities use the model's posterior mean scoring rates; the season model
