@@ -10,7 +10,8 @@ function poLiveFor(g){const s=poLiveGames.get(g.id);return s&&s.home===g.home&&s
 function poEffectiveGame(g){
  if(['OFF','FINAL'].includes(g.state))return g;
  const s=poLiveFor(g);if(!s||s.status==='scheduled')return g;
- return s.status==='final'?{...g,state:s.state,hg:s.home_score,ag:s.away_score,end:s.end}:{...g,state:s.state};
+ if(s.status==='final')return {...g,state:s.state,hg:s.home_score,ag:s.away_score,end:s.end};
+ return ['LIVE','CRIT'].includes(s.state)?{...g,state:s.state}:g;
 }
 function poGameWin(g){
  const s=poLiveFor(g),playing=['LIVE','CRIT'].includes(g.state),final=['OFF','FINAL'].includes(g.state);
