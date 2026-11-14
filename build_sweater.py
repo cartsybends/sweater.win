@@ -657,6 +657,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   /*__COMMUNITY_GAMES_CSS__*/
   /*__PROJECTIONS_CSS__*/
   /*__PLAYOFFS_CSS__*/
+  /*__GAME_CENTER_CSS__*/
   /*__DEEP_CUT_CSS__*/
 
   /* NHL EDGE hub + games */
@@ -9740,6 +9741,8 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 /*__PLAYOFFS_MODEL__*/
 /*__PLAYOFFS_APP__*/
 /*__PLAYOFFS_DASHBOARD__*/
+/*__GAME_CENTER_MODEL__*/
+/*__GAME_CENTER_APP__*/
 
 
 
@@ -14545,6 +14548,9 @@ def main():
         "/*__PLAYOFFS_MODEL__*/": (HERE / "static/playoffs/model.mjs").read_text().replace("export const PLAYOFF_PICTURE", "const PLAYOFF_PICTURE"),
         "/*__PLAYOFFS_APP__*/": (HERE / "static/playoffs/app.js").read_text().replace("/*__PLAYOFF_DATA__*/{}", esc(load_playoff_data())),
         "/*__PLAYOFFS_DASHBOARD__*/": (HERE / "static/playoffs/dashboard.js").read_text(),
+        "/*__GAME_CENTER_CSS__*/": (HERE / "static/playoffs/game-center.css").read_text(),
+        "/*__GAME_CENTER_MODEL__*/": (HERE / "static/playoffs/game-center-model.mjs").read_text().replace("export const GAME_CENTER", "const GAME_CENTER"),
+        "/*__GAME_CENTER_APP__*/": (HERE / "static/playoffs/game-center.js").read_text(),
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
         "<!--__DEEP_CUT_VIEW__-->": (HERE / "static/deep-cut/view.html").read_text(encoding="utf-8"),

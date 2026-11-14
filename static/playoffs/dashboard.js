@@ -62,6 +62,7 @@ function poApplyLive(){
   card.querySelector('.po-game-status').innerHTML=poCardStatus(g);card.querySelector('.po-model-win').innerHTML=poGameWin(g,'prices');card.querySelector('.po-card-win-note').innerHTML=poGameWin(g,'note');card.querySelector('.po-market-cell').innerHTML=poMarketMoneyline(g,'prices');card.querySelector('.po-card-market-note').innerHTML=poMarketMoneyline(g,'note');
   const scoreboard=card.querySelector('.po-card-scoreboard'),scores=poCardScoreboard(g);scoreboard.innerHTML=scores;scoreboard.hidden=!scores;
  }
+ if(typeof poGCMarket==='function')poGCMarket();
 }
 async function poUpdateLive(force=false){
  const dates=poLiveDates(),scope=dates.join(',');if(!scope)return;
@@ -133,15 +134,16 @@ function poInjurySummary(c){
  const injuries=c.injuries||[],note=c.injury_status==='stale'?'Older injury report; availability may have changed.':c.injury_status==='cached'?'Last available injury report.':'';
  return (note?`<p class="po-availability-note">${note}</p>`:'')+(injuries.length?`<ul class="po-injury-list">${injuries.map(i=>`<li>${poInjuryPortrait(i)}<div class="po-injury-copy"><strong>${esc(i.name)}</strong><small>${esc([i.report?.reason||i.reason,poReturnEstimate(i.return_estimate)].filter(Boolean).join(' · '))}</small></div>${poInjuryBadge(i)}</li>`).join('')}</ul>`:'<p class="po-availability-note">No absences listed.</p>');
 }
-function poGameContext(g){
- if(!g.context)return '';
+function poAvailabilityBody(g,goalies=false){
+ if(!g.context)return '<p class="po-availability-note">Team availability unavailable.</p>';
  const teams=['away','home'].map(side=>{
   const c=g.context[side];
-  return `<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div></div>${poInjurySummary(c)}</section>`;
+  return `<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div></div>${goalies?poGameGoalie(g,side):''}${poInjurySummary(c)}</section>`;
  });
  const reported=g.context.home.injury_reported_at||g.context.away.injury_reported_at;
- return `<details class="po-game-context" data-po-disclosure="availability"><summary>Team availability</summary><div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Linked status badges open the matching RotoWire report when available, otherwise the player’s ESPN overview. Return dates are estimates and may change.</small></details>`;
+ return `<div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Linked status badges open the matching RotoWire report when available, otherwise the player’s ESPN overview. Return dates are estimates and may change.</small>`;
 }
+function poGameContext(g){return `<details class="po-game-context" data-po-disclosure="availability"><summary data-po-center="${g.id}" aria-haspopup="dialog">Team availability / Game Center</summary>${poAvailabilityBody(g)}</details>`;}
 function poCardScore(g,side){const s=poLiveFor(g),value=['OFF','FINAL'].includes(g.state)?g[side==='home'?'hg':'ag']:['LIVE','CRIT'].includes(g.state)?s?.[side+'_score']:null;return Number.isInteger(value)?String(value):'';}
 function poCardScoreboard(g){
  const scores={away:poCardScore(g,'away'),home:poCardScore(g,'home')};if(scores.away===''||scores.home==='')return '';

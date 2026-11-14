@@ -11,6 +11,8 @@ on:
       - "tests/grid_popularity.mjs"
       - "tests/playoff_refresh*"
       - "tests/playoffs_live*"
+      - "tests/playoffs_gamecenter*"
+      - "tests/fixtures/gamecenter.mjs"
       - "analytics/**"
       - "tests/analytics*"
       - "tests/helpers/analytics_runtime.mjs"
@@ -27,6 +29,8 @@ on:
       - "tests/grid_popularity.mjs"
       - "tests/playoff_refresh*"
       - "tests/playoffs_live*"
+      - "tests/playoffs_gamecenter*"
+      - "tests/fixtures/gamecenter.mjs"
       - "analytics/**"
       - "tests/analytics*"
       - "tests/helpers/analytics_runtime.mjs"
@@ -49,6 +53,8 @@ jobs:
       - run: node tests/playoffs_live.mjs
       - run: node tests/playoffs_live_history.mjs
       - run: node tests/playoffs_live_runtime.mjs
+      - run: node tests/playoffs_gamecenter.mjs
+      - run: node tests/playoffs_gamecenter_runtime.mjs
       - run: node tests/community_games.mjs
       - run: node tests/face_swap.mjs
       - run: node tests/grid_popularity.mjs

@@ -35,3 +35,4 @@ jobs:
       - run: node tests/playoffs.mjs
       - run: node tests/playoffs_live.mjs
       - run: node tests/playoffs_live_history.mjs
+      - run: node tests/playoffs_gamecenter.mjs
