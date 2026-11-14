@@ -14,7 +14,7 @@ export async function refreshPlayoffs(env,{fetcher=fetch,now=Date.now()}={}){
   stage='feed_parse';
   const feed=await response.json(),checked=Date.parse(feed.checked_at);
   if(!Number.isFinite(checked)||checked>now+300000)return {status:'invalid_feed'};
-  if(now-checked<300000)return {status:'fresh'};
+  if(now-checked<900000)return {status:'fresh'};
   const headers={Authorization:'Bearer '+token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'Sweater-Playoff-Refresh'};
   // Workers supports manual/follow only. Reject redirects without forwarding
   // the credential to another destination; redirect:"error" throws in workerd.

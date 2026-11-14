@@ -2,15 +2,38 @@
 
 This project targets the existing `sweater-api` Worker and its `DB` binding to
 `sweater-leaderboard`. `src/existing-api.mjs` retains the supplied leaderboard
-and Party Mode implementation. `src/index.mjs` routes only analytics paths to
-the new handler; other requests retain their existing behavior.
+and Party Mode implementation. `src/index.mjs` routes analytics, Grid popularity and live hockey paths to
+their respective handlers; other requests retain their existing behavior.
+
+## Live game percentages
+
+`GET /api/playoffs/live?date=YYYY-MM-DD` reads the official NHL score/clock and
+the saved Sweater pregame forecast directly from the existing Worker. It needs
+no new credentials or database. Score responses and calculated estimates are
+cached at the edge for 30 seconds, and the forecast input for 60 seconds.
+Only yesterday, today and tomorrow in NHL's Eastern calendar are accepted.
+The Games view polls while visible and stops on navigation or a hidden tab.
+Live refreshes update score/probability cells without closing team availability.
+
+The live model conditions independent Poisson scoring on the current score and
+regulation time remaining, using saved expected-goal rates. Its prior is matched
+to the saved pregame win probability. Regular-season overtime survival uses
+869 OT games / 278 shootouts from official 2023–24 through 2025–26 NHL schedules;
+playoff overtime has no shootout. These aggregate schedules are already cached
+by `tools/playoffs/data.py`. This first live model is not yet backtested against
+historical in-game states. Current penalties, empty-net play and mid-game goalie
+changes are not separately modeled. Shootouts show unavailable until final;
+missing or stale feeds never become fresh-looking pregame percentages.
+
+The original pregame forecast is retained for Results and forward evaluation.
+This endpoint does not change standings or the season/playoff simulations.
 
 ## Playoff refresh clock
 
-The GitHub workflow targets a five-minute schedule, but scheduled Actions have
+The GitHub workflow targets a fifteen-minute schedule, but scheduled Actions have
 been observed to arrive much later. The existing Worker therefore has a separate
 minute cron that can dispatch the same validated Python workflow when the public
-forecast is over five minutes old. Daily analytics/popularity cleanup remains on
+forecast is over fifteen minutes old. Daily analytics/popularity cleanup remains on
 its original daily cron. The watchdog avoids queued/running jobs and limits
 retries to one dispatch per five minutes. It never publishes unvalidated data.
 

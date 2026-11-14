@@ -2,7 +2,7 @@ name: Refresh NHL playoff probabilities
 
 on:
   schedule:
-    - cron: "3-58/5 * * * *"
+    - cron: "3,18,33,48 * * * *"
   workflow_dispatch:
 
 permissions:

@@ -64,6 +64,20 @@ export const PLAYOFF_PICTURE = (()=>{
   return d.teams.every(t=>t.form&&Number.isInteger(t.form.gp)&&t.form.gp>=0&&t.form.gp<=10&&Number.isInteger(t.form.points)&&t.form.points>=0&&t.form.points<=t.form.gp*2&&Number.isInteger(t.form.wins)&&t.form.wins>=0&&t.form.wins<=t.form.gp);
  }
  function oddsValid(o){return o&&stages.every(([k],i)=>finite(o[k])&&o[k]>=0&&o[k]<=100&&(!i||o[stages[i-1][0]]>=o[k]));}
+ function liveFeed(raw,games,now=Date.now()){
+  if(!raw||raw.version!==1||!Number.isFinite(Date.parse(raw.checked_at))||Date.parse(raw.checked_at)>now+300000||!Array.isArray(raw.games)||raw.games.length>16)return null;
+  const known=new Map(games.map(g=>[g.id,g])),seen=new Set();
+  for(const s of raw.games){
+   const g=known.get(s.id);
+   if(!g||seen.has(s.id)||s.home!==g.home||s.away!==g.away||s.start!==g.start||s.at!==raw.checked_at||!['scheduled','live','final','unavailable'].includes(s.status)||!['FUT','PRE','LIVE','CRIT','OFF','FINAL'].includes(s.state))return null;
+   seen.add(s.id);
+   if(s.status==='scheduled'&&!['FUT','PRE'].includes(s.state))return null;
+   if(['live','final'].includes(s.status)&&![s.home_score,s.away_score].every(n=>Number.isInteger(n)&&n>=0&&n<=30))return null;
+   if(s.status==='final'&&(!['OFF','FINAL'].includes(s.state)||s.home_score===s.away_score||!['REG','OT','SO'].includes(s.end)))return null;
+   if(s.status==='live'&&(!['LIVE','CRIT'].includes(s.state)||s.model!=='sweater-live-v1'||![s.home_win,s.away_win].every(n=>finite(n)&&n>=0&&n<=100)||Math.abs(s.home_win+s.away_win-100)>.001||!Number.isInteger(s.period)||s.period<1||s.period>20||!['REG','OT'].includes(s.period_type)||!Number.isInteger(s.seconds_remaining)||s.seconds_remaining<0||s.seconds_remaining>1200||!Number.isFinite(Date.parse(s.pregame_at))||Date.parse(s.pregame_at)>=Date.parse(g.start)))return null;
+  }
+  return raw;
+ }
  function percent(n){if(!finite(n))return '—';if(n===0)return '<0.1%';if(n===100)return '>99.9%';if(n<.1)return '<0.1%';if(n>99.9)return '>99.9%';return n.toFixed(1)+'%';}
  function fair(n,format='percent'){if(format==='percent')return percent(n);if(!finite(n)||n<=0||n>=100)return '—';if(format==='decimal')return (100/n).toFixed(2);const value=n>=50?-100*n/(100-n):100*(100-n)/n;return (value>0?'+':'−')+Math.round(Math.abs(value)).toLocaleString();}
  function validate(d,now=Date.now()){
@@ -85,5 +99,5 @@ export const PLAYOFF_PICTURE = (()=>{
   return {v:1,team:raw.team,name:raw.name,start:raw.start,at:new Date(raw.at).toISOString(),gp:raw.gp,points:raw.points,projected:raw.projected,n:raw.n,odds:Object.fromEntries(stages.map(([k])=>[k,raw.odds[k]]))};
  }
  function read(hash){if(typeof hash!=='string'||hash.length>2500)return null;try{const q=hash.split('?')[1]||'',s=new URLSearchParams(q).get('s');return s?snapshot(JSON.parse(s)):null;}catch{return null;}}
- return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
+ return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,liveFeed,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
 })();

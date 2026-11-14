@@ -33,3 +33,4 @@ jobs:
       - run: python -B tests/playoffs_advanced.py
       - run: python -B tests/playoffs_rss.py
       - run: node tests/playoffs.mjs
+      - run: node tests/playoffs_live.mjs
