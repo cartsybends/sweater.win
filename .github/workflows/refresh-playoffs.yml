@@ -57,6 +57,7 @@ jobs:
             nhl-advanced-v2-${{ steps.season.outputs.start }}-
       - name: Reconcile every completed game and update the forecast
         env:
+          STARTER_REPORT_SOURCE: rss
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_MAX_POSTS_PER_DAY: ${{ vars.X_MAX_POSTS_PER_DAY }}
         run: |

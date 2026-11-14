@@ -185,6 +185,7 @@ def main():
                       sources=['https://api-web.nhle.com/v1/standings/now',
                                f'https://api-web.nhle.com/v1/club-schedule-season/{{team}}/{data["season"]}',
                                'https://moneypuck.com/data.htm',
+                               'https://www.rotowire.com/rss/',
                                'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/injuries',
                                'https://www.nhl.com/info/standings-info/playoff-format',
                                'https://www.nhl.com/info/standings-info/tie-breaking-procedure'])

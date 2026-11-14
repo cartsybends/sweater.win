@@ -41,6 +41,8 @@ function poRenderHistory(){
 }
 function poFeedStatus(){
  $('poRefresh').disabled=poBusy;
+ const news=poData?.starter_feed;$('poStarterFeedNote').hidden=news?.source!=='RotoWire RSS';
+ if(news?.source==='RotoWire RSS')$('poStarterChecked').textContent=(news.status==='unavailable'?'Latest check unavailable; keeping earlier reports':news.checked_at?'Checked '+poDate(news.checked_at):'Awaiting the next news check')+' · publisher cache about '+Math.round((news.rss?.poll_seconds||600)/60)+' minutes. RSS may not include every announcement.';
  if(!poData){$('poChecked').textContent='Forecast temporarily unavailable';$('poLatest').textContent='Please check again shortly.';return;}
  const stale=Date.now()-Date.parse(poData.checked_at)>30*60*1000,age=Date.now()-Date.parse(poData.checked_at)>6*60*60*1000;
  $('poChecked').textContent=(poBusy?'Checking for a newer forecast…':poError?'Latest check unavailable · keeping the last verified forecast':stale?'Latest published check':'NHL results checked')+' · '+poDate(poData.checked_at);

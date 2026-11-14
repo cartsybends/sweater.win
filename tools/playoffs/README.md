@@ -94,6 +94,17 @@ game/player key; current-season compact caches alone do not cover training.
 
 ## Goalie reports and optional X access
 
+The default `STARTER_REPORT_SOURCE=rss` automatically reads RotoWire's published
+NHL RSS feed, which its RSS page offers for blogs and personal websites. It
+retains only game/player IDs, certainty, timestamps and source links, not news
+prose. The publisher currently advertises a ten-minute TTL, which is respected;
+conditional requests reuse ETag/Last-Modified snapshots. Earlier facts remain
+available after items roll out of the short feed or a request fails. Unknown
+players, wrong opponents/dates and ambiguous starting language never confirm.
+The feed is not exhaustive and can lag the original reporter. The UI shows its
+last successful check. RSS mode never makes paid X requests. MoneyPuck homepage
+starter scraping remains disabled while the owner awaits permission.
+
 `starter_reports.json` contains manually reviewed, game-specific sourced facts.
 `starter_sources.json` lists official team accounts and selected beat reporters;
 it can be extended after checking a reporter's identity and team coverage.
@@ -102,7 +113,8 @@ conflicting reports, retractions and different game dates are treated separately
 Only report facts, source URLs and timestamps are retained, not full posts.
 The parser is conservative but is not a guarantee that every report is captured.
 
-The optional recent-search connector makes read-only requests. To enable it,
+The optional recent-search connector makes read-only requests. Select
+`STARTER_REPORT_SOURCE=x` to use it instead of RSS. To enable it,
 configure the GitHub Actions secret `X_BEARER_TOKEN` and the repository variable
 `X_MAX_POSTS_PER_DAY` with an explicit positive read cap. The default is **zero**,
 including when a token exists. Do not put credentials in code, public files or
@@ -217,7 +229,11 @@ small screens without widening the page; the circle scrolls within its own
 region. Tooltips stay inside the visible chart area. Only the hovered team's
 slices darken slightly; all other slices and logos retain full brightness.
 Transparent image padding is trimmed using the existing local-crest loader.
-League table crests use 42-pixel boxes on desktop and 34-pixel boxes on mobile.
+League and Games table crests use 54-pixel boxes on desktop and 42-pixel boxes
+on mobile. The separate `team-crests` assets change only the original SVG's
+viewBox, using source-hashed measured bounds in `crest-bounds.json`. Official
+paths and colours remain intact, with no bitmap conversion. Circle logos use
+these vector assets directly instead of the PNG cropping cache.
 
 Pointer updates are coalesced once per animation frame. Tooltip contents and
 the team readout change only when the team or stage changes; layout bounds and
@@ -253,7 +269,7 @@ the timezone abbreviation displayed. The date picker and game grouping use
 local calendar dates derived from the start timestamp, including midnight and
 DST transitions. NHL calendar dates remain unchanged in the model inputs.
 
-Games uses the League table's 42px team-logo boxes (34px on mobile), emphasized
+Games uses the League table's 54px team-logo boxes (42px on mobile), emphasized
 team/goalie names, and linked checkmarked confirmations. Unconfirmed percentages
 describe the chance of starting and use a red-to-yellow-to-green scale; a likely
 report links through its percentage. Confirmed does not mean a guaranteed win.

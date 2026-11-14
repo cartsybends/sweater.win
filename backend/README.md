@@ -5,6 +5,33 @@ This project targets the existing `sweater-api` Worker and its `DB` binding to
 and Party Mode implementation. `src/index.mjs` routes only analytics paths to
 the new handler; other requests retain their existing behavior.
 
+## Playoff refresh clock
+
+The GitHub workflow targets a five-minute schedule, but scheduled Actions have
+been observed to arrive much later. The existing Worker therefore has a separate
+minute cron that can dispatch the same validated Python workflow when the public
+forecast is over five minutes old. Daily analytics/popularity cleanup remains on
+its original daily cron. The watchdog avoids queued/running jobs and limits
+retries to one dispatch per five minutes. It never publishes unvalidated data.
+
+One credential is needed to activate this clock:
+
+1. Create a fine-grained GitHub personal access token for **only
+   `cartsybends/sweater.win`**, with repository **Actions: Read and write**.
+   No Contents write permission is needed. Set an expiration and renew it before
+   it expires.
+2. In Cloudflare, open **Workers & Pages → sweater-api → Settings → Variables
+   and Secrets**. Add **`GITHUB_REFRESH_TOKEN`** as an encrypted secret and deploy
+   the settings change. Do not paste it into chat, a file or a public variable.
+3. The minute watchdog then calls the existing `refresh-playoffs.yml` workflow
+   through GitHub's authenticated dispatch API. A source outage can still delay
+   publication; the site always shows the real last successful check. Cron
+   configuration changes can take several minutes to propagate at Cloudflare.
+
+Without that secret the watchdog is inactive and makes no network requests;
+GitHub's original schedule remains the fallback. The X token is unrelated, and
+RSS mode needs no paid X access. There is no public dispatch endpoint.
+
 ## Connect the existing Worker to GitHub
 
 After the source is saved in `cartsybends/sweater.win`:
