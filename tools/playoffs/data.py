@@ -202,6 +202,13 @@ def main():
     output = enrich(output, data, history, old, fetch, now, engine,
                     clock=lambda:datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z'))
     output['advanced']=engine.metadata()
+    goalie_stats=context['goalie_stats']
+    if goalie_stats.get('status') in {'reported','cached'} and goalie_stats.get('as_of'):
+        output['goalie_leaders']={'season':goalie_stats['season'],'as_of':goalie_stats['as_of'],'status':goalie_stats['status'],
+          'source_url':f'https://api-web.nhle.com/v1/goalie-stats-leaders/{data["season"]}/2?limit=3',
+          'players':{str(pid):{'sv':p['sv'],'gaa':p['gaa'],'ranks':p['ranks']} for pid,p in goalie_stats['players'].items() if p.get('ranks')}}
+    else:
+        output.pop('goalie_leaders',None)
     output['starter_feed']=starter_feed
     output['checked_at']=datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
     from evaluation import update as archive_update,scores as forward_scores

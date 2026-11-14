@@ -18,8 +18,11 @@ Live refreshes update score/probability cells without closing team availability.
 During play, that same feed reads DraftKings' explicitly marked live moneyline
 from ESPN's NHL game summary, cached for 30 seconds. Both teams, home/away roles,
 scheduled start and ESPN in-progress status must match. Closing prices are never
-used as live quotes. OFF/suspended markets show no prices, and an ESPN outage
-does not interrupt Sweater's live win estimates. Source-check times are shown;
+used as live quotes. OFF/suspended markets retain the last observed live quote and its original
+timestamp, stored across requests in the existing D1 database and backed by the
+edge cache for two days. A clearly labelled pregame quote is the fallback if no
+live quote has been captured. Market status stays suspended; an ESPN outage
+does not interrupt Sweater's live win estimates. Source-check and retained-quote times are shown;
 ESPN/provider publication delays may remain. No paid odds subscription is used.
 
 The live model conditions independent Poisson scoring on the current score and
@@ -242,3 +245,18 @@ database resolved from Cloudflare or the actual build variable.
 The richer report and dashboard checks use real in-memory SQLite aggregates and
 a DOM simulation. Frontend tests exercise legacy fallback and enhanced batching,
 privacy preferences, attribution, round restoration, timing, and network retries.
+
+## Games presentation
+
+Injured players can use the portrait URL explicitly supplied by ESPN, including
+players omitted from the current NHL roster. URLs are restricted to ESPN's NHL
+headshot CDN, with NHL portraits and silhouettes as fallbacks. Availability
+badges align to the whole name/return-date row. Scheduled times sit between the
+team headings. Live matchups use a red LIVE indicator; reduced-motion settings
+keep it static. Intermission includes an original ice-resurfacer SVG.
+
+NHL's season goalie leader endpoint supplies the top-three SV% and GAA ranks.
+A medal is shown only when the displayed statistic matches that leader's value.
+Saved numeric pregame stats and predictions remain fixed. The League board pins
+only its separate logo column; on mobile the Games matchup scrolls normally so
+it cannot cover the statistics.

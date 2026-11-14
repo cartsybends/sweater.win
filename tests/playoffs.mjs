@@ -66,11 +66,30 @@ test('team availability shows injuries and return estimates without repeating go
  vm.runInContext(source.slice(source.indexOf('function poReturnEstimate('),source.indexOf('function poLocalClockChanged(')),ctx);
  assert.match(ctx.poInjurySummary({injury_status:'stale',injuries:[{name:'Test Goalie',status:'Out'}]}),/Older injury report.*Test Goalie/);
  assert.match(ctx.poInjurySummary({injury_status:'cached',injuries:[]}),/Last available/);
- assert.match(ctx.poInjurySummary({injury_status:'reported',injuries:[{name:'Test Player',status:'Injured Reserve',return_estimate:'2099-12-21'}]}),/>IR<.*Est. return/);
+ const injury=ctx.poInjurySummary({injury_status:'reported',injuries:[{name:'Test Player',status:'Injured Reserve',return_estimate:'2099-12-21'}]});assert.match(injury,/>IR</);assert.match(injury,/Est. return/);
  assert.match(ctx.poReturnEstimate('2001-01-01'),/awaiting update/);assert.equal(ctx.poReturnEstimate(null),'Return date unknown');
  const team={rest_days:7,injury_status:'reported',injuries:[],goalie:{players:[{name:'Starter',probability:100},{name:'Backup',probability:0}]}};
  const html=ctx.poGameContext({home:'VAN',away:'NYR',context:{home:team,away:team}});
  assert.match(html,/Team availability/);assert.match(html,/7\+ days since last game/);assert(!html.includes('Backup'));assert(!html.includes('chance to start'));
+});
+test('injury portraits can use ESPN even without an NHL roster identity',()=>{
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String,poModel:M,poDate:String,poTeamRecord:()=>null});
+ vm.runInContext(source.slice(source.indexOf('function poReturnEstimate('),source.indexOf('function poLocalClockChanged(')),ctx);
+ const image=ctx.poInjuryPortrait({name:'Dylan Larkin',player_id:null,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'});assert(image.includes('3114755.png'));assert(!ctx.poInjuryPortrait({portrait_url:'javascript:alert(1)'}).includes('<img'));
+ assert(ctx.poInjuryPortrait({player_id:8477946,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'}).includes('data-po-injury-fallback='));
+});
+test('goalie medals apply independently to the official matching SV and GAA leaders',()=>{
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String,poDate:String,poData:{goalie_leaders:{season:20262027,as_of:'2026-11-14T19:00:00Z',players:{1:{sv:.938,gaa:1.52,ranks:{sv:1,gaa:3}}}}}});
+ vm.runInContext(source.slice(source.indexOf('function poGoalieStats('),source.indexOf('function poGameGoalie(')),ctx);
+ const player={id:1,stats:{gp:10,gs:9,sv:.938,gaa:1.52,season:20262027,status:'reported'}};
+ const html=ctx.poGoalieStats(player,{state:'FUT'});assert(html.includes('po-medal-gold'));assert(html.includes('po-medal-bronze'));assert(!html.includes('po-medal-silver'));
+ player.stats.sv=.9;assert(!ctx.poGoalieStats(player,{state:'FUT'}).includes('po-medal-gold'),'Changed totals cannot inherit a mismatched medal');
+});
+test('official goalie leader metadata requires matching season, source and valid per-metric ranks',()=>{
+ const fixture=structuredClone(data);fixture.goalie_leaders={season:data.season,as_of:data.checked_at,status:'reported',source_url:`https://api-web.nhle.com/v1/goalie-stats-leaders/${data.season}/2?limit=3`,players:{1:{sv:.938,gaa:1.52,ranks:{sv:1,gaa:3}}}};assert(M.validate(fixture,now));
+ for(const change of [l=>l.season--,l=>l.source_url='https://example.com',l=>l.players[1].ranks.sv=4,l=>l.players[1].sv=1.1,l=>l.as_of=new Date(now+600000).toISOString()]){
+  const invalid=structuredClone(fixture);change(invalid.goalie_leaders);assert.equal(M.validate(invalid,now),null);
+ }
 });
 test('goalie names, linked confirmations, season totals and starting percentages have distinct readable markup',()=>{
  const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String,poDate:String});

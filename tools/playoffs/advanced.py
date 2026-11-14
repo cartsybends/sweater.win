@@ -11,6 +11,7 @@ import hashlib
 import io
 import json
 import math
+import re
 import subprocess
 import tempfile
 import unicodedata
@@ -178,6 +179,25 @@ def goalie_statistics(season, now, fetch=None):
                 raise ValueError('Invalid official goalie totals')
             players[pid]={'gp':gp,'gs':gs,'sv':sv,'gaa':gaa}
         result={'season':season,'as_of':now,'status':'reported','players':players}
+        # Use NHL's own qualified leader lists rather than ranking one-game
+        # samples alongside regular starters. A leaders outage leaves totals intact.
+        try:
+            leaders_url=f'https://api-web.nhle.com/v1/goalie-stats-leaders/{season}/2?limit=3'
+            if fetch:
+                leaders=fetch(leaders_url)
+            else:
+                with tempfile.TemporaryDirectory(prefix='sweater-goalie-leaders-') as folder:
+                    path=Path(folder)/'leaders.json';download(leaders_url,path);leaders=json.loads(path.read_text())
+            for category,field,tolerance in [('savePctg','sv',.00001),('goalsAgainstAverage','gaa',.0001)]:
+                rows=leaders.get(category,[])
+                if not isinstance(rows,list) or len(rows)>3 or len({r.get('id') for r in rows})!=len(rows):
+                    continue
+                for rank,row in enumerate(rows,1):
+                    player=players.get(row.get('id'));value=row.get('value')
+                    if player and isinstance(value,(int,float)) and math.isfinite(value) and player[field] is not None and abs(player[field]-value)<=tolerance:
+                        player.setdefault('ranks',{})[field]=rank
+        except Exception:
+            pass
         temporary=target.with_suffix('.tmp');temporary.write_text(json.dumps(result));temporary.replace(target)
         return result
     except Exception:
@@ -227,8 +247,12 @@ def availability(teams, fetch, now):
                 player=known[team].get(normalized(name));injury_status=injury.get('status','Unknown')
                 if not isinstance(injury_status,str) or len(injury_status)>50:
                     injury_status='Unknown'
-                injuries[team].append({'player_id':player['id'] if player else None,'name':name,'position':athlete.get('position',{}).get('abbreviation',''),
-                   'status':injury_status,'reported_at':injury.get('date'),'return_estimate':injury.get('details',{}).get('returnDate')})
+                record={'player_id':player['id'] if player else None,'name':name,'position':athlete.get('position',{}).get('abbreviation',''),
+                   'status':injury_status,'reported_at':injury.get('date'),'return_estimate':injury.get('details',{}).get('returnDate')}
+                headshot=athlete.get('headshot');portrait=headshot.get('href') if isinstance(headshot,dict) else None
+                if isinstance(portrait,str) and re.fullmatch(r'https://a\.espncdn\.com/i/headshots/nhl/players/full/\d+\.png',portrait):
+                    record['portrait_url']=portrait
+                injuries[team].append(record)
         status='reported'
         (directory/'injuries.json').write_text(json.dumps({'reported_at':reported,'injuries':injuries},separators=(',',':')))
     except Exception:

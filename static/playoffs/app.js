@@ -125,4 +125,4 @@ function poChartReadout(e){const p=e.target.closest('[data-po-point]'),h=e.targe
 for(const event of ['pointerover','focusin','click'])$('view-playoffs').addEventListener(event,poChartReadout);
 $('poImageClose').onclick=()=>$('poImageDialog').close();$('poImageDialog').addEventListener('close',()=>{if(poImageURL)URL.revokeObjectURL(poImageURL);poImageURL='';$('poImagePreview').removeAttribute('src');$('poImageSave').removeAttribute('href');$('poShareToggle').focus();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){poRefresh();poSyncLive();}else poStopLive();});
-$('view-playoffs').addEventListener('error',event=>{if(event.target?.matches?.('[data-po-injury-image]'))event.target.remove();},true);
+$('view-playoffs').addEventListener('error',event=>{const image=event.target;if(!image?.matches?.('[data-po-injury-image]'))return;const fallback=image.dataset.poInjuryFallback;delete image.dataset.poInjuryFallback;if(fallback)image.src=fallback;else image.remove();},true);

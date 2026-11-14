@@ -3,6 +3,7 @@ import {handleAnalytics,purgeAnalytics} from './analytics.mjs';
 import {handleGridPopularity,pruneGridPopularity} from './grid-popularity.mjs';
 import {refreshPlayoffs} from './playoff-refresh.mjs';
 import {handlePlayoffLive} from './playoff-live.mjs';
+import {purgeMarketQuotes} from './market-history.mjs';
 export default {
   async fetch(request,env,ctx) {
     const live=await handlePlayoffLive(request,env,ctx);if(live)return live;
@@ -17,5 +18,6 @@ export default {
     }
     ctx.waitUntil(purgeAnalytics(env));
     ctx.waitUntil(pruneGridPopularity(env));
+    ctx.waitUntil(purgeMarketQuotes(env));
   }
 };

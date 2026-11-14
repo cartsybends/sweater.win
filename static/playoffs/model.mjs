@@ -40,6 +40,7 @@ export const PLAYOFF_PICTURE = (()=>{
  function goalieStatsValid(p,g){
   const s=p.stats;if(s===undefined)return true;
   const year=Number(String(g.id).slice(0,4));
+  if(s?.ranks&&(!Object.keys(s.ranks).every(k=>['sv','gaa'].includes(k))||!Object.values(s.ranks).every(r=>Number.isInteger(r)&&r>=1&&r<=3)))return false;
   return s&&Number.isInteger(s.gp)&&Number.isInteger(s.gs)&&s.gs>=0&&s.gs<=s.gp&&s.gp<=100&&s.season===year*10000+year+1&&['reported','cached'].includes(s.status)&&Number.isFinite(Date.parse(s.as_of))&&Date.parse(s.as_of)<Date.parse(g.start)&&(s.sv===null||finite(s.sv)&&s.sv>=0&&s.sv<=1)&&(s.gaa===null||finite(s.gaa)&&s.gaa>=0&&s.gaa<=3600);
  }
  function contextValid(g){
@@ -79,6 +80,7 @@ export const PLAYOFF_PICTURE = (()=>{
     const m=s.market,hasPrices=m.home!==undefined||m.away!==undefined;
     if(!['LIVE','CRIT'].includes(s.state)||!['live','suspended','unavailable'].includes(m.status)||m.source!=='ESPN'||m.provider!=='DraftKings'||!Number.isFinite(Date.parse(m.observed_at))||Date.parse(m.observed_at)>Date.parse(s.at)+300000||Date.parse(m.observed_at)<Date.parse(g.start)||m.source_url!==undefined&&!/^https:\/\/www\.espn\.com\/nhl\/game\/_\/gameId\/\d{1,12}$/.test(m.source_url))return null;
     if(m.status==='live'&&(!m.source_url||!['home','away'].every(k=>Number.isInteger(m[k])&&Math.abs(m[k])>=100&&Math.abs(m[k])<=100000))||m.status!=='live'&&hasPrices)return null;
+    if(m.last_quote){const q=m.last_quote,at=Date.parse(q.observed_at);if(!['live','pregame'].includes(q.basis)||q.source!=='ESPN'||q.provider!=='DraftKings'||!['home','away'].every(k=>Number.isInteger(q[k])&&Math.abs(q[k])>=100&&Math.abs(q[k])<=100000)||!/^https:\/\/www\.espn\.com\/nhl\/game\/_\/gameId\/\d{1,12}$/.test(q.source_url||'')||!Number.isFinite(at)||at>Date.parse(m.observed_at)+300000||now-at>172800000||(q.basis==='live'?at<Date.parse(g.start):at>=Date.parse(g.start)))return null;}
    }
   }
   return raw;
@@ -88,6 +90,7 @@ export const PLAYOFF_PICTURE = (()=>{
  function validate(d,now=Date.now()){
   if(!d||d.version!==1||!['sweater-goals-v1','sweater-xg-v2'].includes(d.model)||!Number.isInteger(d.start)||d.start<2024||d.start>new Date(now).getUTCFullYear()+1||d.season!==d.start*10000+d.start+1||![82,84].includes(d.season_games)||!Number.isInteger(d.simulations)||d.simulations<100||d.simulations>200000||!Array.isArray(d.teams)||d.teams.length!==32||!Number.isFinite(Date.parse(d.checked_at))||Date.parse(d.checked_at)>now+300000||!Number.isFinite(Date.parse(d.updated_at))||Date.parse(d.updated_at)>Date.parse(d.checked_at)||d.total_games!==d.season_games*16||!Number.isInteger(d.completed_games)||d.completed_games<0||d.completed_games>d.total_games)return null;
   if(d.model==='sweater-xg-v2'&&(d.advanced?.version!==2||d.advanced.source!=='MoneyPuck.com'||!/^\d{4}-\d{2}-\d{2}$/.test(d.advanced.data_through)))return null;
+  if(d.goalie_leaders){const l=d.goalie_leaders;if(l.season!==d.season||!['reported','cached'].includes(l.status)||!Number.isFinite(Date.parse(l.as_of))||Date.parse(l.as_of)>Date.parse(d.checked_at)+300000||l.source_url!==`https://api-web.nhle.com/v1/goalie-stats-leaders/${d.season}/2?limit=3`||!l.players||typeof l.players!=='object'||Object.keys(l.players).length>6||!Object.entries(l.players).every(([id,p])=>/^\d+$/.test(id)&&p&&p.ranks&&Object.entries(p.ranks).every(([key,rank])=>['sv','gaa'].includes(key)&&Number.isInteger(rank)&&rank>=1&&rank<=3&&finite(p[key])&&p[key]>=0&&(key!=='sv'||p[key]<=1))))return null;}
   const ids=new Set();
   for(const t of d.teams){
    if(!clubs.has(t.abbr)||ids.has(t.abbr)||typeof t.name!=='string'||t.name.length>80||!['E','W'].includes(t.conference)||typeof t.division!=='string'||!Number.isInteger(t.gp)||t.gp<0||t.gp>d.season_games||!Number.isInteger(t.points)||t.points<0||t.points>t.gp*2||!oddsValid(t.odds)||!finite(t.projected_points)||t.projected_points<t.points-.051||t.projected_points>t.points+2*(d.season_games-t.gp)+.051||!Array.isArray(t.points_range)||t.points_range.length!==2||!t.points_range.every(Number.isInteger)||t.points_range[0]>t.points_range[1]||!Array.isArray(t.distribution)||!t.distribution.length||t.distribution.length>169||t.distribution.some(r=>!Array.isArray(r)||r.length!==2||!Number.isInteger(r[0])||r[0]<t.points||r[0]>t.points+2*(d.season_games-t.gp)||!finite(r[1])||r[1]<0||r[1]>100)||!Array.isArray(t.opponents)||t.opponents.length>16||t.opponents.some(o=>!clubs.has(o.team)||o.team===t.abbr||!finite(o.chance)||o.chance<0||o.chance>100)||t.change!==null&&t.change!==undefined&&(!finite(t.change)||Math.abs(t.change)>100))return null;
