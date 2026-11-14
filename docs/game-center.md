@@ -38,7 +38,10 @@ corrections can revise earlier points.
 
 This beta win model does **not** yet condition on in-game penalties, pulled
 goalies, shot quality or shootout attempts. These limitations are disclosed in the
-view. Shot-quality percentages do not independently change the win curve.
+view. Shot-quality percentages do not independently change the win curve. Goal and penalty markers
+show the official event time and details; penalty markers do not imply a penalty
+adjustment in this model. The chart readout uses period and time remaining, not
+raw elapsed game time.
 
 ## Sweater shot model
 
@@ -92,3 +95,34 @@ Dialog handles Escape and background focus containment.
 Verification: `node tests/playoffs_gamecenter.mjs` and, after installing backend
 packages, `node tests/playoffs_gamecenter_runtime.mjs` exercise the real workerd
 Cache API as well as model/event, identity, outage and client contracts.
+
+## Events, team colours and mobile rink zoom
+
+Goal cards include the NHL goal score and primary/secondary assists in source
+order. “None listed” reflects an empty current NHL assist list; later official
+corrections replace those details. Penalty records include reason, duration,
+committing player, drawn-by player and served-by player when present. Bench
+penalties do not invent a committing player. Alarm and striped referee markers
+have separate timeline lanes. Dense nearby events share a counted marker with
+all events retained in its details. Details stay inline on mobile.
+
+The graph uses the same team-colour palette as the playoff circle. RGB distance
+below 100 adds a dashed away line; otherwise both lines are solid. Both logos,
+labels and swatches remain visible. The moneyline panel independently labels
+each price with its team logo and abbreviation. Percentage axes include 0, 25,
+50, 75 and 100. Shaded periods, labelled headers and separated end labels prevent
+End P3 / OT collisions on narrow screens. Overtime uses five-minute regular
+season periods or twenty-minute playoff periods.
+
+Shootouts have a separate simple feed, ordered by official NHL sort order.
+Rounds are each team's count of published attempts, so either team may shoot
+first. Sudden death is labelled from Round 4. A shot-on-goal is a save credited
+to the listed goalie; a missed shot does not get save credit. NHL
+`failed-shot-attempt` is “Unsuccessful,” with no invented miss or save cause.
+Shootout attempts never enter normal goals, shot xG or rink shot filters. No
+in-progress shootout win probability is fabricated.
+
+Rink controls offer fit, 2× and 3× zoom. A zoomed viewport uses native horizontal
+and vertical panning, and reset returns to fit. Selection uses the enlarged
+rink's actual geometry. Zoom and pan survive feed redraws; changing games resets
+to fit. The event list remains an alternative to tapping crowded markers.

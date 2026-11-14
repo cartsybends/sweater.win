@@ -5,3 +5,99 @@
 
 .po-gc-bar h2{text-align:left}.po-gc-rink-key>span{display:flex;align-items:center;gap:5px}.po-gc-rink-key>span:nth-child(2){order:3;width:100%;justify-content:center}.po-gc-rink-key>span:last-child{margin-left:auto}.po-game-context>summary[data-po-center]{min-height:44px;display:flex;align-items:center}.po-gc-availability .po-game-goalie{max-width:none;margin-left:0}
 @media(max-width:600px){.po-gc-club,.po-gc-club:last-child{flex-direction:column-reverse;align-self:start}.po-gc-club>div{min-height:45px}.po-gc-filters select{padding-left:7px;padding-right:3px}.po-gc-rink-key .po-gc-swatch{width:13px}}
+
+/* Team colours, event timeline and a clearer hockey clock. */
+.po-gc-chart{height:360px}
+.po-gc-swatch.away{background:var(--gc-away)}
+[data-gc-similar=true] .po-gc-swatch.away{background:repeating-linear-gradient(90deg,var(--gc-away) 0 6px,transparent 6px 9px)}
+.po-gc-chart .po-gc-period-name{fill:var(--fg);font-size:11px;font-weight:750;letter-spacing:.6px}
+.po-gc-chart .po-gc-period-end{font-size:10px;font-weight:600}
+.po-gc-event-marker{cursor:pointer;outline:none}
+.po-gc-event-marker:focus-visible>rect,.po-gc-event-marker[aria-pressed=true]>rect{stroke:var(--link);stroke-width:2}
+.po-gc-event-marker:hover>rect{stroke:var(--muted)}
+.po-gc-event-key{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0;font-size:11px;color:var(--muted)}
+.po-gc-event-key>span{display:inline-flex;align-items:center;gap:5px}
+.po-gc-event-key .po-gc-ref{width:18px;height:18px}
+.po-gc-event-key>span:last-child{margin-left:auto;font-size:10px}
+.po-gc-readout{margin-top:12px;line-height:1.8;font-size:12px}
+.po-gc-event-detail{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.po-gc-event-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px}
+.po-gc-event-heading button{width:36px;height:36px;background:var(--bg);border:1px solid var(--line);border-radius:50%;font-size:21px;color:var(--fg);cursor:pointer}
+.po-gc-event-detail .po-gc-shot-detail{margin:10px 0 0}
+.po-gc-penalty-detail{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:16px;margin:12px 0 0}
+.po-gc-penalty-detail>div{display:flex;align-items:center;gap:9px;font-size:15px}
+.po-gc-penalty-detail p{font-size:12px;line-height:1.7;color:var(--muted);margin:6px 0 0}
+.po-gc-penalty-detail strong,.po-gc-penalty-detail p b{color:var(--fg)}
+.po-gc-market-teams{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 20px}
+.po-gc-market-teams>div{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:var(--bg);border:1px solid var(--line);border-radius:12px;min-width:0}
+.po-gc-market-teams img{width:48px;height:48px;object-fit:contain}
+.po-gc-market-teams b{font-size:12px;color:var(--muted);letter-spacing:.7px}
+.po-gc-market-teams strong{font-size:25px;font-variant-numeric:tabular-nums;color:var(--fg)}
+.po-gc-shot-detail{display:block;padding:18px}
+.po-gc-shot-top{display:flex;align-items:center;gap:12px}
+.po-gc-shot-top .po-gc-shot-person{flex:1;min-width:0}
+.po-gc-shot-top .po-gc-shot-kicker{font-size:11px;color:var(--muted);font-weight:650;margin:0 0 4px}
+.po-gc-shot-top .po-gc-chance{flex:0 0 auto;max-width:110px}
+.po-gc-shot-top .po-gc-chance strong{font-size:27px;color:var(--fg)}
+.po-gc-shot-top .po-gc-chance small{font-size:10px}
+.po-gc-shot-breakdown{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+.po-gc-shot-breakdown p{font-size:12px;line-height:1.7;margin:9px 0 0}
+.po-gc-shot-breakdown strong{font-size:13px;display:inline;letter-spacing:0;color:var(--fg)}
+.po-gc-goal-score{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.po-gc-assists{display:flex;align-items:baseline;gap:14px}
+.po-gc-assists>b{font-size:12px!important;color:var(--fg);flex-shrink:0}
+.po-gc-assists>span{color:var(--fg);font-size:13px;line-height:1.7}
+.po-gc-shot-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 0}
+.po-gc-shot-stats dt{font-size:10px;color:var(--muted);margin:0 0 4px}
+.po-gc-shot-stats dd{font-size:12px;font-weight:650;color:var(--fg);margin:0}
+.po-gc-goalie-line>b{display:inline;font-size:12px}
+.po-gc-so-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.po-gc-so-heading>span{font-size:11px;color:var(--muted)}
+.po-gc-so-score{display:flex;gap:30px;margin:20px 0}
+.po-gc-so-score>span{display:flex;align-items:center;gap:8px;font-size:13px}
+.po-gc-so-score img{width:32px;height:32px;object-fit:contain}
+.po-gc-so-score strong{font-size:25px;margin-left:5px}
+.po-gc-so-round{margin-top:20px}
+.po-gc-so-round h4{font-size:12px;color:var(--muted);font-weight:650;margin:0 0 8px}
+.po-gc-so-round ol{padding:0;margin:0;list-style:none}
+.po-gc-so-round li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:60px;padding:10px 0;border-top:1px solid var(--line)}
+.po-gc-so-round li>img{width:30px;height:30px;object-fit:contain}
+.po-gc-so-round li b{font-size:14px;display:block;line-height:1.5}
+.po-gc-so-round li small{display:block;color:var(--muted);font-size:12px;line-height:1.6}
+.po-gc-so-round [data-result]{font-size:11px;font-weight:700;color:var(--muted);max-width:90px;overflow-wrap:anywhere;text-align:right}
+.po-gc-so-round [data-result=goal]{color:#239668}
+.po-gc-so-round [data-result=saved]{color:#568bd5}
+.po-gc-so-round [data-result=missed]{color:#bb8125}
+@media(max-width:600px){
+ .po-gc-chart{height:310px}
+ .po-gc-event-key{gap:10px;font-size:10px}
+ .po-gc-event-key>span:last-child{margin-left:0}
+ .po-gc-shot-detail{padding:14px}
+ .po-gc-shot-top{gap:9px}
+ .po-gc-shot-top .po-gc-chance{max-width:80px}
+ .po-gc-shot-top .po-gc-chance strong{font-size:23px}
+ .po-gc-shot-top .po-gc-shot-kicker{font-size:10px}
+ .po-gc-shot-top .po-gc-shot-person>b{font-size:14px}
+ .po-gc-shot-top img{width:36px;height:36px}
+ .po-gc-shot-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+ .po-gc-goal-score{font-size:11px!important}
+ .po-gc-assists>span{font-size:12px}
+ .po-gc-so-round li{gap:9px;grid-template-columns:27px minmax(0,1fr) auto}
+ .po-gc-so-round li>img{width:25px;height:25px}
+ .po-gc-so-round li b{font-size:13px}
+ .po-gc-so-round li small{font-size:11px}
+ .po-gc-so-round [data-result]{font-size:10px;max-width:64px}
+}
+
+.po-gc-zoom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px;color:var(--muted);font-size:12px}
+.po-gc-zoom>div{display:flex;align-items:center;gap:5px}
+.po-gc-zoom button{min-width:38px;min-height:38px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;font-size:18px;cursor:pointer}
+.po-gc-zoom button[data-gc-zoom=fit]{font-size:11px;padding:0 10px;margin-left:4px}
+.po-gc-zoom button:disabled{opacity:.35;cursor:default}
+.po-gc-zoom output{min-width:34px;text-align:center;color:var(--fg);font-size:12px;font-weight:650}
+.po-gc-rink-viewport{width:100%;max-width:100%;aspect-ratio:200/85;overflow:hidden;border-radius:14px;touch-action:pan-y;outline-offset:3px}
+.po-gc-rink-viewport.is-zoomed{overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y}
+.po-gc-rink-viewport .po-gc-rink{min-width:100%;touch-action:auto}
+@media(max-width:600px){.po-gc-zoom button{min-width:42px;min-height:42px}.po-gc-zoom{font-size:11px}.po-gc-rink-viewport{border-radius:10px}}
+.po-gc-chart .po-gc-ref{width:22px;height:22px;overflow:visible}
+.po-gc-shot-list .po-gc-goal-assists{margin-top:5px;font-size:11px;line-height:1.7;color:var(--fg);opacity:.8}
