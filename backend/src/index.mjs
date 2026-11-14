@@ -10,7 +10,7 @@ export default {
   },
   async scheduled(controller,env,ctx) {
     if(controller.cron==='* * * * *'){
-      ctx.waitUntil(refreshPlayoffs(env).then(result=>{if(['dispatched','github_error','unavailable','feed_unavailable'].includes(result.status))console.log('Playoff refresh watchdog',result);}));
+      ctx.waitUntil(refreshPlayoffs(env).then(result=>{if(['dispatched','github_error','unavailable','feed_unavailable','invalid_feed','invalid_runs'].includes(result.status))console.log('Playoff refresh watchdog',result);}));
       return;
     }
     ctx.waitUntil(purgeAnalytics(env));
