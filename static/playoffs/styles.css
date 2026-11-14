@@ -36,3 +36,27 @@
 @media(max-width:540px){.po-table .po-team-button img,.po-game-team img{width:34px;height:34px;flex-basis:34px}.po-games-table{--po-game-team-height:136px;min-width:1080px}.po-games-table td:first-child{min-width:325px}.po-game-team{font-size:17px!important;gap:10px}.po-game-goalie{margin-left:44px;max-width:280px}.po-goalie-heading>strong{font-size:15px}.po-goalie-stats{gap:5px 12px}.po-game-context{max-width:300px}.po-games-table td{padding-left:12px;padding-right:12px}}
 .po-table .po-team-button img,.po-game-team img{width:54px;height:54px;flex-basis:54px;object-fit:contain;image-rendering:auto}.po-table td:first-child,.po-table th:first-child{min-width:250px;max-width:250px}.po-game-goalie{margin-left:66px}.po-goalie-heading>strong{font-size:15px}.po-goalie-stats b,.po-goalie-chance{font-size:13px}.po-starter-news a{color:var(--link)}
 @media(max-width:540px){.po-table .po-team-button img,.po-game-team img{width:42px;height:42px;flex-basis:42px}.po-table td:first-child,.po-table th:first-child{min-width:175px;max-width:175px}.po-game-goalie{margin-left:52px}.po-goalie-heading>strong{font-size:14px}}
+
+/* Live game estimates and compact team availability. */
+.po-live-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.05em;color:#25855a}
+.po-live-badge:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+:root[data-theme="dark"] .po-live-badge{color:#72d6a3}
+.po-live-badge.po-live-delayed{color:var(--muted)}
+.po-live-time{display:block;margin-top:4px;white-space:nowrap;font-size:10px;font-weight:450}
+.po-availability-team{display:flex;align-items:center;gap:10px}
+.po-availability-team>img{width:34px;height:34px;object-fit:contain;flex:none}
+.po-availability-team>div{display:grid;gap:3px;min-width:0}
+.po-availability-team b{font-size:14px;line-height:1.4}
+.po-availability-team small{font-size:11px;color:var(--muted)}
+.po-availability-teams{gap:22px;padding:17px 0 14px}
+.po-injury-list{gap:12px}
+.po-injury-list li{display:flex;align-items:center;gap:9px}
+.po-injury-portrait{display:grid;width:36px;height:36px;flex:none;overflow:hidden;border-radius:50%;background:var(--cell);color:var(--muted)}
+.po-injury-portrait>svg,.po-injury-portrait>img{grid-area:1/1;width:36px;height:36px;object-fit:cover}
+.po-injury-portrait>img{background:var(--cell)}
+.po-injury-list li>.po-injury-copy{display:block;min-width:0;flex:1}
+.po-injury-copy>div{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.po-injury-list strong{font-size:12px;font-weight:650;line-height:1.4}
+.po-injury-copy>small{display:block;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
+.po-injury-status{color:#b42332;border-color:#b4233240;background:#b4233210;font-size:10px;line-height:1.5}
+:root[data-theme="dark"] .po-injury-status{color:#ff8994;border-color:#ff899440;background:#ff899412}
