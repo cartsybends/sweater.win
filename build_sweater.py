@@ -3150,6 +3150,30 @@ TEMPLATE = r'''<!DOCTYPE html>
     color: #ff9391;
   }
   body.daily-only .navactions :is(.switch, #archiveBtn) { display: none; }
+
+  .mobile-tools-nav { display: none; }
+  @media (max-width: 700px) {
+    .navbar { z-index: 8; }
+    #projectionsNav, #playoffsNav { display: none; }
+    .mobile-tools-nav { display: block; position: static; margin-left: auto; flex: none; }
+    .mobile-tools-nav > summary { display: flex; align-items: center; justify-content: center; gap: 7px;
+      min-height: 44px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px;
+      background: var(--panel); color: var(--fg); font-size: 12px; font-weight: 650; cursor: pointer; list-style: none; }
+    .mobile-tools-nav > summary::-webkit-details-marker { display: none; }
+    .mobile-tools-nav > summary svg { width: 12px; height: 12px; flex: none; }
+    .mobile-tools-nav[open] > summary { border-color: var(--link); }
+    .mobile-tools-nav[open] > summary svg { transform: rotate(180deg); }
+    .mobile-tools-nav :is(summary, a):focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+    body:is(.projections-mode, .playoffs-mode) .mobile-tools-nav > summary { color: var(--link); }
+    .mobile-tools-links { position: absolute; right: 12px; top: calc(100% + 6px); z-index: 1;
+      display: grid; gap: 3px; width: 224px; max-width: calc(100vw - 24px); padding: 5px;
+      border: 1px solid var(--line); border-radius: 11px; background: var(--panel); box-shadow: 0 12px 30px #0003; }
+    .mobile-tools-links a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 9px 10px;
+      box-sizing: border-box; border-radius: 7px; color: var(--fg); font-size: 13px; font-weight: 600; text-decoration: none; }
+    .mobile-tools-links a > svg { width: 18px; height: 18px; color: var(--link); flex: none; }
+    .mobile-tools-links a:hover, .mobile-tools-links a[aria-current="page"] { background: var(--cell); color: var(--link); }
+    .mobile-tools-links a[aria-current="page"]::after { content: "Current"; margin-left: auto; font-size: 10px; font-weight: 500; }
+  }
 </style>
 </head>
 <body class="hubmode">
@@ -3157,6 +3181,13 @@ TEMPLATE = r'''<!DOCTYPE html>
   <a href="./" id="homeLink" class="brand" title="All games"><span>SWEATER</span></a>
   <a class="pp-nav" id="projectionsNav" href="#projections" aria-label="Point projections"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 19h16M5 15l5-5 4 3 6-9m-5 0h5v5"/></svg><span>Projections</span></a>
   <a class="pp-nav po-nav" id="playoffsNav" href="#playoffs" aria-label="Playoff Picture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v2a4 4 0 0 0 4 4m8-6h4v2a4 4 0 0 1-4 4m-4 2v6m-4 2h8"/></svg><span>Playoffs</span></a>
+  <details class="mobile-tools-nav" id="mobileToolsNav">
+    <summary aria-controls="mobileToolsLinks">Tools <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 4.5 3 3 3-3"/></svg></summary>
+    <div class="mobile-tools-links" id="mobileToolsLinks">
+      <a href="#projections" data-nav-tool="projections"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 19h16M5 15l5-5 4 3 6-9m-5 0h5v5"/></svg>Point Projections</a>
+      <a href="#playoffs" data-nav-tool="playoffs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v2a4 4 0 0 0 4 4m8-6h4v2a4 4 0 0 1-4 4m-4 2v6m-4 2h8"/></svg>Playoff Picture</a>
+    </div>
+  </details>
   <div class="navactions">
     <button class="iconbtn round" id="statsBtn" type="button" aria-label="Statistics" title="Statistics">📊</button>
     <button class="iconbtn round" id="archiveBtn" type="button" aria-label="Archive" title="Past puzzles">📅</button>
@@ -9709,6 +9740,9 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 /*__PLAYOFFS_MODEL__*/
 /*__PLAYOFFS_APP__*/
 /*__PLAYOFFS_DASHBOARD__*/
+
+
+
 /*__DEEP_CUT_MODEL__*/
 /*__DEEP_CUT_SCENERY__*/
 /*__DEEP_CUT_GAME__*/
@@ -11452,6 +11486,31 @@ window.addEventListener("popstate", route);
 window.addEventListener("hashchange", route);
 $("backHub").onclick = () => showHub();
 $("homeLink").onclick = e => { e.preventDefault(); showHub(); };
+
+/* Mobile tools navigation. */
+(() => {
+  const menu = $("mobileToolsNav"), trigger = menu.querySelector("summary");
+  const close = (focus = false) => { if (!menu.open) return; menu.open = false; if (focus) trigger.focus({ preventScroll: true }); };
+  menu.addEventListener("toggle", () => {
+    if (!menu.open) return;
+    menu.querySelectorAll("[data-nav-tool]").forEach(link => {
+      if ($(link.dataset.navTool + "Nav").getAttribute("aria-current") === "page") link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  });
+  menu.addEventListener("click", e => {
+    const link = e.target.closest("[data-nav-tool]");
+    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    close(true);
+    $(link.dataset.navTool + "Nav").click();
+  });
+  document.addEventListener("pointerdown", e => { if (!menu.contains(e.target)) close(); }, { passive: true });
+  document.addEventListener("focusin", e => { if (!menu.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.open) { e.preventDefault(); e.stopPropagation(); close(true); } });
+  for (const event of ["resize", "popstate", "hashchange", "blur"]) window.addEventListener(event, () => close());
+})();
+/* End mobile tools navigation. */
 
 // game pickers inside the stats, leaderboard and archive windows
 function gameOptions(selected, archiveOnly = false) {
