@@ -32,6 +32,14 @@ Without that secret the watchdog is inactive and makes no network requests;
 GitHub's original schedule remains the fallback. The X token is unrelated, and
 RSS mode needs no paid X access. There is no public dispatch endpoint.
 
+In Observability logs, filter for **Playoff refresh watchdog**. A successful
+dispatch has status `dispatched`. Failures include an HTTP status or an
+allowlisted exception type and a static `stage`, such as `github_runs_fetch`
+or `github_dispatch`. No tokens, headers, response bodies or raw exception
+messages are logged. Authenticated requests use manual redirect handling so
+the token cannot be forwarded to another destination. A workerd runtime test
+checks these requests in addition to the mocked workflow tests.
+
 ## Connect the existing Worker to GitHub
 
 After the source is saved in `cartsybends/sweater.win`:

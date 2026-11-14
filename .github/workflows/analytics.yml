@@ -9,6 +9,7 @@ on:
       - "tests/who_scored*"
       - "tests/community_games.mjs"
       - "tests/grid_popularity.mjs"
+      - "tests/playoff_refresh*"
       - "analytics/**"
       - "tests/analytics*"
       - "tests/helpers/analytics_runtime.mjs"
@@ -23,6 +24,7 @@ on:
       - "tests/who_scored*"
       - "tests/community_games.mjs"
       - "tests/grid_popularity.mjs"
+      - "tests/playoff_refresh*"
       - "analytics/**"
       - "tests/analytics*"
       - "tests/helpers/analytics_runtime.mjs"
@@ -41,6 +43,7 @@ jobs:
       - run: npm ci --prefix backend --no-audit --no-fund
       - run: node tests/analytics_backend.mjs
       - run: node tests/playoff_refresh.mjs
+      - run: node tests/playoff_refresh_runtime.mjs
       - run: node tests/community_games.mjs
       - run: node tests/face_swap.mjs
       - run: node tests/grid_popularity.mjs
