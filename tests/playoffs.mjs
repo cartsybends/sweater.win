@@ -92,6 +92,10 @@ test('mobile and desktop share identical saved and live win chances and market p
  const recorded=ctx.poGameWin(g,'prices');g.state='LIVE';ctx.poLiveGames.set(g.id,{...g,status:'live',home_win:66,away_win:34,at:new Date().toISOString(),market:{status:'live',source:'ESPN',provider:'DraftKings',source_url:g.market.source_url,home:-170,away:145,observed_at:new Date().toISOString()}});check();assert(ctx.poGameWin(g,'prices').includes('66.0%'));assert(ctx.poMarketMoneyline(g,'prices').includes('−170'));
  g.state='OFF';check();assert.equal(ctx.poGameWin(g,'prices'),recorded,'Results retain the saved pregame forecast');
 });
+test('mobile Results distinguish reconstructed estimates from saved pregame forecasts',()=>{
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String});vm.runInContext(source.slice(source.indexOf('function poCardStatus('),source.indexOf('function poGameCard(')),ctx);
+ const g={state:'OFF',end:'REG',prediction:{basis:'reconstructed'}};assert(ctx.poCardStatus(g).includes('Reconstructed forecast'));assert(!ctx.poCardStatus(g).includes('Saved pregame'));g.prediction.basis='recorded';assert(ctx.poCardStatus(g).includes('Saved pregame forecast'));
+});
 test('goalie medals apply independently to the official matching SV and GAA leaders',()=>{
  const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String,poDate:String,poData:{goalie_leaders:{season:20262027,as_of:'2026-11-14T19:00:00Z',players:{1:{sv:.938,gaa:1.52,ranks:{sv:1,gaa:3}}}}}});
  vm.runInContext(source.slice(source.indexOf('function poGoalieStats('),source.indexOf('function poGameGoalie(')),ctx);
