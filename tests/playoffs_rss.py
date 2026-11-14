@@ -42,6 +42,28 @@ class News(unittest.TestCase):
   with patch.dict('os.environ',{'STARTER_REPORT_SOURCE':'rss','X_BEARER_TOKEN':'test-only','X_MAX_POSTS_PER_DAY':'100'}),patch.object(R,'collect',return_value=([],{'source':'RotoWire RSS','x_requests':0})),patch.object(S.urllib.request,'urlopen') as request:
    _,meta=S.collect([GAME],ROSTERS,{},NOW)
   request.assert_not_called();self.assertEqual(meta['x_requests'],0)
+ def test_injury_links_match_current_episode_and_keep_only_source_facts(self):
+  injuries={'NYR':[{'name':'Dylan Garand','status':'Out','reported_at':'2026-11-13T19:40:00Z','reason':'Lower body'}]}
+  payload=xml('Will not play Friday','Garand (lower body) will miss Friday\'s game.')
+  reports=R.parse_injuries(payload,injuries,NOW);self.assertEqual(len(reports),1);report=reports[0]
+  self.assertEqual(report['team'],'NYR');self.assertEqual(report['source_url'],'https://www.rotowire.com/hockey/player/dylan-garand-1234');self.assertNotIn('text',report);self.assertNotIn('description',report)
+  meta={'rss':{'injury_reports':reports}};R.enrich_injuries(injuries,meta,NOW);self.assertEqual(injuries['NYR'][0]['report'],report)
+  injuries['NYR'][0]['reported_at']='2026-11-14T00:30:00Z';self.assertFalse(R.valid_injury_report(report,injuries,NOW),'A new injury episode cannot inherit an old report')
+ def test_injury_links_reject_healthy_updates_ambiguous_names_and_bad_sources(self):
+  injuries={'NYR':[{'name':'Dylan Garand','status':'Out','reported_at':'2026-11-13T19:40:00Z'}]}
+  for payload in [xml('Activated off IR','Garand (lower body) was activated off IR.'),xml('Available Friday','Garand will play Friday.'),xml('Confirmed starter Friday','Garand will start Friday.'),xml('Out Friday','Garand will miss Friday.').replace(b'https://www.rotowire.com//hockey/player/',b'https://untrusted.example/')]:
+   self.assertEqual(R.parse_injuries(payload,injuries,NOW),[])
+  injuries['VAN']=injuries['NYR'];self.assertEqual(R.parse_injuries(xml('Out Friday','Garand will miss Friday.'),injuries,NOW),[])
+  injuries={'NYR':[{'name':'Dylan Garand','status':'Out'}]};self.assertEqual(R.parse_injuries(xml('Out Friday','Garand will miss Friday.'),injuries,NOW),[],'An undated injury cannot be matched to a news episode')
+ def test_injury_links_share_one_rss_request_and_survive_rolloff_and_304(self):
+  injuries={'NYR':[{'name':'Dylan Garand','status':'Out','reported_at':'2026-11-13T19:40:00Z'}]};calls=[]
+  def fetch(headers):calls.append(headers);return 200,xml('Will not play Friday','Garand (lower body) will miss Friday.'),{}
+  _,meta=R.collect([GAME],ROSTERS,{},NOW,fetch,injuries);self.assertEqual(len(calls),1);saved=meta['rss']['injury_reports'];self.assertEqual(len(saved),1)
+  _,meta=R.collect([GAME],ROSTERS,{'starter_feed':meta},'2026-11-14T00:01:00Z',lambda headers:(304,b'',{}),injuries);self.assertEqual(meta['rss']['injury_reports'],saved)
+  root=ET.fromstring(xml());channel=root.find('channel');channel.remove(channel.find('item'))
+  _,meta=R.collect([GAME],ROSTERS,{'starter_feed':meta},'2026-11-14T00:12:00Z',lambda headers:(200,ET.tostring(root),{}),injuries);self.assertEqual(meta['rss']['injury_reports'],saved)
+  _,meta=R.collect([GAME],ROSTERS,{'starter_feed':meta},'2026-11-14T00:15:00Z',lambda _:self.fail('Respect shared ten-minute cache'),injuries);self.assertEqual(meta['rss']['injury_reports'],saved)
+  _,meta=R.collect([GAME],ROSTERS,{'starter_feed':meta},'2026-11-14T00:25:00Z',lambda _:(_ for _ in ()).throw(OSError()),injuries);self.assertEqual(meta['rss']['injury_reports'],saved)
 class Crests(unittest.TestCase):
  def test_derived_crest_artwork_stays_vector_and_preserves_official_paths(self):
   spec=importlib.util.spec_from_file_location('sweater_crest_builder',ROOT/'build_sweater.py');builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)

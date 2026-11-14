@@ -92,11 +92,61 @@ def request(headers):
         raise
 
 
-def collect(games, rosters, old, now, fetch=request):
+def valid_injury_report(report, injuries, now):
+    try:
+        if not isinstance(report,dict) or not all(isinstance(report.get(key),str) for key in ['name','team','injury_at','source','source_url','reported_at']):
+            return False
+        matches=[(team,p) for team,players in injuries.items() for p in players if normalized(p['name'])==normalized(report['name'])]
+        at=datetime.fromisoformat(report['reported_at'].replace('Z','+00:00'));checked=datetime.fromisoformat(now.replace('Z','+00:00'))
+        return (len(matches)==1 and matches[0][0]==report['team'] and matches[0][1].get('reported_at')==report['injury_at']
+                and report['source']=='RotoWire RSS' and bool(LINK.fullmatch(report['source_url']))
+                and timedelta(0)<=checked-at+timedelta(minutes=5)<=timedelta(days=30)
+                and at>=datetime.fromisoformat(report['injury_at'].replace('Z','+00:00'))-timedelta(hours=6))
+    except (KeyError,TypeError,ValueError):
+        return False
+
+
+def parse_injuries(payload, injuries, now):
+    if len(payload)>1000000 or b'<!DOCTYPE' in payload.upper() or b'<!ENTITY' in payload.upper():
+        raise ValueError('Unexpected news feed')
+    root=ET.fromstring(payload);channel=root.find('channel')
+    if root.tag!='rss' or channel is None or 'NHL' not in (channel.findtext('title') or ''):
+        raise ValueError('Not an NHL RSS feed')
+    reports=[]
+    for item in channel.findall('item')[:500]:
+        title=(item.findtext('title') or '').strip();description=(item.findtext('description') or '').strip()
+        name=title.split(':',1)[0];link=(item.findtext('link') or '').strip().replace('rotowire.com//','rotowire.com/')
+        if ':' not in title or not LINK.fullmatch(link) or re.search(r'\b(activated|cleared|recovered|returns?|returning|will play|available)\b',title,re.I):
+            continue
+        if not re.search(r'\b(out|miss|missing|injury|injured|surgery|scratched|will not play|won.t play|day.to.day)\b',title+' '+description,re.I):
+            continue
+        matches=[(team,p) for team,players in injuries.items() for p in players if normalized(p['name'])==normalized(name)]
+        if len(matches)!=1:
+            continue
+        team,player=matches[0]
+        try:
+            report={'name':player['name'],'team':team,'injury_at':player.get('reported_at'),'source':'RotoWire RSS','source_url':link,'reported_at':timestamp(item.findtext('pubDate') or '')}
+            if valid_injury_report(report,injuries,now):
+                reports.append(report)
+        except (TypeError,ValueError,OverflowError):
+            continue
+    return reports
+
+
+def enrich_injuries(injuries, meta, now):
+    for report in meta.get('rss',{}).get('injury_reports',[]):
+        if valid_injury_report(report,injuries,now):
+            for player in injuries[report['team']]:
+                if normalized(player['name'])==normalized(report['name']):
+                    player['report']=report
+
+
+def collect(games, rosters, old, now, fetch=request, injuries=None):
     from starters import valid_report
     at=datetime.fromisoformat(now.replace('Z','+00:00'));index={g['id']:g for g in games}
     prior=old.get('starter_feed',{}).get('rss',{});saved=[r for r in prior.get('reports',[]) if r.get('game_id') in index and valid_report(r,index[r['game_id']],rosters,now)]
-    state={**prior,'reports':saved};meta={'source':'RotoWire RSS','source_url':'https://www.rotowire.com/rss/',
+    injuries=injuries or {};injury_reports=[r for r in prior.get('injury_reports',[]) if valid_injury_report(r,injuries,now)]
+    state={**prior,'reports':saved,'injury_reports':injury_reports};meta={'source':'RotoWire RSS','source_url':'https://www.rotowire.com/rss/',
          'status':'idle' if not games else 'cached','checked_at':prior.get('checked_at'),'requests':0,'x_requests':0}
     next_check=prior.get('next_check_at')
     if not games or next_check and now<next_check:
@@ -107,6 +157,8 @@ def collect(games, rosters, old, now, fetch=request):
         interval=prior.get('poll_seconds',600)
         if status==200:
             fresh,interval=parse(payload,games,rosters,now)
+            fresh_injuries=parse_injuries(payload,injuries,now)
+            injury_reports=list({(r['team'],normalized(r['name']),r['injury_at']):r for r in sorted(injury_reports+fresh_injuries,key=lambda r:r['reported_at'])}.values())[-256:]
             # The feed is short. Preserve earlier facts for upcoming games after items roll off.
             saved=list({(r['game_id'],r['team'],r.get('report_id'),r['reported_at']):r for r in saved+fresh}.values())[-200:]
             state.update(etag=response_headers.get('ETag') or response_headers.get('etag'),
@@ -114,7 +166,7 @@ def collect(games, rosters, old, now, fetch=request):
         elif status!=304 or not prior.get('checked_at'):
             raise ValueError('News response has no usable snapshot')
         meta.update(status='checked',checked_at=now)
-        state.update(checked_at=now,poll_seconds=interval,reports=saved,next_check_at=(at+timedelta(seconds=interval)).isoformat(timespec='seconds').replace('+00:00','Z'))
+        state.update(checked_at=now,poll_seconds=interval,reports=saved,injury_reports=injury_reports,next_check_at=(at+timedelta(seconds=interval)).isoformat(timespec='seconds').replace('+00:00','Z'))
     except Exception:
         meta['status']='unavailable'
         state['next_check_at']=(at+timedelta(minutes=10)).isoformat(timespec='seconds').replace('+00:00','Z')

@@ -13,27 +13,31 @@ function poEffectiveGame(g){
  if(s.status==='final')return {...g,state:s.state,hg:s.home_score,ag:s.away_score,end:s.end};
  return ['LIVE','CRIT'].includes(s.state)?{...g,state:s.state}:g;
 }
-function poGameWin(g){
+function poGameWin(g,part='all'){
  const s=poLiveFor(g),playing=['LIVE','CRIT'].includes(g.state),final=['OFF','FINAL'].includes(g.state);
  if(playing&&!final){
   const available=s?.status==='live',delayed=poLiveError||!s||Date.now()-Date.parse(s.at)>90000;
   const values=available?poGamePair(poModel.percent(s.away_win),poModel.percent(s.home_win)):poGamePair('—','—');
   const label=available?delayed?'DELAYED':'LIVE':s?.reason==='shootout'?'SHOOTOUT':'LIVE UNAVAILABLE';
   const at=available?`As of ${new Date(s.at).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',second:'2-digit'})}`:s?.reason==='shootout'?'Awaiting the shootout result':'Waiting for score and clock data';
-  return `${values}<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}">${label}</span><span class="po-live-time">${esc(at)}</span></small>`;
+  const note=`<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}">${label}</span><span class="po-live-time">${esc(at)}</span></small>`;
+  return part==='prices'?values:part==='note'?note:values+note;
  }
- return poGamePair(poModel.percent(g.prediction.away_win),poModel.percent(g.prediction.home_win))+'<small class="po-game-basis">Pregame</small>';
+ const values=poGamePair(poModel.percent(g.prediction.away_win),poModel.percent(g.prediction.home_win)),note='<small class="po-game-basis">Pregame</small>';
+ return part==='prices'?values:part==='note'?note:values+note;
+}
+function poGamePhase(s){
+ const seconds=s?.seconds_remaining,clock=Number.isInteger(seconds)?`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`:'';
+ const period=s?.period_type==='SO'?'Shootout':s?.period_type==='OT'?`OT${s.period>4?' '+(s.period-3):''}`:s?.period?'P'+s.period:'';
+ const stage=period?`<strong class="po-period-label">${esc(period)}</strong>`:'',resurfacer='<svg class="po-intermission-icon" viewBox="0 0 34 23" aria-hidden="true"><path d="M3 9h8V4h14l5 6v8H3Z" fill="currentColor" opacity=".2"/><path d="M3 9h8V4h14l5 6v8H3Zm8 0h19M15 4v5M3 14h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 5h7l3 3H17Z" fill="currentColor" opacity=".55"/><path d="M1 18h6v3H1Z" fill="currentColor" opacity=".5"/><circle cx="9" cy="18" r="3" fill="currentColor"/><circle cx="25" cy="18" r="3" fill="currentColor"/></svg>';
+ return s?.intermission?`<span class="po-intermission-label">${resurfacer}<strong>Intermission</strong></span>${stage?' · '+stage:''}`:[stage,esc(clock)].filter(Boolean).join(' · ');
 }
 function poGameStatus(g){
  const s=poLiveFor(g),final=['OFF','FINAL'].includes(g.state);
  if(final)return poGamePair(`<b>${g.ag}</b>`,`<b>${g.hg}</b>`)+`<small class="po-game-basis">Final${g.end==='REG'?'':' / '+g.end}</small>`;
  if(['LIVE','CRIT'].includes(g.state)){
   const scores=Number.isInteger(s?.home_score)&&Number.isInteger(s?.away_score)?poGamePair(`<b>${s.away_score}</b>`,`<b>${s.home_score}</b>`):'<span>In progress</span>';
-  const seconds=s?.seconds_remaining,clock=Number.isInteger(seconds)?`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`:'';
-  const period=s?.period_type==='SO'?'Shootout':s?.period_type==='OT'?`OT${s.period>4?' '+(s.period-3):''}`:s?.period?'P'+s.period:'';
-  const stage=period?`<strong class="po-period-label">${esc(period)}</strong>`:'',resurfacer='<svg class="po-intermission-icon" viewBox="0 0 34 23" aria-hidden="true"><path d="M3 9h8V4h14l5 6v8H3Z" fill="currentColor" opacity=".2"/><path d="M3 9h8V4h14l5 6v8H3Zm8 0h19M15 4v5M3 14h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 5h7l3 3H17Z" fill="currentColor" opacity=".55"/><path d="M1 18h6v3H1Z" fill="currentColor" opacity=".5"/><circle cx="9" cy="18" r="3" fill="currentColor"/><circle cx="25" cy="18" r="3" fill="currentColor"/></svg>';
-  const status=s?.intermission?`<span class="po-intermission-label">${resurfacer}<strong>Intermission</strong></span>${stage?' · '+stage:''}`:[stage,esc(clock)].filter(Boolean).join(' · ');
-  return scores+`<small class="po-game-basis po-period-status">${status}</small>`;
+  return scores+`<small class="po-game-basis po-period-status">${poGamePhase(s)}</small>`;
  }
  return `<div class="po-scheduled-time"><span>${esc(new Date(g.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'}))}</span><small class="po-game-basis">${g.state==='PRE'?'Pregame':'Scheduled'}</small></div>`;
 }
@@ -53,6 +57,11 @@ function poApplyLive(){
  const games=(poData?.games||[]).map(poEffectiveGame),results=poGamesMode==='results',shown=games.filter(g=>poModel.localDay(g.start)===poGamesDate&&(results?['OFF','FINAL'].includes(g.state):!['OFF','FINAL'].includes(g.state))),rows=[...$('poGamesRows').querySelectorAll('[data-po-game]')];
  if(shown.length!==rows.length||rows.some(row=>!shown.some(g=>String(g.id)===row.dataset.poGame))){poRenderGames();return;}
  for(const row of rows){const g=shown.find(g=>String(g.id)===row.dataset.poGame);row.querySelector('.po-model-win').innerHTML=poGameWin(g);row.querySelector('.po-game-status').innerHTML=poGameStatus(g);row.querySelector('.po-market-cell').innerHTML=poMarketMoneyline(g);row.querySelector('.po-match-basis').innerHTML=poGameBasis(g);}
+ for(const card of $('poGameCards').querySelectorAll('[data-po-game]')){
+  const g=shown.find(g=>String(g.id)===card.dataset.poGame);if(!g){poRenderGames();return;}
+  card.querySelector('.po-game-status').innerHTML=poCardStatus(g);card.querySelector('.po-model-win').innerHTML=poGameWin(g,'prices');card.querySelector('.po-card-win-note').innerHTML=poGameWin(g,'note');card.querySelector('.po-market-cell').innerHTML=poMarketMoneyline(g,'prices');card.querySelector('.po-card-market-note').innerHTML=poMarketMoneyline(g,'note');
+  for(const side of ['away','home'])card.querySelector(`[data-po-score="${side}"]`).textContent=poCardScore(g,side);
+ }
 }
 async function poUpdateLive(force=false){
  const dates=poLiveDates(),scope=dates.join(',');if(!scope)return;
@@ -70,7 +79,7 @@ async function poUpdateLive(force=false){
 function poCircleLogoURL(team){return `team-crests/${team}.svg`;}
 const poRatePercent=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
 function poGamesKey(data){return JSON.stringify([data.goalie_leaders,(data.games||[]).map(g=>[g.id,g.state,g.hg,g.ag,g.end,g.start,g.home_shots,g.away_shots,g.prediction?.home_win,g.prediction?.home_goals,g.prediction?.away_goals,g.prediction?.basis,g.market,g.context])]);}
-function poMarketMoneyline(g){
+function poMarketMoneyline(g,part='all'){
  if(['LIVE','CRIT'].includes(g.state)){
   const m=poLiveFor(g)?.market,available=m?.status==='live',delayed=poLiveError||!!m&&Date.now()-Date.parse(m.observed_at)>90000;
   const pre=g.market?.provider==='DraftKings'?{...g.market,basis:'pregame'}:null,q=available?m:m?.last_quote||pre;
@@ -78,18 +87,20 @@ function poMarketMoneyline(g){
   const label=delayed?'DELAYED':available?'LIVE':m?.status==='suspended'?'SUSPENDED':q?'LAST QUOTE':'UNAVAILABLE';
   const href=q?.source_url||m?.source_url||g.market?.source_url,source=href?`<div class="po-market-attribution"><a class="po-market-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${q||m?.source_url?'DraftKings via ESPN':'ESPN game'}</a></div>`:'';
   const shownAt=q?.observed_at||m?.observed_at,time=shownAt?`${available?'Checked':q?.basis==='pregame'?'Pregame line':q?'Last live quote':'Checked'} · ${poDate(shownAt)}`:'Live DraftKings quote unavailable';
-  return `${prices}${source}<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}${!delayed&&m?.status==='suspended'?' po-market-suspended':''}">${label}</span><span class="po-live-time">${esc(time)}</span></small>`;
+  const note=`${source}<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}${!delayed&&m?.status==='suspended'?' po-market-suspended':''}">${label}</span><span class="po-live-time">${esc(time)}</span></small>`;
+  return part==='prices'?prices:part==='note'?note:prices+note;
  }
- const m=g.market;if(!m)return '<span class="po-market-unavailable">Unavailable</span>';
+ const m=g.market;if(!m)return part==='prices'?poGamePair('—','—'):part==='note'?'<small class="po-game-basis">Sportsbook quote unavailable</small>':'<span class="po-market-unavailable">Unavailable</span>';
  const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),past=Date.now()>=Date.parse(g.start),stale=!past&&Date.now()-Date.parse(m.observed_at)>1800000;
- return `<div class="po-game-pair po-market-prices"><span>${number(m.away)}</span><span>${number(m.home)}</span></div><div class="po-market-attribution"><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a></div><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;
+ const prices=poGamePair(number(m.away),number(m.home),'po-market-prices'),note=`<div class="po-market-attribution"><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a></div><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;
+ return part==='prices'?prices:part==='note'?note:prices+note;
 }
 function poGoalieStats(player,game){
  const s=player.stats;if(!s)return '<p class="po-goalie-stats-missing">Season stats unavailable</p>';
  const current=game&&!['OFF','FINAL'].includes(game.state)&&typeof poData!=='undefined'&&poData?.goalie_leaders?.season===s.season?poData.goalie_leaders:null,leader=current?.players?.[player.id];
  const ranks=current?Object.fromEntries(['sv','gaa'].filter(key=>leader?.ranks?.[key]&&Number.isFinite(s[key])&&Math.abs(s[key]-leader[key])<=(key==='sv'?.00001:.0001)).map(key=>[key,leader.ranks[key]])):s.ranks;
  const values=[['GP',s.gp],['GS',s.gs],['SV%',s.sv===null?'—':s.sv.toFixed(3).replace(/^0/,''),'sv'],['GAA',s.gaa===null?'—':s.gaa.toFixed(2),'gaa']];
- return `<div class="po-goalie-stats" aria-label="Current-season NHL goalie statistics">${values.map(([label,value,field])=>{const rank=ranks?.[field],medal=['gold','silver','bronze'][rank-1],title=medal?`NHL ${label} leader · ${['1st','2nd','3rd'][rank-1]} · ${poDate(current?.as_of||s.as_of)}`:'';return `<span${medal?` class="po-goalie-medal po-medal-${medal}" title="${esc(title)}" aria-label="${esc(title)}: ${value}"`:''}><small>${label}</small><b>${value}</b></span>`;}).join('')}</div>${s.status==='cached'?`<small class="po-goalie-stats-age">Last available stats · ${poDate(s.as_of)}</small>`:''}`;
+ return `<div class="po-goalie-stats" aria-label="Current-season NHL goalie statistics">${values.map(([label,value,field])=>{const rank=ranks?.[field],medal=['gold','silver','bronze'][rank-1],title=medal?`NHL ${label} leader · ${['1st','2nd','3rd'][rank-1]} · ${poDate(current?.as_of||s.as_of)}`:'';return `<span${medal?` class="po-goalie-medal po-medal-${medal}" title="${esc(title)}" aria-label="${esc(title)}: ${value}"`:''}>${medal?`<i class="po-medal-rank" aria-hidden="true">${rank}</i>`:''}<small>${label}</small><b>${value}</b></span>`;}).join('')}</div>${s.status==='cached'?`<small class="po-goalie-stats-age">Last available stats · ${poDate(s.as_of)}</small>`:''}`;
 }
 function poGameGoalie(g,side){
  const goalie=g.context?.[side]?.goalie;if(!goalie)return '';
@@ -110,12 +121,17 @@ function poInjuryPortrait(player){
  const image=url?`<img src="${esc(url)}"${espn&&nhl?` data-po-injury-fallback="${esc(nhl)}"`:''} alt="" loading="lazy" decoding="async" data-po-injury-image>`:'';
  return `<span class="po-injury-portrait" aria-hidden="true"><svg viewBox="0 0 40 40" fill="currentColor"><circle cx="20" cy="13" r="7"/><path d="M6 39v-5c0-8 5-12 14-12s14 4 14 12v5Z"/></svg>${image}</span>`;
 }
+function poInjuryBadge(i){
+ const label=/injured reserve|^ir$/i.test(i.status)?'IR':/day.?to.?day|^dtd$/i.test(i.status)?'DTD':i.status;
+ const report=i.report,rotowire=report?.source==='RotoWire RSS'&&/^https:\/\/www\.rotowire\.com\/hockey\/player\/[a-z0-9-]+-\d+$/.test(report.source_url||''),espn=/^https:\/\/www\.espn\.com\/nhl\/player\/news\/_\/id\/\d+(?:\/[a-z0-9-]+)?$/.test(i.source_url||'');
+ const href=rotowire?report.source_url:espn?i.source_url:'',source=rotowire?'RotoWire':'ESPN',reason=report?.reason||i.reason,title=`${i.name}${reason?' · '+reason:''} · Read ${source} injury report`;
+ return href?`<a class="po-injury-status" href="${esc(href)}" target="_blank" rel="noopener noreferrer" title="${esc(title)}" aria-label="${esc(title)}">${esc(label)}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9"/></svg></a>`:`<span class="po-injury-status">${esc(label)}</span>`;
+}
 function poInjurySummary(c){
  if(c.injury_status==='not_reconstructed')return '<p class="po-availability-note">Historical injury reports unavailable.</p>';
  if(!['reported','cached','stale'].includes(c.injury_status))return '<p class="po-availability-note">Injury report unavailable.</p>';
  const injuries=c.injuries||[],note=c.injury_status==='stale'?'Older injury report; availability may have changed.':c.injury_status==='cached'?'Last available injury report.':'';
- const status=value=>/injured reserve|^ir$/i.test(value)?'IR':/day.?to.?day|^dtd$/i.test(value)?'DTD':value;
- return (note?`<p class="po-availability-note">${note}</p>`:'')+(injuries.length?`<ul class="po-injury-list">${injuries.map(i=>`<li>${poInjuryPortrait(i)}<div class="po-injury-copy"><strong>${esc(i.name)}</strong><small>${esc(poReturnEstimate(i.return_estimate))}</small></div><span class="po-injury-status">${esc(status(i.status))}</span></li>`).join('')}</ul>`:'<p class="po-availability-note">No absences listed.</p>');
+ return (note?`<p class="po-availability-note">${note}</p>`:'')+(injuries.length?`<ul class="po-injury-list">${injuries.map(i=>`<li>${poInjuryPortrait(i)}<div class="po-injury-copy"><strong>${esc(i.name)}</strong><small>${esc([i.report?.reason||i.reason,poReturnEstimate(i.return_estimate)].filter(Boolean).join(' · '))}</small></div>${poInjuryBadge(i)}</li>`).join('')}</ul>`:'<p class="po-availability-note">No absences listed.</p>');
 }
 function poGameContext(g){
  if(!g.context)return '';
@@ -124,7 +140,18 @@ function poGameContext(g){
   return `<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div></div>${poInjurySummary(c)}</section>`;
  });
  const reported=g.context.home.injury_reported_at||g.context.away.injury_reported_at;
- return `<details class="po-game-context"><summary>Team availability</summary><div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Return dates are estimates and may change.</small></details>`;
+ return `<details class="po-game-context" data-po-disclosure="availability"><summary>Team availability</summary><div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Linked status badges open the matching RotoWire report when available, otherwise the player’s ESPN news. Return dates are estimates and may change.</small></details>`;
+}
+function poCardScore(g,side){const s=poLiveFor(g),value=['OFF','FINAL'].includes(g.state)?g[side==='home'?'hg':'ag']:['LIVE','CRIT'].includes(g.state)?s?.[side+'_score']:null;return Number.isInteger(value)?String(value):'';}
+function poCardStatus(g){
+ if(['OFF','FINAL'].includes(g.state))return `<b>Final${g.end==='REG'?'':' / '+esc(g.end)}</b><span>Saved pregame forecast</span>`;
+ if(['LIVE','CRIT'].includes(g.state))return `<span class="po-live-match">LIVE</span><span class="po-period-status">${poGamePhase(poLiveFor(g))||'In progress'}</span>`;
+ return `<b>${esc(new Date(g.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'}))}</b><span>${g.state==='PRE'?'Pregame':'Scheduled'}</span>`;
+}
+function poGameCard(g){
+ const results=['OFF','FINAL'].includes(g.state),team=side=>`<button class="po-card-team" type="button" data-po-team="${g[side]}"><img src="team-crests/${g[side]}.svg" alt=""><span>${esc(poTeamRecord(g[side])?.name||g[side])}</span><b data-po-score="${side}" aria-label="${side} score">${poCardScore(g,side)}</b></button>`;
+ const details=['away','home'].map(side=>`<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b></div>${poGameGoalie(g,side)||'<p class="po-availability-note">Starting goalie unavailable</p>'}<p class="po-card-game-stats"><span>Sweater model goals <b>${g.prediction[side+'_goals'].toFixed(2)}</b></span>${results?`<span>Shots <b>${g[side+'_shots']??'—'}</b></span><span>Goals / shot <b>${poRatePercent(poModel.shooting(g,side))}</b></span>`:''}</p></section>`).join('');
+ return `<article class="po-game-card" data-po-game="${g.id}" aria-label="${esc(g.away+' at '+g.home)}"><header class="po-game-status">${poCardStatus(g)}</header><div class="po-card-metrics"><div><small>Matchup</small>${poGamePair(team('away'),team('home'))}</div><div><small aria-label="Sweater model win percentage">Win %</small><div class="po-model-win">${poGameWin(g,'prices')}</div></div><div><small>Moneyline</small><div class="po-market-cell">${poMarketMoneyline(g,'prices')}</div></div></div><div class="po-card-win-note">${poGameWin(g,'note')}</div><div class="po-card-market-note">${poMarketMoneyline(g,'note')}</div><details class="po-card-extra" data-po-disclosure="stats"><summary>Starting goalies & game stats</summary><div>${details}</div><small class="po-availability-source">Goals are Sweater’s saved pregame projection.${g.neutral?' Neutral site.':''}${g.prediction.basis==='reconstructed'?' Forecast reconstructed from earlier dates.':''}</small></details>${poGameContext(g)}</article>`;
 }
 function poLocalClockChanged(){return poGamesAutoDate&&poGamesDate!==poModel.localDay(Date.now())||poGamesZone!==Intl.DateTimeFormat().resolvedOptions().timeZone;}
 function poFilteredTeams(){const conference=$('poConference').value;return (poData?.teams||[]).filter(t=>conference==='all'||t.conference===conference).sort((a,b)=>(poDescending?-1:1)*(poModel.sortValue(a,poSort)-poModel.sortValue(b,poSort))||a.name.localeCompare(b.name));}
@@ -141,7 +168,7 @@ function poRenderBoard(){
 }
 function poRenderTeamStats(t){const r=poModel.record(t),f=t.form?poModel.record(t.form):null;const values=[['Record',`${r.wins}–${r.losses}–${r.ot}`],['Win %',poRatePercent(r.winPct)],['Points %',poRatePercent(r.pointPct)],['Goals for / against',`${t.gf} / ${t.ga}`],['Goal differential',(r.diff>0?'+':'')+r.diff],['Last 10',f?`${f.wins}–${f.losses}–${f.ot}`:'—']];$('poTeamRaw').innerHTML=values.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');}
 function poRenderGames(){
- const open=new Set([...$('poGamesRows').querySelectorAll('tr:has(details[open])')].map(row=>row.dataset.poGame));
+ const disclosures=$('poPanelGames').querySelectorAll('[data-po-game] details[open]'),open=new Set([...disclosures].map(d=>d.closest('[data-po-game]').dataset.poGame+'|'+d.dataset.poDisclosure));
  const games=(poData?.games||[]).map(poEffectiveGame),zone=Intl.DateTimeFormat().resolvedOptions().timeZone,today=poModel.localDay(Date.now(),zone),dates=games.map(g=>poModel.localDay(g.start,zone)).sort();
  poGamesZone=zone;
  if(!poGamesDate||poGamesAutoDate)poGamesDate=today;
@@ -154,9 +181,10 @@ function poRenderGames(){
  $('poGamesRows').innerHTML=rows.map(g=>{const p=g.prediction,team=(abbr,side)=>`<div class="po-game-club"><button class="po-game-team" type="button" data-po-team="${abbr}"><img src="team-crests/${abbr}.svg" alt=""><span>${esc(poTeamRecord(abbr)?.name||abbr)}</span></button>${poGameGoalie(g,side)}</div>`;
   return `<tr data-po-game="${g.id}"><td>${two(team(g.away,'away'),team(g.home,'home'))}<small class="po-game-basis po-match-basis">${poGameBasis(g)}</small>${poGameContext(g)}</td><td class="po-game-status">${poGameStatus(g)}</td><td class="po-model-win">${poGameWin(g)}</td><td class="po-market-cell">${poMarketMoneyline(g)}</td><td>${two(p.away_goals.toFixed(2),p.home_goals.toFixed(2))}</td>${results?`<td>${two(g.away_shots??'—',g.home_shots??'—')}</td><td>${two(poRatePercent(poModel.shooting(g,'away')),poRatePercent(poModel.shooting(g,'home')))}</td>`:''}</tr>`;
  }).join('');
+ $('poGameCards').innerHTML=rows.map(poGameCard).join('');
  $('poGamesEmpty').hidden=rows.length>0;$('poGamesEmpty').textContent=!poData?.analytics_version?'The game feed is updating. League projections remain available.':results?'No completed games on this date. Choose another date to review results.':'No upcoming games on this date. Select Results for finished games or choose another date.';
  $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” estimates use earlier calendar dates; they were not recorded before those games. Saved pregame estimates stay fixed after puck drop.':'Win percentages switch from Pregame to LIVE during play. Live checks run about every 30 seconds using the NHL score and clock plus the saved model’s scoring rates. Delayed feeds are labelled; shootout estimates await the result. Saved pregame estimates remain available in Results. Live estimates do not yet model current penalties or empty-net situations separately.';
- for(const row of $('poGamesRows').querySelectorAll('[data-po-game]'))if(open.has(row.dataset.poGame)){const details=row.querySelector('details');if(details)details.open=true;}
+ for(const details of $('poPanelGames').querySelectorAll('[data-po-game] details'))if(open.has(details.closest('[data-po-game]').dataset.poGame+'|'+details.dataset.poDisclosure))details.open=true;
  poSyncLive();
 }
 function poDonutSector(cx,cy,outer,inner,start,end){
@@ -185,16 +213,22 @@ function poRenderCircle(){
  const track=mode==='all'?'cup':mode;$('poCircleLegend').innerHTML=[...teams].sort((a,b)=>b.odds[track]-a.odds[track]).map(t=>`<button type="button" data-po-circle-team="${t.abbr}" data-po-circle-stage="${track}"><i style="background:${poModel.teamColors[t.abbr]}"></i><img data-po-circle-logo="${t.abbr}" src="${poCircleLogoURL(t.abbr)}" alt=""><span>${esc(t.name)}</span><b>${poModel.percent(t.odds[track])}</b></button>`).join('');
  if(!poTeamRecord(poCircleSelected))poCircleSelected='';poCircleHighlight(poCircleSelected,mode==='all'?poCircleStage:mode);
 }
+function poCircleReadout(t,stage){
+ const readout=$('poCircleMobileReadout');if(!readout)return;
+ readout.innerHTML=t?`<img src="${poCircleLogoURL(t.abbr)}" alt=""><div><button type="button" data-po-team="${t.abbr}" aria-label="View ${esc(t.name)} breakdown">${esc(t.name)} ↗</button><span>${esc(poStages.find(([key])=>key===stage)?.[1]||'')}</span></div><strong>${poCirclePercent(t.odds[stage])}</strong><button type="button" class="po-circle-dismiss" data-po-circle-close aria-label="Clear selected team">×</button>`:'<p>Tap a slice or team to see its chance here.</p>';
+}
 function poCircleHighlight(team,stage){
  const key=team+'|'+stage;if(poCircleFocusKey===key)return;
  if(poCircleSelected!==team||!poCircleFocusKey){for(const node of poCircleActiveNodes)node.classList.remove('po-circle-active');poCircleActiveNodes=poCircleNodes.get(team)||[];for(const node of poCircleActiveNodes)node.classList.add('po-circle-active');}
  poCircleFocusKey=key;
- poCircleSelected=team;poCircleStage=stage;const t=poTeamRecord(team);
+ poCircleSelected=team;poCircleStage=stage;const t=poTeamRecord(team);poCircleReadout(t,stage);
  if(!t){$('poCircleFocus').innerHTML='<h3>Every team. Every round.</h3><p>Hover, focus, or tap a slice to see its actual probability. Use the legend to inspect the smallest slices.</p><small>Legend: '+($('poCircleMode').value==='all'?'Win the Cup':poStages.find(([k])=>k===$('poCircleMode').value)?.[1])+'</small>';return;}
  $('poCircleFocus').innerHTML=`<div><img src="team-logos/${t.abbr}.svg" alt=""><h3>${esc(t.name)}</h3></div><p>${poStages.find(([k])=>k===stage)?.[1]} <strong>${poCirclePercent(t.odds[stage])}</strong></p><small>Estimated chance at this stage of the current forecast.</small><div class="po-circle-stage-values">${poStages.map(([key,name])=>`<p class="${key===stage?'on':''}"><span>${name}</span><b>${poCirclePercent(t.odds[key])}</b></p>`).join('')}</div><small>Fair American odds ${poModel.fair(t.odds[stage],'american')}</small><button type="button" class="po-plain-button" data-po-team="${t.abbr}">View team breakdown →</button>`;
 }
+function poCircleIsCompact(){return typeof matchMedia==='function'&&matchMedia('(max-width:700px)').matches;}
 function poCircleTooltip(event,node){
  const tooltip=$('poCircleTooltip');if(!tooltip||!node)return;const team=poTeamRecord(node.dataset.poCircleTeam),stage=node.dataset.poCircleStage;if(!team||!stage)return;
+ if(poCircleIsCompact()){tooltip.hidden=true;return;}
  if(!poCircleBounds)poCircleBounds={box:$('poCircleChart').getBoundingClientRect(),scroll:$('poCircleScroll').getBoundingClientRect(),height:innerHeight};
  const {box,scroll,height}=poCircleBounds,key=team.abbr+'|'+stage;
  if(poCircleTipKey!==key){tooltip.innerHTML=`<b>${esc(team.name)}</b><span>${poStages.find(([s])=>s===stage)[1]}</span><strong>${poCirclePercent(team.odds[stage])}</strong><small>Sweater model probability</small>`;poCircleTipKey=key;poCircleTipSize=null;}
@@ -203,7 +237,7 @@ function poCircleTooltip(event,node){
  tooltip.style.transform=`translate3d(${Math.round(Math.max(left,Math.min(right,x+14)))}px,${Math.round(Math.max(top,Math.min(bottom,y+14)))}px,0)`;
 }
 function poCircleCancelHover(){if(poCircleHoverFrame)cancelAnimationFrame(poCircleHoverFrame);poCircleHoverFrame=0;poCirclePendingHover=null;}
-function poCircleHide(){poCircleCancelHover();const tooltip=$('poCircleTooltip');if(tooltip)tooltip.hidden=true;poCircleBounds=null;poCircleKeyFocus=false;for(const node of poCircleActiveNodes)node.classList.remove('po-circle-active');poCircleActiveNodes=[];poCircleSelected='';poCircleFocusKey='';}
+function poCircleHide(){poCircleCancelHover();const tooltip=$('poCircleTooltip');if(tooltip)tooltip.hidden=true;poCircleBounds=null;poCircleKeyFocus=false;for(const node of poCircleActiveNodes)node.classList.remove('po-circle-active');poCircleActiveNodes=[];poCircleSelected='';poCircleFocusKey='';if(typeof poCircleReadout==='function')poCircleReadout(null);}
 function poCircleQueueHover(event,node){
  poCirclePendingHover={node,clientX:event.clientX,clientY:event.clientY,type:event.type};if(poCircleHoverFrame)return;
  poCircleHoverFrame=requestAnimationFrame(()=>{poCircleHoverFrame=0;const pending=poCirclePendingHover;poCirclePendingHover=null;if(!pending?.node.isConnected||poTab!=='circle'||$('view-playoffs').hidden)return;const node=pending.node;poCircleHighlight(node.dataset.poCircleTeam,node.dataset.poCircleStage);if(node.closest('#poCircleChart'))poCircleTooltip(pending,node);else if($('poCircleTooltip'))$('poCircleTooltip').hidden=true;});
@@ -211,14 +245,15 @@ function poCircleQueueHover(event,node){
 $('poLeagueView').onchange=()=>{poSort=$('poLeagueView').value==='stats'?'points':'playoffs';poDescending=true;poRenderBoard();};
 $('poGamesDate').onchange=e=>{poGamesAutoDate=false;poGamesDate=e.target.value;poRenderGames();};$('poCircleMode').onchange=poRenderCircle;
 $('poCircleZoom').onchange=()=>{poCircleHide();$('poCircleChart').style.width=(Number($('poCircleZoom').value)*100)+'%';};
-$('view-playoffs').addEventListener('click',e=>{const set=e.target.closest('[data-po-circle-set]'),mode=e.target.closest('[data-po-games]'),slice=e.target.closest('[data-po-circle-team]');if(set){$('poCircleMode').value=set.dataset.poCircleSet;poRenderCircle();return;}if(mode){poGamesMode=mode.dataset.poGames;poGamesAutoDate=poGamesMode==='upcoming';if(poGamesMode==='results'){poGamesDate=(poData?.games||[]).map(poEffectiveGame).filter(g=>['OFF','FINAL'].includes(g.state)).map(g=>poModel.localDay(g.start)).sort().at(-1)||poModel.localDay(Date.now());}else poGamesDate=poModel.localDay(Date.now());poRenderGames();}if(slice){poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);}});
-$('poPanelCircle').addEventListener('pointerover',e=>{if(e.pointerType==='touch'||poCircleKeyFocus)return;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);});
-$('poPanelCircle').addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;poCircleKeyFocus=false;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);else poCircleHide();});
-$('poPanelCircle').addEventListener('pointerout',e=>{if(e.pointerType!=='touch'&&!poCircleKeyFocus&&e.target.closest('[data-po-circle-team]')&&!e.relatedTarget?.closest?.('[data-po-circle-team]'))poCircleHide();});
-for(const id of ['poPanelCircle','poCircleChart'])$(id).addEventListener('pointerleave',e=>{if(e.pointerType!=='touch')poCircleHide();});
-$('poPanelCircle').addEventListener('focusin',e=>{const slice=e.target.closest('[data-po-circle-team]');if(!slice){poCircleHide();return;}poCircleCancelHover();poCircleKeyFocus=true;poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);else if($('poCircleTooltip'))$('poCircleTooltip').hidden=true;});
-$('poPanelCircle').addEventListener('focusout',e=>{if(!e.relatedTarget?.closest?.('[data-po-circle-team]'))poCircleHide();});
-window.addEventListener('scroll',()=>{poCircleBounds=null;if(!poCircleKeyFocus&&(poCircleSelected||poCirclePendingHover)&&!poCirclePendingHover?.node.matches(':hover'))poCircleHide();},{capture:true,passive:true});
+$('view-playoffs').addEventListener('click',e=>{if(e.target.closest('[data-po-circle-close]')){poCircleHide();if(e.detail===0)$('poCircleScroll').focus();return;}const set=e.target.closest('[data-po-circle-set]'),mode=e.target.closest('[data-po-games]'),slice=e.target.closest('[data-po-circle-team]');if(set){$('poCircleMode').value=set.dataset.poCircleSet;poRenderCircle();return;}if(mode){poGamesMode=mode.dataset.poGames;poGamesAutoDate=poGamesMode==='upcoming';if(poGamesMode==='results'){poGamesDate=(poData?.games||[]).map(poEffectiveGame).filter(g=>['OFF','FINAL'].includes(g.state)).map(g=>poModel.localDay(g.start)).sort().at(-1)||poModel.localDay(Date.now());}else poGamesDate=poModel.localDay(Date.now());poRenderGames();}if(slice){poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);}});
+$('poPanelCircle').addEventListener('keydown',e=>{if(e.key==='Escape'){poCircleHide();$('poCircleScroll').focus();}});
+$('poPanelCircle').addEventListener('pointerover',e=>{if(e.pointerType==='touch'||poCircleIsCompact()||poCircleKeyFocus)return;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);});
+$('poPanelCircle').addEventListener('pointermove',e=>{if(e.pointerType==='touch'||poCircleIsCompact())return;poCircleKeyFocus=false;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);else poCircleHide();});
+$('poPanelCircle').addEventListener('pointerout',e=>{if(e.pointerType!=='touch'&&!poCircleIsCompact()&&!poCircleKeyFocus&&e.target.closest('[data-po-circle-team]')&&!e.relatedTarget?.closest?.('[data-po-circle-team]'))poCircleHide();});
+for(const id of ['poPanelCircle','poCircleChart'])$(id).addEventListener('pointerleave',e=>{if(e.pointerType!=='touch'&&!poCircleIsCompact())poCircleHide();});
+$('poPanelCircle').addEventListener('focusin',e=>{const slice=e.target.closest('[data-po-circle-team]');if(!slice){if(!e.target.closest('#poCircleMobileReadout'))poCircleHide();return;}poCircleCancelHover();poCircleKeyFocus=true;poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);else if($('poCircleTooltip'))$('poCircleTooltip').hidden=true;});
+$('poPanelCircle').addEventListener('focusout',e=>{if(!e.relatedTarget?.closest?.('[data-po-circle-team],#poCircleMobileReadout'))poCircleHide();});
+window.addEventListener('scroll',()=>{poCircleBounds=null;if(poCircleIsCompact())return;if(!poCircleKeyFocus&&(poCircleSelected||poCirclePendingHover)&&!poCirclePendingHover?.node.matches(':hover'))poCircleHide();},{capture:true,passive:true});
 window.addEventListener('resize',()=>{poCircleTipSize=null;poCircleHide();},{passive:true});window.addEventListener('blur',poCircleHide);
 document.addEventListener('click',e=>{if(poTab==='circle'&&!$('view-playoffs').hidden&&!e.target.closest('[data-po-circle-team]'))poCircleHide();});
 $('poCircleChart').addEventListener('keydown',e=>{if(!['Enter',' '].includes(e.key))return;const set=e.target.closest('[data-po-circle-set]');if(set){e.preventDefault();$('poCircleMode').value=set.dataset.poCircleSet;poRenderCircle();return;}if(e.target.matches('[data-po-circle-team]')){e.preventDefault();poCircleHighlight(e.target.dataset.poCircleTeam,e.target.dataset.poCircleStage);}});

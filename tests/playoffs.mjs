@@ -25,7 +25,7 @@ function hoverRuntime(){
  const frames=new Map(),counts={content:0,bounds:0,sizes:0,highlights:0},tip={hidden:true,style:{}},box={left:0,top:0,right:900,bottom:900,width:900,height:900},elements={poCircleTooltip:tip,poCircleChart:{getBoundingClientRect(){counts.bounds++;return box;}},poCircleScroll:{getBoundingClientRect(){counts.bounds++;return box;}},'view-playoffs':{hidden:false}};let frame=0;
  Object.defineProperties(tip,{innerHTML:{set(value){counts.content++;this.html=value;}},offsetWidth:{get(){counts.sizes++;return 235;}},offsetHeight:{get(){counts.sizes++;return 140;}}});
  const ctx=vm.createContext({console,Math,Number,innerHeight:1000,$:id=>elements[id],esc:String,poStages:M.stages,poModel:M,poCirclePercent:M.percent,poTeamRecord:team=>data.teams.find(t=>t.abbr===team),poCircleHoverFrame:0,poCirclePendingHover:null,poCircleFocusKey:'',poCircleTipKey:'',poCircleTipSize:null,poCircleBounds:null,poCircleActiveNodes:[],poCircleSelected:'',poCircleKeyFocus:false,poTab:'circle',poCircleHighlight(){counts.highlights++;},requestAnimationFrame:fn=>{frames.set(++frame,fn);return frame;},cancelAnimationFrame:id=>frames.delete(id)});
- const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),start=source.indexOf('function poCircleTooltip(');vm.runInContext(source.slice(start,source.indexOf("$('poLeagueView')",start)),ctx);
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),start=source.indexOf('function poCircleIsCompact(');vm.runInContext(source.slice(start,source.indexOf("$('poLeagueView')",start)),ctx);
  const node=team=>({isConnected:true,dataset:{poCircleTeam:team,poCircleStage:'playoffs'},closest:()=>elements.poCircleChart,getBoundingClientRect:()=>box}),flush=()=>{const work=[...frames.values()];frames.clear();for(const fn of work)fn();};return {ctx,tip,counts,frames,node,flush};
 }
 test('rapid hover events coalesce and same-slice movement reuses tooltip contents and layout measurements',()=>{const r=hoverRuntime(),node=r.node('SJS');for(let i=0;i<480;i++)r.ctx.poCircleQueueHover({type:'pointermove',clientX:i,clientY:100},node);assert.equal(r.frames.size,1);r.flush();assert.equal(r.counts.content,1);assert.equal(r.counts.bounds,2);assert.equal(r.counts.sizes,2);for(let i=0;i<20;i++){r.ctx.poCircleQueueHover({type:'pointermove',clientX:i,clientY:100},node);r.flush();}assert.equal(r.counts.content,1);assert.equal(r.counts.bounds,2);assert.equal(r.counts.sizes,2);assert.equal(r.tip.hidden,false);r.ctx.poCircleQueueHover({type:'pointermove',clientX:100,clientY:100},r.node('VAN'));r.flush();assert.match(r.tip.html,/Vancouver Canucks/);assert.equal(r.counts.content,2);});
@@ -77,6 +77,20 @@ test('injury portraits can use ESPN even without an NHL roster identity',()=>{
  vm.runInContext(source.slice(source.indexOf('function poReturnEstimate('),source.indexOf('function poLocalClockChanged(')),ctx);
  const image=ctx.poInjuryPortrait({name:'Dylan Larkin',player_id:null,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'});assert(image.includes('3114755.png'));assert(!ctx.poInjuryPortrait({portrait_url:'javascript:alert(1)'}).includes('<img'));
  assert(ctx.poInjuryPortrait({player_id:8477946,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'}).includes('data-po-injury-fallback='));
+});
+test('injury status links prefer matched RotoWire reports and retain explicit ESPN fallback',()=>{
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String});vm.runInContext(source.slice(source.indexOf('function poInjuryBadge('),source.indexOf('function poInjurySummary(')),ctx);
+ const injury={name:'Max Domi',status:'Injured Reserve',reason:'Back',source_url:'https://www.espn.com/nhl/player/news/_/id/3042014/max-domi'};
+ assert.match(ctx.poInjuryBadge(injury),/href="https:\/\/www.espn.com.*Back.*Read ESPN/);
+ injury.report={source:'RotoWire RSS',source_url:'https://www.rotowire.com/hockey/player/max-domi-4075'};assert.match(ctx.poInjuryBadge(injury),/href="https:\/\/www.rotowire.com.*Read RotoWire/);
+ injury.report.source_url='javascript:alert(1)';assert(!ctx.poInjuryBadge(injury).includes('javascript:'));delete injury.source_url;assert(!ctx.poInjuryBadge(injury).includes('<a'));
+});
+test('mobile and desktop share identical saved and live win chances and market prices',()=>{
+ const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),g=structuredClone(data.games.find(g=>g.market)),ctx=vm.createContext({esc:String,poDate:String,poModel:M,poData:data,poLiveGames:new Map(),poLiveError:false,poGamePair:(a,h,extra='')=>`<div class="po-game-pair ${extra}"><span>${a}</span><span>${h}</span></div>`});
+ vm.runInContext(source.slice(source.indexOf('function poLiveFor('),source.indexOf('function poGamePhase('))+source.slice(source.indexOf('function poMarketMoneyline('),source.indexOf('function poGoalieStats(')),ctx);
+ const check=()=>{for(const name of ['poGameWin','poMarketMoneyline'])assert.equal(ctx[name](g,'prices')+ctx[name](g,'note'),ctx[name](g));};check();
+ const recorded=ctx.poGameWin(g,'prices');g.state='LIVE';ctx.poLiveGames.set(g.id,{...g,status:'live',home_win:66,away_win:34,at:new Date().toISOString(),market:{status:'live',source:'ESPN',provider:'DraftKings',source_url:g.market.source_url,home:-170,away:145,observed_at:new Date().toISOString()}});check();assert(ctx.poGameWin(g,'prices').includes('66.0%'));assert(ctx.poMarketMoneyline(g,'prices').includes('−170'));
+ g.state='OFF';check();assert.equal(ctx.poGameWin(g,'prices'),recorded,'Results retain the saved pregame forecast');
 });
 test('goalie medals apply independently to the official matching SV and GAA leaders',()=>{
  const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String,poDate:String,poData:{goalie_leaders:{season:20262027,as_of:'2026-11-14T19:00:00Z',players:{1:{sv:.938,gaa:1.52,ranks:{sv:1,gaa:3}}}}}});

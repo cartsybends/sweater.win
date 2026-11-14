@@ -216,6 +216,8 @@ class AvailabilityAndEvaluation(unittest.TestCase):
     def test_injured_players_keep_source_portraits_without_current_roster_ids(self):
         people=[('Dylan Larkin','3114755','Detroit Red Wings'),('Max Domi','3042014','Toronto Maple Leafs')]
         raw={'timestamp':NOW,'injuries':[{'displayName':team,'injuries':[{'status':'Out','athlete':{'displayName':name,'headshot':{'href':f'https://a.espncdn.com/i/headshots/nhl/players/full/{pid}.png'}}}]} for name,pid,team in people]}
+        for group,(_,pid,_) in zip(raw['injuries'],people):
+            group['injuries'][0]['details']={'type':'Back'};group['injuries'][0]['athlete']['links']=[{'rel':['news'],'href':f'https://www.espn.com/nhl/player/news/_/id/{pid}'}]
         def fetch(url):
             if url==A.INJURY_URL:return raw
             return {'forwards':[],'defensemen':[],'goalies':[{'id':123,'firstName':{'default':'Test'},'lastName':{'default':'Goalie'}}]}
@@ -223,6 +225,7 @@ class AvailabilityAndEvaluation(unittest.TestCase):
             result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
             for team,pid in [('DET','3114755'),('TOR','3042014')]:
                 player=result['injuries'][team][0];self.assertIsNone(player['player_id']);self.assertTrue(player['portrait_url'].endswith(pid+'.png'))
+                self.assertEqual(player['reason'],'Back');self.assertEqual(player['source_url'],f'https://www.espn.com/nhl/player/news/_/id/{pid}')
             raw['injuries'][0]['injuries'][0]['athlete']['headshot']={'href':'https://untrusted.example/head.png'}
             result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
             self.assertEqual(result['status'],'reported');self.assertNotIn('portrait_url',result['injuries']['DET'][0])
