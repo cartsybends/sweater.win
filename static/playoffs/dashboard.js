@@ -5,7 +5,7 @@ let poCircleHoverFrame=0,poCirclePendingHover=null,poCircleFocusKey='',poCircleT
 const poCircleNodes=new Map();
 const poLiveGames=new Map();
 let poLiveTimer=null,poLiveController=null,poLiveRequest=0,poLiveAttempt=0,poLiveScope='',poLiveBusy=false,poLiveError=false;
-const poGamePair=(away,home)=>`<div class="po-game-pair"><span>${away}</span><span>${home}</span></div>`;
+const poGamePair=(away,home,extra='')=>`<div class="po-game-pair${extra?' '+extra:''}"><span>${away}</span><span>${home}</span></div>`;
 function poLiveFor(g){const s=poLiveGames.get(g.id);return s&&s.home===g.home&&s.away===g.away&&s.start===g.start?s:null;}
 function poEffectiveGame(g){
  if(['OFF','FINAL'].includes(g.state))return g;
@@ -49,7 +49,7 @@ function poSyncLive(){
 function poApplyLive(){
  const games=(poData?.games||[]).map(poEffectiveGame),results=poGamesMode==='results',shown=games.filter(g=>poModel.localDay(g.start)===poGamesDate&&(results?['OFF','FINAL'].includes(g.state):!['OFF','FINAL'].includes(g.state))),rows=[...$('poGamesRows').querySelectorAll('[data-po-game]')];
  if(shown.length!==rows.length||rows.some(row=>!shown.some(g=>String(g.id)===row.dataset.poGame))){poRenderGames();return;}
- for(const row of rows){const g=shown.find(g=>String(g.id)===row.dataset.poGame);row.querySelector('.po-model-win').innerHTML=poGameWin(g);row.querySelector('.po-game-status').innerHTML=poGameStatus(g);}
+ for(const row of rows){const g=shown.find(g=>String(g.id)===row.dataset.poGame);row.querySelector('.po-model-win').innerHTML=poGameWin(g);row.querySelector('.po-game-status').innerHTML=poGameStatus(g);row.querySelector('.po-market-cell').innerHTML=poMarketMoneyline(g);}
 }
 async function poUpdateLive(force=false){
  const dates=poLiveDates(),scope=dates.join(',');if(!scope)return;
@@ -68,6 +68,14 @@ function poCircleLogoURL(team){return `team-crests/${team}.svg`;}
 const poRatePercent=n=>Number.isFinite(n)?n.toFixed(1)+'%':'—';
 function poGamesKey(data){return JSON.stringify((data.games||[]).map(g=>[g.id,g.state,g.hg,g.ag,g.end,g.start,g.home_shots,g.away_shots,g.prediction?.home_win,g.prediction?.home_goals,g.prediction?.away_goals,g.prediction?.basis,g.market,g.context]));}
 function poMarketMoneyline(g){
+ if(['LIVE','CRIT'].includes(g.state)){
+  const m=poLiveFor(g)?.market,available=m?.status==='live',delayed=poLiveError||!!m&&Date.now()-Date.parse(m.observed_at)>90000;
+  const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),prices=available?poGamePair(number(m.away),number(m.home),'po-market-prices'):poGamePair('—','—','po-market-prices');
+  const label=delayed?'DELAYED':available?'LIVE':m?.status==='suspended'?'SUSPENDED':'UNAVAILABLE';
+  const href=m?.source_url||g.market?.source_url,source=href?`<div class="po-market-attribution"><a class="po-market-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${m?.source_url?'DraftKings via ESPN':'ESPN game'}</a></div>`:'';
+  const time=m?`Checked ${new Date(m.observed_at).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',second:'2-digit'})}`:'Live DraftKings quote unavailable';
+  return `${prices}${source}<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}${!delayed&&m?.status==='suspended'?' po-market-suspended':''}">${label}</span><span class="po-live-time">${esc(time)}</span></small>`;
+ }
  const m=g.market;if(!m)return '<span class="po-market-unavailable">Unavailable</span>';
  const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),past=Date.now()>=Date.parse(g.start),stale=!past&&Date.now()-Date.parse(m.observed_at)>1800000;
  return `<div class="po-game-pair po-market-prices"><span>${number(m.away)}</span><span>${number(m.home)}</span></div><div class="po-market-attribution"><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a></div><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;

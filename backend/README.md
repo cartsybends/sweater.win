@@ -15,6 +15,13 @@ Only yesterday, today and tomorrow in NHL's Eastern calendar are accepted.
 The Games view polls while visible and stops on navigation or a hidden tab.
 Live refreshes update score/probability cells without closing team availability.
 
+During play, that same feed reads DraftKings' explicitly marked live moneyline
+from ESPN's NHL game summary, cached for 30 seconds. Both teams, home/away roles,
+scheduled start and ESPN in-progress status must match. Closing prices are never
+used as live quotes. OFF/suspended markets show no prices, and an ESPN outage
+does not interrupt Sweater's live win estimates. Source-check times are shown;
+ESPN/provider publication delays may remain. No paid odds subscription is used.
+
 The live model conditions independent Poisson scoring on the current score and
 regulation time remaining, using saved expected-goal rates. Its prior is matched
 to the saved pregame win probability. Regular-season overtime survival uses

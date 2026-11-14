@@ -60,3 +60,6 @@
 .po-injury-copy>small{display:block;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
 .po-injury-status{color:#b42332;border-color:#b4233240;background:#b4233210;font-size:10px;line-height:1.5}
 :root[data-theme="dark"] .po-injury-status{color:#ff8994;border-color:#ff899440;background:#ff899412}
+
+.po-live-badge.po-market-suspended{color:#a7650e}
+:root[data-theme="dark"] .po-live-badge.po-market-suspended{color:#e9b95b}
