@@ -225,7 +225,7 @@ class AvailabilityAndEvaluation(unittest.TestCase):
             result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
             for team,pid in [('DET','3114755'),('TOR','3042014')]:
                 player=result['injuries'][team][0];self.assertIsNone(player['player_id']);self.assertTrue(player['portrait_url'].endswith(pid+'.png'))
-                self.assertEqual(player['reason'],'Back');self.assertEqual(player['source_url'],f'https://www.espn.com/nhl/player/news/_/id/{pid}')
+                self.assertEqual(player['reason'],'Back');self.assertEqual(player['source_url'],f'https://www.espn.com/nhl/player/_/id/{pid}')
             raw['injuries'][0]['injuries'][0]['athlete']['headshot']={'href':'https://untrusted.example/head.png'}
             result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
             self.assertEqual(result['status'],'reported');self.assertNotIn('portrait_url',result['injuries']['DET'][0])

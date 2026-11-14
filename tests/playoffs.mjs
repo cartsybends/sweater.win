@@ -82,6 +82,8 @@ test('injury status links prefer matched RotoWire reports and retain explicit ES
  const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String});vm.runInContext(source.slice(source.indexOf('function poInjuryBadge('),source.indexOf('function poInjurySummary(')),ctx);
  const injury={name:'Max Domi',status:'Injured Reserve',reason:'Back',source_url:'https://www.espn.com/nhl/player/news/_/id/3042014/max-domi'};
  assert.match(ctx.poInjuryBadge(injury),/href="https:\/\/www.espn.com.*Back.*Read ESPN/);
+ assert(ctx.poInjuryBadge(injury).includes('https://www.espn.com/nhl/player/_/id/3042014/max-domi'),'Saved news links open the Overview tab');
+ injury.source_url='https://www.espn.com/nhl/player/_/id/3042014/max-domi';assert(ctx.poInjuryBadge(injury).includes(`href="${injury.source_url}"`),'Direct Overview links remain valid');
  injury.report={source:'RotoWire RSS',source_url:'https://www.rotowire.com/hockey/player/max-domi-4075'};assert.match(ctx.poInjuryBadge(injury),/href="https:\/\/www.rotowire.com.*Read RotoWire/);
  injury.report.source_url='javascript:alert(1)';assert(!ctx.poInjuryBadge(injury).includes('javascript:'));delete injury.source_url;assert(!ctx.poInjuryBadge(injury).includes('<a'));
 });

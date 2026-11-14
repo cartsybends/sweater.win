@@ -100,7 +100,7 @@ function poGoalieStats(player,game){
  const current=game&&!['OFF','FINAL'].includes(game.state)&&typeof poData!=='undefined'&&poData?.goalie_leaders?.season===s.season?poData.goalie_leaders:null,leader=current?.players?.[player.id];
  const ranks=current?Object.fromEntries(['sv','gaa'].filter(key=>leader?.ranks?.[key]&&Number.isFinite(s[key])&&Math.abs(s[key]-leader[key])<=(key==='sv'?.00001:.0001)).map(key=>[key,leader.ranks[key]])):s.ranks;
  const values=[['GP',s.gp],['GS',s.gs],['SV%',s.sv===null?'—':s.sv.toFixed(3).replace(/^0/,''),'sv'],['GAA',s.gaa===null?'—':s.gaa.toFixed(2),'gaa']];
- return `<div class="po-goalie-stats" aria-label="Current-season NHL goalie statistics">${values.map(([label,value,field])=>{const rank=ranks?.[field],medal=['gold','silver','bronze'][rank-1],title=medal?`NHL ${label} leader · ${['1st','2nd','3rd'][rank-1]} · ${poDate(current?.as_of||s.as_of)}`:'';return `<span${medal?` class="po-goalie-medal po-medal-${medal}" title="${esc(title)}" aria-label="${esc(title)}: ${value}"`:''}>${medal?`<i class="po-medal-rank" aria-hidden="true">${rank}</i>`:''}<small>${label}</small><b>${value}</b></span>`;}).join('')}</div>${s.status==='cached'?`<small class="po-goalie-stats-age">Last available stats · ${poDate(s.as_of)}</small>`:''}`;
+ return `<div class="po-goalie-stats" aria-label="Current-season NHL goalie statistics">${values.map(([label,value,field])=>{const rank=ranks?.[field],medal=['gold','silver','bronze'][rank-1],title=medal?`NHL ${label} leader · ${['1st','2nd','3rd'][rank-1]} · ${poDate(current?.as_of||s.as_of)}`:'';return `<span${medal?` class="po-goalie-medal po-medal-${medal}" title="${esc(title)}" aria-label="${esc(title)}: ${value}"`:''}><small>${label}</small><b>${value}</b></span>`;}).join('')}</div>${s.status==='cached'?`<small class="po-goalie-stats-age">Last available stats · ${poDate(s.as_of)}</small>`:''}`;
 }
 function poGameGoalie(g,side){
  const goalie=g.context?.[side]?.goalie;if(!goalie)return '';
@@ -123,8 +123,8 @@ function poInjuryPortrait(player){
 }
 function poInjuryBadge(i){
  const label=/injured reserve|^ir$/i.test(i.status)?'IR':/day.?to.?day|^dtd$/i.test(i.status)?'DTD':i.status;
- const report=i.report,rotowire=report?.source==='RotoWire RSS'&&/^https:\/\/www\.rotowire\.com\/hockey\/player\/[a-z0-9-]+-\d+$/.test(report.source_url||''),espn=/^https:\/\/www\.espn\.com\/nhl\/player\/news\/_\/id\/\d+(?:\/[a-z0-9-]+)?$/.test(i.source_url||'');
- const href=rotowire?report.source_url:espn?i.source_url:'',source=rotowire?'RotoWire':'ESPN',reason=report?.reason||i.reason,title=`${i.name}${reason?' · '+reason:''} · Read ${source} injury report`;
+ const report=i.report,rotowire=report?.source==='RotoWire RSS'&&/^https:\/\/www\.rotowire\.com\/hockey\/player\/[a-z0-9-]+-\d+$/.test(report.source_url||''),espn=/^https:\/\/www\.espn\.com\/nhl\/player\/(?:news\/)?_\/id\/\d+(?:\/[a-z0-9-]+)?$/.test(i.source_url||'');
+ const href=rotowire?report.source_url:espn?i.source_url.replace('/player/news/','/player/'):'',source=rotowire?'RotoWire':'ESPN',reason=report?.reason||i.reason,title=`${i.name}${reason?' · '+reason:''} · Read ${source} injury report`;
  return href?`<a class="po-injury-status" href="${esc(href)}" target="_blank" rel="noopener noreferrer" title="${esc(title)}" aria-label="${esc(title)}">${esc(label)}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9"/></svg></a>`:`<span class="po-injury-status">${esc(label)}</span>`;
 }
 function poInjurySummary(c){
@@ -140,7 +140,7 @@ function poGameContext(g){
   return `<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div></div>${poInjurySummary(c)}</section>`;
  });
  const reported=g.context.home.injury_reported_at||g.context.away.injury_reported_at;
- return `<details class="po-game-context" data-po-disclosure="availability"><summary>Team availability</summary><div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Linked status badges open the matching RotoWire report when available, otherwise the player’s ESPN news. Return dates are estimates and may change.</small></details>`;
+ return `<details class="po-game-context" data-po-disclosure="availability"><summary>Team availability</summary><div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Linked status badges open the matching RotoWire report when available, otherwise the player’s ESPN overview. Return dates are estimates and may change.</small></details>`;
 }
 function poCardScore(g,side){const s=poLiveFor(g),value=['OFF','FINAL'].includes(g.state)?g[side==='home'?'hg':'ag']:['LIVE','CRIT'].includes(g.state)?s?.[side+'_score']:null;return Number.isInteger(value)?String(value):'';}
 function poCardStatus(g){

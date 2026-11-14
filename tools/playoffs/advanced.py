@@ -254,9 +254,11 @@ def availability(teams, fetch, now):
                     record['reason']=reason
                 for link in athlete.get('links',[]):
                     address=link.get('href','')
-                    if 'news' in link.get('rel',[]) and re.fullmatch(r'https://www\.espn\.com/nhl/player/news/_/id/\d+(?:/[a-z0-9-]+)?',address):
+                    if re.fullmatch(r'https://www\.espn\.com/nhl/player/_/id/\d+(?:/[a-z0-9-]+)?',address):
                         record['source_url']=address
                         break
+                    if 'news' in link.get('rel',[]) and re.fullmatch(r'https://www\.espn\.com/nhl/player/news/_/id/\d+(?:/[a-z0-9-]+)?',address):
+                        record['source_url']=address.replace('/player/news/','/player/')
                 headshot=athlete.get('headshot');portrait=headshot.get('href') if isinstance(headshot,dict) else None
                 if isinstance(portrait,str) and re.fullmatch(r'https://a\.espncdn\.com/i/headshots/nhl/players/full/\d+\.png',portrait):
                     record['portrait_url']=portrait
