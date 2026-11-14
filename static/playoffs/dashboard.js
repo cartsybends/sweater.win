@@ -144,7 +144,7 @@ function poGameContext(g){
 }
 function poCardScore(g,side){const s=poLiveFor(g),value=['OFF','FINAL'].includes(g.state)?g[side==='home'?'hg':'ag']:['LIVE','CRIT'].includes(g.state)?s?.[side+'_score']:null;return Number.isInteger(value)?String(value):'';}
 function poCardStatus(g){
- if(['OFF','FINAL'].includes(g.state))return `<b>Final${g.end==='REG'?'':' / '+esc(g.end)}</b><span>Saved pregame forecast</span>`;
+ if(['OFF','FINAL'].includes(g.state))return `<b>Final${g.end==='REG'?'':' / '+esc(g.end)}</b><span>${g.prediction.basis==='reconstructed'?'Reconstructed forecast':'Saved pregame forecast'}</span>`;
  if(['LIVE','CRIT'].includes(g.state))return `<span class="po-live-match">LIVE</span><span class="po-period-status">${poGamePhase(poLiveFor(g))||'In progress'}</span>`;
  return `<b>${esc(new Date(g.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'}))}</b><span>${g.state==='PRE'?'Pregame':'Scheduled'}</span>`;
 }
