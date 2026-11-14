@@ -269,7 +269,8 @@ chart, with an explicit dismiss button; the desktop hover tooltip is unchanged.
 
 Injury reasons and status observations come from ESPN. Status badges link to a
 matching RotoWire public RSS report when observed, otherwise to the explicit
-ESPN player-news URL. RSS injury links share the existing starter-news request
+ESPN player Overview URL. Previously saved news URLs also open Overview. RSS
+injury links share the existing starter-news request
 and ten-minute cache; no extra polling or paid credentials are needed. Only
 unambiguous player names, source URLs and publication times are retained, not
 article prose. Links survive feed rolloff only while the same injury episode
