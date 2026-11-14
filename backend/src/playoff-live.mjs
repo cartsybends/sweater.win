@@ -1,4 +1,5 @@
 import {liveSnapshot} from './playoff-live-model.mjs';
+import {collectLiveMarket} from './playoff-live-market.mjs';
 
 const FEED='https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json';
 const SCORE='https://api-web.nhle.com/v1/score/';
@@ -20,22 +21,25 @@ export async function handlePlayoffLive(request,env,ctx,{fetcher=fetch,cache=glo
   const saved=await cache?.match(key);
   if(saved){const data=await saved.json();if(now-Date.parse(data.checked_at)<30000)return json(data);}
   const load=async()=>{
-   const get=async(address,ttl)=>{
+   const get=async(address,ttl,timeout=8000)=>{
     const cacheKey=new Request(address),saved=await cache?.match(cacheKey);
-    if(saved&&now-Number(saved.headers.get('X-Sweater-Cached-At'))<ttl*1000)return saved.json();
-    const response=await fetcher(address,{signal:AbortSignal.timeout(8000),redirect:'manual',cache:'no-store'});
+    if(saved&&now-Number(saved.headers.get('X-Sweater-Cached-At'))<ttl*1000)return {data:await saved.json(),observed_at:new Date(Number(saved.headers.get('X-Sweater-Cached-At'))).toISOString()};
+    const response=await fetcher(address,{signal:AbortSignal.timeout(timeout),redirect:'manual',cache:'no-store'});
     if(!response.ok)throw new Error('Upstream unavailable');
     const data=await response.json();
     if(cache)await cache.put(cacheKey,Response.json(data,{headers:{'Cache-Control':'public,max-age='+ttl,'X-Sweater-Cached-At':String(now)}}));
-    return data;
+    return {data,observed_at:new Date(now).toISOString()};
    };
-   const [score,feed]=await Promise.all([get(SCORE+date,30),get(FEED,60)]);
+   const [{data:score},{data:feed}]=await Promise.all([get(SCORE+date,30),get(FEED,60)]);
    if(!Array.isArray(score.games)||score.games.length>16||!Array.isArray(feed.games)||feed.games.length>400||!Number.isFinite(Date.parse(feed.checked_at))||Date.parse(feed.checked_at)>now+300000)throw new Error('Invalid upstream feed');
    const baseline=new Map(feed.games.map(g=>[g.id,g])),at=new Date(now).toISOString(),games=[];
    for(const raw of score.games){
     const game=baseline.get(raw.id);if(!game)continue;
     try{games.push(liveSnapshot(raw,game,at));}catch{games.push({id:game.id,home:game.home,away:game.away,start:game.start,state:game.state,at,status:'unavailable',reason:'feed_unavailable'});}
    }
+   // A slow bookmaker source must not consume the live model's response window.
+   const marketDeadline=Date.now()+2500,marketGet=(address,ttl)=>get(address,ttl,Math.max(1,marketDeadline-Date.now()));
+   await Promise.all(games.filter(g=>['LIVE','CRIT'].includes(g.state)).map(async g=>{g.market=await collectLiveMarket(baseline.get(g.id),marketGet,date,at);}));
    const data={version:1,checked_at:at,refresh_seconds:30,games};
    if(cache)await cache.put(key,Response.json(data,{headers:{'Cache-Control':'public,max-age=30'}}));
    return data;

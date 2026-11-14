@@ -75,6 +75,11 @@ export const PLAYOFF_PICTURE = (()=>{
    if(['live','final'].includes(s.status)&&![s.home_score,s.away_score].every(n=>Number.isInteger(n)&&n>=0&&n<=30))return null;
    if(s.status==='final'&&(!['OFF','FINAL'].includes(s.state)||s.home_score===s.away_score||!['REG','OT','SO'].includes(s.end)))return null;
    if(s.status==='live'&&(!['LIVE','CRIT'].includes(s.state)||s.model!=='sweater-live-v1'||![s.home_win,s.away_win].every(n=>finite(n)&&n>=0&&n<=100)||Math.abs(s.home_win+s.away_win-100)>.001||!Number.isInteger(s.period)||s.period<1||s.period>20||!['REG','OT'].includes(s.period_type)||!Number.isInteger(s.seconds_remaining)||s.seconds_remaining<0||s.seconds_remaining>1200||!Number.isFinite(Date.parse(s.pregame_at))||Date.parse(s.pregame_at)>=Date.parse(g.start)))return null;
+   if(s.market){
+    const m=s.market,hasPrices=m.home!==undefined||m.away!==undefined;
+    if(!['LIVE','CRIT'].includes(s.state)||!['live','suspended','unavailable'].includes(m.status)||m.source!=='ESPN'||m.provider!=='DraftKings'||!Number.isFinite(Date.parse(m.observed_at))||Date.parse(m.observed_at)>Date.parse(s.at)+300000||Date.parse(m.observed_at)<Date.parse(g.start)||m.source_url!==undefined&&!/^https:\/\/www\.espn\.com\/nhl\/game\/_\/gameId\/\d{1,12}$/.test(m.source_url))return null;
+    if(m.status==='live'&&(!m.source_url||!['home','away'].every(k=>Number.isInteger(m[k])&&Math.abs(m[k])>=100&&Math.abs(m[k])<=100000))||m.status!=='live'&&hasPrices)return null;
+   }
   }
   return raw;
  }
