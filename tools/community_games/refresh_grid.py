@@ -51,6 +51,31 @@ def appearance_rows(summaries, get_log, cutoff, through):
     return [[pid, team, year, gp] for (pid, team, year), gp in sorted(appearances.items())]
 
 
+def landing_bio(pid, document):
+    """Resolve missing bulk bios from the same player's official NHL landing page."""
+    if document.get('playerId') != pid or document.get('inHHOF') not in (0, 1):
+        raise ValueError('Mismatched or incomplete NHL player landing biography')
+    name = ' '.join(document.get(key, {}).get('default', '') for key in ('firstName', 'lastName')).strip()
+    position, country, birthday = (document.get(key) for key in ('position', 'birthCountry', 'birthDate'))
+    if not name or position not in ('C', 'L', 'R', 'D', 'G') or not isinstance(country, str) or not re.fullmatch('[A-Z]{3}', country):
+        raise ValueError('Invalid NHL landing biography')
+    date.fromisoformat(birthday)
+    career_gp = document.get('careerTotals', {}).get('regularSeason', {}).get('gamesPlayed')
+    if career_gp is None:
+        # Debutants may have no career aggregate yet. Accept only unambiguous
+        # NHL regular-season rows; never include junior/AHL or playoff games.
+        rows = [r for r in document.get('seasonTotals', []) if r.get('leagueAbbrev') == 'NHL' and r.get('gameTypeId') == 2]
+        seasons = [r.get('season') for r in rows]
+        if not rows or len(set(seasons)) != len(rows) or any(type(r.get('gamesPlayed')) is not int or not 0 < r['gamesPlayed'] <= 84 for r in rows):
+            raise ValueError('NHL landing page has no unambiguous career game total')
+        career_gp = sum(r['gamesPlayed'] for r in rows)
+    if type(career_gp) is not int or career_gp <= 0:
+        raise ValueError('Invalid NHL career game total')
+    return {'playerId': pid, 'skaterFullName': name, 'positionCode': position,
+            'birthCountryCode': country, 'birthDate': birthday, 'gamesPlayed': career_gp,
+            'isInHallOfFameYn': 'Y' if document['inHHOF'] else 'N'}
+
+
 def updated_players(bank, appearances, bios):
     base = {p[0]: p for p in bank['players']}
     teams = {team for p in base.values() for team in p[8]}
@@ -62,6 +87,8 @@ def updated_players(bank, appearances, bios):
             years[pid].append(year)
     result = []
     for pid, played in sorted(extra.items()):
+        if pid not in bios:
+            raise ValueError(f'Official NHL biography missing for {pid}')
         bio = bios[pid]
         previous = base.get(pid)
         clubs = dict(previous[8]) if previous else {}
@@ -147,6 +174,10 @@ def refresh(bank, today, fetch):
         return document
 
     appearances = appearance_rows(summaries, get_log, cutoff, through)
+    for pid in sorted({row[0] for row in appearances} - bios.keys()):
+        document, audit = fetch(f'bio-{pid}.json', f'https://api-web.nhle.com/v1/player/{pid}/landing')
+        bios[pid] = landing_bio(pid, document)
+        sources.append(audit)
     spec = importlib.util.spec_from_file_location('deep_cut_toi', ROOT / 'tools/deep_cut/toi.py')
     toi = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(toi)

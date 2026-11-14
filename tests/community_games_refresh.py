@@ -13,6 +13,41 @@ spec.loader.exec_module(refresh)
 
 
 class GridRefresh(unittest.TestCase):
+    def landing(self):
+        return {'playerId':8483442,'firstName':{'default':'Jagger'},'lastName':{'default':'Firkus'},
+                'position':'R','birthCountry':'CAN','birthDate':'2004-04-29','inHHOF':0,'careerTotals':{},
+                'seasonTotals':[{'leagueAbbrev':'NHL','gameTypeId':2,'season':20262027,'gamesPlayed':1},
+                                {'leagueAbbrev':'AHL','gameTypeId':2,'season':20262027,'gamesPlayed':10},
+                                {'leagueAbbrev':'NHL','gameTypeId':3,'season':20262027,'gamesPlayed':3}]}
+
+    def test_debut_bio_uses_official_identity_and_regular_season_nhl_games_only(self):
+        bio=refresh.landing_bio(8483442,self.landing())
+        self.assertEqual((bio['skaterFullName'],bio['gamesPlayed'],bio['birthCountryCode']),('Jagger Firkus',1,'CAN'))
+        self.assertEqual(bio['isInHallOfFameYn'],'N')
+        landing=self.landing();landing['careerTotals']={'regularSeason':{'gamesPlayed':12}}
+        landing['seasonTotals'].append(deepcopy(landing['seasonTotals'][0]))
+        self.assertEqual(refresh.landing_bio(8483442,landing)['gamesPlayed'],12,'Prefer explicit career totals when available')
+
+    def test_missing_or_ambiguous_landing_bios_cannot_invent_player_facts(self):
+        for change in [lambda r:r.update(playerId=1),lambda r:r.pop('inHHOF'),lambda r:r.update(seasonTotals=[]),
+                       lambda r:r['seasonTotals'].append(deepcopy(r['seasonTotals'][0])),lambda r:r['seasonTotals'][0].update(gamesPlayed=0),
+                       lambda r:r.update(birthCountry='unknown'),lambda r:r.update(birthDate='bad')]:
+            landing=self.landing();change(landing)
+            with self.assertRaises(ValueError):refresh.landing_bio(8483442,landing)
+
+    def test_refresh_fetches_and_audits_missing_bio_for_a_verified_debut(self):
+        bank={'team_cutoff':2025,'players':[[1,'Existing Player','C','CAN',1,False,2025,2025,{'SEA':1},2000]]};calls=[]
+        def fetch(name,url):
+            calls.append(url)
+            if '/landing' in url:document=self.landing()
+            elif '/skater/summary?' in url:document={'total':1,'data':[{'playerId':8483442,'seasonId':20262027,'gamesPlayed':1,'teamAbbrevs':'SEA','timeOnIcePerGame':698}]}
+            else:document={'total':0,'data':[]}
+            return document,{'url':url,'sha256':'0'*64}
+        snapshot=refresh.refresh(bank,date(2026,11,14),fetch)
+        self.assertEqual(len(calls),5);self.assertTrue(calls[-1].endswith('/player/8483442/landing'))
+        self.assertEqual(snapshot['players'][0][8],{'SEA':1});self.assertEqual(snapshot['players'][0][4],1)
+        self.assertTrue(any('/player/8483442/landing' in source['url'] for source in snapshot['sources']))
+
     def summary(self, teams='CGY', gp=6):
         return {'skater': {'total': 1, 'data': [{'playerId': 8483495,
             'seasonId': 20262027, 'gamesPlayed': gp, 'teamAbbrevs': teams}]}}
