@@ -1049,11 +1049,6 @@
   "team": "CAR",
   "number": 21
  },
- "8476422": {
-  "name": "Mike Reilly",
-  "team": "CAR",
-  "number": 6
- },
  "8476958": {
   "name": "Jaccob Slavin",
   "team": "CAR",
@@ -3633,6 +3628,11 @@
   "name": "Zeev Buium",
   "team": "VAN",
   "number": 8
+ },
+ "8480075": {
+  "name": "Cameron Crotty",
+  "team": "VAN",
+  "number": 51
  },
  "8479425": {
   "name": "Filip Hronek",
