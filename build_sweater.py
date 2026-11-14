@@ -3153,9 +3153,9 @@ TEMPLATE = r'''<!DOCTYPE html>
 
   .mobile-tools-nav { display: none; }
   @media (max-width: 700px) {
-    .navbar { z-index: 30; }
+    .navbar { z-index: 8; }
     #projectionsNav, #playoffsNav { display: none; }
-    .mobile-tools-nav { display: block; position: relative; margin-left: auto; flex: none; }
+    .mobile-tools-nav { display: block; position: static; margin-left: auto; flex: none; }
     .mobile-tools-nav > summary { display: flex; align-items: center; justify-content: center; gap: 7px;
       min-height: 44px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px;
       background: var(--panel); color: var(--fg); font-size: 12px; font-weight: 650; cursor: pointer; list-style: none; }
@@ -3165,7 +3165,7 @@ TEMPLATE = r'''<!DOCTYPE html>
     .mobile-tools-nav[open] > summary svg { transform: rotate(180deg); }
     .mobile-tools-nav :is(summary, a):focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
     body:is(.projections-mode, .playoffs-mode) .mobile-tools-nav > summary { color: var(--link); }
-    .mobile-tools-links { position: absolute; right: 0; top: calc(100% + 8px); z-index: 1;
+    .mobile-tools-links { position: absolute; right: 12px; top: calc(100% + 6px); z-index: 1;
       display: grid; gap: 3px; width: 224px; max-width: calc(100vw - 24px); padding: 5px;
       border: 1px solid var(--line); border-radius: 11px; background: var(--panel); box-shadow: 0 12px 30px #0003; }
     .mobile-tools-links a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 9px 10px;
@@ -9741,30 +9741,7 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) $("ws
 /*__PLAYOFFS_APP__*/
 /*__PLAYOFFS_DASHBOARD__*/
 
-/* Mobile tools navigation. */
-(() => {
-  const menu = $("mobileToolsNav"), trigger = menu.querySelector("summary");
-  const close = (focus = false) => { if (!menu.open) return; menu.open = false; if (focus) trigger.focus({ preventScroll: true }); };
-  menu.addEventListener("toggle", () => {
-    if (!menu.open) return;
-    menu.querySelectorAll("[data-nav-tool]").forEach(link => {
-      if ($(link.dataset.navTool + "Nav").getAttribute("aria-current") === "page") link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
-    });
-  });
-  menu.addEventListener("click", e => {
-    const link = e.target.closest("[data-nav-tool]");
-    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    e.preventDefault();
-    close(true);
-    $(link.dataset.navTool + "Nav").click();
-  });
-  document.addEventListener("pointerdown", e => { if (!menu.contains(e.target)) close(); }, { passive: true });
-  document.addEventListener("focusin", e => { if (!menu.contains(e.target)) close(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.open) { e.preventDefault(); e.stopPropagation(); close(true); } });
-  for (const event of ["resize", "popstate", "hashchange", "blur"]) window.addEventListener(event, () => close());
-})();
-/* End mobile tools navigation. */
+
 
 /*__DEEP_CUT_MODEL__*/
 /*__DEEP_CUT_SCENERY__*/
@@ -11509,6 +11486,31 @@ window.addEventListener("popstate", route);
 window.addEventListener("hashchange", route);
 $("backHub").onclick = () => showHub();
 $("homeLink").onclick = e => { e.preventDefault(); showHub(); };
+
+/* Mobile tools navigation. */
+(() => {
+  const menu = $("mobileToolsNav"), trigger = menu.querySelector("summary");
+  const close = (focus = false) => { if (!menu.open) return; menu.open = false; if (focus) trigger.focus({ preventScroll: true }); };
+  menu.addEventListener("toggle", () => {
+    if (!menu.open) return;
+    menu.querySelectorAll("[data-nav-tool]").forEach(link => {
+      if ($(link.dataset.navTool + "Nav").getAttribute("aria-current") === "page") link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  });
+  menu.addEventListener("click", e => {
+    const link = e.target.closest("[data-nav-tool]");
+    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    close(true);
+    $(link.dataset.navTool + "Nav").click();
+  });
+  document.addEventListener("pointerdown", e => { if (!menu.contains(e.target)) close(); }, { passive: true });
+  document.addEventListener("focusin", e => { if (!menu.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && menu.open) { e.preventDefault(); e.stopPropagation(); close(true); } });
+  for (const event of ["resize", "popstate", "hashchange", "blur"]) window.addEventListener(event, () => close());
+})();
+/* End mobile tools navigation. */
 
 // game pickers inside the stats, leaderboard and archive windows
 function gameOptions(selected, archiveOnly = false) {
