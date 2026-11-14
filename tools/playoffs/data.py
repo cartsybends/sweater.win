@@ -171,7 +171,9 @@ def main():
     context=availability(data['teams'],fetch,now)
     context['goalie_stats']=goalie_statistics(data['season'],datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z'))
     now=datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
-    reports,starter_feed=starter_reports(data['games'],context['rosters'],old,now)
+    reports,starter_feed=starter_reports(data['games'],context['rosters'],old,now,injuries=context['injuries'])
+    from starter_rss import enrich_injuries
+    enrich_injuries(context['injuries'],starter_feed,now)
     engine=Engine(data,history,inputs,context,reports,now)
     params=engine.parameters
     signature=model_signature(data,params,args.simulations,engine)

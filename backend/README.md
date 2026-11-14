@@ -251,12 +251,28 @@ privacy preferences, attribution, round restoration, timing, and network retries
 Injured players can use the portrait URL explicitly supplied by ESPN, including
 players omitted from the current NHL roster. URLs are restricted to ESPN's NHL
 headshot CDN, with NHL portraits and silhouettes as fallbacks. Availability
-badges align to the whole name/return-date row. Scheduled times sit between the
-team headings. Live matchups use a red LIVE indicator; reduced-motion settings
+badges align to the whole name/return-date row. Scheduled time/status groups are
+centered across both full team/goalie blocks. Live matchups use a red LIVE indicator; reduced-motion settings
 keep it static. Intermission includes an original ice-resurfacer SVG.
 
 NHL's season goalie leader endpoint supplies the top-three SV% and GAA ranks.
 A medal is shown only when the displayed statistic matches that leader's value.
+Metallic badges include a rank number; gold has a slow sheen that stops with
+reduced motion enabled.
 Saved numeric pregame stats and predictions remain fixed. The League board pins
-only its separate logo column; on mobile the Games matchup scrolls normally so
-it cannot cover the statistics.
+only its separate logo column. Selecting a team opens its breakdown at the top
+of the page. Mobile Games uses cards with team-aligned win chances, moneylines,
+scores and status; starting goalies, additional game stats and availability
+remain available in disclosures. Live checks update both layouts without
+closing those disclosures. The mobile circle uses a compact readout below the
+chart, with an explicit dismiss button; the desktop hover tooltip is unchanged.
+
+Injury reasons and status observations come from ESPN. Status badges link to a
+matching RotoWire public RSS report when observed, otherwise to the explicit
+ESPN player-news URL. RSS injury links share the existing starter-news request
+and ten-minute cache; no extra polling or paid credentials are needed. Only
+unambiguous player names, source URLs and publication times are retained, not
+article prose. Links survive feed rolloff only while the same injury episode
+remains listed, and expire after thirty days. Recovery/activation headlines are
+not treated as absence reports. RotoWire's short public feed is not a complete
+injury archive; the full injury-report page requires an account.

@@ -10,7 +10,7 @@ const poDelta=n=>n===null||n===undefined?'—':Math.abs(n)<.05?'0.0':(n>0?'↑ '
 function poSnapshot(){const t=poCurrent();return t?poModel.snapshot({v:1,team:t.abbr,name:t.name,start:poShared?.start||poData.start,at:poShared?.at||poData.updated_at,gp:t.gp,points:t.points,projected:t.projected_points,n:poShared?.n||poData.simulations,odds:t.odds}):null;}
 function poCloseShare(focus=false){$('poShareMenu').hidden=true;$('poShareToggle').setAttribute('aria-expanded','false');if(focus)$('poShareToggle').focus();}
 function poDropShared(){poShared=null;poSharedHash='';if(location.hash.startsWith('#playoffs?'))history.replaceState(null,'','#playoffs');}
-function poPick(team){if(!poModel.clubs.has(team))return;poDropShared();poTeam=team;poTab='team';store.set('sweater-playoffs',{team});poRender();}
+function poPick(team){if(!poModel.clubs.has(team))return;poDropShared();poTeam=team;poTab='team';store.set('sweater-playoffs',{team});poRender();window.scrollTo({top:0,behavior:'instant'});}
 function poOpenShared(){
  if(!location.hash.startsWith('#playoffs?')){poShared=null;poSharedHash='';return;}
  if(poSharedHash===location.hash){poTab='team';return;}

@@ -103,7 +103,7 @@ def search_batches(sources, rosters):
     return search_batches(sources[:middle],rosters)+search_batches(sources[middle:],rosters)
 
 
-def collect(games, rosters, old, now):
+def collect(games, rosters, old, now, injuries=None):
     at=datetime.fromisoformat(now.replace('Z','+00:00'))
     future=[g for g in games if 0<(datetime.fromisoformat(g['start'].replace('Z','+00:00'))-at).total_seconds()<=129600]
     index={g['id']:g for g in future};reports=[]
@@ -121,7 +121,7 @@ def collect(games, rosters, old, now):
         raise ValueError('Unknown starter report source')
     if mode=='rss':
         from starter_rss import collect as collect_rss
-        fresh,meta=collect_rss(future,rosters,old,now)
+        fresh,meta=collect_rss(future,rosters,old,now,injuries=injuries)
         return select_reports(reports+fresh),meta
     if mode=='manual':
         return select_reports(reports),{'source':'manual','status':'manual','checked_at':None,'requests':0,'x_requests':0}
