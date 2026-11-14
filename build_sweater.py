@@ -3804,7 +3804,7 @@ TEMPLATE = r'''<!DOCTYPE html>
   </section>
 
   <footer class="foot"><span id="foot"></span>
-    <small>Playoff Picture advanced hockey data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener">MoneyPuck.com</a> · Sportsbook quotes and injury reports via <a href="https://www.espn.com/nhl/" target="_blank" rel="noopener">ESPN</a>.</small>
+    <small>Playoff Picture advanced hockey data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener">MoneyPuck.com</a> · Sportsbook quotes and injury reports via <a href="https://www.espn.com/nhl/" target="_blank" rel="noopener">ESPN</a> · Starter news via <a href="https://www.rotowire.com/rss/" target="_blank" rel="noopener">RotoWire RSS</a>.</small>
     <small class="creator">Sweater was made by <strong>Carter George</strong>. Questions or inquiries? Reach out at <a href="mailto:1epiccarter1@gmail.com">1epiccarter1@gmail.com</a>.</small>
     <small>Sweater is a fan-made game and is not affiliated with or endorsed by the NHL or its teams. NHL, team names, logos and player images are the property of the NHL and its teams.</small>
   </footer>
@@ -13802,6 +13802,22 @@ def copy_community_logos(out_dir):
         if hashlib.sha256(path.read_bytes()).hexdigest() != r["sha256"]:
             raise ValueError("A community crest differs from its official vector source")
         shutil.copy2(path, destination / r["file"])
+    # Dashboard crests keep the official vector paths and trim only the canvas.
+    bounds = json.loads((HERE / "static/playoffs/crest-bounds.json").read_text())
+    if bounds.get("version") != 1 or set(bounds["teams"]) != set(TEAMS):
+        raise ValueError("Dashboard crest bounds must cover all NHL clubs")
+    destination = out_dir / "team-crests"
+    destination.mkdir(parents=True, exist_ok=True)
+    for r in rows:
+        entry = bounds["teams"][r["team"]]
+        box = entry["viewBox"]
+        if entry["source_sha256"] != r["sha256"] or len(box) != 4 or not all(type(v) is int for v in box) or not (0 <= box[0] < 960 and 0 <= box[1] < 640 and 0 < box[2] <= 960 and 0 < box[3] <= 640 and box[0]+box[2] <= 960 and box[1]+box[3] <= 640):
+            raise ValueError("Dashboard crest bounds do not match the official source")
+        original = (source / "logos" / r["file"]).read_text()
+        cropped, count = re.subn(r'viewBox="[^"]+"', 'viewBox="' + ' '.join(map(str, box)) + '"', original, count=1)
+        if count != 1:
+            raise ValueError("Official vector crest has no viewBox")
+        (destination / r["file"]).write_text(cropped)
     flags = json.loads((source / "flags.json").read_text())
     if {r["country"] for r in flags} != {"ca", "us", "se", "fi"} or len(flags) != 4:
         raise ValueError("Grid flags must cover its four birth-country clues")

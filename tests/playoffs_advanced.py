@@ -81,6 +81,7 @@ class Markets(unittest.TestCase):
 
 class StarterReports(unittest.TestCase):
     def setUp(self):
+        mode=patch.dict('os.environ',{'STARTER_REPORT_SOURCE':'x'});mode.start();self.addCleanup(mode.stop)
         _,_,self.availability=fixture();self.rosters=self.availability['rosters'];self.source={'handle':'vzmercogliano','name':'Vince Mercogliano','teams':['NYR']}
 
     def post(self,text):

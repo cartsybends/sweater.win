@@ -14,6 +14,10 @@ SOURCES=Path(__file__).with_name('starter_sources.json')
 REPORTS=Path(__file__).with_name('starter_reports.json')
 
 
+def valid_source_url(url):
+    return isinstance(url,str) and re.fullmatch(r'https://(?:(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+|www\.rotowire\.com/hockey/player/[a-z0-9-]+-\d+)',url) is not None
+
+
 def valid_report(report, game, rosters, now):
     try:
         at=datetime.fromisoformat(report['reported_at'].replace('Z','+00:00'))
@@ -23,7 +27,8 @@ def valid_report(report, game, rosters, now):
                 and report['status'] in {'confirmed','likely','conflicting','not_starting'}
                 and report['player_id'] in {p['id'] for p in rosters.get(report['team'],[]) if p['position']=='goalies'}
                 and start-timedelta(hours=36)<=at<start and at<=observed+timedelta(minutes=5)
-                and re.fullmatch(r'https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/\d+',report['source_url']) is not None
+                and valid_source_url(report['source_url'])
+                and (not report.get('game_start') or report['game_start']==game['start'])
                 and isinstance(report['author'],str) and 0<len(report['author'])<80)
     except (KeyError,TypeError,ValueError):
         return False
@@ -54,8 +59,8 @@ def parse_post(post, author, source, games, rosters):
                     if last not in words:
                         continue
                     negative=bool(re.search(r"\b(will not start|won't start|is not starting|isn't starting|not starting|scratched)\b",clause,re.I))
-                    uncertain=bool(re.search(r'\b(expected|likely|projected|probable|could|might|may|crease|morning skate)\b',clause,re.I))
-                    explicit=bool(re.search(r"\b(will start|(?:gets|will get) the (?:start|nod)|will be in (?:goal|net)|starting (?:goalie|goaltender)|confirmed (?:starter|to start|in goal|in net)|starts (?:tonight|today|tomorrow)|tonight.s starter|today.s starter)\b",clause,re.I))
+                    uncertain=bool(re.search(r'\b(expected|likely|projected|probable|slated|slotted|scheduled|should|could|might|may|morning skate|first goalie off)\b',clause,re.I))
+                    explicit=bool(re.search(r"\b(will start|(?:gets|will get|will draw|will receive) (?:the )?(?:starting )?(?:start|nod)|will be in (?:goal|net)|will (?:guard|defend) (?:the )?(?:home |road |away |visiting )?(?:goal|net|crease)|will be between the pipes|starting (?:goalie|goaltender)|confirmed (?:starter|to start|in goal|in net)|starts (?:tonight|today|tomorrow)|tonight.s starter|today.s starter)\b",clause,re.I))
                     if not explicit and not uncertain and not negative:
                         continue
                     # An untimed report applies only to the next game within 24 hours.
@@ -111,6 +116,15 @@ def collect(games, rosters, old, now):
         for r in json.loads(REPORTS.read_text()).get('reports',[]):
             if r.get('game_id') in index and valid_report(r,index[r['game_id']],rosters,now):
                 reports.append(r)
+    mode=os.environ.get('STARTER_REPORT_SOURCE','rss')
+    if mode not in {'rss','x','manual'}:
+        raise ValueError('Unknown starter report source')
+    if mode=='rss':
+        from starter_rss import collect as collect_rss
+        fresh,meta=collect_rss(future,rosters,old,now)
+        return select_reports(reports+fresh),meta
+    if mode=='manual':
+        return select_reports(reports),{'source':'manual','status':'manual','checked_at':None,'requests':0,'x_requests':0}
     token=os.environ.get('X_BEARER_TOKEN','');state='not_configured';cursors=dict(old.get('starter_feed',{}).get('cursors',{}));requests=0
     try:
         daily_limit=max(0,min(10000,int(os.environ.get('X_MAX_POSTS_PER_DAY','0'))))
@@ -154,7 +168,11 @@ def collect(games, rosters, old, now):
                 state='unavailable'
     elif token and daily_limit:
         state=old.get('starter_feed',{}).get('status','waiting')
-    unique={(r['game_id'],r['team'],r['source_url'],r['player_id']):r for r in reports}
+    return select_reports(reports),{'source':'X','status':state,'checked_at':now if token and daily_limit and due else last,'cursors':cursors,'requests':requests,'x_requests':requests,'usage_day':now[:10],'posts_read':posts_read,'daily_read_cap':daily_limit}
+
+
+def select_reports(reports):
+    unique={(r['game_id'],r['team'],r['source_url'],r['player_id'],r['reported_at']):r for r in reports}
     chosen={}
     for r in sorted(unique.values(),key=lambda r:(r['reported_at'],{'not_starting':0,'likely':1,'conflicting':2,'confirmed':3}[r['status']])):
         key=(r['game_id'],r['team']);previous=chosen.get(key)
@@ -163,4 +181,4 @@ def collect(games, rosters, old, now):
         if previous and previous['status']=='confirmed' and r['status']=='likely':
             continue
         chosen[key]=r
-    return chosen,{'status':state,'checked_at':now if token and daily_limit and due else last,'cursors':cursors,'requests':requests,'usage_day':now[:10],'posts_read':posts_read,'daily_read_cap':daily_limit}
+    return chosen
