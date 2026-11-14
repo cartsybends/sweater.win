@@ -112,7 +112,7 @@
 .po-scheduled-time>span,.po-scheduled-time>.po-game-basis{position:static;transform:none;margin:0}
 
 /* Qualified NHL leaders get an unmistakable metal badge. */
-.po-goalie-stats .po-goalie-medal{position:relative;isolation:isolate;overflow:hidden;padding:3px 6px;gap:4px;border:1px solid var(--po-medal-edge);border-radius:5px;background:var(--po-medal-bg);color:var(--po-medal-ink);font-weight:750;box-shadow:inset 0 1px 0 #ffffff38;line-height:1.4}
+.po-goalie-stats .po-goalie-medal{position:relative;isolation:isolate;overflow:hidden;padding:1px 4px;gap:3px;border:1px solid var(--po-medal-edge);border-radius:4px;background:var(--po-medal-bg);color:var(--po-medal-ink);font-weight:750;box-shadow:inset 0 1px 0 #ffffff38;line-height:1.4}
 .po-goalie-stats .po-goalie-medal :is(small,b){background:none;-webkit-text-fill-color:currentColor;color:inherit;font-weight:750}
 .po-goalie-medal.po-medal-gold{--po-medal-bg:linear-gradient(125deg,#fff2af,#efc24b);--po-medal-edge:#bd8d20;--po-medal-ink:#684000}
 .po-goalie-medal.po-medal-silver{--po-medal-bg:linear-gradient(125deg,#f4f7fb,#c5d0dc);--po-medal-edge:#8b9bad;--po-medal-ink:#304457}
@@ -120,7 +120,6 @@
 :root[data-theme="dark"] .po-goalie-medal.po-medal-gold{--po-medal-bg:linear-gradient(125deg,#63430d,#88651c);--po-medal-edge:#e4b746;--po-medal-ink:#ffe794;box-shadow:inset 0 1px 0 #fff1af40,0 0 9px #e7b64214}
 :root[data-theme="dark"] .po-goalie-medal.po-medal-silver{--po-medal-bg:linear-gradient(125deg,#344253,#566579);--po-medal-edge:#aebed1;--po-medal-ink:#f1f6ff}
 :root[data-theme="dark"] .po-goalie-medal.po-medal-bronze{--po-medal-bg:linear-gradient(125deg,#613e27,#8c5938);--po-medal-edge:#dba171;--po-medal-ink:#ffdbba}
-.po-medal-rank{display:inline-grid;place-items:center;width:13px;height:13px;border:1px solid currentColor;border-radius:50%;font-size:8px;font-weight:850;font-style:normal;line-height:1;flex:none}
 .po-medal-gold:after{content:"";position:absolute;inset:-8px;pointer-events:none;background:linear-gradient(105deg,transparent 30%,#fff8ce50 48%,transparent 66%);transform:translateX(-140%);animation:po-gold-sheen 5.5s ease-in-out infinite}
 @keyframes po-gold-sheen{0%,55%{transform:translateX(-140%)}82%,100%{transform:translateX(140%)}}
 @media(prefers-reduced-motion:reduce){.po-medal-gold:after{animation:none;display:none}}

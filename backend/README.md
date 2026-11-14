@@ -257,8 +257,8 @@ keep it static. Intermission includes an original ice-resurfacer SVG.
 
 NHL's season goalie leader endpoint supplies the top-three SV% and GAA ranks.
 A medal is shown only when the displayed statistic matches that leader's value.
-Metallic badges include a rank number; gold has a slow sheen that stops with
-reduced motion enabled.
+Compact metallic badges identify rank by color; gold has a slow sheen that
+stops with reduced motion enabled.
 Saved numeric pregame stats and predictions remain fixed. The League board pins
 only its separate logo column. Selecting a team opens its breakdown at the top
 of the page. Mobile Games uses cards with team-aligned win chances, moneylines,
