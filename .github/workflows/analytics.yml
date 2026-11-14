@@ -47,6 +47,7 @@ jobs:
       - run: node tests/playoff_refresh.mjs
       - run: node tests/playoff_refresh_runtime.mjs
       - run: node tests/playoffs_live.mjs
+      - run: node tests/playoffs_live_history.mjs
       - run: node tests/playoffs_live_runtime.mjs
       - run: node tests/community_games.mjs
       - run: node tests/face_swap.mjs

@@ -213,6 +213,30 @@ class AdvancedModel(unittest.TestCase):
 
 
 class AvailabilityAndEvaluation(unittest.TestCase):
+    def test_injured_players_keep_source_portraits_without_current_roster_ids(self):
+        people=[('Dylan Larkin','3114755','Detroit Red Wings'),('Max Domi','3042014','Toronto Maple Leafs')]
+        raw={'timestamp':NOW,'injuries':[{'displayName':team,'injuries':[{'status':'Out','athlete':{'displayName':name,'headshot':{'href':f'https://a.espncdn.com/i/headshots/nhl/players/full/{pid}.png'}}}]} for name,pid,team in people]}
+        def fetch(url):
+            if url==A.INJURY_URL:return raw
+            return {'forwards':[],'defensemen':[],'goalies':[{'id':123,'firstName':{'default':'Test'},'lastName':{'default':'Goalie'}}]}
+        with tempfile.TemporaryDirectory() as folder,patch.object(A,'CACHE',Path(folder)):
+            result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
+            for team,pid in [('DET','3114755'),('TOR','3042014')]:
+                player=result['injuries'][team][0];self.assertIsNone(player['player_id']);self.assertTrue(player['portrait_url'].endswith(pid+'.png'))
+            raw['injuries'][0]['injuries'][0]['athlete']['headshot']={'href':'https://untrusted.example/head.png'}
+            result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
+            self.assertEqual(result['status'],'reported');self.assertNotIn('portrait_url',result['injuries']['DET'][0])
+
+    def test_goalie_medals_use_official_leader_identity_and_matching_totals(self):
+        rows=[{'playerId':1000+i,'seasonId':20262027,'gamesPlayed':10,'gamesStarted':9,'savePct':sv,'goalsAgainstAverage':gaa} for i,(sv,gaa) in enumerate([(.938,1.52),(.926,2.13),(.925,2.2)])]
+        leaders={'savePctg':[{'id':r['playerId'],'value':r['savePct']} for r in rows],'goalsAgainstAverage':[{'id':r['playerId'],'value':r['goalsAgainstAverage']} for r in rows]}
+        with tempfile.TemporaryDirectory() as folder,patch.object(A,'CACHE',Path(folder)):
+            stats=A.goalie_statistics(20262027,NOW,lambda url:leaders if '/goalie-stats-leaders/' in url else {'data':rows,'total':3})
+            for i in range(3):self.assertEqual(stats['players'][1000+i]['ranks'],{'sv':i+1,'gaa':i+1})
+            leaders['savePctg'][0]['value']=.999
+            stats=A.goalie_statistics(20262027,NOW,lambda url:leaders if '/goalie-stats-leaders/' in url else {'data':rows,'total':3})
+            self.assertNotIn('sv',stats['players'][1000]['ranks'],'A newer, mismatched leaderboard must not label older totals')
+
     def test_official_goalie_totals_match_identity_and_cache_during_outage(self):
         row={'playerId':1000,'seasonId':20262027,'gamesPlayed':13,'gamesStarted':12,'savePct':.91815,'goalsAgainstAverage':2.42322}
         with tempfile.TemporaryDirectory() as folder,patch.object(A,'CACHE',Path(folder)):

@@ -87,6 +87,12 @@ for(const mutate of [s=>delete s.pickcenter[0].moneyline.home.live,s=>s.pickcent
 }
 const suspended=summary();suspended.pickcenter[0].moneyline.home.live.odds='OFF';const off=parseLiveMarket(suspended,game,at);assert.equal(off.status,'suspended');assert.equal(off.home,undefined);assert.equal(off.away,undefined);
 const offFeed={...payload,games:[{...snapshot,market:off}]};assert(M.liveFeed(offFeed,[game],now));
+for(const quote of [{...market,basis:'live'},{...game.market,basis:'pregame'}]){
+ const saved=structuredClone(offFeed);saved.games[0].market.last_quote=quote;assert(M.liveFeed(saved,[game],now));
+ for(const change of [q=>q.home=0,q=>q.provider='Other book',q=>q.observed_at='2026-11-10T00:00:00Z',q=>q.basis=q.basis==='live'?'pregame':'live']){
+  const invalid=structuredClone(saved);change(invalid.games[0].market.last_quote);assert.equal(M.liveFeed(invalid,[game],now),null,'Retained prices require the correct source, time and pregame/live basis');
+ }
+}
 const lookup=[];const getter=async url=>{lookup.push(url);return {data:url.includes('scoreboard?')?{events:[{id:'401892706',competitions:summary().header.competitions}]}:summary(),observed_at:at};};
 assert.equal((await collectLiveMarket({...game,market:undefined},getter,'2026-11-13',at)).home,310);assert.equal(lookup.length,2);assert(lookup[0].includes('dates=20261113'));
 assert(matchesMarketGame(summary().header,game));

@@ -3,8 +3,9 @@ import {readFile} from 'node:fs/promises';
 import {Miniflare,convertV4MiniflareOptions} from '../backend/node_modules/miniflare/dist/src/index.js';
 const model=await readFile(new URL('../backend/src/playoff-live-model.mjs',import.meta.url),'utf8');
 const market=await readFile(new URL('../backend/src/playoff-live-market.mjs',import.meta.url),'utf8');
+const history=await readFile(new URL('../backend/src/market-history.mjs',import.meta.url),'utf8');
 const handler=(await readFile(new URL('../backend/src/playoff-live.mjs',import.meta.url),'utf8')).replace(/^import .*\n/gm,'');
-const runtime=new Miniflare(convertV4MiniflareOptions({modules:true,compatibilityDate:'2026-10-12',cf:false,script:model+'\n'+market+'\n'+handler+`
+const runtime=new Miniflare(convertV4MiniflareOptions({modules:true,compatibilityDate:'2026-10-12',cf:false,script:model+'\n'+market+'\n'+history+'\n'+handler+`
  let fetchCalls=0;
  export default {async fetch(request){
  const start='2026-11-14T02:00:00Z',now=Date.parse('2026-11-14T02:30:00Z');

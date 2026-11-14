@@ -1,5 +1,6 @@
 import {liveSnapshot} from './playoff-live-model.mjs';
 import {collectLiveMarket} from './playoff-live-market.mjs';
+import {retainMarketQuote} from './market-history.mjs';
 
 const FEED='https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json';
 const SCORE='https://api-web.nhle.com/v1/score/';
@@ -39,7 +40,7 @@ export async function handlePlayoffLive(request,env,ctx,{fetcher=fetch,cache=glo
    }
    // A slow bookmaker source must not consume the live model's response window.
    const marketDeadline=Date.now()+2500,marketGet=(address,ttl)=>get(address,ttl,Math.max(1,marketDeadline-Date.now()));
-   await Promise.all(games.filter(g=>['LIVE','CRIT'].includes(g.state)).map(async g=>{g.market=await collectLiveMarket(baseline.get(g.id),marketGet,date,at);}));
+   await Promise.all(games.filter(g=>['LIVE','CRIT'].includes(g.state)).map(async g=>{const game=baseline.get(g.id),market=await collectLiveMarket(game,marketGet,date,at);g.market=await retainMarketQuote(game,market,env,{cache,now});}));
    const data={version:1,checked_at:at,refresh_seconds:30,games};
    if(cache)await cache.put(key,Response.json(data,{headers:{'Cache-Control':'public,max-age=30'}}));
    return data;

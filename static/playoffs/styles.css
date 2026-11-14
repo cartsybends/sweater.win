@@ -63,3 +63,46 @@
 
 .po-live-badge.po-market-suspended{color:#a7650e}
 :root[data-theme="dark"] .po-live-badge.po-market-suspended{color:#e9b95b}
+
+/* Availability badges belong to the whole player/return row. */
+.po-injury-list li{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:9px}
+.po-injury-list li>.po-injury-copy{display:block}
+.po-injury-copy>strong{display:block}
+.po-injury-status{align-self:center}
+.po-game-team{min-height:54px}
+.po-scheduled-time{height:calc(var(--po-game-team-height) + 12px + 54px);position:relative;white-space:nowrap;font-size:13px}
+.po-scheduled-time>span{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.po-scheduled-time>.po-game-basis{position:absolute;right:0;top:calc(50% + 12px);margin:0}
+.po-goalie-medal{--po-metal:#835e00;--po-shine:#bd8c23;color:var(--po-metal)}
+.po-medal-silver{--po-metal:#536474;--po-shine:#8296a5}
+.po-medal-bronze{--po-metal:#89512d;--po-shine:#b97c4f}
+.po-goalie-stats .po-goalie-medal :is(small,b){color:var(--po-metal);background:linear-gradient(120deg,var(--po-metal) 12%,var(--po-shine) 42%,var(--po-metal) 70%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+:root[data-theme="dark"] .po-goalie-medal{--po-metal:#d0a53d;--po-shine:#fff0b3}
+:root[data-theme="dark"] .po-medal-silver{--po-metal:#a6b6c4;--po-shine:#f4fbff}
+:root[data-theme="dark"] .po-medal-bronze{--po-metal:#bb845d;--po-shine:#f1c9a8}
+.po-table-wrap{overflow-x:auto;min-width:0;-webkit-overflow-scrolling:touch;touch-action:auto;overscroll-behavior-x:contain}
+@media(max-width:700px){
+ .po-games-table td:first-child,.po-games-table th:first-child{position:static;left:auto;z-index:auto}
+ .po-games-table td:first-child{min-width:280px}
+ .po-table-wrap{scroll-padding-inline-start:0}
+}
+
+/* Only the crest is pinned; team names travel with the league's statistics. */
+.po-table th:first-child,.po-table td:first-child{width:74px;min-width:74px;max-width:74px;padding-left:10px;padding-right:10px;position:sticky;left:0;z-index:2;background:var(--panel)}
+.po-table th.po-logo-head{z-index:3}
+.po-table .po-logo-button{justify-content:center}
+.po-table .po-name-cell,.po-table .po-team-head{text-align:left;position:static;min-width:190px}
+@media(max-width:540px){
+ .po-table th:first-child,.po-table td:first-child{width:56px;min-width:56px;max-width:56px;padding-left:7px;padding-right:7px}
+ .po-table .po-name-cell,.po-table .po-team-head{min-width:155px}
+}
+
+.po-live-match{display:inline-flex;align-items:center;gap:6px;color:#c72d40;font-size:12px;font-weight:800;letter-spacing:.08em;animation:po-live-blink 1.6s ease-in-out infinite}
+.po-live-match:before{content:"";display:block;width:6px;height:6px;flex:none;border-radius:50%;background:currentColor}
+:root[data-theme="dark"] .po-live-match{color:#ff7885}
+@keyframes po-live-blink{0%,100%{opacity:1}50%{opacity:.35}}
+.po-period-status{white-space:nowrap}
+.po-period-status strong{font-size:12px;font-weight:800;color:var(--fg)}
+.po-intermission-label{display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.po-intermission-icon{width:27px;height:20px;flex:none;color:var(--fg)}
+@media(prefers-reduced-motion:reduce){.po-live-match{animation:none}}
