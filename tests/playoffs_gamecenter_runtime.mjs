@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {Miniflare,convertV4MiniflareOptions} from '../backend/node_modules/miniflare/dist/src/index.js';
 import {fixture} from './fixtures/gamecenter.mjs';
 const {g,raw,at}=fixture();let source='';
-for(const name of ['playoff-live-model','shot-model','shot-quality','game-center-model','game-center'])source+=(await readFile(new URL('../backend/src/'+name+'.mjs',import.meta.url),'utf8')).replace(/^import .*\n/gm,'')+'\n';
+for(const name of ['nhl-clock','penalty-rates','penalty-state','penalty-forecast','playoff-live-model','shot-model','shot-quality','game-center-model','game-center'])source+=(await readFile(new URL('../backend/src/'+name+'.mjs',import.meta.url),'utf8')).replace(/^import .*\n/gm,'')+'\n';
 source+=`let requests=0;const baseline=${JSON.stringify(g)},raw=${JSON.stringify(raw)},at=${JSON.stringify(at)};
 export default {async fetch(request){const response=await handleGameCenter(request,{},null,{now:Date.parse(at),fetcher:async(url,options)=>{new Request(url,options);requests++;return Response.json(url.includes('raw.githubusercontent')?{checked_at:at,games:[baseline]}:raw);}});return Response.json({data:await response.json(),upstream_requests:requests},{status:response.status,headers:{'Access-Control-Allow-Origin':response.headers.get('Access-Control-Allow-Origin')||''}});}};`;
 const runtime=new Miniflare(convertV4MiniflareOptions({modules:true,compatibilityDate:'2026-10-12',cf:false,script:source}));

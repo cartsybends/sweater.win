@@ -101,3 +101,10 @@
 @media(max-width:600px){.po-gc-zoom button{min-width:42px;min-height:42px}.po-gc-zoom{font-size:11px}.po-gc-rink-viewport{border-radius:10px}}
 .po-gc-chart .po-gc-ref{width:22px;height:22px;overflow:visible}
 .po-gc-shot-list .po-gc-goal-assists{margin-top:5px;font-size:11px;line-height:1.7;color:var(--fg);opacity:.8}
+
+.po-gc-market .po-market-attribution,.po-gc-market .po-game-basis{text-align:center}
+.po-gc-market .po-market-time{font-size:11px;margin-top:5px}
+.po-gc-chart{height:330px}
+.po-gc-chart .po-gc-minute-tick{font-size:10px}
+.po-gc-chart .po-gc-axis-caption{font-size:10px}
+@media(max-width:600px){.po-gc-chart{height:290px}.po-gc-chart .po-gc-minute-tick{font-size:9px}.po-gc-chart .po-gc-axis-caption{font-size:9px}}
