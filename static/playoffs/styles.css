@@ -207,3 +207,14 @@
  .po-circle-mobile-readout>strong{font-size:20px}
  .po-circle-mobile-readout>div>button{font-size:11px}
 }
+
+/* Centre the source and its timestamp under the market column. */
+.po-games-table td.po-market-cell,.po-games-table th:nth-child(4){text-align:center}
+.po-market-cell .po-game-pair>span{text-align:center}
+.po-market-attribution{display:block;text-align:center}
+.po-market-attribution .po-market-source{display:inline-block;width:auto}
+.po-market-time{display:block;margin-top:4px;font-size:11px;line-height:1.6;font-weight:400;color:var(--muted);white-space:normal}
+.po-market-cell>.po-game-basis{text-align:center}
+.po-card-market-note{align-items:center;text-align:center}
+.po-card-market-note>.po-game-basis{text-align:center}
+@media(max-width:700px){.po-card-metrics>div:nth-child(3)>small,.po-game-card .po-market-cell{text-align:center}.po-card-market-note{align-items:center;text-align:center}.po-card-market-note>.po-game-basis{text-align:center}.po-market-time{font-size:10px}}

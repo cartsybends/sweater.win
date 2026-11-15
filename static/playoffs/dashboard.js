@@ -20,7 +20,7 @@ function poGameWin(g,part='all'){
   const values=available?poGamePair(poModel.percent(s.away_win),poModel.percent(s.home_win)):poGamePair('—','—');
   const label=available?delayed?'DELAYED':'LIVE':s?.reason==='shootout'?'SHOOTOUT':'LIVE UNAVAILABLE';
   const at=available?`As of ${new Date(s.at).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',second:'2-digit'})}`:s?.reason==='shootout'?'Awaiting the shootout result':'Waiting for score and clock data';
-  const note=`<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}">${label}</span><span class="po-live-time">${esc(at)}</span></small>`;
+  const note=`<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}">${label}</span><span class="po-live-time">${esc(at)}${s?.model==='sweater-live-v1'?' · Penalty feed unavailable; score/clock estimate':''}</span></small>`;
   return part==='prices'?values:part==='note'?note:values+note;
  }
  const values=poGamePair(poModel.percent(g.prediction.away_win),poModel.percent(g.prediction.home_win)),note='<small class="po-game-basis">Pregame</small>';
@@ -70,7 +70,7 @@ async function poUpdateLive(force=false){
  if(poLiveBusy||!force&&Date.now()-poLiveAttempt<30000)return;
  poLiveAttempt=Date.now();poLiveBusy=true;const request=++poLiveRequest,controller=new AbortController();poLiveController=controller;const timeout=setTimeout(()=>controller.abort(),12000);
  try{
-  const feeds=await Promise.all(dates.map(async date=>{const response=await fetch((API_ON?API:'https://api.sweater.win')+'/api/playoffs/live?date='+date,{credentials:'omit',cache:'no-store',signal:controller.signal});if(!response.ok)throw Error();const data=poModel.liveFeed(await response.json(),poData.games);if(!data)throw Error();return data;}));
+  const feeds=await Promise.all(dates.map(async date=>{const response=await fetch((API_ON?API:'https://api.sweater.win')+'/api/playoffs/live?date='+date+'&penalties=1',{credentials:'omit',cache:'no-store',signal:controller.signal});if(!response.ok)throw Error();const data=poModel.liveFeed(await response.json(),poData.games);if(!data)throw Error();return data;}));
   if(request!==poLiveRequest)return;
   for(const feed of feeds)for(const s of feed.games){const previous=poLiveGames.get(s.id);if(!previous||Date.parse(s.at)>=Date.parse(previous.at))poLiveGames.set(s.id,s);}
   const known=new Set(poData.games.map(g=>g.id));for(const id of poLiveGames.keys())if(!known.has(id))poLiveGames.delete(id);
@@ -86,14 +86,14 @@ function poMarketMoneyline(g,part='all'){
   const pre=g.market?.provider==='DraftKings'?{...g.market,basis:'pregame'}:null,q=available?m:m?.last_quote||pre;
   const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),prices=q?poGamePair(number(q.away),number(q.home),'po-market-prices'):poGamePair('—','—','po-market-prices');
   const label=delayed?'DELAYED':available?'LIVE':m?.status==='suspended'?'SUSPENDED':q?'LAST QUOTE':'UNAVAILABLE';
-  const href=q?.source_url||m?.source_url||g.market?.source_url,source=href?`<div class="po-market-attribution"><a class="po-market-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${q||m?.source_url?'DraftKings via ESPN':'ESPN game'}</a></div>`:'';
-  const shownAt=q?.observed_at||m?.observed_at,time=shownAt?`${available?'Checked':q?.basis==='pregame'?'Pregame line':q?'Last live quote':'Checked'} · ${poDate(shownAt)}`:'Live DraftKings quote unavailable';
-  const note=`${source}<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}${!delayed&&m?.status==='suspended'?' po-market-suspended':''}">${label}</span><span class="po-live-time">${esc(time)}</span></small>`;
+  const href=q?.source_url||m?.source_url||g.market?.source_url,shownAt=q?.observed_at||m?.observed_at;
+  const source=href?`<div class="po-market-attribution"><a class="po-market-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${q||m?.source_url?'DraftKings via ESPN':'ESPN game'}</a>${shownAt?`<time class="po-market-time" datetime="${esc(shownAt)}">${esc(poDate(shownAt))}</time>`:''}</div>`:'';
+  const note=`${source}<small class="po-game-basis"><span class="po-live-badge${delayed||!available?' po-live-delayed':''}${!delayed&&m?.status==='suspended'?' po-market-suspended':''}">${label}</span>${!shownAt?'<span class="po-live-time">Live DraftKings quote unavailable</span>':''}</small>`;
   return part==='prices'?prices:part==='note'?note:prices+note;
  }
  const m=g.market;if(!m)return part==='prices'?poGamePair('—','—'):part==='note'?'<small class="po-game-basis">Sportsbook quote unavailable</small>':'<span class="po-market-unavailable">Unavailable</span>';
  const number=n=>(n>0?'+':'−')+Math.abs(n).toLocaleString(),past=Date.now()>=Date.parse(g.start),stale=!past&&Date.now()-Date.parse(m.observed_at)>1800000;
- const prices=poGamePair(number(m.away),number(m.home),'po-market-prices'),note=`<div class="po-market-attribution"><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a></div><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Observed'} · ${poDate(m.observed_at)}</small>`;
+ const prices=poGamePair(number(m.away),number(m.home),'po-market-prices'),note=`<div class="po-market-attribution"><a class="po-market-source" href="${esc(m.source_url)}" target="_blank" rel="noopener noreferrer">${esc(m.provider)} via ESPN</a><time class="po-market-time" datetime="${esc(m.observed_at)}">${esc(poDate(m.observed_at))}</time></div><small class="po-game-basis${stale?' po-market-stale':''}">${past?'Saved pregame':stale?'Older quote':'Pregame'}</small>`;
  return part==='prices'?prices:part==='note'?note:prices+note;
 }
 function poGoalieStats(player,game){
@@ -189,7 +189,7 @@ function poRenderGames(){
  }).join('');
  $('poGameCards').innerHTML=rows.map(poGameCard).join('');
  $('poGamesEmpty').hidden=rows.length>0;$('poGamesEmpty').textContent=!poData?.analytics_version?'The game feed is updating. League projections remain available.':results?'No completed games on this date. Choose another date to review results.':'No upcoming games on this date. Select Results for finished games or choose another date.';
- $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” estimates use earlier calendar dates; they were not recorded before those games. Saved pregame estimates stay fixed after puck drop.':'Win percentages switch from Pregame to LIVE during play. Live checks run about every 30 seconds using the NHL score and clock plus the saved model’s scoring rates. Delayed feeds are labelled; shootout estimates await the result. Saved pregame estimates remain available in Results. Live estimates do not yet model current penalties or empty-net situations separately.';
+ $('poGamesNote').textContent=results?'Scores and shots are official NHL results. “Reconstructed” estimates use earlier calendar dates; they were not recorded before those games. Saved pregame estimates stay fixed after puck drop.':'Win percentages switch from Pregame to LIVE during play. Live checks run about every 30 seconds using NHL score, clock, and penalty data plus the saved model’s scoring rates. Delayed feeds are labelled; shootout estimates await the result. Saved pregame estimates remain available in Results. Live estimates include supported timed penalties using NHL manpower scoring rates. Missing or inconsistent penalty data falls back to score and clock. Empty-net play remains outside this adjustment.';
  for(const details of $('poPanelGames').querySelectorAll('[data-po-game] details'))if(open.has(details.closest('[data-po-game]').dataset.poGame+'|'+details.dataset.poDisclosure))details.open=true;
  poSyncLive();
 }

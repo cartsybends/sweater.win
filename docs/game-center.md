@@ -36,12 +36,13 @@ ongoing shootout. Missing frozen forecasts, missing clocks, or score/event-log
 mismatches suppress the curve rather than fabricate history. Official NHL
 corrections can revise earlier points.
 
-This beta win model does **not** yet condition on in-game penalties, pulled
-goalies, shot quality or shootout attempts. These limitations are disclosed in the
-view. Shot-quality percentages do not independently change the win curve. Goal and penalty markers
-show the official event time and details; penalty markers do not imply a penalty
-adjustment in this model. The chart readout uses period and time remaining, not
-raw elapsed game time.
+The beta win model now conditions on supported timed penalties using the same
+calculation in Game Center and the Games feed. Pulled goalies, individual skater
+matchups, in-game shot quality and individual shootout attempts remain outside
+this adjustment. Shot-quality percentages do not independently change the curve.
+The readout uses period and time remaining. Event icons sit at their corresponding
+team's curve point, with short leaders when needed to avoid covering another
+marker. Five-minute clock ticks restart within each period.
 
 ## Sweater shot model
 
@@ -103,7 +104,7 @@ order. “None listed” reflects an empty current NHL assist list; later offici
 corrections replace those details. Penalty records include reason, duration,
 committing player, drawn-by player and served-by player when present. Bench
 penalties do not invent a committing player. Alarm and striped referee markers
-have separate timeline lanes. Dense nearby events share a counted marker with
+are placed on the probability plot. Dense nearby events share a counted marker with
 all events retained in its details. Details stay inline on mobile.
 
 The graph uses the same team-colour palette as the playoff circle. RGB distance
@@ -126,3 +127,63 @@ Rink controls offer fit, 2× and 3× zoom. A zoomed viewport uses native horizon
 and vertical panning, and reset returns to fit. Selection uses the enlarged
 rink's actual geometry. Zoom and pan survive feed redraws; changing games resets
 to fit. The event list remains an alternative to tapping crowded markers.
+
+## Penalty-aware live model
+
+`penalty-state.mjs` reconstructs assessed penalties from official play order and
+playing time. Supported minors/bench minors expire after two minutes or a
+power-play goal; double-minors have two serial two-minute legs; majors and match
+penalties continue after goals. Coincidental calls, serial penalties to one player,
+queued third penalties, misconducts, penalty shots, regular-season OT and Rule
+19.4 differentials are handled separately. An extra attacker never invents a
+power play. The tracker checks official on-ice counts; inconsistent, unsupported
+or stale play-by-play receives an explicit score/clock fallback. A source returning
+to verified even strength can resolve that uncertainty.
+
+`fit_penalties.py` uses official NHL `goalsforbystrength` and `powerplaytime`
+reports for the completed 2023–24 and 2024–25 seasons. Six strength scoring rates
+(5v4/4v5, 5v3/3v5, 4v3/3v4) use a Jeffreys half-goal prior. Report definitions
+separate empty-net/extra-attacker goals from skater-strength goals; PP clock
+exposure does not perfectly isolate goalie-in-net time. These are average
+strength rates, not an individual shooter, goalie or special-teams-unit model.
+
+The later 2025–26 goal-rate check has Poisson deviance 8.86, versus 1546.12 for
+an all-strength average-rate baseline. This evaluates strength **scoring rates**
+and is not full live win-probability calibration. Input URLs and SHA-256 hashes
+are embedded in `penalty-rates.mjs`; raw responses remain outside Git. Regenerate
+with `python -B tools/playoffs/fit_penalties.py --data /path/to/private/cache`.
+
+The live projection scales those rates by saved pregame scoring strength and
+known remaining penalty clocks. Single minors and double-minors account
+analytically for early goal termination. Complex known penalty combinations use
+five-second state occupancy steps, including minor releases and queued/serial
+clocks. Mean remaining goals enter the existing conditional Poisson calculation;
+this retains an independent-goals approximation and does not model future
+unobserved penalties. OT integrates competing first-goal hazards and retains
+known third-period penalty carryover. The saved pregame prior stays fixed.
+
+An 80-game current-season spot check covered 291,635 playing seconds; 110 seconds
+used the explicit manpower mismatch fallback. This is **decoder coverage**, not
+probability accuracy. At 4,800 minute-spaced states, Brier was 0.173893 versus
+0.174187 for score/clock; at 810 penalty-active states, 0.180925 versus 0.182591.
+Game-cluster bootstrap intervals for the differences include zero. Some priors
+were reconstructed, and official corrected logs are retrospective. These checks
+do not establish a statistically reliable accuracy improvement or superiority
+to MoneyPuck/sportsbooks. No coefficients were retuned on this spot check.
+
+The Games feed and Game Center share the same NHL PBP edge cache and inference.
+A newer scoreboard is never combined with stale penalty context. The live list
+keeps its thirty-second polling cadence; an open Game Center targets fifteen
+seconds. Missing market quotes and penalty sources remain independent.
+
+Market attribution is centred beneath prices, with its timestamp directly under
+the source and no “Observed” prefix. Its status still distinguishes a live,
+suspended, last-known or saved pregame quote. Source links remain text-sized.
+
+New website clients request `penalties=1` on `/api/playoffs/live`; the default
+protocol stays on the existing score/clock calculation for already-open older
+clients. The cache and request-coalescing keys separate those variants. Both
+new views use `sweater-live-v2` when penalty context is available and explicitly
+label a `sweater-live-v1` fallback. Goal-log totals must also reconcile before
+applying a power play, preventing a delayed goal event from extending a released
+minor after the score has already changed.
