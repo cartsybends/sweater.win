@@ -40057,6 +40057,144 @@
      "pct": null
     }
    ]
+  },
+  "8484220": {
+   "id": 8484220,
+   "season": "20252026",
+   "shot": 81.99,
+   "speed": 20.26,
+   "bursts20": 1,
+   "miles": 2.31,
+   "distance": 4.05,
+   "total": 3,
+   "hd": 0,
+   "mid": 0,
+   "long": 3,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4295,
+   "nz": 0.1683,
+   "dz": 0.4022,
+   "areas": [
+    {
+     "area": "Center Point",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8482132": {
+   "id": 8482132,
+   "season": "20252026",
+   "shot": 75.49,
+   "speed": 21.67,
+   "bursts20": 19,
+   "miles": 1.94,
+   "distance": 21.6,
+   "total": 10,
+   "hd": 5,
+   "mid": 3,
+   "long": 1,
+   "hdPct": 0.0,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4276,
+   "nz": 0.1852,
+   "dz": 0.3871,
+   "areas": [
+    {
+     "area": "Low Slot",
+     "shots": 5,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "L Point",
+     "shots": 1,
+     "pct": null
+    },
+    {
+     "area": "R Net Side",
+     "shots": 1,
+     "pct": null
+    }
+   ]
+  },
+  "8476422": {
+   "id": 8476422,
+   "season": "20252026",
+   "shot": 93.3,
+   "speed": 21.07,
+   "bursts20": 17,
+   "miles": 3.3,
+   "distance": 91.21,
+   "total": 63,
+   "hd": 3,
+   "mid": 5,
+   "long": 33,
+   "hdPct": 0.3333,
+   "midPct": 0.0,
+   "longPct": 0.0,
+   "oz": 0.4688,
+   "nz": 0.1802,
+   "dz": 0.351,
+   "areas": [
+    {
+     "area": "L Point",
+     "shots": 19,
+     "pct": null
+    },
+    {
+     "area": "Outside L",
+     "shots": 15,
+     "pct": null
+    },
+    {
+     "area": "Center Point",
+     "shots": 7,
+     "pct": null
+    },
+    {
+     "area": "R Point",
+     "shots": 7,
+     "pct": null
+    },
+    {
+     "area": "Beyond Red Line",
+     "shots": 3,
+     "pct": null
+    },
+    {
+     "area": "Crease",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 2,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 2,
+     "pct": null
+    }
+   ]
   }
  },
  "unavailable": [
