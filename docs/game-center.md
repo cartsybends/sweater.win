@@ -88,10 +88,17 @@ keeps away attacking left and home attacking right. The rink uses 200×85-foot
 geometry, a goal line at 89 feet, blue lines at ±25 and regulation faceoff circles.
 Blocked locations represent the block, not an inferred release point. Missing
 locations remain in the event list. Shot filters and a keyboard-accessible event
-list offer an alternative to crowded dots. Both win values appear below the
-chart on interaction; shot details sit below the rink instead of a large mobile
-popup. Chart arrows/Home/End explore history. Close restores focus and native
-Dialog handles Escape and background focus containment.
+list offer an alternative to crowded dots. A compact graph readout follows the
+hovered/pressed point, showing both teams, clock, score and the relevant event.
+Its position stays inside the chart on phones; leaving the plot, scrolling or
+pressing elsewhere dismisses it. The legend retains the latest probabilities.
+Chart arrows/Home/End explore history with the same readout and a screen-reader
+announcement. Escape first dismisses an open readout, then closes the dialog.
+Shot details remain below the rink. Goal rows have an explicit scoring label,
+scorer, assists and resulting score; details separate primary/secondary assists
+from shot measurements. Empty-net goals show the empty net rather than a large
+missing-chance placeholder. Close restores focus and native Dialog maintains
+background focus containment.
 
 Verification: `node tests/playoffs_gamecenter.mjs` and, after installing backend
 packages, `node tests/playoffs_gamecenter_runtime.mjs` exercise the real workerd
