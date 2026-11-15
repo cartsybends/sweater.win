@@ -21804,6 +21804,67 @@
     }
    ]
   },
+  "8478445": {
+   "id": 8478445,
+   "season": "20252026",
+   "shot": 83.89,
+   "speed": 22.48,
+   "bursts20": 313,
+   "miles": 4.32,
+   "distance": 274.34,
+   "total": 184,
+   "hd": 52,
+   "mid": 49,
+   "long": 26,
+   "hdPct": 0.2115,
+   "midPct": 0.0612,
+   "longPct": 0.0385,
+   "oz": 0.4542,
+   "nz": 0.1673,
+   "dz": 0.3784,
+   "areas": [
+    {
+     "area": "Low Slot",
+     "shots": 46,
+     "pct": null
+    },
+    {
+     "area": "L Circle",
+     "shots": 29,
+     "pct": null
+    },
+    {
+     "area": "Outside L",
+     "shots": 19,
+     "pct": null
+    },
+    {
+     "area": "Center Point",
+     "shots": 12,
+     "pct": null
+    },
+    {
+     "area": "High Slot",
+     "shots": 11,
+     "pct": null
+    },
+    {
+     "area": "Outside R",
+     "shots": 11,
+     "pct": null
+    },
+    {
+     "area": "R Net Side",
+     "shots": 11,
+     "pct": null
+    },
+    {
+     "area": "R Circle",
+     "shots": 9,
+     "pct": null
+    }
+   ]
+  },
   "8481711": {
    "id": 8481711,
    "season": "20252026",
@@ -39996,67 +40057,6 @@
      "pct": null
     }
    ]
-  },
-  "8478445": {
-   "id": 8478445,
-   "season": "20252026",
-   "shot": 83.89,
-   "speed": 22.48,
-   "bursts20": 313,
-   "miles": 4.32,
-   "distance": 274.34,
-   "total": 184,
-   "hd": 52,
-   "mid": 49,
-   "long": 26,
-   "hdPct": 0.2115,
-   "midPct": 0.0612,
-   "longPct": 0.0385,
-   "oz": 0.4542,
-   "nz": 0.1673,
-   "dz": 0.3784,
-   "areas": [
-    {
-     "area": "Low Slot",
-     "shots": 46,
-     "pct": null
-    },
-    {
-     "area": "L Circle",
-     "shots": 29,
-     "pct": null
-    },
-    {
-     "area": "Outside L",
-     "shots": 19,
-     "pct": null
-    },
-    {
-     "area": "Center Point",
-     "shots": 12,
-     "pct": null
-    },
-    {
-     "area": "High Slot",
-     "shots": 11,
-     "pct": null
-    },
-    {
-     "area": "Outside R",
-     "shots": 11,
-     "pct": null
-    },
-    {
-     "area": "R Net Side",
-     "shots": 11,
-     "pct": null
-    },
-    {
-     "area": "R Circle",
-     "shots": 9,
-     "pct": null
-    }
-   ]
   }
  },
  "unavailable": [
@@ -40109,6 +40109,7 @@
   "8485138",
   "8485383",
   "8485400",
+  "8485468",
   "8485469",
   "8485554",
   "8485957",
