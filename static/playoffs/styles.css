@@ -57,12 +57,16 @@
 .po-impact-comparison strong{font-variant-numeric:tabular-nums}
 .po-impact-comparison>span{color:var(--muted);white-space:nowrap}
 .po-impact-players{display:grid;gap:10px}
-.po-impact-players article{border-top:1px solid var(--line);padding-top:12px}
+.po-impact-players article{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;border-top:1px solid var(--line);padding-top:12px}
+.po-impact-players .po-injury-portrait,.po-impact-players .po-injury-portrait>svg,.po-impact-players .po-injury-portrait>img{width:44px;height:44px}
+.po-impact-player-copy{min-width:0}
 .po-impact-players strong{font-size:14px;line-height:1.5}
-.po-impact-players article>div{display:flex;gap:8px 18px;flex-wrap:wrap;margin:7px 0;font-size:12px;color:var(--muted)}
+.po-impact-player-stats{display:flex;gap:8px 18px;flex-wrap:wrap;margin:7px 0;font-size:12px;color:var(--muted)}
 .po-impact-players b{color:var(--fg);font-variant-numeric:tabular-nums;margin-left:4px}
 .po-impact-players small{display:block;color:var(--muted);font-size:12px;line-height:1.6}
-.po-skater-impact .po-impact-note{font-size:12px;margin-bottom:0}
+.po-skater-impact .po-impact-note{margin-top:16px}
+.po-skater-impact .po-impact-note p{font-size:12px;margin:9px 0 0}
+.po-impact-note b{color:var(--fg);font-weight:650}
 .po-injury-list{gap:12px}
 .po-injury-list li{display:flex;align-items:center;gap:9px}
 .po-injury-portrait{display:grid;width:36px;height:36px;flex:none;overflow:hidden;border-radius:50%;background:var(--cell);color:var(--muted)}

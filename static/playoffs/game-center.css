@@ -298,7 +298,7 @@
 .po-gc-panel a.po-gc-meeting{color:var(--fg);text-decoration:none;border-radius:8px}
 .po-gc-meeting:hover{background:var(--cell)}
 .po-gc-meeting:focus-visible{outline:2px solid var(--link);outline-offset:3px;background:var(--cell)}
-.po-gc-meeting .po-gc-meeting-winner{color:var(--link)}
+.po-gc-meeting .po-gc-meeting-winner{color:var(--gc-meeting-winner,var(--fg))}
 .po-gc-meeting>time{font-size:11px;color:var(--muted);line-height:1.6}
 .po-gc-meeting>div{display:flex;align-items:center;justify-content:center;gap:10px}
 .po-gc-meeting>div>span{display:flex;align-items:center;gap:6px;font-size:12px;min-width:0}
