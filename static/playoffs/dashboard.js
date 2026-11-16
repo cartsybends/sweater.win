@@ -42,7 +42,7 @@ function poGameStatus(g){
  }
  return `<div class="po-scheduled-time"><span>${esc(new Date(g.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'}))}</span><small class="po-game-basis">${g.state==='PRE'?'Pregame':'Scheduled'}</small></div>`;
 }
-function poGameBasis(g){const p=g.prediction,text=['LIVE','CRIT'].includes(g.state)?'<span class="po-live-match">LIVE</span>':p.basis==='reconstructed'?'Reconstructed':p.basis==='recorded'?'Saved pregame':'Pregame estimate';return text+(g.neutral?' · neutral site':'')+(p.model&&p.model!==poData.model?' · previous model':'');}
+function poGameBasis(g){const p=g.prediction,text=['LIVE','CRIT'].includes(g.state)?'<span class="po-live-match">LIVE</span>':p.basis==='reconstructed'?'Reconstructed':p.basis==='recorded'?'Saved pregame':'Pregame estimate',previous=p.model&&p.model!==poData.model||p.basis==='recorded'&&poData.advanced?.skater_impact&&p.impact_model!==poData.advanced.skater_impact.version;return text+(g.neutral?' · neutral site':'')+(previous?' · previous model':'');}
 function poStopLive(){clearInterval(poLiveTimer);poLiveTimer=null;poLiveRequest++;poLiveController?.abort();poLiveController=null;poLiveBusy=false;poLiveAttempt=0;poLiveScope='';}
 function poLiveDates(){
  if($('view-playoffs').hidden||document.hidden||poTab!=='games'||poGamesMode!=='upcoming')return [];
@@ -139,10 +139,16 @@ function poAvailabilityBody(g,goalies=false){
  if(!g.context)return '<p class="po-availability-note">Team availability unavailable.</p>';
  const teams=['away','home'].map(side=>{
   const c=g.context[side];
-  return `<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div></div>${goalies?poGameGoalie(g,side):''}${poInjurySummary(c)}</section>`;
+  return `<section><div class="po-availability-team"><img src="team-crests/${g[side]}.svg" alt=""><div><b>${esc(poTeamRecord(g[side])?.name||g[side])}</b><small>${c.rest_days===1?'Back-to-back':`${c.rest_days===7?'7+':c.rest_days} days since last game`}</small></div></div>${goalies?poGameGoalie(g,side):''}${poInjurySummary(c)}${poSkaterImpact(c.skater_impact)}</section>`;
  });
  const reported=g.context.home.injury_reported_at||g.context.away.injury_reported_at;
  return `<div class="po-availability-teams">${teams.join('')}</div><small class="po-availability-source"><a href="https://www.espn.com/nhl/injuries" target="_blank" rel="noopener noreferrer">ESPN injury report</a>${reported?` · ${poDate(reported)}`:''}<br>Linked status badges open the matching RotoWire report when available, otherwise the player’s ESPN overview. Return dates are estimates and may change.</small>`;
+}
+function poSkaterImpact(impact){
+ if(!impact||!['available','partial'].includes(impact.status)||!impact.players?.length)return '';
+ const signed=(n,suffix='%')=>`${n>0?'+':''}${Number(n).toFixed(1)}${suffix}`;
+ const game=Number.isFinite(impact.game_win)&&Number.isFinite(impact.game_win_if_available)?`<p class="po-impact-comparison"><strong>${impact.game_win.toFixed(1)}%</strong> win chance · <strong>${impact.game_win_if_available.toFixed(1)}%</strong> if these skaters were available <span>(${signed(impact.win_change_pp,' pp')})</span></p>`:'';
+ return `<details class="po-skater-impact"><summary>Player availability impact <span>Beta</span></summary>${game}<p>Estimated scoring change with each player absent versus available, including projected replacements. Other listed absences stay in place.</p><div class="po-impact-players">${impact.players.map(p=>`<article><strong>${esc(p.name)}</strong><div><span>Team scoring <b>${signed(p.attack_change_pct)}</b></span><span>Opponent scoring <b>${signed(p.opponent_attack_change_pct)}</b></span></div><small>${p.expected_minutes.ev.toFixed(1)} EV · ${p.expected_minutes.pp.toFixed(1)} PP · ${p.expected_minutes.pk.toFixed(1)} PK projected min${p.sample==='trained'?'':' · replacement prior'}</small></article>`).join('')}</div><p class="po-impact-note">Training through ${esc(impact.trained_through)} · Usage through ${esc(impact.usage_through||'unavailable')}. Recovery windows are assumptions around reported estimates, not confirmed return dates. Estimates can be small or positive; star status does not set the result.${impact.status==='partial'?' Some additional absences have no sampled recovery date.':''}</p></details>`;
 }
 function poGameContext(g){return `<details class="po-game-context" data-po-disclosure="availability"><summary data-po-center="${g.id}" aria-haspopup="dialog">Team availability / Game Center</summary>${poAvailabilityBody(g)}</details>`;}
 function poCardScore(g,side){const s=poLiveFor(g),value=['OFF','FINAL'].includes(g.state)?g[side==='home'?'hg':'ag']:['LIVE','CRIT'].includes(g.state)?s?.[side+'_score']:null;return Number.isInteger(value)?String(value):'';}

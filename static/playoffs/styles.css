@@ -49,6 +49,20 @@
 .po-availability-team b{font-size:14px;line-height:1.4}
 .po-availability-team small{font-size:11px;color:var(--muted)}
 .po-availability-teams{gap:22px;padding:17px 0 14px}
+.po-skater-impact{margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:14px;white-space:normal}
+.po-skater-impact summary{cursor:pointer;font-size:14px;font-weight:750;line-height:1.5;color:var(--fg);display:flex;align-items:center;gap:9px}
+.po-skater-impact summary>span{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--link);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.po-skater-impact p{font-size:13px;color:var(--muted);line-height:1.65;margin:13px 0}
+.po-skater-impact .po-impact-comparison{color:var(--fg);font-size:14px}
+.po-impact-comparison strong{font-variant-numeric:tabular-nums}
+.po-impact-comparison>span{color:var(--muted);white-space:nowrap}
+.po-impact-players{display:grid;gap:10px}
+.po-impact-players article{border-top:1px solid var(--line);padding-top:12px}
+.po-impact-players strong{font-size:14px;line-height:1.5}
+.po-impact-players article>div{display:flex;gap:8px 18px;flex-wrap:wrap;margin:7px 0;font-size:12px;color:var(--muted)}
+.po-impact-players b{color:var(--fg);font-variant-numeric:tabular-nums;margin-left:4px}
+.po-impact-players small{display:block;color:var(--muted);font-size:12px;line-height:1.6}
+.po-skater-impact .po-impact-note{font-size:12px;margin-bottom:0}
 .po-injury-list{gap:12px}
 .po-injury-list li{display:flex;align-items:center;gap:9px}
 .po-injury-portrait{display:grid;width:36px;height:36px;flex:none;overflow:hidden;border-radius:50%;background:var(--cell);color:var(--muted)}

@@ -114,11 +114,13 @@ function poRender(){
   $('poOpponents').innerHTML=t.opponents?.length&&t.odds.playoffs>0?t.opponents.slice(0,4).map(o=>`<div class="po-opponent"><img src="team-logos/${o.team}.svg" alt=""><div>${esc(poTeamRecord(o.team)?.name||o.team)}<b>${poModel.percent(Math.min(100,o.chance/t.odds.playoffs*100))}</b></div></div>`).join(''):'<p class="po-panel-note">First-round opponent forecasts are available in the latest forecast when qualification occurs in the simulations.</p>';
  }
  poRenderBoard();poRenderGames();poRenderCircle();if(t&&!t.shared)poRenderTeamStats(t);
+ $('poTeamImpact').innerHTML=t&&!t.shared?poSkaterImpact(t.skater_impact):'';$('poTeamImpact').hidden=!$('poTeamImpact').innerHTML;
  $('poBoardNote').textContent=(poTodayMode?'Today’s field uses official NHL standings and tiebreak ordering. Darkened teams are outside the field at this snapshot; probabilities remain model forecasts. ':'Lower chances shade red, then amber, then green. ')+(poArchiveActive()?'Records reflect '+poArchiveLabel(poArchiveDate)+'.':'Standings update with the published NHL check.')+((poData?.teams||[]).some(t=>PLAYOFF_FIELD.clinched(t))?' x — playoff berth · y — division · z — conference · p — Presidents’ Trophy. Clinches are NHL-reported.':'');
  $('poMethodCount').textContent=`${poData?.model==='sweater-xg-v2'?'Sweater expected-goals model v2':'Sweater goals model v1'} · ${(poData?.simulations||50000).toLocaleString()} simulations per forecast. Historical validation and the model assumptions are published with the source.`;
  $('poAdvancedNote').hidden=poData?.model!=='sweater-xg-v2';$('poAdvancedNote').textContent=poData?.advanced?poData.advanced.summary+' Advanced game data through '+poData.advanced.data_through+'. Future injury returns and goalie assignments remain uncertain.':'';
  $('poLegacyNote').hidden=poData?.model==='sweater-xg-v2';
  $('poValidationText').textContent=poData?.validation?.summary||'This first version uses a goals-based model. Historical validation is documented alongside its source code.';
+ const impactCheck=poData?.advanced?.skater_impact?.game_validation;if(impactCheck)$('poValidationText').textContent+=` Skater-impact check: ${impactCheck.adjusted_2026.games} later-season games, conditional on actual dressed identities; Brier ${impactCheck.adjusted_2026.brier.toFixed(4)} versus ${impactCheck.baseline_2026.brier.toFixed(4)}. This small sample does not establish injury-report or playoff calibration.`;
  for(const tab of poTabs){const cap=tab[0].toUpperCase()+tab.slice(1),on=tab===poTab;$('poTab'+cap).setAttribute('aria-selected',String(on));$('poTab'+cap).tabIndex=on?0:-1;$('poPanel'+cap).hidden=!on;}
  poRenderHistory();poFeedStatus();poArchiveControls();poCloseShare();
 }

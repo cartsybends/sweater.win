@@ -230,7 +230,7 @@ def simulate(data, history, simulations=50000, params=None, engine=None):
             lh = attack[rows, h] * defense[rows, aa] / league * home_factor
             la = attack[rows, aa] * defense[rows, h] / league / home_factor
             if engine:
-                lh,la=engine.series_adjust(h,aa,lh,la)
+                lh,la=engine.series_adjust(h,aa,lh,la,round_number,_)
             hg, ag = rng.poisson(lh), rng.poisson(la)
             home_win = (hg > ag) | ((hg == ag) & (rng.random(n) < lh / (lh + la)))
             high_win = home_win == high_home
@@ -273,6 +273,8 @@ def forecast(data, history, simulations=50000, params=None, engine=None):
     output['teams'].sort(key=lambda t: (-t['odds']['playoffs'], -t['odds']['cup'], t['abbr']))
     if engine:
         output['advanced']=engine.metadata()
+        if engine.impact:
+            for team in output['teams']:team['skater_impact']=engine.impact.summary(team['abbr'],engine.impact.date)
     return output
 
 
