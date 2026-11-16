@@ -104,6 +104,7 @@ class Engine:
                           'injuries':[] if historical else self.availability['injuries'].get(team,[]),
                           'injury_status':'not_reconstructed' if historical else self.availability['status'],
                           'injury_reported_at':None if historical else self.availability.get('reported_at')}
+            if not historical:result[side]['roster_status']=self.availability.get('roster_status',{}).get(team,'reported')
             if self.impact:
                 result[side]['skater_impact']={'status':'not_reconstructed','version':self.impact.version} if historical else self.impact.summary(team,game['date'])
         self.game_cache[key]=result

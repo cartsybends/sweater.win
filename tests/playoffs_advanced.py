@@ -213,18 +213,25 @@ class AdvancedModel(unittest.TestCase):
 
 
 class AvailabilityAndEvaluation(unittest.TestCase):
-    def test_injured_players_keep_source_portraits_without_current_roster_ids(self):
+    def test_reserve_players_get_verified_nhl_ids_and_keep_source_portrait_fallbacks(self):
         people=[('Dylan Larkin','3114755','Detroit Red Wings'),('Max Domi','3042014','Toronto Maple Leafs')]
-        raw={'timestamp':NOW,'injuries':[{'displayName':team,'injuries':[{'status':'Out','athlete':{'displayName':name,'headshot':{'href':f'https://a.espncdn.com/i/headshots/nhl/players/full/{pid}.png'}}}]} for name,pid,team in people]}
+        raw={'timestamp':NOW,'injuries':[{'displayName':team,'injuries':[{'status':'Injured Reserve','athlete':{'displayName':name,'headshot':{'href':f'https://a.espncdn.com/i/headshots/nhl/players/full/{pid}.png'}}}]} for name,pid,team in people]}
         for group,(_,pid,_) in zip(raw['injuries'],people):
             group['injuries'][0]['details']={'type':'Back'};group['injuries'][0]['athlete']['links']=[{'rel':['news'],'href':f'https://www.espn.com/nhl/player/news/_/id/{pid}'}]
         def fetch(url):
             if url==A.INJURY_URL:return raw
-            return {'forwards':[],'defensemen':[],'goalies':[{'id':123,'firstName':{'default':'Test'},'lastName':{'default':'Goalie'}}]}
+            if '/search/player?' in url:
+                import urllib.parse
+                name=urllib.parse.parse_qs(urllib.parse.urlparse(url).query)['q'][0]
+                return [{'name':name,'playerId':'8477946' if name=='Dylan Larkin' else '8477503'}]
+            if '/player/' in url:
+                pid=int(url.split('/player/')[1].split('/')[0]);name='Dylan Larkin' if pid==8477946 else 'Max Domi'
+                return {'playerId':pid,'firstName':{'default':name.split()[0]},'lastName':{'default':name.split()[1]},'currentTeamAbbrev':'DET' if pid==8477946 else 'TOR','seasonTotals':[{'season':20262027,'leagueAbbrev':'NHL','gamesPlayed':10}]}
+            return {'forwards':[{'id':500+i,'firstName':{'default':'Test'},'lastName':{'default':str(i)}} for i in range(14)],'defensemen':[],'goalies':[{'id':123,'firstName':{'default':'Test'},'lastName':{'default':'Goalie'}}]}
         with tempfile.TemporaryDirectory() as folder,patch.object(A,'CACHE',Path(folder)):
             result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)
             for team,pid in [('DET','3114755'),('TOR','3042014')]:
-                player=result['injuries'][team][0];self.assertIsNone(player['player_id']);self.assertTrue(player['portrait_url'].endswith(pid+'.png'))
+                player=result['injuries'][team][0];self.assertEqual(player['player_id'],8477946 if team=='DET' else 8477503);self.assertTrue(player['portrait_url'].endswith(pid+'.png'))
                 self.assertEqual(player['reason'],'Back');self.assertEqual(player['source_url'],f'https://www.espn.com/nhl/player/_/id/{pid}')
             raw['injuries'][0]['injuries'][0]['athlete']['headshot']={'href':'https://untrusted.example/head.png'}
             result=A.availability([{'name':'Detroit Red Wings','abbr':'DET'},{'name':'Toronto Maple Leafs','abbr':'TOR'}],fetch,NOW)

@@ -1,5 +1,31 @@
 # Playoff Picture
 
+## Current team availability and portraits
+
+Injury-feed parent teams are not proof of current NHL membership. The forecast
+refresh checks NHL current rosters every fifteen minutes, including same-day
+transactions. An absent player is kept as a reserve exception after current
+membership and reserve checks, resolving an official NHL identity when available. Current NHL
+participation supports the reserve report; players with minor/junior-league
+appearances, or no current-season NHL appearances, additionally need a current
+ESPN NHL reserve listing. A different current club, unverified parent-club
+association, or non-NHL registration is excluded. This applies to cached injury
+reports as well as fresh observations. NHL name variants can resolve to a
+unique player ID without treating an old parent-team label as membership.
+
+Source observations have timestamps and fifteen-minute freshness windows;
+recent verified caches can bridge an outage for up to 24 hours. With no usable
+roster, source observations remain dated, the UI says membership is unavailable,
+and the skater model skips that club. It does not label an empty/unverified list
+as a healthy roster. Earlier recorded game contexts and probabilities keep
+their original observations; today's membership is not backfilled into them.
+
+Both injury lists and impact cards use the same full 336px NHL portrait first,
+at 44 CSS pixels, with normal image interpolation. Verified reserve identities
+also receive NHL portraits. A source-provided full ESPN portrait is a fallback;
+failed images reveal the existing silhouette. Player IDs and fallback hosts are
+validated before constructing image URLs.
+
 ## Skater availability impact (beta)
 
 `impact_parameters.json` is the offline-trained `sweater-skater-impact-v1`

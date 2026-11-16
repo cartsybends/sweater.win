@@ -119,8 +119,8 @@ function poReturnEstimate(value){
  return day<poModel.localDay(Date.now())?`Previous estimate ${label} · awaiting update`:`Est. return ${label}`;
 }
 function poInjuryPortrait(player){
- const espn=typeof player.portrait_url==='string'&&/^https:\/\/a\.espncdn\.com\/i\/headshots\/nhl\/players\/full\/\d+\.png$/.test(player.portrait_url)?player.portrait_url:'',nhl=Number.isInteger(player.player_id)&&player.player_id>0&&player.player_id<100000000?`https://assets.nhle.com/mugs/nhl/latest/${player.player_id}.png`:'',url=espn||nhl;
- const image=url?`<img src="${esc(url)}"${espn&&nhl?` data-po-injury-fallback="${esc(nhl)}"`:''} alt="" loading="lazy" decoding="async" data-po-injury-image>`:'';
+ const espn=typeof player.portrait_url==='string'&&/^https:\/\/a\.espncdn\.com\/i\/headshots\/nhl\/players\/full\/\d+\.png$/.test(player.portrait_url)?player.portrait_url:'',nhl=Number.isInteger(player.player_id)&&player.player_id>0&&player.player_id<100000000?`https://assets.nhle.com/mugs/nhl/latest/${player.player_id}.png`:'',url=nhl||espn;
+ const image=url?`<img src="${esc(url)}"${espn&&nhl?` data-po-injury-fallback="${esc(espn)}"`:''} alt="" width="336" height="336" loading="lazy" decoding="async" data-po-injury-image>`:'';
  return `<span class="po-injury-portrait" aria-hidden="true"><svg viewBox="0 0 40 40" fill="currentColor"><circle cx="20" cy="13" r="7"/><path d="M6 39v-5c0-8 5-12 14-12s14 4 14 12v5Z"/></svg>${image}</span>`;
 }
 function poInjuryBadge(i){
@@ -131,8 +131,9 @@ function poInjuryBadge(i){
 }
 function poInjurySummary(c){
  if(c.injury_status==='not_reconstructed')return '<p class="po-availability-note">Historical injury reports unavailable.</p>';
+ if(c.roster_status==='unavailable')return '<p class="po-availability-note">Current NHL roster unavailable; team availability could not be verified.</p>';
  if(!['reported','cached','stale'].includes(c.injury_status))return '<p class="po-availability-note">Injury report unavailable.</p>';
- const injuries=c.injuries||[],note=c.injury_status==='stale'?'Older injury report; availability may have changed.':c.injury_status==='cached'?'Last available injury report.':'';
+ const injuries=c.injuries||[],note=(c.injury_status==='stale'?'Older injury report; availability may have changed.':c.injury_status==='cached'?'Last available injury report.':'')+(c.roster_status==='cached'?' Using the last verified NHL roster.':'');
  return (note?`<p class="po-availability-note">${note}</p>`:'')+(injuries.length?`<ul class="po-injury-list">${injuries.map(i=>`<li>${poInjuryPortrait(i)}<div class="po-injury-copy"><strong>${esc(i.name)}</strong><small>${esc([i.report?.reason||i.reason,poReturnEstimate(i.return_estimate)].filter(Boolean).join(' · '))}</small></div>${poInjuryBadge(i)}</li>`).join('')}</ul>`:'<p class="po-availability-note">No absences listed.</p>');
 }
 function poAvailabilityBody(g,goalies=false){
