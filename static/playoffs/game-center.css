@@ -293,7 +293,12 @@
 .po-gc-line-unit>.po-gc-line-note{margin:12px 0 0}
 .po-gc-meeting-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
 .po-gc-meetings{list-style:none;margin:0;padding:0}
+.po-gc-meetings>li{margin:0}
 .po-gc-meeting{display:grid;grid-template-columns:95px minmax(0,1fr) auto;gap:10px;align-items:center;padding:14px 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.po-gc-panel a.po-gc-meeting{color:var(--fg);text-decoration:none;border-radius:8px}
+.po-gc-meeting:hover{background:var(--cell)}
+.po-gc-meeting:focus-visible{outline:2px solid var(--link);outline-offset:3px;background:var(--cell)}
+.po-gc-meeting .po-gc-meeting-winner{color:var(--link)}
 .po-gc-meeting>time{font-size:11px;color:var(--muted);line-height:1.6}
 .po-gc-meeting>div{display:flex;align-items:center;justify-content:center;gap:10px}
 .po-gc-meeting>div>span{display:flex;align-items:center;gap:6px;font-size:12px;min-width:0}
