@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import json
 import math
+from fractions import Fraction
 from pathlib import Path
 
 from lineup_data import observed
@@ -66,13 +67,28 @@ def team_special(year,completed):
 def special_rates(club,source,cutoff,rows):
     # IDs come from the verified NHL boxscore; no name/abbreviation guessing.
     team_id=source['team_id']
-    output={}
+    output={};ranks={}
     for key,report,numerator,denominator in [('pp','powerplay','powerPlayGoalsFor','ppOpportunities'),('pk','penaltykill','ppGoalsAgainst','timesShorthanded')]:
         eligible=[r for r in rows[report] if r['teamId']==team_id and r['gameDate'][:10]<cutoff]
-        if not eligible or any(not isinstance(r.get(numerator),int) or not isinstance(r.get(denominator),int) for r in eligible):
+        if not eligible or any(not isinstance(r.get(numerator),int) or not isinstance(r.get(denominator),int)
+                               or not 0<=r[numerator]<=r[denominator] for r in eligible):
             output[key]=None;continue
         n=sum(r[numerator] for r in eligible);d=sum(r[denominator] for r in eligible)
         output[key]=round(100*((1-n/d) if key=='pk' else n/d),3) if d else None
+        totals=defaultdict(lambda:[0,0]);complete=True
+        for row in rows[report]:
+            if row['gameDate'][:10]>=cutoff:continue
+            a,b=row.get(numerator),row.get(denominator)
+            if not isinstance(a,int) or not isinstance(b,int) or not 0<=a<=b:
+                complete=False;break
+            totals[row['teamId']][0]+=a;totals[row['teamId']][1]+=b
+        # Rank exact opportunity-weighted fractions, with tied teams sharing a
+        # rank. Do not award a league medal against an incomplete field.
+        if complete and len(totals)==32 and all(b for a,b in totals.values()) and d:
+            rate=lambda a,b:Fraction(b-a if key=='pk' else a,b)
+            value=rate(n,d)
+            ranks[key]=1+sum(rate(a,b)>value for a,b in totals.values())
+    if ranks:output['ranks']=ranks
     return output
 
 
@@ -157,6 +173,13 @@ def build(feed=None,now=None):
         freeze=old and old.get('basis')=='pregame' and old.get('start')==game['start'] and stamp(old['as_of'])<stamp(game['start'])<=stamp(now)
         if freeze:
             output={**old,'matchups':matchup_for_game(game,meetings,now)}
+            for side in ('home','away'):
+                club=game[side];team=output['teams'].get(club);prior=references[(game['id'],side)]
+                source=observations.get(prior[0]['id']) if prior else None
+                if team and source and team.get('status')!='unavailable':
+                    rates=special_rates(club,source['teams'][club],cutoff,specials)
+                    if all(rates.get(k)==team['special_teams'].get(k) for k in ('pp','pk')) and rates.get('ranks'):
+                        team['special_teams']={**team['special_teams'],'ranks':rates['ranks']}
         else:
             output={'version':1,'id':game['id'],'start':game['start'],'home':game['home'],'away':game['away'],
               'as_of':now,'basis':'pregame' if stamp(now)<stamp(game['start']) else 'reconstructed',

@@ -175,6 +175,7 @@ jobs:
           python -B tests/playoffs_archive.py
           python -B tests/playoffs_previews.py
           node tests/playoffs_previews.mjs
+          node tests/playoffs_field.mjs
           node tests/playoffs_archive.mjs
           node tests/playoffs.mjs
 

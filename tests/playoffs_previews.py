@@ -93,6 +93,21 @@ class Previews(unittest.TestCase):
         self.assertEqual(data['season'][-1]['state'],'FUT')
         self.assertIsNone(compact({'id':2026010001,'gameType':1},2026))
 
+    def test_league_special_team_ranks_require_all_clubs_and_share_tied_ranks(self):
+        rows={'powerplay':[],'penaltykill':[]}
+        for club in range(32):
+            rows['powerplay'].append({'teamId':club,'gameDate':'2026-11-15','powerPlayGoalsFor':club+1,'ppOpportunities':100})
+            rows['penaltykill'].append({'teamId':club,'gameDate':'2026-11-15','ppGoalsAgainst':club+1,'timesShorthanded':100})
+        rates=special_rates('TOR',{'team_id':2},'2026-11-16',rows)
+        self.assertEqual(rates['ranks'],{'pp':30,'pk':3})
+        rows['powerplay'][1].update(powerPlayGoalsFor=3,ppOpportunities=100)
+        self.assertEqual(special_rates('TOR',{'team_id':1},'2026-11-16',rows)['ranks']['pp'],30)
+        # Adding future results cannot change this game's historical medal.
+        rows['powerplay'].append({'teamId':2,'gameDate':'2026-11-16','powerPlayGoalsFor':100,'ppOpportunities':100})
+        self.assertEqual(special_rates('TOR',{'team_id':2},'2026-11-16',rows)['ranks']['pp'],30)
+        rows['powerplay']=rows['powerplay'][1:]
+        self.assertNotIn('pp',special_rates('TOR',{'team_id':2},'2026-11-16',rows)['ranks'])
+
     def test_published_units_stats_chronology_and_goal_totals(self):
         paths=list((ROOT/'playoffs_lines/matchups').glob('*.json'))
         self.assertGreater(len(paths),0)

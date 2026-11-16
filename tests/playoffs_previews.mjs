@@ -14,7 +14,7 @@ await test('Corrupt identity, future features, invented players, duplicate units
   d=>d.teams[club].stats_through=g.date,d=>d.teams[club].players[0].expected_goals+=1,
   d=>d.teams[club].units.f[0].players[0]=999999,d=>d.teams[club].units.f.push(d.teams[club].units.f[0]),
   d=>d.matchups.recent[0].ag=d.matchups.recent[0].hg,d=>d.matchups.wins[club]++,
-  d=>d.matchups.recent.reverse(),d=>d.matchups.recent[0].type=1,d=>d.teams[club].players[0].stats.fo=101]){
+  d=>d.matchups.recent.reverse(),d=>d.matchups.recent[0].type=1,d=>d.teams[club].players[0].stats.fo=101,d=>d.teams[club].special_teams.ranks={pp:0},d=>d.teams[club].special_teams.ranks={foo:1}]){
   const d=structuredClone(raw);mutate(d);assert.equal(GAME_PREVIEW.validate(d,g,now),null);
  }
 });

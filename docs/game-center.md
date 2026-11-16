@@ -287,3 +287,20 @@ Verification: `python -B tests/playoffs_previews.py`,
 iPhone WebKit and 320px touch layouts, all four tabs, keyboard navigation,
 portrait retention, incomplete lines, goal-specific probabilities, local dates,
 source outages and timer/request cleanup.
+
+## Lineup readability and league special-teams ranks
+
+Movement indicators use larger directional icons and high-contrast rank badges;
+position/jersey labels and shared-ice-time values have larger, heavier text.
+Portraits retain the full 336px NHL source with explicit intrinsic dimensions and
+no transform/filter, displayed within a consistent responsive circle. Rink maps
+place the designated home club's SVG crest beneath the center-ice markings.
+
+PP% and PK% badges now include a league competition rank. Rates use exact season
+goals/opportunities strictly before the selected NHL game date; ranks compare
+unrounded fractions across all 32 clubs, with ties sharing a rank. Incomplete
+league coverage or a zero-opportunity club suppresses the rank and medal rather
+than claiming a leader. Top-three rates reuse the goalie gold/silver/bronze
+palette and reduced-motion-aware sheen. Saved pregame reports may gain rank
+metadata only when recomputed historical rates match their saved values; the
+original lineup, scoring projections and timestamp stay frozen.

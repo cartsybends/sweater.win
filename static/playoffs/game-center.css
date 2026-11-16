@@ -364,3 +364,35 @@
  .po-gc-meeting>small{grid-column:1/-1}
 }
 @media(max-width:360px){.po-gc-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.po-gc-tabs button{text-align:center;font-size:12px}.po-gc-line-team-switch button{flex-direction:column;font-size:11px;gap:4px}.po-gc-line-player h5{font-size:11px}.po-gc-line-portrait{width:48px;height:48px}.po-gc-line-player dd{font-size:14px}}
+
+/* Clear usage changes and full-source NHL portraits at every screen size. */
+.po-gc-line-player-top{gap:8px;min-height:32px}
+.po-gc-line-position{font-size:14px;font-weight:700;color:var(--fg);letter-spacing:.15px}
+.po-gc-line-move{font-size:14px;font-weight:750;padding:4px 7px;border-radius:6px;gap:4px;background:#28845614;color:#216b49;line-height:1.25}
+.po-gc-line-move>svg{width:20px;height:20px;flex-shrink:0}
+.po-gc-line-move[data-direction=down]{color:#915707;background:#aa6d1715}
+:root[data-theme=dark] .po-gc-line-move{color:#8be0b4;background:#5dbd8b1c}
+:root[data-theme=dark] .po-gc-line-move[data-direction=down]{color:#f0c275;background:#d89c3a1c}
+.po-gc-line-portrait{width:96px;height:96px;isolation:isolate}
+.po-gc-line-portrait>img{object-fit:contain;object-position:center bottom;image-rendering:-webkit-optimize-contrast;transform:none;filter:none}
+.po-gc-line-unit>header .po-gc-shared-toi{font-size:14px;line-height:1.6}
+.po-gc-shared-toi>b{color:var(--fg);font-weight:750;font-variant-numeric:tabular-nums}
+.po-gc-shared-toi>span{white-space:nowrap}
+.po-gc-special-rate{gap:16px;text-align:left}
+.po-gc-special-rate>div>span{font-size:12px;color:var(--muted);display:block}
+.po-gc-special-rate>div>small{font-size:13px;font-weight:700;display:block;margin-top:4px;color:var(--fg)}
+.po-gc-special-rate.po-goalie-medal{position:relative;isolation:isolate;overflow:hidden;background:var(--po-medal-bg);border-color:var(--po-medal-edge);color:var(--po-medal-ink)}
+.po-gc-special-rate.po-goalie-medal :is(b,span,small){color:inherit}
+@media(max-width:600px){
+ .po-gc-line-player-top{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:6px;min-height:60px;margin-bottom:8px}
+ .po-gc-line-position{font-size:13px}
+ .po-gc-line-move{font-size:13px;padding:3px 4px;gap:2px}
+ .po-gc-line-move>svg{width:18px;height:18px}
+ .po-gc-line-portrait{width:72px;height:72px;max-width:100%;aspect-ratio:1;height:auto}
+ .po-gc-line-player h5{font-size:13px}
+ .po-gc-line-unit>header .po-gc-shared-toi{font-size:13px}
+ .po-gc-special-rate{display:flex;gap:10px;padding:9px 10px}
+ .po-gc-special-rate>div>span{font-size:11px}
+ .po-gc-special-rate>div>small{font-size:12px}
+}
+@media(max-width:360px){.po-gc-line-position{font-size:12px}.po-gc-line-move{font-size:12px;padding-left:2px;padding-right:2px}.po-gc-line-move>svg{width:17px;height:17px}.po-gc-line-portrait{width:62px}.po-gc-line-player h5{font-size:12px}}

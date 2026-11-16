@@ -334,3 +334,30 @@ choices require a new independent evaluation period before claiming an untouched
 holdout. The workflow `refresh-previews.yml` follows successful league forecast
 refreshes, validates both source chronology and client payloads, and publishes
 only those reports; preview failures do not prevent the base forecast refreshing.
+
+### If playoffs started today
+
+The optional standings view uses the displayed forecast's NHL standing sequences,
+not simulated qualification probabilities or projected final points. Each
+conference takes the top three teams in each division plus its two remaining
+wild cards. The stronger division winner faces WC2 and the other faces WC1,
+including same-division wild cards. Division second/third seeds meet. Current
+snapshots preserve NHL conference/division/wild-card sequence metadata;
+previously saved archives retain their original official league sequence.
+No advancing team is invented for later rounds of the radial bracket.
+
+The league board keeps all 32 rows, disabling and dimming nonqualifiers only
+while this view is selected; returning to forecasts restores every team.
+Changing archive dates rebuilds the field from that snapshot. Official NHL
+x/y/z/p clinch indicators highlight the team column independently of this mode.
+A model probability of 100% never creates a clinch. The probability heatmap is
+on by default, progressing from red through amber to green without changing
+numbers or formatting. The one-line provider credit appears only in Playoff
+Picture; the homepage and other games do not show that footer.
+
+`node tests/playoffs_field.mjs` checks the sixteen-team field, cross-division
+wild-card rules, official rank priority, malformed metadata, independent clinch
+indicators and radial-logo spacing. Existing model/live/archive validations
+remain unchanged. Browser verification additionally covers field toggling,
+disabled rows, pointer/keyboard/touch interactions, zoom, dated snapshots,
+responsive readability and footer visibility on other routes.
