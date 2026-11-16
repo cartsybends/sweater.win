@@ -115,8 +115,11 @@ penalties do not invent a committing player. Alarm and striped referee markers
 are placed on the probability plot. Dense nearby events share a counted marker with
 all events retained in its details. Details stay inline on mobile.
 
-The graph uses the same team-colour palette as the playoff circle. RGB distance
-below 100 adds a dashed away line; otherwise both lines are solid. Both logos,
+The graph prefers each club’s recognizable colours, with Edmonton blue and
+Philadelphia orange. When primary colours clash, a club’s secondary colour can
+separate the pair. The choice is stable when home/away assignments reverse.
+If the available club colours still have RGB distance below 100, a dashed away
+line provides the remaining distinction; otherwise both lines are solid. Both logos,
 labels and swatches remain visible. The moneyline panel independently labels
 each price with its team logo and abbreviation. Percentage axes include 0, 25,
 50, 75 and 100. Shaded periods, labelled headers and separated end labels prevent
@@ -304,3 +307,6 @@ than claiming a leader. Top-three rates reuse the goalie gold/silver/bronze
 palette and reduced-motion-aware sheen. Saved pregame reports may gain rank
 metadata only when recomputed historical rates match their saved values; the
 original lineup, scoring projections and timestamp stay frozen.
+
+First-round bracket cards centre a bold, larger VS label in a fixed middle
+column between equally sized team blocks, including on narrow screens.

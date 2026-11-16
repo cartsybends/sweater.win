@@ -55,7 +55,7 @@ async function poGCLoad(){
 }
 function poGCRefIcon(){return '<svg class="po-gc-ref" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 12 1 7m19 5 3-5" stroke="#e5ae83" stroke-width="3" stroke-linecap="round"/><path d="M5 11h14l2 12H3Z" fill="#f3f3f3" stroke="#17212a" stroke-width="1"/><path d="m7 11-1 12m6-12v12m5-12 1 12" stroke="#17212a" stroke-width="2.5"/><circle cx="12" cy="6" r="4" fill="#edbd97"/><path d="M8 5c0-5 8-5 8 0Z" fill="#17212a"/><path d="m14 8 4 1" stroke="#17212a" stroke-width="1.5"/></svg>';}
 function poGCChart(){
- const d=poGCData,g=poGCGame,forecast=d?.forecast,points=forecast?.points||[],latest=forecast?.status==='scheduled'?{home:g.prediction.home_win,away:g.prediction.away_win}:forecast?.current,style=GAME_CENTER.lineStyle(poModel.teamColors[g.away],poModel.teamColors[g.home]);
+ const d=poGCData,g=poGCGame,forecast=d?.forecast,points=forecast?.points||[],latest=forecast?.status==='scheduled'?{home:g.prediction.home_win,away:g.prediction.away_win}:forecast?.current,style=GAME_CENTER.matchupStyle(g.away,g.home,poModel.teamColors);
  $('poGCBody').style.setProperty('--gc-home',style.home);$('poGCBody').style.setProperty('--gc-away',style.away);$('poGCBody').dataset.gcSimilar=String(style.dashed);
  $('poGCLegend').innerHTML=['away','home'].map(side=>`<span><i class="po-gc-swatch ${side}"></i><img src="team-crests/${g[side]}.svg" alt=""><span>${esc(g[side])}</span><b>${poGCPercent(latest?.[side])}</b></span>`).join('');
  const host=$('poGCChart'),focused=host.contains(document.activeElement)?document.activeElement.dataset.gcEvents:null,inspection=poGCPoint?{t:poGCPoint.t,anchor:poGCAnchor}:null;
