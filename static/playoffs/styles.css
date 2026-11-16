@@ -69,9 +69,9 @@
 .po-impact-note b{color:var(--fg);font-weight:650}
 .po-injury-list{gap:12px}
 .po-injury-list li{display:flex;align-items:center;gap:9px}
-.po-injury-portrait{display:grid;width:36px;height:36px;flex:none;overflow:hidden;border-radius:50%;background:var(--cell);color:var(--muted)}
-.po-injury-portrait>svg,.po-injury-portrait>img{grid-area:1/1;width:36px;height:36px;object-fit:cover}
-.po-injury-portrait>img{background:var(--cell)}
+.po-injury-portrait{display:grid;width:44px;height:44px;flex:none;overflow:hidden;border-radius:50%;background:var(--cell);color:var(--muted)}
+.po-injury-portrait>svg,.po-injury-portrait>img{grid-area:1/1;width:44px;height:44px;object-fit:contain}
+.po-injury-portrait>img{display:block;background:var(--cell);image-rendering:auto;transform:none;filter:none}
 .po-injury-list li>.po-injury-copy{display:block;min-width:0;flex:1}
 .po-injury-copy>div{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .po-injury-list strong{font-size:12px;font-weight:650;line-height:1.4}

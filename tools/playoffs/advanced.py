@@ -210,23 +210,8 @@ def goalie_statistics(season, now, fetch=None):
 def availability(teams, fetch, now):
     """Report source observations and only resolve unambiguous NHL player identities."""
     directory=CACHE/'advanced';directory.mkdir(parents=True,exist_ok=True)
-    rosters={}
-    def roster(team):
-        path=directory/f'roster-{team}.json'
-        cached=json.loads(path.read_text()) if path.exists() else None
-        if cached and cached.get('day')==now[:10]:
-            return team,cached['players']
-        try:
-            raw=fetch(f'https://api-web.nhle.com/v1/roster/{team}/current')
-            players=[{'id':p['id'],'name':p['firstName']['default']+' '+p['lastName']['default'],'position':key} for key in ['forwards','defensemen','goalies'] for p in raw[key]]
-            if not any(p['position']=='goalies' for p in players):
-                raise ValueError('No rostered goalie')
-            path.write_text(json.dumps({'day':now[:10],'players':players}))
-            return team,players
-        except Exception:
-            return team,cached['players'] if cached else []
-    with ThreadPoolExecutor(max_workers=6) as pool:
-        rosters=dict(pool.map(roster,TEAMS))
+    from roster_eligibility import Membership
+    membership=Membership(directory,fetch,now);rosters=membership.collect()
     names={t['name']:t['abbr'] for t in teams};names.update(NAMES)
     known={team:{normalized(p['name']):p for p in players} for team,players in rosters.items()}
     injuries={team:[] for team in TEAMS};status='unavailable';reported=None
@@ -249,6 +234,8 @@ def availability(teams, fetch, now):
                     injury_status='Unknown'
                 record={'player_id':player['id'] if player else None,'name':name,'position':athlete.get('position',{}).get('abbreviation',''),
                    'status':injury_status,'reported_at':injury.get('date'),'return_estimate':injury.get('details',{}).get('returnDate')}
+                registration=athlete.get('status',{}).get('type')
+                if isinstance(registration,str):record['registration_status']=registration[:50]
                 reason=injury.get('details',{}).get('type')
                 if isinstance(reason,str) and 0<len(reason)<=80:
                     record['reason']=reason
@@ -264,7 +251,6 @@ def availability(teams, fetch, now):
                     record['portrait_url']=portrait
                 injuries[team].append(record)
         status='reported'
-        (directory/'injuries.json').write_text(json.dumps({'reported_at':reported,'injuries':injuries},separators=(',',':')))
     except Exception:
         cached=directory/'injuries.json'
         if cached.exists():
@@ -274,4 +260,6 @@ def availability(teams, fetch, now):
                 status='cached' if 0<=age<=86400 else 'stale'
             except (KeyError,ValueError,TypeError):
                 status='unavailable'
-    return {'rosters':rosters,'injuries':injuries,'status':status,'reported_at':reported,'source':'ESPN','observed_at':now}
+    injuries=membership.reconcile(injuries)
+    if status=='reported':(directory/'injuries.json').write_text(json.dumps({'reported_at':reported,'injuries':injuries},separators=(',',':')))
+    return {'rosters':rosters,'roster_status':membership.status,'injuries':injuries,'status':status,'reported_at':reported,'source':'ESPN','observed_at':now}

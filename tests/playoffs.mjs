@@ -83,6 +83,7 @@ test('injury portraits can use ESPN even without an NHL roster identity',()=>{
  vm.runInContext(source.slice(source.indexOf('function poReturnEstimate('),source.indexOf('function poLocalClockChanged(')),ctx);
  const image=ctx.poInjuryPortrait({name:'Dylan Larkin',player_id:null,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'});assert(image.includes('3114755.png'));assert(!ctx.poInjuryPortrait({portrait_url:'javascript:alert(1)'}).includes('<img'));
  assert(ctx.poInjuryPortrait({player_id:8477946,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'}).includes('data-po-injury-fallback='));
+ const verified=ctx.poInjuryPortrait({player_id:8477946,portrait_url:'https://a.espncdn.com/i/headshots/nhl/players/full/3114755.png'});assert.match(verified,/src="https:\/\/assets\.nhle\.com\/mugs\/nhl\/latest\/8477946\.png"/);assert.match(verified,/data-po-injury-fallback="https:\/\/a\.espncdn\.com/);assert.match(verified,/width="336" height="336"/);
 });
 test('injury status links prefer matched RotoWire reports and retain explicit ESPN fallback',()=>{
  const source=fs.readFileSync('static/playoffs/dashboard.js','utf8'),ctx=vm.createContext({esc:String});vm.runInContext(source.slice(source.indexOf('function poInjuryBadge('),source.indexOf('function poInjurySummary(')),ctx);

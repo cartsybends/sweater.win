@@ -55,8 +55,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: .cache/playoffs/advanced
-          key: nhl-advanced-v2-${{ steps.season.outputs.start }}-${{ steps.advanced.outputs.revision }}
+          key: nhl-advanced-v2-membership1-${{ steps.season.outputs.start }}-${{ steps.advanced.outputs.revision }}
           restore-keys: |
+            nhl-advanced-v2-membership1-${{ steps.season.outputs.start }}-
             nhl-advanced-v2-${{ steps.season.outputs.start }}-
       - uses: actions/cache@v4
         with:
