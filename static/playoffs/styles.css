@@ -92,6 +92,15 @@
 .po-table th.po-logo-head{z-index:3}
 .po-table .po-logo-button{justify-content:center}
 .po-table .po-name-cell,.po-table .po-team-head{text-align:left;position:static;min-width:190px}
+@media(min-width:1000px){
+ #poPanelLeague .po-table{min-width:0;table-layout:auto}
+ #poPanelLeague .po-table .po-name-cell,#poPanelLeague .po-table .po-team-head{width:190px;min-width:155px;max-width:190px}
+ #poPanelLeague .po-table .po-name-cell b{white-space:normal}
+ #poPanelLeague .po-table th,#poPanelLeague .po-table td{padding-left:8px;padding-right:8px}
+ #poPanelLeague .po-table .po-logo-cell,#poPanelLeague .po-table .po-logo-head{width:70px;min-width:70px;max-width:70px}
+ #poPanelLeague .po-table th,#poPanelLeague .po-table th button{white-space:normal;line-height:1.4}
+ #poPanelLeague .po-scroll-hint{display:none}
+}
 @media(max-width:540px){
  .po-table th:first-child,.po-table td:first-child{width:56px;min-width:56px;max-width:56px;padding-left:7px;padding-right:7px}
  .po-table .po-name-cell,.po-table .po-team-head{min-width:155px}
