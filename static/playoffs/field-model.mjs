@@ -11,7 +11,9 @@ export const PLAYOFF_FIELD=(()=>{
    const confOrder=hasConferenceRanks?(a,b)=>a.conference_rank-b.conference_rank:order;
    const ranked=members.sort(confOrder),groups=divisions[conference].map(division=>{const group=ranked.filter(t=>t.division===division),complete=group.length===8&&group.every(t=>Number.isInteger(t.division_rank)&&t.division_rank>=1&&t.division_rank<=8)&&new Set(group.map(t=>t.division_rank)).size===8;return complete?group.sort((a,b)=>a.division_rank-b.division_rank):group;});
    if(ranked.length!==16||groups.some(g=>g.length!==8))return null;
-   const automatic=new Set(groups.flatMap(g=>g.slice(0,3).map(t=>t.abbr))),wild=ranked.filter(t=>!automatic.has(t.abbr)).slice(0,2);
+   const automatic=new Set(groups.flatMap(g=>g.slice(0,3).map(t=>t.abbr))),remaining=ranked.filter(t=>!automatic.has(t.abbr));
+   const hasWildRanks=remaining.every(t=>Number.isInteger(t.wildcard_rank)&&t.wildcard_rank>=1&&t.wildcard_rank<=10)&&new Set(remaining.map(t=>t.wildcard_rank)).size===10;
+   const wild=(hasWildRanks?remaining.sort((a,b)=>a.wildcard_rank-b.wildcard_rank):remaining).slice(0,2);
    for(const group of groups)group.slice(0,3).forEach((t,i)=>seeds[t.abbr]=divisionCodes[t.division]+(i+1));
    wild.forEach((t,i)=>seeds[t.abbr]='WC'+(i+1));
    // The better division winner gets WC2 even when both wild cards are from

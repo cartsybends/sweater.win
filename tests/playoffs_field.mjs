@@ -14,7 +14,7 @@ test('Qualification follows actual standings regardless of model odds or project
 });
 const synthetic=()=>{
  const grouped=['E','W'].flatMap(conference=>teams.filter(t=>t.conference===conference).sort((a,b)=>a.division.localeCompare(b.division)||a.abbr.localeCompare(b.abbr)));
- return grouped.map((t,i)=>({...t,official_rank:i+1,conference_rank:undefined,division_rank:undefined,points:100-i}));
+ return grouped.map((t,i)=>({...t,official_rank:i+1,conference_rank:undefined,division_rank:undefined,wildcard_rank:undefined,points:100-i}));
 };
 test('Each division gets three places; both wild cards can come from the same division',()=>{
  const data=synthetic(),field=model.field(data);
@@ -34,6 +34,10 @@ test('Conference and division sequences take precedence when supplied by the NHL
 test('Malformed seed metadata cannot create an invented bracket',()=>{
  assert.equal(model.field(teams.slice(1)),null);const duplicate=structuredClone(teams);duplicate[1].official_rank=duplicate[0].official_rank;assert.equal(model.field(duplicate),null);
  const wrong=structuredClone(teams);wrong[0].division='Unknown';assert.equal(model.field(wrong),null);
+});
+test('Official wild-card sequences resolve the remaining field independently of league order',()=>{
+ const data=synthetic();for(const c of ['E','W']){const members=data.filter(t=>t.conference===c),automatic=new Set([0,1,2,8,9,10].map(i=>members[i].abbr));members.filter(t=>!automatic.has(t.abbr)).forEach((t,i)=>t.wildcard_rank=10-i);}
+ const field=model.field(data);for(const c of ['E','W']){const members=data.filter(t=>t.conference===c),last=members.at(-1);assert.equal(field.seeds[last.abbr],'WC1');}
 });
 test('Clinch badges use NHL indicators and never infer a clinch from simulated certainty',()=>{
  for(const code of ['x','y','z','p'])assert.equal(model.clinched({clinch:code}).code,code);
