@@ -172,6 +172,8 @@ jobs:
           python -B tests/playoffs_data.py
           python -B tests/playoffs_advanced.py
           python -B tests/playoffs_rss.py
+          python -B tests/playoffs_archive.py
+          node tests/playoffs_archive.mjs
           node tests/playoffs.mjs
 
       - name: Validate generated JavaScript

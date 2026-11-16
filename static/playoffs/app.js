@@ -2,6 +2,43 @@ const PLAYOFF_DATA=/*__PLAYOFF_DATA__*/{};
 const poModel=PLAYOFF_PICTURE,poStages=poModel.stages,poSaved=store.get('sweater-playoffs')||{};
 const poTabs=['league','games','circle','team','history'];
 let poData=poModel.validate(PLAYOFF_DATA),poTeam=poModel.clubs.has(poSaved.team)?poSaved.team:'',poTab='league',poFormat='percent',poSort='playoffs',poDescending=true,poShared=null,poSharedHash='',poTimer=null,poController=null,poBusy=false,poAttempt=0,poRequest=0,poError=false,poImageURL='';
+let poLiveData=poData,poArchiveSnapshot=null,poArchiveDate='',poArchiveIndex=null,poArchiveBusy=false,poArchiveIndexBusy=false,poArchiveController=null,poArchiveIndexController=null,poArchiveRequest=0,poArchiveIndexRequest=0,poArchiveIndexAttempt=0,poArchiveWanted='',poArchiveError='';
+const poArchiveCache=new Map(),poArchiveActive=()=>!!poArchiveSnapshot&&['league','circle','team'].includes(poTab)&&!poShared;
+const poArchiveToday=()=>poModel.localDay(Date.now(),poModel.archiveZone),poArchiveLabel=day=>new Date(day+'T12:00:00Z').toLocaleDateString(undefined,{timeZone:poModel.archiveZone,month:'short',day:'numeric',year:'numeric'});
+function poArchiveControls(){
+ const active=poArchiveActive(),today=poArchiveToday(),days=poArchiveIndex?.days||[],selected=poArchiveWanted||poArchiveDate||today;
+ $('poArchiveBar').hidden=!['league','circle','team'].includes(poTab)||!!poShared;
+ $('view-playoffs').dataset.poArchive=active?poArchiveDate:'latest';
+ $('poArchiveDate').disabled=!days.length;$('poArchiveDate').min=days[0]?.date||'';$('poArchiveDate').max=today;$('poArchiveDate').value=selected;
+ $('poArchiveLatest').setAttribute('aria-pressed',String(!active&&!poArchiveBusy));
+ $('poArchivePrev').disabled=!days.some(d=>d.date<selected);$('poArchiveNext').disabled=selected>=today;
+ $('poArchiveShowing').textContent=active?'Archived · '+poArchiveLabel(poArchiveDate):'Latest forecast';
+ $('poArchiveStatus').textContent=poArchiveBusy?'Loading '+poArchiveLabel(poArchiveWanted)+' · Still showing '+(active?poArchiveLabel(poArchiveDate):'the latest forecast')+'.':poArchiveError||(poArchiveIndexBusy&&!days.length?'Loading available dates…':days.length?'Latest saved forecast per date · Eastern Time · Archive starts '+poArchiveLabel(days[0].date)+'.':'No archived dates are available yet.');
+ $('poArchiveRetry').hidden=!poArchiveError;
+ for(const id of ['poPanelLeague','poPanelCircle','poPanelTeam'])$(id).setAttribute('aria-busy',String(poArchiveBusy));
+ $('poExportCSV').disabled=poArchiveBusy;$('poShareToggle').disabled=poArchiveBusy||!poCurrent();
+}
+function poArchiveStop(){poArchiveRequest++;poArchiveIndexRequest++;poArchiveController?.abort();poArchiveIndexController?.abort();poArchiveController=null;poArchiveIndexController=null;poArchiveBusy=false;poArchiveIndexBusy=false;poArchiveIndexAttempt=0;poArchiveWanted='';}
+function poArchiveUseLatest(){poArchiveRequest++;poArchiveController?.abort();poArchiveController=null;poArchiveSnapshot=null;poArchiveDate='';poArchiveWanted='';poArchiveBusy=false;poArchiveError='';poDropShared();poRender();}
+async function poLoadArchiveIndex(force=false){
+ if(poArchiveIndexBusy||!force&&Date.now()-poArchiveIndexAttempt<300000)return;
+ poArchiveIndexAttempt=Date.now();poArchiveIndexBusy=true;const request=++poArchiveIndexRequest,controller=new AbortController();poArchiveIndexController=controller;const timeout=setTimeout(()=>controller.abort(),12000);poArchiveControls();
+ try{const r=await fetch(poModel.archiveURL+'index.json?v='+Math.floor(Date.now()/120000),{cache:'no-store',credentials:'omit',signal:controller.signal});if(!r.ok)throw Error();const index=poModel.archiveIndex(await r.json());if(request!==poArchiveIndexRequest)return;if(!index)throw Error();poArchiveIndex=index;if(!poArchiveWanted)poArchiveError='';}
+ catch{if(request===poArchiveIndexRequest)poArchiveError='Available dates could not be checked. Your displayed forecast has been kept.';}
+ finally{clearTimeout(timeout);if(request===poArchiveIndexRequest){poArchiveIndexBusy=false;poArchiveIndexController=null;poArchiveControls();}}
+}
+async function poSelectArchive(day){
+ if(day===poArchiveToday()){poArchiveUseLatest();return;}
+ const entry=poArchiveIndex?.days.find(d=>d.date===day);
+ if(!entry){poArchiveRequest++;poArchiveController?.abort();poArchiveController=null;poArchiveBusy=false;poArchiveError='No saved forecast is available on that date. Choose another date or use the arrows.';poArchiveWanted='';poArchiveControls();return;}
+ poArchiveController?.abort();const request=++poArchiveRequest,controller=new AbortController();poArchiveController=controller;poArchiveBusy=true;poArchiveWanted=day;poArchiveError='';poArchiveControls();const timeout=setTimeout(()=>controller.abort(),15000);
+ try{
+  let saved=poArchiveCache.get(entry.sha256);
+  if(!saved){const r=await fetch(poModel.archiveURL+day+'.json?v='+entry.sha256,{cache:'no-store',credentials:'omit',signal:controller.signal});if(!r.ok)throw Error();const bytes=await r.arrayBuffer(),digest=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');if(digest!==entry.sha256)throw Error();saved=poModel.archived(JSON.parse(new TextDecoder().decode(bytes)),entry);if(!saved)throw Error();poArchiveCache.set(entry.sha256,saved);if(poArchiveCache.size>6)poArchiveCache.delete(poArchiveCache.keys().next().value);}
+  if(request!==poArchiveRequest)return;poArchiveSnapshot=saved;poArchiveDate=day;poArchiveError='';poDropShared();
+ }catch{if(request===poArchiveRequest)poArchiveError='Could not load '+poArchiveLabel(day)+'. Your displayed forecast has been kept.';}
+ finally{clearTimeout(timeout);if(request===poArchiveRequest){poArchiveBusy=false;poArchiveController=null;if(!poArchiveError)poArchiveWanted='';poRender();}}
+}
 const poDate=value=>new Date(value).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
 const poTeamRecord=team=>poData?.teams.find(t=>t.abbr===team);
 const poCurrent=()=>poShared?{abbr:poShared.team,name:poShared.name,gp:poShared.gp,points:poShared.points,projected_points:poShared.projected,odds:poShared.odds,shared:true}:poTeamRecord(poTeam);
@@ -14,7 +51,7 @@ function poPick(team){if(!poModel.clubs.has(team))return;poDropShared();poTeam=t
 function poOpenShared(){
  if(!location.hash.startsWith('#playoffs?')){poShared=null;poSharedHash='';return;}
  if(poSharedHash===location.hash){poTab='team';return;}
- const snapshot=poModel.read(location.hash);if(snapshot){poShared=snapshot;poTeam=snapshot.team;poTab='team';poSharedHash=location.hash;}else{poShared=null;poSharedHash='';toast('This shared forecast could not be opened. Showing the league board.');}
+ const snapshot=poModel.read(location.hash);if(snapshot){poArchiveRequest++;poArchiveController?.abort();poArchiveController=null;poArchiveBusy=false;poArchiveSnapshot=null;poArchiveDate='';poArchiveWanted='';poArchiveError='';poShared=snapshot;poTeam=snapshot.team;poTab='team';poSharedHash=location.hash;}else{poShared=null;poSharedHash='';toast('This shared forecast could not be opened. Showing the league board.');}
 }
 function poDistribution(t){
  if(!t?.distribution?.length)return '<div class="po-empty">Use the latest forecast to explore the final-points distribution.</div>';
@@ -41,6 +78,8 @@ function poRenderHistory(){
 }
 function poFeedStatus(){
  $('poRefresh').disabled=poBusy;
+ $('poRefresh').textContent=poArchiveActive()?'Use latest forecast ↗':'Check for updates ↻';
+ if(poArchiveActive()){$('poStarterFeedNote').hidden=true;$('poChecked').textContent='Archived forecast · '+poArchiveLabel(poArchiveDate);$('poLatest').textContent='Saved NHL data check · '+poDate(poData.checked_at)+' · '+poData.completed_games+' of '+poData.total_games+' regular-season games included';$('poNotice').hidden=true;return;}
  const news=poData?.starter_feed;$('poStarterFeedNote').hidden=news?.source!=='RotoWire RSS';
  if(news?.source==='RotoWire RSS')$('poStarterChecked').textContent=(news.status==='unavailable'?'Latest check unavailable; keeping earlier reports':news.checked_at?'Checked '+poDate(news.checked_at):'Awaiting the next news check')+' · publisher cache about '+Math.round((news.rss?.poll_seconds||600)/60)+' minutes. RSS may not include every announcement.';
  if(!poData){$('poChecked').textContent='Forecast temporarily unavailable';$('poLatest').textContent='Please check again shortly.';return;}
@@ -50,6 +89,7 @@ function poFeedStatus(){
  $('poNotice').hidden=!age;$('poNotice').textContent=age?'This forecast is more than six hours old. Probabilities below reflect the results included at the displayed time.':'';
 }
 function poRender(){
+ poData=poArchiveActive()?poArchiveSnapshot:poLiveData;
  const t=poCurrent(),available=!!t,options=[...(poData?.teams||[])].sort((a,b)=>a.name.localeCompare(b.name));
  if($('poTeam').options.length<2&&options.length)$('poTeam').innerHTML='<option value="">Choose a team…</option>'+options.map(t=>`<option value="${t.abbr}">${esc(t.name)}</option>`).join('');
  $('poTeam').value=poTeam;$('poShareToggle').disabled=!available;$('poHero').hidden=!available;$('poNoTeam').hidden=available;$('poTeamCharts').hidden=!available;$('poOpponentPanel').hidden=!available;$('poTeamRaw').hidden=!available||!!poShared;
@@ -61,7 +101,7 @@ function poRender(){
   const src=`team-logos/${t.abbr}.svg`;if($('poCrest').getAttribute('src')!==src)$('poCrest').src=src;
   $('poChance').textContent=poModel.fair(t.odds.playoffs,poFormat);$('poChance').classList.toggle('po-long',$('poChance').textContent.length>7);
   $('poChancePercent').textContent=poFormat==='percent'?'':poModel.percent(t.odds.playoffs)+' model probability';
-  $('poChange').textContent=t.shared?'Saved forecast':t.change===null||t.change===undefined?'First forecast recorded':`${poDelta(t.change)} percentage points since the previous forecast`;$('poChange').classList.toggle('positive',t.change>0);
+  $('poChange').textContent=t.shared?'Saved forecast':poArchiveActive()?'Archived forecast · '+poArchiveLabel(poArchiveDate):t.change===null||t.change===undefined?'First forecast recorded':`${poDelta(t.change)} percentage points since the previous forecast`;$('poChange').classList.toggle('positive',!poArchiveActive()&&t.change>0);
   $('poHeroStages').innerHTML=poStages.slice(1).map(([key,label])=>`<div><span>${label}</span><b>${poModel.fair(t.odds[key],poFormat)}</b>${poFormat==='percent'?'':`<small class="po-muted">${poModel.percent(t.odds[key])}</small>`}</div>`).join('');
   $('poCardTime').textContent=`SWEATER MODEL ESTIMATE · ${poDate(poShared?.at||poData.updated_at)}`;
   $('poLadder').innerHTML=poStages.map(([key,label])=>`<div class="po-ladder-row"><div><span>${label}</span><b>${poModel.fair(t.odds[key],poFormat)}</b></div><div class="po-ladder-track"><i style="width:${t.odds[key]}%"></i></div></div>`).join('');
@@ -70,24 +110,24 @@ function poRender(){
   $('poOpponents').innerHTML=t.opponents?.length&&t.odds.playoffs>0?t.opponents.slice(0,4).map(o=>`<div class="po-opponent"><img src="team-logos/${o.team}.svg" alt=""><div>${esc(poTeamRecord(o.team)?.name||o.team)}<b>${poModel.percent(Math.min(100,o.chance/t.odds.playoffs*100))}</b></div></div>`).join(''):'<p class="po-panel-note">First-round opponent forecasts are available in the latest forecast when qualification occurs in the simulations.</p>';
  }
  poRenderBoard();poRenderGames();poRenderCircle();if(t&&!t.shared)poRenderTeamStats(t);
- $('poChangeNote').textContent=poData?.previous_at?`Playoff probability change since ${poDate(poData.previous_at)}. All stage probabilities are measured from today.`:'Changes will appear after the next result changes the forecast. All stage probabilities are measured from today.';
+ $('poBoardNote').textContent=poArchiveActive()?'Team records and all stage probabilities reflect the saved forecast on '+poArchiveLabel(poArchiveDate)+'.':'All stage probabilities are measured from the latest forecast shown above.';
  $('poMethodCount').textContent=`${poData?.model==='sweater-xg-v2'?'Sweater expected-goals model v2':'Sweater goals model v1'} · ${(poData?.simulations||50000).toLocaleString()} simulations per forecast. Historical validation and the model assumptions are published with the source.`;
  $('poAdvancedNote').hidden=poData?.model!=='sweater-xg-v2';$('poAdvancedNote').textContent=poData?.advanced?poData.advanced.summary+' Advanced game data through '+poData.advanced.data_through+'. Future injury returns and goalie assignments remain uncertain.':'';
  $('poLegacyNote').hidden=poData?.model==='sweater-xg-v2';
  $('poValidationText').textContent=poData?.validation?.summary||'This first version uses a goals-based model. Historical validation is documented alongside its source code.';
  for(const tab of poTabs){const cap=tab[0].toUpperCase()+tab.slice(1),on=tab===poTab;$('poTab'+cap).setAttribute('aria-selected',String(on));$('poTab'+cap).tabIndex=on?0:-1;$('poPanel'+cap).hidden=!on;}
- poRenderHistory();poFeedStatus();poCloseShare();
+ poRenderHistory();poFeedStatus();poArchiveControls();poCloseShare();
 }
 async function poRefresh(force=false){
  if($('view-playoffs').hidden||document.hidden||poBusy||!force&&Date.now()-poAttempt<poModel.interval)return;
- poAttempt=Date.now();poBusy=true;poFeedStatus();const request=++poRequest,controller=new AbortController();poController=controller;const timeout=setTimeout(()=>controller.abort(),15000);
- try{const r=await fetch(poModel.url+'?v='+Math.floor(Date.now()/(force?1000:poModel.interval)),{cache:'no-store',credentials:'omit',signal:controller.signal});if(!r.ok)throw new Error();const next=poModel.validate(await r.json());if(request!==poRequest)return;if(!next)throw new Error();if(!poData||Date.parse(next.checked_at)>Date.parse(poData.checked_at)){const changed=!poData||next.source_sha256!==poData.source_sha256||next.analytics_version!==poData.analytics_version||next.games_today!==poData.games_today||poGamesKey(next)!==poGamesKey(poData);poData=next;if(changed)poRender();}poError=false;}catch{if(request===poRequest)poError=true;}finally{clearTimeout(timeout);if(request===poRequest){poController=null;poBusy=false;if(poLocalClockChanged())poRenderGames();poFeedStatus();}}
+ poAttempt=Date.now();poBusy=true;poLoadArchiveIndex();poFeedStatus();const request=++poRequest,controller=new AbortController();poController=controller;const timeout=setTimeout(()=>controller.abort(),15000);
+ try{const r=await fetch(poModel.url+'?v='+Math.floor(Date.now()/(force?1000:poModel.interval)),{cache:'no-store',credentials:'omit',signal:controller.signal});if(!r.ok)throw new Error();const next=poModel.validate(await r.json());if(request!==poRequest)return;if(!next)throw new Error();if(!poLiveData||Date.parse(next.checked_at)>Date.parse(poLiveData.checked_at)){const changed=!poLiveData||next.source_sha256!==poLiveData.source_sha256||next.analytics_version!==poLiveData.analytics_version||next.games_today!==poLiveData.games_today||poGamesKey(next)!==poGamesKey(poLiveData);poLiveData=next;if(!poArchiveActive()){poData=next;if(changed)poRender();}}poError=false;}catch{if(request===poRequest)poError=true;}finally{clearTimeout(timeout);if(request===poRequest){poController=null;poBusy=false;if(poLocalClockChanged())poRenderGames();poFeedStatus();}}
 }
-function closePlayoffs(){if(!$('view-playoffs'))return;if(typeof poCloseGameCenter==='function')poCloseGameCenter();poStopLive();poCircleHide();$('view-playoffs').hidden=true;document.body.classList.remove('playoffs-mode');$('playoffsNav').removeAttribute('aria-current');clearInterval(poTimer);poTimer=null;poRequest++;poController?.abort();poController=null;poBusy=false;poAttempt=0;poCloseShare();if($('poImageDialog').open)$('poImageDialog').close();}
+function closePlayoffs(){if(!$('view-playoffs'))return;if(typeof poCloseGameCenter==='function')poCloseGameCenter();poArchiveStop();poStopLive();poCircleHide();$('view-playoffs').hidden=true;document.body.classList.remove('playoffs-mode');$('playoffsNav').removeAttribute('aria-current');clearInterval(poTimer);poTimer=null;poRequest++;poController?.abort();poController=null;poBusy=false;poAttempt=0;poCloseShare();if($('poImageDialog').open)$('poImageDialog').close();}
 function openPlayoffs(push=true){
  if(push)rememberHubScroll();closeProjections();globalThis.SweaterAnalytics?.leave();leaveGame(game);teamMiniCleanup();closeParty();onHub=false;document.body.classList.remove('hubmode');document.body.classList.add('playoffs-mode');$('view-hub').hidden=true;$('view-teams').hidden=true;$('view-party').hidden=true;new Set(GAME_IDS.map(id=>G[id].view)).forEach(id=>{$(id).hidden=true;});
  $('view-playoffs').hidden=false;$('gameBar').hidden=false;$('archBar').hidden=true;$('gIcon').innerHTML=uiIcon('chart');$('gTitle').textContent='Playoff Picture';$('modeLabel').textContent='League odds, games & results';$('gameBar').dataset.game='playoffs';$('playoffsNav').setAttribute('aria-current','page');
- if(push&&!/^#playoffs(?:\?|$)/.test(location.hash))history.pushState(null,'','#playoffs');poTab='league';poOpenShared();document.title='Playoff Picture · Sweater';poRender();if(!poTimer)poTimer=setInterval(()=>poRefresh(),poModel.interval);poRefresh();window.scrollTo({top:0});
+ if(push&&!/^#playoffs(?:\?|$)/.test(location.hash))history.pushState(null,'','#playoffs');poTab='league';poOpenShared();document.title='Playoff Picture · Sweater';poRender();poLoadArchiveIndex();if(!poTimer)poTimer=setInterval(()=>poRefresh(),poModel.interval);poRefresh();window.scrollTo({top:0});
 }
 async function poDrawImage(snapshot){
  const palette=getComputedStyle($('poHero')),fg=palette.color,bg=palette.backgroundColor,accent=getComputedStyle($('poCardKicker')).color,muted=getComputedStyle($('poRecord')).color;
@@ -114,7 +154,9 @@ async function poShare(action){
  }catch{$('poShareStatus').textContent='The image could not be prepared. Please try again.';}
 }
 $('poBrand').innerHTML=PP_SWEATER_MARK+'<span>sweater.win</span>';
-$('playoffsNav').onclick=e=>{e.preventDefault();openPlayoffs();};$('poTeam').onchange=e=>{if(e.target.value)poPick(e.target.value);else{poDropShared();poTeam='';poRender();}};$('poRefresh').onclick=()=>{poRefresh(true);poUpdateLive(true);};$('poUseLatest').onclick=()=>{poDropShared();poRender();poRefresh(true);};
+$('playoffsNav').onclick=e=>{e.preventDefault();openPlayoffs();};$('poTeam').onchange=e=>{if(e.target.value)poPick(e.target.value);else{poDropShared();poTeam='';poRender();}};$('poRefresh').onclick=()=>{if(poArchiveActive())poArchiveUseLatest();poRefresh(true);poUpdateLive(true);};$('poUseLatest').onclick=()=>{poArchiveUseLatest();poRefresh(true);};
+$('poArchiveLatest').onclick=poArchiveUseLatest;$('poArchiveDate').onchange=e=>poSelectArchive(e.target.value);$('poArchiveRetry').onclick=()=>poArchiveWanted?poSelectArchive(poArchiveWanted):poLoadArchiveIndex(true);
+$('poArchivePrev').onclick=()=>{const day=poArchiveWanted||poArchiveDate||poArchiveToday(),previous=poArchiveIndex?.days.filter(d=>d.date<day).at(-1);if(previous)poSelectArchive(previous.date);};$('poArchiveNext').onclick=()=>{const day=poArchiveWanted||poArchiveDate,next=poArchiveIndex?.days.find(d=>d.date>day);poSelectArchive(next?.date||poArchiveToday());};
 $('poConference').onchange=poRender;for(const id of ['poHistoryTeam','poCompare1','poCompare2','poHistoryMetric'])$(id).onchange=poRenderHistory;
 $('view-playoffs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.poTeam)poPick(b.dataset.poTeam);else if(b.dataset.poTab){poTab=b.dataset.poTab;poRender();}else if(b.dataset.poFormat){poFormat=b.dataset.poFormat;poRender();}else if(b.dataset.poSort){if(poSort===b.dataset.poSort)poDescending=!poDescending;else{poSort=b.dataset.poSort;poDescending=true;}poRender();}else if(b.dataset.poShare)poShare(b.dataset.poShare);});
 $('poShareToggle').onclick=e=>{const open=$('poShareMenu').hidden;$('poShareMenu').hidden=!open;$('poShareToggle').setAttribute('aria-expanded',String(open));if(open&&e.detail===0)$('poShareMenu').querySelector('button').focus();};

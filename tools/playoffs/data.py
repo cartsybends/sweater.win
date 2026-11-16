@@ -221,6 +221,8 @@ def main():
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(output, ensure_ascii=False, separators=(',', ':')) + '\n')
     temp.replace(path)
+    from archive import capture as archive_forecast
+    archive_forecast(output)
     print('Verified Playoff Picture:', output['completed_games'], 'final games;', output['simulations'], 'simulations;', now)
 
 

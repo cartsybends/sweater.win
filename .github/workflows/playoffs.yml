@@ -7,6 +7,7 @@ on:
       - "tests/playoffs*"
       - "tests/fixtures/gamecenter*"
       - "playoffs_cache.json"
+      - "playoffs_archive/**"
       - "build_sweater.py"
       - ".github/workflows/*playoffs.yml"
   push:
@@ -17,6 +18,7 @@ on:
       - "tests/playoffs*"
       - "tests/fixtures/gamecenter*"
       - "playoffs_cache.json"
+      - "playoffs_archive/**"
       - "build_sweater.py"
       - ".github/workflows/*playoffs.yml"
 jobs:
@@ -34,6 +36,8 @@ jobs:
       - run: python -B tests/playoffs_data.py
       - run: python -B tests/playoffs_advanced.py
       - run: python -B tests/playoffs_rss.py
+      - run: python -B tests/playoffs_archive.py
+      - run: node tests/playoffs_archive.mjs
       - run: node tests/playoffs.mjs
       - run: node tests/playoffs_live.mjs
       - run: node tests/playoffs_live_history.mjs

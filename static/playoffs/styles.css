@@ -218,3 +218,21 @@
 .po-card-market-note{align-items:center;text-align:center}
 .po-card-market-note>.po-game-basis{text-align:center}
 @media(max-width:700px){.po-card-metrics>div:nth-child(3)>small,.po-game-card .po-market-cell{text-align:center}.po-card-market-note{align-items:center;text-align:center}.po-card-market-note>.po-game-basis{text-align:center}.po-market-time{font-size:10px}}
+/* One date selection follows the league board, circle and team breakdown. */
+.po-archive-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 18px;margin:8px 0 20px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.po-archive-bar[hidden]{display:none}
+.po-archive-controls{display:flex;align-items:flex-end;gap:14px;flex-shrink:0}
+.po-archive-controls button{min-width:38px;min-height:40px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;font-size:21px;cursor:pointer}
+.po-archive-controls #poArchiveLatest{padding:0 14px;font-size:12px;font-weight:650}
+.po-archive-controls #poArchiveLatest[aria-pressed=true]{color:var(--link);border-color:var(--link);background:var(--cell)}
+.po-archive-controls button:disabled{opacity:.35;cursor:default}
+.po-archive-calendar{display:flex;align-items:flex-end;gap:7px}
+.po-archive-calendar label{display:flex;flex-direction:column;gap:3px;color:var(--muted);font-size:10px}
+.po-archive-calendar input{box-sizing:border-box;min-height:40px;width:157px;max-width:100%;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;font-size:13px;padding:7px 9px}
+.po-archive-description{min-width:0}
+.po-archive-description>b{display:block;font-size:13px;font-weight:650;line-height:1.5}
+.po-archive-description>p{font-size:11px;color:var(--muted);line-height:1.6;margin:4px 0 0}
+.po-archive-description>button{border:0;border-bottom:1px solid currentColor;padding:0;margin-top:5px;background:none;color:var(--link);font:inherit;font-size:12px;cursor:pointer}
+.po-archive-bar button:focus-visible,.po-archive-calendar input:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+@media(max-width:700px){.po-archive-bar{align-items:flex-start;flex-direction:column;gap:12px;padding:14px}.po-archive-controls{width:100%;justify-content:space-between;gap:10px}.po-archive-controls button{min-height:42px;min-width:34px}.po-archive-calendar{gap:5px}.po-archive-calendar input{width:146px;min-height:42px;font-size:16px;padding:6px}.po-archive-controls #poArchiveLatest{padding:0 11px}.po-archive-description>p{font-size:11px}}
+@media(max-width:360px){.po-archive-controls{gap:6px}.po-archive-controls #poArchiveLatest{padding:0 8px;min-width:0}.po-archive-controls button{min-width:28px}.po-archive-calendar input{width:128px;min-width:0}}

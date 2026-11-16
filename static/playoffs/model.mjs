@@ -108,5 +108,17 @@ export const PLAYOFF_PICTURE = (()=>{
   return {v:1,team:raw.team,name:raw.name,start:raw.start,at:new Date(raw.at).toISOString(),gp:raw.gp,points:raw.points,projected:raw.projected,n:raw.n,odds:Object.fromEntries(stages.map(([k])=>[k,raw.odds[k]]))};
  }
  function read(hash){if(typeof hash!=='string'||hash.length>2500)return null;try{const q=hash.split('?')[1]||'',s=new URLSearchParams(q).get('s');return s?snapshot(JSON.parse(s)):null;}catch{return null;}}
- return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,liveFeed,snapshot,read,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
+ const archiveZone='America/New_York',archiveURL='https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_archive/';
+ function archiveIndex(raw,now=Date.now()){
+  if(raw?.version!==1||raw.time_zone!==archiveZone||!Array.isArray(raw.days)||raw.days.length>10000)return null;
+  let previous='';for(const d of raw.days){if(!d||typeof d!=='object')return null;const date=typeof d.date==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d.date)?Date.parse(d.date+'T12:00:00Z'):NaN,checked=Date.parse(d.checked_at),updated=Date.parse(d.updated_at),year=Math.floor(d.season/10000);
+   if(!Number.isFinite(date)||new Date(date).toISOString().slice(0,10)!==d.date||d.date<=previous||!Number.isFinite(checked)||checked>now+300000||!Number.isFinite(updated)||updated>checked||localDay(checked,archiveZone)!==d.date||!Number.isInteger(d.season)||year<2024||d.season!==year*10000+year+1||!/^[a-f0-9]{64}$/.test(d.sha256))return null;
+   previous=d.date;
+  }return raw;
+ }
+ function archived(raw,entry,now=Date.now()){
+  const a=raw?.archive;if(!entry||a?.version!==1||a.kind!=='recorded'||a.time_zone!==archiveZone||a.date!==entry.date||localDay(raw.checked_at,archiveZone)!==entry.date||raw.season!==entry.season||raw.updated_at!==entry.updated_at||raw.checked_at!==entry.checked_at)return null;
+  return validate(raw,now);
+ }
+ return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,liveFeed,snapshot,read,archiveIndex,archived,archiveZone,archiveURL,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
 })();

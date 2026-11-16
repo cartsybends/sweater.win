@@ -6,6 +6,38 @@ while visible. It preserves the last validated forecast on an error. Shared link
 freeze the selected team's stats and probabilities at the original forecast time.
 PNG sharing includes the Sweater S mark, URL, timestamp, and model-estimate label.
 
+## Daily forecast archive
+
+League, Circle and Team detail share a native calendar, previous/next saved-date
+buttons and a Latest reset. A historical choice keeps all three views on the same
+snapshot, including team records, all five stage probabilities, projected points,
+distributions and opponents. Games and the existing intraday History view continue
+to use the latest feed. Background checks update that live feed without replacing
+the selected archive. CSV filenames include the archived date; shared team cards
+retain the original forecast timestamp and values.
+
+`playoffs_archive/index.json` lists saved days with SHA-256 content hashes. Daily
+files use the NHL calendar in **America/New_York**, labelled Eastern Time in the
+UI. Each date retains its latest successful data check, including the original
+forecast/model timestamp; today uses the live forecast. Missing days have an
+explicit unavailable state. The browser checks both the content hash and forecast
+identity/shape before replacing its view, and retains the displayed data on error.
+Requests cancel when leaving Playoff Picture or choosing a different date.
+
+The normal verified forecast job calls `archive.capture` and commits the archive
+with the live feed. A new check only updates its own date; older checks cannot
+overwrite a newer snapshot. Compact files exclude live game/news payloads and the
+growing intraday history. Initial dates from November 12, 2026 onward were recovered
+from actual `playoffs_cache.json` commits on main, retaining source commit IDs.
+Earlier dates are not reconstructed using today's model or standings. Repeating
+the optional recovery uses the same latest-check rule:
+
+```sh
+python -B tools/playoffs/archive.py --backfill-ref origin/main
+python -B tests/playoffs_archive.py
+node tests/playoffs_archive.mjs
+```
+
 ## Refreshing
 
 ```sh
