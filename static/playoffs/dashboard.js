@@ -2,7 +2,7 @@ const poOddsColumns=[['playoffs','Playoffs'],['round2','Round 2'],['conference',
 const poStatColumns=[['gp','GP'],['record','W–L–OT'],['points','PTS'],['winPct','Win %'],['pointPct','Points %'],['gf','GF'],['ga','GA'],['diff','+/−'],['rw','RW'],['row','ROW'],['form','Last 10']];
 let poGamesMode='upcoming',poGamesDate='',poGamesAutoDate=true,poGamesZone='',poCircleSelected='',poCircleStage='cup',poCircleKeyFocus=false;
 let poCircleHoverFrame=0,poCirclePendingHover=null,poCircleFocusKey='',poCircleTipKey='',poCircleTipSize=null,poCircleBounds=null,poCircleActiveNodes=[];
-let poBracketSelected='';
+let poBracketSelected='',poBracketKeyFocus=false;
 const poCircleNodes=new Map();
 const poLiveGames=new Map();
 let poLiveTimer=null,poLiveController=null,poLiveRequest=0,poLiveAttempt=0,poLiveScope='',poLiveBusy=false,poLiveError=false;
@@ -273,7 +273,7 @@ $('poExportCSV').onclick=()=>{
 
 // Standings-only first-round bracket. Unknown advancing teams stay unassigned.
 function poRenderBracket(){
- poBracketSelected='';
+ poBracketSelected='';poBracketKeyFocus=false;
  const host=$('poBracketChart'),field=poTodayField;
  $('poBracketCards').innerHTML='';$('poBracketReadout').textContent='Select a first-round matchup to explore the seeds.';
  if(!field){host.innerHTML='<div class="po-empty">Official seed ordering is unavailable for this snapshot. Use the probability circle or choose another date.</div>';return;}
@@ -298,9 +298,10 @@ function poBracketSelect(id){
  const m=poTodayField?.matches.find(m=>m.id===id);for(const node of $('poTodayCircle').querySelectorAll('[data-po-bracket]')){const on=!!m&&node.dataset.poBracket===id;node.classList.toggle('is-selected',on);if(node.hasAttribute('aria-pressed'))node.setAttribute('aria-pressed',String(on));}
  $('poBracketReadout').textContent=m?'Round 1 · '+m.teams.map(t=>t.name+' ('+t.seed+', '+t.points+' PTS)').join(' vs '):'Select a first-round matchup to explore the seeds.';
 }
-$('poTodayCircle').addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
-$('poTodayCircle').addEventListener('pointerleave',e=>{if(e.pointerType!=='touch')poBracketSelect(null);});
-$('poTodayCircle').addEventListener('click',e=>{if(e.target.closest('[data-po-team]'))return;const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
-$('poTodayCircle').addEventListener('focusin',e=>{const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
-$('poTodayCircle').addEventListener('focusout',e=>{if(!e.relatedTarget?.closest?.('[data-po-bracket]'))poBracketSelect(null);});
+$('poTodayCircle').addEventListener('pointerover',e=>{if(e.pointerType==='touch'||poBracketKeyFocus)return;const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
+$('poTodayCircle').addEventListener('pointerleave',e=>{if(e.pointerType!=='touch'&&!poBracketKeyFocus)poBracketSelect(null);});
+$('poTodayCircle').addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;poBracketKeyFocus=false;const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
+$('poTodayCircle').addEventListener('click',e=>{if(e.detail>0)poBracketKeyFocus=false;if(e.target.closest('[data-po-team]'))return;const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
+$('poTodayCircle').addEventListener('focusin',e=>{poBracketKeyFocus=true;const match=e.target.closest('[data-po-bracket]');if(match)poBracketSelect(match.dataset.poBracket);});
+$('poTodayCircle').addEventListener('focusout',e=>{if(!e.relatedTarget?.closest?.('[data-po-bracket]')){poBracketKeyFocus=false;poBracketSelect(null);}});
 $('poTodayCircle').addEventListener('keydown',e=>{const match=e.target.closest('[data-po-bracket]');if(match&&['Enter',' '].includes(e.key)){e.preventDefault();poBracketSelect(match.dataset.poBracket);}});
