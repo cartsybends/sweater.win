@@ -352,8 +352,9 @@ Changing archive dates rebuilds the field from that snapshot. Official NHL
 x/y/z/p clinch indicators highlight the team column independently of this mode.
 A model probability of 100% never creates a clinch. The probability heatmap is
 on by default, progressing from red through amber to green without changing
-numbers or formatting. The one-line provider credit appears only in Playoff
-Picture; the homepage and other games do not show that footer.
+numbers or formatting. The additional one-line provider credit appears only in Playoff
+Picture; the original player-data, creator and NHL attribution footer remains
+on the homepage, Playoff Picture and other games.
 
 `node tests/playoffs_field.mjs` checks the sixteen-team field, cross-division
 wild-card rules, official rank priority, malformed metadata, independent clinch

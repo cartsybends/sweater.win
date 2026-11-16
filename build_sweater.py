@@ -3835,8 +3835,10 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="divs" id="ttGrid"></div>
   </section>
 
-  <footer class="foot po-attribution" aria-label="Playoff Picture data sources"><span id="foot" hidden></span>
-    <small>Playoff Picture advanced hockey data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener">MoneyPuck.com</a> · Sportsbook quotes and injury reports via <a href="https://www.espn.com/nhl/" target="_blank" rel="noopener">ESPN</a> · Starter news via <a href="https://www.rotowire.com/rss/" target="_blank" rel="noopener">RotoWire RSS</a>.</small>
+  <footer class="foot"><span id="foot"></span>
+    <small class="po-source-credit">Playoff Picture advanced hockey data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener">MoneyPuck.com</a> · Sportsbook quotes and injury reports via <a href="https://www.espn.com/nhl/" target="_blank" rel="noopener">ESPN</a> · Starter news via <a href="https://www.rotowire.com/rss/" target="_blank" rel="noopener">RotoWire RSS</a>.</small>
+    <small class="creator">Sweater was made by <strong>Carter George</strong>. Questions or inquiries? Reach out at <a href="mailto:1epiccarter1@gmail.com">1epiccarter1@gmail.com</a>.</small>
+    <small>Sweater is a fan-made game and is not affiliated with or endorsed by the NHL or its teams. NHL, team names, logos and player images are the property of the NHL and its teams.</small>
   </footer>
 </main>
 

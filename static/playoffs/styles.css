@@ -246,10 +246,9 @@
 @media(max-width:700px){.po-archive-bar{align-items:flex-start;flex-direction:column;gap:12px;padding:14px}.po-archive-controls{width:100%;justify-content:space-between;gap:10px}.po-archive-controls button{min-height:42px;min-width:34px}.po-archive-calendar{gap:5px}.po-archive-calendar input{width:146px;min-height:42px;font-size:16px;padding:6px}.po-archive-controls #poArchiveLatest{padding:0 11px}.po-archive-description>p{font-size:11px}}
 @media(max-width:360px){.po-archive-controls{gap:6px}.po-archive-controls #poArchiveLatest{padding:0 8px;min-width:0}.po-archive-controls button{min-width:28px}.po-archive-calendar input{width:128px;min-width:0}}
 
-/* The source credit belongs to this tool, rather than every game. */
-.foot.po-attribution{display:none}
-body.playoffs-mode .foot.po-attribution{display:block}
-.foot.po-attribution small{font-size:12px;line-height:1.8}
+/* Keep the shared footer; its additional provider credit belongs to this tool. */
+.foot .po-source-credit{display:none}
+body.playoffs-mode .foot .po-source-credit{display:block}
 .po-today-controls{display:flex;align-items:center;gap:16px;margin:16px 0 8px;flex-wrap:wrap}
 .po-today-controls>button{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:11px 15px;min-height:44px;font-size:14px;font-weight:650;color:var(--fg)}
 .po-today-controls>button[aria-pressed=true]{border-color:var(--link);color:var(--link);background:color-mix(in srgb,var(--link) 9%,var(--panel))}
@@ -286,6 +285,9 @@ body.playoffs-mode .foot.po-attribution{display:block}
 .po-bracket-card img{width:36px;height:36px;object-fit:contain;flex-shrink:0}
 .po-bracket-card b{font-size:12px;line-height:1.5;display:block}
 .po-bracket-card small{font-size:10px;line-height:1.6;display:block;color:var(--muted);margin-top:4px}
-.po-bracket-card i{font-size:10px;font-style:normal;color:var(--muted)}
 @media(max-width:1200px){.po-bracket-layout{grid-template-columns:1fr}.po-bracket-chart{max-width:950px}.po-bracket-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}.po-bracket-card b{font-size:13px}}
 @media(max-width:600px){.po-today-controls{gap:9px}.po-today-controls>button{font-size:13px}.po-today-controls>p{font-size:12px;flex-basis:100%}.po-bracket-layout{gap:14px}.po-bracket-cards{grid-template-columns:1fr;gap:4px}.po-bracket-card{padding:12px}.po-bracket-card b{font-size:13px}.po-bracket-card small{font-size:11px}.po-bracket-card img{width:38px;height:38px}.po-bracket-readout{font-size:13px}.po-bracket-cards h3{font-size:17px}}
+
+.po-bracket-card>div{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr)}
+.po-bracket-vs-label{display:grid;place-items:center;align-self:center;justify-self:center;min-height:44px;font-size:15px;line-height:1;font-weight:800;letter-spacing:.4px;color:var(--fg);text-align:center}
+@media(max-width:360px){.po-bracket-card button{flex-direction:column;align-items:center;text-align:center;gap:7px}.po-bracket-card button>span{min-width:0;max-width:100%}}

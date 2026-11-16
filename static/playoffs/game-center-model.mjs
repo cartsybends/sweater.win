@@ -25,6 +25,17 @@ export const GAME_CENTER=(()=>{
  const filter=(shots,{team='',period='',outcome='unblocked'}={})=>shots.filter(s=>(!team||s.team===team)&&(!period||s.period===Number(period))&&(outcome==='all'||outcome==='unblocked'&&s.outcome!=='blocked'||s.outcome===outcome));
  const words=s=>typeof s==='string'?s.replaceAll('-',' ').replace(/^./,c=>c.toUpperCase()):'';
  function lineStyle(away,home){const rgb=hex=>/^#[0-9a-f]{6}$/i.test(hex||'')?[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)):null,a=rgb(away),h=rgb(home);return {away:a?away:'#d48533',home:h?home:'#497fc7',dashed:!!a&&!!h&&Math.hypot(...a.map((n,i)=>n-h[i]))<100};}
+ // Use each club's own secondary colour when primary colours would collide.
+ // Sorting by club makes the choice independent of home/away assignment.
+ const secondaryColors={ANA:'#C6AE7D',BOS:'#A9B0BC',BUF:'#E0B53B',CAR:'#AFB6C0',CBJ:'#CF4357',CGY:'#E4B83D',CHI:'#ACB4C1',COL:'#468EB5',DAL:'#ADB7C3',DET:'#B8C2CE',EDM:'#FA862C',FLA:'#416FAE',LAK:'#CFD5DE',MIN:'#C74C52',MTL:'#416FBA',NJD:'#B7C1CE',NSH:'#466CAA',NYI:'#3C6DB4',NYR:'#D54960',OTT:'#BEA477',PHI:'#ADB7C5',PIT:'#A5B1C0',SEA:'#CE5264',SJS:'#E68B42',STL:'#DFB63A',TBL:'#B8C5D7',TOR:'#BDC7D4',UTA:'#B5BBC4',VAN:'#3D72B8',VGK:'#C94A54',WPG:'#CB4C5D',WSH:'#446DAE'};
+ function matchupStyle(away,home,palette={}){
+  const primary=team=>team==='EDM'?'#4276C5':palette[team],original=lineStyle(primary(away),primary(home));
+  if(!original.dashed)return original;
+  const [first,second]=[away,home].sort(),options=team=>[primary(team),secondaryColors[team]].filter(c=>/^#[0-9a-f]{6}$/i.test(c||'')),distance=(a,b)=>Math.hypot(...[1,3,5].map(i=>parseInt(a.slice(i,i+2),16)-parseInt(b.slice(i,i+2),16)));
+  let best=null;
+  options(first).forEach((a,i)=>options(second).forEach((b,j)=>{const changes=i+j,gap=distance(a,b);if(gap>=100&&(!best||changes<best.changes||changes===best.changes&&gap>best.gap))best={a,b,changes,gap};}));
+  return best?lineStyle(away===first?best.a:best.b,home===first?best.a:best.b):original;
+ }
  function periods(elapsed=0,gameType=2){const result=[{label:'P1',start:0,end:1200},{label:'P2',start:1200,end:2400},{label:'P3',start:2400,end:3600}];if(elapsed>3600){const length=gameType===3?1200:300;for(let n=0;n<Math.min(17,Math.ceil((elapsed-3600)/length));n++)result.push({label:n===0?'OT':`${n+1}OT`,start:3600+n*length,end:3600+(n+1)*length});}return result;}
  function axisTicks(segments){const ticks=[{t:0,label:String((segments[0].end-segments[0].start)/60)}];for(const p of segments){for(let t=p.start+300;t<p.end;t+=300)ticks.push({t,label:String((p.end-t)/60)});ticks.push({t:p.end,label:'0'});}return ticks;}
  function plotEvents(events,points,home,geometry){
@@ -33,5 +44,5 @@ export const GAME_CENTER=(()=>{
   const placed=[];for(const group of groups){let best=null,bestScore=Infinity;const preferred=group.kind==='goal'?-20:20;for(const dx of [0,-28,28,-56,56])for(const dy of [preferred,-preferred,-45,45,-70,70]){const cx=Math.max(left+13,Math.min(right-13,group.anchor.x+dx)),cy=Math.max(top+14,Math.min(bottom-14,group.anchor.y+dy)),collisions=placed.filter(p=>Math.abs(p.x-cx)<29&&Math.abs(p.y-cy)<29).length,score=collisions*10000+Math.hypot(cx-group.anchor.x,cy-group.anchor.y);if(score<bestScore){bestScore=score;best={x:cx,y:cy};}}placed.push({...group,...best});}return placed;
  }
  function eventGroups(events,max,width){const groups=[];for(const event of [...events].sort((a,b)=>a.t-b.t||a.id-b.id)){const last=groups.at(-1);if(last&&(event.t-last.reduce((n,e)=>n+e.t,0)/last.length)/max*width<30)last.push(event);else groups.push([event]);}return groups;}
- return {validate,time,period,gameTime,shotTime,filter,words,lineStyle,periods,eventGroups,axisTicks,plotEvents};
+ return {validate,time,period,gameTime,shotTime,filter,words,lineStyle,matchupStyle,periods,eventGroups,axisTicks,plotEvents};
 })();
