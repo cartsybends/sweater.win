@@ -200,7 +200,7 @@ class Impact:
         self.healthy_teams=set();self.series_cache={}
         self.rates=np.array([self.model['rates'][k] for k in ROLES]);self.share=self.model['modeled_regulation_goal_share']
         self.as_of=max((r['date'] for r in rows),default=None)
-        self.signature={'version':self.version,'coefficients_sha256':hashlib.sha256(json.dumps(self.model,sort_keys=True).encode()).hexdigest(),'usage_through':self.as_of,'usage_sha256':hashlib.sha256(json.dumps(rows,sort_keys=True).encode()).hexdigest()}
+        self.signature={'version':self.version,'scenario_date':self.date,'coefficients_sha256':hashlib.sha256(json.dumps(self.model,sort_keys=True).encode()).hexdigest(),'usage_through':self.as_of,'usage_sha256':hashlib.sha256(json.dumps(rows,sort_keys=True).encode()).hexdigest()}
         params=params or {'prior_games':30,'half_life':15}
         for t in data['teams']:
             club=t['abbr'];roster=availability['rosters'].get(club,[])

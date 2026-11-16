@@ -6,6 +6,12 @@ const data=JSON.parse(fs.readFileSync('playoffs_cache.json'));
 const now=Math.max(Date.now(),Date.parse(data.checked_at));
 let count=0;function test(name,fn){fn();console.log('PASS',name);count++;}
 test('published forecast validates with all probability conservation checks',()=>assert(M.validate(data,now)));
+test('optional player-impact breakdowns reject malformed estimates and retain older forecasts',()=>{
+ const legacy=structuredClone(data);for(const t of legacy.teams)delete t.skater_impact;for(const g of legacy.games||[])for(const side of ['home','away'])if(g.context?.[side])delete g.context[side].skater_impact;assert(M.validate(legacy,now));
+ const player={id:8477492,name:'Nathan MacKinnon',attack_change_pct:-5.8,opponent_attack_change_pct:.4,expected_minutes:{ev:18,pp:4,pk:0}},valid={status:'available',version:'sweater-skater-impact-v1',players:[player]};
+ const good=structuredClone(legacy);good.teams[0].skater_impact=valid;assert(M.validate(good,now));
+ for(const mutate of [v=>v.players[0].attack_change_pct=NaN,v=>v.players[0].expected_minutes.ev=Infinity,v=>v.players.push({...v.players[0]}),v=>v.game_win=101,v=>v.win_change_pp='bad']){const copy=structuredClone(good);mutate(copy.teams[0].skater_impact);assert.equal(M.validate(copy,now),null);}
+});
 test('incomplete, corrupt, future-dated or nonfinite feeds are rejected',()=>{
  for(const patch of [{teams:[]},{version:2},{season:20242025},{total_games:1},{simulations:0},{checked_at:new Date(now+600000).toISOString()},{updated_at:'bad'}])assert.equal(M.validate({...data,...patch},now),null);
  for(const mutate of [d=>d.teams[0].odds.cup=101,d=>d.teams[0].odds.playoffs=NaN,d=>d.teams[0].odds.round2=100,d=>d.teams[1].abbr=d.teams[0].abbr,d=>d.teams[0].projected_points=10000,d=>d.teams[0].distribution=[[0,100]],d=>d.teams[0].opponents=[{team:'BAD',chance:100}]]){const copy=structuredClone(data);mutate(copy);assert.equal(M.validate(copy,now),null);}
