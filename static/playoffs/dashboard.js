@@ -2,6 +2,7 @@ const poOddsColumns=[['playoffs','Playoffs'],['round2','Round 2'],['conference',
 const poStatColumns=[['gp','GP'],['record','W–L–OT'],['points','PTS'],['winPct','Win %'],['pointPct','Points %'],['gf','GF'],['ga','GA'],['diff','+/−'],['rw','RW'],['row','ROW'],['form','Last 10']];
 let poGamesMode='upcoming',poGamesDate='',poGamesAutoDate=true,poGamesZone='',poCircleSelected='',poCircleStage='cup',poCircleKeyFocus=false;
 let poCircleHoverFrame=0,poCirclePendingHover=null,poCircleFocusKey='',poCircleTipKey='',poCircleTipSize=null,poCircleBounds=null,poCircleActiveNodes=[];
+let poBracketSelected='';
 const poCircleNodes=new Map();
 const poLiveGames=new Map();
 let poLiveTimer=null,poLiveController=null,poLiveRequest=0,poLiveAttempt=0,poLiveScope='',poLiveBusy=false,poLiveError=false;
@@ -255,12 +256,12 @@ $('poGamesDate').onchange=e=>{poGamesAutoDate=false;poGamesDate=e.target.value;p
 $('poCircleZoom').onchange=()=>{poCircleHide();$(poTodayMode?'poBracketChart':'poCircleChart').style.width=(Number($('poCircleZoom').value)*100)+'%';};
 $('view-playoffs').addEventListener('click',e=>{if(e.target.closest('[data-po-circle-close]')){poCircleHide();if(e.detail===0)$('poCircleScroll').focus();return;}const set=e.target.closest('[data-po-circle-set]'),mode=e.target.closest('[data-po-games]'),slice=e.target.closest('[data-po-circle-team]');if(set){$('poCircleMode').value=set.dataset.poCircleSet;poRenderCircle();return;}if(mode){poGamesMode=mode.dataset.poGames;poGamesAutoDate=poGamesMode==='upcoming';if(poGamesMode==='results'){poGamesDate=(poData?.games||[]).map(poEffectiveGame).filter(g=>['OFF','FINAL'].includes(g.state)).map(g=>poModel.localDay(g.start)).sort().at(-1)||poModel.localDay(Date.now());}else poGamesDate=poModel.localDay(Date.now());poRenderGames();}if(slice){poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);}});
 $('poPanelCircle').addEventListener('keydown',e=>{if(e.key==='Escape'){poCircleHide();if(poTodayMode)poBracketSelect(null);$(poTodayMode?'poBracketScroll':'poCircleScroll').focus();}});
-$('poPanelCircle').addEventListener('pointerover',e=>{if(e.pointerType==='touch'||poCircleIsCompact()||poCircleKeyFocus)return;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);});
-$('poPanelCircle').addEventListener('pointermove',e=>{if(e.pointerType==='touch'||poCircleIsCompact())return;poCircleKeyFocus=false;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);else poCircleHide();});
-$('poPanelCircle').addEventListener('pointerout',e=>{if(e.pointerType!=='touch'&&!poCircleIsCompact()&&!poCircleKeyFocus&&e.target.closest('[data-po-circle-team]')&&!e.relatedTarget?.closest?.('[data-po-circle-team]'))poCircleHide();});
+$('poPanelCircle').addEventListener('pointerover',e=>{if(poTodayMode)return;if(e.pointerType==='touch'||poCircleIsCompact()||poCircleKeyFocus)return;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);});
+$('poPanelCircle').addEventListener('pointermove',e=>{if(poTodayMode)return;if(e.pointerType==='touch'||poCircleIsCompact())return;poCircleKeyFocus=false;const slice=e.target.closest('[data-po-circle-team]');if(slice)poCircleQueueHover(e,slice);else poCircleHide();});
+$('poPanelCircle').addEventListener('pointerout',e=>{if(poTodayMode)return;if(e.pointerType!=='touch'&&!poCircleIsCompact()&&!poCircleKeyFocus&&e.target.closest('[data-po-circle-team]')&&!e.relatedTarget?.closest?.('[data-po-circle-team]'))poCircleHide();});
 for(const id of ['poPanelCircle','poCircleChart'])$(id).addEventListener('pointerleave',e=>{if(e.pointerType!=='touch'&&!poCircleIsCompact())poCircleHide();});
-$('poPanelCircle').addEventListener('focusin',e=>{const slice=e.target.closest('[data-po-circle-team]');if(!slice){if(!e.target.closest('#poCircleMobileReadout'))poCircleHide();return;}poCircleCancelHover();poCircleKeyFocus=true;poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);else if($('poCircleTooltip'))$('poCircleTooltip').hidden=true;});
-$('poPanelCircle').addEventListener('focusout',e=>{if(!e.relatedTarget?.closest?.('[data-po-circle-team],#poCircleMobileReadout'))poCircleHide();});
+$('poPanelCircle').addEventListener('focusin',e=>{if(poTodayMode)return;const slice=e.target.closest('[data-po-circle-team]');if(!slice){if(!e.target.closest('#poCircleMobileReadout'))poCircleHide();return;}poCircleCancelHover();poCircleKeyFocus=true;poCircleHighlight(slice.dataset.poCircleTeam,slice.dataset.poCircleStage);if(slice.closest('#poCircleChart'))poCircleTooltip(e,slice);else if($('poCircleTooltip'))$('poCircleTooltip').hidden=true;});
+$('poPanelCircle').addEventListener('focusout',e=>{if(poTodayMode)return;if(!e.relatedTarget?.closest?.('[data-po-circle-team],#poCircleMobileReadout'))poCircleHide();});
 window.addEventListener('scroll',()=>{poCircleBounds=null;if(poCircleIsCompact())return;if(!poCircleKeyFocus&&(poCircleSelected||poCirclePendingHover)&&!poCirclePendingHover?.node.matches(':hover'))poCircleHide();},{capture:true,passive:true});
 window.addEventListener('resize',()=>{poCircleTipSize=null;poCircleHide();},{passive:true});window.addEventListener('blur',poCircleHide);
 document.addEventListener('click',e=>{if(poTab==='circle'&&!$('view-playoffs').hidden&&!e.target.closest('[data-po-circle-team]'))poCircleHide();});
@@ -272,6 +273,7 @@ $('poExportCSV').onclick=()=>{
 
 // Standings-only first-round bracket. Unknown advancing teams stay unassigned.
 function poRenderBracket(){
+ poBracketSelected='';
  const host=$('poBracketChart'),field=poTodayField;
  $('poBracketCards').innerHTML='';$('poBracketReadout').textContent='Select a first-round matchup to explore the seeds.';
  if(!field){host.innerHTML='<div class="po-empty">Official seed ordering is unavailable for this snapshot. Use the probability circle or choose another date.</div>';return;}
@@ -292,6 +294,7 @@ function poRenderBracket(){
  $('poBracketCards').innerHTML=['E','W'].map(conference=>`<section><h3>${conference==='E'?'Eastern':'Western'} Conference</h3>${field.matches.filter(m=>m.conference===conference).map(m=>`<article class="po-bracket-card" data-po-bracket="${m.id}"><p>${esc(m.division)} path · Round 1</p><div>${m.teams.map(t=>`<button type="button" data-po-team="${t.abbr}" aria-label="View ${esc(t.name)} breakdown"><img src="${poCircleLogoURL(t.abbr)}" alt=""><span><b>${esc(t.name)}</b><small>${t.seed} · ${t.points} PTS · ${t.gp} GP</small></span></button>`).join('<i>vs</i>')}</div></article>`).join('')}</section>`).join('');
 }
 function poBracketSelect(id){
+ const key=id||'';if(key===poBracketSelected)return;poBracketSelected=key;
  const m=poTodayField?.matches.find(m=>m.id===id);for(const node of $('poTodayCircle').querySelectorAll('[data-po-bracket]')){const on=!!m&&node.dataset.poBracket===id;node.classList.toggle('is-selected',on);if(node.hasAttribute('aria-pressed'))node.setAttribute('aria-pressed',String(on));}
  $('poBracketReadout').textContent=m?'Round 1 · '+m.teams.map(t=>t.name+' ('+t.seed+', '+t.points+' PTS)').join(' vs '):'Select a first-round matchup to explore the seeds.';
 }
