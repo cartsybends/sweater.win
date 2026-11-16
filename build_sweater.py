@@ -3835,10 +3835,8 @@ TEMPLATE = r'''<!DOCTYPE html>
     <div class="divs" id="ttGrid"></div>
   </section>
 
-  <footer class="foot"><span id="foot"></span>
+  <footer class="foot po-attribution" aria-label="Playoff Picture data sources"><span id="foot" hidden></span>
     <small>Playoff Picture advanced hockey data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener">MoneyPuck.com</a> · Sportsbook quotes and injury reports via <a href="https://www.espn.com/nhl/" target="_blank" rel="noopener">ESPN</a> · Starter news via <a href="https://www.rotowire.com/rss/" target="_blank" rel="noopener">RotoWire RSS</a>.</small>
-    <small class="creator">Sweater was made by <strong>Carter George</strong>. Questions or inquiries? Reach out at <a href="mailto:1epiccarter1@gmail.com">1epiccarter1@gmail.com</a>.</small>
-    <small>Sweater is a fan-made game and is not affiliated with or endorsed by the NHL or its teams. NHL, team names, logos and player images are the property of the NHL and its teams.</small>
   </footer>
 </main>
 
@@ -14545,7 +14543,7 @@ def main():
         "/*__PROJECTIONS_FEED__*/": (HERE / "static/projections/feed.js").read_text(),
         "/*__PLAYOFFS_CSS__*/": (HERE / "static/playoffs/styles.css").read_text(),
         "<!--__PLAYOFFS_VIEW__-->": (HERE / "static/playoffs/view.html").read_text(),
-        "/*__PLAYOFFS_MODEL__*/": (HERE / "static/playoffs/model.mjs").read_text().replace("export const PLAYOFF_PICTURE", "const PLAYOFF_PICTURE"),
+        "/*__PLAYOFFS_MODEL__*/": (HERE / "static/playoffs/model.mjs").read_text().replace("export const PLAYOFF_PICTURE", "const PLAYOFF_PICTURE") + "\n" + (HERE / "static/playoffs/field-model.mjs").read_text().replace("export const PLAYOFF_FIELD", "const PLAYOFF_FIELD"),
         "/*__PLAYOFFS_APP__*/": (HERE / "static/playoffs/app.js").read_text().replace("/*__PLAYOFF_DATA__*/{}", esc(load_playoff_data())),
         "/*__PLAYOFFS_DASHBOARD__*/": (HERE / "static/playoffs/dashboard.js").read_text(),
         "/*__GAME_CENTER_CSS__*/": (HERE / "static/playoffs/game-center.css").read_text(),

@@ -41,6 +41,7 @@ jobs:
       - run: python -B tests/playoffs_archive.py
       - run: python -B tests/playoffs_previews.py
       - run: node tests/playoffs_previews.mjs
+      - run: node tests/playoffs_field.mjs
       - run: node tests/playoffs_archive.mjs
       - run: node tests/playoffs.mjs
       - run: node tests/playoffs_live.mjs

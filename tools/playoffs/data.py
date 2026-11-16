@@ -122,6 +122,8 @@ def collect(start):
         teams.append({'abbr': t,
                       'name': r['teamName']['default'], 'conference': r['conferenceAbbrev'],
                       'division': r['divisionName'], 'division_code': r['divisionAbbrev'],
+                      'conference_rank': r['conferenceSequence'], 'division_rank': r['divisionSequence'],
+                      'wildcard_rank': r['wildcardSequence'],
                       'official_rank': r['leagueSequence'], 'clinch': r.get('clinchIndicator', ''), **actual[t]})
     bracket = []
     if all(g['state'] in FINAL for g in games):
