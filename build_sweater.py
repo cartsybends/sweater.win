@@ -14549,7 +14549,7 @@ def main():
         "/*__PLAYOFFS_APP__*/": (HERE / "static/playoffs/app.js").read_text().replace("/*__PLAYOFF_DATA__*/{}", esc(load_playoff_data())),
         "/*__PLAYOFFS_DASHBOARD__*/": (HERE / "static/playoffs/dashboard.js").read_text(),
         "/*__GAME_CENTER_CSS__*/": (HERE / "static/playoffs/game-center.css").read_text(),
-        "/*__GAME_CENTER_MODEL__*/": (HERE / "static/playoffs/game-center-model.mjs").read_text().replace("export const GAME_CENTER", "const GAME_CENTER"),
+        "/*__GAME_CENTER_MODEL__*/": (HERE / "static/playoffs/game-center-model.mjs").read_text().replace("export const GAME_CENTER", "const GAME_CENTER") + "\n" + (HERE / "static/playoffs/preview-model.mjs").read_text().replace("export const GAME_PREVIEW", "const GAME_PREVIEW"),
         "/*__GAME_CENTER_APP__*/": (HERE / "static/playoffs/game-center.js").read_text(),
         "/*__FACE_SWAP_CSS__*/": (HERE / "static/face-swap/styles.css").read_text(encoding="utf-8"),
         "/*__DEEP_CUT_CSS__*/": (HERE / "static/deep-cut/styles.css").read_text(encoding="utf-8"),
