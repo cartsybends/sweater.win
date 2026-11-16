@@ -58,6 +58,14 @@ jobs:
           key: nhl-advanced-v2-${{ steps.season.outputs.start }}-${{ steps.advanced.outputs.revision }}
           restore-keys: |
             nhl-advanced-v2-${{ steps.season.outputs.start }}-
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .cache/playoffs/lines
+            .cache/playoffs/impact/usage-*.json
+          key: nhl-impact-usage-v1-${{ steps.season.outputs.start }}-${{ steps.advanced.outputs.revision }}
+          restore-keys: |
+            nhl-impact-usage-v1-${{ steps.season.outputs.start }}-
       - name: Reconcile every completed game and update the forecast
         env:
           STARTER_REPORT_SOURCE: rss

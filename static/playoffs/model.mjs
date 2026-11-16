@@ -46,10 +46,17 @@ export const PLAYOFF_PICTURE = (()=>{
  function contextValid(g){
   if(!g.context)return true;
   return ['home','away'].every(side=>{const c=g.context[side],q=c?.goalie;if(!q||!['reported','cached','stale','unavailable','not_reconstructed'].includes(c.injury_status)||!Number.isInteger(c.rest_days)||c.rest_days<1||c.rest_days>7||!['projected','confirmed','unknown'].includes(q.status)||!finite(q.gsax)||Math.abs(q.gsax)>2||!Array.isArray(q.players)||q.players.length>10||q.players.some(p=>!Number.isInteger(p.id)||p.id<0||typeof p.name!=='string'||!p.name.length||p.name.length>100||!finite(p.probability)||p.probability<0||p.probability>100)||new Set(q.players.map(p=>p.id)).size!==q.players.length||q.players.length&&Math.abs(q.players.reduce((n,p)=>n+p.probability,0)-100)>.002||!Array.isArray(c.injuries)||c.injuries.length>100||c.injuries.some(i=>typeof i.name!=='string'||i.name.length>100||typeof i.status!=='string'||i.status.length>50))return false;
-   if(!q.players.every(p=>goalieStatsValid(p,g)))return false;
+   if(!q.players.every(p=>goalieStatsValid(p,g))||!impactValid(c.skater_impact))return false;
    const r=q.report;if(r&&(!['confirmed','likely','conflicting','not_starting'].includes(r.status)||r.game_id!==g.id||r.team!==g[side]||r.game_start&&r.game_start!==g.start||!Number.isInteger(r.player_id)||typeof r.author!=='string'||r.author.length>100||!/^https:\/\/(?:(?:x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+|www\.rotowire\.com\/hockey\/player\/[a-z0-9-]+-\d+)$/.test(r.source_url)||!Number.isFinite(Date.parse(r.reported_at))||Date.parse(r.reported_at)>=Date.parse(g.start)||r.via_url&&!/^https:\/\/(?:www\.dailyfaceoff\.com\/|www\.rotowire\.com\/rss\/$)/.test(r.via_url)))return false;
    return q.status!=='confirmed'||r?.status==='confirmed'&&q.players.filter(p=>p.probability===100&&p.id===r.player_id).length===1;
   });
+ }
+ function impactValid(v){
+  if(v===undefined)return true;
+  if(!v||!['available','partial','unavailable','not_reconstructed'].includes(v.status)||typeof v.version!=='string'||v.version.length>80)return false;
+  if(['unavailable','not_reconstructed'].includes(v.status))return true;
+  if(!Array.isArray(v.players)||v.players.length>8||new Set(v.players.map(p=>p?.id)).size!==v.players.length)return false;
+  return v.players.every(p=>p&&Number.isInteger(p.id)&&p.id>0&&typeof p.name==='string'&&p.name.length<=100&&['attack_change_pct','opponent_attack_change_pct'].every(k=>finite(p[k])&&p[k]>-100&&p[k]<1000)&&['ev','pp','pk'].every(k=>finite(p.expected_minutes?.[k])&&p.expected_minutes[k]>=0&&p.expected_minutes[k]<=60))&&['game_win','game_win_if_available'].every(k=>v[k]===undefined||finite(v[k])&&v[k]>=0&&v[k]<=100)&&(v.win_change_pp===undefined||finite(v.win_change_pp)&&Math.abs(v.win_change_pp)<=100);
  }
  function analyticsValid(d){
   if(d.analytics_version===undefined)return true;
@@ -62,7 +69,7 @@ export const PLAYOFF_PICTURE = (()=>{
    for(const field of ['home_shots','away_shots'])if(g[field]!==undefined&&(!Number.isInteger(g[field])||g[field]<0||g[field]>200))return false;
    ids.add(g.id);
   }
-  return d.teams.every(t=>t.form&&Number.isInteger(t.form.gp)&&t.form.gp>=0&&t.form.gp<=10&&Number.isInteger(t.form.points)&&t.form.points>=0&&t.form.points<=t.form.gp*2&&Number.isInteger(t.form.wins)&&t.form.wins>=0&&t.form.wins<=t.form.gp);
+  return d.teams.every(t=>impactValid(t.skater_impact)&&t.form&&Number.isInteger(t.form.gp)&&t.form.gp>=0&&t.form.gp<=10&&Number.isInteger(t.form.points)&&t.form.points>=0&&t.form.points<=t.form.gp*2&&Number.isInteger(t.form.wins)&&t.form.wins>=0&&t.form.wins<=t.form.gp);
  }
  function oddsValid(o){return o&&stages.every(([k],i)=>finite(o[k])&&o[k]>=0&&o[k]<=100&&(!i||o[stages[i-1][0]]>=o[k]));}
  function liveFeed(raw,games,now=Date.now()){
@@ -94,6 +101,7 @@ export const PLAYOFF_PICTURE = (()=>{
   if(d.goalie_leaders){const l=d.goalie_leaders;if(l.season!==d.season||!['reported','cached'].includes(l.status)||!Number.isFinite(Date.parse(l.as_of))||Date.parse(l.as_of)>Date.parse(d.checked_at)+300000||l.source_url!==`https://api-web.nhle.com/v1/goalie-stats-leaders/${d.season}/2?limit=3`||!l.players||typeof l.players!=='object'||Object.keys(l.players).length>6||!Object.entries(l.players).every(([id,p])=>/^\d+$/.test(id)&&p&&p.ranks&&Object.entries(p.ranks).every(([key,rank])=>['sv','gaa'].includes(key)&&Number.isInteger(rank)&&rank>=1&&rank<=3&&finite(p[key])&&p[key]>=0&&(key!=='sv'||p[key]<=1))))return null;}
   const ids=new Set();
   for(const t of d.teams){
+   if(!impactValid(t.skater_impact))return null;
    if(!clubs.has(t.abbr)||ids.has(t.abbr)||typeof t.name!=='string'||t.name.length>80||!['E','W'].includes(t.conference)||typeof t.division!=='string'||!Number.isInteger(t.gp)||t.gp<0||t.gp>d.season_games||!Number.isInteger(t.points)||t.points<0||t.points>t.gp*2||!oddsValid(t.odds)||!finite(t.projected_points)||t.projected_points<t.points-.051||t.projected_points>t.points+2*(d.season_games-t.gp)+.051||!Array.isArray(t.points_range)||t.points_range.length!==2||!t.points_range.every(Number.isInteger)||t.points_range[0]>t.points_range[1]||!Array.isArray(t.distribution)||!t.distribution.length||t.distribution.length>169||t.distribution.some(r=>!Array.isArray(r)||r.length!==2||!Number.isInteger(r[0])||r[0]<t.points||r[0]>t.points+2*(d.season_games-t.gp)||!finite(r[1])||r[1]<0||r[1]>100)||!Array.isArray(t.opponents)||t.opponents.length>16||t.opponents.some(o=>!clubs.has(o.team)||o.team===t.abbr||!finite(o.chance)||o.chance<0||o.chance>100)||t.change!==null&&t.change!==undefined&&(!finite(t.change)||Math.abs(t.change)>100))return null;
    if(Math.abs(t.distribution.reduce((s,r)=>s+r[1],0)-100)>.03||Math.abs(t.opponents.reduce((s,o)=>s+o.chance,0)-t.odds.playoffs)>.03)return null;
    ids.add(t.abbr);

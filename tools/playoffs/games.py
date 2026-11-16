@@ -58,6 +58,10 @@ def enrich(output, data, history, old, fetch, now, engine=None, clock=None):
             hp=round(probability*100,4)
         prediction = {'home_win': hp, 'away_win': round(100-hp, 4), 'home_goals': round(lh, 3), 'away_goals': round(la, 3),
                       'basis': 'pregame' if upcoming else 'reconstructed', 'at': captured_at if upcoming else None, 'model':output['model']}
+        if upcoming and engine and engine.impact:
+            prediction['impact_model']=engine.impact.version
+            baseline=context['home'].get('skater_impact',{}).get('baseline_game_win')
+            if baseline is not None:prediction['impact_baseline_home_win']=baseline
         previous = old_games.get(g['id'])
         if not upcoming and previous and previous['start'] == g['start'] and previous['home'] == g['home'] and previous['away'] == g['away']:
             saved = previous.get('prediction', {})

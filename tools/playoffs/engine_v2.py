@@ -14,9 +14,10 @@ MODEL_VERSION='sweater-xg-v2'
 class Engine:
     version=MODEL_VERSION
 
-    def __init__(self,data,history,inputs,availability,reports,now):
+    def __init__(self,data,history,inputs,availability,reports,now,impact=None):
         self.data=data;self.history=history;self.inputs=inputs;self.availability=availability;self.reports=reports;self.now=now;self.day=now[:10]
         self.params=config();self.teams=[t['abbr'] for t in data['teams']];self.index={t:i for i,t in enumerate(self.teams)}
+        self.impact=impact
         self.goalies=Goalies(inputs['goalies'],inputs.get('births'));self.state=self.make_state()
         self.game_cache={};self.state_cache={};self.base_goalies={t:self.project(t,self.day) for t in self.teams}
         self.coefficients=np.array(self.params['coefficients']);self.mean=np.array(self.params['mean']);self.scale=np.array(self.params['scale'])
@@ -30,10 +31,13 @@ class Engine:
             self.rating_rows.append({'attack':attack,'defense':defending,'shape':np.array([attack,defending])*exposure,'exposure':exposure})
         self.parameters={k:self.params[k] for k in ['model','version','prior_games','half_life','alpha','temperature']}
         self.parameters.update(home_factor=1,prior_regression=.35,coefficients_sha256=hashlib.sha256(json.dumps(self.params,sort_keys=True).encode()).hexdigest())
+        if impact:self.parameters['skater_impact']=impact.signature['coefficients_sha256']
         stable_availability={'rosters':availability['rosters'],'injuries':availability['injuries'],'status':availability['status']}
         self.signature={'inputs':inputs['sha256'],'availability':stable_availability,'reports':sorted(reports.values(),key=lambda r:(r['game_id'],r['team'])),'day':self.day}
+        if impact:self.signature['skater_impact']=impact.signature
         self.context_source={'advanced_data_through':max(r['d'] for r in inputs['teams']),'availability':availability['status'],'availability_reported_at':availability.get('reported_at')}
         last_day=max(g['date'] for g in data['games']);playoff_day=max(last_day,self.day)
+        self.playoff_day=(date.fromisoformat(playoff_day)+timedelta(days=7)).isoformat()
         self.playoff_goalies={t:self.project(t,(date.fromisoformat(playoff_day)+timedelta(days=7)).isoformat()) for t in self.teams}
 
     def make_state(self,before=None):
@@ -100,6 +104,8 @@ class Engine:
                           'injuries':[] if historical else self.availability['injuries'].get(team,[]),
                           'injury_status':'not_reconstructed' if historical else self.availability['status'],
                           'injury_reported_at':None if historical else self.availability.get('reported_at')}
+            if self.impact:
+                result[side]['skater_impact']={'status':'not_reconstructed','version':self.impact.version} if historical else self.impact.summary(team,game['date'])
         self.game_cache[key]=result
         return result
 
@@ -115,6 +121,9 @@ class Engine:
         event=self.event_features(game);reverse=event[[0,2,1,4,3]].copy();reverse[0]*=-1
         home_rate=home_rate*np.exp(((event-self.mean[9:])/self.scale[9:])@self.coefficients[9:])
         away_rate=away_rate*np.exp(((reverse-self.mean[9:])/self.scale[9:])@self.coefficients[9:])
+        if self.impact:
+            mh,ma=self.impact.multipliers(h,a,game['date'],len(home_rate) if np.ndim(home_rate) else None)
+            home_rate=home_rate*mh;away_rate=away_rate*ma
         return self.temper(home_rate,away_rate)
 
     def temper(self,home,away):
@@ -122,13 +131,17 @@ class Engine:
         mid=np.sqrt(home*away);ratio=(home/away)**(.5/self.params['temperature'])
         return mid*ratio,mid/ratio
 
-    def series_adjust(self,home_indices,away_indices,home_rate,away_rate):
+    def series_adjust(self,home_indices,away_indices,home_rate,away_rate,round_number=1,game_number=0):
         quality=self.coefficients[8]/self.scale[8]
         ratio=np.array([math.exp(quality*(self.playoff_goalies[t]['gsax']-self.base_goalies[t]['gsax'])) for t in self.teams])
         home_rate=home_rate*ratio[away_indices];away_rate=away_rate*ratio[home_indices]
         home=np.array([1,0,0,0,0]);away=np.array([-1,0,0,0,0])
         home_rate=home_rate*np.exp(((home-self.mean[9:])/self.scale[9:])@self.coefficients[9:])
         away_rate=away_rate*np.exp(((away-self.mean[9:])/self.scale[9:])@self.coefficients[9:])
+        if self.impact:
+            day=(date.fromisoformat(self.playoff_day)+timedelta(days=14*(round_number-1)+2*game_number)).isoformat()
+            mh,ma=self.impact.series_multipliers(self.teams,home_indices,away_indices,day)
+            home_rate=home_rate*mh;away_rate=away_rate*ma
         return self.temper(home_rate,away_rate)
 
     def predict(self,game,force_historical=False):
@@ -138,6 +151,22 @@ class Engine:
         h,a=game['home'],game['away'];ho,hd=state.features(h,context['home']['goalie']['gsax']);ao,ad=state.features(a,context['away']['goalie']['gsax'])
         event=self.event_features(game);reverse=event[[0,2,1,4,3]].copy();reverse[0]*=-1
         raw=expected(np.array([np.r_[ho,ad,event],np.r_[ao,hd,reverse]]),self.params)
+        if self.impact and not historical:
+            base=raw.copy();mh,ma=self.impact.multipliers(h,a,game['date']);raw=np.clip(base*np.array([mh,ma]),.35,8)
+            for side in ['home','away']:
+                summary=context[side].get('skater_impact',{})
+                if summary.get('status') not in ('available','partial'):continue
+                # Restore this club only; all opponent injuries stay in place.
+                self.impact.healthy_teams.add(game[side])
+                try:hh,ha=self.impact.multipliers(h,a,game['date'])
+                finally:self.impact.healthy_teams.discard(game[side])
+                healthy,_,_=probability(float(np.clip(base[0]*hh,.35,8)),float(np.clip(base[1]*ha,.35,8)),self.params['temperature'])
+                adjusted,_,_=probability(float(raw[0]),float(raw[1]),self.params['temperature'])
+                unadjusted,_,_=probability(float(base[0]),float(base[1]),self.params['temperature'])
+                own=lambda p:p if side=='home' else 1-p
+                summary.update(game_win=round(100*own(adjusted),3),game_win_if_available=round(100*own(healthy),3),
+                  win_change_pp=round(100*(own(adjusted)-own(healthy)),3))
+                summary['baseline_game_win']=round(100*own(unadjusted),4)
         probability_home,lh,la=probability(float(raw[0]),float(raw[1]),self.params['temperature'])
         return probability_home,lh,la,context
 
@@ -145,6 +174,7 @@ class Engine:
         return {'version':2,'source':'MoneyPuck.com','source_url':'https://moneypuck.com/data.htm','revision':self.inputs['revision'],
                 'data_through':self.context_source['advanced_data_through'],'injury_status':self.availability['status'],
                 'injury_reported_at':self.availability.get('reported_at'),'starter_model':'trained workload/rest/performance model',
-                'skater_injuries':'reported context only; no validated individual skater penalty',
+                'skater_injuries':'trained regularized player impact with replacement minutes and recovery scenarios' if self.impact else 'unavailable; no numerical adjustment',
+                **({'skater_impact':self.impact.metadata()} if self.impact else {}),
                 'validation':self.params['validation'],
-                'summary':'Recency-weighted goals and expected goals, five-on-five and special teams, projected/confirmed goalies, and schedule rest. Injured goalies are removed from current starting options. Other skater absences are reported without an unvalidated numerical penalty.'}
+                'summary':'Recency-weighted goals and expected goals, five-on-five and special teams, projected/confirmed goalies, and schedule rest. '+('Reported skater absences adjust projected replacement minutes using trained player effects. Return-date windows feed season simulations; historical injury-report and playoff calibration remain unestablished.' if self.impact else 'Skater impact inputs are unavailable; no individual skater adjustment is applied.')}

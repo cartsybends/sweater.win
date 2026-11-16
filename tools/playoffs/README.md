@@ -1,5 +1,88 @@
 # Playoff Picture
 
+## Skater availability impact (beta)
+
+`impact_parameters.json` is the offline-trained `sweater-skater-impact-v1`
+release. It uses 3,851 verified regular-season games from 2023–24 through
+2025–26, with 1,236 player records (unseen players receive a positional prior).
+Official NHL shift membership is joined to factual MoneyPuck shot geometry,
+shooter IDs and goal outcomes. Sweater's own shot model supplies shot quality;
+MoneyPuck player rankings and predicted game probabilities are not targets.
+Unmatched shifts, empty-net/unsupported strengths, incomplete goal logs and
+games with less than 40 verified regulation minutes are excluded. Training
+coverage and input hashes are published in the artifact. Arizona/Utah share
+the existing historical rating identity; displayed head-to-head history still
+uses the exact franchises.
+
+The chance model is a ridge-regularized Poisson adjusted plus-minus fit with
+separate even-strength, PP and PK offense/defense coefficients and club,
+opponent, home and score-state controls. A shrunk goals-versus-own-xG finishing
+component estimates shooting skill. Penalties and finishing shrinkage were
+selected on 2024–25 after fitting 2023–24. A 2025–26 game-goal check selected
+a 0.7 translation scale using skater coefficients fitted only through 2024–25.
+The release then fits skaters through 2025–26; no current-season outcomes fit
+the player, finishing or translation coefficients. Upstream 2025 shot-quality
+calibration and game-strength training make that year's checks retrospective.
+
+On 215 eligible 2026–27 games through November 13, game Brier was **0.2301**
+versus **0.2311** without the adjustment; log loss was 0.6520 versus 0.6540.
+The paired game-bootstrap 95% interval for Brier change is approximately
+[-0.00200, +0.00010], including zero. This is a small conditional evaluation,
+not proof of superior accuracy. Historical **dressed identities** are observed
+retrospectively; all projected minutes use earlier games. Historical injury
+report timestamps and their forecasting accuracy are not reconstructed. Game
+checks do not establish playoff calibration. Only 12F/6D games with complete
+sources enter this translation check; missing games are not filled with zeros.
+
+Runtime projects role minutes from earlier NHL usage and prior seasons, budgets
+replacement minutes across 12 forwards and six defensemen, and uses learned
+low-usage positional priors for unknown players/call-ups. It compares projected
+availability with the absence exposure already embedded in the base team's
+recency-weighted ratings, avoiding a second full injury deduction. Injuries
+marked Out/IR/suspended change scoring; DTD remains context until an out status
+is reported. Effects can be small or positive; reputation never sets a minimum
+star penalty. Coefficients are regularized associations, not causal guarantees.
+
+Remaining-season draws use one recovery date per player per simulated season,
+shared across games. Future reported estimates use a uniform ±7-day scenario
+window, clipped after today; unknown returns use 7–28 days, and expired dates
+use 1–14 days. These are explicit scenario assumptions, **not a medical return
+model**. The eight highest-usage reported absences receive sampled returns;
+additional absences stay excluded and are flagged partial. Postseason dates
+advance approximately two days per game and two weeks per round. Future
+unreported injuries/trades are not predicted. Stale/unavailable injury or usage
+inputs disable individual adjustments rather than inventing availability.
+
+Both game forecasts and season simulations consume the same artifact. Game
+Center → Team availability and team breakdowns expose player estimates. Frozen
+pregame predictions and archived dates retain their original version and values.
+New pregame predictions also save the unadjusted win chance for an outcome-blind
+paired comparison; `evaluation.py` separates the new impact version and its
+shadow baseline from earlier forecasts. A fresh live game uses the saved,
+adjusted pregame rates as its starting point; no historical fitting runs in
+Cloudflare.
+
+Training stays offline: install `requirements-training.txt`, cache official
+NHL game/player reports with `data.py --history-only` and
+`player_data.py --first 2023 --last 2026`, and provide the current compact NHL
+schedule as `.cache/playoffs/lines/matchups-2026.json` (from `data.schedules`).
+Download the factual `shots_2023.zip` through `shots_2026.zip` links explicitly
+listed on MoneyPuck's data page into a private folder. Then run:
+
+```sh
+python -B tools/playoffs/impact_data.py --shots /path/to/private/shots
+python -B tools/playoffs/fit_impact.py
+python -B tools/playoffs/impact_artifact.py
+python -B tools/playoffs/calibrate_impact.py
+python -B tests/playoffs_impact.py
+```
+
+`calibrate_impact.py` also needs `advanced.load_inputs(2026)` cached inputs and
+the existing fitted game-strength parameters. Raw downloads, shifts and sparse
+design matrices stay outside Git. Only compact coefficients and diagnostics ship.
+The normal forecast job fetches current usage with NumPy only and caches it;
+SciPy is never required by the refresh job or Worker.
+
 The public route is `/#playoffs`. The tool consumes `playoffs_cache.json`,
 embedded at build time and fetched from the public main branch every two minutes
 while visible. It preserves the last validated forecast on an error. Shared links

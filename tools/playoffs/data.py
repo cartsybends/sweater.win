@@ -176,7 +176,10 @@ def main():
     reports,starter_feed=starter_reports(data['games'],context['rosters'],old,now,injuries=context['injuries'])
     from starter_rss import enrich_injuries
     enrich_injuries(context['injuries'],starter_feed,now)
-    engine=Engine(data,history,inputs,context,reports,now)
+    from impact_model import load_impact
+    from strength_v2 import config
+    impact=load_impact(data,inputs,context,now,config())
+    engine=Engine(data,history,inputs,context,reports,now,impact)
     params=engine.parameters
     signature=model_signature(data,params,args.simulations,engine)
     if old.get('source_sha256') == signature:

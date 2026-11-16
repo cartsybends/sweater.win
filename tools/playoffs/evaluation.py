@@ -33,9 +33,13 @@ def scores(archive):
         if 'result' not in g:
             continue
         p=g['prediction']['home_win']/100;y=g['result']['home_win'];key=g['prediction']['model']
+        if g['prediction'].get('impact_model'):key+='+'+g['prediction']['impact_model']
         if not 0<p<1:
             p=min(1-1e-9,max(1e-9,p))
         groups.setdefault(key,[]).append((p,y))
+        baseline=g['prediction'].get('impact_baseline_home_win')
+        if baseline is not None and 0<=baseline<=100:
+            groups.setdefault(key+' (without skater adjustment)',[]).append((min(1-1e-9,max(1e-9,baseline/100)),y))
     return {key:{'games':len(rows),'brier':sum((p-y)**2 for p,y in rows)/len(rows),
                  'log_loss':-sum(y*math.log(p)+(1-y)*math.log1p(-p) for p,y in rows)/len(rows),
                  'accuracy':sum((p>=.5)==bool(y) for p,y in rows)/len(rows)} for key,rows in groups.items()}
