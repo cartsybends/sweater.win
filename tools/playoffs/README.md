@@ -317,3 +317,20 @@ season response has zero appearances; missing sources do not invent zeros.
 Saved pregame contexts freeze their statistics, and current totals are never
 backfilled into historical reconstructions. Missing historical totals are shown
 as unavailable. These display statistics do not change the fitted model inputs.
+
+### Game Center player and matchup reports
+
+`python -B tools/playoffs/lineups.py` publishes official last-game combinations,
+conditional player-scoring forecasts and season/last-ten matchup history under
+`playoffs_lines/`. Historical stats, full schedules and raw HTTP caches remain
+in `.cache/playoffs/lines`; compact observed lineups are reusable versioned
+inputs. Source details, validation results, projection meaning and refresh
+behavior are documented in [Game Center](../../docs/game-center.md#lineups-player-outlook-and-head-to-head-history).
+
+`player_parameters.json` is a fixed release artifact, not refitted by the normal
+refresh workflow. Offline refitting uses `fit_players.py` with NumPy and SciPy;
+production generation needs only the existing NumPy requirement. New model
+choices require a new independent evaluation period before claiming an untouched
+holdout. The workflow `refresh-previews.yml` follows successful league forecast
+refreshes, validates both source chronology and client payloads, and publishes
+only those reports; preview failures do not prevent the base forecast refreshing.

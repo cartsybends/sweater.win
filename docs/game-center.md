@@ -1,7 +1,8 @@
 # Live Game Center
 
 The Games entry **Team availability / Game Center** opens a large view, with
-Game Center and Team availability tabs. There is no extra navigation section.
+Game Center, Lines & units, Matchups and Availability tabs. There is no extra
+navigation section.
 
 ## Live data and serving
 
@@ -194,3 +195,95 @@ new views use `sweater-live-v2` when penalty context is available and explicitly
 label a `sweater-live-v1` fallback. Goal-log totals must also reconcile before
 applying a power play, preventing a delayed goal event from extending a released
 minor after the score has already changed.
+
+## Lineups, player outlook and head-to-head history
+
+`GET /api/playoffs/preview?id=<NHL game ID>` serves a separately precomputed
+report from `playoffs_lines/matchups/`. It uses the same published game-window
+identity gate, checks both source and target game identities, and validates the
+response with `static/playoffs/preview-model.mjs` on the server and client.
+Reports cache for two minutes at the edge; a one-day last-good fallback keeps
+its original timestamps and explicitly marks `stale`. The browser requests this
+report only while Lines or Matchups is visible, polls every two minutes, and
+aborts on hide, close, navigation or a switch to another panel. The live game
+feed remains independent and retains its fifteen-second target.
+
+`Refresh NHL Game Center previews` follows each successful season-forecast
+refresh and also runs when its source/model changes. It downloads official NHL
+stats and schedules with bounded concurrency and persistent source caches. It
+publishes compact validated reports without embedding them in the main HTML or
+running a large historical-data fan-out in Cloudflare. Refresh frequency follows
+the existing season-forecast pipeline; the browser's two-minute check does not
+mean a fresh full history is generated every two minutes. Current selected-game
+scores and final results also update from the independent live game feed.
+
+The lineup source is each team's last completed regular-season game strictly
+before the selected game. Official boxscores identify dressed skaters and their
+positions; official shift overlap identifies forward trios and defense pairs.
+A maximum-weight disjoint set search ranks the most-used complete groups by
+shared five-on-five time. It does not fill missing lines from roster order.
+Eleven-forward/seven-defense games can therefore have an unidentified fourth
+trio and a separate list of rotating players. PP/PK units come from unequal
+skater counts while both goalies are present, excluding extra-attacker play.
+No observed distinct second unit means no invented second unit. Arrows compare
+observed usage rank with the previous game's combinations, not a confirmed
+coaching promotion or demotion. Headshots use official NHL player IDs.
+
+Season AVG SOG and AVG BLK are totals divided by appearances. Center faceoffs
+use total wins/attempts; PP% and PK% use total team opportunities, not averages
+of game percentages. Unknown values remain missing. All displayed averages and
+model features use games with NHL `gameDate` strictly earlier than the target
+NHL date, including September games in the 84-game 2026–27 season. UTC dates
+are not substituted for the NHL schedule date.
+
+`sweater-player-shares-v1` allocates the saved Sweater team goal forecast among
+last-game dressed skaters. Its features use multi-season goal and shot rates,
+recent/multi-season time on ice and PP role, a smoothed recent scoring change,
+and strongly regressed history against the actual opponent franchise. A line's
+expected goals are the sum of goals predicted to be scored by its players,
+including special teams. This is **not on-ice shot-quality xG**, a chemistry
+estimate or an independent team goal forecast. Forward/defense/other-player
+allocations conserve the team mean; overlapping PP/PK groups are not additional
+goals. Injuries already identified in team availability withhold the affected
+complete group's forecast. Estimates otherwise remain conditional on those
+players dressing and are labelled beta; upcoming coaching assignments are not
+claimed to be confirmed.
+
+`fit_players.py` warms up on 2023–24, selects regularization chronologically
+within 2024–25, evaluates on 2025–26, then refits release coefficients through
+2025–26. A later current-season snapshot is separate. Conditional goal-share
+log loss was 2.669660 vs 2.680349 for the goal-rate-times-ice-time baseline over
+2,624 team-games/8,086 goals in 2025–26. Through Nov 15, 2026 it was 2.670780 vs
+2.677224 over 660 team-games/2,064 goals. This retrospective evaluation knows
+who dressed, but no same-game performance feature is used. These figures do
+not establish calibration of team/line totals or superiority to other sites.
+Input row counts, hashes, coefficients and limitations are versioned in
+`player_parameters.json`; raw historical rows stay outside Git. Refit with
+`python -B tools/playoffs/fit_players.py`; generation uses NumPy but no SciPy.
+
+A saved pregame report freezes its lineup and projection after puck drop;
+matchup history can still refresh. Games without a saved report show a clearly
+labelled reconstructed pregame estimate based on earlier games. They do not
+claim to have been published before the game.
+
+Matchups separates the selected season's complete scheduled series (past final
+scores and future local dates/times) from the ten most recent completed meetings
+as of the history check. Both include regular season and playoffs and exclude
+preseason. NHL club schedules are reconciled by game ID and final result. Exact
+franchise identities are retained; Arizona results are not relabelled as Utah.
+A newer franchise can have fewer than ten meetings. Historical matchup results
+are current context, separate from the strictly pregame model feature cutoff.
+
+Goals in both the graph event card and rink detail show complementary win
+chances from the `kind: goal` sample with that exact NHL event ID. They never
+reuse the current/final win chance for an earlier goal, and the readout is
+omitted when verified probability history is unavailable. The rink additionally
+includes neutral-zone dots, end-zone inner L marks and outer hashmarks, and both
+goaltender trapezoids using regulation 200×85-foot geometry.
+
+Verification: `python -B tests/playoffs_previews.py`,
+`node tests/playoffs_previews.mjs`, and (with backend packages installed)
+`node tests/playoffs_previews_runtime.mjs`. Browser checks cover Chrome desktop,
+iPhone WebKit and 320px touch layouts, all four tabs, keyboard navigation,
+portrait retention, incomplete lines, goal-specific probabilities, local dates,
+source outages and timer/request cleanup.

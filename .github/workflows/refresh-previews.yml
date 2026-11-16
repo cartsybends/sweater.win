@@ -1,0 +1,75 @@
+name: Refresh NHL Game Center previews
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Refresh NHL playoff probabilities"]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - "tools/playoffs/lineups.py"
+      - "tools/playoffs/lineup_data.py"
+      - "tools/playoffs/player_data.py"
+      - "tools/playoffs/player_model.py"
+      - "tools/playoffs/player_parameters.json"
+      - "tools/playoffs/matchups.py"
+      - ".github/workflows/refresh-previews.yml"
+permissions:
+  contents: write
+concurrency:
+  group: sweater-game-previews
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/playoffs/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: python -m pip install -r tools/playoffs/requirements.txt
+      - name: Identify preview cache revision
+        id: revision
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          today=datetime.now(ZoneInfo('America/New_York'))
+          print('season='+str(today.year if today.month>=7 else today.year-1))
+          print('day='+today.date().isoformat())
+          PY
+      - uses: actions/cache@v4
+        with:
+          path: .cache/playoffs/lines
+          key: nhl-game-previews-v1-${{ steps.revision.outputs.season }}-${{ steps.revision.outputs.day }}
+          restore-keys: |
+            nhl-game-previews-v1-${{ steps.revision.outputs.season }}-
+      - name: Build and verify official lineup context and scoring projections
+        run: |
+          python -B tools/playoffs/lineups.py
+          python -B tests/playoffs_previews.py
+          node tests/playoffs_previews.mjs
+      - name: Publish verified previews
+        run: |
+          git config user.name "sweater-bot"
+          git config user.email "sweater-bot@users.noreply.github.com"
+          git add playoffs_lines
+          if ! git diff --cached --quiet; then
+            git commit -m "[skip ci] Refresh NHL Game Center previews"
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then exit 0; fi
+            done
+            exit 1
+          fi

@@ -173,6 +173,8 @@ jobs:
           python -B tests/playoffs_advanced.py
           python -B tests/playoffs_rss.py
           python -B tests/playoffs_archive.py
+          python -B tests/playoffs_previews.py
+          node tests/playoffs_previews.mjs
           node tests/playoffs_archive.mjs
           node tests/playoffs.mjs
 

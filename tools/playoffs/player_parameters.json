@@ -1,0 +1,71 @@
+{
+  "version": "sweater-player-shares-v1",
+  "built_at": "2026-11-16T18:04:24.002154+00:00",
+  "features": [
+    "log_goal_rate",
+    "log_shot_rate",
+    "log_expected_ice_time",
+    "power_play_role",
+    "recent_scoring_delta",
+    "opponent_scoring_delta",
+    "defense"
+  ],
+  "weights": [
+    0.390605356807765,
+    0.44555593547885197,
+    1.25436472457741,
+    0.2612618347824694,
+    0.0381864160070565,
+    0.025354376865797407,
+    -0.5315385951418524
+  ],
+  "penalty": 0.001,
+  "inputs": [
+    {
+      "season": 2023,
+      "rows": 47221,
+      "sha256": "4497d210a9b0854acc9e9c3af60bacaa73381a5aa92fe17236cef8568b3469eb"
+    },
+    {
+      "season": 2024,
+      "rows": 47224,
+      "sha256": "ee20ae0f7a9f459f03cd68da4e74de9608002175896781089950b8c2027aaf1e"
+    },
+    {
+      "season": 2025,
+      "rows": 47230,
+      "sha256": "455923d5774a96ee379a91c0c8307269ab792a58ad5afdad5b1d9e3771fab117"
+    },
+    {
+      "season": 2026,
+      "rows": 11879,
+      "sha256": "ae5cca0b515719370d91899fbda284dfe03c79779b13dc2da316db2f629f6dd4"
+    }
+  ],
+  "validation": {
+    "season": 2025,
+    "team_games": 2624,
+    "goals": 8086,
+    "goal_allocation_log_loss": 2.6696604295361763,
+    "baseline_log_loss": 2.6803493285838766
+  },
+  "current_snapshot": {
+    "season": 2026,
+    "data_through": "2026-11-15",
+    "team_games": 660,
+    "goals": 2064,
+    "goal_allocation_log_loss": 2.6707798423010587,
+    "baseline_log_loss": 2.6772238842428684
+  },
+  "limitations": [
+    "Conditional on dressed skaters; not a lineup or injury forecast.",
+    "Allocates the existing team goal forecast; does not establish calibration of team or line totals.",
+    "Opponent history is strongly regressed; no fitted line chemistry effect.",
+    "Historical evaluation knows the dressed roster, but all performance and usage features use strictly earlier games.",
+    "Release coefficients are refitted through 2025\u201326 after evaluating the earlier fit on that season."
+  ],
+  "sources": [
+    "https://api.nhle.com/stats/rest/en/skater/summary",
+    "https://api.nhle.com/stats/rest/en/skater/timeonice"
+  ]
+}
