@@ -91,6 +91,7 @@ function poFeedStatus(){
 }
 function poRender(){
  poData=poArchiveActive()?poArchiveSnapshot:poLiveData;
+ const dialog=$('poGameDialog');if(dialog?.open){dialog.dataset.dashboardPending='true';poGCMarket();return;}
  poTodayField=PLAYOFF_FIELD.field(poData?.teams);
  const t=poCurrent(),available=!!t,options=[...(poData?.teams||[])].sort((a,b)=>a.name.localeCompare(b.name));
  if($('poTeam').options.length<2&&options.length)$('poTeam').innerHTML='<option value="">Choose a team…</option>'+options.map(t=>`<option value="${t.abbr}">${esc(t.name)}</option>`).join('');

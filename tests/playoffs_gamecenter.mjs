@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import {gameCenter} from '../backend/src/game-center-model.mjs';
 import {eventTime} from '../backend/src/nhl-clock.mjs';
@@ -38,4 +39,25 @@ await test('Endpoint rejects bad input, CORS and methods before calling upstream
 await test('One compact edge response is reused across visitors, with correct CORS',async()=>{const r=await handleGameCenter(req('?id='+g.id,{headers:{Origin:'https://sweater.win'}}),{},null,options);assert.equal(r.status,200);assert.equal(r.headers.get('Access-Control-Allow-Origin'),'https://sweater.win');const d=await r.json();assert.equal(d.forecast.status,'available');assert.equal(calls,2);assert.equal((await handleGameCenter(req('?id='+g.id),{},null,options)).status,200);assert.equal(calls,2);});
 await test('Only games in the published schedule can trigger NHL requests',async()=>{assert.equal((await handleGameCenter(req('?id=2026029999'),{},null,options)).status,404);assert.equal(calls,2);});
 await test('An outage keeps the last good view with its original timestamp and an explicit delayed flag',async()=>{fail=true;const r=await handleGameCenter(req('?id='+g.id),{},null,{...options,now:now+70000});const d=await r.json();assert.equal(r.status,200);assert.equal(d.stale,true);assert.equal(Date.parse(d.checked_at),Date.parse(at));assert.equal((await handleGameCenter(req('?id='+g.id),{},null,{...options,cache:undefined,now:now+70000})).status,503);});
+const client=await readFile(new URL('../static/playoffs/game-center.js',import.meta.url),'utf8');
+await test('Clock and intermission updates refresh the header while hidden live panels defer rendering until opened',async()=>{
+ const {raw,g,at}=fixture(),base=gameCenter(raw,g,at);base.checked_at=new Date().toISOString();
+ const updated=structuredClone(base);updated.clock.intermission=!base.clock.intermission;
+ const calls=[],panels={poGCLive:{hidden:true},poGCMatchups:{hidden:true}};
+ const context=vm.createContext({poGCDialog:{open:true},poGCGame:g,poGCData:base,poGCController:null,poGCRequest:0,poGCTimer:null,poGCPreviewData:null,document:{hidden:false},AbortController,API_ON:false,GAME_CENTER,Date,
+  $:id=>panels[id],setTimeout:()=>1,clearTimeout:()=>{},fetch:async()=>({ok:true,json:async()=>structuredClone(updated)}),
+  ...Object.fromEntries(['Status','Score','Chart','Periods','Rink','Quality','Shootout','Market','MatchupsRender'].map(name=>['poGC'+name,()=>calls.push(name)]))});
+ vm.runInContext(client.slice(client.indexOf('async function poGCLoad()'),client.indexOf('function poGCRefIcon()')),context);
+ await context.poGCLoad();assert.deepEqual(calls,['Status','Score','Market']);assert.equal(context.poGCData.clock.intermission,updated.clock.intermission);
+ calls.length=0;context.poGCData=base;panels.poGCLive.hidden=false;await context.poGCLoad();assert.deepEqual(calls,['Status','Score','Chart','Periods','Rink','Quality','Shootout','Market']);
+ calls.length=0;await context.poGCLoad();assert.deepEqual(calls,['Status','Market']);
+});
+await test('Clock-only shot refresh preserves the map, event nodes and reading offset while updating selected goal probabilities',()=>{
+ const {raw,g,at}=fixture(),data=gameCenter(raw,g,at),elements={poGCShotList:{scrollTop:123},poGCRink:{},poGCTeam:{value:''},poGCPeriod:{value:''},poGCOutcome:{value:'unblocked'}};
+ elements.poGCRink._gcKey=JSON.stringify([data.status,data.shots,'','','unblocked']);let details=0;
+ const context=vm.createContext({$:id=>elements[id],poGCData:data,poGCShotDetail:()=>details++});
+ vm.runInContext(client.slice(client.indexOf('function poGCRink(reset='),client.indexOf('function poGCZoomRink(')),context);
+ data.clock.seconds_remaining--;context.poGCRink();assert.equal(elements.poGCShotList.scrollTop,123);assert.equal(details,1);
+ context.poGCRink(true);assert.equal(elements.poGCShotList.scrollTop,0);assert.equal(details,2);
+});
 console.log(checks+' Game Center checks passed');

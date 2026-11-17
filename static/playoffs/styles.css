@@ -309,3 +309,6 @@ body.playoffs-mode .foot .po-source-credit{display:block}
 .po-bracket-card>div{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr)}
 .po-bracket-vs-label{display:grid;place-items:center;align-self:center;justify-self:center;min-height:44px;font-size:15px;line-height:1;font-weight:800;letter-spacing:.4px;color:var(--fg);text-align:center}
 @media(max-width:360px){.po-bracket-card button{flex-direction:column;align-items:center;text-align:center;gap:7px}.po-bracket-card button>span{min-width:0;max-width:100%}}
+
+.po-period-status .po-game-clock{font-size:19px;line-height:1.35;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums;vertical-align:middle}
+.po-game-card .po-period-status .po-game-clock{font-size:20px}
