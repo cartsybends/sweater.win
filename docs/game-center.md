@@ -12,7 +12,7 @@ that schedule before transforming official NHL `/gamecenter/<id>/play-by-play`.
 It never calls MoneyPuck's live prediction endpoints.
 
 The existing Cloudflare Worker runs the small JS inference and caches a compact
-response for 15 seconds live, 60 seconds scheduled/final. The Cache API is local
+response for 5 seconds live, 60 seconds scheduled/final. The Cache API is local
 to each Cloudflare data center, not one global fetch lock. Concurrent requests
 inside an isolate coalesce. A one-day last-good cache can survive source errors;
 its original timestamp stays intact and the response explicitly says `stale`.
@@ -20,8 +20,15 @@ Without a valid fallback the endpoint returns 503.
 
 The browser polls only the open, visible view, aborts on close/navigation/hide,
 retains filters and selection, and marks failed checks as delayed. Checks target
-15 seconds, not instantaneous delivery: NHL publication, cache and network delays
+5 seconds, not instantaneous delivery: NHL publication, cache and network delays
 remain. No GitHub Actions refresh or AWS service is involved in this live path.
+Intermission countdowns never count as hockey time: the curve and penalty timers
+stay at the completed period's boundary. If official events advance before the
+header clock, their latest published hockey time is used until the header catches
+up. Reopening a game retains its last verified in-memory snapshot while checking
+for an update. Failed checks retry on the five-second cadence; returning to the
+tab or reconnecting triggers an immediate check.
+
 Saved pregame forecasts and the broader season simulation retain their existing
 refresh pipeline. The market panel reuses the separate existing live quote feed.
 

@@ -1,4 +1,4 @@
-import {eventTime,currentTime} from './nhl-clock.mjs';
+import {eventTime,currentTime,gameClock} from './nhl-clock.mjs';
 import {penaltyTimeline,penaltyContext} from './penalty-state.mjs';
 import {liveProbability} from './playoff-live-model.mjs';
 import {shotProbability,shotModelInfo} from './shot-quality.mjs';
@@ -33,6 +33,7 @@ export function gameCenter(raw,baseline,at){
  const scheduled=['FUT','PRE'].includes(raw.gameState),final=['OFF','FINAL'].includes(raw.gameState);
  if(scheduled)raw={...raw,plays:raw.plays||[],rosterSpots:raw.rosterSpots||[]};
  if(!Array.isArray(raw.plays)||raw.plays.length>3000||!Array.isArray(raw.rosterSpots)||raw.rosterSpots.length>100)throw new Error('Invalid NHL events');
+ const clock=scheduled?null:gameClock(raw);if(clock)raw={...raw,periodDescriptor:{...raw.periodDescriptor,number:clock.period,periodType:clock.type},clock:{...raw.clock,timeRemaining:clock.remaining,secondsRemaining:clock.seconds,inIntermission:clock.intermission}};
  if(!scheduled&&![raw.homeTeam.score,raw.awayTeam.score].every(n=>integer(n,0,30)))throw new Error('Invalid NHL score');
  if(final&&raw.homeTeam.score===raw.awayTeam.score)throw new Error('Incomplete NHL final');
  const players=new Map(raw.rosterSpots.filter(p=>integer(p.playerId,1,99999999)).map(p=>[p.playerId,{id:p.playerId,name:[p.firstName?.default,p.lastName?.default].filter(x=>typeof x==='string').join(' ').slice(0,100),number:integer(p.sweaterNumber,1,99)?p.sweaterNumber:null}]));
@@ -72,5 +73,5 @@ export function gameCenter(raw,baseline,at){
  const shootoutStarted=raw.periodDescriptor?.periodType==='SO'||attempts.length>0,shootout={started:shootoutStarted,complete:shootoutStarted&&(final||raw.plays.some(p=>p.typeDescKey==='shootout-complete')),attempts,home_goals:shootoutGoals[baseline.home],away_goals:shootoutGoals[baseline.away]};
  const elapsed=scheduled?0:currentTime(raw),timeline=scheduled?null:penaltyTimeline(raw),forecast=scheduled?{status:'scheduled',points:[],current:null}:winHistory(raw,baseline,goals,elapsed,penalties,timeline);
  const club=side=>{const p=raw[side+'Team'];return {abbr:baseline[side],name:baseline[side],score:scheduled?null:p.score,shots:integer(p.sog,0,150)?p.sog:null,expected_goals:Number(shots.filter(s=>s.team===baseline[side]&&s.xg!==null).reduce((n,s)=>n+s.xg,0).toFixed(3)),modeled_shots:shots.filter(s=>s.team===baseline[side]&&s.xg!==null).length};};
- return {version:1,id:baseline.id,game_type:raw.gameType,checked_at:at,refresh_seconds:scheduled?60:final?60:15,source:'NHL play-by-play',source_url:`https://www.nhl.com/gamecenter/${baseline.id}`,state:raw.gameState,status:scheduled?'scheduled':final?'final':'live',home:club('home'),away:club('away'),clock:scheduled?null:{period:raw.periodDescriptor?.number,type:raw.periodDescriptor?.periodType,remaining:raw.clock?.timeRemaining||'',seconds_remaining:raw.clock?.secondsRemaining,intermission:raw.clock?.inIntermission===true},elapsed,forecast,shots,goals,penalties,shootout,shot_model:shotModelInfo};
+ return {version:1,id:baseline.id,game_type:raw.gameType,checked_at:at,refresh_seconds:scheduled?60:final?60:5,source:'NHL play-by-play',source_url:`https://www.nhl.com/gamecenter/${baseline.id}`,state:raw.gameState,status:scheduled?'scheduled':final?'final':'live',home:club('home'),away:club('away'),clock:scheduled?null:{period:raw.periodDescriptor?.number,type:raw.periodDescriptor?.periodType,remaining:raw.clock?.timeRemaining||'',seconds_remaining:raw.clock?.secondsRemaining,intermission:raw.clock?.inIntermission===true},elapsed,forecast,shots,goals,penalties,shootout,shot_model:shotModelInfo};
 }

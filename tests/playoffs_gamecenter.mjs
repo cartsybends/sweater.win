@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import {gameCenter} from '../backend/src/game-center-model.mjs';
-import {eventTime} from '../backend/src/nhl-clock.mjs';
+import {eventTime,currentTime,gameClock} from '../backend/src/nhl-clock.mjs';
 import {shotFeatures,shotProbability,shotModelInfo} from '../backend/src/shot-quality.mjs';
 import {SHOT_MODEL} from '../backend/src/shot-model.mjs';
 import {handleGameCenter} from '../backend/src/game-center.mjs';
@@ -24,6 +24,24 @@ await test('Shootout winner bonus is excluded from the event score reconciliatio
 await test('Client validation rejects identity, out-of-order/inconsistent curves and malformed shot values',()=>{const {raw,g,at}=fixture(),base=gameCenter(raw,g,at);for(const mutate of [d=>d.id++,d=>d.home.abbr='NYR',d=>d.forecast.points[2].t=-1,d=>d.forecast.points[1].home=120,d=>d.forecast.points[1].away=1,d=>d.shots[0].xg=2,d=>d.home.expected_goals=null,d=>d.forecast.points[0].period='<img src=x>',d=>d.forecast.points[0].remaining='99:00',d=>d.shots.push(d.shots[0])]){const d=structuredClone(base);mutate(d);assert.equal(GAME_CENTER.validate(d,g,Date.parse(at)),null);}assert.equal(GAME_CENTER.filter(base.shots,{outcome:'goal'}).length,3);assert.equal(GAME_CENTER.filter(base.shots,{team:'WPG'}).length,1);assert.equal(GAME_CENTER.filter(base.shots,{period:'1'}).length,3);});
 await test('Goal details preserve primary/secondary assists and handle unassisted goals and corrections',()=>{const {raw,g,at}=fixture();raw.plays[0].details.assist1PlayerId=8479973;raw.plays[0].details.assist2PlayerId=9999999;let d=gameCenter(raw,g,at);assert.deepEqual(d.shots[0].assists.map(p=>p.id),[8479973,9999999]);assert.equal(d.shots[0].assists[1].name,'Player unavailable');assert.equal(d.shots[0].home_score,1);assert.equal(d.shots[0].away_score,0);assert.deepEqual(d.shots.at(-1).assists,[]);delete raw.plays[0].details.assist2PlayerId;d=gameCenter(raw,g,at);assert.equal(d.shots[0].assists.length,1);assert(GAME_CENTER.validate(d,g,Date.parse(at)));});
 await test('Penalty facts include player, reason, duration and service, and the live curve reacts to the advantage',()=>{const {raw,g,at,add}=fixture(),before=gameCenter(raw,g,at);add(99,1,100,'penalty',false,{committedByPlayerId:8479973,drawnByPlayerId:8477479,duration:2,descKey:'high-sticking',typeCode:'MIN'});add(100,2,650,'penalty',true,{servedByPlayerId:8477479,duration:2,descKey:'too-many-men-on-the-ice',typeCode:'BEN'});raw.plays[0].situationCode='1451';const d=gameCenter(raw,g,at);assert.equal(d.penalties.length,2);assert.equal(d.penalties[0].team,'WPG');assert.equal(d.penalties[0].player.name,'Stuart Skinner');assert.equal(d.penalties[0].minutes,2);assert.equal(d.penalties[0].drawn_by.name,'Tyler Bertuzzi');assert.equal(d.penalties[1].player,null);assert.equal(d.penalties[1].served_by.name,'Tyler Bertuzzi');assert(d.forecast.points.find(p=>p.event_id===99&&p.kind==='penalty').home>d.forecast.points.find(p=>p.event_id===99&&p.kind==='before_penalty').home);assert(d.forecast.points.find(p=>p.event_id===100&&p.kind==='penalty').home<d.forecast.points.find(p=>p.event_id===100&&p.kind==='before_penalty').home);assert(GAME_CENTER.validate(d,g,Date.parse(at)));});
+await test('Intermission countdowns freeze at the completed period while shots, penalties and the whole curve remain valid on a cold open',async()=>{
+ for(const seconds of [1080,600,0,1320,undefined]){
+  const {raw,g,at,add}=fixture();add(70,2,1190,'penalty',false,{typeCode:'MIN',duration:2,committedByPlayerId:8479973});add(71,2,1200,'period-end');raw.clock={secondsRemaining:seconds,timeRemaining:seconds===undefined?'':`${Math.floor(seconds/60)}:00`,inIntermission:true};
+  const before=structuredClone(raw),d=gameCenter(raw,g,at);assert.deepEqual(raw,before);assert.equal(d.elapsed,2400);assert.equal(d.clock.remaining,'00:00');assert.equal(d.clock.intermission,true);assert.equal(d.shots.length,6);assert.equal(d.forecast.current.t,2400);assert.equal(d.forecast.current.penalty.remaining,110);assert.equal(d.forecast.status,'available');assert(GAME_CENTER.validate(d,g,Date.parse(at)));
+  const r=await handleGameCenter(new Request('https://api.sweater.win/api/playoffs/game?id='+g.id),{},null,{cache:null,now:Date.parse(at),fetcher:async url=>Response.json(url.includes('raw.githubusercontent')?{checked_at:at,games:[g]}:raw)});assert.equal(r.status,200);assert(GAME_CENTER.validate(await r.json(),g,Date.parse(at)));
+ }
+});
+await test('A next-period header during a break does not invent another period of hockey, including playoff overtime',()=>{
+ const {raw,g,at,add}=fixture();add(70,2,1200,'period-end');raw.periodDescriptor.number=3;raw.clock={secondsRemaining:1200,timeRemaining:'20:00',inIntermission:true};let d=gameCenter(raw,g,at);assert.equal(d.elapsed,2400);assert.equal(d.clock.period,2);assert(GAME_CENTER.validate(d,g,Date.parse(at)));
+ const overtime={gameType:3,gameState:'LIVE',periodDescriptor:{number:5,periodType:'OT'},clock:{secondsRemaining:1100,inIntermission:true},plays:[{typeDescKey:'period-end',periodDescriptor:{number:4,periodType:'OT'},timeInPeriod:'20:00'}]};assert.equal(currentTime(overtime),4800);assert.equal(gameClock(overtime).period,4);
+});
+await test('Published events advance a lagging 20:00 header and clear a stale intermission flag without inventing a countdown',()=>{
+ for(const intermission of [false,true]){
+  const {raw,g,at}=fixture();raw.clock={secondsRemaining:1200,timeRemaining:'20:00',inIntermission:intermission};if(intermission){raw.periodDescriptor.number=1;raw.plays.push({eventId:90,typeDescKey:'period-end',periodDescriptor:{number:1,periodType:'REG'},timeInPeriod:'20:00'});}
+  const d=gameCenter(raw,g,at);assert.equal(d.elapsed,1800);assert.equal(d.clock.period,2);assert.equal(d.clock.remaining,'10:00');assert.equal(d.clock.intermission,false);assert.equal(d.forecast.current.t,1800);assert(GAME_CENTER.validate(d,g,Date.parse(at)));
+ }
+ const {raw}=fixture();assert.equal(currentTime(raw),1900,'A current header remains ahead of its last recorded event');
+});
 const realFixture=JSON.parse(await readFile(new URL('./fixtures/gamecenter-shootout.json',import.meta.url),'utf8'));
 await test('Official NHL shootout excerpt preserves home-first order, sudden-death rounds, save attribution and failed attempts',()=>{const {raw,g}=structuredClone(realFixture),d=gameCenter(raw,g,'2026-11-14T22:00:00Z'),a=d.shootout.attempts;assert.equal(d.shootout.started,true);assert.equal(d.shootout.complete,true);assert.equal(a.length,8);assert.equal(a[0].team,g.home);assert.deepEqual(a.map(p=>p.round),[1,1,2,2,3,3,4,4]);assert.equal(a[0].outcome,'missed');assert.equal(a[1].outcome,'saved');assert.equal(a[1].goalie.name,'Adin Hill');assert.equal(a[6].outcome,'unsuccessful');assert.equal(a[7].player.name,'Roman Josi');assert.equal(d.shootout.home_goals,1);assert.equal(d.shootout.away_goals,2);assert.equal(d.shots.length,4);assert.equal(d.goals.length,4);assert.equal(d.forecast.current.away,100);assert.equal(d.shots[0].assists.length,2);assert(GAME_CENTER.validate(d,g,Date.parse(d.checked_at)));});
 await test('An in-progress shootout shows only published attempts and leaves the live win estimate unavailable',()=>{const {raw,g}=structuredClone(realFixture);raw.gameState='LIVE';raw.homeTeam.score=raw.awayTeam.score=2;raw.plays=raw.plays.filter(p=>p.periodDescriptor.periodType!=='SO'||p.sortOrder<=855);const d=gameCenter(raw,g,'2026-11-14T22:00:00Z');assert.equal(d.shootout.complete,false);assert.equal(d.shootout.attempts.length,4);assert.equal(d.forecast.status,'shootout');assert.equal(d.forecast.current,null);assert.equal(GAME_CENTER.gameTime(d.forecast.points.at(-1)),'OT · 00:00 remaining');});
@@ -39,18 +57,43 @@ await test('Endpoint rejects bad input, CORS and methods before calling upstream
 await test('One compact edge response is reused across visitors, with correct CORS',async()=>{const r=await handleGameCenter(req('?id='+g.id,{headers:{Origin:'https://sweater.win'}}),{},null,options);assert.equal(r.status,200);assert.equal(r.headers.get('Access-Control-Allow-Origin'),'https://sweater.win');const d=await r.json();assert.equal(d.forecast.status,'available');assert.equal(calls,2);assert.equal((await handleGameCenter(req('?id='+g.id),{},null,options)).status,200);assert.equal(calls,2);});
 await test('Only games in the published schedule can trigger NHL requests',async()=>{assert.equal((await handleGameCenter(req('?id=2026029999'),{},null,options)).status,404);assert.equal(calls,2);});
 await test('An outage keeps the last good view with its original timestamp and an explicit delayed flag',async()=>{fail=true;const r=await handleGameCenter(req('?id='+g.id),{},null,{...options,now:now+70000});const d=await r.json();assert.equal(r.status,200);assert.equal(d.stale,true);assert.equal(Date.parse(d.checked_at),Date.parse(at));assert.equal((await handleGameCenter(req('?id='+g.id),{},null,{...options,cache:undefined,now:now+70000})).status,503);});
+await test('The live edge cache expires in five seconds and a source outage recovers on the next check with original fallback timestamps',async()=>{
+ const {raw,g,at}=fixture(),now=Date.parse(at),entries=new Map(),cache={match:async k=>entries.get(k.url)?.clone(),put:async(k,r)=>entries.set(k.url,r.clone())};let calls=0,fail=false;
+ const options={cache,fetcher:async url=>{calls++;if(fail&&!url.includes('raw.githubusercontent'))throw Error('temporary NHL outage');return Response.json(url.includes('raw.githubusercontent')?{checked_at:at,games:[g]}:raw);}},request=new Request('https://api.sweater.win/api/playoffs/game?id='+g.id);
+ const read=async ms=>{const r=await handleGameCenter(request,{},null,{...options,now:now+ms});assert.equal(r.status,200);return r.json();};
+ const first=await read(0);assert.equal(first.refresh_seconds,5);assert.equal(calls,2);await read(4999);assert.equal(calls,2);
+ raw.clock={secondsRemaining:490,timeRemaining:'08:10'};const next=await read(5001);assert.equal(calls,3);assert.equal(next.clock.remaining,'08:10');assert(Date.parse(next.checked_at)>Date.parse(first.checked_at));
+ fail=true;const saved=await read(10002);assert.equal(saved.stale,true);assert.equal(saved.checked_at,next.checked_at);fail=false;raw.clock={secondsRemaining:480,timeRemaining:'08:00'};
+ const recovered=await read(10003);assert.equal(recovered.stale,undefined);assert.equal(recovered.clock.remaining,'08:00');assert(GAME_CENTER.validate(recovered,g,now+10003));
+});
 const client=await readFile(new URL('../static/playoffs/game-center.js',import.meta.url),'utf8');
 await test('Clock and intermission updates refresh the header while hidden live panels defer rendering until opened',async()=>{
  const {raw,g,at}=fixture(),base=gameCenter(raw,g,at);base.checked_at=new Date().toISOString();
  const updated=structuredClone(base);updated.clock.intermission=!base.clock.intermission;
  const calls=[],panels={poGCLive:{hidden:true},poGCMatchups:{hidden:true}};
- const context=vm.createContext({poGCDialog:{open:true},poGCGame:g,poGCData:base,poGCController:null,poGCRequest:0,poGCTimer:null,poGCPreviewData:null,document:{hidden:false},AbortController,API_ON:false,GAME_CENTER,Date,
+ const context=vm.createContext({poGCDialog:{open:true},poGCGame:g,poGCData:base,poGCController:null,poGCRequest:0,poGCTimer:null,poGCPreviewData:null,poGCLastGood:new Map(),document:{hidden:false},AbortController,API_ON:false,GAME_CENTER,Date,
   $:id=>panels[id],setTimeout:()=>1,clearTimeout:()=>{},fetch:async()=>({ok:true,json:async()=>structuredClone(updated)}),
   ...Object.fromEntries(['Status','Score','Chart','Periods','Rink','Quality','Shootout','Market','MatchupsRender'].map(name=>['poGC'+name,()=>calls.push(name)]))});
  vm.runInContext(client.slice(client.indexOf('async function poGCLoad()'),client.indexOf('function poGCRefIcon()')),context);
  await context.poGCLoad();assert.deepEqual(calls,['Status','Score','Market']);assert.equal(context.poGCData.clock.intermission,updated.clock.intermission);
  calls.length=0;context.poGCData=base;panels.poGCLive.hidden=false;await context.poGCLoad();assert.deepEqual(calls,['Status','Score','Chart','Periods','Rink','Quality','Shootout','Market']);
  calls.length=0;await context.poGCLoad();assert.deepEqual(calls,['Status','Market']);
+});
+await test('A failed refresh preserves the last snapshot, retries in five seconds and recovers without reopening the game',async()=>{
+ const {raw,g,at}=fixture(),base=gameCenter(raw,g,at);base.checked_at=new Date().toISOString();const next=structuredClone(base);next.clock.remaining='08:10';next.clock.seconds_remaining=490;next.elapsed+=10;next.checked_at=new Date(Date.now()+100).toISOString();let online=false;const timers=[],statuses=[];
+ const context=vm.createContext({poGCDialog:{open:true},poGCGame:g,poGCData:base,poGCController:null,poGCRequest:0,poGCTimer:null,poGCPreviewData:null,poGCLastGood:new Map(),document:{hidden:false},AbortController,API_ON:false,GAME_CENTER,Date,
+  $:()=>({hidden:true}),setTimeout:(fn,ms)=>{timers.push(ms);return 1;},clearTimeout:()=>{},fetch:async()=>{if(!online)throw Error('upstream interrupted');return {ok:true,json:async()=>next};},poGCStatus:delayed=>statuses.push(!!delayed),poGCScore:()=>{},poGCMarket:()=>{}});
+ vm.runInContext(client.slice(client.indexOf('async function poGCLoad()'),client.indexOf('function poGCRefIcon()')),context);
+ await context.poGCLoad();assert.equal(context.poGCData,base);assert.equal(statuses.at(-1),true);assert(timers.at(-1)<=5000&&timers.at(-1)>4500);assert.equal(context.poGCController,null);
+ online=true;await context.poGCLoad();assert.equal(context.poGCData,next);assert.equal(statuses.at(-1),false);assert.equal(context.poGCLastGood.get(g.id),next);assert(timers.at(-1)<=5000);assert.equal(context.poGCController,null);
+ context.poGCDialog.open=false;const n=timers.length;await context.poGCLoad();assert.equal(timers.length,n);
+});
+await test('A queued native close event cannot stop polling or clear data after Game Center is reopened',()=>{
+ let callback,stops=0;const game={id:2026020331},data={clock:{remaining:'16:30'}},dialog={open:true,dataset:{},addEventListener:(type,fn)=>{assert.equal(type,'close');callback=fn;}};
+ const context=vm.createContext({poGCDialog:dialog,poGCGame:game,poGCData:data,poGCStop:()=>stops++,$:()=>({hidden:true})});
+ vm.runInContext(client.slice(client.indexOf("poGCDialog.addEventListener('close',"),client.indexOf("$('poGCClose').onclick=")),context);
+ callback();assert.equal(stops,0);assert.equal(context.poGCGame,game);assert.equal(context.poGCData,data);
+ dialog.open=false;callback();assert.equal(stops,1);assert.equal(context.poGCGame,null);assert.equal(context.poGCData,null);
 });
 await test('Clock-only shot refresh preserves the map, event nodes and reading offset while updating selected goal probabilities',()=>{
  const {raw,g,at}=fixture(),data=gameCenter(raw,g,at),elements={poGCShotList:{scrollTop:123},poGCRink:{},poGCTeam:{value:''},poGCPeriod:{value:''},poGCOutcome:{value:'unblocked'}};

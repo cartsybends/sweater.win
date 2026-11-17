@@ -1,7 +1,7 @@
 export const GAME_CENTER=(()=>{
  const finite=(n,a,b)=>Number.isFinite(n)&&n>=a&&n<=b;
  function validate(d,g,now=Date.now()){
-  if(!d||d.version!==1||d.id!==g.id||d.home?.abbr!==g.home||d.away?.abbr!==g.away||!finite(Date.parse(d.checked_at),now-86400000,now+300000)||![15,60].includes(d.refresh_seconds)||!['scheduled','live','final'].includes(d.status)||!Array.isArray(d.shots)||d.shots.length>2000||!Array.isArray(d.forecast?.points)||d.forecast.points.length>1000)return null;
+  if(!d||d.version!==1||d.id!==g.id||d.home?.abbr!==g.home||d.away?.abbr!==g.away||!finite(Date.parse(d.checked_at),now-86400000,now+300000)||![5,15,60].includes(d.refresh_seconds)||!['scheduled','live','final'].includes(d.status)||!Array.isArray(d.shots)||d.shots.length>2000||!Array.isArray(d.forecast?.points)||d.forecast.points.length>1000)return null;
   if(!['home','away'].every(s=>d.status==='scheduled'?d[s].score===null:Number.isInteger(d[s].score)&&finite(d[s].score,0,30)))return null;
   if(!['home','away'].every(s=>finite(d[s].expected_goals,0,200)&&Number.isInteger(d[s].modeled_shots)&&finite(d[s].modeled_shots,0,2000)))return null;
   if(!['available','unavailable','scheduled','shootout'].includes(d.forecast.status))return null;

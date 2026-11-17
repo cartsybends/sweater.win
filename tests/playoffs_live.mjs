@@ -39,6 +39,11 @@ assert.equal(liveSnapshot({...raw,periodDescriptor:{number:5,periodType:'SO'},cl
 const final=liveSnapshot({...raw,gameState:'OFF',gameOutcome:{lastPeriodType:'REG'}},game,at);assert.equal(final.status,'final');assert.equal(final.home_win,undefined);
 assert.throws(()=>liveSnapshot({...raw,gameState:'OFF',homeTeam:{abbrev:'VAN',score:1}},game,at));
 
+for(const seconds of [1080,600,1320,undefined]){
+ const breakRaw={...raw,clock:{secondsRemaining:seconds,inIntermission:true}},breakSnapshot=liveSnapshot(breakRaw,game,at),end=liveSnapshot({...raw,clock:{secondsRemaining:0}},game,at);
+ assert.equal(breakSnapshot.seconds_remaining,0);assert.equal(breakSnapshot.intermission,true);assert.equal(breakSnapshot.home_win,end.home_win);assert.equal(breakSnapshot.status,'live');
+}
+assert.equal(liveSnapshot({...raw,gameState:'OFF',clock:undefined},game,at).status,'final','Final scores do not require a live clock');
 const payload={version:1,checked_at:at,refresh_seconds:30,games:[snapshot]};
 assert(M.liveFeed(payload,[game],now));
 for(const mutate of [d=>d.games[0].home='SEA',d=>d.games[0].home_win=NaN,d=>d.games[0].away_win=99,d=>d.games[0].seconds_remaining=-1,d=>d.games[0].pregame_at=game.start,d=>d.games.push(d.games[0])]){
