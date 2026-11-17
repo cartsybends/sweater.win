@@ -14,7 +14,7 @@ export async function handleGameCenter(request,env,ctx,{fetcher=fetch,cache=glob
    const get=async(address,ttl)=>{const k=new Request(address),c=await cache?.match(k);if(c&&now-Number(c.headers.get('X-Sweater-Cached-At'))<ttl*1000)return c.json();const r=await fetcher(address,{redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(8000)});if(!r.ok)throw Error('NHL source unavailable');const text=await r.text();if(text.length>2500000)throw Error('Oversized feed');const d=JSON.parse(text);if(cache)await cache.put(k,Response.json(d,{headers:{'Cache-Control':'public,max-age='+ttl,'X-Sweater-Cached-At':String(now)}}));return d;};
    const feed=await get(feedURL,60);if(!Array.isArray(feed.games)||feed.games.length>400||!Number.isFinite(Date.parse(feed.checked_at))||Date.parse(feed.checked_at)>now+300000)throw Error('Invalid baseline');
    const baseline=feed.games.find(g=>String(g.id)===id);if(!baseline)return {error:'Game is outside the published game window',status:404};
-   const raw=await get(`https://api-web.nhle.com/v1/gamecenter/${id}/play-by-play`,15),data=gameCenter(raw,baseline,new Date(now).toISOString());
+   const raw=await get(`https://api-web.nhle.com/v1/gamecenter/${id}/play-by-play`,5),data=gameCenter(raw,baseline,new Date(now).toISOString());
    if(cache){await cache.put(key,Response.json(data,{headers:{'Cache-Control':'public,max-age='+data.refresh_seconds}}));await cache.put(lastKey,Response.json(data,{headers:{'Cache-Control':'public,max-age=86400'}}));}return data;
   };
   if(!pending.has(id))pending.set(id,load().finally(()=>pending.delete(id)));const data=await pending.get(id);return data.error?json({error:data.error},data.status):json(data);

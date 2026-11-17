@@ -1,3 +1,4 @@
+import {gameClock} from './nhl-clock.mjs';
 import {penaltyRegulation,penaltyOvertime} from './penalty-forecast.mjs';
 // Regulation is a conditional Poisson scoring model using Sweater's saved
 // pregame expected goals. NHL regular-season schedules for 2023-24, 2024-25,
@@ -50,15 +51,15 @@ export function liveSnapshot(raw,game,at,penalties=null){
  const homeScore=raw.homeTeam.score,awayScore=raw.awayTeam.score;
  if(![homeScore,awayScore].every(n=>Number.isInteger(n)&&n>=0&&n<=30))throw new Error('Invalid NHL score');
  Object.assign(result,{home_score:homeScore,away_score:awayScore});
- const type=raw.periodDescriptor?.periodType,period=raw.periodDescriptor?.number;
+ const clock=gameClock(raw),type=clock?.type||raw.periodDescriptor?.periodType,period=clock?.period??raw.periodDescriptor?.number;
  if(['OFF','FINAL'].includes(state)){
   const end=raw.gameOutcome?.lastPeriodType||type;
   if(homeScore===awayScore||!['REG','OT','SO'].includes(end))throw new Error('Incomplete NHL final');
   return {...result,status:'final',end};
  }
- const seconds=raw.clock?.secondsRemaining;
+ const seconds=clock?.seconds;
  if(!Number.isInteger(period)||!Number.isInteger(seconds)||seconds<0||seconds>1200||!['REG','OT','SO'].includes(type))throw new Error('Invalid NHL game clock');
- Object.assign(result,{period,period_type:type,seconds_remaining:seconds,intermission:raw.clock.inIntermission===true});
+ Object.assign(result,{period,period_type:type,seconds_remaining:seconds,intermission:clock.intermission});
  const p=game.prediction;
  if(!['pregame','recorded'].includes(p?.basis)||!Number.isFinite(Date.parse(p.at))||Date.parse(p.at)>=Date.parse(game.start)||Date.parse(p.at)>Date.parse(at))return {...result,reason:'pregame_unavailable'};
  const probabilities=liveProbability(p,{homeScore,awayScore,period,periodType:type,seconds,gameType:raw.gameType,penalties});
