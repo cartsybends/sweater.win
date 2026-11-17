@@ -28,7 +28,7 @@ export function winHistory(raw,baseline,goals,endTime,penalties=[],timeline=null
  else add(endTime,'clock');
  return {status:shootout&&!final?'shootout':'available',model:timeline?'sweater-live-v2':'sweater-live-v1',pregame_at:p.at,points,current:shootout&&!final?null:points.at(-1)||null};
 }
-export function gameCenter(raw,baseline,at){
+export function gameCenter(raw,baseline,at,locationCorrections=new Map()){
  if(!raw||raw.id!==baseline.id||raw.homeTeam?.abbrev!==baseline.home||raw.awayTeam?.abbrev!==baseline.away||Date.parse(raw.startTimeUTC)!==Date.parse(baseline.start)||![2,3].includes(raw.gameType)||!['FUT','PRE','LIVE','CRIT','OFF','FINAL'].includes(raw.gameState))throw new Error('Invalid NHL game identity');
  const scheduled=['FUT','PRE'].includes(raw.gameState),final=['OFF','FINAL'].includes(raw.gameState);
  if(scheduled)raw={...raw,plays:raw.plays||[],rosterSpots:raw.rosterSpots||[]};
@@ -49,8 +49,10 @@ export function gameCenter(raw,baseline,at){
   if(!integer(p.eventId,1,9999999)||seen.has(p.eventId))throw new Error('Duplicate NHL shot');seen.add(p.eventId);
   const team=d.eventOwnerTeamId===raw.homeTeam.id?baseline.home:d.eventOwnerTeamId===raw.awayTeam.id?baseline.away:null;if(!team){previous={p,t};continue;}
   const direction=p.homeTeamDefendingSide,sign=direction==='right'?(team===baseline.home?-1:1):direction==='left'?(team===baseline.home?1:-1):null;
-  const located=sign!==null&&[d.xCoord,d.yCoord].every(Number.isFinite)&&Math.abs(d.xCoord)<=100&&Math.abs(d.yCoord)<=43&&!(d.xCoord===0&&d.yCoord===0);
-  const x=located?d.xCoord*sign:null,y=located?d.yCoord*sign:null,situation=typeof p.situationCode==='string'&&/^[01][3-6][3-6][01]$/.test(p.situationCode)?p.situationCode:null,homeTeam=team===baseline.home;
+  const proposed=outcome==='goal'&&sign!==null&&Number.isFinite(d.xCoord)&&d.xCoord*sign<0?locationCorrections.get(p.eventId):null;
+  const correction=proposed&&[proposed.x,proposed.y].every(Number.isFinite)&&Math.abs(proposed.x)<=100&&Math.abs(proposed.y)<=43&&proposed.x*sign>=25&&/^https:\/\/www\.espn\.com\/nhl\/game\/_\/gameId\/\d{1,12}$/.test(proposed.url)?proposed:null,point=correction?{xCoord:correction.x,yCoord:correction.y}:d;
+  const located=sign!==null&&[point.xCoord,point.yCoord].every(Number.isFinite)&&Math.abs(point.xCoord)<=100&&Math.abs(point.yCoord)<=43&&!(point.xCoord===0&&point.yCoord===0);
+  const x=located?point.xCoord*sign:null,y=located?point.yCoord*sign:null,situation=typeof p.situationCode==='string'&&/^[01][3-6][3-6][01]$/.test(p.situationCode)?p.situationCode:null,homeTeam=team===baseline.home;
   const attack=situation?Number(situation[homeTeam?2:1]):null,defend=situation?Number(situation[homeTeam?1:2]):null,empty=situation?situation[homeTeam?0:3]==='0':null;
   const rebound=previous?.p.typeDescKey==='shot-on-goal'&&t-previous.t>=0&&t-previous.t<=3;
   const type=typeof d.shotType==='string'?d.shotType.slice(0,30):'unknown';
@@ -59,6 +61,7 @@ export function gameCenter(raw,baseline,at){
   const shot={id:p.eventId,t,period:p.periodDescriptor.number,period_type:p.periodDescriptor.periodType,remaining:p.timeRemaining,team,outcome,player:actor,goalie,shot_type:type,x:located?(homeTeam?x:-x):null,y:located?(homeTeam?y:-y):null,distance:located?Number(Math.hypot(89-x,y).toFixed(1)):null,angle:located?Number((Math.abs(Math.atan2(y,89-x))/Math.PI*180).toFixed(1)):null,strength:situation?`${attack}-on-${defend}`:null,empty_net:empty,rebound,xg:probability};
   if(probability===null)shot.estimate_note=outcome==='blocked'?'Blocked attempts are not assigned a shot probability.':!located?'NHL location unavailable.':empty?'Empty-net attempts are outside this shot model.':x<0?'Own-half attempts are outside this shot model.':'Shot context unavailable.';
   if(outcome==='goal')Object.assign(shot,{assists:[d.assist1PlayerId,d.assist2PlayerId].filter((id,index,ids)=>integer(id,1,99999999)&&ids.indexOf(id)===index).map(player),home_score:integer(d.homeScore,0,30)?d.homeScore:null,away_score:integer(d.awayScore,0,30)?d.awayScore:null});
+  if(correction)shot.location_source={provider:'ESPN',url:correction.url};
   shots.push(shot);
   if(outcome==='goal')goals.push({id:p.eventId,t,sort_order:p.sortOrder??0,period:shot.period,period_type:shot.period_type,remaining:shot.remaining,team,player:actor?.name||'Scorer unavailable',home_score:d.homeScore,away_score:d.awayScore});
   previous={p,t};

@@ -96,7 +96,16 @@ period before claiming an untouched holdout.
 NHL defending-side information rotates coordinates per period. The display then
 keeps away attacking left and home attacking right. The rink uses 200×85-foot
 geometry, a goal line at 89 feet, blue lines at ±25 and regulation faceoff circles.
-Blocked locations represent the block, not an inferred release point. Missing
+Blocked locations represent the block, not an inferred release point. A goal
+reported in the scoring team's own half is cross-checked against ESPN when the
+published game has a verified ESPN mapping. A replacement requires matching
+home/away teams, scheduled start, period, elapsed clock, resulting score and
+scorer, with one unambiguous offensive-zone coordinate. Legitimate long-range
+attempts are never automatically mirrored. Corrected locations carry an ESPN
+source link and feed the distance/angle and shot model calculations. The optional
+check has a two-second timeout and cannot stop the NHL feed. Cached corroborating
+event facts can survive an ESPN outage for up to a day; the NHL clock stays fresh.
+ Missing
 locations remain in the event list. Shot filters and a keyboard-accessible event
 list offer an alternative to crowded dots. A compact graph readout follows the
 hovered/pressed point, showing both teams, clock, score and the relevant event.

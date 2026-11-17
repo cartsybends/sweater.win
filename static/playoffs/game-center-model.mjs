@@ -11,6 +11,7 @@ export const GAME_CENTER=(()=>{
   if(d.forecast.current&&JSON.stringify(d.forecast.current)!==JSON.stringify(d.forecast.points.at(-1)))return null;
   if(d.forecast.status==='shootout'&&d.forecast.current)return null;
   const seen=new Set();for(const s of d.shots){if(!Number.isInteger(s.id)||seen.has(s.id)||![g.home,g.away].includes(s.team)||!['saved','goal','missed','blocked'].includes(s.outcome)||!finite(s.t,0,24000)||!Number.isInteger(s.period)||!finite(s.period,1,20)||typeof s.shot_type!=='string'||s.shot_type.length>30||s.x!==null&&(!finite(s.x,-100,100)||!finite(s.y,-43,43))||s.xg!==null&&!finite(s.xg,0,1))return null;seen.add(s.id);}
+  for(const s of d.shots)if(s.location_source&&(s.outcome!=='goal'||s.location_source.provider!=='ESPN'||!/^https:\/\/www\.espn\.com\/nhl\/game\/_\/gameId\/\d{1,12}$/.test(s.location_source.url||'')))return null;
   const person=p=>p===null||p&&Number.isInteger(p.id)&&finite(p.id,1,99999999)&&typeof p.name==='string'&&p.name.length<=100;
   for(const s of d.shots)if(s.assists!==undefined&&(!Array.isArray(s.assists)||s.assists.length>2||!s.assists.every(p=>p&&person(p))))return null;
   if(d.game_type!==undefined&&![2,3].includes(d.game_type))return null;

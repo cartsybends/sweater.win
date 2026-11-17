@@ -1,3 +1,4 @@
+import {goalLocationCandidates,goalLocationCorrections} from './game-center-locations.mjs';
 import {gameCenter} from './game-center-model.mjs';
 const feedURL='https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json',pending=new Map();
 export async function handleGameCenter(request,env,ctx,{fetcher=fetch,cache=globalThis.caches?.default,now=Date.now()}={}){
@@ -11,10 +12,20 @@ export async function handleGameCenter(request,env,ctx,{fetcher=fetch,cache=glob
  try{
   const saved=await cache?.match(key);if(saved){const d=await saved.json();if(now-Date.parse(d.checked_at)<d.refresh_seconds*1000)return json(d);}
   const load=async()=>{
-   const get=async(address,ttl)=>{const k=new Request(address),c=await cache?.match(k);if(c&&now-Number(c.headers.get('X-Sweater-Cached-At'))<ttl*1000)return c.json();const r=await fetcher(address,{redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(8000)});if(!r.ok)throw Error('NHL source unavailable');const text=await r.text();if(text.length>2500000)throw Error('Oversized feed');const d=JSON.parse(text);if(cache)await cache.put(k,Response.json(d,{headers:{'Cache-Control':'public,max-age='+ttl,'X-Sweater-Cached-At':String(now)}}));return d;};
+   const get=async(address,ttl,timeout=8000,staleSeconds=0)=>{
+    const k=new Request(address),c=await cache?.match(k),age=c?now-Number(c.headers.get('X-Sweater-Cached-At')):Infinity;if(c&&age>=0&&age<ttl*1000)return c.json();
+    try{const r=await fetcher(address,{redirect:'manual',cache:'no-store',signal:AbortSignal.timeout(timeout)});if(!r.ok)throw Error('Source unavailable');const text=await r.text();if(text.length>2500000)throw Error('Oversized feed');const d=JSON.parse(text);if(cache)await cache.put(k,Response.json(d,{headers:{'Cache-Control':'public,max-age='+Math.max(ttl,staleSeconds),'X-Sweater-Cached-At':String(now)}}));return d;}
+    catch(error){if(c&&staleSeconds&&age>=0&&age<staleSeconds*1000)return c.json();throw error;}
+   };
    const feed=await get(feedURL,60);if(!Array.isArray(feed.games)||feed.games.length>400||!Number.isFinite(Date.parse(feed.checked_at))||Date.parse(feed.checked_at)>now+300000)throw Error('Invalid baseline');
    const baseline=feed.games.find(g=>String(g.id)===id);if(!baseline)return {error:'Game is outside the published game window',status:404};
-   const raw=await get(`https://api-web.nhle.com/v1/gamecenter/${id}/play-by-play`,5),data=gameCenter(raw,baseline,new Date(now).toISOString());
+   const raw=await get(`https://api-web.nhle.com/v1/gamecenter/${id}/play-by-play`,5),at=new Date(now).toISOString();let data=gameCenter(raw,baseline,at);
+   // Optional event-level corroboration must never interrupt the NHL clock/feed.
+   const espnID=baseline.market?.source_url?.match(/^https:\/\/www\.espn\.com\/nhl\/game\/_\/gameId\/(\d{1,12})$/)?.[1];
+   if(espnID&&goalLocationCandidates(data,baseline).length)try{
+    const summary=await get('https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/summary?event='+espnID,30,2000,86400),corrections=goalLocationCorrections(raw,baseline,data,summary,espnID);
+    if(corrections.size)data=gameCenter(raw,baseline,at,corrections);
+   }catch{}
    if(cache){await cache.put(key,Response.json(data,{headers:{'Cache-Control':'public,max-age='+data.refresh_seconds}}));await cache.put(lastKey,Response.json(data,{headers:{'Cache-Control':'public,max-age=86400'}}));}return data;
   };
   if(!pending.has(id))pending.set(id,load().finally(()=>pending.delete(id)));const data=await pending.get(id);return data.error?json({error:data.error},data.status):json(data);
