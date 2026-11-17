@@ -31,7 +31,7 @@ function poGamePhase(s){
  const seconds=s?.seconds_remaining,clock=Number.isInteger(seconds)?`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`:'';
  const period=s?.period_type==='SO'?'Shootout':s?.period_type==='OT'?`OT${s.period>4?' '+(s.period-3):''}`:s?.period?'P'+s.period:'';
  const stage=period?`<strong class="po-period-label">${esc(period)}</strong>`:'',resurfacer='<svg class="po-intermission-icon" viewBox="0 0 34 23" aria-hidden="true"><path d="M3 9h8V4h14l5 6v8H3Z" fill="currentColor" opacity=".2"/><path d="M3 9h8V4h14l5 6v8H3Zm8 0h19M15 4v5M3 14h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 5h7l3 3H17Z" fill="currentColor" opacity=".55"/><path d="M1 18h6v3H1Z" fill="currentColor" opacity=".5"/><circle cx="9" cy="18" r="3" fill="currentColor"/><circle cx="25" cy="18" r="3" fill="currentColor"/></svg>';
- return s?.intermission?`<span class="po-intermission-label">${resurfacer}<strong>Intermission</strong></span>${stage?' · '+stage:''}`:[stage,esc(clock)].filter(Boolean).join(' · ');
+ return s?.intermission?`<span class="po-intermission-label">${resurfacer}<strong>Intermission</strong></span>${stage?' · '+stage:''}`:[stage,clock?`<span class="po-game-clock">${esc(clock)}</span>`:''].filter(Boolean).join(' · ');
 }
 function poGameStatus(g){
  const s=poLiveFor(g),final=['OFF','FINAL'].includes(g.state);
@@ -55,6 +55,7 @@ function poSyncLive(){
  poUpdateLive();
 }
 function poApplyLive(){
+ const dialog=$('poGameDialog');if(dialog?.open){dialog.dataset.dashboardPending='true';poGCMarket();return;}
  const games=(poData?.games||[]).map(poEffectiveGame),results=poGamesMode==='results',shown=games.filter(g=>poModel.localDay(g.start)===poGamesDate&&(results?['OFF','FINAL'].includes(g.state):!['OFF','FINAL'].includes(g.state))),rows=[...$('poGamesRows').querySelectorAll('[data-po-game]')];
  if(shown.length!==rows.length||rows.some(row=>!shown.some(g=>String(g.id)===row.dataset.poGame))){poRenderGames();return;}
  for(const row of rows){const g=shown.find(g=>String(g.id)===row.dataset.poGame);row.querySelector('.po-model-win').innerHTML=poGameWin(g);row.querySelector('.po-game-status').innerHTML=poGameStatus(g);row.querySelector('.po-market-cell').innerHTML=poMarketMoneyline(g);row.querySelector('.po-match-basis').innerHTML=poGameBasis(g);}
