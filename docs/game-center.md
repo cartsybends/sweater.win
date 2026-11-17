@@ -12,7 +12,9 @@ that schedule before transforming official NHL `/gamecenter/<id>/play-by-play`.
 It never calls MoneyPuck's live prediction endpoints.
 
 The existing Cloudflare Worker runs the small JS inference and caches a compact
-response for 5 seconds live, 60 seconds scheduled/final. The Cache API is local
+response for 5 seconds live, 60 seconds scheduled/final. New clients request
+`refresh=5`; existing open tabs still receive the compatible 15-second polling
+field while sharing the same five-second cache. The Cache API is local
 to each Cloudflare data center, not one global fetch lock. Concurrent requests
 inside an isolate coalesce. A one-day last-good cache can survive source errors;
 its original timestamp stays intact and the response explicitly says `stale`.

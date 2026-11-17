@@ -49,7 +49,7 @@ async function poGCLoad(){
  if(!poGCDialog.open||!poGCGame||document.hidden||poGCController)return;
  clearTimeout(poGCTimer);const started=Date.now();let failed=false;const g=poGCGame,request=++poGCRequest,controller=new AbortController();poGCController=controller;const timeout=setTimeout(()=>controller.abort(),18000);
  try{
-  const r=await fetch((API_ON?API:'https://api.sweater.win')+'/api/playoffs/game?id='+g.id,{credentials:'omit',cache:'no-store',signal:controller.signal});if(!r.ok)throw Error();
+  const r=await fetch((API_ON?API:'https://api.sweater.win')+'/api/playoffs/game?id='+g.id+'&refresh=5',{credentials:'omit',cache:'no-store',signal:controller.signal});if(!r.ok)throw Error();
   const d=GAME_CENTER.validate(await r.json(),g);if(!d||poGCData&&Date.parse(d.checked_at)<Date.parse(poGCData.checked_at))throw Error();
   if(request!==poGCRequest||!poGCDialog.open)return;
   const changed=JSON.stringify([d.status,d.clock,d.elapsed,d.forecast,d.shots,d.penalties,d.shootout,d.home,d.away])!==JSON.stringify([poGCData?.status,poGCData?.clock,poGCData?.elapsed,poGCData?.forecast,poGCData?.shots,poGCData?.penalties,poGCData?.shootout,poGCData?.home,poGCData?.away]);poGCData=d;poGCLastGood.delete(g.id);poGCLastGood.set(g.id,d);if(poGCLastGood.size>8)poGCLastGood.delete(poGCLastGood.keys().next().value);

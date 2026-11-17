@@ -4,7 +4,7 @@ export async function handleGameCenter(request,env,ctx,{fetcher=fetch,cache=glob
  const url=new URL(request.url);if(url.pathname!=='/api/playoffs/game')return null;
  const origin=request.headers.get('Origin'),allowed=['https://sweater.win','https://www.sweater.win',...String(env.ALLOWED_ORIGINS||'').split(',').filter(Boolean)];
  if(origin&&!allowed.includes(origin))return Response.json({error:'Origin not allowed'},{status:403});
- const headers={'Access-Control-Allow-Origin':origin||'*','Access-Control-Allow-Methods':'GET,OPTIONS','Vary':'Origin','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'},json=(body,status=200)=>Response.json(body,{status,headers});
+ const headers={'Access-Control-Allow-Origin':origin||'*','Access-Control-Allow-Methods':'GET,OPTIONS','Vary':'Origin','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'},json=(body,status=200)=>Response.json(body?.status==='live'?{...body,refresh_seconds:url.searchParams.get('refresh')==='5'?5:15}:body,{status,headers});
  if(request.method==='OPTIONS')return new Response(null,{status:204,headers});if(request.method!=='GET')return json({error:'Method not allowed'},405);
  const id=url.searchParams.get('id');if(!/^20\d{2}0[23]\d{4}$/.test(id||''))return json({error:'Invalid NHL game'},400);
  const key=new Request('https://api.sweater.win/api/playoffs/game?id='+id),lastKey=new Request('https://api.sweater.win/api/playoffs/game-last?id='+id);
