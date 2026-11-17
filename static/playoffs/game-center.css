@@ -314,6 +314,7 @@
 .po-gc-h2h-wins img{width:30px;height:30px;object-fit:contain}
 .po-gc-h2h-wins strong{font-size:25px;margin-left:4px}
 .po-gc-h2h-wins small{font-size:11px;color:var(--muted)}
+.po-gc-h2h-leader>b,.po-gc-h2h-leader>strong{color:var(--gc-h2h-colour)}
 @media(max-width:1000px){.po-gc-meeting-layout{grid-template-columns:1fr}.po-gc-special-players{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){
  .po-gc-tabs{gap:9px;justify-content:space-between}
