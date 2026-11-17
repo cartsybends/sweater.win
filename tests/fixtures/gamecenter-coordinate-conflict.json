@@ -1,0 +1,401 @@
+{
+  "source": {
+    "nhl": "https://api-web.nhle.com/v1/gamecenter/2026020331/play-by-play",
+    "espn": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/summary?event=401892726"
+  },
+  "at": "2026-11-17T02:24:26.212Z",
+  "g": {
+    "id": 2026020331,
+    "home": "NYR",
+    "away": "MTL",
+    "start": "2026-11-17T00:30:00Z",
+    "prediction": {
+      "home_win": 54.6362,
+      "away_win": 45.3638,
+      "home_goals": 3.31,
+      "away_goals": 3.034,
+      "basis": "recorded",
+      "at": "2026-11-17T00:19:40Z",
+      "model": "sweater-xg-v2",
+      "impact_model": "sweater-skater-impact-v1",
+      "impact_baseline_home_win": 55.0414
+    },
+    "market": {
+      "home": -105,
+      "away": -115,
+      "provider": "DraftKings",
+      "source": "ESPN",
+      "observed_at": "2026-11-17T00:19:40Z",
+      "source_url": "https://www.espn.com/nhl/game/_/gameId/401892726"
+    }
+  },
+  "raw": {
+    "id": 2026020331,
+    "startTimeUTC": "2026-11-17T00:30:00Z",
+    "gameType": 2,
+    "gameState": "LIVE",
+    "periodDescriptor": {
+      "number": 2,
+      "periodType": "REG",
+      "maxRegulationPeriods": 3
+    },
+    "clock": {
+      "timeRemaining": "14:49",
+      "secondsRemaining": 889,
+      "running": false,
+      "inIntermission": true
+    },
+    "homeTeam": {
+      "id": 3,
+      "abbrev": "NYR",
+      "score": 2,
+      "sog": 17
+    },
+    "awayTeam": {
+      "id": 8,
+      "abbrev": "MTL",
+      "score": 1,
+      "sog": 11
+    },
+    "plays": [
+      {
+        "eventId": 673,
+        "sortOrder": 385,
+        "periodDescriptor": {
+          "number": 2,
+          "periodType": "REG",
+          "maxRegulationPeriods": 3
+        },
+        "timeInPeriod": "07:59",
+        "timeRemaining": "12:01",
+        "homeTeamDefendingSide": "left",
+        "situationCode": "1551",
+        "typeDescKey": "goal",
+        "details": {
+          "xCoord": -80,
+          "yCoord": 0,
+          "zoneCode": "O",
+          "shotType": "tip-in",
+          "scoringPlayerId": 8476479,
+          "assist1PlayerId": 8483457,
+          "assist2PlayerId": 8480865,
+          "eventOwnerTeamId": 8,
+          "goalieInNetId": 8476914,
+          "awayScore": 1,
+          "homeScore": 0
+        }
+      },
+      {
+        "eventId": 751,
+        "sortOrder": 408,
+        "periodDescriptor": {
+          "number": 2,
+          "periodType": "REG",
+          "maxRegulationPeriods": 3
+        },
+        "timeInPeriod": "09:47",
+        "timeRemaining": "10:13",
+        "homeTeamDefendingSide": "left",
+        "situationCode": "1551",
+        "typeDescKey": "goal",
+        "details": {
+          "xCoord": -84,
+          "yCoord": 1,
+          "zoneCode": "D",
+          "shotType": "tip-in",
+          "scoringPlayerId": 8482157,
+          "assist1PlayerId": 8477969,
+          "assist2PlayerId": 8476468,
+          "eventOwnerTeamId": 3,
+          "goalieInNetId": 8484170,
+          "awayScore": 1,
+          "homeScore": 1
+        }
+      },
+      {
+        "eventId": 855,
+        "sortOrder": 507,
+        "periodDescriptor": {
+          "number": 2,
+          "periodType": "REG",
+          "maxRegulationPeriods": 3
+        },
+        "timeInPeriod": "19:03",
+        "timeRemaining": "00:57",
+        "homeTeamDefendingSide": "left",
+        "situationCode": "1541",
+        "typeDescKey": "goal",
+        "details": {
+          "xCoord": 60,
+          "yCoord": -15,
+          "zoneCode": "O",
+          "shotType": "wrist",
+          "scoringPlayerId": 8482157,
+          "assist1PlayerId": 8479323,
+          "eventOwnerTeamId": 3,
+          "goalieInNetId": 8484170,
+          "awayScore": 1,
+          "homeScore": 2
+        }
+      }
+    ],
+    "rosterSpots": [
+      {
+        "playerId": 8476468,
+        "teamId": 3,
+        "firstName": {
+          "default": "J.T."
+        },
+        "lastName": {
+          "default": "Miller"
+        },
+        "sweaterNumber": 10
+      },
+      {
+        "playerId": 8476479,
+        "teamId": 8,
+        "firstName": {
+          "default": "Phillip"
+        },
+        "lastName": {
+          "default": "Danault"
+        },
+        "sweaterNumber": 24
+      },
+      {
+        "playerId": 8476914,
+        "teamId": 3,
+        "firstName": {
+          "default": "Joonas"
+        },
+        "lastName": {
+          "default": "Korpisalo"
+        },
+        "sweaterNumber": 70
+      },
+      {
+        "playerId": 8477969,
+        "teamId": 3,
+        "firstName": {
+          "default": "Marcus"
+        },
+        "lastName": {
+          "default": "Pettersson"
+        },
+        "sweaterNumber": 26
+      },
+      {
+        "playerId": 8479323,
+        "teamId": 3,
+        "firstName": {
+          "default": "Adam"
+        },
+        "lastName": {
+          "default": "Fox"
+        },
+        "sweaterNumber": 23
+      },
+      {
+        "playerId": 8480865,
+        "teamId": 8,
+        "firstName": {
+          "default": "Noah"
+        },
+        "lastName": {
+          "default": "Dobson"
+        },
+        "sweaterNumber": 53
+      },
+      {
+        "playerId": 8482157,
+        "teamId": 3,
+        "firstName": {
+          "default": "Will"
+        },
+        "lastName": {
+          "default": "Cuylle"
+        },
+        "sweaterNumber": 50
+      },
+      {
+        "playerId": 8483457,
+        "teamId": 8,
+        "firstName": {
+          "default": "Lane"
+        },
+        "lastName": {
+          "default": "Hutson"
+        },
+        "sweaterNumber": 48
+      },
+      {
+        "playerId": 8484170,
+        "teamId": 8,
+        "firstName": {
+          "default": "Jacob"
+        },
+        "lastName": {
+          "default": "Fowler"
+        },
+        "sweaterNumber": 32
+      }
+    ]
+  },
+  "summary": {
+    "header": {
+      "id": "401892726",
+      "competitions": [
+        {
+          "date": "2026-11-17T00:30Z",
+          "competitors": [
+            {
+              "homeAway": "home",
+              "team": {
+                "id": "13",
+                "abbreviation": "NYR"
+              }
+            },
+            {
+              "homeAway": "away",
+              "team": {
+                "id": "10",
+                "abbreviation": "MTL"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "plays": [
+      {
+        "id": "401892726000006730",
+        "type": {
+          "id": "505",
+          "text": "Goal",
+          "abbreviation": "goal"
+        },
+        "awayScore": 1,
+        "homeScore": 0,
+        "period": {
+          "number": 2,
+          "displayValue": "2nd"
+        },
+        "clock": {
+          "displayValue": "7:59"
+        },
+        "scoringPlay": true,
+        "team": {
+          "id": "10"
+        },
+        "coordinate": {
+          "x": -80,
+          "y": 0
+        },
+        "participants": [
+          {
+            "type": "scorer",
+            "athlete": {
+              "displayName": "Phillip Danault"
+            }
+          },
+          {
+            "type": "assister",
+            "athlete": {
+              "displayName": "Lane Hutson"
+            }
+          },
+          {
+            "type": "assister",
+            "athlete": {
+              "displayName": "Noah Dobson"
+            }
+          }
+        ]
+      },
+      {
+        "id": "401892726000007510",
+        "type": {
+          "id": "505",
+          "text": "Goal",
+          "abbreviation": "goal"
+        },
+        "awayScore": 1,
+        "homeScore": 1,
+        "period": {
+          "number": 2,
+          "displayValue": "2nd"
+        },
+        "clock": {
+          "displayValue": "9:47"
+        },
+        "scoringPlay": true,
+        "team": {
+          "id": "13"
+        },
+        "coordinate": {
+          "x": 85,
+          "y": -3
+        },
+        "participants": [
+          {
+            "type": "scorer",
+            "athlete": {
+              "displayName": "Will Cuylle"
+            }
+          },
+          {
+            "type": "assister",
+            "athlete": {
+              "displayName": "Marcus Pettersson"
+            }
+          },
+          {
+            "type": "assister",
+            "athlete": {
+              "displayName": "J.T. Miller"
+            }
+          }
+        ]
+      },
+      {
+        "id": "401892726000008550",
+        "type": {
+          "id": "505",
+          "text": "Goal",
+          "abbreviation": "goal"
+        },
+        "awayScore": 1,
+        "homeScore": 2,
+        "period": {
+          "number": 2,
+          "displayValue": "2nd"
+        },
+        "clock": {
+          "displayValue": "19:03"
+        },
+        "scoringPlay": true,
+        "team": {
+          "id": "13"
+        },
+        "coordinate": {
+          "x": 60,
+          "y": -15
+        },
+        "participants": [
+          {
+            "type": "scorer",
+            "athlete": {
+              "displayName": "Will Cuylle"
+            }
+          },
+          {
+            "type": "assister",
+            "athlete": {
+              "displayName": "Adam Fox"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

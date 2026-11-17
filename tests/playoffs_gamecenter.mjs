@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
+import {goalLocationCandidates,goalLocationCorrections} from '../backend/src/game-center-locations.mjs';
 import {gameCenter} from '../backend/src/game-center-model.mjs';
 import {eventTime,currentTime,gameClock} from '../backend/src/nhl-clock.mjs';
 import {shotFeatures,shotProbability,shotModelInfo} from '../backend/src/shot-quality.mjs';
@@ -41,6 +42,34 @@ await test('Published events advance a lagging 20:00 header and clear a stale in
   const d=gameCenter(raw,g,at);assert.equal(d.elapsed,1800);assert.equal(d.clock.period,2);assert.equal(d.clock.remaining,'10:00');assert.equal(d.clock.intermission,false);assert.equal(d.forecast.current.t,1800);assert(GAME_CENTER.validate(d,g,Date.parse(at)));
  }
  const {raw}=fixture();assert.equal(currentTime(raw),1900,'A current header remains ahead of its last recorded event');
+});
+const coordinateFixture=JSON.parse(await readFile(new URL('./fixtures/gamecenter-coordinate-conflict.json',import.meta.url),'utf8'));
+await test('A corroborated Rangers goal moves to the correct end and recomputes geometry without changing the NHL record or win curve',()=>{
+ const {raw,g,at,summary}=structuredClone(coordinateFixture),before=gameCenter(raw,g,at),original=JSON.stringify(raw);assert.equal(before.shots.find(s=>s.id===751).x,-84);
+ const corrections=goalLocationCorrections(raw,g,before,summary,'401892726');assert.equal(corrections.size,1);const after=gameCenter(raw,g,at,corrections),goal=after.shots.find(s=>s.id===751);
+ assert.equal(goal.x,85);assert.equal(goal.y,-3);assert.equal(goal.distance,5);assert(goal.xg>0);assert.equal(goal.location_source.provider,'ESPN');assert.equal(after.shots.find(s=>s.id===673).x,-80);assert.equal(after.shots.find(s=>s.id===855).x,60);assert(after.home.expected_goals>before.home.expected_goals);assert.deepEqual(after.forecast,before.forecast);assert.equal(JSON.stringify(raw),original);assert(GAME_CENTER.validate(after,g,Date.parse(at)));
+ for(const change of [d=>d.shots[1].location_source.url='javascript:alert(1)',d=>d.shots[1].location_source.provider='Other']){const bad=structuredClone(after);change(bad);assert.equal(GAME_CENTER.validate(bad,g,Date.parse(at)),null);}
+});
+await test('Coordinate corroboration requires the exact game, goal clock, scorer, team and score, and rejects ambiguous or invalid alternatives',()=>{
+ const {raw,g,at,summary}=coordinateFixture,before=gameCenter(raw,g,at);
+ for(const mutate of [d=>d.header.id='123',d=>d.header.competitions[0].date='2026-11-18T00:30:00Z',d=>d.header.competitions[0].competitors[0].team.abbreviation='SEA',d=>delete d.header.competitions[0].competitors[0].team.id,d=>d.plays[1].period.number=1,d=>d.plays[1].clock.displayValue='9:48',d=>d.plays[1].homeScore=2,d=>d.plays[1].team.id='99',d=>d.plays[1].participants[0].athlete.displayName='Other Player',d=>d.plays[1].coordinate.x=-84,d=>d.plays[1].coordinate.y=44,d=>d.plays[1].coordinate.x=NaN,d=>d.plays[1].scoringPlay=false,d=>d.plays.push(d.plays[1])]){
+  const changed=structuredClone(summary);mutate(changed);assert.equal(goalLocationCorrections(raw,g,before,changed,'401892726').size,0);
+ }
+ const mirrored=structuredClone(coordinateFixture);for(const play of mirrored.raw.plays){play.homeTeamDefendingSide='right';play.details.xCoord*=-1;play.details.yCoord*=-1;}for(const play of mirrored.summary.plays){play.coordinate.x*=-1;play.coordinate.y*=-1;}
+ const mirroredBefore=gameCenter(mirrored.raw,g,at),fixed=gameCenter(mirrored.raw,g,at,goalLocationCorrections(mirrored.raw,g,mirroredBefore,mirrored.summary,'401892726'));assert.equal(fixed.shots.find(s=>s.id===751).x,85);assert.equal(fixed.shots.find(s=>s.id===751).y,-3);
+ const agreed=structuredClone(summary);agreed.plays[1].coordinate={x:-84,y:1};const unchanged=gameCenter(raw,g,at,goalLocationCorrections(raw,g,before,agreed,'401892726'));assert.equal(unchanged.shots[1].x,-84,'Uncorroborated own-half attempts must never be blindly mirrored');
+});
+await test('Optional coordinate checks retain fresh NHL clock/feed during an ESPN outage and reuse matching cached event facts',async()=>{
+ const {raw,g,at,summary}=structuredClone(coordinateFixture),now=Date.parse(at),entries=new Map(),cache={match:async k=>entries.get(k.url)?.clone(),put:async(k,r)=>entries.set(k.url,r.clone())};let espnDown=false,espnCalls=0;
+ const fetcher=async(url,options)=>{new Request(url,options);if(url.includes('espn.com')){espnCalls++;if(espnDown)throw Error('ESPN temporarily unavailable');return Response.json(summary);}return Response.json(url.includes('raw.githubusercontent')?{checked_at:at,games:[g]}:raw);},request=new Request('https://api.sweater.win/api/playoffs/game?id='+g.id+'&refresh=5');
+ const first=await(await handleGameCenter(request,{},null,{fetcher,cache,now})).json();assert.equal(first.shots[1].x,85);assert.equal(espnCalls,1);
+ espnDown=true;const later=await(await handleGameCenter(request,{},null,{fetcher,cache,now:now+31000})).json();assert.equal(later.shots[1].x,85);assert.equal(later.stale,undefined);assert.equal(later.checked_at,new Date(now+31000).toISOString());assert.equal(later.refresh_seconds,5);assert.equal(espnCalls,2);assert(GAME_CENTER.validate(later,g,now+31000));
+ const cold=await handleGameCenter(request,{},null,{fetcher,cache:null,now:now+32000});assert.equal(cold.status,200);const original=await cold.json();assert.equal(original.shots[1].x,-84);assert.equal(original.shots[1].location_source,undefined);assert.equal(original.forecast.status,'available');assert.equal(original.shots.length,3);
+ raw.plays[1].details.xCoord=85;raw.plays[1].details.yCoord=-3;const primary=await(await handleGameCenter(request,{},null,{fetcher,cache:null,now:now+33000})).json();assert.equal(primary.shots[1].x,85);assert.equal(primary.shots[1].location_source,undefined);assert.equal(goalLocationCandidates(primary,g).length,0);
+});
+await test('A stalled coordinate provider has a bounded timeout and cannot blank the NHL feed',async()=>{
+ const {raw,g,at}=coordinateFixture,keepAlive=setTimeout(()=>{},4500),start=Date.now();
+ try{const r=await handleGameCenter(new Request('https://api.sweater.win/api/playoffs/game?id='+g.id),{},null,{cache:null,now:Date.parse(at),fetcher:async(url,options)=>url.includes('espn.com')?new Promise((_,reject)=>options.signal.addEventListener('abort',()=>reject(options.signal.reason),{once:true})):Response.json(url.includes('raw.githubusercontent')?{checked_at:at,games:[g]}:raw)});assert.equal(r.status,200);const d=await r.json();assert.equal(d.shots.length,3);assert.equal(d.forecast.status,'available');assert(Date.now()-start<3500);}finally{clearTimeout(keepAlive);}
 });
 const realFixture=JSON.parse(await readFile(new URL('./fixtures/gamecenter-shootout.json',import.meta.url),'utf8'));
 await test('Official NHL shootout excerpt preserves home-first order, sudden-death rounds, save attribution and failed attempts',()=>{const {raw,g}=structuredClone(realFixture),d=gameCenter(raw,g,'2026-11-14T22:00:00Z'),a=d.shootout.attempts;assert.equal(d.shootout.started,true);assert.equal(d.shootout.complete,true);assert.equal(a.length,8);assert.equal(a[0].team,g.home);assert.deepEqual(a.map(p=>p.round),[1,1,2,2,3,3,4,4]);assert.equal(a[0].outcome,'missed');assert.equal(a[1].outcome,'saved');assert.equal(a[1].goalie.name,'Adin Hill');assert.equal(a[6].outcome,'unsuccessful');assert.equal(a[7].player.name,'Roman Josi');assert.equal(d.shootout.home_goals,1);assert.equal(d.shootout.away_goals,2);assert.equal(d.shots.length,4);assert.equal(d.goals.length,4);assert.equal(d.forecast.current.away,100);assert.equal(d.shots[0].assists.length,2);assert(GAME_CENTER.validate(d,g,Date.parse(d.checked_at)));});
