@@ -366,7 +366,7 @@
  .po-gc-meeting>div>span{grid-template-columns:30px 32px 32px;font-size:13px;gap:4px}
  .po-gc-meeting img{width:30px;height:30px}
  .po-gc-meeting strong{font-size:23px}
- .po-gc-meeting-status{grid-row:1;grid-column:2;font-size:10px}
+ .po-gc-meeting-status{grid-row:1;grid-column:2;font-size:10px;white-space:nowrap}
  .po-gc-meeting>small{grid-column:1/-1}
 }
 @media(max-width:360px){.po-gc-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.po-gc-tabs button{text-align:center;font-size:12px}.po-gc-line-team-switch button{flex-direction:column;font-size:11px;gap:4px}.po-gc-line-player h5{font-size:11px}.po-gc-line-portrait{width:48px;height:48px}.po-gc-line-player dd{font-size:14px}}
