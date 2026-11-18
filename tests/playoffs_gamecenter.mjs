@@ -139,7 +139,7 @@ const leadersRequest=new Request('https://api.sweater.win/api/playoffs/team-lead
 const skater=(id,goals,assists,penaltyMinutes)=>({playerId:id,firstName:{default:'Player'},lastName:{default:String(id)},goals,assists,points:goals+assists,penaltyMinutes});
 const leaderRows=(...entries)=>entries.map(([id,value])=>({id,value}));
 const leadersLeague={points:leaderRows([1,30],[2,24],[3,24],[4,24]),goals:leaderRows([3,12],[2,9],[1,8]),assists:leaderRows([1,22],[2,15],[3,12]),penaltyMins:leaderRows([3,19],[5,14],[1,10])};
-const leadersClubs={EDM:[skater(1,5,12,2),skater(2,6,10,6),skater(4,6,6,4),skater(6,0,0,0)],FLA:[skater(3,12,12,19),skater(5,2,1,14)]};
+const leadersClubs={EDM:[skater(1,5,12,2),skater(2,6,10,6),skater(4,6,6,6),skater(6,0,0,2)],FLA:[skater(3,12,12,19),skater(5,2,1,14),skater(7,2,0,0)]};
 
 await test('Team rankings use club totals and league medals use category-specific ranks with ties',async()=>{
  const fetcher=async url=>Response.json(url.includes('skater-stats-leaders')?leadersLeague:{season:leadersSeason,gameType:2,skaters:leadersClubs[url.split('/').at(-3)]});
@@ -149,12 +149,33 @@ await test('Team rankings use club totals and league medals use category-specifi
  const data=GAME_CENTER.validateLeaders(await response.json(),leadersGame,leadersSeason,leadersNow);
  assert(data);
  assert.deepEqual(data.teams.EDM.points.map(({id,value})=>[id,value]),[[1,17],[2,16],[4,12]]);
- assert.deepEqual(data.teams.EDM.goals.map(({id,rank})=>[id,rank]),[[2,1],[4,1],[1,3]]);
+ const ranks=rows=>rows.map(({rank,tied})=>[rank,tied]);
+ assert.deepEqual(ranks(data.teams.EDM.goals),[[1,true],[1,true],[3,false]]);
+ assert.deepEqual(ranks(data.teams.FLA.goals),[[1,false],[2,true],[2,true]]);
+ assert.deepEqual(ranks(data.teams.EDM.penaltyMinutes),[[1,true],[1,true],[3,true]]);
  assert.deepEqual(data.league_ranks.points,{1:1,2:2,3:2,4:2});
  assert.equal(data.league_ranks.goals[1],3);
  assert.equal(data.teams.FLA.penaltyMinutes[0].id,3);
  assert.equal(data.league_ranks.penaltyMinutes[3],1);
  assert.equal(GAME_CENTER.validateLeaders({...data,season:'20252026'},leadersGame,leadersSeason,leadersNow),null);
+});
+
+await test('Displayed ranks include ties at the top-three cutoff and accept older cached club reports',()=>{
+ const rows=[
+  [{id:1,name:'Player 1',value:50,rank:1,tied:true},{id:2,name:'Player 2',value:50,rank:1,tied:true},{id:3,name:'Player 3',value:20,rank:3,tied:true}],
+  [{id:1,name:'Player 1',value:30,rank:1},{id:2,name:'Player 2',value:20,rank:2},{id:3,name:'Player 3',value:20,rank:2}],
+ ];
+ const EDM={points:rows[0],goals:rows[1],assists:[],penaltyMinutes:[]};
+ const data={version:1,season:leadersSeason,checked_at:new Date(leadersNow).toISOString(),stale:false,teams:{EDM,FLA:null},league_ranks:{points:{1:2,4:2},goals:{},assists:{},penaltyMinutes:{}}};
+ assert(GAME_CENTER.validateLeaders(data,leadersGame,leadersSeason,leadersNow));
+ const grid={style:{setProperty(){}},querySelectorAll:()=>[]};
+ const elements={poGCLeadersGrid:grid,poGCLeaders:{querySelectorAll:()=>[]},poGCLeadersStatus:{}};
+ const context=vm.createContext({$:id=>elements[id],poGCLeadersData:data,poGCLeadersClub:'EDM',poGCGame:leadersGame,poModel:{teamColors:{}},GAME_CENTER,poDate:()=>'',esc:text=>text,poGCLeadersObserver:{disconnect(){}},poGCDialog:{}});
+ vm.runInContext(client.slice(client.indexOf('function poGCLeadersRender('),client.indexOf('async function poGCLeadersLoad(')),context);
+ context.poGCLeadersRender();
+ const labels=[...grid.innerHTML.matchAll(/class="po-gc-leader-rank"[^>]+>([^<]+)/g)].map(match=>match[1]);
+ assert.deepEqual(labels,['T-1','T-1','T-3','1','T-2','T-2']);
+ assert.match(grid.innerHTML,/title="NHL rank T-2 in Points"/);
 });
 
 await test('A shared cache retains verified leaders through an outage and serves club rows without a league report',async()=>{
