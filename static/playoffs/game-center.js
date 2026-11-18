@@ -3,6 +3,7 @@
 let poGCGame=null,poGCData=null,poGCTimer=null,poGCController=null,poGCRequest=0,poGCSelected=null,poGCShots=[],poGCFrame=0,poGCPoint=null,poGCAnchor=null,poGCReturn=null,poGCReturnID=null,poGCEventSelection=[],poGCRinkScale=1;
 let poGCPreviewData=null,poGCPreviewController=null,poGCPreviewTimer=null,poGCPreviewRequest=0,poGCPreviewTeam='',poGCPreviewKey='';
 let poGCLeadersData=null,poGCLeadersClub='',poGCLeadersController=null,poGCLeadersTimer=null;
+let poGCLeadersObserver;
 const poGCLastGood=new Map();
 const poGCDialog=$('poGameDialog'),poGCPercent=n=>Number.isFinite(n)?(n<.1&&n>0?'<0.1':n>99.9&&n<100?'>99.9':n.toFixed(1))+'%':'—';
 const poGCName=abbr=>poTeamRecord(abbr)?.name||abbr;
@@ -24,6 +25,7 @@ function poGCMarket(){
 function poGCOpen(id,trigger){
  const g=(poData?.games||[]).find(g=>String(g.id)===String(id));if(!g)return;
  const seasonStart=Number(String(g.id).slice(0,4));
+ poGCLeadersObserver?.disconnect();
  poGCStop();poGCGame=g;const saved=poGCLastGood.get(g.id);poGCData=saved&&GAME_CENTER.validate(saved,g)?{...saved,stale:true}:null;poGCSelected=null;poGCEventSelection=[];poGCRinkScale=1;poGCReturn=trigger;poGCReturnID=g.id;poGCPreviewData=null;poGCPreviewTeam=g.away;poGCPreviewKey='';poGCLeadersData=null;poGCLeadersClub=g.away;
  $('poGCBody').innerHTML=`<div id="poGCScore" class="po-gc-score"></div><p id="poGCUpdated" class="po-gc-update" role="status"></p>
  <div class="po-gc-tabs" role="tablist" aria-label="Game Center views"><button type="button" id="poGCTabLive" role="tab" aria-selected="true" aria-controls="poGCLive" data-gc-tab="live">Game Center</button><button type="button" id="poGCTabLines" role="tab" aria-selected="false" aria-controls="poGCLines" tabindex="-1" data-gc-tab="lines">Lines & units</button><button type="button" id="poGCTabMatchups" role="tab" aria-selected="false" aria-controls="poGCMatchups" tabindex="-1" data-gc-tab="matchups">Matchups</button><button type="button" id="poGCTabLeaders" role="tab" aria-selected="false" aria-controls="poGCLeaders" tabindex="-1" data-gc-tab="leaders">Team Leaders</button><button type="button" id="poGCTabAvailability" role="tab" aria-selected="false" aria-controls="poGCAvailability" aria-label="Team availability" tabindex="-1" data-gc-tab="availability">Availability</button></div><p id="poGCPreviewStatus" class="po-gc-preview-status" role="status" hidden></p>
@@ -259,6 +261,7 @@ function poGCLeadersRender(failed=false){
  const key=JSON.stringify([club,team,data?.league_ranks]);
  if(grid._gcKey===key)return;
  grid._gcKey=key;
+ poGCLeadersObserver?.disconnect();
  if(!team?.points.length){grid.replaceChildren();return;}
 
  const game=poGCGame,colours=GAME_CENTER.matchupStyle(game.away,game.home,poModel.teamColors);
@@ -278,6 +281,14 @@ function poGCLeadersRender(failed=false){
   }).join('');
   return `<section class="po-gc-panel po-gc-leader-card"><h3>${label}</h3><ol>${rows}</ol></section>`;
  }).join('');
+ poGCLeadersObserver??=new IntersectionObserver((entries,observer)=>{
+  for(const entry of entries){
+   if(entry.intersectionRatio<.75)continue;
+   entry.target.classList.add('po-gc-leader-sparkle');
+   observer.unobserve(entry.target);
+  }
+ },{root:poGCDialog,rootMargin:'-74px 0px 0px',threshold:.75});
+ for(const leader of grid.querySelectorAll('.po-gc-leader-first'))poGCLeadersObserver.observe(leader);
 }
 async function poGCLeadersLoad(){
  if(!poGCDialog.open||!poGCGame||document.hidden||$('poGCLeaders').hidden||poGCLeadersController)return;

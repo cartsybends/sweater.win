@@ -330,15 +330,15 @@
 .po-gc-leader-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:inherit;background:var(--cell)}
 .po-gc-leader-first .po-gc-leader-portrait{box-shadow:0 0 0 1px color-mix(in srgb,var(--gc-leader-colour) 70%,var(--line))}
 @media(prefers-reduced-motion:no-preference){
- .po-gc-leader-first .po-gc-leader-portrait::before,
- .po-gc-leader-first .po-gc-leader-portrait::after{
+ .po-gc-leader-sparkle .po-gc-leader-portrait::before,
+ .po-gc-leader-sparkle .po-gc-leader-portrait::after{
   content:"";position:absolute;z-index:1;pointer-events:none;
   background:color-mix(in srgb,#fff2bc 78%,var(--gc-leader-colour));
   clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
   animation:po-gc-leader-sparkle 900ms ease-out both;
  }
- .po-gc-leader-first .po-gc-leader-portrait::before{width:13px;height:13px;right:-4px;top:-3px;animation-delay:80ms}
- .po-gc-leader-first .po-gc-leader-portrait::after{width:8px;height:8px;right:-5px;top:10px;animation-delay:200ms}
+ .po-gc-leader-sparkle .po-gc-leader-portrait::before{width:13px;height:13px;right:-4px;top:-3px;animation-delay:80ms}
+ .po-gc-leader-sparkle .po-gc-leader-portrait::after{width:8px;height:8px;right:-5px;top:10px;animation-delay:200ms}
  @keyframes po-gc-leader-sparkle{
   0%{opacity:0;transform:scale(.2) rotate(-20deg)}
   30%{opacity:1;transform:scale(1.1) rotate(0)}
