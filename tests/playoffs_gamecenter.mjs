@@ -8,6 +8,7 @@ import {shotFeatures,shotProbability,shotModelInfo} from '../backend/src/shot-qu
 import {SHOT_MODEL} from '../backend/src/shot-model.mjs';
 import {handleGameCenter} from '../backend/src/game-center.mjs';
 import {GAME_CENTER} from '../static/playoffs/game-center-model.mjs';
+import {handleTeamLeaders} from '../backend/src/team-leaders.mjs';
 import {PLAYOFF_PICTURE} from '../static/playoffs/model.mjs';
 import {fixture} from './fixtures/gamecenter.mjs';
 let checks=0;async function test(name,fn){await fn();console.log('PASS',name);checks++;}
@@ -131,5 +132,53 @@ await test('Clock-only shot refresh preserves the map, event nodes and reading o
  vm.runInContext(client.slice(client.indexOf('function poGCRink(reset='),client.indexOf('function poGCZoomRink(')),context);
  data.clock.seconds_remaining--;context.poGCRink();assert.equal(elements.poGCShotList.scrollTop,123);assert.equal(details,1);
  context.poGCRink(true);assert.equal(elements.poGCShotList.scrollTop,0);assert.equal(details,2);
+});
+const leadersNow=Date.parse('2026-11-18T12:00:00Z'),leadersSeason='20262027';
+const leadersGame={away:'EDM',home:'FLA'};
+const leadersRequest=new Request('https://api.sweater.win/api/playoffs/team-leaders?season=20262027&away=EDM&home=FLA',{headers:{Origin:'https://sweater.win'}});
+const skater=(id,goals,assists,penaltyMinutes)=>({playerId:id,firstName:{default:'Player'},lastName:{default:String(id)},goals,assists,points:goals+assists,penaltyMinutes});
+const leaderRows=(...entries)=>entries.map(([id,value])=>({id,value}));
+const leadersLeague={points:leaderRows([1,30],[2,24],[3,24],[4,24]),goals:leaderRows([3,12],[2,9],[1,8]),assists:leaderRows([1,22],[2,15],[3,12]),penaltyMins:leaderRows([3,19],[5,14],[1,10])};
+const leadersClubs={EDM:[skater(1,5,12,2),skater(2,6,10,6),skater(4,6,6,4),skater(6,0,0,0)],FLA:[skater(3,12,12,19),skater(5,2,1,14)]};
+
+await test('Team rankings use club totals and league medals use category-specific ranks with ties',async()=>{
+ const fetcher=async url=>Response.json(url.includes('skater-stats-leaders')?leadersLeague:{season:leadersSeason,gameType:2,skaters:leadersClubs[url.split('/').at(-3)]});
+ const response=await handleTeamLeaders(leadersRequest,{}, {fetcher,cache:null,now:leadersNow});
+ assert.equal(response.status,200);
+ assert.equal(response.headers.get('Access-Control-Allow-Origin'),'https://sweater.win');
+ const data=GAME_CENTER.validateLeaders(await response.json(),leadersGame,leadersSeason,leadersNow);
+ assert(data);
+ assert.deepEqual(data.teams.EDM.points.map(({id,value})=>[id,value]),[[1,17],[2,16],[4,12]]);
+ assert.deepEqual(data.teams.EDM.goals.map(({id,rank})=>[id,rank]),[[2,1],[4,1],[1,3]]);
+ assert.deepEqual(data.league_ranks.points,{1:1,2:2,3:2,4:2});
+ assert.equal(data.league_ranks.goals[1],3);
+ assert.equal(data.teams.FLA.penaltyMinutes[0].id,3);
+ assert.equal(data.league_ranks.penaltyMinutes[3],1);
+ assert.equal(GAME_CENTER.validateLeaders({...data,season:'20252026'},leadersGame,leadersSeason,leadersNow),null);
+});
+
+await test('A shared cache retains verified leaders through an outage and serves club rows without a league report',async()=>{
+ const entries=new Map();
+ const cache={match:async key=>entries.get(key.url)?.clone(),put:async (key,value)=>entries.set(key.url,value.clone())};
+ let calls=0,leagueDown=false;
+ const fetcher=async url=>{
+  calls++;
+  if(url.includes('skater-stats-leaders'))return leagueDown?new Response('',{status:503}):Response.json(leadersLeague);
+  return Response.json({season:leadersSeason,gameType:2,skaters:leadersClubs[url.split('/').at(-3)]});
+ };
+ await handleTeamLeaders(leadersRequest,{}, {fetcher,cache,now:leadersNow});
+ const reversed=new Request(leadersRequest.url.replace('away=EDM&home=FLA','away=FLA&home=EDM'));
+ assert.equal((await handleTeamLeaders(reversed,{}, {fetcher,cache,now:leadersNow+1000})).status,200);
+ assert.equal(calls,3);
+ leagueDown=true;
+ const cached=await (await handleTeamLeaders(leadersRequest,{}, {fetcher,cache,now:leadersNow+301000})).json();
+ assert.equal(cached.stale,true);
+ assert.equal(cached.checked_at,new Date(leadersNow).toISOString());
+ assert.equal(cached.league_ranks.points[1],1);
+ const partial=await (await handleTeamLeaders(leadersRequest,{}, {fetcher,cache:null,now:leadersNow})).json();
+ assert.equal(partial.league_ranks,null);
+ assert.equal(partial.teams.EDM.points[0].value,17);
+ assert.equal((await handleTeamLeaders(new Request(leadersRequest.url.replace('away=EDM','away=XXX')),{}, {fetcher,cache,now:leadersNow})).status,400);
+ assert.equal(calls,9);
 });
 console.log(checks+' Game Center checks passed');

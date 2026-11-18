@@ -1,5 +1,21 @@
 export const GAME_CENTER=(()=>{
  const finite=(n,a,b)=>Number.isFinite(n)&&n>=a&&n<=b;
+ const leaderStats=[['points','Points'],['goals','Goals'],['assists','Assists'],['penaltyMinutes','PIM']];
+ function validateLeaders(data,game,season,now=Date.now()){
+  if(data?.version!==1||data.season!==season||typeof data.stale!=='boolean'||!finite(Date.parse(data.checked_at),now-86460000,now+300000)||!data.teams)return null;
+  const rank=value=>Number.isInteger(value)&&finite(value,1,3);
+  const validTeam=team=>team===null||team&&leaderStats.every(([key])=>{
+   const rows=team[key];
+   return Array.isArray(rows)&&rows.length<=3&&new Set(rows.map(row=>row?.id)).size===rows.length&&rows.every((row,index)=>row&&Number.isInteger(row.id)&&finite(row.id,1,99999999)&&typeof row.name==='string'&&row.name.length>0&&row.name.length<=100&&Number.isInteger(row.value)&&finite(row.value,0,1000)&&rank(row.rank)&&(!index||row.value<=rows[index-1].value));
+  });
+  const teams=[data.teams[game.away],data.teams[game.home]];
+  if(!teams.some(Boolean)||!teams.every(validTeam))return null;
+  if(data.league_ranks!==null&&!leaderStats.every(([key])=>{
+   const ranks=data.league_ranks?.[key];
+   return ranks&&typeof ranks==='object'&&!Array.isArray(ranks)&&Object.keys(ranks).length<=1600&&Object.entries(ranks).every(([id,value])=>/^\d{1,8}$/.test(id)&&rank(value));
+  }))return null;
+  return data;
+ }
  function validate(d,g,now=Date.now()){
   if(!d||d.version!==1||d.id!==g.id||d.home?.abbr!==g.home||d.away?.abbr!==g.away||!finite(Date.parse(d.checked_at),now-86400000,now+300000)||![5,15,60].includes(d.refresh_seconds)||!['scheduled','live','final'].includes(d.status)||!Array.isArray(d.shots)||d.shots.length>2000||!Array.isArray(d.forecast?.points)||d.forecast.points.length>1000)return null;
   if(!['home','away'].every(s=>d.status==='scheduled'?d[s].score===null:Number.isInteger(d[s].score)&&finite(d[s].score,0,30)))return null;
@@ -45,5 +61,5 @@ export const GAME_CENTER=(()=>{
   const placed=[];for(const group of groups){let best=null,bestScore=Infinity;const preferred=group.kind==='goal'?-20:20;for(const dx of [0,-28,28,-56,56])for(const dy of [preferred,-preferred,-45,45,-70,70]){const cx=Math.max(left+13,Math.min(right-13,group.anchor.x+dx)),cy=Math.max(top+14,Math.min(bottom-14,group.anchor.y+dy)),collisions=placed.filter(p=>Math.abs(p.x-cx)<29&&Math.abs(p.y-cy)<29).length,score=collisions*10000+Math.hypot(cx-group.anchor.x,cy-group.anchor.y);if(score<bestScore){bestScore=score;best={x:cx,y:cy};}}placed.push({...group,...best});}return placed;
  }
  function eventGroups(events,max,width){const groups=[];for(const event of [...events].sort((a,b)=>a.t-b.t||a.id-b.id)){const last=groups.at(-1);if(last&&(event.t-last.reduce((n,e)=>n+e.t,0)/last.length)/max*width<30)last.push(event);else groups.push([event]);}return groups;}
- return {validate,time,period,gameTime,shotTime,filter,words,lineStyle,matchupStyle,periods,eventGroups,axisTicks,plotEvents};
+ return {validate,validateLeaders,leaderStats,time,period,gameTime,shotTime,filter,words,lineStyle,matchupStyle,periods,eventGroups,axisTicks,plotEvents};
 })();
