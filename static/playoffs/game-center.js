@@ -2,10 +2,11 @@
 // hiding the document aborts the request and stops its polling timer.
 let poGCGame=null,poGCData=null,poGCTimer=null,poGCController=null,poGCRequest=0,poGCSelected=null,poGCShots=[],poGCFrame=0,poGCPoint=null,poGCAnchor=null,poGCReturn=null,poGCReturnID=null,poGCEventSelection=[],poGCRinkScale=1;
 let poGCPreviewData=null,poGCPreviewController=null,poGCPreviewTimer=null,poGCPreviewRequest=0,poGCPreviewTeam='',poGCPreviewKey='';
+let poGCLeadersData=null,poGCLeadersClub='',poGCLeadersController=null,poGCLeadersTimer=null;
 const poGCLastGood=new Map();
 const poGCDialog=$('poGameDialog'),poGCPercent=n=>Number.isFinite(n)?(n<.1&&n>0?'<0.1':n>99.9&&n<100?'>99.9':n.toFixed(1))+'%':'—';
 const poGCName=abbr=>poTeamRecord(abbr)?.name||abbr;
-function poGCStop(){clearTimeout(poGCTimer);poGCTimer=null;poGCRequest++;poGCController?.abort();poGCController=null;poGCPreviewStop();poGCHideInspection();}
+function poGCStop(){clearTimeout(poGCTimer);poGCTimer=null;poGCRequest++;poGCController?.abort();poGCController=null;poGCPreviewStop();poGCLeadersStop();poGCHideInspection();}
 function poCloseGameCenter(){poGCStop();if(poGCDialog.open)poGCDialog.close();poGCGame=null;poGCData=null;}
 function poGCStatus(delayed=false){
  if(!$('poGCUpdated'))return;
@@ -22,9 +23,10 @@ function poGCMarket(){
 }
 function poGCOpen(id,trigger){
  const g=(poData?.games||[]).find(g=>String(g.id)===String(id));if(!g)return;
- poGCStop();poGCGame=g;const saved=poGCLastGood.get(g.id);poGCData=saved&&GAME_CENTER.validate(saved,g)?{...saved,stale:true}:null;poGCSelected=null;poGCEventSelection=[];poGCRinkScale=1;poGCReturn=trigger;poGCReturnID=g.id;poGCPreviewData=null;poGCPreviewTeam=g.away;poGCPreviewKey='';
+ const seasonStart=Number(String(g.id).slice(0,4));
+ poGCStop();poGCGame=g;const saved=poGCLastGood.get(g.id);poGCData=saved&&GAME_CENTER.validate(saved,g)?{...saved,stale:true}:null;poGCSelected=null;poGCEventSelection=[];poGCRinkScale=1;poGCReturn=trigger;poGCReturnID=g.id;poGCPreviewData=null;poGCPreviewTeam=g.away;poGCPreviewKey='';poGCLeadersData=null;poGCLeadersClub=g.away;
  $('poGCBody').innerHTML=`<div id="poGCScore" class="po-gc-score"></div><p id="poGCUpdated" class="po-gc-update" role="status"></p>
- <div class="po-gc-tabs" role="tablist" aria-label="Game Center views"><button type="button" id="poGCTabLive" role="tab" aria-selected="true" aria-controls="poGCLive" data-gc-tab="live">Game Center</button><button type="button" id="poGCTabLines" role="tab" aria-selected="false" aria-controls="poGCLines" tabindex="-1" data-gc-tab="lines">Lines & units</button><button type="button" id="poGCTabMatchups" role="tab" aria-selected="false" aria-controls="poGCMatchups" tabindex="-1" data-gc-tab="matchups">Matchups</button><button type="button" id="poGCTabAvailability" role="tab" aria-selected="false" aria-controls="poGCAvailability" aria-label="Team availability" tabindex="-1" data-gc-tab="availability">Availability</button></div><p id="poGCPreviewStatus" class="po-gc-preview-status" role="status" hidden></p>
+ <div class="po-gc-tabs" role="tablist" aria-label="Game Center views"><button type="button" id="poGCTabLive" role="tab" aria-selected="true" aria-controls="poGCLive" data-gc-tab="live">Game Center</button><button type="button" id="poGCTabLines" role="tab" aria-selected="false" aria-controls="poGCLines" tabindex="-1" data-gc-tab="lines">Lines & units</button><button type="button" id="poGCTabMatchups" role="tab" aria-selected="false" aria-controls="poGCMatchups" tabindex="-1" data-gc-tab="matchups">Matchups</button><button type="button" id="poGCTabLeaders" role="tab" aria-selected="false" aria-controls="poGCLeaders" tabindex="-1" data-gc-tab="leaders">Team Leaders</button><button type="button" id="poGCTabAvailability" role="tab" aria-selected="false" aria-controls="poGCAvailability" aria-label="Team availability" tabindex="-1" data-gc-tab="availability">Availability</button></div><p id="poGCPreviewStatus" class="po-gc-preview-status" role="status" hidden></p>
  <div id="poGCLive" role="tabpanel" aria-labelledby="poGCTabLive"><div class="po-gc-layout"><div>
  <section class="po-gc-panel"><h3>Win probability</h3><p class="po-gc-subtitle">Both sides of the game. Sweater estimates, including overtime and shootouts.</p><div id="poGCLegend" class="po-gc-legend"></div><p id="poGCChartNote" class="po-gc-chart-note" hidden></p><div id="poGCChart" class="po-gc-chart"></div><p class="po-gc-event-key"><span>🚨 Goal</span><span>${poGCRefIcon()} Penalty</span></p><p id="poGCChartHint" class="po-gc-chart-hint">Hover or press the graph to explore. Select a goal or penalty for details.</p><p id="poGCReadout" class="po-gc-readout" aria-live="polite"></p><div id="poGCEvent" class="po-gc-event-detail" aria-live="polite" hidden></div></section>
  <section id="poGCShootout" class="po-gc-panel" hidden></section>
@@ -34,7 +36,13 @@ function poGCOpen(id,trigger){
  <div id="poGCShot" class="po-gc-shot-detail" aria-live="polite"></div><div class="po-gc-feed-heading"><h4>Event feed</h4><span>Newest first</span></div><p id="poGCShotCount" class="po-gc-rink-note"></p><div id="poGCShotList" class="po-gc-shot-list" aria-label="Shot event list"></div><p class="po-gc-rink-note">Positions are aligned to one attacking direction per team across every period. Blocked markers indicate the reported block location. Shootout attempts are excluded.</p></section></div>
  <aside class="po-gc-rail"><section class="po-gc-panel"><h3>Before puck drop</h3><p class="po-gc-subtitle">${g.prediction.basis==='reconstructed'?'Reconstructed forecast':'Saved pregame forecast'}</p><div class="po-gc-pregame">${['away','home'].map(s=>`<span>${esc(g[s])}<b>${poGCPercent(g.prediction[s+'_win'])}</b></span>`).join('')}</div></section><section class="po-gc-panel po-gc-market"><h3>Market moneyline</h3><div id="poGCMarket"></div></section><section class="po-gc-panel"><h3>Shot quality</h3><div id="poGCQuality"></div></section>
  <details class="po-gc-method"><summary>How these estimates work</summary><p>The win curve uses Sweater’s saved pregame expected goals and win probability, then conditions on score and time remaining. Supported penalties change scoring rates for their remaining duration, including goal releases for minors, double-minors, and majors that continue after a goal. Strength rates come from NHL data; missing or inconsistent penalty context falls back to score and clock. It does not yet adjust for in-game shot quality, individual skater matchups, a pulled goalie, or individual shootout attempts. These are beta estimates. The strength scoring rates were checked on a later season, but that does not establish full live win-probability calibration. They are separate from sportsbook quotes.</p><p>Shot percentages come from Sweater’s separate logistic shot model: distance, angle, shot type, rebound and skater counts. It uses factual shots and goals from the 2023–24 and 2024–25 seasons, calibration on 2025–26, and a held-out 2026–27 snapshot. It makes no individual shooter or goalie adjustment.</p><p>On 25,818 held-out goalie-in-net attempts, Brier score was 0.0637 (lower is better). This does not establish future accuracy or superiority to another model. Empty nets, own-half shots, blocked attempts, missing context and shootouts receive no shot percentage. Shot-quality totals cover supported attempts only.</p><p>Official events: <a id="poGCNHL" href="https://www.nhl.com/gamecenter/${g.id}" target="_blank" rel="noopener noreferrer">NHL Gamecenter ↗</a>. Factual training data: <a href="https://moneypuck.com/data.htm" target="_blank" rel="noopener noreferrer">MoneyPuck.com ↗</a>. MoneyPuck does not supply these live predictions.</p><p>Checks target 5 seconds while this view is open and visible; upstream publication, caching and network delays still apply. The curve is reconstructed from the current official event log and a frozen pregame forecast; NHL corrections can revise earlier points.</p></details></aside></div></div>
- <section id="poGCLines" role="tabpanel" aria-labelledby="poGCTabLines" hidden><div class="po-gc-empty">Loading last-game lines and player projections…</div></section><section id="poGCMatchups" role="tabpanel" aria-labelledby="poGCTabMatchups" hidden><div class="po-gc-empty">Loading the season series and recent meetings…</div></section><section id="poGCAvailability" role="tabpanel" aria-labelledby="poGCTabAvailability" class="po-gc-panel po-gc-availability" hidden><h3>Team availability</h3>${poAvailabilityBody(g,true)}</section>`;
+ <section id="poGCLines" role="tabpanel" aria-labelledby="poGCTabLines" hidden><div class="po-gc-empty">Loading last-game lines and player projections…</div></section><section id="poGCMatchups" role="tabpanel" aria-labelledby="poGCTabMatchups" hidden><div class="po-gc-empty">Loading the season series and recent meetings…</div></section>
+ <section id="poGCLeaders" role="tabpanel" aria-labelledby="poGCTabLeaders" hidden>
+  <div class="po-gc-leaders-header"><p class="po-gc-subtitle">${seasonStart}–${String(seasonStart+1).slice(-2)} regular season · Stats earned with each team</p><a href="https://www.nhl.com/stats/skaters" target="_blank" rel="noopener noreferrer">NHL stats ↗</a></div>
+  <div class="po-gc-line-team-switch" role="group" aria-label="Select team leaders">${['away','home'].map(side=>`<button type="button" data-gc-leaders-team="${g[side]}" aria-pressed="${side==='away'}"><img src="team-crests/${g[side]}.svg" alt=""><span>${esc(poGCName(g[side]))}</span></button>`).join('')}</div>
+  <p id="poGCLeadersStatus" class="po-gc-update po-gc-leaders-status" role="status">Loading NHL season leaders…</p>
+  <div id="poGCLeadersGrid" class="po-gc-leaders-grid"></div>
+ </section><section id="poGCAvailability" role="tabpanel" aria-labelledby="poGCTabAvailability" class="po-gc-panel po-gc-availability" hidden><h3>Team availability</h3>${poAvailabilityBody(g,true)}</section>`;
  $('poGCAvailability').dataset.context=JSON.stringify([g.context,poData?.goalie_leaders]);poGCScore();poGCStatus();poGCChart();if(poGCData)poGCPeriods();poGCRink();poGCQuality();poGCShootout();
  if(!poGCDialog.open)poGCDialog.showModal();poGCDialog.scrollTop=0;$('poGCClose').focus({preventScroll:true});poGCMarket();poGCLoad();
 }
@@ -226,12 +234,90 @@ function poGCMatchupsRender(){
  const totals={away:wins('away'),home:wins('home')},leader=totals.away===totals.home?null:totals.away>totals.home?'away':'home',colours=GAME_CENTER.matchupStyle(g.away,g.home,poModel.teamColors);
  $('poGCMatchups').innerHTML=`<div class="po-gc-lines-heading"><div><p class="po-gc-kicker">HEAD TO HEAD</p><h3>${esc(poGCName(g.away))} & ${esc(poGCName(g.home))}</h3><p>Away @ home · Regular season and playoffs. Select a meeting for NHL Gamecenter stats. Upcoming dates and times follow your device’s time zone.</p></div></div><div class="po-gc-meeting-layout"><section class="po-gc-panel"><h3>This season</h3><p class="po-gc-subtitle">${season}–${String(Number(season)+1).slice(-2)} · ${h.season.length} scheduled meetings</p><ol class="po-gc-meetings">${h.season.length?h.season.map(poGCMeetingHTML).join(''):'<li class="po-gc-empty">No meetings are listed in the NHL season schedule yet.</li>'}</ol></section><section class="po-gc-panel"><h3>Last 10 meetings</h3><p class="po-gc-subtitle">${recent.length} completed ${recent.length===1?'meeting':'meetings'} available. The selected game is included after it finishes.</p><div class="po-gc-h2h-wins">${['away','home'].map(side=>`<span${side===leader?` class="po-gc-h2h-leader" style="--gc-h2h-colour:${colours[side]}"`:''}><img src="team-crests/${g[side]}.svg" alt=""><b>${esc(g[side])}</b><strong>${totals[side]}</strong><small>wins</small></span>`).join('')}</div><ol class="po-gc-meetings">${recent.length?recent.map(poGCMeetingHTML).join(''):'<li class="po-gc-empty">No completed meetings are available.</li>'}</ol></section></div><p class="po-gc-line-note">Source: <a href="https://www.nhl.com/schedule" target="_blank" rel="noopener noreferrer">NHL schedules and final scores ↗</a>. Preseason games are excluded. Each franchise keeps its own history; newer teams can have fewer than ten meetings.</p>`;
 }
+function poGCLeadersStop(){
+ clearTimeout(poGCLeadersTimer);
+ poGCLeadersTimer=null;
+ poGCLeadersController?.abort();
+ poGCLeadersController=null;
+}
+function poGCLeadersRender(failed=false){
+ const data=poGCLeadersData,club=poGCLeadersClub,team=data?.teams[club];
+ const panel=$('poGCLeaders'),status=$('poGCLeadersStatus'),grid=$('poGCLeadersGrid');
+ for(const button of panel.querySelectorAll('[data-gc-leaders-team]')){
+  button.setAttribute('aria-pressed',String(button.dataset.gcLeadersTeam===club));
+ }
+ const notices=[];
+ if(!data)notices.push(failed?'NHL season leaders temporarily unavailable. Retrying…':'Loading NHL season leaders…');
+ if(data){
+  if(!team)notices.push('NHL team stats temporarily unavailable.');
+  else if(!team.points.length)notices.push('No skater statistics for this season yet.');
+  else if(data.league_ranks===null)notices.push('NHL league ranks temporarily unavailable.');
+  notices.push((failed||data.stale?'Last available check ':'NHL stats checked ')+poDate(data.checked_at));
+ }
+ const message=notices.join(' ');
+ if(status.textContent!==message)status.textContent=message;
+ const key=JSON.stringify([club,team,data?.league_ranks]);
+ if(grid._gcKey===key)return;
+ grid._gcKey=key;
+ if(!team?.points.length){grid.replaceChildren();return;}
+
+ const game=poGCGame,colours=GAME_CENTER.matchupStyle(game.away,game.home,poModel.teamColors);
+ grid.style.setProperty('--gc-leader-colour',colours[club===game.home?'home':'away']);
+ grid.innerHTML=GAME_CENTER.leaderStats.map(([stat,label])=>{
+  const rows=team[stat].map(player=>{
+   const leagueRank=data.league_ranks?.[stat]?.[player.id];
+   const medal=['gold','silver','bronze'][leagueRank-1];
+   const medalAttrs=medal?` class="po-gc-leader-medal po-goalie-medal po-medal-${medal}" title="NHL rank ${leagueRank} in ${label}"`:'';
+   const photo=`https://assets.nhle.com/mugs/nhl/${data.season}/${club}/${player.id}.png`;
+   return `<li${player.rank===1&&player.value>0?' class="po-gc-leader-first"':''}>
+    <span class="po-gc-leader-rank" aria-label="Team rank ${player.rank}">${player.rank}</span>
+    <span class="po-gc-leader-portrait" aria-hidden="true">${esc(player.name.split(' ').map(name=>name[0]).slice(0,2).join(''))}<img src="${photo}" alt="" width="336" height="336" loading="lazy" decoding="async" data-gc-headshot></span>
+    <b>${esc(player.name)}</b>
+    <strong${medalAttrs}>${player.value}${medal?`<span class="po-sr">, NHL rank ${leagueRank} in ${label}</span>`:''}</strong>
+   </li>`;
+  }).join('');
+  return `<section class="po-gc-panel po-gc-leader-card"><h3>${label}</h3><ol>${rows}</ol></section>`;
+ }).join('');
+}
+async function poGCLeadersLoad(){
+ if(!poGCDialog.open||!poGCGame||document.hidden||$('poGCLeaders').hidden||poGCLeadersController)return;
+ clearTimeout(poGCLeadersTimer);
+ const game=poGCGame,year=Number(String(game.id).slice(0,4)),season=`${year}${year+1}`;
+ const query=new URLSearchParams({season,away:game.away,home:game.home});
+ const controller=new AbortController();
+ poGCLeadersController=controller;
+ const deadline=setTimeout(()=>controller.abort(),12000);
+ let retryDelay=300000;
+ try{
+  const response=await fetch((API_ON?API:'https://api.sweater.win')+'/api/playoffs/team-leaders?'+query,{credentials:'omit',cache:'no-store',signal:controller.signal});
+  if(!response.ok)throw new Error('Team leaders unavailable');
+  const data=GAME_CENTER.validateLeaders(await response.json(),game,season);
+  if(!data)throw new Error('Invalid team leaders');
+  if(poGCLeadersController!==controller)return;
+  poGCLeadersData=data;
+  poGCLeadersRender();
+  if(data.stale||data.league_ranks===null||!data.teams[game.away]||!data.teams[game.home])retryDelay=60000;
+ }catch{
+  if(poGCLeadersController!==controller)return;
+  poGCLeadersRender(true);
+  retryDelay=60000;
+ }finally{
+  clearTimeout(deadline);
+  if(poGCLeadersController===controller){
+   poGCLeadersController=null;
+   poGCLeadersTimer=setTimeout(poGCLeadersLoad,retryDelay);
+  }
+ }
+}
 function poGCTab(name){
  for(const b of poGCDialog.querySelectorAll('[data-gc-tab]')){const active=b.dataset.gcTab===name;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;$(b.getAttribute('aria-controls')).hidden=!active;}
+ if(name==='leaders'){poGCLeadersRender();poGCLeadersLoad();}else poGCLeadersStop();
  if(name==='live'){poGCChart();if(poGCData)poGCPeriods();poGCRink();poGCQuality();poGCShootout();}$('poGCPreviewStatus').hidden=!['lines','matchups'].includes(name);if(['lines','matchups'].includes(name)){if(poGCPreviewData){poGCLinesRender();poGCMatchupsRender();}poGCPreviewLoad();}else poGCPreviewStop();
 }
 $('view-playoffs').addEventListener('click',e=>{const trigger=e.target.closest('[data-po-center]');if(trigger){e.preventDefault();poGCOpen(trigger.dataset.poCenter,trigger);}});
 poGCDialog.addEventListener('click',e=>{
+ const leaders=e.target.closest('[data-gc-leaders-team]');
+ if(leaders){poGCLeadersClub=leaders.dataset.gcLeadersTeam;poGCLeadersRender();}
  const lineup=e.target.closest('[data-gc-line-team]');if(lineup){poGCPreviewTeam=lineup.dataset.gcLineTeam;poGCLinesRender();}if(e.target.closest('[data-gc-preview-retry]'))poGCPreviewLoad();
  const zoom=e.target.closest('[data-gc-zoom]');if(zoom)poGCZoomRink(zoom.dataset.gcZoom==='fit'?1:poGCRinkScale+(zoom.dataset.gcZoom==='in'?1:-1));
  const marker=e.target.closest('[data-gc-events]');if(marker)poGCEventShow(marker.dataset.gcEvents.split(',').map(Number));if(e.target.closest('[data-gc-events-close]')){poGCEventShow([]);}
@@ -249,7 +335,7 @@ poGCDialog.addEventListener('focusout',e=>{const chart=e.target.closest('#poGCCh
 poGCDialog.addEventListener('keydown',e=>{
  if(e.key==='Escape'&&$('poGCTooltip')&&!$('poGCTooltip').hidden){e.preventDefault();poGCHideInspection();return;}
  const marker=e.target.closest('[data-gc-events]');if(marker&&['Enter',' '].includes(e.key)){e.preventDefault();poGCEventShow(marker.dataset.gcEvents.split(',').map(Number));return;}
- const tab=e.target.closest('[data-gc-tab]');if(tab&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const tabs=['live','lines','matchups','availability'],index=tabs.indexOf(tab.dataset.gcTab),next=tabs[e.key==='Home'?0:e.key==='End'?3:(index+(e.key==='ArrowLeft'?-1:1)+tabs.length)%tabs.length];poGCTab(next);poGCDialog.querySelector(`[data-gc-tab="${next}"]`).focus();}
+ const tab=e.target.closest('[data-gc-tab]');if(tab&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const tabs=[...poGCDialog.querySelectorAll('[data-gc-tab]')],index=tabs.indexOf(tab),next=tabs[e.key==='Home'?0:e.key==='End'?tabs.length-1:(index+(e.key==='ArrowLeft'?-1:1)+tabs.length)%tabs.length];poGCTab(next.dataset.gcTab);next.focus();}
  if(e.target.id==='poGCChart'&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)&&poGCData?.forecast.points.length){e.preventDefault();const points=poGCData.forecast.points,index=poGCPoint?points.indexOf(poGCPoint):points.length-1,n=e.key==='Home'?0:e.key==='End'?points.length-1:Math.max(0,Math.min(points.length-1,index+(e.key==='ArrowLeft'?-1:1)));poGCPoint=points[n];poGCRead(poGCPoint);}
 });
 poGCDialog.addEventListener('error',e=>{if(e.target.matches('[data-gc-headshot]'))e.target.hidden=true;},true);
@@ -257,7 +343,7 @@ poGCDialog.addEventListener('load',e=>{if(e.target.matches('[data-gc-headshot]')
 // A queued close event from the previous view must not stop a game just reopened.
 poGCDialog.addEventListener('close',()=>{if(poGCDialog.open)return;poGCStop();poGCGame=null;poGCData=null;if(poGCDialog.dataset.dashboardPending){delete poGCDialog.dataset.dashboardPending;poRender();}if(!$('view-playoffs').hidden){const trigger=poGCReturn?.isConnected?poGCReturn:[...document.querySelectorAll(`[data-po-center="${poGCReturnID}"]`)].find(e=>e.getClientRects().length);trigger?.focus({preventScroll:true});}});
 $('poGCClose').onclick=()=>poCloseGameCenter();
-function poGCResume(){if(!poGCDialog.open||document.hidden)return;poGCLoad();if(poGCPreviewVisible())poGCPreviewLoad();}
+function poGCResume(){if(!poGCDialog.open||document.hidden)return;poGCLoad();if(poGCPreviewVisible())poGCPreviewLoad();poGCLeadersLoad();}
 document.addEventListener('visibilitychange',()=>{if(!poGCDialog.open)return;if(document.hidden)poGCStop();else poGCResume();});
 window.addEventListener('online',poGCResume);window.addEventListener('focus',poGCResume);window.addEventListener('pageshow',poGCResume);
 let poGCWidth=0;new ResizeObserver(entries=>{const width=entries[0]?.contentRect.width;if(width&&width!==poGCWidth){poGCWidth=width;if(poGCDialog.open&&poGCGame&&!$('poGCLive').hidden)poGCChart();}}).observe(poGCDialog);
