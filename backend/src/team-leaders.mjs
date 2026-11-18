@@ -27,7 +27,8 @@ function teamLeaders(report, season) {
     let rank = 1;
     const leaders = ranked.slice(0, 3).map((player, index) => {
       if (index && player[key] !== ranked[index - 1][key]) rank = index + 1;
-      return {id: player.id, name: player.name, value: player[key], rank};
+      const tied = ranked[index - 1]?.[key] === player[key] || ranked[index + 1]?.[key] === player[key];
+      return {id: player.id, name: player.name, value: player[key], rank, tied};
     });
     return [key, leaders];
   }));

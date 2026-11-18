@@ -267,16 +267,21 @@ function poGCLeadersRender(failed=false){
  const game=poGCGame,colours=GAME_CENTER.matchupStyle(game.away,game.home,poModel.teamColors);
  grid.style.setProperty('--gc-leader-colour',colours[club===game.home?'home':'away']);
  grid.innerHTML=GAME_CENTER.leaderStats.map(([stat,label])=>{
+  const leagueRanks=data.league_ranks?.[stat];
   const rows=team[stat].map(player=>{
-   const leagueRank=data.league_ranks?.[stat]?.[player.id];
+   const tied=player.tied??team[stat].some(other=>other.id!==player.id&&other.rank===player.rank);
+   const teamRank=(tied?'T-':'')+player.rank;
+   const leagueRank=leagueRanks?.[player.id];
    const medal=['gold','silver','bronze'][leagueRank-1];
-   const medalAttrs=medal?` class="po-gc-leader-medal po-goalie-medal po-medal-${medal}" title="NHL rank ${leagueRank} in ${label}"`:'';
+   const leagueTied=medal&&Object.values(leagueRanks).filter(rank=>rank===leagueRank).length>1;
+   const leagueLabel=`NHL rank ${leagueTied?'T-':''}${leagueRank} in ${label}`;
+   const medalAttrs=medal?` class="po-gc-leader-medal po-goalie-medal po-medal-${medal}" title="${leagueLabel}"`:'';
    const photo=`https://assets.nhle.com/mugs/nhl/${data.season}/${club}/${player.id}.png`;
    return `<li${player.rank===1&&player.value>0?' class="po-gc-leader-first"':''}>
-    <span class="po-gc-leader-rank" aria-label="Team rank ${player.rank}">${player.rank}</span>
+    <span class="po-gc-leader-rank" aria-label="${tied?'Tied for team rank':'Team rank'} ${player.rank}">${teamRank}</span>
     <span class="po-gc-leader-portrait" aria-hidden="true">${esc(player.name.split(' ').map(name=>name[0]).slice(0,2).join(''))}<img src="${photo}" alt="" width="336" height="336" loading="lazy" decoding="async" data-gc-headshot></span>
     <b>${esc(player.name)}</b>
-    <strong${medalAttrs}>${player.value}${medal?`<span class="po-sr">, NHL rank ${leagueRank} in ${label}</span>`:''}</strong>
+    <strong${medalAttrs}>${player.value}${medal?`<span class="po-sr">, ${leagueTied?`Tied for NHL rank ${leagueRank} in ${label}`:leagueLabel}</span>`:''}</strong>
    </li>`;
   }).join('');
   return `<section class="po-gc-panel po-gc-leader-card"><h3>${label}</h3><ol>${rows}</ol></section>`;

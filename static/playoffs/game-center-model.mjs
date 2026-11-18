@@ -6,7 +6,7 @@ export const GAME_CENTER=(()=>{
   const rank=value=>Number.isInteger(value)&&finite(value,1,3);
   const validTeam=team=>team===null||team&&leaderStats.every(([key])=>{
    const rows=team[key];
-   return Array.isArray(rows)&&rows.length<=3&&new Set(rows.map(row=>row?.id)).size===rows.length&&rows.every((row,index)=>row&&Number.isInteger(row.id)&&finite(row.id,1,99999999)&&typeof row.name==='string'&&row.name.length>0&&row.name.length<=100&&Number.isInteger(row.value)&&finite(row.value,0,1000)&&rank(row.rank)&&(!index||row.value<=rows[index-1].value));
+   return Array.isArray(rows)&&rows.length<=3&&new Set(rows.map(row=>row?.id)).size===rows.length&&rows.every((row,index)=>row&&Number.isInteger(row.id)&&finite(row.id,1,99999999)&&typeof row.name==='string'&&row.name.length>0&&row.name.length<=100&&Number.isInteger(row.value)&&finite(row.value,0,1000)&&rank(row.rank)&&(row.tied===undefined||typeof row.tied==='boolean')&&(!index||row.value<=rows[index-1].value));
   });
   const teams=[data.teams[game.away],data.teams[game.home]];
   if(!teams.some(Boolean)||!teams.every(validTeam))return null;
