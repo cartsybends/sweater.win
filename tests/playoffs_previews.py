@@ -35,6 +35,11 @@ class Previews(unittest.TestCase):
             rows = player_data.skater_games(season, display_stats=True)
             self.assertGreater(len(rows), 0)
             print('Verified NHL player-game reports:', len(rows), flush=True)
+            gid = rows[-1]['g']
+            for limit in (-1, 5000):
+                path = f'https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId%3D{gid}&limit={limit}'
+                shifts = fetch(path)
+                print('NHL shifts:', gid, limit, len(shifts['data']), 'of', shifts['total'], flush=True)
             for name in ('powerplay', 'penaltykill'):
                 report = player_data.season_report('team', name, season)
                 self.assertGreater(len(report), 0)
