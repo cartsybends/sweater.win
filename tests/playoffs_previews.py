@@ -5,9 +5,13 @@ import math
 from pathlib import Path
 import sys
 import unittest
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
+from urllib.parse import parse_qs, urlparse
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools/playoffs'))
+import player_data
 from lineup_data import groups, special, infer
 from lineups import special_rates, supplement
 from matchups import compact, for_game
@@ -15,6 +19,30 @@ from player_model import History, FEATURES, goal_allocation
 
 
 class Previews(unittest.TestCase):
+    def test_short_nhl_game_reports_page_without_accepting_duplicates(self):
+        day = '2026-11-19'
+        rows = [{'gameId': 2026020001, 'playerId': pid} for pid in range(1, 8)]
+        starts = []
+
+        def fetch(url):
+            query = parse_qs(urlparse(url).query)
+            if query['limit'] == ['-1']:
+                return {'data': rows[:3], 'total': len(rows)}
+            self.assertEqual([item['property'] for item in json.loads(query['sort'][0])], ['gameId', 'playerId'])
+            start = int(query['start'][0])
+            starts.append(start)
+            return {'data': rows[start:start+3], 'total': len(rows)}
+
+        with TemporaryDirectory() as cache, patch.object(player_data, 'CACHE', Path(cache)):
+            with patch.object(player_data, 'get_json', side_effect=lambda url: {'data': rows[:3], 'total': len(rows)}):
+                with self.assertRaisesRegex(ValueError, 'offset 3 of 7'):
+                    player_data.report('skater', 'summary', 2026, day, day)
+            self.assertFalse(list(Path(cache).iterdir()))
+            with patch.object(player_data, 'get_json', side_effect=fetch):
+                result = player_data.report('skater', 'summary', 2026, day, day)
+            self.assertEqual([row['playerId'] for row in result], list(range(1, 8)))
+            self.assertEqual(starts, [0, 3, 6])
+
     def test_disjoint_units_optimize_total_overlap_without_inventing_players(self):
         units=groups(range(1,7),{(1,2,3):100,(1,4,5):90,(2,3,6):90},3,2)
         self.assertEqual(sum(g['seconds'] for g in units),180)
