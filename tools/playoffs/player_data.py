@@ -35,6 +35,14 @@ def get_json(url):
             time.sleep(attempt + 1)
 
 
+def report_page(url):
+    raw = get_json(url)
+    rows, total = raw.get('data'), raw.get('total')
+    if not isinstance(rows, list) or not isinstance(total, int) or total < len(rows):
+        raise ValueError('Invalid NHL game report')
+    return rows, total
+
+
 def report(kind, report_name, season, first, last):
     path = CACHE / f'{kind}-{report_name}-{season}-{first}-{last}.json'
     fresh = season < current_season() or path.exists() and time.time()-path.stat().st_mtime < 900
@@ -43,18 +51,33 @@ def report(kind, report_name, season, first, last):
         if data.get('version') == 1:
             return data['rows']
     expression = f'seasonId={season*10000+season+1} and gameTypeId=2 and gameDate>="{first}" and gameDate<="{last}"'
-    url = API + kind + '/' + report_name + '?' + urllib.parse.urlencode({
-        'isAggregate':'false','isGame':'true','limit':-1,'cayenneExp':expression})
-    raw = get_json(url)
-    rows, total = raw.get('data'), raw.get('total')
-    if not isinstance(rows,list) or not isinstance(total,int) or total < 0:
-        raise ValueError('Invalid NHL skater report')
-    if total >= 10000 or len(rows) != total:
+    endpoint = API + kind + '/' + report_name + '?'
+    query = {'isAggregate':'false','isGame':'true','limit':-1,'cayenneExp':expression}
+    url = endpoint + urllib.parse.urlencode(query)
+    rows, total = report_page(url)
+    if total >= 10000:
         a,b = date.fromisoformat(first),date.fromisoformat(last)
         if a >= b:
-            raise ValueError('Incomplete NHL report page')
+            raise ValueError(f'NHL {kind}/{report_name} report exceeds query limit on {first}')
         middle = a + (b-a)//2
         return report(kind,report_name,season,first,middle.isoformat()) + report(kind,report_name,season,(middle+timedelta(days=1)).isoformat(),last)
+    if len(rows) < total:
+        # Some reports return a short bulk response, even for a single date.
+        # Restart with a stable order before advancing by the returned row count.
+        identity = 'playerId' if kind == 'skater' else 'teamId'
+        sort = json.dumps([{'property': key, 'direction': 'ASC'} for key in ('gameId', identity)])
+        query.update(limit=1000, sort=sort)
+        rows = []
+        seen = set()
+        while len(rows) < total:
+            offset = len(rows)
+            page_url = endpoint + urllib.parse.urlencode({**query, 'start': offset})
+            page, count = report_page(page_url)
+            keys = {(row.get('gameId'), row.get(identity)) for row in page}
+            if count != total or not page or len(page) > total - offset or len(keys) != len(page) or keys & seen:
+                raise ValueError(f'Incomplete NHL {kind}/{report_name} report for {first} to {last} at offset {offset} of {total}')
+            rows.extend(page)
+            seen.update(keys)
     rows = [{key:r.get(key) for key in KEEP[report_name]} for r in rows]
     path.parent.mkdir(parents=True,exist_ok=True)
     temp = path.with_suffix('.tmp')
