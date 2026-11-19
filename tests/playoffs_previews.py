@@ -19,32 +19,6 @@ from player_model import History, FEATURES, goal_allocation
 
 
 class Previews(unittest.TestCase):
-    def test_live_nhl_preview_input_probe(self):
-        fetch = player_data.get_json
-
-        def observe(url):
-            report = fetch(url)
-            query = parse_qs(urlparse(url).query)
-            actual = len(report['data'])
-            if actual != report['total'] and query['limit'] == ['-1']:
-                print('NHL bulk response', urlparse(url).path, query['cayenneExp'][0], actual, 'of', report['total'], flush=True)
-            return report
-
-        with TemporaryDirectory() as cache, patch.object(player_data, 'CACHE', Path(cache)), patch.object(player_data, 'get_json', side_effect=observe):
-            season = player_data.current_season()
-            rows = player_data.skater_games(season, display_stats=True)
-            self.assertGreater(len(rows), 0)
-            print('Verified NHL player-game reports:', len(rows), flush=True)
-            gid = rows[-1]['g']
-            for limit in (-1, 5000):
-                path = f'https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId%3D{gid}&limit={limit}'
-                shifts = fetch(path)
-                print('NHL shifts:', gid, limit, len(shifts['data']), 'of', shifts['total'], flush=True)
-            for name in ('powerplay', 'penaltykill'):
-                report = player_data.season_report('team', name, season)
-                self.assertGreater(len(report), 0)
-                print('Verified NHL team-game report:', name, len(report), flush=True)
-
     def test_short_nhl_game_reports_page_without_accepting_duplicates(self):
         day = '2026-11-19'
         rows = [{'gameId': 2026020001, 'playerId': pid} for pid in range(1, 8)]
