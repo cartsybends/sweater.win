@@ -43,6 +43,28 @@ def report_page(url):
     return rows, total
 
 
+def complete_report(url, identity):
+    rows, seen = [], set()
+    while True:
+        offset = len(rows)
+        page, count = report_page(f'{url}&start={offset}')
+        if offset == 0:
+            total = count
+            if total >= 10000:
+                return None
+        if count != total:
+            raise ValueError(f'row count changed from {total} to {count} at offset {offset}')
+        keys = {(row.get('gameId'), row.get(identity)) for row in page}
+        if len(page) > total - offset or not page and offset < total:
+            raise ValueError(f'incomplete page at offset {offset} of {total}')
+        if len(keys) != len(page) or keys & seen:
+            raise ValueError(f'duplicate rows at offset {offset} of {total}')
+        rows.extend(page)
+        seen.update(keys)
+        if len(rows) == total:
+            return rows
+
+
 def report(kind, report_name, season, first, last):
     path = CACHE / f'{kind}-{report_name}-{season}-{first}-{last}.json'
     fresh = season < current_season() or path.exists() and time.time()-path.stat().st_mtime < 900
@@ -52,32 +74,25 @@ def report(kind, report_name, season, first, last):
             return data['rows']
     expression = f'seasonId={season*10000+season+1} and gameTypeId=2 and gameDate>="{first}" and gameDate<="{last}"'
     endpoint = API + kind + '/' + report_name + '?'
-    query = {'isAggregate':'false','isGame':'true','limit':-1,'cayenneExp':expression}
+    identity = 'playerId' if kind == 'skater' else 'teamId'
+    sort = json.dumps([{'property': key, 'direction': 'ASC'} for key in ('gameId', identity)])
+    query = {'isAggregate':'false','isGame':'true','limit':1000,'sort':sort,'cayenneExp':expression}
     url = endpoint + urllib.parse.urlencode(query)
-    rows, total = report_page(url)
-    if total >= 10000:
+    for attempt in range(3):
+        try:
+            rows = complete_report(url, identity)
+            break
+        except ValueError as error:
+            # A newly posted game's rows can move page boundaries during a read.
+            if attempt == 2:
+                raise ValueError(f'Incomplete NHL {kind}/{report_name} report for {first} to {last}: {error}') from error
+            time.sleep(attempt + 1)
+    if rows is None:
         a,b = date.fromisoformat(first),date.fromisoformat(last)
         if a >= b:
             raise ValueError(f'NHL {kind}/{report_name} report exceeds query limit on {first}')
         middle = a + (b-a)//2
         return report(kind,report_name,season,first,middle.isoformat()) + report(kind,report_name,season,(middle+timedelta(days=1)).isoformat(),last)
-    if len(rows) < total:
-        # Some reports return a short bulk response, even for a single date.
-        # Restart with a stable order before advancing by the returned row count.
-        identity = 'playerId' if kind == 'skater' else 'teamId'
-        sort = json.dumps([{'property': key, 'direction': 'ASC'} for key in ('gameId', identity)])
-        query.update(limit=1000, sort=sort)
-        rows = []
-        seen = set()
-        while len(rows) < total:
-            offset = len(rows)
-            page_url = endpoint + urllib.parse.urlencode({**query, 'start': offset})
-            page, count = report_page(page_url)
-            keys = {(row.get('gameId'), row.get(identity)) for row in page}
-            if count != total or not page or len(page) > total - offset or len(keys) != len(page) or keys & seen:
-                raise ValueError(f'Incomplete NHL {kind}/{report_name} report for {first} to {last} at offset {offset} of {total}')
-            rows.extend(page)
-            seen.update(keys)
     rows = [{key:r.get(key) for key in KEEP[report_name]} for r in rows]
     path.parent.mkdir(parents=True,exist_ok=True)
     temp = path.with_suffix('.tmp')

@@ -13,6 +13,9 @@ def compact(raw,season):
     if raw.get('gameType') not in (2,3) or str(raw.get('id',''))[:4]!=str(season):
         return None
     state=raw.get('gameState');home=raw.get('homeTeam',{});away=raw.get('awayTeam',{})
+    if state == 'OVER':
+        # The schedule can show the end of play before publishing the official final.
+        state = 'CRIT'
     if not home.get('abbrev') or not away.get('abbrev') or not raw.get('startTimeUTC'):
         raise ValueError('Incomplete NHL meeting identity')
     result={'id':raw['id'],'season':season*10000+season+1,'type':raw['gameType'],

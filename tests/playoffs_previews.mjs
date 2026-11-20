@@ -7,7 +7,17 @@ const root=new URL('../',import.meta.url),feed=JSON.parse(await readFile(new URL
 const paths=await readdir(new URL('playoffs_lines/matchups/',root));let checks=0;
 async function test(name,fn){await fn();checks++;console.log('PASS '+name);}
 const id=2026020331,raw=JSON.parse(await readFile(new URL(`playoffs_lines/matchups/${id}.json`,root))),g=games.get(id)||{id,start:raw.start,home:raw.home,away:raw.away,date:raw.start.slice(0,10)},now=Math.max(Date.now(),Date.parse(raw.as_of));
-await test('Every published in-window preview validates and preserves original team goal allocations',async()=>{let n=0;for(const file of paths){const d=JSON.parse(await readFile(new URL('playoffs_lines/matchups/'+file,root))),game=games.get(d.id);if(!game)continue;assert(GAME_PREVIEW.validate(d,game,Math.max(now,Date.parse(d.as_of))),file);n++;}assert(n>0);});
+await test('Every published in-window preview validates and preserves original team goal allocations',async()=>{
+ let n=0;
+ for(const file of paths){
+  const d=JSON.parse(await readFile(new URL('playoffs_lines/matchups/'+file,root))),game=games.get(d.id);
+  if(!game)continue;
+  const states=d.matchups?.season?.map(m=>`${m.id}=${m.state}`).join(', ');
+  assert(GAME_PREVIEW.validate(d,game,Math.max(now,Date.parse(d.as_of))),`${file} (season meeting states: ${states})`);
+  n++;
+ }
+ assert(n>0);
+});
 await test('Corrupt identity, future features, invented players, duplicate units and false final scores are rejected',()=>{
  const team=raw.teams[raw.away],club=raw.away;assert(team.status!=='unavailable');
  for(const mutate of [d=>d.id++,d=>d.start='2026-01-01T00:00:00Z',d=>d.teams[club].source_game.date=g.date,
