@@ -109,6 +109,11 @@
   "team": "BOS",
   "number": 91
  },
+ "8480022": {
+  "name": "Michael DiPietro",
+  "team": "BOS",
+  "number": 30
+ },
  "8480280": {
   "name": "Jeremy Swayman",
   "team": "BOS",
@@ -359,6 +364,11 @@
   "team": "DET",
   "number": 80
  },
+ "8477493": {
+  "name": "Aleksander Barkov",
+  "team": "FLA",
+  "number": 16
+ },
  "8477935": {
   "name": "Sam Bennett",
   "team": "FLA",
@@ -589,6 +599,11 @@
   "team": "MTL",
   "number": 8
  },
+ "8484220": {
+  "name": "David Reinbacher",
+  "team": "MTL",
+  "number": 64
+ },
  "8482964": {
   "name": "Arber Xhekaj",
   "team": "MTL",
@@ -618,6 +633,16 @@
   "name": "Drake Batherson",
   "team": "OTT",
   "number": 19
+ },
+ "8478104": {
+  "name": "Sammy Blais",
+  "team": "OTT",
+  "number": 79
+ },
+ "8482674": {
+  "name": "Tyler Boucher",
+  "team": "OTT",
+  "number": 54
  },
  "8477444": {
   "name": "Andre Burakovsky",
@@ -673,6 +698,11 @@
   "name": "Tim Stützle",
   "team": "OTT",
   "number": 18
+ },
+ "8481577": {
+  "name": "Philip Tomasino",
+  "team": "OTT",
+  "number": 62
  },
  "8480188": {
   "name": "Fabian Zetterlund",
@@ -779,6 +809,11 @@
   "team": "TBL",
   "number": 95
  },
+ "8484770": {
+  "name": "Sam O'Reilly",
+  "team": "TBL",
+  "number": 23
+ },
  "8478010": {
   "name": "Brayden Point",
   "team": "TBL",
@@ -849,6 +884,11 @@
   "team": "TOR",
   "number": 73
  },
+ "8482153": {
+  "name": "Brendan Brisson",
+  "team": "TOR",
+  "number": 90
+ },
  "8484158": {
   "name": "Easton Cowan",
   "team": "TOR",
@@ -914,6 +954,11 @@
   "team": "TOR",
   "number": 91
  },
+ "8482525": {
+  "name": "Ryan Tverberg",
+  "team": "TOR",
+  "number": 77
+ },
  "8477425": {
   "name": "Miles Wood",
   "team": "TOR",
@@ -934,6 +979,11 @@
   "team": "TOR",
   "number": 22
  },
+ "8484287": {
+  "name": "Cole McWard",
+  "team": "TOR",
+  "number": 82
+ },
  "8477541": {
   "name": "Dakota Mermis",
   "team": "TOR",
@@ -949,6 +999,11 @@
   "team": "TOR",
   "number": 44
  },
+ "8483546": {
+  "name": "Marshall Rifai",
+  "team": "TOR",
+  "number": 83
+ },
  "8479442": {
   "name": "Troy Stecher",
   "team": "TOR",
@@ -958,6 +1013,11 @@
   "name": "Chris Tanev",
   "team": "TOR",
   "number": 8
+ },
+ "8482515": {
+  "name": "Artur Akhtyamov",
+  "team": "TOR",
+  "number": 70
  },
  "8475683": {
   "name": "Sergei Bobrovsky",
@@ -1064,6 +1124,11 @@
   "team": "CAR",
   "number": 74
  },
+ "8479976": {
+  "name": "Juuso Välimäki",
+  "team": "CAR",
+  "number": 8
+ },
  "8480336": {
   "name": "Sean Walker",
   "team": "CAR",
@@ -1148,6 +1213,11 @@
   "name": "Dmitri Voronkov",
   "team": "CBJ",
   "number": 10
+ },
+ "8485469": {
+  "name": "Jack Williams",
+  "team": "CBJ",
+  "number": 92
  },
  "8481161": {
   "name": "Jake Christiansen",
@@ -1299,6 +1369,11 @@
   "team": "NJD",
   "number": 71
  },
+ "8484987": {
+  "name": "Anton Silaev",
+  "team": "NJD",
+  "number": 52
+ },
  "8474596": {
   "name": "Jake Allen",
   "team": "NJD",
@@ -1424,6 +1499,11 @@
   "team": "NYI",
   "number": 30
  },
+ "8473575": {
+  "name": "Semyon Varlamov",
+  "team": "NYI",
+  "number": 40
+ },
  "8477416": {
   "name": "Oliver Bjorkstrand",
   "team": "NYR",
@@ -1443,6 +1523,11 @@
   "name": "Pavel Dorofeyev",
   "team": "NYR",
   "number": 16
+ },
+ "8478446": {
+  "name": "Glenn Gawdin",
+  "team": "NYR",
+  "number": 15
  },
  "8476822": {
   "name": "Luke Glendening",
@@ -1694,6 +1779,11 @@
   "team": "PIT",
   "number": 19
  },
+ "8482993": {
+  "name": "Avery Hayes",
+  "team": "PIT",
+  "number": 85
+ },
  "8485414": {
   "name": "Ben Kindel",
   "team": "PIT",
@@ -1934,6 +2024,11 @@
   "team": "CHI",
   "number": 59
  },
+ "8485554": {
+  "name": "Dillon Boucher",
+  "team": "CHI",
+  "number": 36
+ },
  "8477987": {
   "name": "Ryan Donato",
   "team": "CHI",
@@ -2028,6 +2123,11 @@
   "name": "Alex Vlasic",
   "team": "CHI",
   "number": 72
+ },
+ "8482123": {
+  "name": "Drew Commesso",
+  "team": "CHI",
+  "number": 33
  },
  "8481519": {
   "name": "Spencer Knight",
@@ -2234,6 +2334,11 @@
   "team": "DAL",
   "number": 6
  },
+ "8477335": {
+  "name": "Kyle Burroughs",
+  "team": "DAL",
+  "number": 28
+ },
  "8478476": {
   "name": "Kyle Capobianco",
   "team": "DAL",
@@ -2263,6 +2368,11 @@
   "name": "Tyler Myers",
   "team": "DAL",
   "number": 57
+ },
+ "8485468": {
+  "name": "Trey Taylor",
+  "team": "DAL",
+  "number": 27
  },
  "8479193": {
   "name": "Casey DeSmith",
@@ -2499,6 +2609,11 @@
   "team": "NSH",
   "number": 3
  },
+ "8482806": {
+  "name": "William Trudeau",
+  "team": "NSH",
+  "number": 85
+ },
  "8482482": {
   "name": "Adam Wilsby",
   "team": "NSH",
@@ -2523,6 +2638,11 @@
   "name": "Pavel Buchnevich",
   "team": "STL",
   "number": 89
+ },
+ "8479346": {
+  "name": "Dillon Dube",
+  "team": "STL",
+  "number": 65
  },
  "8484164": {
   "name": "Dalibor Dvorsky",
@@ -2614,6 +2734,11 @@
   "team": "STL",
   "number": 55
  },
+ "8480157": {
+  "name": "Calle Rosen",
+  "team": "STL",
+  "number": 43
+ },
  "8481006": {
   "name": "Tyler Tucker",
   "team": "STL",
@@ -2674,6 +2799,11 @@
   "team": "UTA",
   "number": 22
  },
+ "8481827": {
+  "name": "Ben McCartney",
+  "team": "UTA",
+  "number": 62
+ },
  "8477070": {
   "name": "Liam O'Brien",
   "team": "UTA",
@@ -2704,6 +2834,21 @@
   "team": "UTA",
   "number": 57
  },
+ "8483436": {
+  "name": "Artem Duda",
+  "team": "UTA",
+  "number": 84
+ },
+ "8481708": {
+  "name": "Zac Jones",
+  "team": "UTA",
+  "number": 15
+ },
+ "8483472": {
+  "name": "Maveric Lamoureux",
+  "team": "UTA",
+  "number": 10
+ },
  "8478507": {
   "name": "John Marino",
   "team": "UTA",
@@ -2733,6 +2878,11 @@
   "name": "MacKenzie Weegar",
   "team": "UTA",
   "number": 52
+ },
+ "8482657": {
+  "name": "Sebastian Cossa",
+  "team": "UTA",
+  "number": 33
  },
  "8478872": {
   "name": "Karel Vejmelka",
@@ -2809,6 +2959,11 @@
   "team": "WPG",
   "number": 29
  },
+ "8483526": {
+  "name": "Danil Zhilkin",
+  "team": "WPG",
+  "number": 53
+ },
  "8482459": {
   "name": "Tyrel Bauer",
   "team": "WPG",
@@ -2844,6 +2999,11 @@
   "team": "WPG",
   "number": 54
  },
+ "8481567": {
+  "name": "Henry Thrun",
+  "team": "WPG",
+  "number": 8
+ },
  "8482076": {
   "name": "Nico Daws",
   "team": "WPG",
@@ -2853,6 +3013,11 @@
   "name": "Stuart Skinner",
   "team": "WPG",
   "number": 74
+ },
+ "8483532": {
+  "name": "Clay Stevenson",
+  "team": "WPG",
+  "number": 33
  },
  "8484153": {
   "name": "Leo Carlsson",
@@ -2968,6 +3133,11 @@
   "name": "Noah Warren",
   "team": "ANA",
   "number": 47
+ },
+ "8476316": {
+  "name": "Laurent Brossoit",
+  "team": "ANA",
+  "number": 31
  },
  "8480843": {
   "name": "Lukas Dostal",
@@ -3369,6 +3539,11 @@
   "team": "SEA",
   "number": 7
  },
+ "8483442": {
+  "name": "Jagger Firkus",
+  "team": "SEA",
+  "number": 57
+ },
  "8477919": {
   "name": "Frederick Gaudreau",
   "team": "SEA",
@@ -3399,10 +3574,10 @@
   "team": "SEA",
   "number": 59
  },
- "8483497": {
-  "name": "Jani Nyman",
+ "8485383": {
+  "name": "Jake O'Brien",
   "team": "SEA",
-  "number": 38
+  "number": 44
  },
  "8482713": {
   "name": "Mackie Samoskevich",
@@ -3504,6 +3679,11 @@
   "team": "SJS",
   "number": 51
  },
+ "8481517": {
+  "name": "Brett Leason",
+  "team": "SJS",
+  "number": 17
+ },
  "8478975": {
   "name": "Mason Marchment",
   "team": "SJS",
@@ -3568,6 +3748,11 @@
   "name": "Dmitry Orlov",
   "team": "SJS",
   "number": 9
+ },
+ "8484421": {
+  "name": "Eric Pohlkamp",
+  "team": "SJS",
+  "number": 48
  },
  "8476885": {
   "name": "Jacob Trouba",
@@ -3653,6 +3838,11 @@
   "name": "Max Sasson",
   "team": "VAN",
   "number": 63
+ },
+ "8478465": {
+  "name": "Guillaume Brisebois",
+  "team": "VAN",
+  "number": 55
  },
  "8484798": {
   "name": "Zeev Buium",
