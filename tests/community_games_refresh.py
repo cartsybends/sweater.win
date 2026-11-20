@@ -5,6 +5,7 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('grid_refresh', ROOT / 'tools/community_games/refresh_grid.py')
@@ -112,6 +113,29 @@ class GridRefresh(unittest.TestCase):
         self.assertEqual(len(urls), 4)
         self.assertTrue(all('gameTypeId%3D2' in url for url in urls))
         self.assertTrue(all('seasonId%3E%3D20262027' in url for url in urls if '/summary?' in url))
+
+    def test_short_nhl_reports_use_all_pages_and_reject_duplicate_rows(self):
+        bank = {'team_cutoff': 2025, 'players': [[1, 'Existing Player', 'C', 'CAN', 1, False, 2025, 2025, {'SEA': 1}, 2000]]}
+        summaries = [{'playerId': pid, 'seasonId': 20262027, 'gamesPlayed': 1, 'teamAbbrevs': 'SEA'} for pid in (1, 8483442)]
+        bios = [{**refresh.landing_bio(8483442, self.landing()), 'playerId': pid, 'gamesPlayed': 2} for pid in (1, 8483442)]
+        reports = {'/skater/summary': summaries, '/skater/bios': bios}
+        duplicate = False
+
+        def fetch(name, url):
+            path = urlsplit(url).path.removeprefix('/stats/rest/en')
+            rows = reports.get(path, [])
+            params = parse_qs(urlsplit(url).query)
+            start = int(params['start'][0])
+            index = 0 if duplicate else start
+            return {'total': len(rows), 'data': rows[index:index+1]}, {'url': url, 'sha256': '0' * 64}
+
+        snapshot = refresh.refresh(bank, date(2026, 11, 20), fetch)
+        self.assertEqual(snapshot['appearances'], [[1, 'SEA', 2026, 1], [8483442, 'SEA', 2026, 1]])
+        self.assertEqual(len(snapshot['sources']), 6)
+        self.assertTrue(any('start=1' in source['url'] for source in snapshot['sources']))
+        duplicate = True
+        with self.assertRaisesRegex(ValueError, 'Duplicate NHL skater/'):
+            refresh.refresh(bank, date(2026, 11, 20), fetch)
 
     def test_empty_or_incomplete_refresh_cannot_erase_a_verified_team_connection(self):
         previous = {'appearances': [[8483495, 'CGY', 2026, 6]]}

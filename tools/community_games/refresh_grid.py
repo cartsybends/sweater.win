@@ -143,18 +143,41 @@ def refresh(bank, today, fetch):
                   'isGame': 'false', 'start': 0, 'limit': -1, 'cayenneExp': 'gameTypeId=2'}
         if report == 'summary':
             params['cayenneExp'] += f' and seasonId>={cutoff + 1}{cutoff + 2} and seasonId<={through}{through + 1}'
-        url = f'https://api.nhle.com/stats/rest/en/{kind}/{report}?' + urllib.parse.urlencode(params)
+        endpoint = f'https://api.nhle.com/stats/rest/en/{kind}/{report}?'
+        url = endpoint + urllib.parse.urlencode(params)
         document, audit = fetch(f'{kind}-{report}.json', url)
-        if len(document['data']) != document['total']:
-            raise ValueError('Incomplete NHL response')
-        return kind, report, document, audit
+        if len(document['data']) == document['total']:
+            return kind, report, document, [audit]
+
+        # A bulk request can return only the first page. Restart with a stable
+        # order and advance by the actual row count, which can be below the limit.
+        keys = ('playerId', 'seasonId') if report == 'summary' else ('playerId',)
+        params.update(limit=1000, sort=json.dumps([{'property': key, 'direction': 'ASC'} for key in keys]))
+        rows, audits, seen = [], [], set()
+        total = None
+        while total is None or len(rows) < total:
+            offset = len(rows)
+            page_url = endpoint + urllib.parse.urlencode({**params, 'start': offset})
+            page, audit = fetch(f'{kind}-{report}-{offset}.json', page_url)
+            count, batch = page['total'], page['data']
+            if total is None:
+                total = count
+            if type(count) is not int or count != total or not isinstance(batch, list) or len(batch) > total - offset or not batch and offset < total:
+                raise ValueError(f'Incomplete NHL {kind}/{report} response at offset {offset}')
+            ids = {tuple(row[key] for key in keys) for row in batch}
+            if len(ids) != len(batch) or ids & seen:
+                raise ValueError(f'Duplicate NHL {kind}/{report} rows at offset {offset}')
+            rows.extend(batch)
+            audits.append(audit)
+            seen.update(ids)
+        return kind, report, {'data': rows, 'total': total}, audits
 
     jobs = [(kind, report) for kind in ('skater', 'goalie') for report in ('summary', 'bios')]
     bios, summaries = {}, {}
     with ThreadPoolExecutor(max_workers=4) as executor:
         results = list(executor.map(lambda pair: request(*pair), jobs))
-    for kind, report, document, audit in results:
-        sources.append(audit)
+    for kind, report, document, audits in results:
+        sources.extend(audits)
         if report == 'summary':
             summaries[kind] = document
         else:
