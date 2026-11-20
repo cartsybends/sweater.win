@@ -26,14 +26,13 @@ class Previews(unittest.TestCase):
 
         def fetch(url):
             query = parse_qs(urlparse(url).query)
-            if query['limit'] == ['-1']:
-                return {'data': rows[:3], 'total': len(rows)}
+            self.assertEqual(query['limit'], ['1000'])
             self.assertEqual([item['property'] for item in json.loads(query['sort'][0])], ['gameId', 'playerId'])
             start = int(query['start'][0])
             starts.append(start)
             return {'data': rows[start:start+3], 'total': len(rows)}
 
-        with TemporaryDirectory() as cache, patch.object(player_data, 'CACHE', Path(cache)):
+        with TemporaryDirectory() as cache, patch.object(player_data, 'CACHE', Path(cache)), patch.object(player_data.time, 'sleep'):
             with patch.object(player_data, 'get_json', side_effect=lambda url: {'data': rows[:3], 'total': len(rows)}):
                 with self.assertRaisesRegex(ValueError, 'offset 3 of 7'):
                     player_data.report('skater', 'summary', 2026, day, day)
@@ -42,6 +41,26 @@ class Previews(unittest.TestCase):
                 result = player_data.report('skater', 'summary', 2026, day, day)
             self.assertEqual([row['playerId'] for row in result], list(range(1, 8)))
             self.assertEqual(starts, [0, 3, 6])
+
+    def test_report_restarts_when_the_nhl_posts_more_rows_between_pages(self):
+        day = '2026-11-19'
+        rows = [{'gameId': 2026020001, 'playerId': pid, 'totalFaceoffs': 2} for pid in range(1, 9)]
+        starts = []
+
+        def fetch(url):
+            start = int(parse_qs(urlparse(url).query)['start'][0])
+            starts.append(start)
+            if len(starts) == 1:
+                return {'data': [{**row, 'totalFaceoffs': 1} for row in rows[:3]], 'total': 7}
+            return {'data': rows[start:start+3], 'total': len(rows)}
+
+        with TemporaryDirectory() as cache, patch.object(player_data, 'CACHE', Path(cache)):
+            with patch.object(player_data, 'get_json', side_effect=fetch), patch.object(player_data.time, 'sleep') as wait:
+                result = player_data.report('skater', 'faceoffwins', 2026, day, day)
+            wait.assert_called_once_with(1)
+            self.assertEqual(starts, [0, 3, 0, 3, 6])
+            self.assertEqual([row['playerId'] for row in result], list(range(1, 9)))
+            self.assertTrue(all(row['totalFaceoffs'] == 2 for row in result))
 
     def test_disjoint_units_optimize_total_overlap_without_inventing_players(self):
         units=groups(range(1,7),{(1,2,3):100,(1,4,5):90,(2,3,6):90},3,2)
@@ -120,6 +139,20 @@ class Previews(unittest.TestCase):
         self.assertEqual(len(data['season']),13)
         self.assertEqual(data['season'][-1]['state'],'FUT')
         self.assertIsNone(compact({'id':2026010001,'gameType':1},2026))
+
+    def test_schedule_holds_a_game_marked_over_until_the_final_is_official(self):
+        raw = {'id': 2026020347, 'gameType': 2, 'gameDate': '2026-11-19', 'startTimeUTC': '2026-11-20T00:00:00Z',
+               'homeTeam': {'abbrev': 'TOR', 'score': 3}, 'awayTeam': {'abbrev': 'LAK', 'score': 4},
+               'gameState': 'OVER', 'gameOutcome': {'lastPeriodType': 'SO'}}
+        pending = compact(raw, 2026)
+        self.assertEqual(pending['state'], 'CRIT')
+        self.assertEqual((pending['hg'], pending['ag']), (3, 4))
+        check = '2026-11-20T03:00:00Z'
+        report = for_game(pending, [pending], check)
+        self.assertEqual(report['season'], [pending])
+        self.assertEqual(report['recent'], [])
+        final = compact({**raw, 'gameState': 'FINAL'}, 2026)
+        self.assertEqual(for_game(final, [final], check)['wins'], {'TOR': 0, 'LAK': 1})
 
     def test_league_special_team_ranks_require_all_clubs_and_share_tied_ranks(self):
         rows={'powerplay':[],'penaltykill':[]}
