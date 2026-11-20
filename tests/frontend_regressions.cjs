@@ -115,6 +115,56 @@ function runtime(extra = {}) {
     }
   });
 
+  await test('Playoff History can end early and reveal all squares while preserving its earned score', () => {
+    const records = new Map(), intervals = new Map(), timeouts = [];
+    let nextInterval = 0;
+    const st = {day: '2026-11-20', target: {rows: [
+      [1980, 'New York Islanders', 'Minnesota North Stars', 'Butch Goring', 'New York Islanders'],
+      [1981, 'New York Islanders', 'Vancouver Canucks', 'Mike Bossy', 'New York Islanders'],
+    ]}, guesses: [], over: false};
+    const G = {};
+    const r = runtime({game: 'cups', mode: 'daily', G, S: {cups: st}, KEYS: {cups: {daily: 'cups-daily'}},
+      store: {get: key => records.get(key), set: (key, value) => records.set(key, structuredClone(value))},
+      isDone: (game, t, guesses) => G[game].isDone(t, guesses), isScored: () => true,
+      window: {addEventListener() {}}, requestAnimationFrame() {}, FALLBACK: '',
+      norm: value => value.toLowerCase(), TEAMS: {}, logo: String, logoToneClass: () => '', esc: String, seasonLabel: String,
+      setInterval: callback => {intervals.set(++nextInterval, callback); return nextInterval;},
+      clearInterval: id => intervals.delete(id), setTimeout: callback => timeouts.push(callback),
+      historyGet: () => null, historySet() {}, recordResult() {}, awardProgression: () => [],
+      renderResultRecap() {}, renderOptions() {}, updateLabels() {}, tick() {}, confetti() {}, submitPending() {},
+    });
+    r.$('cuTime').parentElement = r.$('timer');
+    r.$('cuInput').addEventListener = () => {};
+    r.$('cuInput').focus = () => {};
+    r.run(part('// ======================= playoff history', '// ======================= NHL EDGE games'));
+    r.run(part('function saveProgress()', 'function restoreFrom'));
+    r.run('G.cups.reset(S.cups.target); G.cups.render(S.cups.target, S.cups)');
+    assert.equal(r.$('cuGiveUp').hidden, true);
+    r.$('cuStart').onclick();
+    assert.equal(r.$('cuGiveUp').hidden, false);
+    r.$('cuInput').value = 'Islanders';
+    r.run('cupsEnter()');
+    assert.equal(r.$('cuCount').textContent, '2/6');
+    assert.equal(intervals.size, 1);
+    r.$('cuGiveUp').onclick();
+    assert.equal(intervals.size, 0);
+    assert.equal(st.over, true);
+    assert.equal(r.$('cuTime').textContent, '0:00');
+    assert.equal(r.$('cuGiveUp').hidden, true);
+    assert.equal(r.$('cuInput').disabled, true);
+    assert.equal((r.$('cuRows').innerHTML.match(/class="cuanswer"/g) || []).length, 6);
+    assert.equal(r.$('cuCount').textContent, '2/6');
+    assert.equal(r.$('cheer').textContent, 'Answers revealed');
+    assert.equal(timeouts.length, 0);
+    r.run('S.cups.over=false; S.cups.guesses=[]; G.cups.reset(S.cups.target);');
+    for (const guess of records.get('cups-daily').guesses) r.ctx.doGuess(guess, false);
+    r.run('G.cups.render(S.cups.target, S.cups)');
+    assert.equal(st.over, true);
+    assert.equal(r.$('cuCount').textContent, '2/6');
+    assert.equal(intervals.size, 0);
+    assert.match(r.$('cuRows').innerHTML, /Mike Bossy/);
+  });
+
   function navigation() {
     let opened = null, hubCalls = 0, saved = null;
     const location = {hash: '', pathname: '/app.html', search: ''};

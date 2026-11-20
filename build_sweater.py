@@ -3808,6 +3808,7 @@ TEMPLATE = r'''<!DOCTYPE html>
         <input id="cuInput" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" enterkeyhint="send"
                placeholder="Press Start to begin" aria-label="Team or player name">
         <button class="btn" id="cuStart" type="button">Start</button>
+        <button class="btn ghost" id="cuGiveUp" type="button" aria-controls="cuRows" hidden>Give Up</button>
       </div>
       <p class="hint romsg" id="cuMsg" aria-live="polite"></p>
     </div>
@@ -7022,6 +7023,7 @@ $("mrGrid").addEventListener("click", e => {
 
 // ======================= playoff history =======================
 const CUPS_SECONDS = 600;
+const CUPS_GIVE_UP = "GIVE_UP";
 const cupsClock = seconds => `${Math.floor(Math.max(0, seconds) / 60)}:${String(Math.max(0, seconds) % 60).padStart(2, "0")}`;
 const cupsNorm = s => norm(s).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
 const cupsCols = t => t.mvp === false || !t.rows.some(r => r[3]) ? [1, 2] : [1, 2, 3];
@@ -7061,6 +7063,7 @@ let cupsTimer = null, cupsMemory = null;
 G.cups = {
   kind: "score", repeat: false, title: "Playoff History", share: "Sweater Playoff History",
   view: "view-cups", max: 999, next: "New grid", hideReveal: true,
+  get quietFinish() { return S.cups.guesses.includes(CUPS_GIVE_UP); },
   rows: () => CUP_ROWS.filter(r => r[0] >= 1980 && r[1] && r[2] && r[3]),
   pool() { return this.rows().length >= 40 ? [1] : []; },
   daily(k) {
@@ -7075,16 +7078,17 @@ G.cups = {
   player: () => null,
   cells(t) { this._cells = this._cells && this._cells.t === t ? this._cells : { t, list: cupsKeys(t.rows, cupsCols(t)) }; return this._cells.list; },
   filled(t, g) {
-    const typed = g.filter(x => x !== "END").map(cupsNorm);
+    const typed = g.filter(x => x !== "END" && x !== CUPS_GIVE_UP).map(cupsNorm);
     return this.cells(t).map(c => typed.some(x => cupsMatch(c.full, c.player, x)));
   },
   score(t, g) { return this.filled(t, g).filter(Boolean).length; },
   isWin: () => false,
-  isDone(t, g) { return g.includes("END") || this.score(t, g) >= this.cells(t).length; },
+  isDone(t, g) { return g.includes("END") || g.includes(CUPS_GIVE_UP) || this.score(t, g) >= this.cells(t).length; },
   wonGame(t, g) { return this.score(t, g) >= this.cells(t).length; },
   meta: t => `${seasonLabel(t.rows[0][0])} to ${seasonLabel(t.rows[t.rows.length - 1][0])}`,
   endText(t, g, won) {
     const n = this.score(t, g), total = this.cells(t).length;
+    if (g.includes(CUPS_GIVE_UP)) return { result: `${n} of ${total} squares`, cheer: "Answers revealed" };
     return { result: `${n} of ${total} squares`,
              cheer: won ? "The whole grid! 🏆" : n >= total * .7 ? "Deep run! 🔥" : n >= total * .35 ? "Solid effort 💪" : "Time's up! ⏱️" };
   },
@@ -7110,11 +7114,14 @@ G.cups = {
   render(t, st) {
     const marks = this.filled(t, st.guesses), total = marks.length;
     const running = !!st.endsAt && !st.over;
+    const left = st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : CUPS_SECONDS;
     $("cuCount").textContent = `${marks.filter(Boolean).length}/${total}`;
-    $("cuTime").textContent = cupsClock(st.over ? 0 : running ? Math.max(0, Math.ceil((st.endsAt - Date.now()) / 1000)) : CUPS_SECONDS);
+    $("cuTime").textContent = cupsClock(left);
+    $("cuTime").parentElement.classList.toggle("urgent", running && left <= 30);
     $("cuStart").hidden = running || !!st.over;
+    $("cuGiveUp").hidden = !running;
     $("cuInput").disabled = !running;
-    $("cuInput").placeholder = running ? "Type a team or player, then press Enter" : st.over ? "Time's up" : "Press Start to begin";
+    $("cuInput").placeholder = running ? "Type a team or player, then press Enter" : st.over ? "Round ended" : "Press Start to begin";
     const cols = cupsCols(t);
     const decades = {};
     t.rows.forEach((r, i) => {
@@ -7135,9 +7142,9 @@ G.cups = {
       }).join("")}</tr>`).join("");
     requestAnimationFrame(syncCupsStickyHeader);
     if (running) {
-      if (st.endsAt <= Date.now()) setTimeout(() => { if (game === "cups" && !S.cups.over) doGuess("END"); }, 0);
+      if (left <= 0) setTimeout(() => { if (game === "cups" && !S.cups.over) doGuess("END"); }, 0);
       else cupsTick();
-    }
+    } else clearInterval(cupsTimer);
   },
 };
 function cupsTick() {
@@ -7185,6 +7192,15 @@ function cupsEnter() {
   if (!S.cups.over) $("cuInput").focus({ preventScroll: true });
 }
 $("cuStart").onclick = cupsStart;
+$("cuGiveUp").onclick = () => {
+  const st = S.cups;
+  if (game !== "cups" || !st.endsAt || st.over) return;
+  if (st.endsAt <= Date.now()) return doGuess("END");
+  $("cuInput").value = "";
+  $("cuMsg").textContent = "";
+  $("cuMsg").classList.remove("bad");
+  doGuess(CUPS_GIVE_UP);
+};
 $("cuInput").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); cupsEnter(); } });
 
 
