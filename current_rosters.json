@@ -1369,11 +1369,6 @@
   "team": "NJD",
   "number": 71
  },
- "8484987": {
-  "name": "Anton Silaev",
-  "team": "NJD",
-  "number": 52
- },
  "8474596": {
   "name": "Jake Allen",
   "team": "NJD",
@@ -1559,10 +1554,20 @@
   "team": "NYR",
   "number": 94
  },
+ "8479390": {
+  "name": "Taylor Raddysh",
+  "team": "NYR",
+  "number": 14
+ },
  "8482460": {
   "name": "Matt Rempe",
   "team": "NYR",
   "number": 73
+ },
+ "8484136": {
+  "name": "Max Sasson",
+  "team": "NYR",
+  "number": 63
  },
  "8483669": {
   "name": "Adam Sykora",
@@ -2429,11 +2434,6 @@
   "team": "MIN",
   "number": 47
  },
- "8475752": {
-  "name": "Tyler Pitlick",
-  "team": "MIN",
-  "number": 19
- },
  "8485702": {
   "name": "Maxim Shabanov",
   "team": "MIN",
@@ -3129,6 +3129,11 @@
   "team": "ANA",
   "number": 3
  },
+ "8484859": {
+  "name": "Stian Solberg",
+  "team": "ANA",
+  "number": 50
+ },
  "8483521": {
   "name": "Noah Warren",
   "team": "ANA",
@@ -3809,6 +3814,11 @@
   "team": "VAN",
   "number": 88
  },
+ "8484406": {
+  "name": "Ty Mueller",
+  "team": "VAN",
+  "number": 39
+ },
  "8482055": {
   "name": "Drew O'Connor",
   "team": "VAN",
@@ -3833,11 +3843,6 @@
   "name": "Marco Rossi",
   "team": "VAN",
   "number": 23
- },
- "8484136": {
-  "name": "Max Sasson",
-  "team": "VAN",
-  "number": 63
  },
  "8478465": {
   "name": "Guillaume Brisebois",
@@ -3893,6 +3898,11 @@
   "name": "Leevi Meriläinen",
   "team": "VAN",
   "number": 31
+ },
+ "8484268": {
+  "name": "Nikita Tolopilo",
+  "team": "VAN",
+  "number": 60
  },
  "8477964": {
   "name": "Ivan Barbashev",
@@ -3968,6 +3978,11 @@
   "name": "Dylan Coghlan",
   "team": "VGK",
   "number": 52
+ },
+ "8482141": {
+  "name": "Lukas Cormier",
+  "team": "VGK",
+  "number": 51
  },
  "8478396": {
   "name": "Noah Hanifin",
