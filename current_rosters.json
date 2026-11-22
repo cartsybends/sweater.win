@@ -499,11 +499,6 @@
   "team": "MTL",
   "number": 62
  },
- "8482132": {
-  "name": "Brett Berard",
-  "team": "MTL",
-  "number": 37
- },
  "8482737": {
   "name": "Zachary Bolduc",
   "team": "MTL",
@@ -598,11 +593,6 @@
   "name": "Mike Matheson",
   "team": "MTL",
   "number": 8
- },
- "8484220": {
-  "name": "David Reinbacher",
-  "team": "MTL",
-  "number": 64
  },
  "8482964": {
   "name": "Arber Xhekaj",
@@ -2829,6 +2819,11 @@
   "team": "UTA",
   "number": 56
  },
+ "8485010": {
+  "name": "Gregor Biber",
+  "team": "UTA",
+  "number": 94
+ },
  "8480084": {
   "name": "Nick DeSimone",
   "team": "UTA",
@@ -2994,6 +2989,11 @@
   "team": "WPG",
   "number": 4
  },
+ "8483510": {
+  "name": "Elias Salomonsson",
+  "team": "WPG",
+  "number": 57
+ },
  "8480049": {
   "name": "Dylan Samberg",
   "team": "WPG",
@@ -3013,11 +3013,6 @@
   "name": "Stuart Skinner",
   "team": "WPG",
   "number": 74
- },
- "8483532": {
-  "name": "Clay Stevenson",
-  "team": "WPG",
-  "number": 33
  },
  "8484153": {
   "name": "Leo Carlsson",
@@ -3063,6 +3058,11 @@
   "name": "Roger McQueen",
   "team": "ANA",
   "number": 95
+ },
+ "8484201": {
+  "name": "Nico Myatovic",
+  "team": "ANA",
+  "number": 48
  },
  "8481754": {
   "name": "Nikita Nesterenko",
@@ -3543,11 +3543,6 @@
   "name": "Jordan Eberle",
   "team": "SEA",
   "number": 7
- },
- "8483442": {
-  "name": "Jagger Firkus",
-  "team": "SEA",
-  "number": 57
  },
  "8477919": {
   "name": "Frederick Gaudreau",
