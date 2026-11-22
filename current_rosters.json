@@ -929,6 +929,11 @@
   "team": "TOR",
   "number": 20
  },
+ "8482691": {
+  "name": "Aatu Räty",
+  "team": "TOR",
+  "number": 26
+ },
  "8478458": {
   "name": "Jack Roslovic",
   "team": "TOR",
@@ -1168,11 +1173,6 @@
   "name": "Ryan Lomberg",
   "team": "CBJ",
   "number": 94
- },
- "8478904": {
-  "name": "Steven Lorentz",
-  "team": "CBJ",
-  "number": 18
  },
  "8480806": {
   "name": "Isac Lundeström",
@@ -1513,11 +1513,6 @@
   "name": "Glenn Gawdin",
   "team": "NYR",
   "number": 15
- },
- "8476822": {
-  "name": "Luke Glendening",
-  "team": "NYR",
-  "number": 43
  },
  "8481789": {
   "name": "Tye Kartye",
