@@ -312,3 +312,55 @@ body.playoffs-mode .foot .po-source-credit{display:block}
 
 .po-period-status .po-game-clock{font-size:19px;line-height:1.35;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums;vertical-align:middle}
 .po-game-card .po-period-status .po-game-clock{font-size:20px}
+.po-team-tabs{display:flex;gap:22px;margin:4px 0 18px;border-bottom:1px solid var(--line)}
+.po-team-tabs button{border:0;border-bottom:2px solid transparent;background:none;color:var(--muted);padding:10px 5px;min-height:44px;border-radius:0;font-weight:650}
+.po-team-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--link)}
+.po-schedule-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.po-schedule-club{display:flex;align-items:center;min-width:0;gap:12px}
+.po-schedule-club img{width:48px;height:48px;object-fit:contain;flex:none}
+.po-schedule-club h2{margin:0;font-size:clamp(19px,3vw,26px);letter-spacing:-.035em}
+.po-schedule-club p,.po-schedule-meta p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.po-schedule-nav{display:grid;grid-template-columns:40px minmax(150px,1fr) 40px;gap:6px;align-items:stretch}
+.po-schedule-nav :is(button,select){border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);min-height:42px;padding:4px;font-family:inherit}
+.po-schedule-nav button{font-size:22px;line-height:1}
+.po-schedule-nav select{font-size:14px;font-weight:650;padding-inline:9px}
+.po-schedule-nav button:disabled{opacity:.45;cursor:default}
+.po-schedule-meta{display:flex;align-items:center;gap:10px;min-height:34px;margin:5px 0 8px}
+.po-schedule-meta p{margin:0}
+.po-schedule-weekdays,.po-schedule-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.po-schedule-weekdays{padding:0 0 8px;color:var(--muted);font-size:12px;font-weight:650;text-align:center}
+.po-schedule-grid{margin:0;padding:0;list-style:none;gap:1px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line)}
+.po-schedule-day,.po-schedule-void{min-width:0;min-height:108px;background:var(--bg);padding:6px}
+.po-schedule-void{background:var(--panel)}
+.po-schedule-day[data-today="true"]{background:color-mix(in srgb,var(--link) 9%,var(--bg))}
+.po-schedule-day time{display:flex;align-items:center;justify-content:center;width:24px;height:24px;margin:0 0 3px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.po-schedule-day time small{display:none}
+.po-schedule-day[data-today="true"] time{border-radius:50%;background:var(--accent);color:var(--accent-ink)}
+.po-schedule-day>div{display:grid;gap:4px}
+.po-schedule-game{box-sizing:border-box;display:grid;gap:3px;width:100%;min-width:0;padding:6px;border:1px solid var(--line);border-radius:7px;background:var(--cell);color:var(--fg);font:inherit;text-align:left;text-decoration:none}
+.po-schedule-game:is(:hover,:focus-visible){border-color:var(--link);color:var(--fg)}
+.po-schedule-game:focus-visible{outline:2px solid var(--link);outline-offset:-2px}
+.po-schedule-opponent,.po-schedule-result{display:flex;align-items:center;gap:5px;min-width:0}
+.po-schedule-opponent img{width:29px;height:29px;object-fit:contain;flex:none}
+.po-schedule-opponent b,.po-schedule-result strong{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.po-schedule-game small{font-size:11px;color:var(--muted)}
+.po-schedule-result{flex-wrap:wrap;gap:4px}
+.po-schedule-result b{font-size:11px;line-height:1;padding:3px 4px;border-radius:4px;background:var(--bg);color:#a12a3d}
+.po-schedule-result b[data-result="W"]{color:#147149}
+.po-schedule-result b[data-result="OTL"]{color:#835a09}
+.po-schedule-result[data-status="live"] small{color:#b32943;font-weight:750}
+:root[data-theme="dark"] .po-schedule-result b,:root[data-theme="dark"] .po-schedule-result[data-status="live"] small{color:#ff9cac}
+:root[data-theme="dark"] .po-schedule-result b[data-result="W"]{color:#8ddbb1}
+:root[data-theme="dark"] .po-schedule-result b[data-result="OTL"]{color:#f4cc75}
+@media(max-width:740px){
+ .po-schedule-nav{width:100%;grid-template-columns:44px minmax(0,1fr) 44px}
+ .po-schedule-weekdays,.po-schedule-void,.po-schedule-day:not(.has-game){display:none}
+ .po-schedule-grid{grid-template-columns:minmax(0,1fr)}
+ .po-schedule-day{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:9px;min-height:0;padding:6px 8px}
+ .po-schedule-day time{flex-direction:column;gap:2px;width:38px;height:36px;margin:0}
+ .po-schedule-day time small{display:block;font-size:10px}
+ .po-schedule-day time b{font-size:16px;line-height:1}
+ .po-schedule-day[data-today="true"] time{border-radius:8px}
+ .po-schedule-game{display:flex;align-items:center;justify-content:space-between;gap:4px;min-height:44px}
+ .po-schedule-result{justify-content:flex-end;text-align:right}
+}

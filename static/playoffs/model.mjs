@@ -128,5 +128,24 @@ export const PLAYOFF_PICTURE = (()=>{
   const a=raw?.archive;if(!entry||a?.version!==1||a.kind!=='recorded'||a.time_zone!==archiveZone||a.date!==entry.date||localDay(raw.checked_at,archiveZone)!==entry.date||raw.season!==entry.season||raw.updated_at!==entry.updated_at||raw.checked_at!==entry.checked_at)return null;
   return validate(raw,now);
  }
- return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,liveFeed,snapshot,read,archiveIndex,archived,archiveZone,archiveURL,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
+ function validateSchedule(report,team,season,now=Date.now()){
+  const year=Math.floor(season/10000),checked=Date.parse(report?.checked_at);
+  if(report?.version!==1||report.team!==team||report.season!==season||!clubs.has(team)||season!==year*10000+year+1||
+     typeof report.stale!=='boolean'||!Number.isFinite(checked)||checked>now+300000||!Array.isArray(report.games)||report.games.length>120)return null;
+  const seen=new Set(),score=value=>Number.isInteger(value)&&value>=0&&value<=30;
+  let regular=0;
+  for(const game of report.games){
+   if(!game||!Number.isInteger(game.id)||seen.has(game.id)||Math.floor(game.id/1000000)!==year||
+      ![2,3].includes(game.type)||Math.floor(game.id/10000)%100!==game.type||!clubs.has(game.away)||!clubs.has(game.home)||
+      game.away===game.home||![game.away,game.home].includes(team)||!Number.isFinite(Date.parse(game.start))||
+      !['final','live','pending','scheduled','postponed','cancelled'].includes(game.status)||typeof game.time_tbd!=='boolean')return null;
+   if(game.status==='final'&&(!score(game.hg)||!score(game.ag)||game.hg===game.ag||!['REG','OT','SO'].includes(game.end)))return null;
+   if(game.status!=='final'&&game.end!==null)return null;
+   if(game.status!=='final'&&(game.hg!==null||game.ag!==null)&&(!['live','pending'].includes(game.status)||!score(game.hg)||!score(game.ag)))return null;
+   seen.add(game.id);
+   if(game.type===2)regular++;
+  }
+  return regular===(year>=2026?84:82)?report:null;
+ }
+ return Object.freeze({stages,clubs,teamColors,record,sortValue,circle,circleRings,circleLabels,circleCallouts,localDay,shooting,percent,fair,validate,validateSchedule,liveFeed,snapshot,read,archiveIndex,archived,archiveZone,archiveURL,interval:120000,url:'https://raw.githubusercontent.com/cartsybends/sweater.win/main/playoffs_cache.json'});
 })();

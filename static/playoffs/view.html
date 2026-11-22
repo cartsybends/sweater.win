@@ -37,6 +37,11 @@
  <section id="poPanelTeam" role="tabpanel" aria-labelledby="poTabTeam" hidden>
   <div class="po-team-controls"><button type="button" class="po-plain-button" data-po-tab="league">← League board</button><label class="po-team-select">Team breakdown<select id="poTeam" aria-label="Choose a team for its breakdown"><option value="">Choose a team…</option></select></label></div>
   <p class="po-empty po-panel" id="poNoTeam">Choose a team above, or select one from the league board, to open its full breakdown.</p>
+  <div class="po-team-tabs" id="poTeamTabs" role="tablist" aria-label="Team detail views" hidden>
+   <button type="button" id="poTeamOverviewTab" role="tab" aria-selected="true" aria-controls="poTeamOverview" data-po-team-view="overview">Overview</button>
+   <button type="button" id="poTeamScheduleTab" role="tab" aria-selected="false" aria-controls="poTeamSchedule" data-po-team-view="schedule" tabindex="-1">Schedule</button>
+  </div>
+  <div id="poTeamOverview" role="tabpanel" aria-labelledby="poTeamOverviewTab">
   <article class="po-hero" id="poHero" hidden><img class="po-hero-crest" id="poCrest" alt="" aria-hidden="true"><div class="po-hero-top"><div><p class="po-eyebrow" id="poCardKicker">TEAM BREAKDOWN</p><h2 id="poName"></h2><p class="po-muted" id="poRecord"></p></div><div class="po-share-wrap"><button type="button" id="poShareToggle" aria-expanded="false" aria-controls="poShareMenu">Share <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7"/></svg></button><div class="po-share-menu" id="poShareMenu" hidden><button type="button" data-po-share="copy">Copy image</button><button type="button" data-po-share="save">Save image</button><button type="button" data-po-share="link">Copy link</button></div></div></div>
    <div class="po-hero-main"><div><p class="po-muted">Make the playoffs</p><div class="po-big" id="poChance"></div><p class="po-muted" id="poChancePercent"></p><p class="po-change" id="poChange"></p></div><div class="po-hero-stages" id="poHeroStages"></div></div><div class="po-hero-foot"><span class="po-brand" id="poBrand"></span><small id="poCardTime"></small></div>
   </article>
@@ -45,6 +50,19 @@
   <article class="po-panel" id="poTeamImpact" hidden></article>
   <div class="po-outlook-grid" id="poTeamCharts" hidden><article class="po-panel"><div class="po-panel-head"><div><h2>Round-by-round probabilities</h2><p>Chances of reaching each stage from this forecast.</p></div></div><div class="po-ladder" id="poLadder"></div></article><article class="po-panel"><div class="po-panel-head"><div><h2>Projected final points</h2><p id="poRange"></p></div><b class="po-points" id="poProjected"></b></div><div id="poDistribution" class="po-chart"></div><p class="po-panel-note" id="poDistributionReadout" role="status">Hover, tap, or focus a bar to explore final points.</p></article></div>
   <article class="po-panel po-opponents" id="poOpponentPanel" hidden><div class="po-panel-head"><div><h2>First-round opponents</h2><p>Most likely opponents, conditional on this team making the playoffs.</p></div></div><div id="poOpponents"></div></article>
+  </div>
+  <section class="po-panel po-schedule-panel" id="poTeamSchedule" role="tabpanel" aria-labelledby="poTeamScheduleTab" hidden>
+   <div class="po-schedule-header">
+    <div class="po-schedule-club"><img id="poScheduleCrest" width="48" height="48" alt=""><div><h2 id="poScheduleTitle"></h2><p id="poScheduleSeason"></p></div></div>
+    <div class="po-schedule-nav">
+     <button type="button" id="poSchedulePrev" aria-label="Previous month" disabled>‹</button>
+     <select id="poScheduleMonth" aria-label="Schedule month" disabled><option>Month</option></select>
+     <button type="button" id="poScheduleNext" aria-label="Next month" disabled>›</button>
+    </div>
+   </div>
+   <div class="po-schedule-meta"><p id="poScheduleStatus" role="status"></p><button type="button" class="po-plain-button" id="poScheduleRetry" hidden>Try again ↻</button></div>
+   <div id="poScheduleCalendar"></div>
+  </section>
  </section>
  <section class="po-panel" id="poPanelHistory" role="tabpanel" aria-labelledby="poTabHistory" hidden><div class="po-panel-head"><div><h2>Probability history</h2><p>Compare up to three teams across recorded forecasts.</p></div><label class="po-filter">Track<select id="poHistoryMetric"><option value="playoffs">Make playoffs</option><option value="cup">Win the Cup</option></select></label></div><div class="po-history-controls"><label>Team<select id="poHistoryTeam" aria-label="Primary history team"></select></label><label>Compare<select id="poCompare1" aria-label="First team to compare"></select></label><label>And<select id="poCompare2" aria-label="Second team to compare"></select></label></div><div class="po-legend" id="poHistoryLegend"></div><div class="po-chart po-history-chart" id="poHistoryChart"></div><p class="po-panel-note" id="poHistoryReadout" role="status"></p></section>
  <details class="po-method"><summary>Data definitions and model methodology</summary><div>
