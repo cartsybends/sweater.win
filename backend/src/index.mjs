@@ -7,8 +7,10 @@ import {purgeMarketQuotes} from './market-history.mjs';
 import {handleGameCenter} from './game-center.mjs';
 import {handleGamePreview} from './game-preview.mjs';
 import {handleTeamLeaders} from './team-leaders.mjs';
+import {handleTeamSchedule} from './team-schedule.mjs';
 export default {
   async fetch(request,env,ctx) {
+    const schedule=await handleTeamSchedule(request,env);if(schedule)return schedule;
     const leaders=await handleTeamLeaders(request,env);if(leaders)return leaders;
     const preview=await handleGamePreview(request,env,ctx);if(preview)return preview;
     const center=await handleGameCenter(request,env,ctx);if(center)return center;

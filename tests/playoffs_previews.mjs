@@ -3,6 +3,7 @@ import {readFile,readdir} from 'node:fs/promises';
 import vm from 'node:vm';
 import {GAME_PREVIEW} from '../static/playoffs/preview-model.mjs';
 import {handleGamePreview} from '../backend/src/game-preview.mjs';
+import {handleTeamSchedule} from '../backend/src/team-schedule.mjs';
 const root=new URL('../',import.meta.url),feed=JSON.parse(await readFile(new URL('playoffs_cache.json',root))),games=new Map(feed.games.map(g=>[g.id,g]));
 const paths=await readdir(new URL('playoffs_lines/matchups/',root));let checks=0;
 async function test(name,fn){await fn();checks++;console.log('PASS '+name);}
@@ -65,5 +66,35 @@ await test('An outage shows the last verified report with original timestamps an
  fail=true;const r=await handleGamePreview(req(),{},null,{...options,now:now+121000});assert.equal(r.status,200);const d=await r.json();assert.equal(d.stale,true);assert.equal(d.as_of,raw.as_of);
  assert.equal((await handleGamePreview(req(),{},null,{...options,cache:undefined,now:now+121000})).status,503);
  assert.equal((await handleGamePreview(req(),{},null,{...options,now:now+86401000})).status,503);
+});
+await test('Team schedule includes the full season and keeps complete scores through an NHL outage',async()=>{
+ const season=20262027,at=Date.parse('2026-11-22T18:00:00Z');
+ const base={season,gameType:2,startTimeUTC:'2026-11-23T00:00:00Z',gameState:'FUT',gameScheduleState:'OK',
+  homeTeam:{abbrev:'EDM'},awayTeam:{abbrev:'VAN'}};
+ const regular=Array.from({length:84},(_,i)=>({...base,id:2026020001+i}));
+ regular[0]={...regular[0],gameState:'OFF',homeTeam:{abbrev:'EDM',score:2},awayTeam:{abbrev:'VAN',score:3},gameOutcome:{lastPeriodType:'SO'}};
+ regular[1]={...regular[1],gameState:'OVER',homeTeam:{abbrev:'EDM',score:3},awayTeam:{abbrev:'VAN',score:2}};
+ const doc={games:[...regular,{...base,gameType:1,id:2026010001},{...base,gameType:3,id:2026030111}]};
+ const cacheRows=new Map(),cache={match:async key=>cacheRows.get(key.url)?.clone(),put:async (key,value)=>cacheRows.set(key.url,value.clone())};
+ const request=new Request('https://api.sweater.win/api/playoffs/team-schedule?season=20262027&team=EDM',{headers:{Origin:'https://sweater.win'}});
+ let calls=0;
+ const fetcher=async url=>{
+  calls++;assert.equal(url,'https://api-web.nhle.com/v1/club-schedule-season/EDM/20262027');return Response.json(doc);
+ };
+ const options={cache,fetcher,now:at};
+ assert.equal((await handleTeamSchedule(new Request(request.url.replace('EDM','XXX')),{},options)).status,400);
+ assert.equal(calls,0);
+ const replies=await Promise.all([handleTeamSchedule(request,{},options),handleTeamSchedule(request,{},options)]);
+ assert.equal(calls,1);
+ assert.equal(replies[0].headers.get('Access-Control-Allow-Origin'),'https://sweater.win');
+ const saved=await replies[0].json();
+ assert.equal(saved.games.length,85);
+ assert.deepEqual(saved.games.slice(0,3).map(g=>[g.status,g.hg,g.ag,g.end]),[['final',2,3,'SO'],['pending',3,2,null],['scheduled',null,null,null]]);
+ assert.equal((await handleTeamSchedule(request,{},{...options,now:at+1000})).status,200);
+ assert.equal(calls,1);
+ const partial=async()=>Response.json({games:regular.slice(0,83)});
+ const stale=await (await handleTeamSchedule(request,{},{cache,fetcher:partial,now:at+121000})).json();
+ assert.deepEqual(stale,{...saved,stale:true});
+ assert.equal((await handleTeamSchedule(request,{},{cache:null,fetcher:partial,now:at+121000})).status,503);
 });
 console.log(checks+' preview checks passed');

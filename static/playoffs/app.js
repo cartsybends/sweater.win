@@ -8,7 +8,7 @@ const poArchiveCache=new Map(),poArchiveActive=()=>!!poArchiveSnapshot&&['league
 const poArchiveToday=()=>poModel.localDay(Date.now(),poModel.archiveZone),poArchiveLabel=day=>new Date(day+'T12:00:00Z').toLocaleDateString(undefined,{timeZone:poModel.archiveZone,month:'short',day:'numeric',year:'numeric'});
 function poArchiveControls(){
  const active=poArchiveActive(),today=poArchiveToday(),days=poArchiveIndex?.days||[],selected=poArchiveWanted||poArchiveDate||today;
- $('poArchiveBar').hidden=!['league','circle','team'].includes(poTab)||!!poShared;
+ $('poArchiveBar').hidden=!['league','circle','team'].includes(poTab)||!!poShared||poScheduleVisible();
  $('view-playoffs').dataset.poArchive=active?poArchiveDate:'latest';
  $('poArchiveDate').disabled=!days.length;$('poArchiveDate').min=days[0]?.date||'';$('poArchiveDate').max=today;$('poArchiveDate').value=selected;
  $('poArchiveLatest').setAttribute('aria-pressed',String(!active&&!poArchiveBusy));
@@ -48,7 +48,7 @@ const poDelta=n=>n===null||n===undefined?'—':Math.abs(n)<.05?'0.0':(n>0?'↑ '
 function poSnapshot(){const t=poCurrent();return t?poModel.snapshot({v:1,team:t.abbr,name:t.name,start:poShared?.start||poData.start,at:poShared?.at||poData.updated_at,gp:t.gp,points:t.points,projected:t.projected_points,n:poShared?.n||poData.simulations,odds:t.odds}):null;}
 function poCloseShare(focus=false){$('poShareMenu').hidden=true;$('poShareToggle').setAttribute('aria-expanded','false');if(focus)$('poShareToggle').focus();}
 function poDropShared(){poShared=null;poSharedHash='';if(location.hash.startsWith('#playoffs?'))history.replaceState(null,'','#playoffs');}
-function poPick(team){if(!poModel.clubs.has(team))return;poDropShared();poTeam=team;poTab='team';store.set('sweater-playoffs',{team});poRender();window.scrollTo({top:0,behavior:'instant'});}
+function poPick(team){if(!poModel.clubs.has(team))return;if(poTab!=='team')poTeamView='overview';poDropShared();poTeam=team;poTab='team';store.set('sweater-playoffs',{team});poRender();window.scrollTo({top:0,behavior:'instant'});}
 function poOpenShared(){
  if(!location.hash.startsWith('#playoffs?')){poShared=null;poSharedHash='';return;}
  if(poSharedHash===location.hash){poTab='team';return;}
@@ -100,7 +100,8 @@ function poRender(){
  $('poSharedNotice').hidden=!poShared;$('poSharedNotice').querySelector('span').textContent=poShared?'Saved team card · '+poDate(poShared.at)+'. The league board uses the latest forecast.':'';
  $('poTodayControls').hidden=!['league','circle'].includes(poTab);$('poTodayToggle').disabled=!poTodayField;$('poTodayToggle').setAttribute('aria-pressed',String(poTodayMode));$('view-playoffs').dataset.poToday=String(poTodayMode);
  $('poTodayStatus').textContent=poTodayMode?(poTodayField?'16-team field · NHL standings checked '+poDate(poData.checked_at)+(poArchiveActive()?' · Archived snapshot':'')+'. Seeds can change until the season ends.':'The playoff field is unavailable for this snapshot.'):'Use the current standings to see the 16-team field and first-round matchups.';
- $('poOddsNote').hidden=false;$('poOddsNote').textContent=poTab==='circle'&&poTodayMode?'Eight first-round matchups from the displayed NHL standings.':poTab==='games'?'Sweater model win percentages and observed sportsbook prices.':'Sweater model probabilities, with fair American odds available alongside them.';$('view-playoffs').querySelector('.po-format').hidden=poTab==='games'||poTab==='circle'&&poTodayMode;$('view-playoffs').querySelectorAll('[data-po-format]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.poFormat===poFormat)));
+ const scheduling=poScheduleVisible();
+ $('poOddsNote').hidden=scheduling;$('poOddsNote').textContent=poTab==='circle'&&poTodayMode?'Eight first-round matchups from the displayed NHL standings.':poTab==='games'?'Sweater model win percentages and observed sportsbook prices.':'Sweater model probabilities, with fair American odds available alongside them.';$('view-playoffs').querySelector('.po-format').hidden=scheduling||poTab==='games'||poTab==='circle'&&poTodayMode;$('view-playoffs').querySelectorAll('[data-po-format]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.poFormat===poFormat)));
  if(t){
   $('poName').textContent=t.name;$('poRecord').textContent=`${t.gp} GP · ${t.points} PTS · ${Math.round(t.projected_points)} projected final points`;
   const src=`team-logos/${t.abbr}.svg`;if($('poCrest').getAttribute('src')!==src)$('poCrest').src=src;
@@ -123,7 +124,7 @@ function poRender(){
  $('poValidationText').textContent=poData?.validation?.summary||'This first version uses a goals-based model. Historical validation is documented alongside its source code.';
  const impactCheck=poData?.advanced?.skater_impact?.game_validation;if(impactCheck)$('poValidationText').textContent+=` Skater-impact check: ${impactCheck.adjusted_2026.games} later-season games, conditional on actual dressed identities; Brier ${impactCheck.adjusted_2026.brier.toFixed(4)} versus ${impactCheck.baseline_2026.brier.toFixed(4)}. This small sample does not establish injury-report or playoff calibration.`;
  for(const tab of poTabs){const cap=tab[0].toUpperCase()+tab.slice(1),on=tab===poTab;$('poTab'+cap).setAttribute('aria-selected',String(on));$('poTab'+cap).tabIndex=on?0:-1;$('poPanel'+cap).hidden=!on;}
- poRenderHistory();poFeedStatus();poArchiveControls();poCloseShare();
+ poRenderTeamViews(t);poRenderHistory();poFeedStatus();poArchiveControls();poCloseShare();
 }
 async function poRefresh(force=false){
  if($('view-playoffs').hidden||document.hidden||poBusy||!force&&Date.now()-poAttempt<poModel.interval)return;
@@ -134,7 +135,7 @@ function closePlayoffs(){if(!$('view-playoffs'))return;if(typeof poCloseGameCent
 function openPlayoffs(push=true){
  if(push)rememberHubScroll();closeProjections();globalThis.SweaterAnalytics?.leave();leaveGame(game);teamMiniCleanup();closeParty();onHub=false;document.body.classList.remove('hubmode');document.body.classList.add('playoffs-mode');$('view-hub').hidden=true;$('view-teams').hidden=true;$('view-party').hidden=true;new Set(GAME_IDS.map(id=>G[id].view)).forEach(id=>{$(id).hidden=true;});
  $('view-playoffs').hidden=false;$('gameBar').hidden=false;$('archBar').hidden=true;$('gIcon').innerHTML=uiIcon('chart');$('gTitle').textContent='Playoff Picture';$('modeLabel').textContent='League odds, games & results';$('gameBar').dataset.game='playoffs';$('playoffsNav').setAttribute('aria-current','page');
- if(push&&!/^#playoffs(?:\?|$)/.test(location.hash))history.pushState(null,'','#playoffs');poTab='league';poOpenShared();document.title='Playoff Picture · Sweater';poRender();poLoadArchiveIndex();if(!poTimer)poTimer=setInterval(()=>poRefresh(),poModel.interval);poRefresh();window.scrollTo({top:0});
+ if(push&&!/^#playoffs(?:\?|$)/.test(location.hash))history.pushState(null,'','#playoffs');poTab='league';poTeamView='overview';poOpenShared();document.title='Playoff Picture · Sweater';poRender();poLoadArchiveIndex();if(!poTimer)poTimer=setInterval(()=>{poRefresh();poScheduleLoad();},poModel.interval);poRefresh();window.scrollTo({top:0});
 }
 async function poDrawImage(snapshot){
  const palette=getComputedStyle($('poHero')),fg=palette.color,bg=palette.backgroundColor,accent=getComputedStyle($('poCardKicker')).color,muted=getComputedStyle($('poRecord')).color;
@@ -161,7 +162,7 @@ async function poShare(action){
  }catch{$('poShareStatus').textContent='The image could not be prepared. Please try again.';}
 }
 $('poBrand').innerHTML=PP_SWEATER_MARK+'<span>sweater.win</span>';
-$('playoffsNav').onclick=e=>{e.preventDefault();openPlayoffs();};$('poTeam').onchange=e=>{if(e.target.value)poPick(e.target.value);else{poDropShared();poTeam='';poRender();}};$('poRefresh').onclick=()=>{if(poArchiveActive())poArchiveUseLatest();poRefresh(true);poUpdateLive(true);};$('poUseLatest').onclick=()=>{poArchiveUseLatest();poRefresh(true);};
+$('playoffsNav').onclick=e=>{e.preventDefault();openPlayoffs();};$('poTeam').onchange=e=>{if(e.target.value)poPick(e.target.value);else{poDropShared();poTeam='';poRender();}};$('poRefresh').onclick=()=>{if(poScheduleVisible())return poScheduleLoad(true);if(poArchiveActive())poArchiveUseLatest();poRefresh(true);poUpdateLive(true);};$('poUseLatest').onclick=()=>{poArchiveUseLatest();poRefresh(true);};
 $('poArchiveLatest').onclick=poArchiveUseLatest;$('poArchiveDate').onchange=e=>poSelectArchive(e.target.value);$('poArchiveRetry').onclick=()=>poArchiveWanted?poSelectArchive(poArchiveWanted):poLoadArchiveIndex(true);
 $('poArchivePrev').onclick=()=>{const day=poArchiveWanted||poArchiveDate||poArchiveToday(),previous=poArchiveIndex?.days.filter(d=>d.date<day).at(-1);if(previous)poSelectArchive(previous.date);};$('poArchiveNext').onclick=()=>{const day=poArchiveWanted||poArchiveDate,next=poArchiveIndex?.days.find(d=>d.date>day);poSelectArchive(next?.date||poArchiveToday());};
 $('poConference').onchange=poRender;for(const id of ['poHistoryTeam','poCompare1','poCompare2','poHistoryMetric'])$(id).onchange=poRenderHistory;
@@ -173,5 +174,5 @@ $('view-playoffs').querySelector('[role=tablist]').onkeydown=e=>{if(!['ArrowLeft
 function poChartReadout(e){const p=e.target.closest('[data-po-point]'),h=e.target.closest('[data-po-history]');if(p)$('poDistributionReadout').textContent=`${p.dataset.poPoint} final points · ${Number(p.dataset.poProb).toFixed(2)}% of simulations`;if(h){const point=poData.history[+h.dataset.poHistory],index=$('poHistoryMetric').value==='cup'?1:0;$('poHistoryReadout').textContent=`${poTeamRecord(h.dataset.poHteam).name} · ${poDate(point.at)} · ${poModel.percent(point.teams[h.dataset.poHteam][index])}`;}}
 for(const event of ['pointerover','focusin','click'])$('view-playoffs').addEventListener(event,poChartReadout);
 $('poImageClose').onclick=()=>$('poImageDialog').close();$('poImageDialog').addEventListener('close',()=>{if(poImageURL)URL.revokeObjectURL(poImageURL);poImageURL='';$('poImagePreview').removeAttribute('src');$('poImageSave').removeAttribute('href');$('poShareToggle').focus();});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){poRefresh();poSyncLive();}else poStopLive();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){poRefresh();poSyncLive();poScheduleLoad();}else poStopLive();});
 $('view-playoffs').addEventListener('error',event=>{const image=event.target;if(!image?.matches?.('[data-po-injury-image]'))return;const fallback=image.dataset.poInjuryFallback;delete image.dataset.poInjuryFallback;if(fallback)image.src=fallback;else image.remove();},true);
