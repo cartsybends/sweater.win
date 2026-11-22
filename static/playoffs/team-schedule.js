@@ -24,6 +24,26 @@ function poRenderTeamViews(team){
  if(scheduling){poRenderSchedule(poScheduleEntry());poScheduleLoad();}
 }
 
+function poScheduleResult(game,club){
+ if(game.status!=='final')return '';
+ const won=game.home===club?game.hg>game.ag:game.ag>game.hg;
+ return won?'W':game.end==='OT'||game.end==='SO'?'OTL':'L';
+}
+
+function poScheduleMonthSummary(games,club,future){
+ if(future){
+  const scheduled=games.filter(game=>game.status==='scheduled').length;
+  return {value:scheduled,label:scheduled===1?'Game scheduled':'Games scheduled',spoken:`${scheduled} ${scheduled===1?'game':'games'} scheduled`};
+ }
+ const record={W:0,L:0,OTL:0};
+ for(const game of games){
+  const result=poScheduleResult(game,club);
+  if(result)record[result]++;
+ }
+ return {value:`${record.W}–${record.L}–${record.OTL}`,label:'W–L–OTL',
+  spoken:`Monthly record, ${record.W} wins, ${record.L} regulation losses, ${record.OTL} overtime or shootout losses`};
+}
+
 function poScheduleTile(game,club,day,inGameCenter){
  const home=game.home===club,opponent=home?game.away:game.home;
  const opponentName=poTeamRecord(opponent)?.name||opponent;
@@ -31,9 +51,9 @@ function poScheduleTile(game,club,day,inGameCenter){
  const forGoals=home?game.hg:game.ag,against=home?game.ag:game.hg;
  const score=scored?`${forGoals}–${against}`:'';
  const end=game.end==='OT'||game.end==='SO'?game.end:'';
- let result='',label=score,time='';
+ const result=poScheduleResult(game,club);
+ let label=score,time='';
  if(game.status==='final'){
-  result=forGoals>against?'W':end?'OTL':'L';
   label=`${{W:'Win',L:'Loss',OTL:'Overtime or shootout loss'}[result]} ${score}${end?' '+end:''}`;
  }else if(game.status==='scheduled'){
   time=game.time_tbd?'Time TBD':new Date(game.start).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
@@ -53,7 +73,7 @@ function poScheduleTile(game,club,day,inGameCenter){
 function poRenderSchedule(entry){
  const {team,year,season,data,failed}=entry;
  const status=$('poScheduleStatus'),host=$('poScheduleCalendar'),select=$('poScheduleMonth');
- const previous=$('poSchedulePrev'),next=$('poScheduleNext');
+ const previous=$('poSchedulePrev'),next=$('poScheduleNext'),summary=$('poScheduleSummary');
  const title=`${poCurrent().name} schedule`;
  if($('poScheduleTitle').textContent!==title)$('poScheduleTitle').textContent=title;
  const seasonLabel=`${year}–${String(year+1).slice(-2)} · NHL schedule · Local time`;
@@ -64,6 +84,7 @@ function poRenderSchedule(entry){
   failed?'The NHL schedule is temporarily unavailable.':'Loading NHL schedule…';
  if(status.textContent!==message)status.textContent=message;
  $('poScheduleRetry').hidden=!failed&&!data?.stale;
+ summary.hidden=!data;
  if(!data){
   host.replaceChildren();host._poScheduleKey='';
   previous.disabled=next.disabled=select.disabled=true;
@@ -84,6 +105,9 @@ function poRenderSchedule(entry){
  select.value=poCalendarMonth;
  select.disabled=false;previous.disabled=index===0;next.disabled=index===months.length-1;
  const dated=dates.filter(({day})=>day.startsWith(poCalendarMonth));
+ const monthTotal=poScheduleMonthSummary(dated.map(({game})=>game),team,poCalendarMonth>today.slice(0,7));
+ const summaryText=`<strong aria-hidden="true">${monthTotal.value}</strong><small aria-hidden="true">${monthTotal.label}</small><span class="po-sr">${monthTotal.spoken}</span>`;
+ if(summary.innerHTML!==summaryText)summary.innerHTML=summaryText;
  const listed=new Set(poData.games?.map(game=>game.id));
  const key=JSON.stringify([team,poCalendarMonth,today,dated,dated.map(({game})=>listed.has(game.id))]);
  if(host._poScheduleKey===key)return;

@@ -97,4 +97,21 @@ await test('Team schedule includes the full season and keeps complete scores thr
  assert.deepEqual(stale,{...saved,stale:true});
  assert.equal((await handleTeamSchedule(request,{},{cache:null,fetcher:partial,now:at+121000})).status,503);
 });
+await test('Monthly records use the selected team and verified finals, with fixture counts for future months',async()=>{
+ const source=await readFile(new URL('static/playoffs/team-schedule.js',root),'utf8');
+ const c=vm.createContext({games:[
+  {home:'EDM',away:'VAN',hg:5,ag:2,end:'OT',status:'final'},
+  {home:'VAN',away:'EDM',hg:4,ag:1,end:'REG',status:'final'},
+  {home:'VAN',away:'EDM',hg:2,ag:1,end:'SO',status:'final'},
+  {home:'EDM',away:'VAN',hg:2,ag:3,status:'pending'},
+  {home:'EDM',away:'VAN',status:'scheduled'},
+  {home:'EDM',away:'VAN',status:'postponed'},
+  {home:'EDM',away:'VAN',status:'cancelled'},
+ ]});
+ vm.runInContext(source.slice(source.indexOf('function poScheduleResult('),source.indexOf('function poScheduleTile(')),c);
+ assert.equal(vm.runInContext('poScheduleMonthSummary(games,"EDM",false).value',c),'1–1–1');
+ assert.equal(vm.runInContext('poScheduleMonthSummary(games,"VAN",false).value',c),'2–0–1');
+ assert.equal(vm.runInContext('poScheduleMonthSummary(games.slice(3),"EDM",false).value',c),'0–0–0');
+ assert.equal(vm.runInContext('poScheduleMonthSummary(games,"EDM",true).spoken',c),'1 game scheduled');
+});
 console.log(checks+' preview checks passed');
