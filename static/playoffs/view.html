@@ -54,10 +54,13 @@
   <section class="po-panel po-schedule-panel" id="poTeamSchedule" role="tabpanel" aria-labelledby="poTeamScheduleTab" hidden>
    <div class="po-schedule-header">
     <div class="po-schedule-club"><img id="poScheduleCrest" width="48" height="48" alt=""><div><h2 id="poScheduleTitle"></h2><p id="poScheduleSeason"></p></div></div>
-    <div class="po-schedule-nav">
-     <button type="button" id="poSchedulePrev" aria-label="Previous month" disabled>‹</button>
-     <select id="poScheduleMonth" aria-label="Schedule month" disabled><option>Month</option></select>
-     <button type="button" id="poScheduleNext" aria-label="Next month" disabled>›</button>
+    <div class="po-schedule-controls">
+     <div class="po-schedule-nav">
+      <button type="button" id="poSchedulePrev" aria-label="Previous month" disabled>‹</button>
+      <select id="poScheduleMonth" aria-label="Schedule month" disabled><option>Month</option></select>
+      <button type="button" id="poScheduleNext" aria-label="Next month" disabled>›</button>
+     </div>
+     <p class="po-schedule-summary" id="poScheduleSummary" role="status" aria-atomic="true" hidden></p>
     </div>
    </div>
    <div class="po-schedule-meta"><p id="poScheduleStatus" role="status"></p><button type="button" class="po-plain-button" id="poScheduleRetry" hidden>Try again ↻</button></div>
