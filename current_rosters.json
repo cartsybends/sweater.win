@@ -279,11 +279,6 @@
   "team": "DET",
   "number": 93
  },
- "8480326": {
-  "name": "Sheldon Dries",
-  "team": "DET",
-  "number": 15
- },
  "8484471": {
   "name": "Emmitt Finnie",
   "team": "DET",
@@ -409,11 +404,6 @@
   "team": "FLA",
   "number": 63
  },
- "8481133": {
-  "name": "Cole Reinhardt",
-  "team": "FLA",
-  "number": 29
- },
  "8477933": {
   "name": "Sam Reinhart",
   "team": "FLA",
@@ -509,11 +499,6 @@
   "team": "MTL",
   "number": 13
  },
- "8481523": {
-  "name": "Kirby Dach",
-  "team": "MTL",
-  "number": 77
- },
  "8476479": {
   "name": "Phillip Danault",
   "team": "MTL",
@@ -538,6 +523,11 @@
   "name": "Chris Kreider",
   "team": "MTL",
   "number": 22
+ },
+ "8477946": {
+  "name": "Dylan Larkin",
+  "team": "MTL",
+  "number": 89
  },
  "8481618": {
   "name": "Alex Newhook",
@@ -608,11 +598,6 @@
   "name": "Jacob Fowler",
   "team": "MTL",
   "number": 32
- },
- "8478470": {
-  "name": "Samuel Montembeault",
-  "team": "MTL",
-  "number": 35
  },
  "8478020": {
   "name": "Michael Amadio",
@@ -778,11 +763,6 @@
   "name": "Brandon Hagel",
   "team": "TBL",
   "number": 38
- },
- "8478424": {
-  "name": "Jansen Harkins",
-  "team": "TBL",
-  "number": 10
  },
  "8480995": {
   "name": "Pontus Holmberg",
@@ -1193,6 +1173,11 @@
   "name": "Mathieu Olivier",
   "team": "CBJ",
   "number": 24
+ },
+ "8482451": {
+  "name": "Mikael Pyyhtia",
+  "team": "CBJ",
+  "number": 82
  },
  "8482705": {
   "name": "Cole Sillinger",
@@ -3194,6 +3179,11 @@
   "team": "CGY",
   "number": 43
  },
+ "8484821": {
+  "name": "Sam Morton",
+  "team": "CGY",
+  "number": 45
+ },
  "8482747": {
   "name": "Brennan Othmann",
   "team": "CGY",
@@ -3734,6 +3724,11 @@
   "team": "SJS",
   "number": 6
  },
+ "8479333": {
+  "name": "Libor Hajek",
+  "team": "SJS",
+  "number": 24
+ },
  "8480891": {
   "name": "Michael Kesselring",
   "team": "SJS",
@@ -3893,11 +3888,6 @@
   "name": "Leevi Meriläinen",
   "team": "VAN",
   "number": 31
- },
- "8484268": {
-  "name": "Nikita Tolopilo",
-  "team": "VAN",
-  "number": 60
  },
  "8477964": {
   "name": "Ivan Barbashev",
