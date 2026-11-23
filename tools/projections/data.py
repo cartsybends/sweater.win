@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime,timezone
 import hashlib,json
 from pathlib import Path
+import time
 import urllib.parse,urllib.request
 from zoneinfo import ZoneInfo
 
@@ -26,12 +27,48 @@ def validate(data):
     assert len(ids)>=500
     return data
 
+def skater_summary(fetch,season):
+    endpoint='https://api.nhle.com/stats/rest/en/skater/summary?'
+    params={'isAggregate':'false','isGame':'false','limit':1000,'cayenneExp':f'seasonId={season} and gameTypeId=2',
+            'sort':json.dumps([{'property':'playerId','direction':'ASC'}])}
+
+    def pages():
+        rows,urls,seen=[],[],set()
+        total=None
+        while total is None or len(rows)<total:
+            offset=len(rows)
+            url=endpoint+urllib.parse.urlencode({**params,'start':offset})
+            document=fetch(url)
+            batch,count=document.get('data'),document.get('total')
+            if total is None:
+                total=count
+            if type(count) is not int or not 0<=count<10000 or total!=count or not isinstance(batch,list) or len(batch)>count-offset or not batch and offset<count:
+                raise ValueError(f'Incomplete NHL skater summary at offset {offset}')
+            ids={row['playerId'] for row in batch}
+            if len(ids)!=len(batch) or ids&seen:
+                raise ValueError(f'Duplicate NHL summary players at offset {offset}')
+            rows.extend(batch)
+            urls.append(url)
+            seen.update(ids)
+        return {'data':rows,'total':total},urls
+
+    for attempt in range(3):
+        try:
+            return pages()
+        except ValueError:
+            # A game can be added while pages are loading. Retry from page one.
+            if attempt==2:
+                raise
+            time.sleep(attempt+1)
+
+
 def collect(fetch,roster,today):
     start=season_start(today);season=start*10000+start+1
-    url='https://api.nhle.com/stats/rest/en/skater/summary?'+urllib.parse.urlencode({'isAggregate':'false','isGame':'false','start':0,'limit':-1,'cayenneExp':f'seasonId={season} and gameTypeId=2'})
     standings_url='https://api-web.nhle.com/v1/standings/now'
-    with ThreadPoolExecutor(max_workers=2) as pool:summary,standings=list(pool.map(fetch,[url,standings_url]))
-    if len(summary['data'])!=summary['total'] or len(summary['data'])>=10000:raise ValueError('Incomplete NHL skater summary')
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        totals=pool.submit(skater_summary,fetch,season)
+        standings=fetch(standings_url)
+        summary,summary_urls=totals.result()
     teams={r['teamAbbrev']['default']:r['gamesPlayed'] for r in standings['standings']}
     if set(teams)!=TEAMS or any(r.get('seasonId',season)!=season for r in standings['standings']):raise ValueError('Club games are not a complete current-season snapshot')
     current={p['id']:p for p in roster if p.get('pos')!='G'}
@@ -51,7 +88,7 @@ def collect(fetch,roster,today):
           'gp':0,'goals':0,'assists':0,'points':0,'teamGP':teams[p['team']],'headshot':p.get('headshot','')}
     return validate({'version':1,'start':start,'season':season,'season_games':84,'asof':today.isoformat(),
       'collected_at':datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z'),
-      'sources':[url,standings_url],'source_sha256':hashlib.sha256(json.dumps([summary,standings],sort_keys=True,separators=(',',':')).encode()).hexdigest(),
+      'sources':[*summary_urls,standings_url],'source_sha256':hashlib.sha256(json.dumps([summary,standings],sort_keys=True,separators=(',',':')).encode()).hexdigest(),
       'team_games':teams,'players':sorted(records.values(),key=lambda p:p['id'])})
 
 def load():

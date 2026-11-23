@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {refreshPlayoffs} from '../backend/src/playoff-refresh.mjs';
+import {refreshPlayoffs,refreshProjections} from '../backend/src/playoff-refresh.mjs';
 import worker from '../backend/src/index.mjs';
 const now=Date.parse('2026-11-13T23:50:00Z'),env={GITHUB_REFRESH_TOKEN:'test-only-never-a-real-token'};
 const feed=minutes=>new Response(JSON.stringify({checked_at:new Date(now-minutes*60000).toISOString()}));
@@ -23,5 +23,18 @@ for(const [responses,stage,code] of [
  assert.deepEqual(result,{status:'unavailable',stage,code});
  assert(!JSON.stringify(result).includes(env.GITHUB_REFRESH_TOKEN));
 }
-const tasks=[];await worker.scheduled({cron:'* * * * *'},{},{waitUntil:p=>tasks.push(p)});await Promise.all(tasks);assert.equal(tasks.length,1,'Minute clock must not run daily database cleanup');
-console.log('PASS playoff watchdog: fresh/stale feeds, no duplicate jobs, cooldown, errors, secret isolation and separate daily cleanup');
+const projectionsFeed=minutes=>Response.json({collected_at:new Date(now-minutes*60000).toISOString()});
+calls=[];
+assert.equal((await refreshProjections(env,{now,fetcher:mock([projectionsFeed(5)])})).status,'fresh');
+assert.equal(calls.length,1);
+assert(calls[0].url.includes('/projections_cache.json?'));
+calls=[];
+assert.equal((await refreshProjections(env,{now,fetcher:mock([projectionsFeed(35),Response.json({workflow_runs:[]}),new Response(null,{status:204})])})).status,'dispatched');
+assert(calls[1].url.endsWith('/refresh-projections.yml/runs?per_page=5'));
+assert(calls[2].url.endsWith('/refresh-projections.yml/dispatches'));
+for(const [offset,expected] of [[0,2],[60000,1]]){
+ const tasks=[];await worker.scheduled({cron:'* * * * *',scheduledTime:now+offset},{},{waitUntil:p=>tasks.push(p)});
+ await Promise.all(tasks);
+ assert.equal(tasks.length,expected,'Check playoff freshness each minute and projection freshness every five minutes');
+}
+console.log('PASS NHL watchdogs: refresh cadence, duplicate-job guards, cooldown, errors, and secret isolation');

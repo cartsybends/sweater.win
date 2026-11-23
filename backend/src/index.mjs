@@ -1,13 +1,16 @@
 import existingAPI from './existing-api.mjs';
 import {handleAnalytics,purgeAnalytics} from './analytics.mjs';
 import {handleGridPopularity,pruneGridPopularity} from './grid-popularity.mjs';
-import {refreshPlayoffs} from './playoff-refresh.mjs';
+import {refreshPlayoffs,refreshProjections} from './playoff-refresh.mjs';
 import {handlePlayoffLive} from './playoff-live.mjs';
 import {purgeMarketQuotes} from './market-history.mjs';
 import {handleGameCenter} from './game-center.mjs';
 import {handleGamePreview} from './game-preview.mjs';
 import {handleTeamLeaders} from './team-leaders.mjs';
 import {handleTeamSchedule} from './team-schedule.mjs';
+function logRefresh(label,result){
+  if(['dispatched','github_error','unavailable','feed_unavailable','invalid_feed','invalid_runs'].includes(result.status))console.log(label,result);
+}
 export default {
   async fetch(request,env,ctx) {
     const schedule=await handleTeamSchedule(request,env);if(schedule)return schedule;
@@ -21,7 +24,10 @@ export default {
   },
   async scheduled(controller,env,ctx) {
     if(controller.cron==='* * * * *'){
-      ctx.waitUntil(refreshPlayoffs(env).then(result=>{if(['dispatched','github_error','unavailable','feed_unavailable','invalid_feed','invalid_runs'].includes(result.status))console.log('Playoff refresh watchdog',result);}));
+      ctx.waitUntil(refreshPlayoffs(env).then(result=>logRefresh('Playoff refresh watchdog',result)));
+      if(new Date(controller.scheduledTime).getUTCMinutes()%5===0){
+        ctx.waitUntil(refreshProjections(env).then(result=>logRefresh('Projection refresh watchdog',result)));
+      }
       return;
     }
     ctx.waitUntil(purgeAnalytics(env));

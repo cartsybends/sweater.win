@@ -1,6 +1,8 @@
 import importlib.util,json,unittest
 from datetime import date
 from pathlib import Path
+from unittest.mock import patch
+from urllib.parse import parse_qs,urlsplit
 spec=importlib.util.spec_from_file_location('projection_data',Path(__file__).resolve().parents[1]/'tools/projections/data.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 class ProjectionDataTests(unittest.TestCase):
  def setUp(self):
@@ -13,11 +15,38 @@ class ProjectionDataTests(unittest.TestCase):
   self.assertEqual(len(d['players']),640);self.assertEqual(p['points'],12);self.assertEqual(p['gp'],10);self.assertEqual(p['team'],'ANA');self.assertEqual(p['teamGP'],12);self.assertEqual(d['players'][1]['gp'],0)
  def test_unconfirmed_traded_current_club_is_not_guessed_from_alphabetical_abbreviations(self):
   self.roster=self.roster[1:];d=m.collect(self.fetch,self.roster,date(2026,11,12));self.assertIsNone(d['players'][0]['team']);self.assertIsNone(d['players'][0]['teamGP'])
- def test_incomplete_duplicate_or_wrong_season_records_are_rejected(self):
+ @patch.object(m.time,'sleep')
+ def test_incomplete_or_duplicate_records_are_rejected(self,wait):
   self.summary['total']=2
   with self.assertRaises(ValueError):m.collect(self.fetch,self.roster,date(2026,11,12))
   self.summary['data']*=2
   with self.assertRaises(ValueError):m.collect(self.fetch,self.roster,date(2026,11,12))
+ def test_short_nhl_pages_collect_totals_for_skaters_beyond_the_first_page(self):
+  rows=[self.summary['data'][0],{**self.summary['data'][0],'playerId':1000001,'teamAbbrevs':'BOS'}]
+  offsets=[]
+  def fetch(url):
+   if '/standings/' in url:return self.clubs
+   query=parse_qs(urlsplit(url).query)
+   self.assertEqual(json.loads(query['sort'][0]),[{'property':'playerId','direction':'ASC'}])
+   start=int(query['start'][0]);offsets.append(start)
+   return {'total':len(rows),'data':rows[start:start+1]}
+  data=m.collect(fetch,self.roster,date(2026,11,12))
+  self.assertEqual(offsets,[0,1])
+  self.assertEqual(data['players'][1]['points'],12)
+  self.assertEqual(len(data['sources']),3)
+ @patch.object(m.time,'sleep')
+ def test_report_restarts_when_stats_change_between_pages(self,wait):
+  rows=[{**self.summary['data'][0],'playerId':1000000+i} for i in range(3)]
+  offsets=[]
+  def fetch(url):
+   start=int(parse_qs(urlsplit(url).query)['start'][0]);offsets.append(start)
+   if len(offsets)==1:return {'total':2,'data':[{**rows[0],'points':11}]}
+   return {'total':3,'data':rows[start:start+1]}
+  data,urls=m.skater_summary(fetch,20262027)
+  self.assertEqual(offsets,[0,1,0,1,2])
+  self.assertEqual(data['data'],rows)
+  self.assertEqual(len(urls),3)
+  wait.assert_called_once_with(1)
  def test_wrong_club_season_or_inconsistent_points_are_rejected(self):
   self.clubs['standings'][0]['seasonId']=20252026
   with self.assertRaises(ValueError):m.collect(self.fetch,self.roster,date(2026,11,12))

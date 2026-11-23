@@ -8,8 +8,9 @@ function ppFeedEligible(){return !$('view-projections').hidden&&!document.hidden
 function ppFeedStatus(){
  $('ppFeedBar').hidden=ppState.mode==='manual';$('ppRefreshStats').hidden=!!ppShared;$('ppRefreshStats').disabled=ppFeedBusy;
  const checked=ppSnapshotChecked(),fallback=ppShared?.asof||PROJECTION_DATA.asof||'unavailable';
+ const delayed=!checked||Date.now()-Date.parse(checked)>=30*60*1000;
  $('ppFeedTime').textContent=`${ppShared?'Shared snapshot':'NHL stats checked'} · ${ppCheckedLabel(checked,fallback)}`;
- $('ppFeedNote').textContent=ppShared?'This shared stat line stays fixed.':ppFeedBusy?'Checking for newer stats…':ppFeedError?'Latest check unavailable. Keeping the last verified stats.':'Refreshes about every 15 minutes';
+ $('ppFeedNote').textContent=ppShared?'This shared stat line stays fixed.':ppFeedBusy?'Checking for newer stats…':ppFeedError?'Latest check unavailable. Keeping the last verified stats.':delayed?'NHL stats are delayed. Showing the last verified totals.':'Refreshes about every 15 minutes';
 }
 function ppApplyFeed(raw,now=Date.now()){
  const data=ppFeed.validate(raw,now);if(!data)throw new Error('Invalid NHL projection feed');

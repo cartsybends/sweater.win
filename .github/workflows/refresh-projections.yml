@@ -35,6 +35,10 @@ jobs:
           if ! git diff --cached --quiet; then
             # This data-only commit must not redeploy the connected API Worker.
             git commit -m "[skip ci] Refresh NHL point projections"
-            git pull --rebase
-            git push
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then exit 0; fi
+            done
+            exit 1
           fi
