@@ -274,6 +274,11 @@
   "team": "DET",
   "number": 18
  },
+ "8481523": {
+  "name": "Kirby Dach",
+  "team": "DET",
+  "number": 17
+ },
  "8479337": {
   "name": "Alex DeBrincat",
   "team": "DET",
@@ -353,6 +358,11 @@
   "name": "John Gibson",
   "team": "DET",
   "number": 36
+ },
+ "8478470": {
+  "name": "Samuel Montembeault",
+  "team": "DET",
+  "number": 32
  },
  "8480193": {
   "name": "Daniil Tarasov",
@@ -489,6 +499,11 @@
   "team": "MTL",
   "number": 62
  },
+ "8482132": {
+  "name": "Brett Berard",
+  "team": "MTL",
+  "number": 37
+ },
  "8482737": {
   "name": "Zachary Bolduc",
   "team": "MTL",
@@ -583,6 +598,11 @@
   "name": "Mike Matheson",
   "team": "MTL",
   "number": 8
+ },
+ "8484220": {
+  "name": "David Reinbacher",
+  "team": "MTL",
+  "number": 64
  },
  "8482964": {
   "name": "Arber Xhekaj",
@@ -708,11 +728,6 @@
   "name": "Jordan Spence",
   "team": "OTT",
   "number": 10
- },
- "8484759": {
-  "name": "Carter Yakemchuk",
-  "team": "OTT",
-  "number": 26
  },
  "8482245": {
   "name": "Artem Zub",
@@ -869,11 +884,6 @@
   "team": "TOR",
   "number": 24
  },
- "8480870": {
-  "name": "Bo Groulx",
-  "team": "TOR",
-  "number": 29
- },
  "8478057": {
   "name": "Dakota Joshua",
   "team": "TOR",
@@ -928,11 +938,6 @@
   "name": "John Tavares",
   "team": "TOR",
   "number": 91
- },
- "8482525": {
-  "name": "Ryan Tverberg",
-  "team": "TOR",
-  "number": 77
  },
  "8477425": {
   "name": "Miles Wood",
@@ -2939,11 +2944,6 @@
   "team": "WPG",
   "number": 29
  },
- "8483526": {
-  "name": "Danil Zhilkin",
-  "team": "WPG",
-  "number": 53
- },
  "8482459": {
   "name": "Tyrel Bauer",
   "team": "WPG",
@@ -3828,6 +3828,11 @@
   "name": "Jacob Quillan",
   "team": "VAN",
   "number": 62
+ },
+ "8481133": {
+  "name": "Cole Reinhardt",
+  "team": "VAN",
+  "number": 29
  },
  "8482079": {
   "name": "Marco Rossi",
