@@ -1419,6 +1419,11 @@
   "team": "NYI",
   "number": 21
  },
+ "8484221": {
+  "name": "Calum Ritchie",
+  "team": "NYI",
+  "number": 64
+ },
  "8475170": {
   "name": "Brayden Schenn",
   "team": "NYI",
@@ -2119,6 +2124,11 @@
   "team": "CHI",
   "number": 30
  },
+ "8481550": {
+  "name": "Adam Beckman",
+  "team": "COL",
+  "number": 34
+ },
  "8484149": {
   "name": "Gavin Brindley",
   "team": "COL",
@@ -2664,6 +2674,11 @@
   "team": "STL",
   "number": 21
  },
+ "8484230": {
+  "name": "Otto Stenberg",
+  "team": "STL",
+  "number": 28
+ },
  "8480459": {
   "name": "Pius Suter",
   "team": "STL",
@@ -2703,6 +2718,11 @@
   "name": "Cam Fowler",
   "team": "STL",
   "number": 17
+ },
+ "8484790": {
+  "name": "Adam Jiricek",
+  "team": "STL",
+  "number": 36
  },
  "8482733": {
   "name": "Logan Mailloux",
@@ -3119,11 +3139,6 @@
   "team": "ANA",
   "number": 50
  },
- "8483521": {
-  "name": "Noah Warren",
-  "team": "ANA",
-  "number": 47
- },
  "8476316": {
   "name": "Laurent Brossoit",
   "team": "ANA",
@@ -3178,11 +3193,6 @@
   "name": "Adam Klapka",
   "team": "CGY",
   "number": 43
- },
- "8484821": {
-  "name": "Sam Morton",
-  "team": "CGY",
-  "number": 45
  },
  "8482747": {
   "name": "Brennan Othmann",
@@ -3503,6 +3513,11 @@
   "name": "Erik Gustafsson",
   "team": "LAK",
   "number": 64
+ },
+ "8482922": {
+  "name": "Kirill Kirsanov",
+  "team": "LAK",
+  "number": 78
  },
  "8476341": {
   "name": "Anton Forsberg",
@@ -3968,11 +3983,6 @@
   "name": "Dylan Coghlan",
   "team": "VGK",
   "number": 52
- },
- "8482141": {
-  "name": "Lukas Cormier",
-  "team": "VGK",
-  "number": 51
  },
  "8478396": {
   "name": "Noah Hanifin",

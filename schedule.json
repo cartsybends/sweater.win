@@ -330,7 +330,8 @@
   "2026-12-21": 8478136,
   "2026-12-22": 8478463,
   "2026-12-23": 8484262,
-  "2026-12-24": 8480145
+  "2026-12-24": 8480145,
+  "2026-12-25": 8476917
  },
  "start": "2026-09-15",
  "statline_days": {
@@ -434,7 +435,8 @@
   "2026-12-21": 8475311,
   "2026-12-22": 8478398,
   "2026-12-23": 8475168,
-  "2026-12-24": 8477488
+  "2026-12-24": 8477488,
+  "2026-12-25": 8479639
  },
  "statline_start": "2026-09-15",
  "team_days": {
@@ -841,6 +843,10 @@
   "2026-12-24": [
    8476927,
    2020
+  ],
+  "2026-12-25": [
+   8480878,
+   2021
   ]
  },
  "team_start": "2026-09-15",
@@ -945,7 +951,8 @@
   "2026-12-21": 8479996,
   "2026-12-22": 8475279,
   "2026-12-23": 8481524,
-  "2026-12-24": 8481655
+  "2026-12-24": 8481655,
+  "2026-12-25": 8477446
  },
  "journey_start": "2026-09-15",
  "number_days": {
@@ -1049,7 +1056,8 @@
   "2026-12-21": 8477506,
   "2026-12-22": 8476474,
   "2026-12-23": 8476374,
-  "2026-12-24": 8481593
+  "2026-12-24": 8481593,
+  "2026-12-25": 8480893
  },
  "number_start": "2026-09-15",
  "draft_days": {
@@ -1152,7 +1160,8 @@
   "2026-12-21": 8477951,
   "2026-12-22": 8477015,
   "2026-12-23": 8477969,
-  "2026-12-24": 8482142
+  "2026-12-24": 8482142,
+  "2026-12-25": 8479343
  },
  "draft_start": "2026-09-16",
  "map_days": {
@@ -1255,7 +1264,8 @@
   "2026-12-21": 8481568,
   "2026-12-22": 8476880,
   "2026-12-23": 8478013,
-  "2026-12-24": 8480843
+  "2026-12-24": 8480843,
+  "2026-12-25": 8481601
  },
  "map_start": "2026-09-16",
  "roster_days": {
@@ -3531,7 +3541,8 @@
     8482124,
     8482155,
     8482726,
-    8482730
+    8482730,
+    8482922
    ]
   },
   "2026-12-02": {
@@ -3559,6 +3570,7 @@
     8482070,
     8482476,
     8482516,
+    8484221,
     8485366,
     8485388
    ]
@@ -3981,6 +3993,7 @@
     8480069,
     8480448,
     8481186,
+    8481550,
     8482742,
     8482768,
     8484149,
@@ -4192,7 +4205,6 @@
     8483445,
     8483482,
     8483490,
-    8483521,
     8484153,
     8484201,
     8484262,
@@ -4231,6 +4243,35 @@
     8483703,
     8483808,
     8485414
+   ]
+  },
+  "2026-12-25": {
+   "team": "LAK",
+   "ids": [
+    8470621,
+    8474563,
+    8475208,
+    8475287,
+    8475311,
+    8475692,
+    8476341,
+    8476441,
+    8476469,
+    8476872,
+    8476879,
+    8476979,
+    8477942,
+    8477960,
+    8478550,
+    8479675,
+    8479998,
+    8481532,
+    8481732,
+    8482124,
+    8482155,
+    8482726,
+    8482730,
+    8482922
    ]
   }
  },
@@ -4309,7 +4350,8 @@
   "2026-12-21": 8474578,
   "2026-12-22": 8478508,
   "2026-12-23": 8480893,
-  "2026-12-24": 8478038
+  "2026-12-24": 8478038,
+  "2026-12-25": 8480113
  },
  "whoscored_start": "2026-10-12",
  "rank_days": {
@@ -5301,6 +5343,16 @@
     8482259,
     8482157,
     8480018
+   ]
+  },
+  "2026-12-25": {
+   "stat": "height",
+   "ids": [
+    8475231,
+    8476483,
+    8479333,
+    8480797,
+    8478859
    ]
   }
  },
@@ -9561,6 +9613,49 @@
     8481133,
     8485702,
     8476463
+   ]
+  },
+  "2026-12-25": {
+   "kind": "team",
+   "key": "MTL",
+   "label": "Plays for Montréal",
+   "ids": [
+    8477404,
+    8482070,
+    8480075,
+    8475184,
+    8482737,
+    8484984,
+    8479333,
+    8480069,
+    8476875,
+    8484170,
+    8478508,
+    8484806,
+    8483515,
+    8479400,
+    8483424,
+    8484790,
+    8477989,
+    8477346,
+    8484999,
+    8485366,
+    8480074,
+    8478493,
+    8478476,
+    8478458,
+    8482451,
+    8475170,
+    8476479,
+    8476879,
+    8483457,
+    8478851,
+    8482475,
+    8478133,
+    8475786,
+    8482487,
+    8476927,
+    8471675
    ]
   }
  },
@@ -17227,6 +17322,85 @@
      "kind": "position",
      "keep": [
       2,
+      4
+     ]
+    }
+   ]
+  },
+  "2026-12-25": {
+   "rounds": [
+    {
+     "q": "Which of these players wears #24?",
+     "o": [
+      "Matt Grzelcyk",
+      "Spencer Knight",
+      "Ty Mueller",
+      "William Nylander"
+     ],
+     "a": 0,
+     "kind": "wears",
+     "keep": [
+      1,
+      2
+     ]
+    },
+    {
+     "q": "Which of these players has the most career NHL games?",
+     "o": [
+      "Brock Nelson",
+      "Robert Thomas",
+      "Chandler Stephenson",
+      "Kailer Yamamoto"
+     ],
+     "a": 0,
+     "kind": "mostGames",
+     "keep": [
+      1,
+      3
+     ]
+    },
+    {
+     "q": "Which city was Tyler Myers born in?",
+     "o": [
+      "Belle River, ON, Canada",
+      "Houston, TX, USA",
+      "Ann Arbor, MI, USA",
+      "Florence, SC, USA"
+     ],
+     "a": 1,
+     "kind": "city",
+     "keep": [
+      0,
+      1
+     ]
+    },
+    {
+     "q": "Which of these players is the oldest?",
+     "o": [
+      "Daemon Hunt",
+      "Brendan Gallagher",
+      "Gustav Forsling",
+      "Jake Middleton"
+     ],
+     "a": 1,
+     "kind": "oldest",
+     "keep": [
+      2,
+      4
+     ]
+    },
+    {
+     "q": "What position does Simon Nemec play?",
+     "o": [
+      "Defence",
+      "Left wing",
+      "Right wing",
+      "Goalie"
+     ],
+     "a": 0,
+     "kind": "position",
+     "keep": [
+      3,
       4
      ]
     }
@@ -123218,6 +123392,1110 @@
      "kind": "trophy"
     }
    ]
+  },
+  "2026-12-25": {
+   "rounds": [
+    {
+     "q": "How many NHL seasons has Blake Lizotte played?",
+     "o": [
+      "9",
+      "5",
+      "8",
+      "10"
+     ],
+     "a": 0,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which team does Jake DeBrusk play for?",
+     "o": [
+      "NY Rangers",
+      "New Jersey",
+      "Vancouver",
+      "NY Islanders"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "Which of these players is the tallest?",
+     "o": [
+      "J.J. Moser",
+      "Louis Crevier",
+      "Matvei Michkov",
+      "Pontus Holmberg"
+     ],
+     "a": 1,
+     "kind": "tallest"
+    },
+    {
+     "q": "What's the most goals Artem Zub has scored in one NHL season?",
+     "o": [
+      "6",
+      "0",
+      "8",
+      "12"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the James Norris Memorial Trophy in 2025–26?",
+     "o": [
+      "Mark Giordano",
+      "Victor Hedman",
+      "Zach Werenski",
+      "Adam Fox"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players has the most career points?",
+     "o": [
+      "Emmitt Finnie",
+      "Ty Emberson",
+      "Adam Engstrom",
+      "Nikita Nesterenko"
+     ],
+     "a": 0,
+     "kind": "mostPoints"
+    },
+    {
+     "q": "Which of these players has the most career NHL games?",
+     "o": [
+      "Jimmy Snuggerud",
+      "John Marino",
+      "Vasily Podkolzin",
+      "Jesper Boqvist"
+     ],
+     "a": 1,
+     "kind": "mostGames"
+    },
+    {
+     "q": "Which of these players is the youngest?",
+     "o": [
+      "Matt Grzelcyk",
+      "Boone Jenner",
+      "Uvis Balinskis",
+      "Casey DeSmith"
+     ],
+     "a": 2,
+     "kind": "youngest"
+    },
+    {
+     "q": "Which of these players wears #8?",
+     "o": [
+      "Garnet Hathaway",
+      "Adin Hill",
+      "Drew Helleson",
+      "Cale Fleury"
+     ],
+     "a": 3,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 1981–82?",
+     "o": [
+      "Mario Lemieux",
+      "Brett Hull",
+      "Mark Messier",
+      "Wayne Gretzky"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players is a goalie?",
+     "o": [
+      "Elmer Soderblom",
+      "Oliver Kapanen",
+      "Braeden Bowman",
+      "Joseph Woll"
+     ],
+     "a": 3,
+     "kind": "goalie"
+    },
+    {
+     "q": "What number does Jamie Drysdale wear?",
+     "o": [
+      "#9",
+      "#77",
+      "#61",
+      "#58"
+     ],
+     "a": 0,
+     "kind": "number"
+    },
+    {
+     "q": "In which round was Robert Thomas drafted?",
+     "o": [
+      "Round 6",
+      "Round 7",
+      "Round 5",
+      "Round 1"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which of these players is the oldest?",
+     "o": [
+      "Florian Xhekaj",
+      "Sammy Blais",
+      "Simon Nemec",
+      "Liam Ohgren"
+     ],
+     "a": 1,
+     "kind": "oldest"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 1982–83?",
+     "o": [
+      "Patrick Roy",
+      "Dominik Hašek",
+      "Pete Peeters",
+      "John Vanbiesbrouck"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team drafted Elias Salomonsson?",
+     "o": [
+      "Calgary",
+      "Montréal",
+      "Winnipeg",
+      "Ottawa"
+     ],
+     "a": 2,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which of these players is a defenceman?",
+     "o": [
+      "Vitali Pinchuk",
+      "Andre Lee",
+      "Vince Dunn",
+      "Cole Perfetti"
+     ],
+     "a": 2,
+     "kind": "defence"
+    },
+    {
+     "q": "Which city was Seth Jones born in?",
+     "o": [
+      "Duluth, MN, USA",
+      "Plessisville, QC, Canada",
+      "Arlington, TX, USA",
+      "Sundsvall, Sweden"
+     ],
+     "a": 2,
+     "kind": "city"
+    },
+    {
+     "q": "What position does Yaroslav Askarov play?",
+     "o": [
+      "Right wing",
+      "Goalie",
+      "Centre",
+      "Defence"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "Who won the Vezina Trophy in 1995–96?",
+     "o": [
+      "José Théodore",
+      "Jim Carey",
+      "Patrick Roy",
+      "John Vanbiesbrouck"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "What year was Shane Wright drafted?",
+     "o": [
+      "2022",
+      "2020",
+      "2019",
+      "2025"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which of these players was born in the USA?",
+     "o": [
+      "Michael Brandsegg-Nygård",
+      "Zach Bogosian",
+      "Vincent Desharnais",
+      "Arttu Hyry"
+     ],
+     "a": 1,
+     "kind": "bornIn"
+    },
+    {
+     "q": "Which of these players has the most career goals?",
+     "o": [
+      "Alex Turcotte",
+      "Mathieu Joseph",
+      "Trevor Moore",
+      "Tony DeAngelo"
+     ],
+     "a": 2,
+     "kind": "mostGoals"
+    },
+    {
+     "q": "Which country was Erik Haula born in?",
+     "o": [
+      "Russia",
+      "Finland",
+      "Sweden",
+      "Latvia"
+     ],
+     "a": 1,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 2014–15?",
+     "o": [
+      "Matty Beniers",
+      "Aaron Ekblad",
+      "Gabriel Landeskog",
+      "Evgeni Malkin"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is Tyson Foerster?",
+     "o": [
+      "6′5″",
+      "6′3″",
+      "5′11″",
+      "6′2″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "What year was Brayden McNabb drafted?",
+     "o": [
+      "2012",
+      "2008",
+      "2011",
+      "2009"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which country was Joel Farabee born in?",
+     "o": [
+      "France",
+      "USA",
+      "Russia",
+      "Denmark"
+     ],
+     "a": 1,
+     "kind": "nation"
+    },
+    {
+     "q": "Which of these players wears #72?",
+     "o": [
+      "Neal Pionk",
+      "Trevor Zegras",
+      "Arber Xhekaj",
+      "Zemgus Girgensons"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2002–03?",
+     "o": [
+      "Peter Forsberg",
+      "Alexander Ovechkin",
+      "Chris Pronger",
+      "Carey Price"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Logan Cooley played?",
+     "o": [
+      "4",
+      "8",
+      "2",
+      "7"
+     ],
+     "a": 0,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which country was Stephen Halliday born in?",
+     "o": [
+      "Canada",
+      "Germany",
+      "Australia",
+      "Latvia"
+     ],
+     "a": 0,
+     "kind": "nation"
+    },
+    {
+     "q": "Which team drafted Dylan Holloway?",
+     "o": [
+      "San Jose",
+      "Colorado",
+      "Los Angeles",
+      "Edmonton"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "What number does Kevin Stenlund wear?",
+     "o": [
+      "#82",
+      "#4",
+      "#72",
+      "#67"
+     ],
+     "a": 0,
+     "kind": "number"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 1984–85?",
+     "o": [
+      "Brett Hull",
+      "Wayne Gretzky",
+      "Mario Lemieux",
+      "Eric Lindros"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "What year was Logan Stankoven drafted?",
+     "o": [
+      "2021",
+      "2022",
+      "2019",
+      "2020"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which team does Dylan Samberg play for?",
+     "o": [
+      "San Jose",
+      "Pittsburgh",
+      "Winnipeg",
+      "Detroit"
+     ],
+     "a": 2,
+     "kind": "team"
+    },
+    {
+     "q": "What year was Connor Clifton drafted?",
+     "o": [
+      "2009",
+      "2016",
+      "2010",
+      "2013"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What number does Roman Kantserov wear?",
+     "o": [
+      "#10",
+      "#87",
+      "#80",
+      "#67"
+     ],
+     "a": 2,
+     "kind": "number"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 1997–98?",
+     "o": [
+      "Sergei Samsonov",
+      "Brian Leetch",
+      "Peter Forsberg",
+      "Gary Suter"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is Oskar Bäck?",
+     "o": [
+      "6′5″",
+      "6′2″",
+      "6′6″",
+      "6′4″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "Which of these players wears #41?",
+     "o": [
+      "Ryker Evans",
+      "Isac Lundeström",
+      "Phillip Danault",
+      "Victor Olofsson"
+     ],
+     "a": 0,
+     "kind": "wears"
+    },
+    {
+     "q": "Which team drafted Taylor Hall?",
+     "o": [
+      "Nashville",
+      "Utah",
+      "Detroit",
+      "Edmonton"
+     ],
+     "a": 3,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which of these players wears #33?",
+     "o": [
+      "Roger McQueen",
+      "Olli Maatta",
+      "Alex Nedeljkovic",
+      "Martin Fehérváry"
+     ],
+     "a": 2,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Maurice Richard Trophy in 2022–23?",
+     "o": [
+      "Leon Draisaitl",
+      "Auston Matthews",
+      "Corey Perry",
+      "Connor McDavid"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Pavel Mintyukov has scored in one NHL season?",
+     "o": [
+      "0",
+      "6",
+      "8",
+      "10"
+     ],
+     "a": 2,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which team does Brett Berard play for?",
+     "o": [
+      "Columbus",
+      "Montréal",
+      "Tampa Bay",
+      "Dallas"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Which team drafted Troy Terry?",
+     "o": [
+      "Anaheim",
+      "Ottawa",
+      "Winnipeg",
+      "Edmonton"
+     ],
+     "a": 0,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Which team drafted Nolan Allan?",
+     "o": [
+      "Chicago",
+      "Nashville",
+      "Seattle",
+      "Washington"
+     ],
+     "a": 0,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 2017–18?",
+     "o": [
+      "Henrik Sedin",
+      "Connor McDavid",
+      "Daniel Sedin",
+      "Jamie Benn"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "In which round was James Hagens drafted?",
+     "o": [
+      "Round 6",
+      "Round 2",
+      "Round 5",
+      "Round 1"
+     ],
+     "a": 3,
+     "kind": "draftRound"
+    },
+    {
+     "q": "What year was Ryan Hartman drafted?",
+     "o": [
+      "2013",
+      "2014",
+      "2010",
+      "2012"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "What position does Ukko-Pekka Luukkonen play?",
+     "o": [
+      "Defence",
+      "Right wing",
+      "Goalie",
+      "Centre"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "What year was Jake Guentzel drafted?",
+     "o": [
+      "2011",
+      "2013",
+      "2014",
+      "2016"
+     ],
+     "a": 1,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Who won the Frank J. Selke Trophy in 1982–83?",
+     "o": [
+      "Bobby Clarke",
+      "Doug Jarvis",
+      "Steve Kasper",
+      "Guy Carbonneau"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Sam Reinhart played?",
+     "o": [
+      "13",
+      "16",
+      "12",
+      "9"
+     ],
+     "a": 0,
+     "kind": "seasons"
+    },
+    {
+     "q": "What year was Kaiden Guhle drafted?",
+     "o": [
+      "2017",
+      "2022",
+      "2018",
+      "2020"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which of these players was born in Austria?",
+     "o": [
+      "Gregor Biber",
+      "Parker Wotherspoon",
+      "Miro Heiskanen",
+      "Alexander Nikishin"
+     ],
+     "a": 0,
+     "kind": "bornIn"
+    },
+    {
+     "q": "Which country was Cole Caufield born in?",
+     "o": [
+      "Germany",
+      "Czechia",
+      "Switzerland",
+      "USA"
+     ],
+     "a": 3,
+     "kind": "nation"
+    },
+    {
+     "q": "Who won the Calder Memorial Trophy in 1988–89?",
+     "o": [
+      "Peter Forsberg",
+      "Joe Nieuwendyk",
+      "Luc Robitaille",
+      "Brian Leetch"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Travis Sanheim played?",
+     "o": [
+      "6",
+      "12",
+      "10",
+      "8"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "Which country was K'Andre Miller born in?",
+     "o": [
+      "Switzerland",
+      "Czechia",
+      "USA",
+      "Canada"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "In which round was Nico Hischier drafted?",
+     "o": [
+      "Round 4",
+      "Round 1",
+      "Round 5",
+      "Round 6"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Which team does Will Smith play for?",
+     "o": [
+      "Vancouver",
+      "San Jose",
+      "St. Louis",
+      "Detroit"
+     ],
+     "a": 1,
+     "kind": "team"
+    },
+    {
+     "q": "Who won the Conn Smythe Trophy in 2024–25?",
+     "o": [
+      "Sam Bennett",
+      "Alexander Ovechkin",
+      "Patrick Kane",
+      "Jonathan Marchessault"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Michael Misa has scored in one NHL season?",
+     "o": [
+      "9",
+      "7",
+      "11",
+      "13"
+     ],
+     "a": 0,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Which of these players was born in Belarus?",
+     "o": [
+      "Scott Wedgewood",
+      "Oliver Bonk",
+      "Aliaksei Protas",
+      "Mikael Granlund"
+     ],
+     "a": 2,
+     "kind": "bornIn"
+    },
+    {
+     "q": "Which country was Dawson Mercer born in?",
+     "o": [
+      "Great Britain",
+      "Denmark",
+      "Canada",
+      "Czechia"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "How tall is Hendrix Lapierre?",
+     "o": [
+      "6′4″",
+      "5′11″",
+      "6′0″",
+      "5′9″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the Conn Smythe Trophy in 1997–98?",
+     "o": [
+      "Bill Ranford",
+      "Henrik Zetterberg",
+      "Steve Yzerman",
+      "Evgeni Malkin"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "How many NHL seasons has Aleksander Barkov played?",
+     "o": [
+      "11",
+      "17",
+      "13",
+      "14"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "What year was Sam Rinzel drafted?",
+     "o": [
+      "2020",
+      "2022",
+      "2021",
+      "2024"
+     ],
+     "a": 1,
+     "kind": "draftYear"
+    },
+    {
+     "q": "How many NHL seasons has Maveric Lamoureux played?",
+     "o": [
+      "5",
+      "4",
+      "2",
+      "6"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "How many NHL seasons has Nathan MacKinnon played?",
+     "o": [
+      "15",
+      "11",
+      "14",
+      "18"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "Who won the Ted Lindsay Award in 2002–03?",
+     "o": [
+      "Jaromír Jágr",
+      "Mario Lemieux",
+      "Dominik Hašek",
+      "Markus Näslund"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "What's the most goals Macklin Celebrini has scored in one NHL season?",
+     "o": [
+      "49",
+      "43",
+      "45",
+      "53"
+     ],
+     "a": 2,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "What position does Nathan Walker play?",
+     "o": [
+      "Right wing",
+      "Left wing",
+      "Goalie",
+      "Defence"
+     ],
+     "a": 1,
+     "kind": "position"
+    },
+    {
+     "q": "What year was Pierre-Luc Dubois drafted?",
+     "o": [
+      "2019",
+      "2016",
+      "2014",
+      "2013"
+     ],
+     "a": 1,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which of these players wears #36?",
+     "o": [
+      "Christian Dvorak",
+      "Declan Carlile",
+      "Matt Kiersted",
+      "Mats Zuccarello"
+     ],
+     "a": 3,
+     "kind": "wears"
+    },
+    {
+     "q": "Who won the Lady Byng Memorial Trophy in 1981–82?",
+     "o": [
+      "Mats Näslund",
+      "Brett Hull",
+      "Rick Middleton",
+      "Mike Bossy"
+     ],
+     "a": 2,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which team drafted Leo Carlsson?",
+     "o": [
+      "Anaheim",
+      "Buffalo",
+      "St. Louis",
+      "Montréal"
+     ],
+     "a": 0,
+     "kind": "draftTeam"
+    },
+    {
+     "q": "What year was Justus Annunen drafted?",
+     "o": [
+      "2021",
+      "2015",
+      "2014",
+      "2018"
+     ],
+     "a": 3,
+     "kind": "draftYear"
+    },
+    {
+     "q": "How tall is Ville Koivunen?",
+     "o": [
+      "6′4″",
+      "5′10″",
+      "6′0″",
+      "6′2″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "In which round was Rasmus Dahlin drafted?",
+     "o": [
+      "Round 6",
+      "Round 1",
+      "Round 5",
+      "Round 2"
+     ],
+     "a": 1,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Art Ross Trophy in 1986–87?",
+     "o": [
+      "Peter Forsberg",
+      "Jaromír Jágr",
+      "Sidney Crosby",
+      "Wayne Gretzky"
+     ],
+     "a": 3,
+     "kind": "trophy"
+    },
+    {
+     "q": "How tall is Kirill Marchenko?",
+     "o": [
+      "6′3″",
+      "6′6″",
+      "6′5″",
+      "6′1″"
+     ],
+     "a": 0,
+     "kind": "height"
+    },
+    {
+     "q": "What number does Dmitry Kulikov wear?",
+     "o": [
+      "#72",
+      "#7",
+      "#71",
+      "#2"
+     ],
+     "a": 1,
+     "kind": "number"
+    },
+    {
+     "q": "Which country was Nick DeSimone born in?",
+     "o": [
+      "France",
+      "Switzerland",
+      "USA",
+      "Germany"
+     ],
+     "a": 2,
+     "kind": "nation"
+    },
+    {
+     "q": "In which round was Adam Fantilli drafted?",
+     "o": [
+      "Round 2",
+      "Round 5",
+      "Round 1",
+      "Round 6"
+     ],
+     "a": 2,
+     "kind": "draftRound"
+    },
+    {
+     "q": "Who won the Ted Lindsay Award in 2003–04?",
+     "o": [
+      "Martin St. Louis",
+      "Jaromír Jágr",
+      "Sergei Fedorov",
+      "Dominik Hašek"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    },
+    {
+     "q": "Which of these players wears #91?",
+     "o": [
+      "Akira Schmid",
+      "Fabian Zetterlund",
+      "Alex Vlasic",
+      "Nazem Kadri"
+     ],
+     "a": 3,
+     "kind": "wears"
+    },
+    {
+     "q": "What year was Joseph Veleno drafted?",
+     "o": [
+      "2018",
+      "2020",
+      "2022",
+      "2019"
+     ],
+     "a": 0,
+     "kind": "draftYear"
+    },
+    {
+     "q": "Which of these players wears #6?",
+     "o": [
+      "Philip Broberg",
+      "Jake Neighbours",
+      "Yakov Trenin",
+      "Ivan Demidov"
+     ],
+     "a": 0,
+     "kind": "wears"
+    },
+    {
+     "q": "How tall is Jacob Trouba?",
+     "o": [
+      "6′2″",
+      "5′11″",
+      "6′0″",
+      "6′3″"
+     ],
+     "a": 3,
+     "kind": "height"
+    },
+    {
+     "q": "Who won the Hart Memorial Trophy in 2009–10?",
+     "o": [
+      "Corey Perry",
+      "Henrik Sedin",
+      "Sidney Crosby",
+      "Joe Thornton"
+     ],
+     "a": 1,
+     "kind": "trophy"
+    },
+    {
+     "q": "What position does Elias Lindholm play?",
+     "o": [
+      "Goalie",
+      "Left wing",
+      "Centre",
+      "Defence"
+     ],
+     "a": 2,
+     "kind": "position"
+    },
+    {
+     "q": "How tall is Nick Paul?",
+     "o": [
+      "6′1″",
+      "6′2″",
+      "6′3″",
+      "6′4″"
+     ],
+     "a": 2,
+     "kind": "height"
+    },
+    {
+     "q": "How many NHL seasons has Jack McBain played?",
+     "o": [
+      "8",
+      "3",
+      "6",
+      "7"
+     ],
+     "a": 2,
+     "kind": "seasons"
+    },
+    {
+     "q": "What's the most goals Sean Durzi has scored in one NHL season?",
+     "o": [
+      "1",
+      "11",
+      "5",
+      "9"
+     ],
+     "a": 3,
+     "kind": "bestGoals"
+    },
+    {
+     "q": "Who won the Maurice Richard Trophy in 2018–19?",
+     "o": [
+      "Alexander Ovechkin",
+      "Auston Matthews",
+      "Leon Draisaitl",
+      "Sidney Crosby"
+     ],
+     "a": 0,
+     "kind": "trophy"
+    }
+   ]
   }
  },
  "overtime_start": "2026-09-20",
@@ -128281,6 +129559,60 @@
      ],
      "f": 1,
      "c": "Is a centre"
+    }
+   ]
+  },
+  "2026-12-25": {
+   "rounds": [
+    {
+     "p": 8482476,
+     "s": [
+      "Once scored 22 goals in a season",
+      "Was drafted in 2024",
+      "Is 6′2″ tall"
+     ],
+     "f": 1,
+     "c": "Was drafted in 2020"
+    },
+    {
+     "p": 8477504,
+     "s": [
+      "Is 5′9″ tall",
+      "Was born in Canada",
+      "Plays for Winnipeg"
+     ],
+     "f": 0,
+     "c": "Is 6′0″ tall"
+    },
+    {
+     "p": 8482809,
+     "s": [
+      "Has played 4 NHL seasons",
+      "Is 5′9″ tall",
+      "Plays for Carolina"
+     ],
+     "f": 1,
+     "c": "Is 5′11″ tall"
+    },
+    {
+     "p": 8482149,
+     "s": [
+      "Is 6′1″ tall",
+      "Was born in Canada",
+      "Once scored 19 goals in a season"
+     ],
+     "f": 0,
+     "c": "Is 5′11″ tall"
+    },
+    {
+     "p": 8483510,
+     "s": [
+      "Has played 2 NHL seasons",
+      "Was drafted in 2022",
+      "Was born in Belarus"
+     ],
+     "f": 2,
+     "c": "Was born in Sweden"
     }
    ]
   }
@@ -152438,6 +153770,290 @@
      "goals"
     ]
    ]
+  },
+  "2026-12-25": {
+   "rounds": [
+    [
+     "CAR",
+     12364,
+     "NYI",
+     12948,
+     "games"
+    ],
+    [
+     "STL",
+     12,
+     "UTA",
+     7,
+     "abroad"
+    ],
+    [
+     "TBL",
+     11407,
+     "OTT",
+     9625,
+     "games"
+    ],
+    [
+     "CGY",
+     27.3,
+     "VGK",
+     30.0,
+     "age"
+    ],
+    [
+     "PHI",
+     8551,
+     "CBJ",
+     10467,
+     "games"
+    ],
+    [
+     "NSH",
+     28.9,
+     "BOS",
+     28.0,
+     "age"
+    ],
+    [
+     "SJS",
+     8541,
+     "TBL",
+     11407,
+     "games"
+    ],
+    [
+     "PHI",
+     1554,
+     "FLA",
+     3101,
+     "goals"
+    ],
+    [
+     "CGY",
+     9,
+     "SEA",
+     4,
+     "abroad"
+    ],
+    [
+     "SJS",
+     8541,
+     "NYR",
+     8815,
+     "games"
+    ],
+    [
+     "CBJ",
+     28.3,
+     "VAN",
+     27.4,
+     "age"
+    ],
+    [
+     "EDM",
+     8,
+     "CGY",
+     9,
+     "abroad"
+    ],
+    [
+     "NSH",
+     2622,
+     "VGK",
+     2273,
+     "goals"
+    ],
+    [
+     "MTL",
+     26.3,
+     "VAN",
+     27.4,
+     "age"
+    ],
+    [
+     "DAL",
+     3275,
+     "EDM",
+     2798,
+     "goals"
+    ],
+    [
+     "OTT",
+     9,
+     "SEA",
+     4,
+     "abroad"
+    ],
+    [
+     "COL",
+     73.0,
+     "NYR",
+     73.8,
+     "height"
+    ],
+    [
+     "CHI",
+     4,
+     "FLA",
+     12,
+     "abroad"
+    ],
+    [
+     "WSH",
+     28.6,
+     "VAN",
+     27.4,
+     "age"
+    ],
+    [
+     "EDM",
+     8,
+     "NJD",
+     7,
+     "abroad"
+    ],
+    [
+     "COL",
+     30.6,
+     "BUF",
+     27.2,
+     "age"
+    ],
+    [
+     "SEA",
+     1626,
+     "STL",
+     1514,
+     "goals"
+    ],
+    [
+     "EDM",
+     29.3,
+     "DAL",
+     30.0,
+     "age"
+    ],
+    [
+     "NYI",
+     12948,
+     "VGK",
+     10801,
+     "games"
+    ],
+    [
+     "WPG",
+     2129,
+     "TBL",
+     2712,
+     "goals"
+    ],
+    [
+     "NJD",
+     29.4,
+     "SJS",
+     27.0,
+     "age"
+    ],
+    [
+     "EDM",
+     2798,
+     "LAK",
+     2895,
+     "goals"
+    ],
+    [
+     "VAN",
+     7999,
+     "TBL",
+     11407,
+     "games"
+    ],
+    [
+     "TOR",
+     73.4,
+     "CGY",
+     73.7,
+     "height"
+    ],
+    [
+     "PHI",
+     1554,
+     "LAK",
+     2895,
+     "goals"
+    ],
+    [
+     "SJS",
+     8541,
+     "MTL",
+     8572,
+     "games"
+    ],
+    [
+     "PIT",
+     9,
+     "CAR",
+     7,
+     "abroad"
+    ],
+    [
+     "UTA",
+     73.6,
+     "EDM",
+     73.9,
+     "height"
+    ],
+    [
+     "CHI",
+     1662,
+     "CBJ",
+     1953,
+     "goals"
+    ],
+    [
+     "CAR",
+     29.9,
+     "LAK",
+     31.4,
+     "age"
+    ],
+    [
+     "EDM",
+     2798,
+     "VGK",
+     2273,
+     "goals"
+    ],
+    [
+     "PHI",
+     27.2,
+     "SEA",
+     27.9,
+     "age"
+    ],
+    [
+     "BOS",
+     73.8,
+     "VAN",
+     73.3,
+     "height"
+    ],
+    [
+     "FLA",
+     3101,
+     "NSH",
+     2622,
+     "goals"
+    ],
+    [
+     "NYI",
+     8,
+     "SJS",
+     6,
+     "abroad"
+    ]
+   ]
   }
  },
  "hlt_start": "2026-09-18",
@@ -152833,6 +154449,10 @@
   "2026-12-24": {
    "id": 8471215,
    "y": 2010
+  },
+  "2026-12-25": {
+   "id": 8480947,
+   "y": 2024
   }
  },
  "season_start": "2026-09-18",
@@ -153180,6 +154800,10 @@
   "2026-12-24": {
    "id": 8482073,
    "y": 2021
+  },
+  "2026-12-25": {
+   "id": 8480807,
+   "y": 2025
   }
  },
  "playoff_start": "2026-09-18",
@@ -182500,6 +184124,350 @@
      "a": 0
     }
    ]
+  },
+  "2026-12-25": {
+   "rounds": [
+    {
+     "t": "Ted Lindsay Award",
+     "y": 1982,
+     "names": [
+      "Brett Hull",
+      "Mario Lemieux",
+      "Sergei Fedorov",
+      "Wayne Gretzky"
+     ],
+     "teams": [
+      "STL",
+      "PIT",
+      "DET",
+      "EDM"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 2021,
+     "names": [
+      "Duncan Keith",
+      "Ryan O'Reilly",
+      "Cale Makar",
+      "Sam Bennett"
+     ],
+     "teams": [
+      "CHI",
+      "STL",
+      "COL",
+      "FLA"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Lady Byng Memorial Trophy",
+     "y": 1993,
+     "names": [
+      "Wayne Gretzky",
+      "Brad Richards",
+      "Brett Hull",
+      "Alexander Mogilny"
+     ],
+     "teams": [
+      "LAK",
+      "TBL",
+      "STL",
+      "TOR"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 1992,
+     "names": [
+      "Bobby Clarke",
+      "John Madden",
+      "Doug Gilmour",
+      "Troy Murray"
+     ],
+     "teams": [
+      "PHI",
+      "NJD",
+      "TOR",
+      "CHI"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Frank J. Selke Trophy",
+     "y": 2019,
+     "names": [
+      "Sean Couturier",
+      "Pavel Datsyuk",
+      "Patrice Bergeron",
+      "Nick Suzuki"
+     ],
+     "teams": [
+      "PHI",
+      "DET",
+      "BOS",
+      "MTL"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2011,
+     "names": [
+      "Markus Näslund",
+      "Evgeni Malkin",
+      "Nathan MacKinnon",
+      "Nikita Kucherov"
+     ],
+     "teams": [
+      "VAN",
+      "PIT",
+      "COL",
+      "TBL"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 2009,
+     "names": [
+      "Kirill Kaprizov",
+      "Tyler Myers",
+      "Aaron Ekblad",
+      "Dany Heatley"
+     ],
+     "teams": [
+      "MIN",
+      "BUF",
+      "FLA",
+      "ATL"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Ted Lindsay Award",
+     "y": 2008,
+     "names": [
+      "Joe Sakic",
+      "Carey Price",
+      "Evgeni Malkin",
+      "Alexander Ovechkin"
+     ],
+     "teams": [
+      "COL",
+      "MTL",
+      "PIT",
+      "WSH"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Calder Memorial Trophy",
+     "y": 2016,
+     "names": [
+      "Tyler Myers",
+      "Nathan MacKinnon",
+      "Matthew Schaefer",
+      "Auston Matthews"
+     ],
+     "teams": [
+      "BUF",
+      "COL",
+      "NYI",
+      "TOR"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 1981,
+     "names": [
+      "Mike Bossy",
+      "Billy Smith",
+      "Butch Goring",
+      "Brian Leetch"
+     ],
+     "teams": [
+      "NYI",
+      "NYI",
+      "NYI",
+      "NYR"
+     ],
+     "a": 0
+    },
+    {
+     "t": "James Norris Memorial Trophy",
+     "y": 2003,
+     "names": [
+      "Duncan Keith",
+      "P. K. Subban",
+      "Scott Niedermayer",
+      "Chris Chelios"
+     ],
+     "teams": [
+      "CHI",
+      "MTL",
+      "NJD",
+      "CHI"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Vezina Trophy",
+     "y": 1994,
+     "names": [
+      "Pelle Lindbergh",
+      "John Vanbiesbrouck",
+      "Patrick Roy",
+      "Dominik Hašek"
+     ],
+     "teams": [
+      "PHI",
+      "NYR",
+      "MTL",
+      "BUF"
+     ],
+     "a": 3
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2015,
+     "names": [
+      "Patrick Kane",
+      "Nikita Kucherov",
+      "Martin St. Louis",
+      "Henrik Sedin"
+     ],
+     "teams": [
+      "CHI",
+      "TBL",
+      "TBL",
+      "VAN"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Art Ross Trophy",
+     "y": 1988,
+     "names": [
+      "Jarome Iginla",
+      "Sidney Crosby",
+      "Mario Lemieux",
+      "Joe Thornton"
+     ],
+     "teams": [
+      "CGY",
+      "PIT",
+      "PIT",
+      "BOS"
+     ],
+     "a": 2
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 2022,
+     "names": [
+      "Cale Makar",
+      "Jonathan Marchessault",
+      "Sam Bennett",
+      "Ryan O'Reilly"
+     ],
+     "teams": [
+      "COL",
+      "VGK",
+      "FLA",
+      "STL"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 2011,
+     "names": [
+      "Jean-Sebastien Giguere",
+      "Alexander Ovechkin",
+      "Jonathan Quick",
+      "Jonathan Marchessault"
+     ],
+     "teams": [
+      "ANA",
+      "WSH",
+      "LAK",
+      "VGK"
+     ],
+     "a": 2
+    },
+    {
+     "t": "James Norris Memorial Trophy",
+     "y": 2007,
+     "names": [
+      "Erik Karlsson",
+      "Nicklas Lidström",
+      "Scott Niedermayer",
+      "Duncan Keith"
+     ],
+     "teams": [
+      "OTT",
+      "DET",
+      "NJD",
+      "CHI"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Conn Smythe Trophy",
+     "y": 1993,
+     "names": [
+      "Mario Lemieux",
+      "Brian Leetch",
+      "Cam Ward",
+      "Al MacInnis"
+     ],
+     "teams": [
+      "PIT",
+      "NYR",
+      "CAR",
+      "CGY"
+     ],
+     "a": 1
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 2018,
+     "names": [
+      "Nikita Kucherov",
+      "Connor McDavid",
+      "Carey Price",
+      "Corey Perry"
+     ],
+     "teams": [
+      "TBL",
+      "EDM",
+      "MTL",
+      "ANA"
+     ],
+     "a": 0
+    },
+    {
+     "t": "Hart Memorial Trophy",
+     "y": 1983,
+     "names": [
+      "Sergei Fedorov",
+      "Brett Hull",
+      "Mario Lemieux",
+      "Wayne Gretzky"
+     ],
+     "teams": [
+      "DET",
+      "STL",
+      "PIT",
+      "EDM"
+     ],
+     "a": 3
+    }
+   ]
   }
  },
  "trophy_start": "2026-09-18",
@@ -183580,6 +185548,17 @@
     8483515,
     8481618,
     8484170
+   ]
+  },
+  "2026-12-25": {
+   "team": "NSH",
+   "ids": [
+    8477021,
+    8482094,
+    8481593,
+    8477424,
+    8482145,
+    8481020
    ]
   }
  },
@@ -208854,6 +210833,326 @@
     ]
    ],
    "mvp": true
+  },
+  "2026-12-25": {
+   "rows": [
+    [
+     1980,
+     "New York Islanders",
+     "Minnesota North Stars",
+     "Butch Goring",
+     "NYI"
+    ],
+    [
+     1981,
+     "New York Islanders",
+     "Vancouver Canucks",
+     "Mike Bossy",
+     "NYI"
+    ],
+    [
+     1982,
+     "New York Islanders",
+     "Edmonton Oilers",
+     "Billy Smith",
+     "NYI"
+    ],
+    [
+     1983,
+     "Edmonton Oilers",
+     "New York Islanders",
+     "Mark Messier",
+     "EDM"
+    ],
+    [
+     1984,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1985,
+     "Montreal Canadiens",
+     "Calgary Flames",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1986,
+     "Edmonton Oilers",
+     "Philadelphia Flyers",
+     "Ron Hextall",
+     "PHI"
+    ],
+    [
+     1987,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Wayne Gretzky",
+     "EDM"
+    ],
+    [
+     1988,
+     "Calgary Flames",
+     "Montreal Canadiens",
+     "Al MacInnis",
+     "CGY"
+    ],
+    [
+     1989,
+     "Edmonton Oilers",
+     "Boston Bruins",
+     "Bill Ranford",
+     "EDM"
+    ],
+    [
+     1990,
+     "Pittsburgh Penguins",
+     "Minnesota North Stars",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1991,
+     "Pittsburgh Penguins",
+     "Chicago Blackhawks",
+     "Mario Lemieux",
+     "PIT"
+    ],
+    [
+     1992,
+     "Montreal Canadiens",
+     "Los Angeles Kings",
+     "Patrick Roy",
+     "MTL"
+    ],
+    [
+     1993,
+     "New York Rangers",
+     "Vancouver Canucks",
+     "Brian Leetch",
+     "NYR"
+    ],
+    [
+     1994,
+     "New Jersey Devils",
+     "Detroit Red Wings",
+     "Claude Lemieux",
+     "NJD"
+    ],
+    [
+     1995,
+     "Colorado Avalanche",
+     "Florida Panthers",
+     "Joe Sakic",
+     "COL"
+    ],
+    [
+     1996,
+     "Detroit Red Wings",
+     "Philadelphia Flyers",
+     "Mike Vernon",
+     "DET"
+    ],
+    [
+     1997,
+     "Detroit Red Wings",
+     "Washington Capitals",
+     "Steve Yzerman",
+     "DET"
+    ],
+    [
+     1998,
+     "Dallas Stars",
+     "Buffalo Sabres",
+     "Joe Nieuwendyk",
+     "DAL"
+    ],
+    [
+     1999,
+     "New Jersey Devils",
+     "Dallas Stars",
+     "Scott Stevens",
+     "NJD"
+    ],
+    [
+     2000,
+     "Colorado Avalanche",
+     "New Jersey Devils",
+     "Patrick Roy",
+     "COL"
+    ],
+    [
+     2001,
+     "Detroit Red Wings",
+     "Carolina Hurricanes",
+     "Nicklas Lidstrom",
+     "DET"
+    ],
+    [
+     2002,
+     "New Jersey Devils",
+     "Mighty Ducks of Anaheim",
+     "Jean-Sebastien Giguere",
+     "ANA"
+    ],
+    [
+     2003,
+     "Tampa Bay Lightning",
+     "Calgary Flames",
+     "Brad Richards",
+     "TBL"
+    ],
+    [
+     2005,
+     "Carolina Hurricanes",
+     "Edmonton Oilers",
+     "Cam Ward",
+     "CAR"
+    ],
+    [
+     2006,
+     "Anaheim Ducks",
+     "Ottawa Senators",
+     "Scott Niedermayer",
+     "ANA"
+    ],
+    [
+     2007,
+     "Detroit Red Wings",
+     "Pittsburgh Penguins",
+     "Henrik Zetterberg",
+     "DET"
+    ],
+    [
+     2008,
+     "Pittsburgh Penguins",
+     "Detroit Red Wings",
+     "Evgeni Malkin",
+     "PIT"
+    ],
+    [
+     2009,
+     "Chicago Blackhawks",
+     "Philadelphia Flyers",
+     "Jonathan Toews",
+     "CHI"
+    ],
+    [
+     2010,
+     "Boston Bruins",
+     "Vancouver Canucks",
+     "Tim Thomas",
+     "BOS"
+    ],
+    [
+     2011,
+     "Los Angeles Kings",
+     "New Jersey Devils",
+     "Jonathan Quick",
+     "LAK"
+    ],
+    [
+     2012,
+     "Chicago Blackhawks",
+     "Boston Bruins",
+     "Patrick Kane",
+     "CHI"
+    ],
+    [
+     2013,
+     "Los Angeles Kings",
+     "New York Rangers",
+     "Justin Williams",
+     "LAK"
+    ],
+    [
+     2014,
+     "Chicago Blackhawks",
+     "Tampa Bay Lightning",
+     "Duncan Keith",
+     "CHI"
+    ],
+    [
+     2015,
+     "Pittsburgh Penguins",
+     "San Jose Sharks",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2016,
+     "Pittsburgh Penguins",
+     "Nashville Predators",
+     "Sidney Crosby",
+     "PIT"
+    ],
+    [
+     2017,
+     "Washington Capitals",
+     "Vegas Golden Knights",
+     "Alexander Ovechkin",
+     "WSH"
+    ],
+    [
+     2018,
+     "St. Louis Blues",
+     "Boston Bruins",
+     "Ryan O'Reilly",
+     "STL"
+    ],
+    [
+     2019,
+     "Tampa Bay Lightning",
+     "Dallas Stars",
+     "Victor Hedman",
+     "TBL"
+    ],
+    [
+     2020,
+     "Tampa Bay Lightning",
+     "Montreal Canadiens",
+     "Andrei Vasilevskiy",
+     "TBL"
+    ],
+    [
+     2021,
+     "Colorado Avalanche",
+     "Tampa Bay Lightning",
+     "Cale Makar",
+     "COL"
+    ],
+    [
+     2022,
+     "Vegas Golden Knights",
+     "Florida Panthers",
+     "Jonathan Marchessault",
+     "VGK"
+    ],
+    [
+     2023,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Connor McDavid",
+     "EDM"
+    ],
+    [
+     2024,
+     "Florida Panthers",
+     "Edmonton Oilers",
+     "Sam Bennett",
+     "FLA"
+    ],
+    [
+     2025,
+     "Carolina Hurricanes",
+     "Vegas Golden Knights",
+     "Jordan Staal",
+     "CAR"
+    ]
+   ],
+   "mvp": true
   }
  },
  "cups_start": "2026-09-18",
@@ -212655,6 +214954,44 @@
      8473533,
      8474141,
      8475683
+    ]
+   }
+  ],
+  "2026-12-25": [
+   {
+    "label": "Plays for Chicago",
+    "ids": [
+     8474013,
+     8477479,
+     8481568,
+     8484144
+    ]
+   },
+   {
+    "label": "Born in Denmark",
+    "ids": [
+     8474189,
+     8475883,
+     8477416,
+     8477940
+    ]
+   },
+   {
+    "label": "Wears #75",
+    "ids": [
+     8477365,
+     8480831,
+     8481006,
+     8482487
+    ]
+   },
+   {
+    "label": "Born in 1990",
+    "ids": [
+     8474578,
+     8474586,
+     8474593,
+     8475311
     ]
    }
   ]
@@ -247605,6 +249942,352 @@
     8484798,
     8482768,
     8482964
+   ]
+  },
+  "2026-12-25": {
+   "goals": [
+    8475166,
+    8480281,
+    8480835,
+    8480246,
+    8474151,
+    8480434,
+    8481517,
+    8476880,
+    8480796,
+    8481186,
+    8473512,
+    8476467,
+    8476905,
+    8476372,
+    8479591,
+    8481014,
+    8475722,
+    8484387,
+    8479359,
+    8479390,
+    8480018,
+    8476479,
+    8477935,
+    8476879,
+    8481604,
+    8478397,
+    8477499,
+    8480078,
+    8478840,
+    8479977,
+    8480043,
+    8484801,
+    8478055,
+    8476891,
+    8482124,
+    8478476,
+    8477447,
+    8478507,
+    8477504,
+    8480049,
+    8475168
+   ],
+   "assists": [
+    8477451,
+    8477845,
+    8481542,
+    8482145,
+    8482087,
+    8474567,
+    8476422,
+    8480835,
+    8479372,
+    8475314,
+    8484166,
+    8483565,
+    8474568,
+    8477969,
+    8480434,
+    8481557,
+    8481533,
+    8484471,
+    8482859,
+    8477810,
+    8475810,
+    8481122,
+    8482655,
+    8482155,
+    8480459,
+    8474141,
+    8482093,
+    8477938,
+    8473533,
+    8476448,
+    8482113,
+    8482088,
+    8470621,
+    8478055,
+    8481522,
+    8480796,
+    8479772,
+    8484798,
+    8476389,
+    8482089,
+    8481528
+   ],
+   "points": [
+    8475172,
+    8476278,
+    8479343,
+    8484145,
+    8481481,
+    8475166,
+    8476429,
+    8478569,
+    8480064,
+    8477938,
+    8482122,
+    8474563,
+    8478476,
+    8481596,
+    8474716,
+    8477476,
+    8482157,
+    8471214,
+    8478020,
+    8477940,
+    8480802,
+    8476931,
+    8480434,
+    8478416,
+    8482176,
+    8478104,
+    8477946,
+    8477450,
+    8482116,
+    8475170,
+    8480014,
+    8481523,
+    8479661,
+    8477505,
+    8474150,
+    8481028,
+    8478438,
+    8480839,
+    8475235,
+    8481161,
+    8479976
+   ],
+   "pim": [
+    8482149,
+    8474600,
+    8482726,
+    8480813,
+    8475200,
+    8480990,
+    8481517,
+    8482070,
+    8482475,
+    8476454,
+    8474564,
+    8475754,
+    8476873,
+    8480797,
+    8476889,
+    8477416,
+    8479407,
+    8478416,
+    8478403,
+    8482110,
+    8480039,
+    8479996,
+    8478970,
+    8481582,
+    8476419,
+    8478458,
+    8477507,
+    8475170,
+    8482176,
+    8479661,
+    8482177,
+    8475810,
+    8470621,
+    8476455,
+    8482105,
+    8478449,
+    8480796,
+    8476539,
+    8480246,
+    8479992,
+    8479353
+   ],
+   "gp": [
+    8477932,
+    8479400,
+    8476853,
+    8484783,
+    8479976,
+    8477964,
+    8478038,
+    8480015,
+    8479378,
+    8484387,
+    8477444,
+    8480029,
+    8481593,
+    8477426,
+    8475462,
+    8484166,
+    8482964,
+    8483445,
+    8478233,
+    8476906,
+    8478550,
+    8481068,
+    8475179,
+    8479324,
+    8479525,
+    8476869,
+    8477493,
+    8476822,
+    8476456,
+    8476885,
+    8478507,
+    8480448,
+    8481161,
+    8477425,
+    8483499,
+    8482929,
+    8481557,
+    8479983,
+    8479337,
+    8482659,
+    8478402
+   ],
+   "height": [
+    8474013,
+    8477492,
+    8480078,
+    8481056,
+    8481593,
+    8477573,
+    8482660,
+    8481708,
+    8475171,
+    8474567,
+    8476925,
+    8479337,
+    8482964,
+    8484321,
+    8477511,
+    8475745,
+    8482166,
+    8479346,
+    8482113,
+    8480873,
+    8482665,
+    8480893,
+    8475842,
+    8482062,
+    8473986,
+    8478401,
+    8477416,
+    8477496,
+    8478434,
+    8482145,
+    8476887,
+    8475913,
+    8477070,
+    8481559,
+    8476432,
+    8478856,
+    8480834,
+    8477498,
+    8479066,
+    8482175,
+    8482055
+   ],
+   "weight": [
+    8482691,
+    8482482,
+    8482177,
+    8475790,
+    8477365,
+    8479675,
+    8477939,
+    8478444,
+    8477425,
+    8478454,
+    8478010,
+    8480064,
+    8480220,
+    8481582,
+    8478136,
+    8475220,
+    8480797,
+    8479638,
+    8484911,
+    8476459,
+    8482803,
+    8480806,
+    8481789,
+    8478366,
+    8481024,
+    8481563,
+    8478468,
+    8480069,
+    8476822,
+    8481532,
+    8480113,
+    8477493,
+    8482740,
+    8478472,
+    8474574,
+    8483678,
+    8478851,
+    8479420,
+    8476882,
+    8480043,
+    8481598
+   ],
+   "age": [
+    8483570,
+    8479314,
+    8477018,
+    8479333,
+    8479369,
+    8480434,
+    8482088,
+    8478047,
+    8478460,
+    8478840,
+    8482089,
+    8475764,
+    8480803,
+    8482177,
+    8481596,
+    8479591,
+    8480003,
+    8483678,
+    8476967,
+    8482713,
+    8481716,
+    8478407,
+    8480036,
+    8477948,
+    8475220,
+    8480806,
+    8477425,
+    8483489,
+    8479976,
+    8484321,
+    8482078,
+    8476917,
+    8482702,
+    8479982,
+    8478463,
+    8478438,
+    8474102,
+    8478399,
+    8479410,
+    8482122,
+    8481122
    ]
   }
  },
@@ -344452,14 +347135,14 @@
     "Brayden McNabb",
     "D",
     "CAN",
-    910,
+    911,
     false,
     2011,
     2026,
     {
      "BUF": 37,
      "LAK": 201,
-     "VGK": 672
+     "VGK": 673
     },
     1991
    ],
@@ -344797,13 +347480,13 @@
     "Mattias Ekholm",
     "D",
     "SWE",
-    990,
+    991,
     false,
     2011,
     2026,
     {
      "NSH": 719,
-     "EDM": 271
+     "EDM": 272
     },
     1990
    ],
@@ -345615,14 +348298,14 @@
     "Nic Dowd",
     "C",
     "USA",
-    682,
+    683,
     false,
     2015,
     2026,
     {
      "WSH": 506,
      "LAK": 91,
-     "VGK": 45,
+     "VGK": 46,
      "VAN": 40
     },
     1990
@@ -347890,13 +350573,13 @@
     "Mark Stone",
     "R",
     "CAN",
-    791,
+    792,
     false,
     2012,
     2026,
     {
      "OTT": 366,
-     "VGK": 425
+     "VGK": 426
     },
     1992
    ],
@@ -349885,14 +352568,14 @@
     "William Karlsson",
     "C",
     "SWE",
-    777,
+    778,
     false,
     2014,
     2026,
     {
      "CBJ": 165,
      "ANA": 18,
-     "VGK": 594
+     "VGK": 595
     },
     1993
    ],
@@ -349976,12 +352659,12 @@
     "Ryan Nugent-Hopkins",
     "C",
     "CAN",
-    1043,
+    1044,
     false,
     2011,
     2026,
     {
-     "EDM": 1043
+     "EDM": 1044
     },
     1993
    ],
@@ -350269,13 +352952,13 @@
     "Connor Murphy",
     "D",
     "USA",
-    851,
+    852,
     false,
     2017,
     2026,
     {
      "CHI": 547,
-     "EDM": 46
+     "EDM": 47
     },
     1993
    ],
@@ -351395,13 +354078,13 @@
     "Tomas Hertl",
     "C",
     "CZE",
-    898,
+    899,
     false,
     2013,
     2026,
     {
      "SJS": 712,
-     "VGK": 186
+     "VGK": 187
     },
     1993
    ],
@@ -353895,13 +356578,13 @@
     "Shea Theodore",
     "D",
     "CAN",
-    659,
+    660,
     false,
     2015,
     2026,
     {
      "ANA": 53,
-     "VGK": 606
+     "VGK": 607
     },
     1995
    ],
@@ -353941,14 +356624,14 @@
     "Jason Dickinson",
     "C",
     "CAN",
-    583,
+    584,
     false,
     2015,
     2026,
     {
      "CHI": 266,
      "DAL": 221,
-     "EDM": 34,
+     "EDM": 35,
      "VAN": 62
     },
     1995
@@ -355426,12 +358109,12 @@
     "Leon Draisaitl",
     "C",
     "DEU",
-    881,
+    882,
     false,
     2014,
     2026,
     {
-     "EDM": 881
+     "EDM": 882
     },
     1995
    ],
@@ -355721,7 +358404,7 @@
     "Kasperi Kapanen",
     "R",
     "FIN",
-    594,
+    595,
     false,
     2015,
     2026,
@@ -355729,7 +358412,7 @@
      "TOR": 202,
      "PIT": 162,
      "STL": 106,
-     "EDM": 124
+     "EDM": 125
     },
     1996
    ],
@@ -355876,13 +358559,13 @@
     "Ivan Barbashev",
     "L",
     "RUS",
-    692,
+    693,
     false,
     2016,
     2026,
     {
      "STL": 410,
-     "VGK": 282
+     "VGK": 283
     },
     1995
    ],
@@ -356299,14 +358982,14 @@
     "Jake Walman",
     "D",
     "CAN",
-    332,
+    333,
     false,
     2019,
     2026,
     {
      "DET": 145,
      "STL": 57,
-     "EDM": 80,
+     "EDM": 81,
      "SJS": 50
     },
     1996
@@ -356849,7 +359532,7 @@
     "Victor Olofsson",
     "L",
     "SWE",
-    460,
+    461,
     false,
     2018,
     2026,
@@ -356857,7 +359540,7 @@
      "BUF": 314,
      "COL": 60,
      "CGY": 18,
-     "VGK": 68
+     "VGK": 69
     },
     1995
    ],
@@ -357219,13 +359902,13 @@
     "Rasmus Andersson",
     "D",
     "SWE",
-    642,
+    643,
     false,
     2016,
     2026,
     {
      "CGY": 584,
-     "VGK": 58
+     "VGK": 59
     },
     1996
    ],
@@ -357296,12 +359979,12 @@
     "Connor McDavid",
     "C",
     "CAN",
-    820,
+    821,
     false,
     2015,
     2026,
     {
-     "EDM": 820
+     "EDM": 821
     },
     1997
    ],
@@ -357310,13 +359993,13 @@
     "Jack Eichel",
     "C",
     "USA",
-    715,
+    716,
     false,
     2015,
     2026,
     {
      "BUF": 375,
-     "VGK": 340
+     "VGK": 341
     },
     1996
    ],
@@ -357797,7 +360480,7 @@
     "Parker Wotherspoon",
     "D",
     "CAN",
-    200,
+    201,
     false,
     2022,
     2026,
@@ -357805,7 +360488,7 @@
      "BOS": 96,
      "NYI": 12,
      "PIT": 80,
-     "VGK": 12
+     "VGK": 13
     },
     1997
    ],
@@ -357999,7 +360682,7 @@
     "Jeremy Lauzon",
     "D",
     "CAN",
-    409,
+    410,
     false,
     2018,
     2026,
@@ -358007,7 +360690,7 @@
      "BOS": 76,
      "NSH": 187,
      "SEA": 53,
-     "VGK": 93
+     "VGK": 94
     },
     1997
    ],
@@ -358045,7 +360728,7 @@
     "Mathieu Joseph",
     "R",
     "CAN",
-    497,
+    498,
     false,
     2018,
     2026,
@@ -358054,7 +360737,7 @@
      "TBL": 221,
      "STL": 99,
      "LAK": 12,
-     "EDM": 26
+     "EDM": 27
     },
     1997
    ],
@@ -358123,13 +360806,13 @@
     "Mitch Marner",
     "R",
     "CAN",
-    761,
+    762,
     false,
     2016,
     2026,
     {
      "TOR": 657,
-     "VGK": 104
+     "VGK": 105
     },
     1997
    ],
@@ -358258,13 +360941,13 @@
     "Adin Hill",
     "G",
     "CAN",
-    225,
+    226,
     false,
     2021,
     2026,
     {
      "SJS": 25,
-     "VGK": 151
+     "VGK": 152
     },
     1996
    ],
@@ -358780,13 +361463,13 @@
     "Ryan Shea",
     "D",
     "USA",
-    176,
+    177,
     false,
     2023,
     2026,
     {
      "PIT": 150,
-     "EDM": 26
+     "EDM": 27
     },
     1997
    ],
@@ -360063,13 +362746,13 @@
     "Brett Howden",
     "C",
     "CAN",
-    514,
+    515,
     false,
     2018,
     2026,
     {
      "NYR": 178,
-     "VGK": 336
+     "VGK": 337
     },
     1998
    ],
@@ -360184,13 +362867,13 @@
     "Trent Frederic",
     "C",
     "USA",
-    435,
+    436,
     false,
     2018,
     2026,
     {
      "BOS": 337,
-     "EDM": 98
+     "EDM": 99
     },
     1998
    ],
@@ -360528,13 +363211,13 @@
     "Carter Hart",
     "G",
     "CAN",
-    258,
+    259,
     false,
     2018,
     2026,
     {
      "PHI": 227,
-     "VGK": 31
+     "VGK": 32
     },
     1998
    ],
@@ -361544,14 +364227,14 @@
     "Dylan Coghlan",
     "D",
     "CAN",
-    132,
+    133,
     false,
     2020,
     2026,
     {
      "CAR": 18,
      "WPG": 6,
-     "VGK": 108
+     "VGK": 109
     },
     1998
    ],
@@ -362504,13 +365187,13 @@
     "Alex Formenton",
     "L",
     "CAN",
-    135,
+    136,
     false,
     2017,
     2026,
     {
      "OTT": 109,
-     "EDM": 26
+     "EDM": 27
     },
     1999
    ],
@@ -364396,12 +367079,12 @@
     "Evan Bouchard",
     "D",
     "CAN",
-    455,
+    456,
     false,
     2018,
     2026,
     {
-     "EDM": 455
+     "EDM": 456
     },
     1999
    ],
@@ -364718,13 +367401,13 @@
     "Filip Hallander",
     "C",
     "SWE",
-    32,
+    33,
     false,
     2021,
     2026,
     {
      "PIT": 18,
-     "EDM": 14
+     "EDM": 15
     },
     2000
    ],
@@ -367351,12 +370034,12 @@
     "Vasily Podkolzin",
     "R",
     "RUS",
-    327,
+    328,
     false,
     2021,
     2026,
     {
-     "EDM": 190,
+     "EDM": 191,
      "VAN": 137
     },
     2001
@@ -368917,13 +371600,13 @@
     "Shakir Mukhamadullin",
     "D",
     "RUS",
-    104,
+    105,
     false,
     2023,
     2026,
     {
      "SJS": 83,
-     "EDM": 21
+     "EDM": 22
     },
     2002
    ],
@@ -369218,13 +371901,13 @@
     "Devon Levi",
     "G",
     "CAN",
-    52,
+    53,
     false,
     2022,
     2026,
     {
      "BUF": 39,
-     "EDM": 13
+     "EDM": 14
     },
     2001
    ],
@@ -370091,13 +372774,13 @@
     "Colton Dach",
     "C",
     "CAN",
-    106,
+    107,
     false,
     2024,
     2026,
     {
      "CHI": 78,
-     "EDM": 28
+     "EDM": 29
     },
     2003
    ],
@@ -371909,13 +374592,13 @@
     "Marc Gatcomb",
     "C",
     "USA",
-    111,
+    112,
     false,
     2024,
     2026,
     {
      "NYI": 88,
-     "VGK": 23
+     "VGK": 24
     },
     1999
    ],
@@ -372456,12 +375139,12 @@
     "Braeden Bowman",
     "R",
     "CAN",
-    79,
+    80,
     false,
     2025,
     2026,
     {
-     "VGK": 79
+     "VGK": 80
     },
     2003
    ],
@@ -374428,12 +377111,12 @@
     "Trevor Connelly",
     "L",
     "USA",
-    25,
+    26,
     false,
     2026,
     2026,
     {
-     "VGK": 25
+     "VGK": 26
     },
     2006
    ],
@@ -374624,12 +377307,12 @@
     "Owen Michaels",
     "R",
     "USA",
-    26,
+    27,
     false,
     2026,
     2026,
     {
-     "EDM": 26
+     "EDM": 27
     },
     2002
    ],
@@ -904186,7 +906869,7 @@
    "8484801": 45
   },
   "achievements_sha256": "062b3f729644babe25e1a5ac1944fc7b298f9a7a74e661f88b7967469d1496da",
-  "grid_asof": "2026-11-24"
+  "grid_asof": "2026-11-25"
  },
  "deepcut": {
   "version": 2,
@@ -2091700,6 +2094383,9342 @@
      8482765,
      8484242
     ]
+   },
+   {
+    "id": "dc3-team-ANA-8486f537a4a6",
+    "family": "Sweaters",
+    "text": "Name a player who played for Anaheim Ducks.",
+    "note": "Verified appearances through 2026-11-25. Current roster: 10 points; six lowest average-TOI skaters: 15. Snapshot 2026-11-25; former players count.",
+    "answers": [
+     [
+      8445017,
+      60
+     ],
+     [
+      8445323,
+      15
+     ],
+     [
+      8445335,
+      60
+     ],
+     [
+      8445417,
+      15
+     ],
+     [
+      8446165,
+      15
+     ],
+     [
+      8446286,
+      15
+     ],
+     [
+      8446376,
+      30
+     ],
+     [
+      8446435,
+      10
+     ],
+     [
+      8446468,
+      30
+     ],
+     [
+      8446733,
+      15
+     ],
+     [
+      8446788,
+      10
+     ],
+     [
+      8446792,
+      60
+     ],
+     [
+      8447386,
+      10
+     ],
+     [
+      8447477,
+      15
+     ],
+     [
+      8447715,
+      10
+     ],
+     [
+      8447979,
+      15
+     ],
+     [
+      8447981,
+      30
+     ],
+     [
+      8448017,
+      15
+     ],
+     [
+      8448225,
+      15
+     ],
+     [
+      8448416,
+      30
+     ],
+     [
+      8448549,
+      15
+     ],
+     [
+      8448568,
+      30
+     ],
+     [
+      8448569,
+      10
+     ],
+     [
+      8448616,
+      10
+     ],
+     [
+      8448719,
+      30
+     ],
+     [
+      8448841,
+      30
+     ],
+     [
+      8449461,
+      60
+     ],
+     [
+      8449477,
+      15
+     ],
+     [
+      8449633,
+      30
+     ],
+     [
+      8449939,
+      85
+     ],
+     [
+      8449951,
+      10
+     ],
+     [
+      8449971,
+      10
+     ],
+     [
+      8450471,
+      60
+     ],
+     [
+      8451089,
+      30
+     ],
+     [
+      8451093,
+      10
+     ],
+     [
+      8451122,
+      10
+     ],
+     [
+      8451224,
+      10
+     ],
+     [
+      8451291,
+      30
+     ],
+     [
+      8451293,
+      30
+     ],
+     [
+      8451359,
+      15
+     ],
+     [
+      8451392,
+      60
+     ],
+     [
+      8451827,
+      30
+     ],
+     [
+      8451837,
+      30
+     ],
+     [
+      8451898,
+      30
+     ],
+     [
+      8451901,
+      30
+     ],
+     [
+      8451914,
+      60
+     ],
+     [
+      8452147,
+      10
+     ],
+     [
+      8452161,
+      10
+     ],
+     [
+      8452557,
+      30
+     ],
+     [
+      8452569,
+      15
+     ],
+     [
+      8455752,
+      60
+     ],
+     [
+      8455763,
+      15
+     ],
+     [
+      8455801,
+      30
+     ],
+     [
+      8455805,
+      10
+     ],
+     [
+      8455984,
+      30
+     ],
+     [
+      8456087,
+      15
+     ],
+     [
+      8456118,
+      15
+     ],
+     [
+      8456430,
+      15
+     ],
+     [
+      8456547,
+      15
+     ],
+     [
+      8456595,
+      15
+     ],
+     [
+      8456729,
+      30
+     ],
+     [
+      8456848,
+      15
+     ],
+     [
+      8456850,
+      30
+     ],
+     [
+      8456857,
+      60
+     ],
+     [
+      8457065,
+      85
+     ],
+     [
+      8457083,
+      85
+     ],
+     [
+      8457222,
+      10
+     ],
+     [
+      8457261,
+      10
+     ],
+     [
+      8457319,
+      10
+     ],
+     [
+      8457421,
+      60
+     ],
+     [
+      8457511,
+      30
+     ],
+     [
+      8457533,
+      85
+     ],
+     [
+      8457559,
+      85
+     ],
+     [
+      8457570,
+      60
+     ],
+     [
+      8457866,
+      60
+     ],
+     [
+      8457905,
+      60
+     ],
+     [
+      8457981,
+      10
+     ],
+     [
+      8458348,
+      60
+     ],
+     [
+      8458361,
+      15
+     ],
+     [
+      8458468,
+      15
+     ],
+     [
+      8458504,
+      60
+     ],
+     [
+      8458517,
+      10
+     ],
+     [
+      8458519,
+      30
+     ],
+     [
+      8458526,
+      30
+     ],
+     [
+      8458542,
+      60
+     ],
+     [
+      8458544,
+      15
+     ],
+     [
+      8458546,
+      15
+     ],
+     [
+      8458565,
+      30
+     ],
+     [
+      8458582,
+      15
+     ],
+     [
+      8458600,
+      60
+     ],
+     [
+      8458615,
+      60
+     ],
+     [
+      8458628,
+      60
+     ],
+     [
+      8458637,
+      10
+     ],
+     [
+      8458672,
+      15
+     ],
+     [
+      8458775,
+      60
+     ],
+     [
+      8458821,
+      85
+     ],
+     [
+      8458888,
+      15
+     ],
+     [
+      8458919,
+      85
+     ],
+     [
+      8458947,
+      100
+     ],
+     [
+      8458949,
+      30
+     ],
+     [
+      8458962,
+      60
+     ],
+     [
+      8458966,
+      85
+     ],
+     [
+      8458986,
+      60
+     ],
+     [
+      8458996,
+      30
+     ],
+     [
+      8459010,
+      60
+     ],
+     [
+      8459074,
+      60
+     ],
+     [
+      8459249,
+      30
+     ],
+     [
+      8459256,
+      30
+     ],
+     [
+      8459284,
+      10
+     ],
+     [
+      8459305,
+      60
+     ],
+     [
+      8459333,
+      85
+     ],
+     [
+      8459359,
+      85
+     ],
+     [
+      8459365,
+      30
+     ],
+     [
+      8459424,
+      10
+     ],
+     [
+      8459426,
+      10
+     ],
+     [
+      8459427,
+      10
+     ],
+     [
+      8459442,
+      10
+     ],
+     [
+      8459444,
+      15
+     ],
+     [
+      8459452,
+      85
+     ],
+     [
+      8459459,
+      85
+     ],
+     [
+      8459461,
+      15
+     ],
+     [
+      8459477,
+      60
+     ],
+     [
+      8459478,
+      85
+     ],
+     [
+      8459492,
+      10
+     ],
+     [
+      8459498,
+      60
+     ],
+     [
+      8459519,
+      85
+     ],
+     [
+      8459557,
+      30
+     ],
+     [
+      8459563,
+      60
+     ],
+     [
+      8459567,
+      60
+     ],
+     [
+      8459570,
+      60
+     ],
+     [
+      8459587,
+      10
+     ],
+     [
+      8459609,
+      85
+     ],
+     [
+      8459672,
+      15
+     ],
+     [
+      8459828,
+      85
+     ],
+     [
+      8460051,
+      60
+     ],
+     [
+      8460087,
+      30
+     ],
+     [
+      8460465,
+      10
+     ],
+     [
+      8460493,
+      10
+     ],
+     [
+      8460501,
+      15
+     ],
+     [
+      8460518,
+      60
+     ],
+     [
+      8460526,
+      60
+     ],
+     [
+      8460541,
+      30
+     ],
+     [
+      8460561,
+      15
+     ],
+     [
+      8460594,
+      15
+     ],
+     [
+      8460601,
+      85
+     ],
+     [
+      8460661,
+      30
+     ],
+     [
+      8460663,
+      30
+     ],
+     [
+      8460713,
+      60
+     ],
+     [
+      8460782,
+      30
+     ],
+     [
+      8460836,
+      60
+     ],
+     [
+      8462035,
+      15
+     ],
+     [
+      8462041,
+      30
+     ],
+     [
+      8462044,
+      10
+     ],
+     [
+      8462057,
+      85
+     ],
+     [
+      8462061,
+      30
+     ],
+     [
+      8462084,
+      15
+     ],
+     [
+      8462196,
+      30
+     ],
+     [
+      8462235,
+      85
+     ],
+     [
+      8464959,
+      60
+     ],
+     [
+      8464962,
+      10
+     ],
+     [
+      8464963,
+      30
+     ],
+     [
+      8464984,
+      60
+     ],
+     [
+      8464989,
+      10
+     ],
+     [
+      8465034,
+      60
+     ],
+     [
+      8465042,
+      10
+     ],
+     [
+      8465192,
+      10
+     ],
+     [
+      8465978,
+      15
+     ],
+     [
+      8466142,
+      30
+     ],
+     [
+      8466144,
+      30
+     ],
+     [
+      8466145,
+      30
+     ],
+     [
+      8466153,
+      60
+     ],
+     [
+      8466155,
+      85
+     ],
+     [
+      8466179,
+      85
+     ],
+     [
+      8466251,
+      15
+     ],
+     [
+      8466260,
+      100
+     ],
+     [
+      8466292,
+      15
+     ],
+     [
+      8466317,
+      60
+     ],
+     [
+      8466345,
+      60
+     ],
+     [
+      8467025,
+      60
+     ],
+     [
+      8467304,
+      30
+     ],
+     [
+      8467323,
+      60
+     ],
+     [
+      8467332,
+      15
+     ],
+     [
+      8467335,
+      60
+     ],
+     [
+      8467343,
+      30
+     ],
+     [
+      8467352,
+      10
+     ],
+     [
+      8467387,
+      30
+     ],
+     [
+      8467391,
+      60
+     ],
+     [
+      8467393,
+      30
+     ],
+     [
+      8467400,
+      10
+     ],
+     [
+      8467423,
+      15
+     ],
+     [
+      8467425,
+      60
+     ],
+     [
+      8467427,
+      60
+     ],
+     [
+      8467478,
+      30
+     ],
+     [
+      8467558,
+      85
+     ],
+     [
+      8467579,
+      85
+     ],
+     [
+      8467834,
+      85
+     ],
+     [
+      8467844,
+      10
+     ],
+     [
+      8467857,
+      30
+     ],
+     [
+      8467910,
+      85
+     ],
+     [
+      8467943,
+      15
+     ],
+     [
+      8467956,
+      10
+     ],
+     [
+      8467959,
+      85
+     ],
+     [
+      8467967,
+      30
+     ],
+     [
+      8468011,
+      10
+     ],
+     [
+      8468036,
+      85
+     ],
+     [
+      8468095,
+      15
+     ],
+     [
+      8468103,
+      60
+     ],
+     [
+      8468434,
+      10
+     ],
+     [
+      8468482,
+      15
+     ],
+     [
+      8468492,
+      60
+     ],
+     [
+      8468506,
+      30
+     ],
+     [
+      8468515,
+      30
+     ],
+     [
+      8468520,
+      60
+     ],
+     [
+      8468524,
+      30
+     ],
+     [
+      8468534,
+      30
+     ],
+     [
+      8468535,
+      10
+     ],
+     [
+      8468540,
+      60
+     ],
+     [
+      8468568,
+      30
+     ],
+     [
+      8468578,
+      60
+     ],
+     [
+      8468598,
+      10
+     ],
+     [
+      8468635,
+      10
+     ],
+     [
+      8468695,
+      60
+     ],
+     [
+      8468927,
+      15
+     ],
+     [
+      8469458,
+      30
+     ],
+     [
+      8469483,
+      30
+     ],
+     [
+      8469488,
+      85
+     ],
+     [
+      8469490,
+      15
+     ],
+     [
+      8469543,
+      60
+     ],
+     [
+      8469548,
+      60
+     ],
+     [
+      8469551,
+      85
+     ],
+     [
+      8469598,
+      10
+     ],
+     [
+      8469615,
+      85
+     ],
+     [
+      8469656,
+      85
+     ],
+     [
+      8469666,
+      60
+     ],
+     [
+      8469667,
+      85
+     ],
+     [
+      8469672,
+      60
+     ],
+     [
+      8469675,
+      30
+     ],
+     [
+      8469765,
+      30
+     ],
+     [
+      8469820,
+      30
+     ],
+     [
+      8469992,
+      15
+     ],
+     [
+      8469997,
+      60
+     ],
+     [
+      8470039,
+      30
+     ],
+     [
+      8470074,
+      85
+     ],
+     [
+      8470136,
+      85
+     ],
+     [
+      8470147,
+      30
+     ],
+     [
+      8470192,
+      30
+     ],
+     [
+      8470207,
+      10
+     ],
+     [
+      8470222,
+      15
+     ],
+     [
+      8470283,
+      60
+     ],
+     [
+      8470299,
+      30
+     ],
+     [
+      8470309,
+      15
+     ],
+     [
+      8470310,
+      60
+     ],
+     [
+      8470317,
+      60
+     ],
+     [
+      8470543,
+      10
+     ],
+     [
+      8470612,
+      10
+     ],
+     [
+      8470616,
+      10
+     ],
+     [
+      8470621,
+      10
+     ],
+     [
+      8470622,
+      30
+     ],
+     [
+      8470654,
+      30
+     ],
+     [
+      8470655,
+      15
+     ],
+     [
+      8470661,
+      60
+     ],
+     [
+      8470775,
+      10
+     ],
+     [
+      8470778,
+      15
+     ],
+     [
+      8470839,
+      15
+     ],
+     [
+      8470843,
+      60
+     ],
+     [
+      8470867,
+      60
+     ],
+     [
+      8470882,
+      85
+     ],
+     [
+      8470886,
+      15
+     ],
+     [
+      8470996,
+      60
+     ],
+     [
+      8471185,
+      60
+     ],
+     [
+      8471208,
+      15
+     ],
+     [
+      8471229,
+      30
+     ],
+     [
+      8471231,
+      15
+     ],
+     [
+      8471241,
+      30
+     ],
+     [
+      8471371,
+      15
+     ],
+     [
+      8471390,
+      30
+     ],
+     [
+      8471409,
+      60
+     ],
+     [
+      8471418,
+      60
+     ],
+     [
+      8471476,
+      15
+     ],
+     [
+      8471490,
+      60
+     ],
+     [
+      8471504,
+      30
+     ],
+     [
+      8471521,
+      60
+     ],
+     [
+      8471526,
+      85
+     ],
+     [
+      8471634,
+      30
+     ],
+     [
+      8471664,
+      60
+     ],
+     [
+      8471676,
+      10
+     ],
+     [
+      8471689,
+      85
+     ],
+     [
+      8471699,
+      10
+     ],
+     [
+      8471705,
+      60
+     ],
+     [
+      8471766,
+      15
+     ],
+     [
+      8471803,
+      85
+     ],
+     [
+      8471978,
+      60
+     ],
+     [
+      8472355,
+      30
+     ],
+     [
+      8472370,
+      60
+     ],
+     [
+      8473434,
+      60
+     ],
+     [
+      8473465,
+      30
+     ],
+     [
+      8473485,
+      15
+     ],
+     [
+      8473492,
+      15
+     ],
+     [
+      8473493,
+      85
+     ],
+     [
+      8473494,
+      85
+     ],
+     [
+      8473499,
+      60
+     ],
+     [
+      8473503,
+      60
+     ],
+     [
+      8473541,
+      30
+     ],
+     [
+      8473560,
+      30
+     ],
+     [
+      8473618,
+      15
+     ],
+     [
+      8473646,
+      15
+     ],
+     [
+      8473682,
+      30
+     ],
+     [
+      8473933,
+      15
+     ],
+     [
+      8473972,
+      15
+     ],
+     [
+      8473986,
+      10
+     ],
+     [
+      8474005,
+      85
+     ],
+     [
+      8474009,
+      10
+     ],
+     [
+      8474031,
+      10
+     ],
+     [
+      8474034,
+      10
+     ],
+     [
+      8474102,
+      15
+     ],
+     [
+      8474130,
+      60
+     ],
+     [
+      8474139,
+      60
+     ],
+     [
+      8474176,
+      15
+     ],
+     [
+      8474194,
+      85
+     ],
+     [
+      8474568,
+      30
+     ],
+     [
+      8474579,
+      15
+     ],
+     [
+      8474584,
+      15
+     ],
+     [
+      8474590,
+      15
+     ],
+     [
+      8474606,
+      85
+     ],
+     [
+      8474641,
+      10
+     ],
+     [
+      8474646,
+      30
+     ],
+     [
+      8474682,
+      85
+     ],
+     [
+      8474683,
+      15
+     ],
+     [
+      8474688,
+      60
+     ],
+     [
+      8475085,
+      85
+     ],
+     [
+      8475105,
+      60
+     ],
+     [
+      8475151,
+      10
+     ],
+     [
+      8475155,
+      30
+     ],
+     [
+      8475162,
+      85
+     ],
+     [
+      8475164,
+      10
+     ],
+     [
+      8475179,
+      15
+     ],
+     [
+      8475180,
+      30
+     ],
+     [
+      8475184,
+      15
+     ],
+     [
+      8475203,
+      85
+     ],
+     [
+      8475204,
+      60
+     ],
+     [
+      8475208,
+      15
+     ],
+     [
+      8475222,
+      15
+     ],
+     [
+      8475235,
+      10
+     ],
+     [
+      8475324,
+      30
+     ],
+     [
+      8475436,
+      85
+     ],
+     [
+      8475461,
+      60
+     ],
+     [
+      8475462,
+      10
+     ],
+     [
+      8475625,
+      30
+     ],
+     [
+      8475758,
+      15
+     ],
+     [
+      8475764,
+      10
+     ],
+     [
+      8475770,
+      30
+     ],
+     [
+      8475780,
+      15
+     ],
+     [
+      8475790,
+      15
+     ],
+     [
+      8475798,
+      10
+     ],
+     [
+      8475825,
+      30
+     ],
+     [
+      8475842,
+      15
+     ],
+     [
+      8475852,
+      30
+     ],
+     [
+      8475883,
+      15
+     ],
+     [
+      8475906,
+      15
+     ],
+     [
+      8475958,
+      60
+     ],
+     [
+      8476043,
+      60
+     ],
+     [
+      8476116,
+      30
+     ],
+     [
+      8476158,
+      85
+     ],
+     [
+      8476207,
+      30
+     ],
+     [
+      8476243,
+      85
+     ],
+     [
+      8476312,
+      10
+     ],
+     [
+      8476316,
+      10
+     ],
+     [
+      8476384,
+      85
+     ],
+     [
+      8476390,
+      60
+     ],
+     [
+      8476400,
+      30
+     ],
+     [
+      8476407,
+      60
+     ],
+     [
+      8476434,
+      10
+     ],
+     [
+      8476448,
+      15
+     ],
+     [
+      8476449,
+      60
+     ],
+     [
+      8476458,
+      10
+     ],
+     [
+      8476470,
+      30
+     ],
+     [
+      8476474,
+      30
+     ],
+     [
+      8476483,
+      10
+     ],
+     [
+      8476806,
+      30
+     ],
+     [
+      8476839,
+      60
+     ],
+     [
+      8476854,
+      10
+     ],
+     [
+      8476857,
+      60
+     ],
+     [
+      8476866,
+      85
+     ],
+     [
+      8476885,
+      10
+     ],
+     [
+      8476913,
+      15
+     ],
+     [
+      8476932,
+      30
+     ],
+     [
+      8476934,
+      15
+     ],
+     [
+      8476971,
+      60
+     ],
+     [
+      8476982,
+      85
+     ],
+     [
+      8477009,
+      60
+     ],
+     [
+      8477010,
+      60
+     ],
+     [
+      8477018,
+      30
+     ],
+     [
+      8477034,
+      30
+     ],
+     [
+      8477043,
+      60
+     ],
+     [
+      8477126,
+      30
+     ],
+     [
+      8477205,
+      30
+     ],
+     [
+      8477210,
+      60
+     ],
+     [
+      8477240,
+      30
+     ],
+     [
+      8477447,
+      15
+     ],
+     [
+      8477462,
+      60
+     ],
+     [
+      8477466,
+      85
+     ],
+     [
+      8477527,
+      15
+     ],
+     [
+      8477929,
+      60
+     ],
+     [
+      8477938,
+      60
+     ],
+     [
+      8477941,
+      15
+     ],
+     [
+      8477947,
+      30
+     ],
+     [
+      8477952,
+      30
+     ],
+     [
+      8477969,
+      15
+     ],
+     [
+      8477986,
+      10
+     ],
+     [
+      8477993,
+      60
+     ],
+     [
+      8478021,
+      60
+     ],
+     [
+      8478024,
+      10
+     ],
+     [
+      8478029,
+      85
+     ],
+     [
+      8478046,
+      15
+     ],
+     [
+      8478131,
+      30
+     ],
+     [
+      8478137,
+      60
+     ],
+     [
+      8478366,
+      15
+     ],
+     [
+      8478421,
+      10
+     ],
+     [
+      8478424,
+      30
+     ],
+     [
+      8478425,
+      60
+     ],
+     [
+      8478430,
+      60
+     ],
+     [
+      8478446,
+      85
+     ],
+     [
+      8478466,
+      30
+     ],
+     [
+      8478491,
+      30
+     ],
+     [
+      8478841,
+      60
+     ],
+     [
+      8478866,
+      60
+     ],
+     [
+      8478873,
+      10
+     ],
+     [
+      8479290,
+      85
+     ],
+     [
+      8479294,
+      85
+     ],
+     [
+      8479351,
+      15
+     ],
+     [
+      8479368,
+      15
+     ],
+     [
+      8479372,
+      30
+     ],
+     [
+      8479613,
+      85
+     ],
+     [
+      8479705,
+      60
+     ],
+     [
+      8479933,
+      60
+     ],
+     [
+      8479944,
+      30
+     ],
+     [
+      8479968,
+      60
+     ],
+     [
+      8480001,
+      30
+     ],
+     [
+      8480031,
+      30
+     ],
+     [
+      8480042,
+      85
+     ],
+     [
+      8480068,
+      10
+     ],
+     [
+      8480082,
+      85
+     ],
+     [
+      8480184,
+      60
+     ],
+     [
+      8480186,
+      60
+     ],
+     [
+      8480467,
+      85
+     ],
+     [
+      8480591,
+      85
+     ],
+     [
+      8480748,
+      30
+     ],
+     [
+      8480806,
+      15
+     ],
+     [
+      8480843,
+      10
+     ],
+     [
+      8480870,
+      60
+     ],
+     [
+      8480950,
+      30
+     ],
+     [
+      8481003,
+      85
+     ],
+     [
+      8481122,
+      15
+     ],
+     [
+      8481517,
+      30
+     ],
+     [
+      8481530,
+      85
+     ],
+     [
+      8481533,
+      15
+     ],
+     [
+      8481538,
+      10
+     ],
+     [
+      8481563,
+      10
+     ],
+     [
+      8481605,
+      10
+     ],
+     [
+      8481754,
+      15
+     ],
+     [
+      8481815,
+      85
+     ],
+     [
+      8482118,
+      15
+     ],
+     [
+      8482142,
+      30
+     ],
+     [
+      8482150,
+      85
+     ],
+     [
+      8482178,
+      10
+     ],
+     [
+      8482408,
+      15
+     ],
+     [
+      8482731,
+      10
+     ],
+     [
+      8482745,
+      15
+     ],
+     [
+      8482803,
+      30
+     ],
+     [
+      8483444,
+      85
+     ],
+     [
+      8483445,
+      10
+     ],
+     [
+      8483482,
+      10
+     ],
+     [
+      8483490,
+      10
+     ],
+     [
+      8483521,
+      60
+     ],
+     [
+      8483570,
+      60
+     ],
+     [
+      8483630,
+      60
+     ],
+     [
+      8483746,
+      85
+     ],
+     [
+      8484153,
+      10
+     ],
+     [
+      8484201,
+      15
+     ],
+     [
+      8484262,
+      10
+     ],
+     [
+      8484762,
+      10
+     ],
+     [
+      8484859,
+      10
+     ],
+     [
+      8485400,
+      15
+     ],
+     [
+      8485512,
+      10
+     ],
+     [
+      8486052,
+      85
+     ]
+    ],
+    "rule": "team-ANA",
+    "version": 2,
+    "base": "team-ANA",
+    "asof": "2026-11-25",
+    "currentRoster": [
+     8473986,
+     8475798,
+     8476316,
+     8478024,
+     8478366,
+     8478421,
+     8478873,
+     8480068,
+     8480843,
+     8481538,
+     8481563,
+     8481605,
+     8481754,
+     8482118,
+     8482178,
+     8482408,
+     8482731,
+     8483445,
+     8483482,
+     8483490,
+     8484153,
+     8484201,
+     8484262,
+     8484762,
+     8484859,
+     8485400,
+     8485512
+    ],
+    "lowToiRoster": [
+     8478366,
+     8481754,
+     8482118,
+     8482408,
+     8484201,
+     8485400
+    ]
+   },
+   {
+    "id": "dc3-team-COL-1e11930b58f2",
+    "family": "Sweaters",
+    "text": "Name a player who played for Colorado Avalanche.",
+    "note": "Verified appearances through 2026-11-25. Current roster: 10 points; six lowest average-TOI skaters: 15. Snapshot 2026-11-25; former players count.",
+    "answers": [
+     [
+      8445000,
+      10
+     ],
+     [
+      8445470,
+      30
+     ],
+     [
+      8445550,
+      10
+     ],
+     [
+      8445621,
+      10
+     ],
+     [
+      8445739,
+      15
+     ],
+     [
+      8446830,
+      30
+     ],
+     [
+      8446831,
+      30
+     ],
+     [
+      8446847,
+      30
+     ],
+     [
+      8447187,
+      15
+     ],
+     [
+      8447363,
+      15
+     ],
+     [
+      8447515,
+      30
+     ],
+     [
+      8448117,
+      30
+     ],
+     [
+      8448415,
+      10
+     ],
+     [
+      8448554,
+      15
+     ],
+     [
+      8448569,
+      10
+     ],
+     [
+      8448674,
+      30
+     ],
+     [
+      8448770,
+      10
+     ],
+     [
+      8448772,
+      10
+     ],
+     [
+      8448797,
+      15
+     ],
+     [
+      8448822,
+      30
+     ],
+     [
+      8449137,
+      30
+     ],
+     [
+      8449773,
+      10
+     ],
+     [
+      8449895,
+      30
+     ],
+     [
+      8450773,
+      15
+     ],
+     [
+      8450817,
+      15
+     ],
+     [
+      8451033,
+      10
+     ],
+     [
+      8451073,
+      30
+     ],
+     [
+      8451089,
+      30
+     ],
+     [
+      8451101,
+      10
+     ],
+     [
+      8451293,
+      30
+     ],
+     [
+      8451834,
+      60
+     ],
+     [
+      8451991,
+      10
+     ],
+     [
+      8452516,
+      15
+     ],
+     [
+      8452569,
+      10
+     ],
+     [
+      8455666,
+      30
+     ],
+     [
+      8455976,
+      85
+     ],
+     [
+      8455984,
+      30
+     ],
+     [
+      8456100,
+      30
+     ],
+     [
+      8456283,
+      10
+     ],
+     [
+      8456567,
+      30
+     ],
+     [
+      8456745,
+      30
+     ],
+     [
+      8456770,
+      15
+     ],
+     [
+      8456850,
+      15
+     ],
+     [
+      8456852,
+      10
+     ],
+     [
+      8456882,
+      30
+     ],
+     [
+      8456933,
+      15
+     ],
+     [
+      8457261,
+      15
+     ],
+     [
+      8457384,
+      10
+     ],
+     [
+      8457566,
+      15
+     ],
+     [
+      8457704,
+      15
+     ],
+     [
+      8457981,
+      10
+     ],
+     [
+      8458031,
+      15
+     ],
+     [
+      8458048,
+      60
+     ],
+     [
+      8458520,
+      10
+     ],
+     [
+      8458525,
+      15
+     ],
+     [
+      8458534,
+      30
+     ],
+     [
+      8458536,
+      15
+     ],
+     [
+      8458538,
+      15
+     ],
+     [
+      8458544,
+      10
+     ],
+     [
+      8458560,
+      85
+     ],
+     [
+      8458572,
+      15
+     ],
+     [
+      8458575,
+      60
+     ],
+     [
+      8458666,
+      60
+     ],
+     [
+      8458801,
+      85
+     ],
+     [
+      8458805,
+      60
+     ],
+     [
+      8458942,
+      30
+     ],
+     [
+      8458964,
+      85
+     ],
+     [
+      8458972,
+      15
+     ],
+     [
+      8458983,
+      30
+     ],
+     [
+      8459019,
+      30
+     ],
+     [
+      8459038,
+      60
+     ],
+     [
+      8459094,
+      10
+     ],
+     [
+      8459122,
+      10
+     ],
+     [
+      8459264,
+      85
+     ],
+     [
+      8459425,
+      30
+     ],
+     [
+      8459426,
+      10
+     ],
+     [
+      8459432,
+      100
+     ],
+     [
+      8459436,
+      15
+     ],
+     [
+      8459441,
+      60
+     ],
+     [
+      8459450,
+      15
+     ],
+     [
+      8459538,
+      30
+     ],
+     [
+      8459541,
+      60
+     ],
+     [
+      8459550,
+      85
+     ],
+     [
+      8459566,
+      85
+     ],
+     [
+      8459574,
+      15
+     ],
+     [
+      8459576,
+      60
+     ],
+     [
+      8459596,
+      10
+     ],
+     [
+      8459614,
+      60
+     ],
+     [
+      8459654,
+      85
+     ],
+     [
+      8459996,
+      60
+     ],
+     [
+      8460012,
+      15
+     ],
+     [
+      8460087,
+      30
+     ],
+     [
+      8460254,
+      10
+     ],
+     [
+      8460496,
+      10
+     ],
+     [
+      8460502,
+      30
+     ],
+     [
+      8460509,
+      30
+     ],
+     [
+      8460526,
+      60
+     ],
+     [
+      8460535,
+      10
+     ],
+     [
+      8460562,
+      10
+     ],
+     [
+      8460577,
+      10
+     ],
+     [
+      8460620,
+      30
+     ],
+     [
+      8460649,
+      30
+     ],
+     [
+      8460753,
+      85
+     ],
+     [
+      8462042,
+      10
+     ],
+     [
+      8462044,
+      15
+     ],
+     [
+      8462055,
+      30
+     ],
+     [
+      8462068,
+      30
+     ],
+     [
+      8462069,
+      60
+     ],
+     [
+      8462082,
+      30
+     ],
+     [
+      8462115,
+      30
+     ],
+     [
+      8462198,
+      30
+     ],
+     [
+      8462213,
+      85
+     ],
+     [
+      8462220,
+      85
+     ],
+     [
+      8462600,
+      85
+     ],
+     [
+      8463638,
+      30
+     ],
+     [
+      8464922,
+      85
+     ],
+     [
+      8464962,
+      15
+     ],
+     [
+      8464966,
+      10
+     ],
+     [
+      8464975,
+      15
+     ],
+     [
+      8464981,
+      15
+     ],
+     [
+      8464993,
+      60
+     ],
+     [
+      8464997,
+      85
+     ],
+     [
+      8465002,
+      85
+     ],
+     [
+      8465016,
+      30
+     ],
+     [
+      8465113,
+      30
+     ],
+     [
+      8465122,
+      10
+     ],
+     [
+      8465175,
+      15
+     ],
+     [
+      8465968,
+      30
+     ],
+     [
+      8466158,
+      10
+     ],
+     [
+      8466189,
+      30
+     ],
+     [
+      8466210,
+      30
+     ],
+     [
+      8466290,
+      30
+     ],
+     [
+      8466300,
+      30
+     ],
+     [
+      8466316,
+      15
+     ],
+     [
+      8466357,
+      60
+     ],
+     [
+      8467331,
+      15
+     ],
+     [
+      8467338,
+      10
+     ],
+     [
+      8467343,
+      10
+     ],
+     [
+      8467364,
+      60
+     ],
+     [
+      8467369,
+      15
+     ],
+     [
+      8467379,
+      60
+     ],
+     [
+      8467400,
+      10
+     ],
+     [
+      8467453,
+      30
+     ],
+     [
+      8467483,
+      15
+     ],
+     [
+      8467519,
+      10
+     ],
+     [
+      8467898,
+      85
+     ],
+     [
+      8467904,
+      85
+     ],
+     [
+      8467917,
+      15
+     ],
+     [
+      8467950,
+      15
+     ],
+     [
+      8468025,
+      60
+     ],
+     [
+      8468056,
+      60
+     ],
+     [
+      8468085,
+      10
+     ],
+     [
+      8468095,
+      60
+     ],
+     [
+      8468113,
+      30
+     ],
+     [
+      8468121,
+      85
+     ],
+     [
+      8468184,
+      60
+     ],
+     [
+      8468432,
+      15
+     ],
+     [
+      8468466,
+      30
+     ],
+     [
+      8468494,
+      60
+     ],
+     [
+      8468568,
+      30
+     ],
+     [
+      8468611,
+      30
+     ],
+     [
+      8468626,
+      60
+     ],
+     [
+      8468636,
+      30
+     ],
+     [
+      8468639,
+      10
+     ],
+     [
+      8469467,
+      15
+     ],
+     [
+      8469492,
+      15
+     ],
+     [
+      8469508,
+      15
+     ],
+     [
+      8469514,
+      15
+     ],
+     [
+      8469591,
+      15
+     ],
+     [
+      8469670,
+      15
+     ],
+     [
+      8469707,
+      15
+     ],
+     [
+      8470039,
+      30
+     ],
+     [
+      8470062,
+      85
+     ],
+     [
+      8470152,
+      60
+     ],
+     [
+      8470171,
+      15
+     ],
+     [
+      8470187,
+      30
+     ],
+     [
+      8470189,
+      60
+     ],
+     [
+      8470203,
+      60
+     ],
+     [
+      8470317,
+      30
+     ],
+     [
+      8470378,
+      30
+     ],
+     [
+      8470575,
+      60
+     ],
+     [
+      8470610,
+      15
+     ],
+     [
+      8470613,
+      10
+     ],
+     [
+      8470623,
+      85
+     ],
+     [
+      8470656,
+      85
+     ],
+     [
+      8470672,
+      30
+     ],
+     [
+      8470697,
+      60
+     ],
+     [
+      8470699,
+      15
+     ],
+     [
+      8470724,
+      15
+     ],
+     [
+      8470750,
+      15
+     ],
+     [
+      8470755,
+      15
+     ],
+     [
+      8470839,
+      15
+     ],
+     [
+      8470877,
+      15
+     ],
+     [
+      8470880,
+      30
+     ],
+     [
+      8471004,
+      85
+     ],
+     [
+      8471227,
+      60
+     ],
+     [
+      8471234,
+      15
+     ],
+     [
+      8471260,
+      10
+     ],
+     [
+      8471262,
+      10
+     ],
+     [
+      8471326,
+      30
+     ],
+     [
+      8471327,
+      85
+     ],
+     [
+      8471331,
+      30
+     ],
+     [
+      8471396,
+      85
+     ],
+     [
+      8471413,
+      85
+     ],
+     [
+      8471436,
+      15
+     ],
+     [
+      8471450,
+      30
+     ],
+     [
+      8471476,
+      15
+     ],
+     [
+      8471504,
+      15
+     ],
+     [
+      8471657,
+      10
+     ],
+     [
+      8471669,
+      10
+     ],
+     [
+      8471677,
+      10
+     ],
+     [
+      8471681,
+      30
+     ],
+     [
+      8471699,
+      10
+     ],
+     [
+      8471703,
+      30
+     ],
+     [
+      8471708,
+      60
+     ],
+     [
+      8471718,
+      30
+     ],
+     [
+      8471730,
+      85
+     ],
+     [
+      8471753,
+      60
+     ],
+     [
+      8471786,
+      85
+     ],
+     [
+      8471794,
+      15
+     ],
+     [
+      8471829,
+      85
+     ],
+     [
+      8471879,
+      30
+     ],
+     [
+      8471915,
+      85
+     ],
+     [
+      8472263,
+      60
+     ],
+     [
+      8473407,
+      85
+     ],
+     [
+      8473446,
+      10
+     ],
+     [
+      8473465,
+      15
+     ],
+     [
+      8473485,
+      15
+     ],
+     [
+      8473499,
+      60
+     ],
+     [
+      8473526,
+      30
+     ],
+     [
+      8473541,
+      30
+     ],
+     [
+      8473544,
+      30
+     ],
+     [
+      8473550,
+      60
+     ],
+     [
+      8473574,
+      30
+     ],
+     [
+      8473575,
+      10
+     ],
+     [
+      8473700,
+      30
+     ],
+     [
+      8473979,
+      60
+     ],
+     [
+      8474001,
+      30
+     ],
+     [
+      8474002,
+      85
+     ],
+     [
+      8474008,
+      60
+     ],
+     [
+      8474013,
+      10
+     ],
+     [
+      8474030,
+      60
+     ],
+     [
+      8474031,
+      15
+     ],
+     [
+      8474089,
+      30
+     ],
+     [
+      8474092,
+      85
+     ],
+     [
+      8474189,
+      15
+     ],
+     [
+      8474207,
+      15
+     ],
+     [
+      8474569,
+      15
+     ],
+     [
+      8474571,
+      30
+     ],
+     [
+      8474577,
+      30
+     ],
+     [
+      8474597,
+      60
+     ],
+     [
+      8474605,
+      30
+     ],
+     [
+      8474611,
+      60
+     ],
+     [
+      8474636,
+      60
+     ],
+     [
+      8474660,
+      60
+     ],
+     [
+      8474685,
+      15
+     ],
+     [
+      8474688,
+      60
+     ],
+     [
+      8474705,
+      60
+     ],
+     [
+      8474717,
+      30
+     ],
+     [
+      8474727,
+      60
+     ],
+     [
+      8474730,
+      60
+     ],
+     [
+      8474743,
+      60
+     ],
+     [
+      8475150,
+      60
+     ],
+     [
+      8475158,
+      10
+     ],
+     [
+      8475168,
+      10
+     ],
+     [
+      8475172,
+      10
+     ],
+     [
+      8475177,
+      15
+     ],
+     [
+      8475193,
+      15
+     ],
+     [
+      8475197,
+      10
+     ],
+     [
+      8475199,
+      60
+     ],
+     [
+      8475206,
+      60
+     ],
+     [
+      8475246,
+      60
+     ],
+     [
+      8475266,
+      60
+     ],
+     [
+      8475268,
+      30
+     ],
+     [
+      8475311,
+      30
+     ],
+     [
+      8475461,
+      60
+     ],
+     [
+      8475717,
+      30
+     ],
+     [
+      8475729,
+      85
+     ],
+     [
+      8475745,
+      15
+     ],
+     [
+      8475747,
+      15
+     ],
+     [
+      8475754,
+      10
+     ],
+     [
+      8475759,
+      60
+     ],
+     [
+      8475767,
+      85
+     ],
+     [
+      8475768,
+      10
+     ],
+     [
+      8475780,
+      30
+     ],
+     [
+      8475793,
+      15
+     ],
+     [
+      8475809,
+      10
+     ],
+     [
+      8475820,
+      15
+     ],
+     [
+      8475824,
+      85
+     ],
+     [
+      8475831,
+      15
+     ],
+     [
+      8475878,
+      60
+     ],
+     [
+      8475958,
+      60
+     ],
+     [
+      8476043,
+      60
+     ],
+     [
+      8476225,
+      85
+     ],
+     [
+      8476234,
+      60
+     ],
+     [
+      8476310,
+      60
+     ],
+     [
+      8476312,
+      10
+     ],
+     [
+      8476391,
+      60
+     ],
+     [
+      8476422,
+      10
+     ],
+     [
+      8476428,
+      60
+     ],
+     [
+      8476438,
+      15
+     ],
+     [
+      8476442,
+      10
+     ],
+     [
+      8476455,
+      10
+     ],
+     [
+      8476464,
+      60
+     ],
+     [
+      8476480,
+      30
+     ],
+     [
+      8476511,
+      85
+     ],
+     [
+      8476536,
+      85
+     ],
+     [
+      8476779,
+      30
+     ],
+     [
+      8476798,
+      85
+     ],
+     [
+      8476850,
+      30
+     ],
+     [
+      8476851,
+      30
+     ],
+     [
+      8476855,
+      30
+     ],
+     [
+      8476870,
+      60
+     ],
+     [
+      8476888,
+      30
+     ],
+     [
+      8476918,
+      100
+     ],
+     [
+      8476948,
+      60
+     ],
+     [
+      8476952,
+      60
+     ],
+     [
+      8476967,
+      10
+     ],
+     [
+      8477021,
+      15
+     ],
+     [
+      8477070,
+      60
+     ],
+     [
+      8477073,
+      30
+     ],
+     [
+      8477126,
+      30
+     ],
+     [
+      8477202,
+      85
+     ],
+     [
+      8477312,
+      85
+     ],
+     [
+      8477320,
+      60
+     ],
+     [
+      8477335,
+      60
+     ],
+     [
+      8477413,
+      30
+     ],
+     [
+      8477425,
+      15
+     ],
+     [
+      8477435,
+      15
+     ],
+     [
+      8477444,
+      10
+     ],
+     [
+      8477448,
+      60
+     ],
+     [
+      8477453,
+      60
+     ],
+     [
+      8477456,
+      10
+     ],
+     [
+      8477476,
+      10
+     ],
+     [
+      8477484,
+      60
+     ],
+     [
+      8477492,
+      10
+     ],
+     [
+      8477494,
+      15
+     ],
+     [
+      8477501,
+      10
+     ],
+     [
+      8477507,
+      10
+     ],
+     [
+      8477902,
+      60
+     ],
+     [
+      8477914,
+      85
+     ],
+     [
+      8477916,
+      85
+     ],
+     [
+      8477930,
+      15
+     ],
+     [
+      8477971,
+      60
+     ],
+     [
+      8477973,
+      60
+     ],
+     [
+      8477979,
+      30
+     ],
+     [
+      8477992,
+      60
+     ],
+     [
+      8478028,
+      60
+     ],
+     [
+      8478038,
+      10
+     ],
+     [
+      8478039,
+      60
+     ],
+     [
+      8478073,
+      60
+     ],
+     [
+      8478106,
+      60
+     ],
+     [
+      8478109,
+      30
+     ],
+     [
+      8478211,
+      60
+     ],
+     [
+      8478406,
+      10
+     ],
+     [
+      8478420,
+      10
+     ],
+     [
+      8478421,
+      30
+     ],
+     [
+      8478430,
+      60
+     ],
+     [
+      8478452,
+      60
+     ],
+     [
+      8478454,
+      15
+     ],
+     [
+      8478462,
+      15
+     ],
+     [
+      8478502,
+      60
+     ],
+     [
+      8478508,
+      30
+     ],
+     [
+      8478542,
+      15
+     ],
+     [
+      8478561,
+      30
+     ],
+     [
+      8478842,
+      85
+     ],
+     [
+      8478843,
+      30
+     ],
+     [
+      8479252,
+      60
+     ],
+     [
+      8479324,
+      30
+     ],
+     [
+      8479362,
+      85
+     ],
+     [
+      8479370,
+      10
+     ],
+     [
+      8479379,
+      60
+     ],
+     [
+      8479387,
+      60
+     ],
+     [
+      8479398,
+      10
+     ],
+     [
+      8479439,
+      60
+     ],
+     [
+      8479520,
+      30
+     ],
+     [
+      8479525,
+      15
+     ],
+     [
+      8479530,
+      85
+     ],
+     [
+      8479573,
+      60
+     ],
+     [
+      8479718,
+      60
+     ],
+     [
+      8479746,
+      85
+     ],
+     [
+      8479982,
+      60
+     ],
+     [
+      8479999,
+      15
+     ],
+     [
+      8480032,
+      85
+     ],
+     [
+      8480039,
+      10
+     ],
+     [
+      8480069,
+      10
+     ],
+     [
+      8480112,
+      85
+     ],
+     [
+      8480157,
+      60
+     ],
+     [
+      8480326,
+      60
+     ],
+     [
+      8480336,
+      30
+     ],
+     [
+      8480382,
+      30
+     ],
+     [
+      8480448,
+      10
+     ],
+     [
+      8480748,
+      30
+     ],
+     [
+      8480822,
+      60
+     ],
+     [
+      8480835,
+      30
+     ],
+     [
+      8480846,
+      85
+     ],
+     [
+      8480913,
+      85
+     ],
+     [
+      8480925,
+      60
+     ],
+     [
+      8481020,
+      60
+     ],
+     [
+      8481031,
+      85
+     ],
+     [
+      8481042,
+      60
+     ],
+     [
+      8481186,
+      10
+     ],
+     [
+      8481206,
+      60
+     ],
+     [
+      8481477,
+      30
+     ],
+     [
+      8481524,
+      30
+     ],
+     [
+      8481529,
+      85
+     ],
+     [
+      8481550,
+      15
+     ],
+     [
+      8481618,
+      15
+     ],
+     [
+      8481641,
+      15
+     ],
+     [
+      8481704,
+      60
+     ],
+     [
+      8481737,
+      85
+     ],
+     [
+      8482072,
+      60
+     ],
+     [
+      8482111,
+      60
+     ],
+     [
+      8482147,
+      85
+     ],
+     [
+      8482250,
+      85
+     ],
+     [
+      8482470,
+      60
+     ],
+     [
+      8482507,
+      85
+     ],
+     [
+      8482712,
+      85
+     ],
+     [
+      8482742,
+      15
+     ],
+     [
+      8482768,
+      15
+     ],
+     [
+      8482942,
+      85
+     ],
+     [
+      8482947,
+      60
+     ],
+     [
+      8482953,
+      85
+     ],
+     [
+      8483039,
+      85
+     ],
+     [
+      8483565,
+      60
+     ],
+     [
+      8483569,
+      85
+     ],
+     [
+      8483570,
+      60
+     ],
+     [
+      8483930,
+      60
+     ],
+     [
+      8484149,
+      15
+     ],
+     [
+      8484221,
+      60
+     ],
+     [
+      8484255,
+      85
+     ],
+     [
+      8484258,
+      10
+     ],
+     [
+      8484259,
+      85
+     ],
+     [
+      8484976,
+      85
+     ],
+     [
+      8485105,
+      85
+     ],
+     [
+      8486171,
+      10
+     ]
+    ],
+    "rule": "team-COL",
+    "version": 2,
+    "base": "team-COL",
+    "asof": "2026-11-25",
+    "currentRoster": [
+     8470613,
+     8475172,
+     8475754,
+     8475768,
+     8475809,
+     8476312,
+     8476422,
+     8476455,
+     8476967,
+     8477476,
+     8477492,
+     8478038,
+     8478406,
+     8478454,
+     8478462,
+     8480039,
+     8480069,
+     8480448,
+     8481186,
+     8481550,
+     8482742,
+     8482768,
+     8484149,
+     8484258,
+     8486171
+    ],
+    "lowToiRoster": [
+     8478454,
+     8478462,
+     8481550,
+     8482742,
+     8482768,
+     8484149
+    ]
+   },
+   {
+    "id": "dc3-team-NYI-22283e2cbb2f",
+    "family": "Sweaters",
+    "text": "Name a player who played for New York Islanders.",
+    "note": "Verified appearances through 2026-11-25. Current roster: 10 points; six lowest average-TOI skaters: 15. Snapshot 2026-11-25; former players count.",
+    "answers": [
+     [
+      8444897,
+      15
+     ],
+     [
+      8444905,
+      60
+     ],
+     [
+      8444963,
+      30
+     ],
+     [
+      8445053,
+      60
+     ],
+     [
+      8445084,
+      60
+     ],
+     [
+      8445181,
+      30
+     ],
+     [
+      8445281,
+      15
+     ],
+     [
+      8445313,
+      15
+     ],
+     [
+      8445323,
+      15
+     ],
+     [
+      8445385,
+      30
+     ],
+     [
+      8445423,
+      10
+     ],
+     [
+      8445424,
+      15
+     ],
+     [
+      8445428,
+      15
+     ],
+     [
+      8445430,
+      60
+     ],
+     [
+      8445440,
+      15
+     ],
+     [
+      8445530,
+      60
+     ],
+     [
+      8445611,
+      10
+     ],
+     [
+      8445617,
+      10
+     ],
+     [
+      8445625,
+      30
+     ],
+     [
+      8445653,
+      30
+     ],
+     [
+      8445694,
+      60
+     ],
+     [
+      8445816,
+      30
+     ],
+     [
+      8445823,
+      85
+     ],
+     [
+      8445983,
+      30
+     ],
+     [
+      8446023,
+      30
+     ],
+     [
+      8446026,
+      30
+     ],
+     [
+      8446081,
+      30
+     ],
+     [
+      8446084,
+      60
+     ],
+     [
+      8446085,
+      15
+     ],
+     [
+      8446127,
+      60
+     ],
+     [
+      8446129,
+      30
+     ],
+     [
+      8446226,
+      30
+     ],
+     [
+      8446238,
+      15
+     ],
+     [
+      8446263,
+      30
+     ],
+     [
+      8446286,
+      30
+     ],
+     [
+      8446289,
+      15
+     ],
+     [
+      8446296,
+      85
+     ],
+     [
+      8446404,
+      85
+     ],
+     [
+      8446408,
+      15
+     ],
+     [
+      8446417,
+      10
+     ],
+     [
+      8446424,
+      15
+     ],
+     [
+      8446449,
+      60
+     ],
+     [
+      8446480,
+      60
+     ],
+     [
+      8446482,
+      15
+     ],
+     [
+      8446552,
+      30
+     ],
+     [
+      8446734,
+      85
+     ],
+     [
+      8446823,
+      10
+     ],
+     [
+      8446826,
+      15
+     ],
+     [
+      8446829,
+      30
+     ],
+     [
+      8446830,
+      10
+     ],
+     [
+      8446838,
+      10
+     ],
+     [
+      8446932,
+      30
+     ],
+     [
+      8446936,
+      60
+     ],
+     [
+      8446944,
+      30
+     ],
+     [
+      8446993,
+      60
+     ],
+     [
+      8447004,
+      15
+     ],
+     [
+      8447169,
+      10
+     ],
+     [
+      8447193,
+      10
+     ],
+     [
+      8447296,
+      10
+     ],
+     [
+      8447339,
+      60
+     ],
+     [
+      8447373,
+      30
+     ],
+     [
+      8447402,
+      30
+     ],
+     [
+      8447414,
+      85
+     ],
+     [
+      8447435,
+      60
+     ],
+     [
+      8447436,
+      60
+     ],
+     [
+      8447438,
+      60
+     ],
+     [
+      8447449,
+      30
+     ],
+     [
+      8447458,
+      60
+     ],
+     [
+      8447477,
+      30
+     ],
+     [
+      8447479,
+      30
+     ],
+     [
+      8447503,
+      60
+     ],
+     [
+      8447506,
+      85
+     ],
+     [
+      8447551,
+      85
+     ],
+     [
+      8447577,
+      15
+     ],
+     [
+      8447589,
+      60
+     ],
+     [
+      8447610,
+      60
+     ],
+     [
+      8447658,
+      10
+     ],
+     [
+      8447666,
+      10
+     ],
+     [
+      8447683,
+      85
+     ],
+     [
+      8447709,
+      15
+     ],
+     [
+      8447732,
+      60
+     ],
+     [
+      8447740,
+      15
+     ],
+     [
+      8447748,
+      30
+     ],
+     [
+      8447775,
+      10
+     ],
+     [
+      8447782,
+      30
+     ],
+     [
+      8447822,
+      30
+     ],
+     [
+      8447857,
+      60
+     ],
+     [
+      8447872,
+      60
+     ],
+     [
+      8447945,
+      85
+     ],
+     [
+      8447949,
+      85
+     ],
+     [
+      8447968,
+      60
+     ],
+     [
+      8447981,
+      15
+     ],
+     [
+      8447985,
+      15
+     ],
+     [
+      8447995,
+      10
+     ],
+     [
+      8448016,
+      85
+     ],
+     [
+      8448017,
+      100
+     ],
+     [
+      8448020,
+      15
+     ],
+     [
+      8448053,
+      30
+     ],
+     [
+      8448222,
+      30
+     ],
+     [
+      8448225,
+      30
+     ],
+     [
+      8448229,
+      85
+     ],
+     [
+      8448286,
+      85
+     ],
+     [
+      8448361,
+      85
+     ],
+     [
+      8448370,
+      15
+     ],
+     [
+      8448401,
+      30
+     ],
+     [
+      8448403,
+      15
+     ],
+     [
+      8448439,
+      60
+     ],
+     [
+      8448467,
+      15
+     ],
+     [
+      8448489,
+      10
+     ],
+     [
+      8448517,
+      60
+     ],
+     [
+      8448521,
+      15
+     ],
+     [
+      8448547,
+      60
+     ],
+     [
+      8448554,
+      15
+     ],
+     [
+      8448555,
+      30
+     ],
+     [
+      8448568,
+      15
+     ],
+     [
+      8448626,
+      10
+     ],
+     [
+      8448643,
+      15
+     ],
+     [
+      8448649,
+      15
+     ],
+     [
+      8448664,
+      30
+     ],
+     [
+      8448674,
+      10
+     ],
+     [
+      8448675,
+      30
+     ],
+     [
+      8448687,
+      60
+     ],
+     [
+      8448708,
+      30
+     ],
+     [
+      8448725,
+      85
+     ],
+     [
+      8448755,
+      30
+     ],
+     [
+      8448778,
+      85
+     ],
+     [
+      8448811,
+      10
+     ],
+     [
+      8448825,
+      10
+     ],
+     [
+      8448841,
+      30
+     ],
+     [
+      8448845,
+      15
+     ],
+     [
+      8448870,
+      30
+     ],
+     [
+      8448885,
+      15
+     ],
+     [
+      8448957,
+      85
+     ],
+     [
+      8449079,
+      15
+     ],
+     [
+      8449083,
+      85
+     ],
+     [
+      8449095,
+      30
+     ],
+     [
+      8449102,
+      15
+     ],
+     [
+      8449115,
+      85
+     ],
+     [
+      8449140,
+      60
+     ],
+     [
+      8449174,
+      30
+     ],
+     [
+      8449191,
+      30
+     ],
+     [
+      8449192,
+      30
+     ],
+     [
+      8449206,
+      10
+     ],
+     [
+      8449222,
+      85
+     ],
+     [
+      8449328,
+      30
+     ],
+     [
+      8449384,
+      10
+     ],
+     [
+      8449412,
+      30
+     ],
+     [
+      8449420,
+      15
+     ],
+     [
+      8449442,
+      60
+     ],
+     [
+      8449456,
+      85
+     ],
+     [
+      8449457,
+      60
+     ],
+     [
+      8449488,
+      30
+     ],
+     [
+      8449547,
+      30
+     ],
+     [
+      8449570,
+      10
+     ],
+     [
+      8449607,
+      30
+     ],
+     [
+      8449633,
+      30
+     ],
+     [
+      8449713,
+      15
+     ],
+     [
+      8449740,
+      15
+     ],
+     [
+      8449742,
+      15
+     ],
+     [
+      8449868,
+      30
+     ],
+     [
+      8449877,
+      60
+     ],
+     [
+      8449902,
+      10
+     ],
+     [
+      8449925,
+      15
+     ],
+     [
+      8449932,
+      10
+     ],
+     [
+      8449961,
+      15
+     ],
+     [
+      8449969,
+      85
+     ],
+     [
+      8449985,
+      85
+     ],
+     [
+      8450196,
+      15
+     ],
+     [
+      8450197,
+      60
+     ],
+     [
+      8450267,
+      60
+     ],
+     [
+      8450314,
+      10
+     ],
+     [
+      8450389,
+      10
+     ],
+     [
+      8450505,
+      10
+     ],
+     [
+      8450508,
+      15
+     ],
+     [
+      8450554,
+      15
+     ],
+     [
+      8450558,
+      60
+     ],
+     [
+      8450742,
+      15
+     ],
+     [
+      8450767,
+      15
+     ],
+     [
+      8450802,
+      15
+     ],
+     [
+      8450804,
+      85
+     ],
+     [
+      8451005,
+      15
+     ],
+     [
+      8451093,
+      15
+     ],
+     [
+      8451224,
+      15
+     ],
+     [
+      8451293,
+      30
+     ],
+     [
+      8451359,
+      10
+     ],
+     [
+      8451525,
+      10
+     ],
+     [
+      8451563,
+      85
+     ],
+     [
+      8451614,
+      30
+     ],
+     [
+      8451657,
+      60
+     ],
+     [
+      8451673,
+      30
+     ],
+     [
+      8451712,
+      85
+     ],
+     [
+      8451741,
+      15
+     ],
+     [
+      8451793,
+      30
+     ],
+     [
+      8451794,
+      10
+     ],
+     [
+      8451800,
+      10
+     ],
+     [
+      8451805,
+      30
+     ],
+     [
+      8451820,
+      30
+     ],
+     [
+      8451857,
+      30
+     ],
+     [
+      8451860,
+      60
+     ],
+     [
+      8451898,
+      10
+     ],
+     [
+      8451915,
+      60
+     ],
+     [
+      8451917,
+      10
+     ],
+     [
+      8451954,
+      60
+     ],
+     [
+      8451965,
+      10
+     ],
+     [
+      8451987,
+      30
+     ],
+     [
+      8451991,
+      10
+     ],
+     [
+      8452157,
+      15
+     ],
+     [
+      8452197,
+      60
+     ],
+     [
+      8452239,
+      15
+     ],
+     [
+      8452240,
+      15
+     ],
+     [
+      8452278,
+      85
+     ],
+     [
+      8452355,
+      60
+     ],
+     [
+      8452501,
+      10
+     ],
+     [
+      8455408,
+      60
+     ],
+     [
+      8455447,
+      30
+     ],
+     [
+      8455564,
+      60
+     ],
+     [
+      8455976,
+      85
+     ],
+     [
+      8455984,
+      30
+     ],
+     [
+      8456023,
+      60
+     ],
+     [
+      8456087,
+      15
+     ],
+     [
+      8456100,
+      30
+     ],
+     [
+      8456118,
+      30
+     ],
+     [
+      8456137,
+      30
+     ],
+     [
+      8456153,
+      60
+     ],
+     [
+      8456264,
+      60
+     ],
+     [
+      8456306,
+      60
+     ],
+     [
+      8456430,
+      10
+     ],
+     [
+      8456441,
+      60
+     ],
+     [
+      8456464,
+      10
+     ],
+     [
+      8456514,
+      30
+     ],
+     [
+      8456567,
+      30
+     ],
+     [
+      8456576,
+      60
+     ],
+     [
+      8456586,
+      85
+     ],
+     [
+      8456588,
+      30
+     ],
+     [
+      8456595,
+      15
+     ],
+     [
+      8456695,
+      60
+     ],
+     [
+      8456793,
+      60
+     ],
+     [
+      8456903,
+      30
+     ],
+     [
+      8456932,
+      60
+     ],
+     [
+      8457174,
+      85
+     ],
+     [
+      8457191,
+      15
+     ],
+     [
+      8457194,
+      60
+     ],
+     [
+      8457214,
+      85
+     ],
+     [
+      8457319,
+      10
+     ],
+     [
+      8457491,
+      15
+     ],
+     [
+      8457685,
+      30
+     ],
+     [
+      8457714,
+      30
+     ],
+     [
+      8457805,
+      60
+     ],
+     [
+      8457971,
+      85
+     ],
+     [
+      8457983,
+      30
+     ],
+     [
+      8458031,
+      15
+     ],
+     [
+      8458033,
+      85
+     ],
+     [
+      8458069,
+      10
+     ],
+     [
+      8458075,
+      30
+     ],
+     [
+      8458080,
+      30
+     ],
+     [
+      8458185,
+      60
+     ],
+     [
+      8458219,
+      85
+     ],
+     [
+      8458269,
+      85
+     ],
+     [
+      8458283,
+      85
+     ],
+     [
+      8458300,
+      30
+     ],
+     [
+      8458361,
+      10
+     ],
+     [
+      8458518,
+      10
+     ],
+     [
+      8458525,
+      15
+     ],
+     [
+      8458536,
+      30
+     ],
+     [
+      8458540,
+      10
+     ],
+     [
+      8458541,
+      15
+     ],
+     [
+      8458549,
+      30
+     ],
+     [
+      8458557,
+      60
+     ],
+     [
+      8458562,
+      30
+     ],
+     [
+      8458568,
+      15
+     ],
+     [
+      8458576,
+      85
+     ],
+     [
+      8458595,
+      15
+     ],
+     [
+      8458600,
+      60
+     ],
+     [
+      8458606,
+      85
+     ],
+     [
+      8458611,
+      60
+     ],
+     [
+      8458613,
+      60
+     ],
+     [
+      8458620,
+      10
+     ],
+     [
+      8458631,
+      60
+     ],
+     [
+      8458632,
+      30
+     ],
+     [
+      8458650,
+      30
+     ],
+     [
+      8458938,
+      10
+     ],
+     [
+      8458939,
+      10
+     ],
+     [
+      8458942,
+      10
+     ],
+     [
+      8458946,
+      60
+     ],
+     [
+      8458955,
+      30
+     ],
+     [
+      8458976,
+      10
+     ],
+     [
+      8458992,
+      85
+     ],
+     [
+      8459008,
+      15
+     ],
+     [
+      8459021,
+      60
+     ],
+     [
+      8459053,
+      10
+     ],
+     [
+      8459064,
+      30
+     ],
+     [
+      8459065,
+      30
+     ],
+     [
+      8459072,
+      60
+     ],
+     [
+      8459089,
+      30
+     ],
+     [
+      8459112,
+      85
+     ],
+     [
+      8459141,
+      60
+     ],
+     [
+      8459144,
+      30
+     ],
+     [
+      8459146,
+      30
+     ],
+     [
+      8459184,
+      85
+     ],
+     [
+      8459249,
+      30
+     ],
+     [
+      8459262,
+      85
+     ],
+     [
+      8459428,
+      15
+     ],
+     [
+      8459433,
+      10
+     ],
+     [
+      8459434,
+      10
+     ],
+     [
+      8459437,
+      30
+     ],
+     [
+      8459444,
+      10
+     ],
+     [
+      8459454,
+      15
+     ],
+     [
+      8459458,
+      15
+     ],
+     [
+      8459462,
+      10
+     ],
+     [
+      8459463,
+      30
+     ],
+     [
+      8459472,
+      60
+     ],
+     [
+      8459483,
+      60
+     ],
+     [
+      8459484,
+      30
+     ],
+     [
+      8459487,
+      60
+     ],
+     [
+      8459517,
+      60
+     ],
+     [
+      8459527,
+      15
+     ],
+     [
+      8459534,
+      10
+     ],
+     [
+      8459541,
+      15
+     ],
+     [
+      8459550,
+      60
+     ],
+     [
+      8459558,
+      60
+     ],
+     [
+      8459615,
+      60
+     ],
+     [
+      8459624,
+      85
+     ],
+     [
+      8460484,
+      30
+     ],
+     [
+      8460496,
+      15
+     ],
+     [
+      8460498,
+      15
+     ],
+     [
+      8460499,
+      60
+     ],
+     [
+      8460506,
+      60
+     ],
+     [
+      8460518,
+      60
+     ],
+     [
+      8460521,
+      60
+     ],
+     [
+      8460522,
+      85
+     ],
+     [
+      8460523,
+      30
+     ],
+     [
+      8460529,
+      60
+     ],
+     [
+      8460533,
+      10
+     ],
+     [
+      8460539,
+      85
+     ],
+     [
+      8460541,
+      10
+     ],
+     [
+      8460548,
+      30
+     ],
+     [
+      8460555,
+      30
+     ],
+     [
+      8460560,
+      60
+     ],
+     [
+      8460580,
+      30
+     ],
+     [
+      8460664,
+      15
+     ],
+     [
+      8460689,
+      60
+     ],
+     [
+      8460705,
+      10
+     ],
+     [
+      8460707,
+      30
+     ],
+     [
+      8460713,
+      60
+     ],
+     [
+      8460720,
+      15
+     ],
+     [
+      8460735,
+      30
+     ],
+     [
+      8460757,
+      30
+     ],
+     [
+      8460806,
+      15
+     ],
+     [
+      8462032,
+      10
+     ],
+     [
+      8462047,
+      30
+     ],
+     [
+      8462049,
+      60
+     ],
+     [
+      8462094,
+      15
+     ],
+     [
+      8462136,
+      30
+     ],
+     [
+      8462176,
+      30
+     ],
+     [
+      8462215,
+      60
+     ],
+     [
+      8462239,
+      85
+     ],
+     [
+      8464967,
+      15
+     ],
+     [
+      8464984,
+      30
+     ],
+     [
+      8465009,
+      10
+     ],
+     [
+      8465012,
+      15
+     ],
+     [
+      8465018,
+      15
+     ],
+     [
+      8465024,
+      15
+     ],
+     [
+      8465025,
+      10
+     ],
+     [
+      8465026,
+      10
+     ],
+     [
+      8465161,
+      60
+     ],
+     [
+      8465165,
+      60
+     ],
+     [
+      8466110,
+      30
+     ],
+     [
+      8466132,
+      85
+     ],
+     [
+      8466140,
+      15
+     ],
+     [
+      8466141,
+      10
+     ],
+     [
+      8466142,
+      15
+     ],
+     [
+      8466217,
+      85
+     ],
+     [
+      8466251,
+      10
+     ],
+     [
+      8466266,
+      15
+     ],
+     [
+      8466309,
+      30
+     ],
+     [
+      8466357,
+      30
+     ],
+     [
+      8467304,
+      15
+     ],
+     [
+      8467345,
+      30
+     ],
+     [
+      8467365,
+      30
+     ],
+     [
+      8467372,
+      60
+     ],
+     [
+      8467416,
+      30
+     ],
+     [
+      8467422,
+      60
+     ],
+     [
+      8467427,
+      60
+     ],
+     [
+      8467466,
+      15
+     ],
+     [
+      8467469,
+      60
+     ],
+     [
+      8467579,
+      60
+     ],
+     [
+      8467580,
+      15
+     ],
+     [
+      8467844,
+      10
+     ],
+     [
+      8467857,
+      60
+     ],
+     [
+      8467878,
+      15
+     ],
+     [
+      8467881,
+      15
+     ],
+     [
+      8467883,
+      30
+     ],
+     [
+      8467931,
+      30
+     ],
+     [
+      8467951,
+      30
+     ],
+     [
+      8467964,
+      15
+     ],
+     [
+      8467974,
+      30
+     ],
+     [
+      8468003,
+      60
+     ],
+     [
+      8468101,
+      15
+     ],
+     [
+      8468153,
+      85
+     ],
+     [
+      8468172,
+      15
+     ],
+     [
+      8468252,
+      30
+     ],
+     [
+      8468309,
+      10
+     ],
+     [
+      8468481,
+      15
+     ],
+     [
+      8468485,
+      30
+     ],
+     [
+      8468504,
+      15
+     ],
+     [
+      8468517,
+      30
+     ],
+     [
+      8468561,
+      60
+     ],
+     [
+      8468598,
+      15
+     ],
+     [
+      8468634,
+      85
+     ],
+     [
+      8468682,
+      85
+     ],
+     [
+      8468732,
+      85
+     ],
+     [
+      8468747,
+      60
+     ],
+     [
+      8468884,
+      60
+     ],
+     [
+      8469484,
+      60
+     ],
+     [
+      8469490,
+      15
+     ],
+     [
+      8469510,
+      85
+     ],
+     [
+      8469534,
+      30
+     ],
+     [
+      8469535,
+      85
+     ],
+     [
+      8469588,
+      85
+     ],
+     [
+      8469619,
+      15
+     ],
+     [
+      8469623,
+      15
+     ],
+     [
+      8469684,
+      30
+     ],
+     [
+      8469707,
+      15
+     ],
+     [
+      8469732,
+      60
+     ],
+     [
+      8469765,
+      30
+     ],
+     [
+      8469779,
+      60
+     ],
+     [
+      8469820,
+      30
+     ],
+     [
+      8469919,
+      60
+     ],
+     [
+      8469994,
+      85
+     ],
+     [
+      8470047,
+      15
+     ],
+     [
+      8470086,
+      60
+     ],
+     [
+      8470119,
+      85
+     ],
+     [
+      8470144,
+      10
+     ],
+     [
+      8470153,
+      30
+     ],
+     [
+      8470176,
+      15
+     ],
+     [
+      8470187,
+      10
+     ],
+     [
+      8470203,
+      85
+     ],
+     [
+      8470222,
+      30
+     ],
+     [
+      8470268,
+      60
+     ],
+     [
+      8470329,
+      15
+     ],
+     [
+      8470373,
+      60
+     ],
+     [
+      8470578,
+      30
+     ],
+     [
+      8470584,
+      60
+     ],
+     [
+      8470598,
+      15
+     ],
+     [
+      8470601,
+      30
+     ],
+     [
+      8470608,
+      30
+     ],
+     [
+      8470609,
+      30
+     ],
+     [
+      8470610,
+      10
+     ],
+     [
+      8470620,
+      30
+     ],
+     [
+      8470644,
+      30
+     ],
+     [
+      8470651,
+      60
+     ],
+     [
+      8470659,
+      85
+     ],
+     [
+      8470774,
+      15
+     ],
+     [
+      8470775,
+      15
+     ],
+     [
+      8470780,
+      60
+     ],
+     [
+      8470798,
+      60
+     ],
+     [
+      8470852,
+      10
+     ],
+     [
+      8470860,
+      15
+     ],
+     [
+      8471186,
+      60
+     ],
+     [
+      8471217,
+      10
+     ],
+     [
+      8471219,
+      30
+     ],
+     [
+      8471229,
+      60
+     ],
+     [
+      8471233,
+      30
+     ],
+     [
+      8471238,
+      60
+     ],
+     [
+      8471239,
+      60
+     ],
+     [
+      8471260,
+      10
+     ],
+     [
+      8471299,
+      30
+     ],
+     [
+      8471306,
+      15
+     ],
+     [
+      8471311,
+      30
+     ],
+     [
+      8471360,
+      60
+     ],
+     [
+      8471362,
+      15
+     ],
+     [
+      8471372,
+      60
+     ],
+     [
+      8471641,
+      85
+     ],
+     [
+      8471671,
+      60
+     ],
+     [
+      8471701,
+      60
+     ],
+     [
+      8471996,
+      85
+     ],
+     [
+      8472008,
+      85
+     ],
+     [
+      8472382,
+      10
+     ],
+     [
+      8472410,
+      30
+     ],
+     [
+      8473434,
+      60
+     ],
+     [
+      8473449,
+      10
+     ],
+     [
+      8473456,
+      85
+     ],
+     [
+      8473463,
+      15
+     ],
+     [
+      8473501,
+      60
+     ],
+     [
+      8473504,
+      10
+     ],
+     [
+      8473514,
+      60
+     ],
+     [
+      8473544,
+      15
+     ],
+     [
+      8473546,
+      15
+     ],
+     [
+      8473565,
+      30
+     ],
+     [
+      8473575,
+      10
+     ],
+     [
+      8473579,
+      15
+     ],
+     [
+      8473584,
+      15
+     ],
+     [
+      8473607,
+      60
+     ],
+     [
+      8473611,
+      85
+     ],
+     [
+      8473734,
+      60
+     ],
+     [
+      8473827,
+      85
+     ],
+     [
+      8473905,
+      85
+     ],
+     [
+      8473942,
+      60
+     ],
+     [
+      8474063,
+      85
+     ],
+     [
+      8474066,
+      15
+     ],
+     [
+      8474145,
+      30
+     ],
+     [
+      8474230,
+      30
+     ],
+     [
+      8474236,
+      85
+     ],
+     [
+      8474383,
+      60
+     ],
+     [
+      8474519,
+      30
+     ],
+     [
+      8474573,
+      10
+     ],
+     [
+      8474579,
+      100
+     ],
+     [
+      8474586,
+      10
+     ],
+     [
+      8474604,
+      60
+     ],
+     [
+      8474612,
+      10
+     ],
+     [
+      8474659,
+      60
+     ],
+     [
+      8474666,
+      60
+     ],
+     [
+      8474690,
+      60
+     ],
+     [
+      8474709,
+      10
+     ],
+     [
+      8474731,
+      85
+     ],
+     [
+      8474771,
+      85
+     ],
+     [
+      8474855,
+      85
+     ],
+     [
+      8475151,
+      10
+     ],
+     [
+      8475156,
+      60
+     ],
+     [
+      8475166,
+      10
+     ],
+     [
+      8475170,
+      10
+     ],
+     [
+      8475177,
+      10
+     ],
+     [
+      8475181,
+      10
+     ],
+     [
+      8475192,
+      60
+     ],
+     [
+      8475195,
+      60
+     ],
+     [
+      8475209,
+      30
+     ],
+     [
+      8475215,
+      30
+     ],
+     [
+      8475231,
+      15
+     ],
+     [
+      8475234,
+      60
+     ],
+     [
+      8475270,
+      85
+     ],
+     [
+      8475314,
+      10
+     ],
+     [
+      8475754,
+      10
+     ],
+     [
+      8475780,
+      30
+     ],
+     [
+      8475799,
+      15
+     ],
+     [
+      8475832,
+      30
+     ],
+     [
+      8475869,
+      60
+     ],
+     [
+      8475990,
+      85
+     ],
+     [
+      8476086,
+      85
+     ],
+     [
+      8476147,
+      85
+     ],
+     [
+      8476158,
+      60
+     ],
+     [
+      8476195,
+      60
+     ],
+     [
+      8476208,
+      85
+     ],
+     [
+      8476292,
+      15
+     ],
+     [
+      8476367,
+      85
+     ],
+     [
+      8476386,
+      30
+     ],
+     [
+      8476404,
+      60
+     ],
+     [
+      8476409,
+      60
+     ],
+     [
+      8476419,
+      10
+     ],
+     [
+      8476422,
+      30
+     ],
+     [
+      8476429,
+      15
+     ],
+     [
+      8476444,
+      85
+     ],
+     [
+      8476445,
+      85
+     ],
+     [
+      8476458,
+      10
+     ],
+     [
+      8476765,
+      60
+     ],
+     [
+      8476852,
+      60
+     ],
+     [
+      8476917,
+      10
+     ],
+     [
+      8476983,
+      60
+     ],
+     [
+      8477018,
+      10
+     ],
+     [
+      8477369,
+      30
+     ],
+     [
+      8477392,
+      30
+     ],
+     [
+      8477405,
+      60
+     ],
+     [
+      8477407,
+      15
+     ],
+     [
+      8477494,
+      15
+     ],
+     [
+      8477500,
+      10
+     ],
+     [
+      8477506,
+      10
+     ],
+     [
+      8477527,
+      30
+     ],
+     [
+      8477814,
+      85
+     ],
+     [
+      8477881,
+      85
+     ],
+     [
+      8477936,
+      30
+     ],
+     [
+      8477950,
+      10
+     ],
+     [
+      8477959,
+      60
+     ],
+     [
+      8478009,
+      10
+     ],
+     [
+      8478038,
+      15
+     ],
+     [
+      8478115,
+      15
+     ],
+     [
+      8478367,
+      85
+     ],
+     [
+      8478373,
+      60
+     ],
+     [
+      8478445,
+      10
+     ],
+     [
+      8478450,
+      60
+     ],
+     [
+      8478463,
+      10
+     ],
+     [
+      8478512,
+      60
+     ],
+     [
+      8478857,
+      85
+     ],
+     [
+      8478965,
+      85
+     ],
+     [
+      8479206,
+      60
+     ],
+     [
+      8479328,
+      60
+     ],
+     [
+      8479356,
+      60
+     ],
+     [
+      8479378,
+      10
+     ],
+     [
+      8479395,
+      30
+     ],
+     [
+      8479496,
+      30
+     ],
+     [
+      8479526,
+      60
+     ],
+     [
+      8480071,
+      60
+     ],
+     [
+      8480222,
+      30
+     ],
+     [
+      8480242,
+      85
+     ],
+     [
+      8480306,
+      60
+     ],
+     [
+      8480789,
+      30
+     ],
+     [
+      8480819,
+      85
+     ],
+     [
+      8480853,
+      60
+     ],
+     [
+      8480865,
+      15
+     ],
+     [
+      8480871,
+      30
+     ],
+     [
+      8481014,
+      10
+     ],
+     [
+      8481016,
+      85
+     ],
+     [
+      8481059,
+      60
+     ],
+     [
+      8481237,
+      30
+     ],
+     [
+      8481541,
+      60
+     ],
+     [
+      8481569,
+      85
+     ],
+     [
+      8481601,
+      10
+     ],
+     [
+      8481711,
+      10
+     ],
+     [
+      8482070,
+      15
+     ],
+     [
+      8482207,
+      85
+     ],
+     [
+      8482476,
+      10
+     ],
+     [
+      8482516,
+      10
+     ],
+     [
+      8482668,
+      85
+     ],
+     [
+      8482691,
+      60
+     ],
+     [
+      8483448,
+      60
+     ],
+     [
+      8483553,
+      60
+     ],
+     [
+      8484221,
+      15
+     ],
+     [
+      8484262,
+      85
+     ],
+     [
+      8484287,
+      85
+     ],
+     [
+      8484958,
+      30
+     ],
+     [
+      8485366,
+      10
+     ],
+     [
+      8485388,
+      10
+     ],
+     [
+      8485702,
+      60
+     ]
+    ],
+    "rule": "team-NYI",
+    "version": 2,
+    "base": "team-NYI",
+    "asof": "2026-11-25",
+    "currentRoster": [
+     8473575,
+     8475151,
+     8475170,
+     8475231,
+     8476292,
+     8476419,
+     8476429,
+     8476917,
+     8477018,
+     8477407,
+     8477500,
+     8477506,
+     8477950,
+     8478009,
+     8478445,
+     8479378,
+     8481014,
+     8481601,
+     8481711,
+     8482070,
+     8482476,
+     8482516,
+     8484221,
+     8485366,
+     8485388
+    ],
+    "lowToiRoster": [
+     8475231,
+     8476292,
+     8476429,
+     8477407,
+     8482070,
+     8484221
+    ]
+   },
+   {
+    "id": "dc3-team-STL-1c9420fe814c",
+    "family": "Sweaters",
+    "text": "Name a player who played for St. Louis Blues.",
+    "note": "Verified appearances through 2026-11-25. Current roster: 10 points; six lowest average-TOI skaters: 15. Snapshot 2026-11-25; former players count.",
+    "answers": [
+     [
+      8444905,
+      30
+     ],
+     [
+      8444928,
+      60
+     ],
+     [
+      8444945,
+      10
+     ],
+     [
+      8444947,
+      30
+     ],
+     [
+      8444952,
+      30
+     ],
+     [
+      8444955,
+      15
+     ],
+     [
+      8444966,
+      60
+     ],
+     [
+      8444985,
+      85
+     ],
+     [
+      8444988,
+      15
+     ],
+     [
+      8444993,
+      85
+     ],
+     [
+      8444997,
+      30
+     ],
+     [
+      8445038,
+      85
+     ],
+     [
+      8445056,
+      60
+     ],
+     [
+      8445067,
+      10
+     ],
+     [
+      8445126,
+      30
+     ],
+     [
+      8445137,
+      30
+     ],
+     [
+      8445207,
+      15
+     ],
+     [
+      8445212,
+      60
+     ],
+     [
+      8445239,
+      85
+     ],
+     [
+      8445266,
+      10
+     ],
+     [
+      8445267,
+      85
+     ],
+     [
+      8445273,
+      15
+     ],
+     [
+      8445275,
+      10
+     ],
+     [
+      8445281,
+      10
+     ],
+     [
+      8445313,
+      15
+     ],
+     [
+      8445324,
+      85
+     ],
+     [
+      8445332,
+      60
+     ],
+     [
+      8445395,
+      60
+     ],
+     [
+      8445400,
+      15
+     ],
+     [
+      8445403,
+      60
+     ],
+     [
+      8445418,
+      30
+     ],
+     [
+      8445419,
+      15
+     ],
+     [
+      8445428,
+      10
+     ],
+     [
+      8445505,
+      15
+     ],
+     [
+      8445507,
+      85
+     ],
+     [
+      8445521,
+      30
+     ],
+     [
+      8445604,
+      15
+     ],
+     [
+      8445605,
+      85
+     ],
+     [
+      8445615,
+      60
+     ],
+     [
+      8445623,
+      30
+     ],
+     [
+      8445643,
+      60
+     ],
+     [
+      8445659,
+      30
+     ],
+     [
+      8445662,
+      60
+     ],
+     [
+      8445666,
+      60
+     ],
+     [
+      8445696,
+      30
+     ],
+     [
+      8445700,
+      10
+     ],
+     [
+      8445704,
+      60
+     ],
+     [
+      8445719,
+      15
+     ],
+     [
+      8445728,
+      60
+     ],
+     [
+      8445735,
+      10
+     ],
+     [
+      8445736,
+      60
+     ],
+     [
+      8445749,
+      85
+     ],
+     [
+      8445771,
+      30
+     ],
+     [
+      8445803,
+      15
+     ],
+     [
+      8445808,
+      15
+     ],
+     [
+      8445813,
+      85
+     ],
+     [
+      8445816,
+      15
+     ],
+     [
+      8445834,
+      60
+     ],
+     [
+      8445867,
+      30
+     ],
+     [
+      8445875,
+      85
+     ],
+     [
+      8445900,
+      85
+     ],
+     [
+      8445932,
+      30
+     ],
+     [
+      8445936,
+      60
+     ],
+     [
+      8445964,
+      60
+     ],
+     [
+      8445965,
+      30
+     ],
+     [
+      8445966,
+      60
+     ],
+     [
+      8445998,
+      15
+     ],
+     [
+      8446011,
+      30
+     ],
+     [
+      8446014,
+      15
+     ],
+     [
+      8446017,
+      15
+     ],
+     [
+      8446035,
+      30
+     ],
+     [
+      8446036,
+      10
+     ],
+     [
+      8446057,
+      30
+     ],
+     [
+      8446079,
+      15
+     ],
+     [
+      8446125,
+      15
+     ],
+     [
+      8446141,
+      30
+     ],
+     [
+      8446167,
+      15
+     ],
+     [
+      8446187,
+      30
+     ],
+     [
+      8446205,
+      10
+     ],
+     [
+      8446210,
+      60
+     ],
+     [
+      8446219,
+      60
+     ],
+     [
+      8446226,
+      15
+     ],
+     [
+      8446237,
+      15
+     ],
+     [
+      8446238,
+      15
+     ],
+     [
+      8446266,
+      60
+     ],
+     [
+      8446279,
+      30
+     ],
+     [
+      8446286,
+      30
+     ],
+     [
+      8446315,
+      60
+     ],
+     [
+      8446323,
+      30
+     ],
+     [
+      8446347,
+      85
+     ],
+     [
+      8446372,
+      30
+     ],
+     [
+      8446376,
+      30
+     ],
+     [
+      8446414,
+      60
+     ],
+     [
+      8446443,
+      30
+     ],
+     [
+      8446494,
+      10
+     ],
+     [
+      8446501,
+      60
+     ],
+     [
+      8446507,
+      60
+     ],
+     [
+      8446522,
+      15
+     ],
+     [
+      8446530,
+      15
+     ],
+     [
+      8446560,
+      60
+     ],
+     [
+      8446569,
+      30
+     ],
+     [
+      8446586,
+      60
+     ],
+     [
+      8446602,
+      60
+     ],
+     [
+      8446623,
+      10
+     ],
+     [
+      8446624,
+      60
+     ],
+     [
+      8446626,
+      15
+     ],
+     [
+      8446642,
+      60
+     ],
+     [
+      8446675,
+      15
+     ],
+     [
+      8446677,
+      60
+     ],
+     [
+      8446687,
+      85
+     ],
+     [
+      8446696,
+      30
+     ],
+     [
+      8446717,
+      30
+     ],
+     [
+      8446728,
+      10
+     ],
+     [
+      8446733,
+      15
+     ],
+     [
+      8446734,
+      85
+     ],
+     [
+      8446735,
+      30
+     ],
+     [
+      8446736,
+      30
+     ],
+     [
+      8446778,
+      30
+     ],
+     [
+      8446784,
+      10
+     ],
+     [
+      8446803,
+      10
+     ],
+     [
+      8446823,
+      30
+     ],
+     [
+      8446826,
+      10
+     ],
+     [
+      8446869,
+      30
+     ],
+     [
+      8446905,
+      60
+     ],
+     [
+      8446916,
+      60
+     ],
+     [
+      8446928,
+      60
+     ],
+     [
+      8446933,
+      60
+     ],
+     [
+      8446941,
+      60
+     ],
+     [
+      8446959,
+      60
+     ],
+     [
+      8446976,
+      60
+     ],
+     [
+      8446991,
+      10
+     ],
+     [
+      8447021,
+      15
+     ],
+     [
+      8447033,
+      85
+     ],
+     [
+      8447042,
+      60
+     ],
+     [
+      8447057,
+      85
+     ],
+     [
+      8447135,
+      85
+     ],
+     [
+      8447145,
+      30
+     ],
+     [
+      8447154,
+      15
+     ],
+     [
+      8447169,
+      15
+     ],
+     [
+      8447176,
+      15
+     ],
+     [
+      8447187,
+      15
+     ],
+     [
+      8447205,
+      30
+     ],
+     [
+      8447206,
+      10
+     ],
+     [
+      8447209,
+      30
+     ],
+     [
+      8447251,
+      85
+     ],
+     [
+      8447284,
+      85
+     ],
+     [
+      8447314,
+      60
+     ],
+     [
+      8447330,
+      10
+     ],
+     [
+      8447339,
+      60
+     ],
+     [
+      8447354,
+      60
+     ],
+     [
+      8447363,
+      30
+     ],
+     [
+      8447400,
+      10
+     ],
+     [
+      8447482,
+      30
+     ],
+     [
+      8447494,
+      30
+     ],
+     [
+      8447505,
+      30
+     ],
+     [
+      8447506,
+      85
+     ],
+     [
+      8447513,
+      30
+     ],
+     [
+      8447525,
+      60
+     ],
+     [
+      8447551,
+      85
+     ],
+     [
+      8447568,
+      30
+     ],
+     [
+      8447570,
+      85
+     ],
+     [
+      8447581,
+      85
+     ],
+     [
+      8447585,
+      85
+     ],
+     [
+      8447592,
+      60
+     ],
+     [
+      8447617,
+      30
+     ],
+     [
+      8447666,
+      15
+     ],
+     [
+      8447685,
+      10
+     ],
+     [
+      8447710,
+      30
+     ],
+     [
+      8447715,
+      30
+     ],
+     [
+      8447717,
+      30
+     ],
+     [
+      8447725,
+      60
+     ],
+     [
+      8447737,
+      85
+     ],
+     [
+      8447744,
+      15
+     ],
+     [
+      8447757,
+      30
+     ],
+     [
+      8447790,
+      15
+     ],
+     [
+      8447792,
+      15
+     ],
+     [
+      8447826,
+      85
+     ],
+     [
+      8447837,
+      30
+     ],
+     [
+      8447886,
+      10
+     ],
+     [
+      8447957,
+      85
+     ],
+     [
+      8447979,
+      15
+     ],
+     [
+      8447989,
+      10
+     ],
+     [
+      8448014,
+      60
+     ],
+     [
+      8448017,
+      15
+     ],
+     [
+      8448032,
+      85
+     ],
+     [
+      8448038,
+      30
+     ],
+     [
+      8448046,
+      30
+     ],
+     [
+      8448049,
+      30
+     ],
+     [
+      8448068,
+      30
+     ],
+     [
+      8448069,
+      60
+     ],
+     [
+      8448075,
+      30
+     ],
+     [
+      8448091,
+      10
+     ],
+     [
+      8448093,
+      30
+     ],
+     [
+      8448094,
+      85
+     ],
+     [
+      8448106,
+      15
+     ],
+     [
+      8448147,
+      30
+     ],
+     [
+      8448148,
+      85
+     ],
+     [
+      8448155,
+      10
+     ],
+     [
+      8448156,
+      10
+     ],
+     [
+      8448157,
+      30
+     ],
+     [
+      8448207,
+      60
+     ],
+     [
+      8448222,
+      15
+     ],
+     [
+      8448294,
+      30
+     ],
+     [
+      8448304,
+      30
+     ],
+     [
+      8448347,
+      60
+     ],
+     [
+      8448353,
+      30
+     ],
+     [
+      8448356,
+      10
+     ],
+     [
+      8448382,
+      10
+     ],
+     [
+      8448399,
+      15
+     ],
+     [
+      8448415,
+      15
+     ],
+     [
+      8448416,
+      60
+     ],
+     [
+      8448434,
+      30
+     ],
+     [
+      8448483,
+      30
+     ],
+     [
+      8448489,
+      30
+     ],
+     [
+      8448501,
+      15
+     ],
+     [
+      8448518,
+      30
+     ],
+     [
+      8448579,
+      85
+     ],
+     [
+      8448613,
+      15
+     ],
+     [
+      8448633,
+      15
+     ],
+     [
+      8448652,
+      85
+     ],
+     [
+      8448671,
+      15
+     ],
+     [
+      8448694,
+      10
+     ],
+     [
+      8448695,
+      15
+     ],
+     [
+      8448700,
+      60
+     ],
+     [
+      8448712,
+      30
+     ],
+     [
+      8448717,
+      60
+     ],
+     [
+      8448727,
+      60
+     ],
+     [
+      8448735,
+      30
+     ],
+     [
+      8448754,
+      60
+     ],
+     [
+      8448764,
+      30
+     ],
+     [
+      8448773,
+      60
+     ],
+     [
+      8448781,
+      30
+     ],
+     [
+      8448788,
+      30
+     ],
+     [
+      8448816,
+      60
+     ],
+     [
+      8448834,
+      10
+     ],
+     [
+      8448839,
+      30
+     ],
+     [
+      8448865,
+      10
+     ],
+     [
+      8448937,
+      15
+     ],
+     [
+      8448939,
+      60
+     ],
+     [
+      8448960,
+      10
+     ],
+     [
+      8448962,
+      85
+     ],
+     [
+      8448963,
+      15
+     ],
+     [
+      8448966,
+      30
+     ],
+     [
+      8448981,
+      15
+     ],
+     [
+      8448991,
+      10
+     ],
+     [
+      8449020,
+      15
+     ],
+     [
+      8449023,
+      60
+     ],
+     [
+      8449139,
+      85
+     ],
+     [
+      8449143,
+      15
+     ],
+     [
+      8449154,
+      85
+     ],
+     [
+      8449164,
+      85
+     ],
+     [
+      8449171,
+      15
+     ],
+     [
+      8449192,
+      30
+     ],
+     [
+      8449200,
+      85
+     ],
+     [
+      8449207,
+      30
+     ],
+     [
+      8449214,
+      15
+     ],
+     [
+      8449285,
+      60
+     ],
+     [
+      8449295,
+      15
+     ],
+     [
+      8449304,
+      85
+     ],
+     [
+      8449313,
+      85
+     ],
+     [
+      8449316,
+      30
+     ],
+     [
+      8449321,
+      60
+     ],
+     [
+      8449337,
+      30
+     ],
+     [
+      8449367,
+      30
+     ],
+     [
+      8449388,
+      85
+     ],
+     [
+      8449426,
+      60
+     ],
+     [
+      8449445,
+      15
+     ],
+     [
+      8449486,
+      60
+     ],
+     [
+      8449498,
+      15
+     ],
+     [
+      8449535,
+      10
+     ],
+     [
+      8449545,
+      10
+     ],
+     [
+      8449570,
+      15
+     ],
+     [
+      8449580,
+      60
+     ],
+     [
+      8449604,
+      60
+     ],
+     [
+      8449607,
+      15
+     ],
+     [
+      8449627,
+      15
+     ],
+     [
+      8449669,
+      15
+     ],
+     [
+      8449672,
+      60
+     ],
+     [
+      8449675,
+      30
+     ],
+     [
+      8449677,
+      60
+     ],
+     [
+      8449706,
+      60
+     ],
+     [
+      8449737,
+      60
+     ],
+     [
+      8449743,
+      10
+     ],
+     [
+      8449744,
+      15
+     ],
+     [
+      8449751,
+      15
+     ],
+     [
+      8449784,
+      30
+     ],
+     [
+      8449797,
+      15
+     ],
+     [
+      8449807,
+      30
+     ],
+     [
+      8449809,
+      15
+     ],
+     [
+      8449848,
+      85
+     ],
+     [
+      8449884,
+      30
+     ],
+     [
+      8449894,
+      15
+     ],
+     [
+      8449898,
+      30
+     ],
+     [
+      8449902,
+      15
+     ],
+     [
+      8449905,
+      15
+     ],
+     [
+      8449927,
+      60
+     ],
+     [
+      8449951,
+      10
+     ],
+     [
+      8449970,
+      60
+     ],
+     [
+      8449984,
+      85
+     ],
+     [
+      8449988,
+      10
+     ],
+     [
+      8449999,
+      85
+     ],
+     [
+      8450004,
+      85
+     ],
+     [
+      8450005,
+      30
+     ],
+     [
+      8450024,
+      85
+     ],
+     [
+      8450038,
+      85
+     ],
+     [
+      8450056,
+      85
+     ],
+     [
+      8450066,
+      10
+     ],
+     [
+      8450071,
+      85
+     ],
+     [
+      8450125,
+      60
+     ],
+     [
+      8450146,
+      85
+     ],
+     [
+      8450198,
+      60
+     ],
+     [
+      8450200,
+      15
+     ],
+     [
+      8450215,
+      10
+     ],
+     [
+      8450257,
+      30
+     ],
+     [
+      8450293,
+      30
+     ],
+     [
+      8450345,
+      15
+     ],
+     [
+      8450357,
+      60
+     ],
+     [
+      8450378,
+      60
+     ],
+     [
+      8450389,
+      30
+     ],
+     [
+      8450467,
+      15
+     ],
+     [
+      8450468,
+      60
+     ],
+     [
+      8450471,
+      60
+     ],
+     [
+      8450486,
+      30
+     ],
+     [
+      8450490,
+      30
+     ],
+     [
+      8450514,
+      85
+     ],
+     [
+      8450620,
+      15
+     ],
+     [
+      8450635,
+      30
+     ],
+     [
+      8450642,
+      10
+     ],
+     [
+      8450643,
+      85
+     ],
+     [
+      8450650,
+      30
+     ],
+     [
+      8450737,
+      30
+     ],
+     [
+      8450741,
+      15
+     ],
+     [
+      8450825,
+      15
+     ],
+     [
+      8450827,
+      30
+     ],
+     [
+      8450828,
+      60
+     ],
+     [
+      8450829,
+      85
+     ],
+     [
+      8450834,
+      30
+     ],
+     [
+      8450905,
+      10
+     ],
+     [
+      8451005,
+      10
+     ],
+     [
+      8451010,
+      60
+     ],
+     [
+      8451059,
+      60
+     ],
+     [
+      8451098,
+      60
+     ],
+     [
+      8451239,
+      30
+     ],
+     [
+      8451302,
+      10
+     ],
+     [
+      8451305,
+      60
+     ],
+     [
+      8451353,
+      60
+     ],
+     [
+      8451359,
+      15
+     ],
+     [
+      8451378,
+      60
+     ],
+     [
+      8451391,
+      85
+     ],
+     [
+      8451406,
+      85
+     ],
+     [
+      8451538,
+      30
+     ],
+     [
+      8451565,
+      60
+     ],
+     [
+      8451587,
+      15
+     ],
+     [
+      8451655,
+      30
+     ],
+     [
+      8451689,
+      10
+     ],
+     [
+      8451695,
+      30
+     ],
+     [
+      8451715,
+      10
+     ],
+     [
+      8451728,
+      30
+     ],
+     [
+      8451732,
+      30
+     ],
+     [
+      8451791,
+      10
+     ],
+     [
+      8451793,
+      10
+     ],
+     [
+      8451799,
+      10
+     ],
+     [
+      8451805,
+      60
+     ],
+     [
+      8451862,
+      60
+     ],
+     [
+      8451893,
+      15
+     ],
+     [
+      8451905,
+      15
+     ],
+     [
+      8451930,
+      30
+     ],
+     [
+      8451938,
+      60
+     ],
+     [
+      8451986,
+      85
+     ],
+     [
+      8451991,
+      10
+     ],
+     [
+      8451992,
+      15
+     ],
+     [
+      8451994,
+      30
+     ],
+     [
+      8452018,
+      30
+     ],
+     [
+      8452019,
+      15
+     ],
+     [
+      8452086,
+      10
+     ],
+     [
+      8452224,
+      85
+     ],
+     [
+      8452229,
+      60
+     ],
+     [
+      8452247,
+      60
+     ],
+     [
+      8452287,
+      30
+     ],
+     [
+      8452353,
+      15
+     ],
+     [
+      8452366,
+      15
+     ],
+     [
+      8452368,
+      60
+     ],
+     [
+      8452424,
+      60
+     ],
+     [
+      8452445,
+      15
+     ],
+     [
+      8452466,
+      30
+     ],
+     [
+      8452477,
+      30
+     ],
+     [
+      8452495,
+      15
+     ],
+     [
+      8452496,
+      30
+     ],
+     [
+      8452556,
+      30
+     ],
+     [
+      8452557,
+      30
+     ],
+     [
+      8452569,
+      10
+     ],
+     [
+      8452583,
+      15
+     ],
+     [
+      8452685,
+      10
+     ],
+     [
+      8452694,
+      15
+     ],
+     [
+      8455479,
+      30
+     ],
+     [
+      8455536,
+      85
+     ],
+     [
+      8455710,
+      85
+     ],
+     [
+      8455850,
+      60
+     ],
+     [
+      8455919,
+      10
+     ],
+     [
+      8456087,
+      60
+     ],
+     [
+      8456106,
+      10
+     ],
+     [
+      8456121,
+      30
+     ],
+     [
+      8456153,
+      60
+     ],
+     [
+      8456156,
+      10
+     ],
+     [
+      8456233,
+      85
+     ],
+     [
+      8456464,
+      15
+     ],
+     [
+      8456547,
+      15
+     ],
+     [
+      8456595,
+      15
+     ],
+     [
+      8456729,
+      30
+     ],
+     [
+      8456974,
+      60
+     ],
+     [
+      8457222,
+      60
+     ],
+     [
+      8457264,
+      30
+     ],
+     [
+      8457380,
+      85
+     ],
+     [
+      8457640,
+      30
+     ],
+     [
+      8457646,
+      15
+     ],
+     [
+      8457661,
+      30
+     ],
+     [
+      8457704,
+      15
+     ],
+     [
+      8457783,
+      30
+     ],
+     [
+      8457816,
+      60
+     ],
+     [
+      8457824,
+      85
+     ],
+     [
+      8457883,
+      85
+     ],
+     [
+      8457928,
+      85
+     ],
+     [
+      8458036,
+      30
+     ],
+     [
+      8458172,
+      15
+     ],
+     [
+      8458183,
+      60
+     ],
+     [
+      8458229,
+      10
+     ],
+     [
+      8458266,
+      30
+     ],
+     [
+      8458361,
+      10
+     ],
+     [
+      8458534,
+      10
+     ],
+     [
+      8458536,
+      15
+     ],
+     [
+      8458542,
+      30
+     ],
+     [
+      8458562,
+      30
+     ],
+     [
+      8458568,
+      15
+     ],
+     [
+      8458579,
+      60
+     ],
+     [
+      8458585,
+      15
+     ],
+     [
+      8458600,
+      60
+     ],
+     [
+      8458667,
+      85
+     ],
+     [
+      8458682,
+      100
+     ],
+     [
+      8458686,
+      85
+     ],
+     [
+      8458838,
+      30
+     ],
+     [
+      8458943,
+      10
+     ],
+     [
+      8458946,
+      60
+     ],
+     [
+      8458968,
+      60
+     ],
+     [
+      8458969,
+      60
+     ],
+     [
+      8458974,
+      15
+     ],
+     [
+      8458998,
+      60
+     ],
+     [
+      8459000,
+      60
+     ],
+     [
+      8459044,
+      60
+     ],
+     [
+      8459064,
+      60
+     ],
+     [
+      8459074,
+      60
+     ],
+     [
+      8459094,
+      15
+     ],
+     [
+      8459223,
+      30
+     ],
+     [
+      8459252,
+      30
+     ],
+     [
+      8459308,
+      30
+     ],
+     [
+      8459406,
+      60
+     ],
+     [
+      8459412,
+      60
+     ],
+     [
+      8459424,
+      10
+     ],
+     [
+      8459426,
+      10
+     ],
+     [
+      8459429,
+      15
+     ],
+     [
+      8459457,
+      15
+     ],
+     [
+      8459469,
+      60
+     ],
+     [
+      8459484,
+      15
+     ],
+     [
+      8459487,
+      60
+     ],
+     [
+      8459514,
+      10
+     ],
+     [
+      8459579,
+      30
+     ],
+     [
+      8459615,
+      30
+     ],
+     [
+      8459648,
+      10
+     ],
+     [
+      8459686,
+      85
+     ],
+     [
+      8459687,
+      15
+     ],
+     [
+      8459690,
+      60
+     ],
+     [
+      8459722,
+      85
+     ],
+     [
+      8460484,
+      30
+     ],
+     [
+      8460527,
+      10
+     ],
+     [
+      8460533,
+      30
+     ],
+     [
+      8460575,
+      85
+     ],
+     [
+      8460588,
+      60
+     ],
+     [
+      8460626,
+      10
+     ],
+     [
+      8460660,
+      60
+     ],
+     [
+      8460733,
+      15
+     ],
+     [
+      8460836,
+      60
+     ],
+     [
+      8462033,
+      30
+     ],
+     [
+      8462041,
+      15
+     ],
+     [
+      8462045,
+      15
+     ],
+     [
+      8462073,
+      30
+     ],
+     [
+      8462077,
+      15
+     ],
+     [
+      8462129,
+      10
+     ],
+     [
+      8462136,
+      60
+     ],
+     [
+      8462152,
+      30
+     ],
+     [
+      8462161,
+      30
+     ],
+     [
+      8462220,
+      85
+     ],
+     [
+      8462239,
+      85
+     ],
+     [
+      8462244,
+      60
+     ],
+     [
+      8462823,
+      30
+     ],
+     [
+      8462824,
+      30
+     ],
+     [
+      8462826,
+      85
+     ],
+     [
+      8464967,
+      15
+     ],
+     [
+      8465056,
+      60
+     ],
+     [
+      8465067,
+      60
+     ],
+     [
+      8465175,
+      15
+     ],
+     [
+      8465179,
+      60
+     ],
+     [
+      8465207,
+      30
+     ],
+     [
+      8465962,
+      85
+     ],
+     [
+      8465977,
+      60
+     ],
+     [
+      8465992,
+      60
+     ],
+     [
+      8466109,
+      30
+     ],
+     [
+      8466140,
+      30
+     ],
+     [
+      8466142,
+      10
+     ],
+     [
+      8466160,
+      15
+     ],
+     [
+      8466210,
+      60
+     ],
+     [
+      8466236,
+      85
+     ],
+     [
+      8466304,
+      30
+     ],
+     [
+      8466437,
+      30
+     ],
+     [
+      8466995,
+      85
+     ],
+     [
+      8467337,
+      60
+     ],
+     [
+      8467348,
+      30
+     ],
+     [
+      8467350,
+      30
+     ],
+     [
+      8467351,
+      15
+     ],
+     [
+      8467372,
+      60
+     ],
+     [
+      8467408,
+      30
+     ],
+     [
+      8467478,
+      30
+     ],
+     [
+      8467565,
+      60
+     ],
+     [
+      8467830,
+      85
+     ],
+     [
+      8467890,
+      10
+     ],
+     [
+      8467899,
+      60
+     ],
+     [
+      8467917,
+      15
+     ],
+     [
+      8467937,
+      60
+     ],
+     [
+      8467958,
+      85
+     ],
+     [
+      8468011,
+      15
+     ],
+     [
+      8468094,
+      85
+     ],
+     [
+      8468105,
+      15
+     ],
+     [
+      8468158,
+      85
+     ],
+     [
+      8468166,
+      60
+     ],
+     [
+      8468434,
+      10
+     ],
+     [
+      8468448,
+      85
+     ],
+     [
+      8468466,
+      30
+     ],
+     [
+      8468478,
+      15
+     ],
+     [
+      8468504,
+      10
+     ],
+     [
+      8468505,
+      15
+     ],
+     [
+      8468515,
+      15
+     ],
+     [
+      8468584,
+      85
+     ],
+     [
+      8468615,
+      60
+     ],
+     [
+      8468617,
+      85
+     ],
+     [
+      8468626,
+      60
+     ],
+     [
+      8468741,
+      60
+     ],
+     [
+      8468750,
+      85
+     ],
+     [
+      8468770,
+      60
+     ],
+     [
+      8469152,
+      30
+     ],
+     [
+      8469470,
+      15
+     ],
+     [
+      8469473,
+      30
+     ],
+     [
+      8469479,
+      60
+     ],
+     [
+      8469480,
+      30
+     ],
+     [
+      8469485,
+      15
+     ],
+     [
+      8469486,
+      85
+     ],
+     [
+      8469501,
+      15
+     ],
+     [
+      8469508,
+      10
+     ],
+     [
+      8469584,
+      60
+     ],
+     [
+      8469685,
+      60
+     ],
+     [
+      8469689,
+      85
+     ],
+     [
+      8469696,
+      30
+     ],
+     [
+      8469733,
+      85
+     ],
+     [
+      8469760,
+      30
+     ],
+     [
+      8469770,
+      15
+     ],
+     [
+      8469779,
+      60
+     ],
+     [
+      8469795,
+      60
+     ],
+     [
+      8470004,
+      60
+     ],
+     [
+      8470084,
+      60
+     ],
+     [
+      8470105,
+      10
+     ],
+     [
+      8470123,
+      30
+     ],
+     [
+      8470136,
+      60
+     ],
+     [
+      8470151,
+      10
+     ],
+     [
+      8470152,
+      60
+     ],
+     [
+      8470223,
+      60
+     ],
+     [
+      8470257,
+      10
+     ],
+     [
+      8470294,
+      60
+     ],
+     [
+      8470303,
+      85
+     ],
+     [
+      8470330,
+      60
+     ],
+     [
+      8470378,
+      60
+     ],
+     [
+      8470549,
+      60
+     ],
+     [
+      8470600,
+      10
+     ],
+     [
+      8470647,
+      15
+     ],
+     [
+      8470654,
+      15
+     ],
+     [
+      8470655,
+      10
+     ],
+     [
+      8470662,
+      60
+     ],
+     [
+      8470729,
+      30
+     ],
+     [
+      8470737,
+      85
+     ],
+     [
+      8470740,
+      10
+     ],
+     [
+      8470751,
+      85
+     ],
+     [
+      8470772,
+      85
+     ],
+     [
+      8470803,
+      10
+     ],
+     [
+      8470860,
+      15
+     ],
+     [
+      8470871,
+      30
+     ],
+     [
+      8470880,
+      15
+     ],
+     [
+      8471188,
+      85
+     ],
+     [
+      8471230,
+      85
+     ],
+     [
+      8471306,
+      30
+     ],
+     [
+      8471348,
+      30
+     ],
+     [
+      8471360,
+      85
+     ],
+     [
+      8471392,
+      10
+     ],
+     [
+      8471426,
+      15
+     ],
+     [
+      8471490,
+      30
+     ],
+     [
+      8471669,
+      10
+     ],
+     [
+      8471698,
+      10
+     ],
+     [
+      8471707,
+      30
+     ],
+     [
+      8471710,
+      60
+     ],
+     [
+      8471729,
+      15
+     ],
+     [
+      8471743,
+      15
+     ],
+     [
+      8471750,
+      30
+     ],
+     [
+      8471753,
+      60
+     ],
+     [
+      8471761,
+      30
+     ],
+     [
+      8471817,
+      10
+     ],
+     [
+      8471832,
+      85
+     ],
+     [
+      8471851,
+      30
+     ],
+     [
+      8473434,
+      60
+     ],
+     [
+      8473446,
+      10
+     ],
+     [
+      8473485,
+      15
+     ],
+     [
+      8473510,
+      85
+     ],
+     [
+      8473534,
+      10
+     ],
+     [
+      8473916,
+      60
+     ],
+     [
+      8474013,
+      10
+     ],
+     [
+      8474029,
+      85
+     ],
+     [
+      8474031,
+      10
+     ],
+     [
+      8474034,
+      15
+     ],
+     [
+      8474102,
+      10
+     ],
+     [
+      8474125,
+      10
+     ],
+     [
+      8474145,
+      10
+     ],
+     [
+      8474189,
+      30
+     ],
+     [
+      8474565,
+      10
+     ],
+     [
+      8474584,
+      100
+     ],
+     [
+      8474592,
+      85
+     ],
+     [
+      8474596,
+      15
+     ],
+     [
+      8474618,
+      10
+     ],
+     [
+      8474627,
+      15
+     ],
+     [
+      8474634,
+      60
+     ],
+     [
+      8474762,
+      85
+     ],
+     [
+      8474884,
+      15
+     ],
+     [
+      8475098,
+      10
+     ],
+     [
+      8475150,
+      60
+     ],
+     [
+      8475158,
+      10
+     ],
+     [
+      8475160,
+      15
+     ],
+     [
+      8475170,
+      10
+     ],
+     [
+      8475175,
+      15
+     ],
+     [
+      8475181,
+      10
+     ],
+     [
+      8475195,
+      60
+     ],
+     [
+      8475263,
+      85
+     ],
+     [
+      8475325,
+      30
+     ],
+     [
+      8475613,
+      60
+     ],
+     [
+      8475622,
+      30
+     ],
+     [
+      8475718,
+      60
+     ],
+     [
+      8475752,
+      30
+     ],
+     [
+      8475753,
+      10
+     ],
+     [
+      8475760,
+      15
+     ],
+     [
+      8475761,
+      60
+     ],
+     [
+      8475763,
+      15
+     ],
+     [
+      8475764,
+      10
+     ],
+     [
+      8475765,
+      10
+     ],
+     [
+      8475768,
+      10
+     ],
+     [
+      8475844,
+      60
+     ],
+     [
+      8476285,
+      60
+     ],
+     [
+      8476410,
+      30
+     ],
+     [
+      8476412,
+      10
+     ],
+     [
+      8476427,
+      60
+     ],
+     [
+      8476436,
+      15
+     ],
+     [
+      8476438,
+      10
+     ],
+     [
+      8476441,
+      10
+     ],
+     [
+      8476779,
+      60
+     ],
+     [
+      8476792,
+      10
+     ],
+     [
+      8476819,
+      85
+     ],
+     [
+      8476855,
+      30
+     ],
+     [
+      8476877,
+      60
+     ],
+     [
+      8476884,
+      60
+     ],
+     [
+      8476889,
+      15
+     ],
+     [
+      8476892,
+      10
+     ],
+     [
+      8476897,
+      10
+     ],
+     [
+      8476903,
+      85
+     ],
+     [
+      8476907,
+      30
+     ],
+     [
+      8476989,
+      60
+     ],
+     [
+      8477402,
+      10
+     ],
+     [
+      8477455,
+      30
+     ],
+     [
+      8477463,
+      60
+     ],
+     [
+      8477482,
+      15
+     ],
+     [
+      8477494,
+      30
+     ],
+     [
+      8477527,
+      15
+     ],
+     [
+      8477573,
+      15
+     ],
+     [
+      8477831,
+      60
+     ],
+     [
+      8477944,
+      30
+     ],
+     [
+      8477952,
+      15
+     ],
+     [
+      8477953,
+      15
+     ],
+     [
+      8477964,
+      10
+     ],
+     [
+      8478013,
+      30
+     ],
+     [
+      8478024,
+      30
+     ],
+     [
+      8478040,
+      85
+     ],
+     [
+      8478057,
+      30
+     ],
+     [
+      8478104,
+      30
+     ],
+     [
+      8478146,
+      60
+     ],
+     [
+      8478373,
+      60
+     ],
+     [
+      8478407,
+      10
+     ],
+     [
+      8478443,
+      10
+     ],
+     [
+      8478472,
+      15
+     ],
+     [
+      8478569,
+      15
+     ],
+     [
+      8478859,
+      15
+     ],
+     [
+      8478874,
+      60
+     ],
+     [
+      8479292,
+      60
+     ],
+     [
+      8479346,
+      15
+     ],
+     [
+      8479366,
+      60
+     ],
+     [
+      8479375,
+      85
+     ],
+     [
+      8479385,
+      10
+     ],
+     [
+      8479420,
+      30
+     ],
+     [
+      8479644,
+      60
+     ],
+     [
+      8480011,
+      30
+     ],
+     [
+      8480023,
+      10
+     ],
+     [
+      8480041,
+      85
+     ],
+     [
+      8480058,
+      60
+     ],
+     [
+      8480074,
+      30
+     ],
+     [
+      8480143,
+      85
+     ],
+     [
+      8480157,
+      10
+     ],
+     [
+      8480281,
+      15
+     ],
+     [
+      8480459,
+      10
+     ],
+     [
+      8480761,
+      85
+     ],
+     [
+      8480981,
+      10
+     ],
+     [
+      8481006,
+      10
+     ],
+     [
+      8481013,
+      10
+     ],
+     [
+      8481059,
+      60
+     ],
+     [
+      8481070,
+      85
+     ],
+     [
+      8481461,
+      85
+     ],
+     [
+      8481543,
+      60
+     ],
+     [
+      8481580,
+      10
+     ],
+     [
+      8481598,
+      10
+     ],
+     [
+      8481715,
+      85
+     ],
+     [
+      8482077,
+      10
+     ],
+     [
+      8482089,
+      10
+     ],
+     [
+      8482090,
+      60
+     ],
+     [
+      8482111,
+      10
+     ],
+     [
+      8482121,
+      85
+     ],
+     [
+      8482516,
+      60
+     ],
+     [
+      8482733,
+      10
+     ],
+     [
+      8482737,
+      30
+     ],
+     [
+      8482745,
+      10
+     ],
+     [
+      8482784,
+      85
+     ],
+     [
+      8483463,
+      10
+     ],
+     [
+      8483516,
+      10
+     ],
+     [
+      8484164,
+      15
+     ],
+     [
+      8484188,
+      85
+     ],
+     [
+      8484230,
+      15
+     ],
+     [
+      8484790,
+      10
+     ]
+    ],
+    "rule": "team-STL",
+    "version": 2,
+    "base": "team-STL",
+    "asof": "2026-11-25",
+    "currentRoster": [
+     8475764,
+     8476412,
+     8476892,
+     8477402,
+     8477527,
+     8477573,
+     8478443,
+     8479346,
+     8480023,
+     8480157,
+     8480281,
+     8480459,
+     8480981,
+     8481006,
+     8481013,
+     8481580,
+     8481598,
+     8482077,
+     8482089,
+     8482111,
+     8482733,
+     8482745,
+     8483463,
+     8483516,
+     8484164,
+     8484230,
+     8484790
+    ],
+    "lowToiRoster": [
+     8477527,
+     8477573,
+     8479346,
+     8480281,
+     8484164,
+     8484230
+    ]
    }
   ],
   "runs": [
@@ -2131542,10 +2143561,262 @@
     ],
     "scoringVersion": 3,
     "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-027-4c7cf6bf89e0",
+    "prompts": [
+     "x1-name-short-last",
+     "x1-birth-country-FRA",
+     "x1-height-max-70",
+     "award-frank",
+     "dc3-team-COL-1e11930b58f2",
+     "x1-draft-round-4",
+     "x1-career-pim-1000"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-045-a0c38fc5c953",
+    "prompts": [
+     "games-1000",
+     "x1-franchises-5",
+     "dc3-goalie-CAR-4e75d875544b",
+     "dc3-team-ANA-8486f537a4a6",
+     "x1-career-goals-400",
+     "x1-draft-round-7",
+     "award-vezina"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-059-50dd6d4cb4bd",
+    "prompts": [
+     "x1-season-shutouts-10",
+     "x1-name-short-last",
+     "x1-played-2010",
+     "both-COL-NYR",
+     "dc3-team-NYI-22283e2cbb2f",
+     "award-james",
+     "dc2-goals-40-7f370aef2e39"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-073-5cefc602afa0",
+    "prompts": [
+     "dc3-team-STL-1c9420fe814c",
+     "debut-1970",
+     "dc2-goals-30-8d1edcf16a70",
+     "x1-era-stat-goals-2000",
+     "x1-franchises-5",
+     "x1-hand-D",
+     "both-EDM-LAK"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-098-5abce42b32d7",
+    "prompts": [
+     "country-LVA",
+     "dc3-team-STL-1c9420fe814c",
+     "x1-season-points-120",
+     "x1-franchises-5",
+     "x1-name-alliteration",
+     "x1-legacy-QUE",
+     "dc3-x1-shared-8478402-5a08c9e3c4a5"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-113-5e080e2bab53",
+    "prompts": [
+     "debut-1960",
+     "dc3-x1-era-BOS-2010-9deb5e539a6f",
+     "x1-name-alliteration",
+     "games-500",
+     "x1-height-min-78",
+     "dc3-team-COL-1e11930b58f2",
+     "x1-undrafted"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-133-3df1ed313a08",
+    "prompts": [
+     "games-1500",
+     "dc3-x1-shared-8471675-9056c4244d0f",
+     "x1-career-goals-600",
+     "award-lady",
+     "x1-draft-round-6",
+     "x1-height-min-76",
+     "dc3-team-ANA-8486f537a4a6"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-148-71672537d1e3",
+    "prompts": [
+     "dc3-team-NYI-22283e2cbb2f",
+     "x1-birth-CAN-NS",
+     "both-DAL-STL",
+     "country-CHE",
+     "dc3-x1-shared-8474141-7cdb4c4e0647",
+     "award-james",
+     "x1-franchises-7"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-164-a5ee54d782fc",
+    "prompts": [
+     "award-maurice",
+     "x1-name-mc-mac",
+     "x1-career-wins-300",
+     "x1-draft-class-1990",
+     "dc3-team-NYI-22283e2cbb2f",
+     "games-1000",
+     "x1-birth-CAN-BC"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-174-283ee89f1140",
+    "prompts": [
+     "x1-draft-late-100",
+     "x1-name-hyphen-first",
+     "debut-1950",
+     "dc3-x1-era-COL-2010-51cc92040b27",
+     "dc3-team-COL-1e11930b58f2",
+     "both-EDM-LAK",
+     "x1-hand-G"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-182-b2234addfd74",
+    "prompts": [
+     "x1-season-wins-30",
+     "x1-height-min-76",
+     "dc3-goalie-PIT-f284de7a0227",
+     "dc3-team-STL-1c9420fe814c",
+     "x1-name-hyphen-last",
+     "x1-career-points-500",
+     "x1-legacy-WIN"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-185-478a24413d47",
+    "prompts": [
+     "x1-franchises-9",
+     "dc3-x1-era-CAR-2000-2fb3837f595b",
+     "games-1000",
+     "debut-1940",
+     "x1-birth-country-KAZ",
+     "dc3-team-ANA-8486f537a4a6",
+     "x1-name-long-first"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-247-3781404dcdde",
+    "prompts": [
+     "x1-shared-8471679",
+     "dc2-country-RUS-f29f0a969d6c",
+     "dc3-x1-era-NSH-2010-4a6b1e52975f",
+     "debut-1960",
+     "dc3-team-COL-1e11930b58f2",
+     "x1-legacy-WIN",
+     "both-OTT-TOR"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-255-5bd195435340",
+    "prompts": [
+     "x1-legacy-HFD",
+     "games-1000",
+     "x1-shared-8467876",
+     "dc3-team-NYI-22283e2cbb2f",
+     "x1-name-hyphen-first",
+     "x1-career-wins-100",
+     "dc3-x1-era-FLA-2000-128cd5b64837"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-281-b27ae699977a",
+    "prompts": [
+     "x1-birth-CAN-MB",
+     "award-maurice",
+     "x1-season-shutouts-10",
+     "dc3-team-ANA-8486f537a4a6",
+     "debut-1970",
+     "x1-draft-class-2015",
+     "dc3-x1-era-DAL-2000-a1c1232dea05"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-286-4932666bd4d6",
+    "prompts": [
+     "x1-career-points-1500",
+     "both-WPG-BUF",
+     "dc3-goalie-DAL-3939dbd1fb04",
+     "x1-legacy-CLR",
+     "x1-draft-round-5",
+     "x1-defence-points-50",
+     "dc3-team-STL-1c9420fe814c"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-321-f804b00cf7a0",
+    "prompts": [
+     "dc3-x1-era-DET-2010-15c58882b5bb",
+     "dc3-x1-shared-8478402-5a08c9e3c4a5",
+     "x1-legacy-ARI",
+     "dc3-team-COL-1e11930b58f2",
+     "both-BUF-VAN",
+     "dc3-goalie-OTT-01d391179b27",
+     "country-DNK"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
+   },
+   {
+    "id": "dc-x1-v3-333-7c38c64636c6",
+    "prompts": [
+     "games-1000",
+     "dc3-team-NYI-22283e2cbb2f",
+     "x1-draft-class-2003",
+     "hall-of-fame",
+     "debut-1950",
+     "x1-hand-G",
+     "x1-birth-country-FRA"
+    ],
+    "scoringVersion": 3,
+    "contentVersion": 1
    }
   ],
-  "team_asof": "2026-11-24",
-  "roster_asof": "2026-11-24",
+  "team_asof": "2026-11-25",
+  "roster_asof": "2026-11-25",
   "roster_snapshot": {
    "8470613": "COL",
    "8470621": "LAK",
@@ -2132052,6 +2144323,7 @@
    "8481540": "MTL",
    "8481542": "DET",
    "8481546": "PHI",
+   "8481550": "COL",
    "8481551": "BUF",
    "8481553": "MIN",
    "8481554": "SEA",
@@ -2132122,7 +2144394,6 @@
    "8482124": "LAK",
    "8482132": "MTL",
    "8482137": "SJS",
-   "8482141": "VGK",
    "8482142": "PHI",
    "8482145": "NSH",
    "8482146": "NJD",
@@ -2132203,6 +2144474,7 @@
    "8482874": "SEA",
    "8482877": "NYR",
    "8482896": "BUF",
+   "8482922": "LAK",
    "8482929": "TBL",
    "8482964": "MTL",
    "8482982": "CBJ",
@@ -2132243,7 +2144515,6 @@
    "8483513": "NSH",
    "8483515": "MTL",
    "8483516": "STL",
-   "8483521": "ANA",
    "8483524": "NSH",
    "8483525": "MIN",
    "8483546": "TOR",
@@ -2132286,7 +2144557,9 @@
    "8484201": "ANA",
    "8484210": "NYR",
    "8484220": "MTL",
+   "8484221": "NYI",
    "8484227": "SJS",
+   "8484230": "STL",
    "8484234": "CGY",
    "8484240": "VAN",
    "8484241": "SEA",
@@ -2132309,6 +2144582,7 @@
    "8484768": "CGY",
    "8484770": "TBL",
    "8484783": "CHI",
+   "8484790": "STL",
    "8484794": "DET",
    "8484797": "BUF",
    "8484798": "VAN",
@@ -2132316,7 +2144590,6 @@
    "8484801": "SJS",
    "8484803": "VGK",
    "8484806": "SJS",
-   "8484821": "CGY",
    "8484829": "DAL",
    "8484859": "ANA",
    "8484860": "CGY",
@@ -2132614,8 +2144887,8 @@
     8475188,
     "VGK",
     20262027,
-    25,
-    1208.52
+    26,
+    1220.923
    ],
    [
     8475200,
@@ -2132635,8 +2144908,8 @@
     8475218,
     "EDM",
     20262027,
-    24,
-    1260.333
+    25,
+    1256.92
    ],
    [
     8475220,
@@ -2132698,8 +2144971,8 @@
     8475343,
     "VGK",
     20262027,
-    25,
-    674.12
+    26,
+    671.808
    ],
    [
     8475413,
@@ -2132873,8 +2145146,8 @@
     8475913,
     "VGK",
     20262027,
-    25,
-    1141.24
+    26,
+    1139.538
    ],
    [
     8476278,
@@ -2132992,8 +2145265,8 @@
     8476448,
     "VGK",
     20262027,
-    25,
-    1062.4
+    26,
+    1072.0
    ],
    [
     8476453,
@@ -2133006,8 +2145279,8 @@
     8476454,
     "EDM",
     20262027,
-    12,
-    1091.5
+    13,
+    1098.846
    ],
    [
     8476455,
@@ -2133090,8 +2145363,8 @@
     8476473,
     "EDM",
     20262027,
-    26,
-    1254.038
+    27,
+    1250.407
    ],
    [
     8476474,
@@ -2133223,8 +2145496,8 @@
     8476881,
     "VGK",
     20262027,
-    25,
-    943.2
+    26,
+    932.731
    ],
    [
     8476882,
@@ -2133510,15 +2145783,15 @@
     8477447,
     "VGK",
     20262027,
-    25,
-    1331.32
+    26,
+    1335.192
    ],
    [
     8477450,
     "EDM",
     20262027,
-    17,
-    769.941
+    18,
+    768.0
    ],
    [
     8477451,
@@ -2133727,8 +2146000,8 @@
     8477934,
     "EDM",
     20262027,
-    26,
-    1320.461
+    27,
+    1324.63
    ],
    [
     8477935,
@@ -2133811,8 +2146084,8 @@
     8477953,
     "EDM",
     20262027,
-    26,
-    1096.846
+    27,
+    1102.259
    ],
    [
     8477955,
@@ -2133839,8 +2146112,8 @@
     8477964,
     "VGK",
     20262027,
-    25,
-    924.04
+    26,
+    920.115
    ],
    [
     8477969,
@@ -2133895,8 +2146168,8 @@
     8478013,
     "EDM",
     20262027,
-    12,
-    867.0
+    13,
+    871.077
    ],
    [
     8478020,
@@ -2133965,8 +2146238,8 @@
     8478109,
     "VGK",
     20262027,
-    12,
-    922.333
+    13,
+    911.231
    ],
    [
     8478133,
@@ -2134028,8 +2146301,8 @@
     8478397,
     "VGK",
     20262027,
-    25,
-    1183.68
+    26,
+    1182.808
    ],
    [
     8478398,
@@ -2134056,15 +2146329,15 @@
     8478402,
     "EDM",
     20262027,
-    26,
-    1422.269
+    27,
+    1421.222
    ],
    [
     8478403,
     "VGK",
     20262027,
-    25,
-    1238.04
+    26,
+    1236.115
    ],
    [
     8478407,
@@ -2134189,8 +2146462,8 @@
     8478450,
     "VGK",
     20262027,
-    12,
-    1089.167
+    13,
+    1073.461
    ],
    [
     8478454,
@@ -2134238,8 +2146511,8 @@
     8478468,
     "VGK",
     20262027,
-    25,
-    1042.0
+    26,
+    1048.154
    ],
    [
     8478469,
@@ -2134252,8 +2146525,8 @@
     8478472,
     "EDM",
     20262027,
-    26,
-    766.462
+    27,
+    772.222
    ],
    [
     8478474,
@@ -2134273,8 +2146546,8 @@
     8478483,
     "VGK",
     20262027,
-    23,
-    1238.043
+    24,
+    1239.667
    ],
    [
     8478493,
@@ -2134371,8 +2146644,8 @@
     8478854,
     "EDM",
     20262027,
-    26,
-    1369.769
+    27,
+    1365.926
    ],
    [
     8478856,
@@ -2134539,8 +2146812,8 @@
     8479353,
     "VGK",
     20262027,
-    25,
-    908.84
+    26,
+    914.308
    ],
    [
     8479359,
@@ -2134553,8 +2146826,8 @@
     8479365,
     "EDM",
     20262027,
-    23,
-    574.0
+    24,
+    567.167
    ],
    [
     8479368,
@@ -2134707,8 +2146980,8 @@
     8479639,
     "VGK",
     20262027,
-    17,
-    848.823
+    18,
+    838.167
    ],
    [
     8479661,
@@ -2134924,8 +2147197,8 @@
     8480029,
     "EDM",
     20262027,
-    26,
-    750.538
+    27,
+    748.963
    ],
    [
     8480036,
@@ -2135204,8 +2147477,8 @@
     8480803,
     "EDM",
     20262027,
-    26,
-    1535.615
+    27,
+    1542.63
    ],
    [
     8480806,
@@ -2135281,8 +2147554,8 @@
     8480842,
     "EDM",
     20262027,
-    14,
-    651.214
+    15,
+    620.2
    ],
    [
     8480842,
@@ -2135799,8 +2148072,8 @@
     8481617,
     "EDM",
     20262027,
-    26,
-    1078.0
+    27,
+    1085.555
    ],
    [
     8481618,
@@ -2136233,8 +2148506,8 @@
     8482166,
     "EDM",
     20262027,
-    21,
-    892.714
+    22,
+    891.136
    ],
    [
     8482169,
@@ -2136499,8 +2148772,8 @@
     8482703,
     "EDM",
     20262027,
-    20,
-    840.35
+    21,
+    836.571
    ],
    [
     8482705,
@@ -2137108,8 +2149381,8 @@
     8483553,
     "VGK",
     20262027,
-    23,
-    618.87
+    24,
+    611.417
    ],
    [
     8483565,
@@ -2137255,8 +2149528,8 @@
     8483890,
     "VGK",
     20262027,
-    25,
-    759.0
+    26,
+    756.0
    ],
    [
     8484136,
@@ -2137703,8 +2149976,8 @@
     8484803,
     "VGK",
     20262027,
-    25,
-    881.76
+    26,
+    889.577
    ],
    [
     8484806,
@@ -2137941,8 +2150214,8 @@
     8486161,
     "EDM",
     20262027,
-    26,
-    682.231
+    27,
+    675.259
    ],
    [
     8486171,
@@ -2138002,11 +2150275,11 @@
     8485469
    ],
    "CGY": [
+    8481028,
     8482747,
     8483609,
     8484154,
     8484234,
-    8484821,
     8484958
    ],
    "CHI": [
@@ -2138020,7 +2150293,7 @@
    "COL": [
     8478454,
     8478462,
-    8480448,
+    8481550,
     8482742,
     8482768,
     8484149
@@ -2138103,7 +2150376,7 @@
     8476429,
     8477407,
     8482070,
-    8482516
+    8484221
    ],
    "NYR": [
     8478446,
@@ -2138158,8 +2150431,8 @@
     8477573,
     8479346,
     8480281,
-    8483463,
-    8484164
+    8484164,
+    8484230
    ],
    "TBL": [
     8476878,
@@ -2138236,7 +2150509,7 @@
    "dc-x1-v3-010-07a1fa65c47b",
    "dc-x1-v3-011-35fd64896523",
    "dc-x1-v3-012-b24a62ed992f",
-   "dc-x1-v3-013-e0ea252df62d",
+   "dc-x1-v3-013-be4070000f7d",
    "dc-x1-v3-014-4955e764835e",
    "dc-x1-v3-015-8629e4363d59",
    "dc-x1-v3-016-9281bbdc456f",
@@ -2138250,7 +2150523,7 @@
    "dc-x1-v3-024-5d5ee28187ec",
    "dc-x1-v3-025-a83de6600694",
    "dc-x1-v3-026-5f3972ad589f",
-   "dc-x1-v3-027-90ac12d0a8d8",
+   "dc-x1-v3-027-4c7cf6bf89e0",
    "dc-x1-v3-028-93fa3e1b5729",
    "dc-x1-v3-029-86f41220d01c",
    "dc-x1-v3-030-60ad828dd012",
@@ -2138268,10 +2150541,10 @@
    "dc-x1-v3-042-627e95d035e8",
    "dc-x1-v3-043-ec9856fbbbd0",
    "dc-x1-v3-044-053c9838dad4",
-   "dc-x1-v3-045-59e0caecbb5b",
+   "dc-x1-v3-045-a0c38fc5c953",
    "dc-x1-v3-046-78e1397dcb85",
    "dc-x1-v3-047-8c94d287a016",
-   "dc-x1-v3-048-ca22bf52322f",
+   "dc-x1-v3-048-71c69f878e07",
    "dc-x1-v3-049-b16bee373d44",
    "dc-x1-v3-050-b1722b105002",
    "dc-x1-v3-051-d9a78f3d6fe1",
@@ -2138282,7 +2150555,7 @@
    "dc-x1-v3-056-fcd1d0155f05",
    "dc-x1-v3-057-917826f82574",
    "dc-x1-v3-058-bd2af6b24df5",
-   "dc-x1-v3-059-906a6051d2d9",
+   "dc-x1-v3-059-50dd6d4cb4bd",
    "dc-x1-v3-060-d87f19ad28f1",
    "dc-x1-v3-061-fe009c8ac406",
    "dc-x1-v3-062-f596a97a5911",
@@ -2138296,7 +2150569,7 @@
    "dc-x1-v3-070-e49f7bcdfa98",
    "dc-x1-v3-071-17e99b066bfd",
    "dc-x1-v3-072-49dc8b33dcf0",
-   "dc-x1-v3-073-939e40d0d820",
+   "dc-x1-v3-073-5cefc602afa0",
    "dc-x1-v3-074-851a020de0b9",
    "dc-x1-v3-075-8f6ab8229f34",
    "dc-x1-v3-076-6b8a7539583f",
@@ -2138321,7 +2150594,7 @@
    "dc-x1-v3-095-2e4a84563888",
    "dc-x1-v3-096-3aef487ac7ee",
    "dc-x1-v3-097-e40f86acba82",
-   "dc-x1-v3-098-8ecf25457eed",
+   "dc-x1-v3-098-5abce42b32d7",
    "dc-x1-v3-099-7bc4c4b663f2",
    "dc-x1-v3-100-d22d608c74a7",
    "dc-x1-v3-101-9b6fd30ac369",
@@ -2138336,7 +2150609,7 @@
    "dc-x1-v3-110-fac16f526ce8",
    "dc-x1-v3-111-743e2753d1c4",
    "dc-x1-v3-112-267bcc188522",
-   "dc-x1-v3-113-fc75985f8804",
+   "dc-x1-v3-113-5e080e2bab53",
    "dc-x1-v3-114-d46fb5b54285",
    "dc-x1-v3-115-77a4c0e2d987",
    "dc-x1-v3-116-4e059ef46071",
@@ -2138356,12 +2150629,12 @@
    "dc-x1-v3-130-56d0e3f155db",
    "dc-x1-v3-131-d217c648286c",
    "dc-x1-v3-132-c94d47c82a3b",
-   "dc-x1-v3-133-19a6a2b29380",
+   "dc-x1-v3-133-3df1ed313a08",
    "dc-x1-v3-134-388b1dcf4c0b",
    "dc-x1-v3-135-d943566faad1",
    "dc-x1-v3-136-bfe244fa6ca3",
    "dc-x1-v3-137-905167f4cb9c",
-   "dc-x1-v3-138-827b91efe715",
+   "dc-x1-v3-138-54f6a497d515",
    "dc-x1-v3-139-3af18c9fe1a7",
    "dc-x1-v3-140-ca56389648f2",
    "dc-x1-v3-141-1ef3cf01d7be",
@@ -2138371,13 +2150644,13 @@
    "dc-x1-v3-145-26b7bd1aa650",
    "dc-x1-v3-146-8ecb9bea6886",
    "dc-x1-v3-147-783644cd57e6",
-   "dc-x1-v3-148-0c1ca5e4cd24",
+   "dc-x1-v3-148-71672537d1e3",
    "dc-x1-v3-149-207aed36a070",
    "dc-x1-v3-150-376174d6a526",
    "dc-x1-v3-151-5a75b737f667",
    "dc-x1-v3-152-dc06e09feec2",
    "dc-x1-v3-153-03848fcd7ef2",
-   "dc-x1-v3-154-ad525540bde0",
+   "dc-x1-v3-154-ea7835418f18",
    "dc-x1-v3-155-e6915ac79c19",
    "dc-x1-v3-156-93ee8b2c6ae1",
    "dc-x1-v3-157-d43192d39a03",
@@ -2138387,7 +2150660,7 @@
    "dc-x1-v3-161-9d2182e55a65",
    "dc-x1-v3-162-479ab8721c40",
    "dc-x1-v3-163-d5912e2c373e",
-   "dc-x1-v3-164-0efe10d6f211",
+   "dc-x1-v3-164-a5ee54d782fc",
    "dc-x1-v3-165-def08befeb48",
    "dc-x1-v3-166-34f5540b9d4f",
    "dc-x1-v3-167-f578814a5e20",
@@ -2138397,7 +2150670,7 @@
    "dc-x1-v3-171-3d8c695e8ae7",
    "dc-x1-v3-172-ae097651f0ce",
    "dc-x1-v3-173-fd815929d9fe",
-   "dc-x1-v3-174-fe969144b58f",
+   "dc-x1-v3-174-283ee89f1140",
    "dc-x1-v3-175-9fb3338fa6e7",
    "dc-x1-v3-176-1e364b8c21eb",
    "dc-x1-v3-177-5b34f0fe210d",
@@ -2138405,10 +2150678,10 @@
    "dc-x1-v3-179-922b66551958",
    "dc-x1-v3-180-80a05a467f0e",
    "dc-x1-v3-181-2ac4588387e5",
-   "dc-x1-v3-182-73f870c01617",
+   "dc-x1-v3-182-b2234addfd74",
    "dc-x1-v3-183-5dee2de98601",
    "dc-x1-v3-184-c90b7de9d276",
-   "dc-x1-v3-185-c97d295fa17d",
+   "dc-x1-v3-185-478a24413d47",
    "dc-x1-v3-186-0c9dbddfabfe",
    "dc-x1-v3-187-5f96435adda8",
    "dc-x1-v3-188-7dc079a5a7c8",
@@ -2138434,13 +2150707,13 @@
    "dc-x1-v3-208-99fe4203bc21",
    "dc-x1-v3-209-1aab8c15b7a4",
    "dc-x1-v3-210-a40b85fadfbe",
-   "dc-x1-v3-211-a2fe356b1f64",
+   "dc-x1-v3-211-8475cbc9480a",
    "dc-x1-v3-212-da17fa4f4a37",
    "dc-x1-v3-213-48899b75509c",
    "dc-x1-v3-214-4e8e6ee3690b",
    "dc-x1-v3-215-a8737f2015f5",
    "dc-x1-v3-216-d28e0e19a3d3",
-   "dc-x1-v3-217-a1419bab3c6c",
+   "dc-x1-v3-217-0c14a90a9147",
    "dc-x1-v3-218-76f783de8b43",
    "dc-x1-v3-219-8de263d293b8",
    "dc-x1-v3-220-63862e3cad07",
@@ -2138470,7 +2150743,7 @@
    "dc-x1-v3-244-17d81ca2b1cc",
    "dc-x1-v3-245-59ce58ca3038",
    "dc-x1-v3-246-20590114aeb9",
-   "dc-x1-v3-247-181a5e87b017",
+   "dc-x1-v3-247-3781404dcdde",
    "dc-x1-v3-248-1a5bf94f5257",
    "dc-x1-v3-249-d0f5fa00a714",
    "dc-x1-v3-250-52966e704f26",
@@ -2138478,7 +2150751,7 @@
    "dc-x1-v3-252-a2827ea25e99",
    "dc-x1-v3-253-c09e506f33fb",
    "dc-x1-v3-254-a6a7a844fe88",
-   "dc-x1-v3-255-5ec53306e761",
+   "dc-x1-v3-255-5bd195435340",
    "dc-x1-v3-256-f5f14e7e0c22",
    "dc-x1-v3-257-d8c6d7cb804a",
    "dc-x1-v3-258-44170b8e7662",
@@ -2138491,7 +2150764,7 @@
    "dc-x1-v3-265-dbbde987e067",
    "dc-x1-v3-266-da7c281d2340",
    "dc-x1-v3-267-51298391c957",
-   "dc-x1-v3-268-8e37f5c670d5",
+   "dc-x1-v3-268-8089a2567e68",
    "dc-x1-v3-269-b410cf153e95",
    "dc-x1-v3-270-0402226ea3f3",
    "dc-x1-v3-271-8f0cf5bda78c",
@@ -2138504,13 +2150777,13 @@
    "dc-x1-v3-278-c648af8da58b",
    "dc-x1-v3-279-bef736df180e",
    "dc-x1-v3-280-20a25d7a754f",
-   "dc-x1-v3-281-0cb300919e37",
+   "dc-x1-v3-281-b27ae699977a",
    "dc-x1-v3-282-5b7667a57095",
    "dc-x1-v3-283-cea839219048",
    "dc-x1-v3-284-eee86416b3d2",
    "dc-x1-v3-285-87d6c6d27e3e",
-   "dc-x1-v3-286-ffa522ec56ce",
-   "dc-x1-v3-287-f5d3d463f6e4",
+   "dc-x1-v3-286-4932666bd4d6",
+   "dc-x1-v3-287-8fcc71f46d11",
    "dc-x1-v3-288-041670aa9747",
    "dc-x1-v3-289-6416661bb479",
    "dc-x1-v3-290-90c5d5bf2b5c",
@@ -2138544,7 +2150817,7 @@
    "dc-x1-v3-318-4c32f708c71a",
    "dc-x1-v3-319-7f971c414279",
    "dc-x1-v3-320-8403fcb75ef0",
-   "dc-x1-v3-321-815bfe3b30a4",
+   "dc-x1-v3-321-f804b00cf7a0",
    "dc-x1-v3-322-8b71cd909351",
    "dc-x1-v3-323-cc29cd81abf5",
    "dc-x1-v3-324-72bf04d8524d",
@@ -2138552,11 +2150825,11 @@
    "dc-x1-v3-326-7542da6c86e0",
    "dc-x1-v3-327-81e638a4b590",
    "dc-x1-v3-328-f1d87353ec59",
-   "dc-x1-v3-329-827d8ebdb446",
+   "dc-x1-v3-329-b9ad69aea531",
    "dc-x1-v3-330-dc970efb34a1",
    "dc-x1-v3-331-79b4686ba6f3",
    "dc-x1-v3-332-7e83fd9b3a5f",
-   "dc-x1-v3-333-a21497a59e16",
+   "dc-x1-v3-333-7c38c64636c6",
    "dc-x1-v3-334-d37ab8eafa8c",
    "dc-x1-v3-335-e034a425662a",
    "dc-x1-v3-336-13d0a0ea0e37",
@@ -2138590,19 +2150863,19 @@
    "dc-x1-v3-364-018147bc6ca2"
   ],
   "current_prompts": {
-   "team-ANA": "dc3-team-ANA-4094b3d0f431",
+   "team-ANA": "dc3-team-ANA-8486f537a4a6",
    "goalie-ANA": "dc3-goalie-ANA-ffce285e96dc",
    "team-BOS": "dc3-team-BOS-3f73cf087a63",
    "goalie-BOS": "dc3-goalie-BOS-0d77158056f3",
    "team-BUF": "dc3-team-BUF-35e17d8f9cab",
    "goalie-BUF": "dc3-goalie-BUF-01e2a87fa6cb",
-   "team-CGY": "dc3-team-CGY-e03bf2f03f2b",
+   "team-CGY": "dc3-team-CGY-a99948e06ef7",
    "goalie-CGY": "dc3-goalie-CGY-bebea688072e",
    "team-CAR": "dc3-team-CAR-ffa80a7f0b76",
    "goalie-CAR": "dc3-goalie-CAR-4e75d875544b",
    "team-CHI": "dc3-team-CHI-b9fe758acde4",
    "goalie-CHI": "dc3-goalie-CHI-4a42424793bb",
-   "team-COL": "dc3-team-COL-41530b3fabe9",
+   "team-COL": "dc3-team-COL-1e11930b58f2",
    "goalie-COL": "dc3-goalie-COL-d8b875be540c",
    "team-CBJ": "dc3-team-CBJ-e12bcb5000a3",
    "goalie-CBJ": "dc3-goalie-CBJ-5953ab7cb4bb",
@@ -2138624,7 +2150897,7 @@
    "goalie-NSH": "dc3-goalie-NSH-0d4455fcf8e5",
    "team-NJD": "dc3-team-NJD-1e278af5c841",
    "goalie-NJD": "dc3-goalie-NJD-eae9c5e7f2f6",
-   "team-NYI": "dc3-team-NYI-c7657cae1177",
+   "team-NYI": "dc3-team-NYI-22283e2cbb2f",
    "goalie-NYI": "dc3-goalie-NYI-1752e5b44694",
    "team-NYR": "dc3-team-NYR-8e11b451893e",
    "goalie-NYR": "dc3-goalie-NYR-020700991bc6",
@@ -2138637,7 +2150910,7 @@
    "team-SJS": "dc3-team-SJS-3d932cddbc06",
    "goalie-SJS": "dc3-goalie-SJS-bfece925536f",
    "team-SEA": "dc3-team-SEA-2fff3e8b80ee",
-   "team-STL": "dc3-team-STL-2c3e73ba9580",
+   "team-STL": "dc3-team-STL-1c9420fe814c",
    "goalie-STL": "dc3-goalie-STL-6955206fbb36",
    "team-TBL": "dc3-team-TBL-bd3a700b07f9",
    "goalie-TBL": "dc3-goalie-TBL-7d49f123f46c",
@@ -2138646,7 +2150919,7 @@
    "team-UTA": "dc3-team-UTA-009c283ff7b1",
    "team-VAN": "dc3-team-VAN-b5bd953f21f2",
    "goalie-VAN": "dc3-goalie-VAN-1ea75dcdf5ee",
-   "team-VGK": "dc3-team-VGK-22555f49366f",
+   "team-VGK": "dc3-team-VGK-21274458805f",
    "goalie-VGK": "dc3-goalie-VGK-53944124fe03",
    "team-WSH": "dc3-team-WSH-34bcd4eacdb6",
    "goalie-WSH": "dc3-goalie-WSH-dd1f17a92ccf",
@@ -2138850,19 +2151123,19 @@
   "review_sha": "28e7ea708e9b",
   "content_asof": "2026-11-04",
   "active_prompt_ids": [
-   "dc3-team-ANA-4094b3d0f431",
+   "dc3-team-ANA-8486f537a4a6",
    "dc3-goalie-ANA-ffce285e96dc",
    "dc3-team-BOS-3f73cf087a63",
    "dc3-goalie-BOS-0d77158056f3",
    "dc3-team-BUF-35e17d8f9cab",
    "dc3-goalie-BUF-01e2a87fa6cb",
-   "dc3-team-CGY-e03bf2f03f2b",
+   "dc3-team-CGY-a99948e06ef7",
    "dc3-goalie-CGY-bebea688072e",
    "dc3-team-CAR-ffa80a7f0b76",
    "dc3-goalie-CAR-4e75d875544b",
    "dc3-team-CHI-b9fe758acde4",
    "dc3-goalie-CHI-4a42424793bb",
-   "dc3-team-COL-41530b3fabe9",
+   "dc3-team-COL-1e11930b58f2",
    "dc3-goalie-COL-d8b875be540c",
    "dc3-team-CBJ-e12bcb5000a3",
    "dc3-goalie-CBJ-5953ab7cb4bb",
@@ -2138884,7 +2151157,7 @@
    "dc3-goalie-NSH-0d4455fcf8e5",
    "dc3-team-NJD-1e278af5c841",
    "dc3-goalie-NJD-eae9c5e7f2f6",
-   "dc3-team-NYI-c7657cae1177",
+   "dc3-team-NYI-22283e2cbb2f",
    "dc3-goalie-NYI-1752e5b44694",
    "dc3-team-NYR-8e11b451893e",
    "dc3-goalie-NYR-020700991bc6",
@@ -2138897,7 +2151170,7 @@
    "dc3-team-SJS-3d932cddbc06",
    "dc3-goalie-SJS-bfece925536f",
    "dc3-team-SEA-2fff3e8b80ee",
-   "dc3-team-STL-2c3e73ba9580",
+   "dc3-team-STL-1c9420fe814c",
    "dc3-goalie-STL-6955206fbb36",
    "dc3-team-TBL-bd3a700b07f9",
    "dc3-goalie-TBL-7d49f123f46c",
@@ -2138906,7 +2151179,7 @@
    "dc3-team-UTA-009c283ff7b1",
    "dc3-team-VAN-b5bd953f21f2",
    "dc3-goalie-VAN-1ea75dcdf5ee",
-   "dc3-team-VGK-22555f49366f",
+   "dc3-team-VGK-21274458805f",
    "dc3-goalie-VGK-53944124fe03",
    "dc3-team-WSH-34bcd4eacdb6",
    "dc3-goalie-WSH-dd1f17a92ccf",
@@ -2139316,6 +2151589,9 @@
   },
   "2026-12-24": {
    "id": "dc-x1-v3-121-1c69b969209b"
+  },
+  "2026-12-25": {
+   "id": "dc-x1-v3-258-44170b8e7662"
   }
  },
  "deepcut_start": "2026-11-04",
@@ -2140317,6 +2152593,20 @@
     null,
     null
    ]
+  },
+  "2026-12-25": {
+   "id": "grid-009",
+   "rarity": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
   }
  },
  "grid_start": "2026-10-14",
@@ -2140536,6 +2152826,9 @@
   },
   "2026-12-24": {
    "id": "boss-030"
+  },
+  "2026-12-25": {
+   "id": "boss-021"
   }
  },
  "benchboss_start": "2026-10-14",
@@ -2140755,6 +2153048,9 @@
   },
   "2026-12-24": {
    "id": "trail-080"
+  },
+  "2026-12-25": {
+   "id": "trail-028"
   }
  },
  "teammatetrail_start": "2026-10-14",
@@ -2144761,6 +2157057,9 @@
   },
   "2026-12-24": {
    "id": "face-116"
+  },
+  "2026-12-25": {
+   "id": "face-35"
   }
  },
  "faceswap_start": "2026-10-19",
@@ -2195502,12 +2207801,12 @@
     [
      2026,
      "EDM",
-     14,
+     18,
      2,
-     3,
-     5,
+     4,
+     6,
      0,
-     3
+     1
     ]
    ],
    "draft": [
@@ -2244981,6 +2257280,16 @@
      12,
      4,
      -2
+    ],
+    [
+     2026,
+     "CBJ",
+     3,
+     0,
+     0,
+     0,
+     0,
+     -2
     ]
    ],
    "draft": [
@@ -2253046,12 +2265355,12 @@
     [
      2026,
      "ANA",
-     20,
+     23,
      4,
      7,
      11,
      0,
-     0
+     -4
     ]
    ],
    "draft": [
@@ -2253517,6 +2265826,77 @@
     2,
     51,
     "WPG"
+   ]
+  },
+  "8481550": {
+   "id": 8481550,
+   "name": "Adam Beckman",
+   "team": "COL",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2001-05-10",
+   "nation": "CAN",
+   "number": 34,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/COL/8481550.png",
+   "ht": 74,
+   "bc": "Saskatoon",
+   "bs": "SK",
+   "wt": 192,
+   "bp": [
+    52.13,
+    -106.67,
+    "Saskatoon, SK, Canada"
+   ],
+   "past": [
+    "MIN"
+   ],
+   "car": [
+    [
+     2021,
+     "MIN",
+     3,
+     0,
+     1,
+     1,
+     2,
+     -1
+    ],
+    [
+     2022,
+     "MIN",
+     9,
+     0,
+     0,
+     0,
+     0,
+     -2
+    ],
+    [
+     2023,
+     "MIN",
+     11,
+     0,
+     2,
+     2,
+     12,
+     -2
+    ],
+    [
+     2026,
+     "COL",
+     1,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "draft": [
+    2019,
+    3,
+    75,
+    "MIN"
    ]
   },
   "8481551": {
@@ -2258031,12 +2270411,12 @@
     [
      2026,
      "LAK",
-     17,
+     20,
      2,
      2,
      4,
-     7,
-     0
+     9,
+     -2
     ]
    ],
    "draft": [
@@ -2259119,10 +2271499,10 @@
     [
      2026,
      "WPG",
-     4,
-     2,
-     2.32,
-     0.912,
+     5,
+     3,
+     2.47,
+     0.906,
      0
     ]
    ],
@@ -2264799,12 +2277179,12 @@
     [
      2026,
      "WPG",
-     16,
+     19,
      1,
      1,
      2,
      30,
-     -2
+     -4
     ]
    ],
    "draft": [
@@ -2273649,12 +2286029,12 @@
     [
      2026,
      "ANA",
-     22,
+     25,
      4,
      10,
      14,
-     2,
-     1
+     6,
+     -1
     ]
    ],
    "draft": [
@@ -2274508,12 +2286888,12 @@
     [
      2026,
      "BOS",
-     15,
+     17,
      4,
      3,
      7,
      4,
-     3
+     2
     ]
    ],
    "draft": [
@@ -2276506,12 +2288886,12 @@
     [
      2026,
      "NJD",
-     17,
+     19,
      0,
-     4,
-     4,
+     7,
+     7,
      10,
-     -2
+     -1
     ]
    ],
    "draft": [
@@ -2280659,12 +2293039,12 @@
     [
      2026,
      "WPG",
-     7,
+     10,
      1,
      1,
      2,
      2,
-     1
+     -1
     ]
    ],
    "draft": [
@@ -2282961,12 +2295341,12 @@
     [
      2026,
      "STL",
-     16,
+     17,
      1,
      2,
      3,
-     8,
-     3
+     10,
+     2
     ]
    ],
    "draft": [
@@ -2284555,12 +2296935,12 @@
     [
      2026,
      "WSH",
-     19,
+     21,
      2,
-     5,
      7,
+     9,
      0,
-     -3
+     -5
     ]
    ],
    "draft": [
@@ -2285206,12 +2297586,12 @@
     [
      2026,
      "NYI",
-     20,
+     23,
      7,
      4,
      11,
      10,
-     6
+     5
     ]
    ],
    "draft": [
@@ -2285355,11 +2297735,11 @@
     [
      2026,
      "ANA",
-     17,
+     20,
      2,
-     1,
-     3,
-     15,
+     2,
+     4,
+     17,
      -7
     ]
    ],
@@ -2286492,12 +2298872,12 @@
     [
      2026,
      "SJS",
-     24,
-     7,
-     7,
-     14,
+     26,
      8,
-     -10
+     8,
+     16,
+     8,
+     -15
     ]
    ],
    "draft": [
@@ -2286682,12 +2299062,12 @@
     [
      2026,
      "COL",
-     21,
+     23,
      2,
-     8,
-     10,
+     9,
+     11,
      2,
-     1
+     -2
     ]
    ],
    "draft": 0
@@ -2297893,6 +2310273,21 @@
    "bs": "CA",
    "wt": 194
   },
+  "8481550": {
+   "id": 8481550,
+   "name": "Adam Beckman",
+   "team": "COL",
+   "pos": "L",
+   "shoots": "L",
+   "birth": "2001-05-10",
+   "nation": "CAN",
+   "number": 34,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/COL/8481550.png",
+   "ht": 74,
+   "bc": "Saskatoon",
+   "bs": "SK",
+   "wt": 192
+  },
   "8481551": {
    "id": 8481551,
    "name": "Colten Ellis",
@@ -2300104,13 +2312499,13 @@
   "8482465": {
    "id": 8482465,
    "name": "Rémi Poirier",
-   "team": "DAL",
+   "team": "WSH",
    "pos": "G",
    "shoots": "L",
    "birth": "2001-10-06",
    "nation": "CAN",
-   "number": 31,
-   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/DAL/8482465.png",
+   "number": 1,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/WSH/8482465.png",
    "ht": 75,
    "bc": "Farnham",
    "bs": "QC",
@@ -2301218,6 +2313613,21 @@
     "CAR"
    ]
   },
+  "8482922": {
+   "id": 8482922,
+   "name": "Kirill Kirsanov",
+   "team": "LAK",
+   "pos": "D",
+   "shoots": "L",
+   "birth": "2002-09-19",
+   "nation": "RUS",
+   "number": 78,
+   "headshot": "https://assets.nhle.com/mugs/nhl/20262027/LAK/8482922.png",
+   "ht": 73,
+   "bc": "Tver",
+   "bs": "",
+   "wt": 198
+  },
   "8482929": {
    "id": 8482929,
    "name": "Emil Lilleberg",
@@ -2302160,7 +2314570,31 @@
    "ht": 77,
    "bc": "Montréal",
    "bs": "QC",
-   "wt": 233
+   "wt": 233,
+   "bp": [
+    45.51,
+    -73.59,
+    "Montréal, QC, Canada"
+   ],
+   "past": [],
+   "car": [
+    [
+     2026,
+     "ANA",
+     23,
+     0,
+     6,
+     6,
+     21,
+     -3
+    ]
+   ],
+   "draft": [
+    2022,
+    2,
+    42,
+    "ANA"
+   ]
   },
   "8483523": {
    "id": 8483523,
@@ -2303572,53 +2316006,7 @@
    "ht": 75,
    "bc": "Oakville",
    "bs": "ON",
-   "wt": 196,
-   "bp": [
-    43.45,
-    -79.68,
-    "Oakville, ON, Canada"
-   ],
-   "past": [
-    "COL"
-   ],
-   "car": [
-    [
-     2024,
-     "COL",
-     7,
-     1,
-     0,
-     1,
-     0,
-     -7
-    ],
-    [
-     2025,
-     "NYI",
-     65,
-     13,
-     17,
-     30,
-     22,
-     -14
-    ],
-    [
-     2026,
-     "NYI",
-     8,
-     1,
-     1,
-     2,
-     2,
-     0
-    ]
-   ],
-   "draft": [
-    2023,
-    1,
-    27,
-    "COL"
-   ]
+   "wt": 196
   },
   "8484223": {
    "id": 8484223,
@@ -2304289,31 +2316677,7 @@
    "ht": 75,
    "bc": "Klatovy",
    "bs": "",
-   "wt": 185,
-   "bp": [
-    49.4,
-    13.3,
-    "Klatovy, Czechia"
-   ],
-   "past": [],
-   "car": [
-    [
-     2026,
-     "STL",
-     16,
-     1,
-     2,
-     3,
-     8,
-     3
-    ]
-   ],
-   "draft": [
-    2024,
-    1,
-    16,
-    "STL"
-   ]
+   "wt": 185
   },
   "8484794": {
    "id": 8484794,
