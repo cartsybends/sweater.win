@@ -1529,6 +1529,11 @@
   "team": "NYR",
   "number": 10
  },
+ "8481704": {
+  "name": "Juuso Parssinen",
+  "team": "NYR",
+  "number": 71
+ },
  "8484210": {
   "name": "Gabe Perreault",
   "team": "NYR",
@@ -2169,6 +2174,11 @@
   "team": "COL",
   "number": 29
  },
+ "8482953": {
+  "name": "Taylor Makar",
+  "team": "COL",
+  "number": 16
+ },
  "8480039": {
   "name": "Martin Necas",
   "team": "COL",
@@ -2754,6 +2764,11 @@
   "team": "STL",
   "number": 30
  },
+ "8485594": {
+  "name": "Yegor Borikov",
+  "team": "UTA",
+  "number": 65
+ },
  "8484388": {
   "name": "Daniil But",
   "team": "UTA",
@@ -2798,11 +2813,6 @@
   "name": "Jack McBain",
   "team": "UTA",
   "number": 22
- },
- "8481827": {
-  "name": "Ben McCartney",
-  "team": "UTA",
-  "number": 62
  },
  "8477070": {
   "name": "Liam O'Brien",
@@ -3684,10 +3694,10 @@
   "team": "SJS",
   "number": 51
  },
- "8481517": {
-  "name": "Brett Leason",
+ "8483481": {
+  "name": "Cam Lund",
   "team": "SJS",
-  "number": 17
+  "number": 46
  },
  "8478975": {
   "name": "Mason Marchment",
@@ -3734,15 +3744,15 @@
   "team": "SJS",
   "number": 5
  },
+ "8484152": {
+  "name": "Luca Cagnoni",
+  "team": "SJS",
+  "number": 42
+ },
  "8484806": {
   "name": "Sam Dickinson",
   "team": "SJS",
   "number": 6
- },
- "8479333": {
-  "name": "Libor Hajek",
-  "team": "SJS",
-  "number": 24
  },
  "8480891": {
   "name": "Michael Kesselring",
