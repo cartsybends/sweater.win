@@ -629,16 +629,6 @@
   "team": "OTT",
   "number": 19
  },
- "8478104": {
-  "name": "Sammy Blais",
-  "team": "OTT",
-  "number": 79
- },
- "8482674": {
-  "name": "Tyler Boucher",
-  "team": "OTT",
-  "number": 54
- },
  "8477444": {
   "name": "Andre Burakovsky",
   "team": "OTT",
@@ -1274,11 +1264,6 @@
   "team": "NJD",
   "number": 81
  },
- "8484177": {
-  "name": "Lenni Hameenaho",
-  "team": "NJD",
-  "number": 29
- },
  "8480002": {
   "name": "Nico Hischier",
   "team": "NJD",
@@ -1348,6 +1333,11 @@
   "name": "Jonas Siegenthaler",
   "team": "NJD",
   "number": 71
+ },
+ "8484987": {
+  "name": "Anton Silaev",
+  "team": "NJD",
+  "number": 52
  },
  "8474596": {
   "name": "Jake Allen",
@@ -1754,6 +1744,11 @@
   "team": "PIT",
   "number": 16
  },
+ "8483833": {
+  "name": "Atley Calvert",
+  "team": "PIT",
+  "number": 84
+ },
  "8482475": {
   "name": "Egor Chinakhov",
   "team": "PIT",
@@ -1964,11 +1959,6 @@
   "team": "WSH",
   "number": 42
  },
- "8475718": {
-  "name": "Justin Holl",
-  "team": "WSH",
-  "number": 4
- },
  "8484873": {
   "name": "Cole Hutson",
   "team": "WSH",
@@ -2013,6 +2003,11 @@
   "name": "Tyler Bertuzzi",
   "team": "CHI",
   "number": 59
+ },
+ "8485554": {
+  "name": "Dillon Boucher",
+  "team": "CHI",
+  "number": 36
  },
  "8477987": {
   "name": "Ryan Donato",
@@ -2073,11 +2068,6 @@
   "name": "Teuvo Teravainen",
   "team": "CHI",
   "number": 86
- },
- "8476952": {
-  "name": "Dominic Toninato",
-  "team": "CHI",
-  "number": 25
  },
  "8481524": {
   "name": "Bowen Byram",
